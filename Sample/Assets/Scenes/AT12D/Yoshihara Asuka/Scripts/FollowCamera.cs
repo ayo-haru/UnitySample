@@ -16,8 +16,14 @@ public class FollowCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // プレイヤーに追従する
         Vector3 PlayerPos = this.Player.transform.position;
         //transform.position = new Vector3(PlayerPos.x, PlayerPos.y + 1.0f, PlayerPos.z - 2.0f);
         transform.position = new Vector3(PlayerPos.x, PlayerPos.y + 0.5f, -4.0f);
+
+        // 画面外設定(x = 45.0fの地点に到達したらカメラの移動を停止)
+        if(PlayerPos.x > 45.0f){
+            transform.position = new Vector3(45.0f, PlayerPos.y + 0.5f, -4.0f); 
+        }
     }
 }

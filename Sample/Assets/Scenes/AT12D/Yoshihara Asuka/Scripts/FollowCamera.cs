@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FollowCamera : MonoBehaviour
 {
+    
     GameObject Player;
     
     // Start is called before the first frame update
@@ -18,6 +19,6 @@ public class FollowCamera : MonoBehaviour
     {
         Vector3 PlayerPos = this.Player.transform.position;
         //transform.position = new Vector3(PlayerPos.x, PlayerPos.y + 1.0f, PlayerPos.z - 2.0f);
-        transform.position = new Vector3(PlayerPos.x, PlayerPos.y + 0.5f, -4.0f);
+        transform.position = new Vector3(PlayerPos.x, PlayerPos.y + 1.5f, -4.0f);
     }
 }

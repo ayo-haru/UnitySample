@@ -1,3 +1,18 @@
+//=============================================================================
+//
+// プレイヤーの追従カメラ(遅延)[DelayFollowCamera]
+//
+// <Refelence>
+// 少し遅れて追従するカメラ設定。ただMainCameraの値で動くのでそれに依存。
+// 今後使うかわからないから、一応おいときます。
+//
+// 作成日:2022/03/08
+// 作成者:吉原飛鳥
+//
+// <開発履歴>
+// 2022/03/08 作成
+//=============================================================================
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +34,7 @@ public class DelayFollowCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.Lerp(Player.transform.position,
+        transform.position = Vector3.Lerp(transform.position,
                                           Player.transform.position + OffSet,
                                           16.0f * Time.deltaTime);
     }

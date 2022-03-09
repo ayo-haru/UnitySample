@@ -7,10 +7,13 @@ public class BaunceEnemy : MonoBehaviour
     public float bounceSpeed = 5.0f;
     public float bounceVectorMultiple = 2f;
 
+    public bool isAlive;
+
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
+        isAlive = true;
         rb = gameObject.GetComponent<Rigidbody>();
     }
 
@@ -37,6 +40,7 @@ public class BaunceEnemy : MonoBehaviour
             collision.rigidbody.AddForce(-velocity * bounceSpeed, ForceMode.Impulse);
 
             //íeÇ¢ÇΩÇÁè¡Ç∑
+            isAlive = false;
             Destroy(gameObject, 1.0f);
         }
         

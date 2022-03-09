@@ -23,6 +23,10 @@ public class EnemyMoveFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!(this.GetComponent<BaunceEnemy>().isAlive))
+        {
+            return;
+        }
         //Vector3 pos = rb.position;
         //‰E
         if(transform.position.x < Player.transform.position.x)

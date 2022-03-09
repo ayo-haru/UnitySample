@@ -6,13 +6,13 @@ using UnityEngine;
 
 public class FollowCamera1 : MonoBehaviour
 {
-    GameObject  Player;
+    //GameObject  Player;
    // private Vector3 OffSet;
     // Start is called before the first frame update
     void Start()
     {
         // 追従するオブジェクト名を設定
-        this.Player = GameObject.Find("Player");
+        //this.Player = GameObject.Find("Player");
         //OffSet = transform.position - Player.transform.position;
     }
 
@@ -20,7 +20,8 @@ public class FollowCamera1 : MonoBehaviour
     void Update()
     {
         // プレイヤーに追従する
-        Vector3 PlayerPos = this.Player.transform.position;
+        //Vector3 PlayerPos = this.Player.transform.position;
+        Vector3 PlayerPos = GameData.PlayerPos;
         
 
         // *****座標*****

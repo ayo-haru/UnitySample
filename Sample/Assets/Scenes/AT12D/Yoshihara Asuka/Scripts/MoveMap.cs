@@ -13,31 +13,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MoveMap : MonoBehaviour
 {
-
-    //---変数宣言
-    GameObject Player;
-    public Vector3 MovePoint;         // マップ遷移の地点となる値
-                                    // 
     // Start is called before the first frame update
     void Start()
     {
-        //---追従するオブジェクト名を設定
-        this.Player = GameObject.Find("SD_unitychan_humanoid");
-
+        DontDestroyOnLoad(GameObject.Find("SD_unitychan_humanoid"));        // シーンを切り替えても破壊しない
     }
 
     // Update is called once per frame
     void Update()
     {
-        //---プレイヤーの現座標を取得
-        Vector3 PlayerPos = this.Player.transform.position;
 
-        if(PlayerPos.x >= MovePoint.x){
-            transform.position = new Vector3(60.0f,1.5f,-4.0f);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "MovePoint")
+        {
+            SceneManager.LoadScene("PlayerScene2");
         }
-
     }
 }

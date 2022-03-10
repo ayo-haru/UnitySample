@@ -25,7 +25,6 @@ public class FollowCamera : MonoBehaviour
     public float MovePoint;             // マップ遷移するための地点
     bool MoveFlg;                       // マップ遷移のフラグ
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -53,14 +52,12 @@ public class FollowCamera : MonoBehaviour
             transform.position = new Vector3(RightScreenOut, 
                                              PlayerPos.y + FollowCameraPos.y, 
                                              FollowCameraPos.z);         // ジャンプ追従
-            if (PlayerPos.x >= MovePoint){
-                this.MoveFlg = true;
-                if(this.MoveFlg == true)
-                {
-                    this.transform.position = new Vector3(60.0f, 1.5f, -4.0f);    // カメラの場所を再定義
-
-                }
-            }
+            //if (PlayerPos.x >= MovePoint){
+            //    this.MoveFlg = true;
+            //    if(this.MoveFlg == true){
+            //        this.transform.position = new Vector3(60.0f, 1.5f, -4.0f);    // カメラの場所を再定
+            //    }
+            //}
         }
 
 

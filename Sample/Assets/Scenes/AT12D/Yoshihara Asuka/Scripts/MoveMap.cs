@@ -38,6 +38,6 @@ public class MoveMap : MonoBehaviour
         if (other.gameObject.tag == "MovePoint1to2")
         {
             SceneManager.LoadScene("PlayerScene2");
-        }s
+        }
     }
 }

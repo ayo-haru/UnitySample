@@ -15,13 +15,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowCamera : MonoBehaviour
+public class FollowCameraProto : MonoBehaviour
 {
     //---変数宣言
-    GameObject Player;
     public Vector3 FollowCameraPos = new Vector3(0.0f,1.5f,-6.0f);     // 追従するカメラの高さ(x,y,z)
-    public int RightScreenOut;          // 右の画面外設定
-    public int LeftScreenOut;           // 左の画面外設定
+    public int RightScreenOut = 40;          // 右の画面外設定
+    public int LeftScreenOut = 0;           // 左の画面外設定
     public float MovePoint;             // マップ遷移するための地点
     bool MoveFlg;                       // マップ遷移のフラグ
 
@@ -29,7 +28,6 @@ public class FollowCamera : MonoBehaviour
     void Start()
     {
         //---追従するオブジェクト名を設定
-        this.Player = GameObject.Find("SD_unitychan_humanoid");
         this.MoveFlg = false;    
     }
 
@@ -37,8 +35,8 @@ public class FollowCamera : MonoBehaviour
     void Update()
     {
         //---プレイヤーに追従する
-        Vector3 PlayerPos = this.Player.transform.position;
-        
+        Vector3 PlayerPos = GameData.PlayerPos;
+
         // *****座標*****
         //transform.position = new Vector3(PlayerPos.x,0.7f, PlayerPos.z - 4.0f);
         transform.position = new Vector3(PlayerPos.x, 

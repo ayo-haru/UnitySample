@@ -17,8 +17,8 @@ using UnityEngine;
 public static class GameData
 {
     static int roomSize;                    // 1部屋のサイズは簡単に触れて欲しくないからpublicにしてない
-    public static int CurrentMapNumber;            // マップの番号いれる
-    public static int NextMapNumber;              // マップの番号いれる
+    public static int CurrentMapNumber;     // マップの番号いれる
+    public static int NextMapNumber;        // マップの番号いれる
     static string[] MapName                 // マップの名前 
         = {"PlayerScene1" ,"Testscene 1" };
     public static string CurrentMapName;    // 現在のマップの名前

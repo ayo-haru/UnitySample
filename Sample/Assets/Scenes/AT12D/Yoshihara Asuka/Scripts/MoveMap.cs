@@ -7,6 +7,7 @@
 //
 // <開発履歴>
 // 2022/03/09 作成
+// 2022/03/11 破壊しないオブジェクトを追加
 //=============================================================================
 
 
@@ -20,7 +21,9 @@ public class MoveMap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(GameObject.Find("SD_unitychan_humanoid"));        // シーンを切り替えても破壊しない
+        //---遷移後も破壊しないオブジェクト
+        DontDestroyOnLoad(GameObject.Find("SD_unitychan_humanoid"));
+        DontDestroyOnLoad(GameObject.Find("Main Camera"));
     }
 
     // Update is called once per frame
@@ -29,11 +32,12 @@ public class MoveMap : MonoBehaviour
 
     }
 
+
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "MovePoint")
+        if (other.gameObject.tag == "MovePoint1to2")
         {
             SceneManager.LoadScene("PlayerScene2");
-        }
+        }s
     }
 }

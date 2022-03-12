@@ -18,7 +18,7 @@ using UnityEngine;
 public class FollowCameraProto : MonoBehaviour
 {
     //---変数宣言
-    public Vector3 FollowCameraPos = new Vector3(0.0f,1.5f,-6.0f);     // 追従するカメラの高さ(x,y,z)
+    public Vector3 FollowCameraPos = new Vector3(0.0f,1.0f,-6.0f);     // 追従するカメラの高さ(x,y,z)
     public int RightScreenOut = 40;          // 右の画面外設定
     public int LeftScreenOut = 0;           // 左の画面外設定
     public float MovePoint;             // マップ遷移するための地点

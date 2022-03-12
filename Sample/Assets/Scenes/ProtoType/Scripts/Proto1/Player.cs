@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameData.PlayerPos = GameData.Player.transform.position;
+        GameData.PlayerPos = transform.position;
     }
 
     void OnTriggerEnter(Collider other) {

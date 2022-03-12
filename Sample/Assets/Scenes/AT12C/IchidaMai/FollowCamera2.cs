@@ -15,21 +15,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowCamera : MonoBehaviour
+public class FollowCamera2 : MonoBehaviour
 {
     //---変数宣言
-    GameObject Player;
-    public Vector3 FollowCameraPos = new Vector3(0.0f,1.5f,-6.0f);     // 追従するカメラの高さ(x,y,z)
+    //GameObject Player;
+    public Vector3 FollowCameraPos;     // 追従するカメラの高さ(x,y,z)
     public int RightScreenOut;          // 右の画面外設定
     public int LeftScreenOut;           // 左の画面外設定
     public float MovePoint;             // マップ遷移するための地点
     bool MoveFlg;                       // マップ遷移のフラグ
 
+
     // Start is called before the first frame update
     void Start()
     {
         //---追従するオブジェクト名を設定
-        this.Player = GameObject.Find("SD_unitychan_humanoid");
+        //this.Player = GameObject.Find("SD_unitychan_humanoid");
         this.MoveFlg = false;    
     }
 
@@ -37,7 +38,8 @@ public class FollowCamera : MonoBehaviour
     void Update()
     {
         //---プレイヤーに追従する
-        Vector3 PlayerPos = this.Player.transform.position;
+        //Vector3 PlayerPos = this.Player.transform.position;
+        Vector3 PlayerPos = GameData.PlayerPos;
         
         // *****座標*****
         //transform.position = new Vector3(PlayerPos.x,0.7f, PlayerPos.z - 4.0f);
@@ -52,12 +54,14 @@ public class FollowCamera : MonoBehaviour
             transform.position = new Vector3(RightScreenOut, 
                                              PlayerPos.y + FollowCameraPos.y, 
                                              FollowCameraPos.z);         // ジャンプ追従
-            //if (PlayerPos.x >= MovePoint){
-            //    this.MoveFlg = true;
-            //    if(this.MoveFlg == true){
-            //        this.transform.position = new Vector3(60.0f, 1.5f, -4.0f);    // カメラの場所を再定
-            //    }
-            //}
+            if (PlayerPos.x >= MovePoint){
+                this.MoveFlg = true;
+                if(this.MoveFlg == true)
+                {
+                    this.transform.position = new Vector3(60.0f, 1.5f, -4.0f);    // カメラの場所を再定義
+
+                }
+            }
         }
 
 

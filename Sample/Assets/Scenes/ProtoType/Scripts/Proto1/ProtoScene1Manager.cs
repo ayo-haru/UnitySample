@@ -21,17 +21,9 @@ public class ProtoScene1Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Return))
-        {
-            SceneManager.LoadScene("ProtoTypeScene2");
-        }
     }
 
     public void MoveScene1to2() {
         SceneManager.LoadScene("ProtoTypeScene2");
-    }
-
-    public void MoveScene2to1() {
-
     }
 }

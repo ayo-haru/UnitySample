@@ -5,10 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class ProtoScene2Manager : MonoBehaviour
 {
+    public GameObject playerPrefab;
     // Start is called before the first frame update
-    void Start() {
-        GameData.Player = GameObject.Find("Player");
-        GameData.Player.transform.position = new Vector3(2.0f, 0.0f, 0.0f);
+    void Awake() {
+        if (!GameData.Player)
+        {
+            GameData.Player = playerPrefab;
+        }
+
+        GameData.Player.transform.position = new Vector3(2.0f, 2.0f, -1.0f);
+        GameObject player = Instantiate(GameData.Player);
     }
 
     // Update is called once per frame

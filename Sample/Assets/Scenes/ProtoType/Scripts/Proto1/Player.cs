@@ -26,35 +26,18 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameData.PlayerPos = transform.position;
+        GameData.PlayerPos = transform.position;    // プレイヤーの位置を保存
     }
 
     void OnTriggerEnter(Collider other) {
-        if (SceneManager.GetActiveScene().name == "ProtoTypeScene1") { 
-
-            if (other.gameObject.tag == "MovePoint1to2")
-            {
-                /*
-                 * ProtoScene1Managerというゲームオブジェクトをそのシーン内から探す.
-                 * そのオブジェクトに入っているコンポーネントを取得(この場合はスクリプト).
-                 * そのスクリプト内のMoveScene1to2メソッドを呼び出す
-                 */
-
-                GameObject.Find("ProtoScene1Manager").
-                    GetComponent<ProtoScene1Manager>().
-                    MoveScene1to2();
-            }
+        if (other.gameObject.tag == "MovePoint1to2")    // この名前のタグと衝突したら
+        {
+            GameData.NextMapNumber = (int)GameData.SceneState.MAP2_SCENE;   // 次のシーン番号を設定、保存
         }
 
-        if (SceneManager.GetActiveScene().name == "ProtoTypeScene2")
+        if (other.gameObject.tag == "MovePoint2to1")
         {
-            if (other.gameObject.tag == "MovePoint2to1")
-            {
-
-                GameObject.Find("ProtoScene2Manager")
-                    .GetComponent<ProtoScene2Manager>().
-                    MoveScene2to1();
-            }
+            GameData.NextMapNumber = (int)GameData.SceneState.MAP1_SCENE;    // 次のシーン番号を設定、保存
         }
     }
 

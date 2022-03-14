@@ -39,6 +39,7 @@ public class ProtoScene1Manager : MonoBehaviour
        
         //----- ƒ}ƒbƒv‚Ì”Ô†‚ğ•Û‘¶ -----
         GameData.NextMapNumber = GameData.CurrentMapNumber = (int)GameData.SceneState.MAP1_SCENE;
+        SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
     }
 
     // Update is called once per frame

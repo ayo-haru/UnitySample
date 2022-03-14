@@ -9,7 +9,8 @@ public class TitleSceneManager : MonoBehaviour {
         /*
          todo:セーブデータ読込→ネクストシーンに最後にいたシーン番号を入れる 
          */
-
+        SaveManager.load();
+        GameData.NextMapNumber = SaveManager.sd.LastMapNumber;
         GameData.CurrentMapNumber = (int)GameData.SceneState.TITLE_SCENE;
     }
 
@@ -17,9 +18,15 @@ public class TitleSceneManager : MonoBehaviour {
     void Update() {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            //string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
-            string nextSceneName = GameData.GetNextScene(2);
-            SceneManager.LoadScene(nextSceneName);
+            if (SaveManager.sd.LastMapNumber == 0)
+            {
+                string nextSceneName = GameData.GetNextScene(1);
+                SceneManager.LoadScene(nextSceneName);
+            }else{
+                //if(続きからを押されたら)
+                string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
+                SceneManager.LoadScene(nextSceneName);
+            }
         }
     }
 }

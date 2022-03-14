@@ -35,6 +35,8 @@ public static class GameData
     public static bool isFadeOut = false;   //フェードアウト処理の開始、完了を管理するフラグ
     public static bool isFadeIn = false;    //フェードイン処理の開始、完了を管理するフラグ
 
+    public static bool isAliveBoss1 = true;    //ボス１の討伐情報保存用
+
 
     public static void SetPlayerPos(Vector3 playerpos) {
         PlayerPos = playerpos;

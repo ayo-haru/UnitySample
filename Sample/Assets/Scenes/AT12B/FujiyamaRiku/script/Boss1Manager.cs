@@ -13,17 +13,25 @@ using UnityEngine;
 
 public class Boss1Manager : MonoBehaviour
 {
-    public bool Boss1AliveFlg ;
+    public enum Boss1State
+    { 
+        BOSS1_START = 0,    //ボスの開始
+        BOSS1_BATTLE ,      //ボスとのバトル中
+        BOSS1_END,          //ボスを倒したとき
+    }
     private void Awake()
     {
         //ボスを倒したかどうかの判定
-        
-}
+        if (!GameData.isAliveBoss1)
+        {
+            //ボスの処理を何もしない処理入れる
+            return;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {   
-        //
-
+       
     }
 
     // Update is called once per frame

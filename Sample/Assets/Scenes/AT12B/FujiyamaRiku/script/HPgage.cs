@@ -5,6 +5,7 @@
 //      
 //      <開発履歴>
 //      2022/03/10  ゲージ実装
+//      2022/03/15  HPがゼロになったときボスのFlgをfalseに
 //
 //==========================================================
 using System.Collections;
@@ -15,7 +16,7 @@ using UnityEngine.UI;
 public class HPgage : MonoBehaviour
 {
     [SerializeField] int MAXHP = 0;     //最大HP数値変更可
-    int currentHp;                      //現在HP
+    private int currentHp;                      //現在HP
     public Slider slider;               //スライダー
     int m_DelHp ;                      //ダメージ収納用変数
     
@@ -38,6 +39,11 @@ public class HPgage : MonoBehaviour
             Debug.Log("After currentHp : " + currentHp);
         }
         slider.value = (float)currentHp / (float)MAXHP;  //スライダーの長さの計算
+        if (currentHp <= 0)
+        {
+            //ボスのタグ付けして全部のボスで使えるようにしたい所存
+            GameData.isAliveBoss1 = false;
+        }
     }
     //ダメージ受けた時処理
     private void DelHP()
@@ -47,4 +53,5 @@ public class HPgage : MonoBehaviour
         Debug.Log("delHP : " + m_DelHp);
         Debug.Log("m_damage : " + Damage.damage);
     }
+    
 }

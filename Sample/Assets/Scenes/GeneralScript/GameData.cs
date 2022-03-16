@@ -17,7 +17,7 @@ using UnityEngine;
 
 public static class GameData
 {
-   public enum SceneState {
+   public enum eSceneState {
         TITLE_SCENE = 0,
         MAP1_SCENE,
         MAP2_SCENE,

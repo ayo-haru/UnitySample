@@ -22,6 +22,7 @@ public class ProtoScene2Manager : MonoBehaviour
     public GameObject playerPrefab;
     // Start is called before the first frame update
     void Awake() {
+
         //----- プレイヤー初期化 -----
         if (!GameData.Player)
         {
@@ -32,7 +33,7 @@ public class ProtoScene2Manager : MonoBehaviour
         GameObject player = Instantiate(GameData.Player);
 
         //----- マップの番号を保存 -----
-        GameData.NextMapNumber =  GameData.CurrentMapNumber = (int)GameData.SceneState.MAP2_SCENE;
+        GameData.NextMapNumber =  GameData.CurrentMapNumber = (int)GameData.eSceneState.MAP2_SCENE;
         SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
     }
 

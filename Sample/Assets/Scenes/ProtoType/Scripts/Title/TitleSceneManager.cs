@@ -6,14 +6,12 @@ using UnityEngine.SceneManagement;
 public class TitleSceneManager : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
-        /*
-         todo:セーブデータ読込→ネクストシーンに最後にいたシーン番号を入れる 
-         */
+        Application.targetFrameRate = 60;           // フレームレートを固定
         SaveManager.load();
         GameData.NextMapNumber = SaveManager.sd.LastMapNumber;
-        GameData.CurrentMapNumber = (int)GameData.SceneState.TITLE_SCENE;
+        GameData.CurrentMapNumber = (int)GameData.eSceneState.TITLE_SCENE;
     }
-
+    
     // Update is called once per frame
     void Update() {
         if (Input.GetKeyDown(KeyCode.Return))

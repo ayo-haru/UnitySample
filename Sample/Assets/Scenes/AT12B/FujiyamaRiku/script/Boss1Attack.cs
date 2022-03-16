@@ -41,4 +41,5 @@ public class Boss1Attack : MonoBehaviour
                 }
         }
     }
+
 }

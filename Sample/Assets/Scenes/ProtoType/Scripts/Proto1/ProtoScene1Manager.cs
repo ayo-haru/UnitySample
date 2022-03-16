@@ -23,17 +23,6 @@ public class ProtoScene1Manager : MonoBehaviour {
 
     private AudioSource[] audioSourceList = new AudioSource[5];    // 一回に同時にならせる数
 
-
-    [SerializeField]
-    public AudioClip clip1;
-    [SerializeField]
-    public AudioClip clip2;
-    [SerializeField]
-    public AudioClip clip3;
-    [SerializeField]
-    public AudioClip clip4;
-
-
     // Start is called before the first frame update
     void Awake() {
         Application.targetFrameRate = 60;           // フレームレートを固定
@@ -49,7 +38,7 @@ public class ProtoScene1Manager : MonoBehaviour {
         GameObject player = Instantiate(GameData.Player);
 
         //----- マップの番号を保存 -----
-        GameData.NextMapNumber = GameData.CurrentMapNumber = (int)GameData.SceneState.MAP1_SCENE;
+        GameData.NextMapNumber = GameData.CurrentMapNumber = (int)GameData.eSceneState.MAP1_SCENE;
         SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
 
         // audioSourceList配列の数だけAudioSourceを自身に生成して配列に格納
@@ -69,19 +58,19 @@ public class ProtoScene1Manager : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.U))
         {
-            SoundManager.Play(clip1, audioSourceList);
+            SoundManager.Play(SoundData.eSE.SE_CLICK, audioSourceList);
         }
         if (Input.GetKey(KeyCode.I))
         {
-            SoundManager.Play(clip2, audioSourceList);
+            SoundManager.Play(SoundData.eSE.SE_DORA, audioSourceList);
         }
         if (Input.GetKey(KeyCode.O))
         {
-            SoundManager.Play(clip3, audioSourceList);
+            SoundManager.Play(SoundData.eSE.SE_BYON, audioSourceList);
         }
         if (Input.GetKey(KeyCode.P))
         {
-            SoundManager.Play(clip4, audioSourceList);
+            SoundManager.Play(SoundData.eSE.SE_SPON, audioSourceList);
         }
 
 

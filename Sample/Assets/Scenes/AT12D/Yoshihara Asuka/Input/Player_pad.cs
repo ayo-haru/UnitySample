@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;                           // コントローラーを使う
 public class Player_pad : MonoBehaviour
 {
     //---変数宣言
-    private Controller PlayerAction;                    //
+    private Controller PlayerAction;                    // 
 
     private InputAction move;
     private Rigidbody rb;
@@ -59,7 +59,7 @@ public class Player_pad : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        ForceDirection += move.ReadValue<Vector2>().x; //* GetCameraRight();
+        //ForceDirection += move.ReadValue<Vector2>().x; //* GetCameraRight();
         rb.AddForce(ForceDirection, ForceMode.Impulse); // ForceMode.Impulse ... リジッドボディでかかる質量を一瞬で行う。
     }
 

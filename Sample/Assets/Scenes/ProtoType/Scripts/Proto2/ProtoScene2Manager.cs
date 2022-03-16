@@ -22,6 +22,7 @@ public class ProtoScene2Manager : MonoBehaviour
     public GameObject playerPrefab;
     // Start is called before the first frame update
     void Awake() {
+
         //----- ƒvƒŒƒCƒ„[‰Šú‰» -----
         if (!GameData.Player)
         {

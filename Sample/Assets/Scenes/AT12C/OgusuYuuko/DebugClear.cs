@@ -13,10 +13,17 @@ public class DebugClear : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Return))
+        //クリア表示
+        if (Input.GetKey(KeyCode.F1))
         {
-            GameObject ClearImage = GameObject.Find("GameClearImage");
-            ClearImage.SendMessage("Show");
+            GameObject ClearImage = GameObject.Find("EventSystem");
+            ClearImage.SendMessage("GameClearShow");
+        }
+        //ゲームオーバー表示
+        if (Input.GetKey(KeyCode.F2))
+        {
+            GameObject OverImage = GameObject.Find("EventSystem");
+            OverImage.SendMessage("GameOverShow");
         }
     }
 }

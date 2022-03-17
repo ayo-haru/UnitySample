@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameData.PlayerPos = transform.position;    // プレイヤーの位置を保存
+        GameData.PlayerPos = this.transform.position;    // プレイヤーの位置を保存
     }
 
     void OnTriggerEnter(Collider other) {

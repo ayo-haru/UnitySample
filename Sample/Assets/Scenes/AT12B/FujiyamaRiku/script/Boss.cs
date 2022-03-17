@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
-    public static Vector3 BossPos = new Vector3(0, 0, 0);
+    public static Vector3 BossPos = new Vector3(10, 0.4f, -2);
     int i = 0;
     // Start is called before the first frame update
     void Start()

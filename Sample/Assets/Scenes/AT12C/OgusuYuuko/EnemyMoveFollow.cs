@@ -19,42 +19,41 @@ using UnityEngine;
 public class EnemyMoveFollow : MonoBehaviour
 {
     //移動速度
-    public float speed = 0.01f;
+    public float speed = 0.05f;
 
-    //Rigidbody rb;
-
-    //GameObject Player;
     // Start is called before the first frame update
-    void Start()
-    {
-        //機能の取得
-        //rb = gameObject.GetComponent<Rigidbody>();
+    void Start() {
 
-        //プレイヤー取得
-        //Player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (!(this.GetComponent<BaunceEnemy>().isAlive))
+    void Update() {
+        if ((this.GetComponent<BaunceEnemy>().isBounce))
         {
             return;
         }
-        //Vector3 pos = rb.position;
         //右
-        if(transform.position.x < GameData.Player.transform.position.x)
+        if (transform.position.x < GameData.PlayerPos.x)
         {
             transform.position = new Vector3(transform.position.x + speed, transform.position.y, transform.position.z);
-            //rb.position = pos;
         }
 
         //左
-        if (transform.position.x > GameData.Player.transform.position.x)
+        if (transform.position.x > GameData.PlayerPos.x)
         {
             transform.position = new Vector3(transform.position.x - speed, transform.position.y, transform.position.z);
-            //rb.position = pos;
         }
 
     }
+        //if ((this.GetComponent<BaunceEnemy>().isBounce))    // 跳ね返るときは追尾しない
+        //{
+        //    //this.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        //    //this.GetComponent<Rigidbody>().AddForce(-Direction);
+        //    return;
+        //}
+
+        //// プレイヤーと自分の位置から進行方向を決める
+        //this.Direction = GameData.PlayerPos - this.transform.position;
+        //this.Direction.Normalize();
+        //this.GetComponent<Rigidbody>().AddForce(Direction * speed);
 }

@@ -9,9 +9,9 @@ public class TitleSceneManager : MonoBehaviour {
         Application.targetFrameRate = 60;           // フレームレートを固定
         SaveManager.load();
         GameData.NextMapNumber = SaveManager.sd.LastMapNumber;
-        GameData.CurrentMapNumber = (int)GameData.SceneState.TITLE_SCENE;
+        GameData.CurrentMapNumber = (int)GameData.eSceneState.TITLE_SCENE;
     }
-
+    
     // Update is called once per frame
     void Update() {
         if (Input.GetKeyDown(KeyCode.Return))

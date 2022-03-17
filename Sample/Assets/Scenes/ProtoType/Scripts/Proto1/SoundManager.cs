@@ -1,21 +1,19 @@
+//=============================================================================
+//
+// 作成日:2022/03/16
+// 作成者:伊地田真衣
+//
+// <開発履歴>
+// 2022/03/16 作成
+//
+//=============================================================================
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class SoundManager {
-    //private static AudioSource[] audioSourceList = new AudioSource[20];    // 一回に同時にならせる数
-    //private static GameObject _gameobject = new GameObject();
-
-    // Start is called before the first frame update
-    //private static void Awake() {
-    // audioSourceList配列の数だけAudioSourceを自身に生成して配列に格納
-    //for(int i = 0;i < audioSourceList.Length; ++i)
-    //{
-    //     audioSourceList[i] = _gameobject.AddComponent<AudioSource>();
-    //}
-    //}
-
-    private static AudioSource GetUnusedSource(AudioSource[] audioSourceList) {
+    private static AudioSource GetUnusedSource(AudioSource[] audioSourceList) { // 未使用のAudioSourceを探す
         for (int i = 0; i < audioSourceList.Length; ++i)
         {
             if (audioSourceList[i].isPlaying == false)
@@ -26,13 +24,31 @@ public static class SoundManager {
         return null;    // 未使用のAudioSourceはみつからなかった
     }
 
-    public static void Play(AudioClip clip, AudioSource[] audioSourceList) {
-        AudioSource audioSource = GetUnusedSource(audioSourceList);
+
+    //----------------------------------
+    //
+    //  サウンド再生
+    //  作成：伊地田真衣
+    //  詳細：第一引数はSoundDataの列挙体に定義した
+    //
+    //----------------------------------
+    public static void Play(SoundData.eSE _seDataNumber, AudioSource[] _audioSourceList) {
+        AudioSource audioSource = GetUnusedSource(_audioSourceList);
         if (audioSource == null)
         {
             return; // 再生できませんでした
         }
-        audioSource.clip = clip;
+        audioSource.clip = SoundData.SEClip[(int)_seDataNumber];
+        audioSource.Play();
+    }
+
+    public static void Play(SoundData.eBGM _bgmDataNumber, AudioSource[] _audioSourceList) {
+        AudioSource audioSource = GetUnusedSource(_audioSourceList);
+        if (audioSource == null)
+        {
+            return; // 再生できませんでした
+        }
+        audioSource.clip = SoundData.SEClip[(int)_bgmDataNumber];
         audioSource.Play();
     }
 }

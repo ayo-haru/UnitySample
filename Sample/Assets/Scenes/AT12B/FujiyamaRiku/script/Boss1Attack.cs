@@ -13,7 +13,7 @@ public class Boss1Attack : MonoBehaviour
         Attack4, 
     }
     GameObject obj;
-    //[SerializeField] public GameObject Strawberry;
+    public GameObject [] Strawberry;
     bool [] StrawberryFlg;
     [SerializeField] public int StrawberryNum;
 
@@ -32,17 +32,7 @@ public class Boss1Attack : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F3))
         {
-            if (!StrawberryFlg[0])
-            {
-                obj.transform.position = new Vector3(10.0f, 2.0f, -2f);
-                Instantiate(obj);
-                Debug.Log("State : " + Boss1AttackState);
-                //Rigidbody rb = obj.GetComponent<Rigidbody>();  // 
-                Vector3 force = new Vector3(-40.0f, 40.0f, 0.0f);    // óÕÇê›íË
-                GameObject.Find("strawberry(Clone)").GetComponent<Rigidbody>().AddForce(force);
-                //rb.AddForce(force);  // óÕÇâ¡Ç¶ÇÈ
-                StrawberryFlg[0] = true;
-            }
+            
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -77,9 +67,17 @@ public class Boss1Attack : MonoBehaviour
     }
     private void Boss1Attack2()
     {
-        
         //ÉCÉ`ÉS
-        
+        if (!StrawberryFlg[0])
+        {
+            obj.transform.position = new Vector3(10.0f, 2.0f, -2f);
+            Strawberry[0] = Instantiate(obj);
+            Rigidbody rb = Strawberry[0].GetComponent<Rigidbody>();  
+            Vector3 force = new Vector3(-40.0f, 40.0f, 0.0f);    // óÕÇê›íË
+            //GameObject.Find("strawberry(Clone)").GetComponent<Rigidbody>().AddForce(force);
+            rb.AddForce(force);  // óÕÇâ¡Ç¶ÇÈ
+            StrawberryFlg[0] = true;
+        }
     }
     private void Boss1Attack3()
     { 

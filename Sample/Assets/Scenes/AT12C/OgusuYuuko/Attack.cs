@@ -47,7 +47,6 @@ public class Attack : MonoBehaviour
         {
             GameObject weapon = Instantiate(prefab, new Vector3(pos.x,pos.y + AttckPosHeight, pos.z), Quaternion.identity);
             weapon.transform.Rotate(new Vector3(0, 0, 90));
-            weapon.SendMessage("SetDir", Dir_Attack.UP);
             Destroy(weapon, DestroyTime);
             return;
         }
@@ -56,7 +55,6 @@ public class Attack : MonoBehaviour
         {
             GameObject weapon = Instantiate(prefab, new Vector3(pos.x, pos.y - AttckPosHeight, pos.z), Quaternion.identity);
             weapon.transform.Rotate(new Vector3(0, 0, 90));
-            weapon.SendMessage("SetDir", Dir_Attack.DOWN);
            Destroy(weapon, DestroyTime);
             return;
         }
@@ -64,7 +62,6 @@ public class Attack : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             GameObject weapon = Instantiate(prefab, new Vector3(pos.x - AttckPosWidth, pos.y, pos.z), Quaternion.identity);
-            weapon.SendMessage("SetDir", Dir_Attack.LEFT);
            Destroy(weapon, DestroyTime);
             return;
         }
@@ -73,10 +70,8 @@ public class Attack : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             GameObject weapon = Instantiate(prefab, new Vector3(pos.x + AttckPosWidth, pos.y, pos.z), Quaternion.identity);
-            weapon.SendMessage("SetDir", Dir_Attack.RIGHT);
             Destroy(weapon, DestroyTime);
             return;
         }
-
     }
 }

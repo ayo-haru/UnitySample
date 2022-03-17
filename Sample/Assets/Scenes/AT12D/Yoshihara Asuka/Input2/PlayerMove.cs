@@ -27,7 +27,9 @@ public class PlayerMove : MonoBehaviour
     //--ボタンの入力と関数を結び付け
     private void OnEnable()
     {
-        move = PlayerAction_Pad.Player.Move;                // moveの取得と方向を結び付け。
+        //---moveアクションの取得
+        move = PlayerAction_Pad.Player.Move;
+        
     }
     private void OnDisable()
     {

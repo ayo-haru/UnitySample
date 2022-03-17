@@ -8,6 +8,7 @@
 // <開発履歴>
 // 2022/03    作成
 // 2022/03/12 モデルの向きに関係なく入力方向に盾が出るように変更
+// 2022/03/16 反射板がスライドするようにした
 //=============================================================================
 
 using System.Collections;
@@ -54,14 +55,14 @@ public class Attack : MonoBehaviour
         {
             GameObject weapon = Instantiate(prefab, new Vector3(pos.x, pos.y - AttckPosHeight, pos.z), Quaternion.identity);
             weapon.transform.Rotate(new Vector3(0, 0, 90));
-            Destroy(weapon, DestroyTime);
+           Destroy(weapon, DestroyTime);
             return;
         }
         //左攻撃
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             GameObject weapon = Instantiate(prefab, new Vector3(pos.x - AttckPosWidth, pos.y, pos.z), Quaternion.identity);
-            Destroy(weapon, DestroyTime);
+           Destroy(weapon, DestroyTime);
             return;
         }
 
@@ -72,6 +73,5 @@ public class Attack : MonoBehaviour
             Destroy(weapon, DestroyTime);
             return;
         }
-
     }
 }

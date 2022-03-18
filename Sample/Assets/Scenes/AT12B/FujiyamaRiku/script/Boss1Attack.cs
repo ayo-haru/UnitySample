@@ -17,11 +17,11 @@ public class Boss1Attack : MonoBehaviour
     //----------------------------------------------------------
     GameObject obj;                             //ÉCÉ`ÉSê∂ê¨óp
     static public GameObject [] Strawberry;            //ÉCÉ`ÉSê∂ê¨å„äiî[
-    static public bool[] StrawberryFlg;                      //Ç¢ÇÁÇÒÇ´Ç™Ç∑ÇÈÇÀ
     [SerializeField] public int Max_Strawberry;  //ë≈Ç¡ÇΩÉCÉ`ÉSÇÃîªíf
     private int StrawberryNum;
     static public int AliveStrawberry;
     private Vector3 StrawberryPos;
+    static public bool[] StrawberryUseFlg;
     static public int LoopSave;
 
     //ÉxÉWÉGã»ê¸óp
@@ -44,7 +44,7 @@ public class Boss1Attack : MonoBehaviour
         //Strawberry = new GameObject[StrawberryNum];
         StrawberryNum = 0;
         Strawberry = new GameObject[Max_Strawberry];
-        StrawberryFlg = new bool[Max_Strawberry];
+        StrawberryUseFlg = new bool[Max_Strawberry];
         MiddlePoint = new Vector3[Max_Strawberry];
         EndPoint = new Vector3[Max_Strawberry];
         FinishTime = new float[Max_Strawberry];
@@ -54,7 +54,8 @@ public class Boss1Attack : MonoBehaviour
         StartPoint.z = Boss.BossPos.z;
         for (int i=0;i < Max_Strawberry;i++)
         {
-            StrawberryFlg[i] = false;
+            
+            StrawberryUseFlg[i] = false;
             MiddlePoint[i] = FirstMiddlePoint;
             EndPoint[i] = FirstEndPoint;
             MiddlePoint[i].x += (1.7f * i);
@@ -65,12 +66,15 @@ public class Boss1Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            Boss1AttackState = BossAttack.Attack1;
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            
             Boss1AttackState = BossAttack.Attack2;
         }
+
         //çUåÇÇ…ÇÊÇ¡ÇƒèàóùÇïœÇ¶ÇÈèàóù
         switch(Boss1AttackState)
         {
@@ -100,29 +104,37 @@ public class Boss1Attack : MonoBehaviour
     }
     private void Boss1Attack2()
     {
-        
-        for (int i = AliveStrawberry; i < StrawberryNum + 1; i++)
+        if(AliveStrawberry >= Max_Strawberry)
+        {
+            AliveStrawberry = 0;
+            StrawberryNum = 0;
+            Boss1AttackState = BossAttack.Attack1;
+            return;
+        }
+        for (int i = AliveStrawberry; i < Max_Strawberry; i++)
             {
-                
             //ÉCÉ`ÉS
-            if (!StrawberryFlg[i])
+            if (!StrawberryUseFlg[StrawberryNum])
                 {
                     Strawberry[i] = Instantiate(obj, StartPoint, Quaternion.identity);
-                    Debug.Log("Flg : " + StrawberryFlg[i]);
-                    StrawberryFlg[i] = true;
+                    StrawberryUseFlg[StrawberryNum] = true;
                 }
-            if (StrawberryFlg[i])
+            if (StrawberryUseFlg[i])
             {
                 //ÉCÉ`ÉSè¡Ç¶ÇΩÇÁèâä˙âªÇ∑ÇÈÇÒÇæÇºbyéÑ
                 FinishTime[i] += Time.deltaTime;
-            }
+            
                 Vector3 S = Vector3.Lerp(StartPoint, MiddlePoint[i], FinishTime[i]);
                 Vector3 E = Vector3.Lerp(MiddlePoint[i], EndPoint[i], FinishTime[i]);
                 Strawberry[i].transform.position = Vector3.Lerp(S, E, FinishTime[i]);
-                if (FinishTime[i] > 0.5f && !StrawberryFlg[i + 1])
+                if (i < Max_Strawberry - 1)
                 {
-                    StrawberryNum++;
+                    if (FinishTime[i] > 0.5f && !StrawberryUseFlg[i + 1])
+                    {
+                        StrawberryNum++;
+                    }
                 }
+            }
         }
     }
     

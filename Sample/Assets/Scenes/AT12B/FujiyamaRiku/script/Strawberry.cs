@@ -17,14 +17,13 @@ public class Strawberry : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        // Õ“Ë‚µ‚½‘Šè‚ÉPlayerƒ^ƒO‚ª•t‚¢‚Ä‚¢‚é‚Æ‚«
         if (collision.gameObject.name == "Stage")
         {
             Debug.Log("Alive : " + Boss1Attack.AliveStrawberry);
             Boss1Attack.FinishTime[Boss1Attack.AliveStrawberry] = 0;
+            Boss1Attack.StrawberryUseFlg[Boss1Attack.AliveStrawberry] = false;
+            Destroy(Boss1Attack.Strawberry[Boss1Attack.AliveStrawberry]);
             Boss1Attack.AliveStrawberry++;
-            Destroy(this.gameObject);
-            //Boss1Attack.StrawberryFlg[Boss1Attack.LoopSave] = false;
         }
     }
 }

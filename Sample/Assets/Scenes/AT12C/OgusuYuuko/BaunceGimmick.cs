@@ -57,7 +57,7 @@ public class BaunceGimmick : MonoBehaviour
             player_rb.velocity = Vector3.zero;
             //íµÇÀï‘Ç∑
             player_rb.AddForce(dir * bounceSpeed, ForceMode.Impulse);
-            //èÇè¡ãé
+            //èÇè¡ãé!!!!!!
             Destroy(collision.gameObject);
 
         }

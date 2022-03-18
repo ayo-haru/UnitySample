@@ -20,13 +20,17 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
         GameData.PlayerPos = this.transform.position;    // プレイヤーの位置を保存
+
+        if(this.transform.position.y < -5)
+        {
+            GameData.PlayerPos = GameData.Player.transform.position = this.transform.position = new Vector3(2.0f, 2.0f, -1.0f);
+        }
     }
 
     void OnTriggerEnter(Collider other) {

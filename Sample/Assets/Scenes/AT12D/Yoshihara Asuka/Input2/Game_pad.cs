@@ -168,6 +168,17 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""7bb2007f-60e7-4f31-b853-05733f2b3040"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""431f1552-cfeb-406e-8118-2a01b0181513"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",

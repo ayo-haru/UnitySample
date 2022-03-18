@@ -16,11 +16,13 @@ public class Boss1Attack : MonoBehaviour
     //イチゴ爆弾変数
     //----------------------------------------------------------
     GameObject obj;                             //イチゴ生成用
-    public GameObject [] Strawberry;            //イチゴ生成後格納
-    bool [] StrawberryFlg;                      //いらんきがするね
+    static public GameObject [] Strawberry;            //イチゴ生成後格納
+    static public bool[] StrawberryFlg;                      //いらんきがするね
     [SerializeField] public int Max_Strawberry;  //打ったイチゴの判断
     private int StrawberryNum;
+    static public int AliveStrawberry;
     private Vector3 StrawberryPos;
+    static public int LoopSave;
 
     //ベジエ曲線用
     private Vector3  StartPoint;
@@ -28,8 +30,8 @@ public class Boss1Attack : MonoBehaviour
     private Vector3 [] EndPoint;
     [SerializeField] private Vector3 FirstMiddlePoint;
     [SerializeField] private Vector3 FirstEndPoint;
-    private float [] FinishTime;
-    private bool SpanFlg = false;
+    static public float [] FinishTime;
+    
     //----------------------------------------------------------
 
 
@@ -66,6 +68,7 @@ public class Boss1Attack : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            
             Boss1AttackState = BossAttack.Attack2;
         }
         //攻撃によって処理を変える処理
@@ -97,34 +100,32 @@ public class Boss1Attack : MonoBehaviour
     }
     private void Boss1Attack2()
     {
-        for (int i = 0; i < Max_Strawberry; i++)
-        {
+        
+        for (int i = AliveStrawberry; i < StrawberryNum + 1; i++)
+            {
+                
             //イチゴ
-            if (!StrawberryFlg[0])
-            {
-                Strawberry[0] = Instantiate(obj, StartPoint, Quaternion.identity);
-                Debug.Log("Flg : " + StrawberryFlg[i]);
-                StrawberryFlg[0] = true;
-            }
-            if (!StrawberryFlg[i] && FinishTime[i - 1] > 0.5f)
-            {
-                Strawberry[i] = Instantiate(obj, StartPoint, Quaternion.identity);
-                Debug.Log("Flg : " + StrawberryFlg[i]);
-                StrawberryFlg[i] = true;
-            }
-
+            if (!StrawberryFlg[i])
+                {
+                    Strawberry[i] = Instantiate(obj, StartPoint, Quaternion.identity);
+                    Debug.Log("Flg : " + StrawberryFlg[i]);
+                    StrawberryFlg[i] = true;
+                }
             if (StrawberryFlg[i])
             {
                 //イチゴ消えたら初期化するんだぞby私
                 FinishTime[i] += Time.deltaTime;
             }
-            Vector3 S = Vector3.Lerp(StartPoint, MiddlePoint[i], FinishTime[i]);
-            Vector3 E = Vector3.Lerp(MiddlePoint[i], EndPoint[i], FinishTime[i]);
-            Strawberry[i].transform.position = Vector3.Lerp(S, E, FinishTime[i]);
-
-            
+                Vector3 S = Vector3.Lerp(StartPoint, MiddlePoint[i], FinishTime[i]);
+                Vector3 E = Vector3.Lerp(MiddlePoint[i], EndPoint[i], FinishTime[i]);
+                Strawberry[i].transform.position = Vector3.Lerp(S, E, FinishTime[i]);
+                if (FinishTime[i] > 0.5f && !StrawberryFlg[i + 1])
+                {
+                    StrawberryNum++;
+                }
         }
     }
+    
     private void Boss1Attack3()
     { 
         //ナイフフォーク遠距離
@@ -132,11 +133,5 @@ public class Boss1Attack : MonoBehaviour
     private void Boss1Attack4()
     {
         //スーパー着地
-    }
-
-    //ベジエ曲線
-    private void GetPoint()
-    {
-        
     }
 }

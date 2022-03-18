@@ -41,7 +41,7 @@ public static class SoundData
     public static void SEDataSet() {    // SE‚Ìƒf[ƒ^‚ğ“Ç‚İ‚Ş
         for (int i = 0; i < (int)eSE.MAX_SE; i++)
         {
-            SEClip[i] = AssetDatabase.LoadAssetAtPath<AudioClip>(SEpath[i]);
+            //SEClip[i] = AssetDatabase.LoadAssetAtPath<AudioClip>(SEpath[i]);
         }
     }
 }

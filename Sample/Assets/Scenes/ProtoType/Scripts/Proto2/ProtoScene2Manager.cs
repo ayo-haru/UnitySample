@@ -19,9 +19,12 @@ using UnityEngine.SceneManagement;
 
 public class ProtoScene2Manager : MonoBehaviour
 {
+    public int roomSize = 50;
+
     public GameObject playerPrefab;
     // Start is called before the first frame update
     void Awake() {
+        GameData.SetroomSize(roomSize);             // 部屋のサイズをセット
 
         //----- プレイヤー初期化 -----
         if (!GameData.Player)

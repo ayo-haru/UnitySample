@@ -20,6 +20,8 @@ public class EnemyMoveFollow : MonoBehaviour
 {
     //移動速度
     public float speed = 0.05f;
+    // 移動許可フラグ
+    private bool moveFlg = false;
 
     // Start is called before the first frame update
     void Start() {
@@ -28,10 +30,15 @@ public class EnemyMoveFollow : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        if ((this.GetComponent<BaunceEnemy>().isBounce))
+        if (!moveFlg)
         {
+            if ((this.GetComponent<BaunceEnemy>().isBounce))
+            {
+                return;
+            }
             return;
         }
+
         //右
         if (transform.position.x < GameData.PlayerPos.x)
         {
@@ -45,15 +52,28 @@ public class EnemyMoveFollow : MonoBehaviour
         }
 
     }
-        //if ((this.GetComponent<BaunceEnemy>().isBounce))    // 跳ね返るときは追尾しない
-        //{
-        //    //this.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        //    //this.GetComponent<Rigidbody>().AddForce(-Direction);
-        //    return;
-        //}
+    private void OnTriggerEnter(Collider collider) {
+        if(collider.gameObject.tag == "Player")
+        {
+            moveFlg = true;
+        }
+    }
 
-        //// プレイヤーと自分の位置から進行方向を決める
-        //this.Direction = GameData.PlayerPos - this.transform.position;
-        //this.Direction.Normalize();
-        //this.GetComponent<Rigidbody>().AddForce(Direction * speed);
+    private void OnTriggerExit(Collider collider) {
+        if (collider.gameObject.tag == "Player")
+        {
+            moveFlg = false;
+        }
+    }
+    //if ((this.GetComponent<BaunceEnemy>().isBounce))    // 跳ね返るときは追尾しない
+    //{
+    //    //this.GetComponent<Rigidbody>().velocity = Vector3.zero;
+    //    //this.GetComponent<Rigidbody>().AddForce(-Direction);
+    //    return;
+    //}
+
+    //// プレイヤーと自分の位置から進行方向を決める
+    //this.Direction = GameData.PlayerPos - this.transform.position;
+    //this.Direction.Normalize();
+    //this.GetComponent<Rigidbody>().AddForce(Direction * speed);
 }

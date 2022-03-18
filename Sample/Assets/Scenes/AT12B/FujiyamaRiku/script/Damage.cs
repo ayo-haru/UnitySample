@@ -17,7 +17,7 @@ public class Damage : MonoBehaviour
     [SerializeField]  private int ShortRangeAttack = 0; //近距離攻撃のダメージ
 
     static public int  damage;                            //ダメージ格納用
-    //private bool SucRefrect;                        //プレイヤーがパリィに成功したかどうかの受け取り用
+    
 
     // Start is called before the first frame update
     void Start()

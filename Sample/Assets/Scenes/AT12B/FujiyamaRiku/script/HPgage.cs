@@ -16,9 +16,10 @@ using UnityEngine.UI;
 public class HPgage : MonoBehaviour
 {
     [SerializeField] int MAXHP = 0;     //最大HP数値変更可
-    private int currentHp;                      //現在HP
+    public static int currentHp;                      //現在HP
     public Slider slider;               //スライダー
-    int m_DelHp ;                      //ダメージ収納用変数
+    public static int m_DelHp ;                      //ダメージ収納用変数
+    
     
     // Start is called before the first frame update
     void Start()
@@ -46,7 +47,7 @@ public class HPgage : MonoBehaviour
         }
     }
     //ダメージ受けた時処理
-    private void DelHP()
+    public static void DelHP()
     {
         m_DelHp = Damage.damage;                //受けたダメージを受け取る
         currentHp = currentHp - m_DelHp;               //現在のHPから受けたダメージ分減らす

@@ -14,17 +14,17 @@ public class TitleSceneManager : MonoBehaviour {
     
     // Update is called once per frame
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return))   // ‚Í‚¶‚ß‚©‚ç
         {
-            if (SaveManager.sd.LastMapNumber == 0)
-            {
                 string nextSceneName = GameData.GetNextScene(1);
                 SceneManager.LoadScene(nextSceneName);
-            }else{
-                //if(‘±‚«‚©‚ç‚ð‰Ÿ‚³‚ê‚½‚ç)
-                string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
-                SceneManager.LoadScene(nextSceneName);
-            }
         }
+
+        if (Input.GetKeyDown(KeyCode.RightShift))    // ‚Â‚Ã‚«‚©‚ç
+        {
+            string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
+            SceneManager.LoadScene(nextSceneName);
+        }
+
     }
 }

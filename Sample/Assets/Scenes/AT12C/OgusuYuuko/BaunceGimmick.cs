@@ -25,7 +25,8 @@ public class BaunceGimmick : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Player = GameObject.Find("Player");
+        //Player = GameObject.Find("Player");
+        Player = GameData.Player;
         player_rb = Player.GetComponent<Rigidbody>();
     }
 

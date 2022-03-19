@@ -131,32 +131,33 @@ public class Boss1Attack : MonoBehaviour
             if (StrawberryUseFlg[i])
             {
                 //íeÇ©ÇÍÇΩÇ∆Ç´
-                if (RefrectFlg)
+                if (RefrectFlg && !StrawberryRefFlg[i])
                 {
                     StrawberryRefFlg[i] = true;
+                    Debug.Log("i : " + i);
                     PlayerPoint[i].x = GameData.PlayerPos.x + 3.0f;
                     PlayerPoint[i].y = GameData.PlayerPos.y;
                     PlayerPoint[i].z = GameData.PlayerPos.z;
                     RefrectFlg = false;
-                    //AliveStrawberry++;
+                    
                 }
                 //íeÇ©ÇÍÇΩå„
                 if (StrawberryRefFlg[i])
                 {
-
+                    
+                    Ref_FinishTime[i] += Time.deltaTime * 3;
                     Strawberry[i].transform.position = Vector3.Lerp(PlayerPoint[i], Boss.BossPos, Ref_FinishTime[i]);
-                    Ref_FinishTime[i] += Time.deltaTime;
-
-                    if (Ref_FinishTime[i] >= 1.0f)
+                    if (Ref_FinishTime[i] >= 1.0f && StrawberryUseFlg[i])
                     {
                         Damage.damage = 5;
                         HPgage.DelHP();
-                        //StrawberryUseFlg[i] = false ;
-                        //StrawberryRefFlg[i] = false ;
+                        StrawberryUseFlg[i] = false ;
+                        StrawberryRefFlg[i] = false ;
                         Destroy(Strawberry[i]);
                         Ref_FinishTime[i] = 0;
-                        //FinishTime[i] = 0;
-                        //Debug.Log("Save : " + LoopSave);
+                        FinishTime[i] = 0;
+                        AliveStrawberry++;
+                        //Debug.Log("i : " + i);
                     }
                 }
                 //ÉCÉ`ÉSè¡Ç¶ÇΩÇÁèâä˙âªÇ∑ÇÈÇÒÇæÇºbyéÑ
@@ -168,17 +169,17 @@ public class Boss1Attack : MonoBehaviour
                     Strawberry[i].transform.position = Vector3.Lerp(S, E, FinishTime[i]);
                 }
                 
-                FinishTime[i] += Time.deltaTime;
+                FinishTime[i] += Time.deltaTime / 3;
                 //Ç±Ç±Ç™ê∑ëÂÇ…à´Ç≥ÇµÇƒÇÈÅB
                 //íeÇ≠Ç∆ç≈ëÂílí¥Ç¶ÇÈÇ»Ç∫Ç©
                 //íeÇ™îºï™ÇÆÇÁÇ¢çsÇ¡ÇΩÇÁêVÇµÇ¢ÇÃê∂ê¨Ç∑ÇÈ
                 if (i < Max_Strawberry - 1)
                 {
-                    if (FinishTime[i] >= 0.5f && !StrawberryUseFlg[i + 1])
+                    if (FinishTime[i] >= 0.5f && !StrawberryUseFlg[i + 1] && !StrawberryRefFlg[i])
                     {
                             StrawberryNum++;
-                            Debug.Log("I : " + (i));
-                            Debug.Log("StrawberryNum : " + StrawberryNum);
+                            //Debug.Log("I : " + (i));
+                            //Debug.Log("StrawberryNum : " + StrawberryNum);
                     }
                 }
                 //----------------------------------------------------------

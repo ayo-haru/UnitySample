@@ -29,7 +29,7 @@ public class FollowCamera : MonoBehaviour
     void Start()
     {
         //---追従するオブジェクト名を設定
-        this.Player = GameObject.Find("rullaby");
+        this.Player = GameObject.Find("Player");
         this.MoveFlg = false;    
     }
 

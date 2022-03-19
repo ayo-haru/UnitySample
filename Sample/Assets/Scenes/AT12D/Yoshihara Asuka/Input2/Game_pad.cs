@@ -146,17 +146,6 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3141093e-8258-4604-8327-06f7da2ee7d6"",
-                    ""path"": ""<Gamepad>/leftStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""1645ec7c-fab5-4d2d-b11f-7edb47d7428f"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",

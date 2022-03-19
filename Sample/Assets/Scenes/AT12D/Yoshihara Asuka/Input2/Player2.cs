@@ -14,8 +14,8 @@ public class Player2 : MonoBehaviour
     private Vector2 ForceDirection = Vector2.zero;      // 移動する方向
 
     [SerializeField] private float maxSpeed = 1;        // 移動スピード
-    [SerializeField] private float JumpForce = 200;     // ジャンプ力
-    public float GravityForce = -100;                   // 重力
+    [SerializeField] private float JumpForce = 5;       // ジャンプ力
+    public float GravityForce = -10;                    // 重力
     private bool JumpNow = false;                       // ジャンプしているかどうか
 
     private void Awake()
@@ -23,6 +23,8 @@ public class Player2 : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         PlayerActionAsset = new Game_pad();             // InputActionインスタンスを生成
     }
+
+
     //---ボタンンの入力を結び付ける
     private void OnEnable()
     {
@@ -37,8 +39,6 @@ public class Player2 : MonoBehaviour
         PlayerActionAsset.Player.Enable();
         
     }
-
-
 
     private void OnDisable()
     {
@@ -62,14 +62,15 @@ public class Player2 : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //---移動処理
+        //---ジャンプ中なら移動処理をしない
         if(JumpNow == true)
         {
+            Gravity(); 
             return;
         }
 
+        //---移動処理
         SpeedCheck();
-        Gravity();
         ForceDirection += move.ReadValue<Vector2>();
         rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
         ForceDirection = Vector2.zero;
@@ -81,12 +82,14 @@ public class Player2 : MonoBehaviour
 
     }
 
+    //---攻撃処理
     private void OnAttack(InputAction.CallbackContext obj)
     {
         Debug.Log("攻撃した！");
 
     }
 
+    //---ジャンプ処理
     private void OnJump(InputAction.CallbackContext obj)
     {
         //---ジャンプ中であればジャンプしない
@@ -107,10 +110,13 @@ public class Player2 : MonoBehaviour
             rb.AddForce(new Vector3(0.0f,GravityForce,0.0f));
         }
     }
+
+    //---当たり判定処理
     private void OnCollisionEnter(Collision collision)
     {
         if(JumpNow == true)
         {
+            //---Tag"Ground"と接触している間の処理
             if(collision.gameObject.CompareTag("Ground"));
             {
                 JumpNow = false;
@@ -118,6 +124,7 @@ public class Player2 : MonoBehaviour
         }
     }
 
+    //---AddForceで力がかかりすぎてしまうため、maxSpeedの値に近い値に固定する処理
     private void SpeedCheck()
     {
         Vector3 PlayerVelocity  = rb.velocity;
@@ -137,6 +144,7 @@ public class Player2 : MonoBehaviour
             return;
         }
 
+        //---ゲームパッドとつながっている時に表示される。
         GUILayout.Label($"LeftStick:{Gamepad.current.leftStick.ReadValue()}");
         GUILayout.Label($"RightStick:{Gamepad.current.rightStick.ReadValue()}");
         GUILayout.Label($"ButtonNorth:{Gamepad.current.buttonNorth.isPressed}");

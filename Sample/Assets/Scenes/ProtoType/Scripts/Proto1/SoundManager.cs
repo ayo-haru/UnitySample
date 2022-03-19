@@ -29,7 +29,7 @@ public static class SoundManager {
     //
     //  サウンド再生
     //  作成：伊地田真衣
-    //  詳細：第一引数はSoundDataの列挙体に定義した
+    //  詳細：第一引数はSoundDataの列挙体に定義したやーつ
     //
     //----------------------------------
     public static void Play(SoundData.eSE _seDataNumber, AudioSource[] _audioSourceList) {

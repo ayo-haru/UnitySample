@@ -3,12 +3,14 @@
 // 画像を表示
 //
 //フェードみたいにだんだん表示させれます。
+//パッと一瞬で表示させたいときはalphaSpeedに１を設定してください
 //
 // 作成日:2022/03/16
 // 作成者:小楠裕子
 //
 // <開発履歴>
 // 2022/03/16 作成
+// 2022/03/19 表示を終了する関数を追加
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -58,5 +60,18 @@ public class ImageShow : MonoBehaviour
     public void Show()
     {
         useFlag = true;
+    }
+    
+    public void Hide()
+    {
+        //表示途中だったらリターン
+        if(alpha < 1.0f)
+        {
+            return;
+        }
+        useFlag = false;
+        alpha = 0.0f;
+        //透明に設定
+        Image.color = new Color(1.0f, 1.0f, 1.0f, alpha);
     }
 }

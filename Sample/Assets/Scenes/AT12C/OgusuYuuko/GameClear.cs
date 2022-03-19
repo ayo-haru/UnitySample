@@ -8,6 +8,7 @@
 // <開発履歴>
 // 2022/03/15 作成
 // 2022/03/16 画像表示の機能をImageShow.csに移動
+// 2022/03/19 何かのキーを押したら終了する処理を追加
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -29,12 +30,22 @@ public class GameClear : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //何かしらのキーが押されたら表示終了
+        if (Input.anyKey)
+        {
+            GameClearHide();
+        }
     }
 
     public void GameClearShow()
     {
         //画像表示
         Image.SendMessage("Show");
+    }
+
+    public void GameClearHide()
+    {
+        //画像消去
+        Image.SendMessage("Hide");
     }
 }

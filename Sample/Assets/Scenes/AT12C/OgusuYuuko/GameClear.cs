@@ -20,11 +20,14 @@ public class GameClear : MonoBehaviour
     //ゲームクリアで使うオブジェクト
     //クリア画像
     GameObject Image;
+    //テキスト
+    GameObject text;
 
     // Start is called before the first frame update
     void Start()
     {
         Image = GameObject.Find("GameClearImage");
+        text = GameObject.Find("GameClearText");
     }
 
     // Update is called once per frame
@@ -41,11 +44,15 @@ public class GameClear : MonoBehaviour
     {
         //画像表示
         Image.SendMessage("Show");
+        //テキスト表示
+        text.SendMessage("Show");
     }
 
     public void GameClearHide()
     {
         //画像消去
         Image.SendMessage("Hide");
+        //テキスト消去
+        text.SendMessage("Hide");
     }
 }

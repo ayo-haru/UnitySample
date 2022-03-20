@@ -18,6 +18,8 @@ public class GameOver : MonoBehaviour
     //ゲームオーバーで使うオブジェクト
     //画像
     GameObject Image;
+    //カメラ
+    GameObject ZoomInCamera;
 
     // Start is called before the first frame update
     void Start()
@@ -28,11 +30,20 @@ public class GameOver : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //何かしらのキーが押されたら表示終了
+        if (Input.anyKey)
+        {
+            GameOverHide();
+        }
     }
     public void GameOverShow()
     {
         //画像表示
         Image.SendMessage("Show");
+    }
+    public void GameOverHide()
+    {
+        //画像消去
+        Image.SendMessage("Hide");
     }
 }

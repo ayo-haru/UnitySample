@@ -23,6 +23,9 @@ public class DataManager : MonoBehaviour
      * 
      * 
      */
+     [SerializeField]
+     
+    
 
 
     // Start is called before the first frame update

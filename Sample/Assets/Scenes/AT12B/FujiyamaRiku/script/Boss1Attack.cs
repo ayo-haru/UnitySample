@@ -23,7 +23,9 @@ public class Boss1Attack : MonoBehaviour
     static public int AliveStrawberry;
     private Vector3 StrawberryPos;
     static public bool[] StrawberryUseFlg;
-    private bool [] StrawberryRef;
+    static public bool [] StrawberryRefFlg;
+    private bool[] StrawberrySpnFlg;
+    static public int LoopSave;
 
     //ÉxÉWÉGã»ê¸óp
     private Vector3  StartPoint;
@@ -33,6 +35,7 @@ public class Boss1Attack : MonoBehaviour
     [SerializeField] private Vector3 FirstEndPoint;
     static public float [] FinishTime;
     static public float[] Ref_FinishTime;
+    public static Vector3[] PlayerPoint;
     //----------------------------------------------------------
 
 
@@ -45,19 +48,23 @@ public class Boss1Attack : MonoBehaviour
         StrawberryNum = 0;
         Strawberry = new GameObject[Max_Strawberry];
         StrawberryUseFlg = new bool[Max_Strawberry];
+        StrawberrySpnFlg = new bool[Max_Strawberry];
+        StrawberryRefFlg = new bool[Max_Strawberry];
         MiddlePoint = new Vector3[Max_Strawberry];
         EndPoint = new Vector3[Max_Strawberry];
+        PlayerPoint = new Vector3[Max_Strawberry];
         FinishTime = new float[Max_Strawberry];
         Ref_FinishTime = new float[Max_Strawberry];
-        StrawberryRef = new bool[Max_Strawberry];
+        
 
         StartPoint.x = Boss.BossPos.x;
         StartPoint.y = Boss.BossPos.y += 2;
         StartPoint.z = Boss.BossPos.z;
         for (int i=0;i < Max_Strawberry;i++)
         {
-            StrawberryRef[i] = false;
+            StrawberryRefFlg[i] = false;
             StrawberryUseFlg[i] = false;
+            StrawberrySpnFlg[i] = false;
             MiddlePoint[i] = FirstMiddlePoint;
             EndPoint[i] = FirstEndPoint;
             MiddlePoint[i].x -= (1.7f * i);
@@ -106,35 +113,83 @@ public class Boss1Attack : MonoBehaviour
     }
     private void Boss1Attack2()
     {
-        if(AliveStrawberry >= Max_Strawberry)
+        if(AliveStrawberry>=Max_Strawberry)
         {
-            AliveStrawberry = 0;
-            StrawberryNum = 0;
-            Boss1AttackState = BossAttack.Attack1;
             return;
         }
-        for (int i = AliveStrawberry; i < Max_Strawberry; i++)
+        if (!StrawberryUseFlg[StrawberryNum])
+        {
+            Strawberry[StrawberryNum] = Instantiate(obj, StartPoint, Quaternion.identity);
+            StrawberryUseFlg[StrawberryNum] = true;
+
+            //Debug.Log("Flg1 : " + StrawberryUseFlg[StrawberryNum]);
+            //Debug.Log("Number : " + StrawberryNum);
+        }
+        for (int i = 0; i < Max_Strawberry; i++)
             {
             //ÉCÉ`ÉS
-            if (!StrawberryUseFlg[StrawberryNum])
-                {
-                    Strawberry[i] = Instantiate(obj, StartPoint, Quaternion.identity);
-                    StrawberryUseFlg[StrawberryNum] = true;
-                }
-            if (StrawberryUseFlg[i] && !StrawberryRef[i] )
+            if (StrawberryUseFlg[i])
             {
+                //íeÇ©ÇÍÇΩÇ∆Ç´
+                if (RefrectFlg && !StrawberryRefFlg[i])
+                {
+                    StrawberryRefFlg[i] = true;
+                    Debug.Log("i : " + i);
+                    PlayerPoint[i].x = GameData.PlayerPos.x + 3.0f;
+                    PlayerPoint[i].y = GameData.PlayerPos.y;
+                    PlayerPoint[i].z = GameData.PlayerPos.z;
+                    RefrectFlg = false;
+                    
+                }
+                //íeÇ©ÇÍÇΩå„
+                if (StrawberryRefFlg[i])
+                {
+                    
+                    Ref_FinishTime[i] += Time.deltaTime * 3;
+                    Strawberry[i].transform.position = Vector3.Lerp(PlayerPoint[i], Boss.BossPos, Ref_FinishTime[i]);
+                    if (Ref_FinishTime[i] >= 1.0f && StrawberryUseFlg[i])
+                    {
+                        Damage.damage = 5;
+                        HPgage.DelHP();
+                        StrawberryUseFlg[i] = false ;
+                        StrawberryRefFlg[i] = false ;
+                        Destroy(Strawberry[i]);
+                        Ref_FinishTime[i] = 0;
+                        FinishTime[i] = 0;
+                        AliveStrawberry++;
+                        //Debug.Log("i : " + i);
+                    }
+                }
                 //ÉCÉ`ÉSè¡Ç¶ÇΩÇÁèâä˙âªÇ∑ÇÈÇÒÇæÇºbyéÑ
-                FinishTime[i] += Time.deltaTime;
-            
-                Vector3 S = Vector3.Lerp(StartPoint, MiddlePoint[i], FinishTime[i]);
-                Vector3 E = Vector3.Lerp(MiddlePoint[i], EndPoint[i], FinishTime[i]);
-                Strawberry[i].transform.position = Vector3.Lerp(S, E, FinishTime[i]);
+                //íeÇ©ÇÍÇƒÇ¢ÇΩÇÁÇ±Ç¡ÇøÇÃèàóùÇµÇ»Ç¢
+                if (!StrawberryRefFlg[i])
+                {
+                    Vector3 S = Vector3.Lerp(StartPoint, MiddlePoint[i], FinishTime[i]);
+                    Vector3 E = Vector3.Lerp(MiddlePoint[i], EndPoint[i], FinishTime[i]);
+                    Strawberry[i].transform.position = Vector3.Lerp(S, E, FinishTime[i]);
+                }
+                
+                FinishTime[i] += Time.deltaTime / 3;
+                //Ç±Ç±Ç™ê∑ëÂÇ…à´Ç≥ÇµÇƒÇÈÅB
+                //íeÇ≠Ç∆ç≈ëÂílí¥Ç¶ÇÈÇ»Ç∫Ç©
+                //íeÇ™îºï™ÇÆÇÁÇ¢çsÇ¡ÇΩÇÁêVÇµÇ¢ÇÃê∂ê¨Ç∑ÇÈ
                 if (i < Max_Strawberry - 1)
                 {
-                    if (FinishTime[i] > 0.5f && !StrawberryUseFlg[i + 1])
+                    if (FinishTime[i] >= 0.5f && !StrawberryUseFlg[i + 1] && !StrawberryRefFlg[i])
                     {
-                        StrawberryNum++;
+                            StrawberryNum++;
+                            //Debug.Log("I : " + (i));
+                            //Debug.Log("StrawberryNum : " + StrawberryNum);
                     }
+                }
+                //----------------------------------------------------------
+                //íeÇ™ìûíÖÇµÇΩÇÁè¡Ç∑,çUåÇÇÇÕÇ∂Ç¢ÇƒÇ¢ÇΩÇÁèàóùÇÇµÇ»Ç¢
+                if (FinishTime[i] >= 1.0f && !StrawberryRefFlg[i])
+                {
+                    FinishTime[i] = 0;
+                    StrawberryUseFlg[i] = false;
+                    Destroy(Strawberry[i]);
+                    AliveStrawberry++;
                 }
             }
         }

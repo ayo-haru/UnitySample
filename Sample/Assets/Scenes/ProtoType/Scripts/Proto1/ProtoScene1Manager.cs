@@ -56,23 +56,9 @@ public class ProtoScene1Manager : MonoBehaviour {
             SceneManager.LoadScene(nextSceneName);
         }
 
-        if (Input.GetKey(KeyCode.U))
-        {
-            SoundManager.Play(SoundData.eSE.SE_CLICK, audioSourceList);
-        }
-        if (Input.GetKey(KeyCode.I))
-        {
-            SoundManager.Play(SoundData.eSE.SE_DORA, audioSourceList);
-        }
-        if (Input.GetKey(KeyCode.O))
-        {
-            SoundManager.Play(SoundData.eSE.SE_BYON, audioSourceList);
-        }
-        if (Input.GetKey(KeyCode.P))
-        {
-            SoundManager.Play(SoundData.eSE.SE_SPON, audioSourceList);
-        }
-
-
+        //if (Input.GetKey(KeyCode.U))
+        //{
+        //    SoundManager.Play(SoundData.eSE.SE_CLICK, audioSourceList);
+        //}
     }
 }

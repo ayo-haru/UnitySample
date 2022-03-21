@@ -24,6 +24,8 @@ public class ProtoScene2Manager : MonoBehaviour
     public GameObject playerPrefab;
     // Start is called before the first frame update
     void Awake() {
+        Application.targetFrameRate = 60;           // フレームレートを固定
+
         GameData.SetroomSize(roomSize);             // 部屋のサイズをセット
 
         //----- プレイヤー初期化 -----

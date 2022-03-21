@@ -15,12 +15,13 @@ public class Player2 : MonoBehaviour
     public GameObject prefab;
 
     private Vector2 ForceDirection = Vector2.zero;      // 移動する方向
+    private Vector3 MoveVelocity = Vector3.zero;        // 移動する方向
     private Vector2 AttackDirection = Vector2.zero;     // 攻撃方向
     private Vector3 PlayerPos;                          // プレイヤーの座標
 
 
     [SerializeField] private float maxSpeed = 5;        // 移動スピード
-    [SerializeField] private float JumpForce = 5;       // ジャンプ力
+    [SerializeField] private float JumpForce = 5;      // ジャンプ力
     public float GravityForce = -10.0f;                 // 重力
 
     private bool JumpNow = false;                       // ジャンプしているかどうか
@@ -74,7 +75,10 @@ public class Player2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //SpeedCheck();
+        //ForceDirection += move.ReadValue<Vector2>();
+        //ForceDirection.Normalize();
+        //MoveVelocity = ForceDirection * maxSpeed;
     }
 
     private void FixedUpdate()
@@ -83,13 +87,15 @@ public class Player2 : MonoBehaviour
         if(JumpNow == true)
         {
             Gravity(); 
-            //return;
+            return;
         }
 
         //---移動処理
         SpeedCheck();
         ForceDirection += move.ReadValue<Vector2>();
+        ForceDirection.Normalize();
         rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
+        //rb.velocity = new Vector3(MoveVelocity.x, MoveVelocity.y, 0);
         ForceDirection = Vector2.zero;
 
     }
@@ -141,8 +147,9 @@ public class Player2 : MonoBehaviour
             return;
         }
         Debug.Log("ジャンプ！");
-        JumpNow = true;
         rb.AddForce(transform.up * JumpForce,ForceMode.Impulse);
+        //rb.velocity = Vector3.up * JumpForce;
+        JumpNow = true;
     }
 
     //---ジャンプ中の重力を強くする(ジャンプが俊敏に見える効果がある)
@@ -154,32 +161,34 @@ public class Player2 : MonoBehaviour
         }
     }
 
-    //---当たり判定処理
-    private void OnCollisionEnter(Collision collision)
+    //---AddForceで力がかかりすぎてしまうため、maxSpeedの値に近い値に固定する処理
+    private void SpeedCheck()
     {
+        Vector3 PlayerVelocity = rb.velocity;
+        PlayerVelocity.z = 0;
 
-        if(JumpNow == true)
+        if (PlayerVelocity.sqrMagnitude > maxSpeed * maxSpeed)
+        {
+            rb.velocity = PlayerVelocity.normalized * maxSpeed;
+        }
+    }
+
+
+    //---当たり判定処理(GroundCheckのボックスコライダーで地面との当たり判定)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (JumpNow == true)
         {
             //---Tag"Ground"と接触している間の処理
-            if(collision.gameObject.tag == "Ground"){
+            if (other.gameObject.CompareTag("Ground"))
+            {
+                Debug.Log("地上にいる");
                 JumpNow = false;
                 ForceDirection = Vector2.zero;
             }
         }
+
     }
-
-    //---AddForceで力がかかりすぎてしまうため、maxSpeedの値に近い値に固定する処理
-    private void SpeedCheck()
-    {
-        Vector3 PlayerVelocity  = rb.velocity;
-        PlayerVelocity.z = 0;
-
-        if(PlayerVelocity.sqrMagnitude > maxSpeed * maxSpeed)
-        {
-            rb.velocity = PlayerVelocity.normalized * maxSpeed / 2;
-        }
-    }
-
 
     private void OnGUI()
     {

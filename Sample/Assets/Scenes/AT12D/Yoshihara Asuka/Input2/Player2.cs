@@ -76,9 +76,11 @@ public class Player2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ForceDirection += move.ReadValue<Vector2>();
-        ForceDirection.Normalize();
-        MovingVelocity = ForceDirection * maxSpeed;
+        //---GameData.PlayerPosに現在のオブジェクトの座標を格納(これで言えばプレイヤー)
+        GameData.PlayerPos = this.transform.position;
+        //ForceDirection += move.ReadValue<Vector2>();
+        //ForceDirection.Normalize();
+        //MovingVelocity = ForceDirection * maxSpeed;
 
     }
 
@@ -92,11 +94,11 @@ public class Player2 : MonoBehaviour
         }
 
         //---移動処理
-        //SpeedCheck();
-        //ForceDirection += move.ReadValue<Vector2>();
-        //ForceDirection.Normalize();
-        //rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
-        rb.velocity = new Vector3(MovingVelocity.x,MovingVelocity.y,0);
+        SpeedCheck();
+        ForceDirection += move.ReadValue<Vector2>();
+        ForceDirection.Normalize();
+        rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
+        //rb.velocity = new Vector3(MovingVelocity.x,MovingVelocity.y,0);
         ForceDirection = Vector2.zero;
 
     }

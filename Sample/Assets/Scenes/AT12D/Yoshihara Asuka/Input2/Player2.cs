@@ -83,7 +83,7 @@ public class Player2 : MonoBehaviour
         if(JumpNow == true)
         {
             Gravity(); 
-            //return;
+            return;
         }
 
         //---移動処理
@@ -154,31 +154,41 @@ public class Player2 : MonoBehaviour
         }
     }
 
+    //---AddForceで力がかかりすぎてしまうため、maxSpeedの値に近い値に固定する処理
+    private void SpeedCheck()
+    {
+        Vector3 PlayerVelocity = rb.velocity;
+        PlayerVelocity.z = 0;
+
+        if (PlayerVelocity.sqrMagnitude > maxSpeed * maxSpeed)
+        {
+            rb.velocity = PlayerVelocity.normalized * maxSpeed;
+        }
+    }
+
+
     //---当たり判定処理
     private void OnCollisionEnter(Collision collision)
     {
 
-        if(JumpNow == true)
+    }
+
+    //---当たり判定処理(GroundCheckのボックスコライダーで判定を取るように)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (JumpNow == true)
         {
             //---Tag"Ground"と接触している間の処理
-            if(collision.gameObject.tag == "Ground"){
+            if (other.gameObject.tag == "Ground")
+            {
+                Debug.Log("着地中");
                 JumpNow = false;
-                ForceDirection = Vector2.zero;
+                //ForceDirection = Vector2.zero;
             }
         }
+
     }
 
-    //---AddForceで力がかかりすぎてしまうため、maxSpeedの値に近い値に固定する処理
-    private void SpeedCheck()
-    {
-        Vector3 PlayerVelocity  = rb.velocity;
-        PlayerVelocity.z = 0;
-
-        if(PlayerVelocity.sqrMagnitude > maxSpeed * maxSpeed)
-        {
-            rb.velocity = PlayerVelocity.normalized * maxSpeed / 2;
-        }
-    }
 
 
     private void OnGUI()

@@ -639,10 +639,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1.2590148
-  m_Height: 8.508919
+  m_Radius: 1.3719299
+  m_Height: 7.023554
   m_Direction: 1
-  m_Center: {x: -2.1523562e-15, y: -1.7393644, z: -0.29982653}
+  m_Center: {x: -2.2681488e-16, y: -0.9966794, z: -0.18691161}
 --- !u!54 &764185735
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -678,6 +678,19 @@ MonoBehaviour:
   AttckPosHeight: 2
   AttckPosWidth: 2
   DestroyTime: 0.2
+--- !u!65 &764185738
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764185733}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.060298044, z: 3.1830585}
+  m_Center: {x: -3.2787726e-15, y: -4.554682, z: -0.53949136}
 --- !u!4 &822188172 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 4620f3c93dca8c94c9124d8ba443f43e, type: 3}

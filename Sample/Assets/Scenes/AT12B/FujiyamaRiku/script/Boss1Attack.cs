@@ -11,11 +11,10 @@ public class Boss1Attack : MonoBehaviour
         Attack1 = 0,
         Attack2,
         Attack3,
-        Attack4, 
         Idle,
     }
     static public bool RefrectFlg = false;                //プレイヤーがパリィに成功したかどうかの受け取り用
-    //突進用変数軍
+    //突進用変数群
     //----------------------------------------------------------
 
     //----------------------------------------------------------
@@ -29,7 +28,7 @@ public class Boss1Attack : MonoBehaviour
     private Vector3 StrawberryPos;
     static public bool[] StrawberryUseFlg;
     static public bool [] StrawberryRefFlg;
-    [SerializeField] public int StrawberryTimes;
+    [SerializeField] public int StrawberrySpeed;
 
     //ベジエ曲線用
     private Vector3  StartPoint;
@@ -41,6 +40,19 @@ public class Boss1Attack : MonoBehaviour
     static public float[] Ref_FinishTime;
     public static Vector3[] PlayerPoint;
     //----------------------------------------------------------
+    //ナイフ投げ変数群
+    //----------------------------------------------------------
+    GameObject Knifeobj;
+    GameObject Knife;
+    private Vector3 KnifeStartPoint;
+    private Vector3 KnifeEndPoint;
+    private Vector3 KnifePlayerPoint;
+    private float KnifeTime;
+    private bool OnlyFlg;
+    [SerializeField] public int KnifeSpeed;
+    static public bool KnifeRefFlg = false;
+    private float KnifeRefTime;
+    //----------------------------------------------------------
 
 
 
@@ -49,6 +61,7 @@ public class Boss1Attack : MonoBehaviour
     void Start()
     {
         obj = (GameObject)Resources.Load("strawberry");
+        Knifeobj = (GameObject)Resources.Load("Knife");
         StrawberryNum = 0;
         Strawberry = new GameObject[Max_Strawberry];
         StrawberryUseFlg = new bool[Max_Strawberry];
@@ -59,10 +72,6 @@ public class Boss1Attack : MonoBehaviour
         FinishTime = new float[Max_Strawberry];
         Ref_FinishTime = new float[Max_Strawberry];
         
-
-        StartPoint.x = Boss.BossPos.x;
-        StartPoint.y = Boss.BossPos.y += 2;
-        StartPoint.z = Boss.BossPos.z;
         for (int i=0;i < Max_Strawberry;i++)
         {
             StrawberryRefFlg[i] = false;
@@ -72,6 +81,7 @@ public class Boss1Attack : MonoBehaviour
             MiddlePoint[i].x -= (1.7f * i);
             EndPoint[i].x -= (4f * i);
         }
+        OnlyFlg = false;
     }
 
     // Update is called once per frame
@@ -85,27 +95,33 @@ public class Boss1Attack : MonoBehaviour
         {
             Boss1AttackState = BossAttack.Attack2;
         }
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            Boss1AttackState = BossAttack.Attack3;
+        }
 
         //攻撃によって処理を変える処理
-        switch(Boss1AttackState)
+        switch (Boss1AttackState)
         {
+                //突進
             case BossAttack.Attack1:
                 {
+                    Boss1Attack1();
                     break;
                 }
+                //イチゴ
             case BossAttack.Attack2:
                 {
                     Boss1Attack2();
                     break;
                 }
+                //ナイフ投げ
             case BossAttack.Attack3:
                 {
+                    Boss1Attack3();
                     break;
                 }
-            case BossAttack.Attack4:
-                {
-                    break;
-                }
+                //疑似通常状態(仮)
             case BossAttack.Idle:
                 {
                     break;
@@ -116,6 +132,7 @@ public class Boss1Attack : MonoBehaviour
     private void Boss1Attack1()
     {
         //近距離(突進)
+
 
     }
     private void Boss1Attack2()
@@ -129,11 +146,12 @@ public class Boss1Attack : MonoBehaviour
         }
         if (!StrawberryUseFlg[StrawberryNum])
         {
+            StartPoint.x = Boss.BossPos.x;
+            StartPoint.y = Boss.BossPos.y + 2;
+            StartPoint.z = Boss.BossPos.z;
             Strawberry[StrawberryNum] = Instantiate(obj, StartPoint, Quaternion.identity);
             StrawberryUseFlg[StrawberryNum] = true;
-
-            //Debug.Log("Flg1 : " + StrawberryUseFlg[StrawberryNum]);
-            //Debug.Log("Number : " + StrawberryNum);
+            
         }
         for (int i = 0; i < Max_Strawberry; i++)
             {
@@ -144,7 +162,7 @@ public class Boss1Attack : MonoBehaviour
                 if (RefrectFlg && !StrawberryRefFlg[i])
                 {
                     StrawberryRefFlg[i] = true;
-                    Debug.Log("i : " + i);
+                    
                     PlayerPoint[i].x = GameData.PlayerPos.x + 3.0f;
                     PlayerPoint[i].y = GameData.PlayerPos.y;
                     PlayerPoint[i].z = GameData.PlayerPos.z;
@@ -159,7 +177,7 @@ public class Boss1Attack : MonoBehaviour
                     Strawberry[i].transform.position = Vector3.Lerp(PlayerPoint[i], Boss.BossPos, Ref_FinishTime[i]);
                     if (Ref_FinishTime[i] >= 1.0f && StrawberryUseFlg[i])
                     {
-                        Damage.damage = 5;
+                        HPgage.damage = 5;
                         HPgage.DelHP();
                         StrawberryUseFlg[i] = false ;
                         StrawberryRefFlg[i] = false ;
@@ -167,7 +185,6 @@ public class Boss1Attack : MonoBehaviour
                         Ref_FinishTime[i] = 0;
                         FinishTime[i] = 0;
                         AliveStrawberry++;
-                        //Debug.Log("i : " + i);
                     }
                 }
                 //イチゴ消えたら初期化するんだぞby私
@@ -177,7 +194,7 @@ public class Boss1Attack : MonoBehaviour
                     Strawberry[i].transform.position = Beziercurve.SecondCurve(StartPoint, MiddlePoint[i], EndPoint[i], FinishTime[i]);
                 }
                 
-                FinishTime[i] += Time.deltaTime * StrawberryTimes;
+                FinishTime[i] += Time.deltaTime * StrawberrySpeed;
                 if (i < Max_Strawberry - 1)
                 {
                     if (FinishTime[i] >= 0.5f && !StrawberryUseFlg[i + 1] && !StrawberryRefFlg[i])
@@ -199,11 +216,51 @@ public class Boss1Attack : MonoBehaviour
     }
     
     private void Boss1Attack3()
-    { 
-        //ナイフフォーク遠距離
-    }
-    private void Boss1Attack4()
     {
-        //スーパー着地
+        //ナイフ遠距離
+        
+        if(!OnlyFlg)
+        {
+            
+            OnlyFlg = true;
+            KnifeStartPoint.x = Boss.BossPos.x;
+            KnifeStartPoint.y = Boss.BossPos.y + 2;
+            KnifeStartPoint.z = Boss.BossPos.z;
+            KnifeEndPoint = GameData.PlayerPos;
+            Knife = Instantiate(Knifeobj, KnifeStartPoint, Quaternion.identity);
+            
+        }
+        if (OnlyFlg && !KnifeRefFlg)
+        {
+            KnifeTime += Time.deltaTime * KnifeSpeed;
+            Knife.transform.position = Vector3.Lerp(KnifeStartPoint, KnifeEndPoint, KnifeTime);
+            if (KnifeTime >= 1.0f)
+            {
+                OnlyFlg = false;
+                KnifeTime = 0;
+                Destroy(Knife);
+                Boss1AttackState = BossAttack.Idle;
+                return;
+            }
+        }
+        if(KnifeRefFlg)
+        {
+            KnifeRefTime += Time.deltaTime * 3;
+            Knife.transform.position = Vector3.Lerp(KnifePlayerPoint, Boss.BossPos, KnifeRefTime);
+            
+            if(KnifeRefTime >= 1.0f)
+            {
+                HPgage.damage = 10;
+                HPgage.DelHP();
+                OnlyFlg = false;
+                KnifeRefFlg = false;
+                KnifeTime = 0;
+                KnifeRefTime = 0;
+                Destroy(Knife);
+                Boss1AttackState = BossAttack.Idle;
+                return;
+            }
+        }
+            
     }
 }

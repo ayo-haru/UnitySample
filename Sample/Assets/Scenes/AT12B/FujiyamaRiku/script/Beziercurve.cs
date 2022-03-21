@@ -16,11 +16,7 @@ public class Beziercurve : MonoBehaviour
     {
 
     }
-    static public Vector3 FirstCurve(Vector3 StartPoint, Vector3 EndPoint, float Time)
-    {
-        CurvePos = Vector3.Lerp(StartPoint, EndPoint, Time);
-        return CurvePos;
-    }
+    
     static public Vector3 SecondCurve(Vector3 StartPoint, Vector3 MiddlePoint, Vector3 EndPoint, float Time)
     {
         Vector3 S = Vector3.Lerp(StartPoint, MiddlePoint, Time);

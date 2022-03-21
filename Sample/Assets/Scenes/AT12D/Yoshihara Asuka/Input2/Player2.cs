@@ -14,7 +14,9 @@ public class Player2 : MonoBehaviour
     private Rigidbody rb;
     public GameObject prefab;
 
-    private Vector2 ForceDirection = Vector2.zero;      // 移動する方向
+    private Vector2 ForceDirection = Vector2.zero;      // 移動する方向を決める
+    private Vector2 MovingVelocity = Vector3.zero;      // 移動するベクトル
+
     private Vector2 AttackDirection = Vector2.zero;     // 攻撃方向
     private Vector3 PlayerPos;                          // プレイヤーの座標
 
@@ -74,6 +76,9 @@ public class Player2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ForceDirection += move.ReadValue<Vector2>();
+        ForceDirection.Normalize();
+        MovingVelocity = ForceDirection * maxSpeed;
 
     }
 
@@ -87,9 +92,11 @@ public class Player2 : MonoBehaviour
         }
 
         //---移動処理
-        SpeedCheck();
-        ForceDirection += move.ReadValue<Vector2>();
-        rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
+        //SpeedCheck();
+        //ForceDirection += move.ReadValue<Vector2>();
+        //ForceDirection.Normalize();
+        //rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
+        rb.velocity = new Vector3(MovingVelocity.x,MovingVelocity.y,0);
         ForceDirection = Vector2.zero;
 
     }
@@ -117,7 +124,7 @@ public class Player2 : MonoBehaviour
             AttackDirection.y *= -1;
         }
         //---y軸が－だったら(下パリィする際)ジャンプ中にする
-        if (AttackDirection.y <= 0.0f)
+        if (AttackDirection.y < 0.0f)
         {
             JumpNow = true;
         }
@@ -151,6 +158,7 @@ public class Player2 : MonoBehaviour
         if(JumpNow == true)
         {
             rb.AddForce(new Vector3(0.0f,GravityForce,0.0f));
+            ForceDirection = Vector2.zero;
         }
     }
 

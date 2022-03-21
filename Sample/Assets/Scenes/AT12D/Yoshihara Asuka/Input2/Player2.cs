@@ -19,7 +19,7 @@ public class Player2 : MonoBehaviour
     private Vector3 PlayerPos;                          // プレイヤーの座標
 
 
-    [SerializeField] private float maxSpeed = 1;        // 移動スピード
+    [SerializeField] private float maxSpeed = 5;        // 移動スピード
     [SerializeField] private float JumpForce = 5;       // ジャンプ力
     public float GravityForce = -10.0f;                 // 重力
 
@@ -42,11 +42,11 @@ public class Player2 : MonoBehaviour
     //---ボタンンの入力を結び付ける
     private void OnEnable()
     {
-        //---移動
-        move = PlayerActionAsset.Player.Move;
+        //---スティック入力を取るための設定
+        move = PlayerActionAsset.Player.Move;           
         Attack = PlayerActionAsset.Player.Attack;
 
-        //---Actionイベント登録
+        //---Actionイベント登録(ボタン入力)
         PlayerActionAsset.Player.Attack.started += OnAttack;      // started...ボタンが押された瞬間
         PlayerActionAsset.Player.Jump.canceled += OnJump;       　// performed...ボタンが押された瞬間
 
@@ -83,7 +83,7 @@ public class Player2 : MonoBehaviour
         if(JumpNow == true)
         {
             Gravity(); 
-            return;
+            //return;
         }
 
         //---移動処理
@@ -102,29 +102,32 @@ public class Player2 : MonoBehaviour
     //---攻撃処理
     private void OnAttack(InputAction.CallbackContext obj)
     {
-        PlayerPos = transform.position;
-        AttackDirection += Attack.ReadValue<Vector2>(); 
+        PlayerPos = transform.position;                             // 攻撃する瞬間のプレイヤーの座標を取得
+        AttackDirection += Attack.ReadValue<Vector2>();             // スティックの倒した値を取得
         Debug.Log("AttackDirection(正規化前):" + AttackDirection);
+        AttackDirection.Normalize();                                // 取得した値を正規化(ベクトルを１にする)
 
-        AttackDirection.Normalize();
+        //---倒した値を基に盾の出す場所を指定
         GameObject weapon = Instantiate(prefab,new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
                                                            PlayerPos.y + (AttackDirection.y * AttckPosHeight),
                                                            PlayerPos.z),Quaternion.identity);
-        //---
+        //---コントローラーの倒したXの値が－だったらy軸に-1する(盾の角度の調整)
         if (AttackDirection.x < 0.0f)
         {
             AttackDirection.y *= -1;
         }
+        //---y軸が－だったら(下パリィする際)ジャンプ中にする
         if (AttackDirection.y <= 0.0f)
         {
             JumpNow = true;
         }
-
-
+        
+        //---盾の回転を設定
         weapon.transform.Rotate(new Vector3(0,0,(90 * AttackDirection.y)));
         //Debug.Log("攻撃した！(Weapon)");
         Debug.Log("AttackDirection(正規化後):"+ AttackDirection);
-        AttackDirection = Vector2.zero;
+
+        AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする
         Destroy(weapon,DestroyTime);
         return;
     }
@@ -138,8 +141,8 @@ public class Player2 : MonoBehaviour
             return;
         }
         Debug.Log("ジャンプ！");
-        rb.AddForce(transform.up * JumpForce,ForceMode.Impulse);
         JumpNow = true;
+        rb.AddForce(transform.up * JumpForce,ForceMode.Impulse);
     }
 
     //---ジャンプ中の重力を強くする(ジャンプが俊敏に見える効果がある)
@@ -158,7 +161,7 @@ public class Player2 : MonoBehaviour
         if(JumpNow == true)
         {
             //---Tag"Ground"と接触している間の処理
-            if(collision.gameObject.tag == "Ground" && !(this.gameObject.tag == "Weapon")){
+            if(collision.gameObject.tag == "Ground"){
                 JumpNow = false;
                 ForceDirection = Vector2.zero;
             }
@@ -173,7 +176,7 @@ public class Player2 : MonoBehaviour
 
         if(PlayerVelocity.sqrMagnitude > maxSpeed * maxSpeed)
         {
-            rb.velocity = PlayerVelocity.normalized * maxSpeed;
+            rb.velocity = PlayerVelocity.normalized * maxSpeed / 2;
         }
     }
 

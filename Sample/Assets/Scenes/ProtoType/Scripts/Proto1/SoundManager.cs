@@ -48,7 +48,7 @@ public static class SoundManager {
         {
             return; // Ä¶‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½
         }
-        audioSource.clip = SoundData.SEClip[(int)_bgmDataNumber];
+        audioSource.clip = SoundData.BGMClip[(int)_bgmDataNumber];
         audioSource.Play();
     }
 }

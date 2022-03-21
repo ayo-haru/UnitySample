@@ -1031,7 +1031,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4770249373084629626}
   - component: {fileID: 5024308519693660470}
-  - component: {fileID: 5024308519693660464}
   - component: {fileID: 5024308519693660465}
   - component: {fileID: 5024308519693660471}
   - component: {fileID: 5024308519693660468}
@@ -1083,22 +1082,9 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 120
   m_CollisionDetection: 1
---- !u!135 &5024308519693660464
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5294126684173066432}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.1172179
-  m_Center: {x: -0, y: 1.4184684, z: 0}
 --- !u!136 &5024308519693660465
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1109,10 +1095,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.996077
-  m_Height: 5.6268697
+  m_Radius: 1.721125
+  m_Height: 7.8961577
   m_Direction: 1
-  m_Center: {x: -7.0909787e-16, y: -2.1388693, z: -0.73602617}
+  m_Center: {x: -1.893501e-15, y: -1.0042254, z: -0.45825815}
 --- !u!114 &5024308519693660471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1167,8 +1153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
   maxSpeed: 5
-  JumpForce: 5
   GravityForce: -10
+  JumpForce: 5
   AttckPosHeight: 2
   AttckPosWidth: 2
   DestroyTime: 0.2
@@ -1183,8 +1169,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.14793952, z: 1.413547}
-  m_Center: {x: -3.670845e-15, y: -5.095807, z: -0.9097048}
+  m_Size: {x: 1, y: 0.0268356, z: 2.761583}
+  m_Center: {x: -1.893501e-15, y: -4.9948926, z: -0.23568659}
 --- !u!1 &5597119329934578222
 GameObject:
   m_ObjectHideFlags: 0

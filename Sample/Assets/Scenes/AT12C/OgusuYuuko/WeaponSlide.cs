@@ -30,8 +30,8 @@ public class WeaponSlide : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        Player = GameObject.Find("Player");
-        //Player = GameData.Player;
+        //Player = GameObject.Find("Player");
+        Player = GameData.Player;
     }
 
     // Update is called once per frame

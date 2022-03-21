@@ -12,8 +12,13 @@ public class Boss1Attack : MonoBehaviour
         Attack2,
         Attack3,
         Attack4, 
+        Idle,
     }
     static public bool RefrectFlg = false;                //プレイヤーがパリィに成功したかどうかの受け取り用
+    //突進用変数軍
+    //----------------------------------------------------------
+
+    //----------------------------------------------------------
     //イチゴ爆弾変数
     //----------------------------------------------------------
     GameObject obj;                                       //イチゴ生成用
@@ -24,8 +29,7 @@ public class Boss1Attack : MonoBehaviour
     private Vector3 StrawberryPos;
     static public bool[] StrawberryUseFlg;
     static public bool [] StrawberryRefFlg;
-    private bool[] StrawberrySpnFlg;
-    static public int LoopSave;
+    [SerializeField] public int StrawberryTimes;
 
     //ベジエ曲線用
     private Vector3  StartPoint;
@@ -48,7 +52,6 @@ public class Boss1Attack : MonoBehaviour
         StrawberryNum = 0;
         Strawberry = new GameObject[Max_Strawberry];
         StrawberryUseFlg = new bool[Max_Strawberry];
-        StrawberrySpnFlg = new bool[Max_Strawberry];
         StrawberryRefFlg = new bool[Max_Strawberry];
         MiddlePoint = new Vector3[Max_Strawberry];
         EndPoint = new Vector3[Max_Strawberry];
@@ -64,7 +67,6 @@ public class Boss1Attack : MonoBehaviour
         {
             StrawberryRefFlg[i] = false;
             StrawberryUseFlg[i] = false;
-            StrawberrySpnFlg[i] = false;
             MiddlePoint[i] = FirstMiddlePoint;
             EndPoint[i] = FirstEndPoint;
             MiddlePoint[i].x -= (1.7f * i);
@@ -104,17 +106,25 @@ public class Boss1Attack : MonoBehaviour
                 {
                     break;
                 }
+            case BossAttack.Idle:
+                {
+                    break;
+                }
         }
     }
     //それぞれの攻撃処理
     private void Boss1Attack1()
     {
-        //近距離
+        //近距離(突進)
+
     }
     private void Boss1Attack2()
     {
         if(AliveStrawberry>=Max_Strawberry)
         {
+            AliveStrawberry = 0;
+            StrawberryNum = 0;
+            Boss1AttackState = BossAttack.Idle;
             return;
         }
         if (!StrawberryUseFlg[StrawberryNum])
@@ -164,22 +174,15 @@ public class Boss1Attack : MonoBehaviour
                 //弾かれていたらこっちの処理しない
                 if (!StrawberryRefFlg[i])
                 {
-                    Vector3 S = Vector3.Lerp(StartPoint, MiddlePoint[i], FinishTime[i]);
-                    Vector3 E = Vector3.Lerp(MiddlePoint[i], EndPoint[i], FinishTime[i]);
-                    Strawberry[i].transform.position = Vector3.Lerp(S, E, FinishTime[i]);
+                    Strawberry[i].transform.position = Beziercurve.SecondCurve(StartPoint, MiddlePoint[i], EndPoint[i], FinishTime[i]);
                 }
                 
-                FinishTime[i] += Time.deltaTime / 3;
-                //ここが盛大に悪さしてる。
-                //弾くと最大値超えるなぜか
-                //弾が半分ぐらい行ったら新しいの生成する
+                FinishTime[i] += Time.deltaTime * StrawberryTimes;
                 if (i < Max_Strawberry - 1)
                 {
                     if (FinishTime[i] >= 0.5f && !StrawberryUseFlg[i + 1] && !StrawberryRefFlg[i])
                     {
                             StrawberryNum++;
-                            //Debug.Log("I : " + (i));
-                            //Debug.Log("StrawberryNum : " + StrawberryNum);
                     }
                 }
                 //----------------------------------------------------------

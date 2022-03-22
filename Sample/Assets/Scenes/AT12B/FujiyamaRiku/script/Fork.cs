@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Knife : MonoBehaviour
+public class Fork : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -19,13 +19,8 @@ public class Knife : MonoBehaviour
     {
         if (collision.gameObject.name == "Weapon(Clone)")
         {
-            
             Boss1Attack.RefrectFlg = true;
         }
         
-        if (collision.gameObject.name == "Boss")
-        {
-
-        }
     }
 }

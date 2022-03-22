@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class Boss1Attack : MonoBehaviour
 {
     //ボスの攻撃の種類
@@ -14,9 +13,23 @@ public class Boss1Attack : MonoBehaviour
         Idle,
     }
     static public bool RefrectFlg = false;                //プレイヤーがパリィに成功したかどうかの受け取り用
+    private bool OnlyFlg;
+    private Vector3 BossStartPoint;
     //突進用変数群
     //----------------------------------------------------------
-
+    GameObject Forkobj;
+    GameObject Fork;
+    private Vector3 RushStartPoint;
+    private Vector3 RushEndPoint;
+    private Vector3 RushPlayerPoint;
+    private Vector3 RushRefEndPoint;
+    static public bool OnlyRushFlg;
+    [SerializeField] public int RushSpeed;
+    private bool RushRefFlg = false;
+    private float RushTime;
+    private float RushRefTime;
+    private bool BossReturnFlg;
+    private float BossReturnTime;
     //----------------------------------------------------------
     //イチゴ爆弾変数
     //----------------------------------------------------------
@@ -48,20 +61,19 @@ public class Boss1Attack : MonoBehaviour
     private Vector3 KnifeEndPoint;
     private Vector3 KnifePlayerPoint;
     private float KnifeTime;
-    private bool OnlyFlg;
     [SerializeField] public int KnifeSpeed;
-    static public bool KnifeRefFlg = false;
+    private bool KnifeRefFlg = false;
     private float KnifeRefTime;
     //----------------------------------------------------------
 
 
-
-    private BossAttack Boss1AttackState = BossAttack.Attack1;
+    private BossAttack Boss1AttackState = BossAttack.Idle;
     // Start is called before the first frame update
     void Start()
     {
         obj = (GameObject)Resources.Load("strawberry");
         Knifeobj = (GameObject)Resources.Load("Knife");
+        Forkobj = (GameObject)Resources.Load("Fork");
         StrawberryNum = 0;
         Strawberry = new GameObject[Max_Strawberry];
         StrawberryUseFlg = new bool[Max_Strawberry];
@@ -71,7 +83,9 @@ public class Boss1Attack : MonoBehaviour
         PlayerPoint = new Vector3[Max_Strawberry];
         FinishTime = new float[Max_Strawberry];
         Ref_FinishTime = new float[Max_Strawberry];
-        
+        BossStartPoint = GameObject.Find("BossPoint").transform.position;
+
+
         for (int i=0;i < Max_Strawberry;i++)
         {
             StrawberryRefFlg[i] = false;
@@ -99,6 +113,7 @@ public class Boss1Attack : MonoBehaviour
         {
             Boss1AttackState = BossAttack.Attack3;
         }
+        
 
         //攻撃によって処理を変える処理
         switch (Boss1AttackState)
@@ -132,8 +147,74 @@ public class Boss1Attack : MonoBehaviour
     private void Boss1Attack1()
     {
         //近距離(突進)
+        if(!OnlyFlg)
+        {
+            OnlyFlg = true;
+            Debug.Log("Pos : " + Boss.BossPos);
+            RushStartPoint = Boss.BossPos;
+            RushEndPoint = GameObject.Find("ForkEndPoint").transform.position;
+            Fork = Instantiate(Forkobj, RushStartPoint, Quaternion.identity);
+            Fork.transform.parent = Boss.Bossobj.transform;
+        }
+        if(OnlyFlg)
+        {
+            if(BossReturnFlg)
+            {
+                
+                BossReturnTime += Time.deltaTime * 2;
+                Boss.BossPos = Vector3.Lerp(RushRefEndPoint, BossStartPoint, BossReturnTime);
 
-
+                if(BossReturnTime >= 1.0f)
+                {
+                    BossReturnFlg = false;
+                    BossReturnTime = 0;
+                    Boss1AttackState = BossAttack.Idle;
+                    OnlyFlg = false;
+                }
+                return;
+            }
+            if (RefrectFlg)
+            {
+                RushRefFlg = true;
+                RushPlayerPoint.x = GameData.PlayerPos.x + 3.0f;
+                RushPlayerPoint.y = GameData.PlayerPos.y;
+                RushPlayerPoint.z = GameData.PlayerPos.z;
+                RushRefEndPoint = GameObject.Find("ForkRefEndPoint").transform.position;
+                RefrectFlg = false;
+            }
+            if (!RushRefFlg)
+            {
+                RushTime += Time.deltaTime / 2;
+                Boss.BossPos = Vector3.Lerp(RushStartPoint, RushEndPoint, RushTime);
+                if (RushTime >= 1.0f)
+                {
+                    OnlyFlg = false;
+                    RushTime = 0;
+                    Destroy(Fork);
+                    Boss1AttackState = BossAttack.Idle;
+                    return;
+                }
+            }
+            if (RushRefFlg)
+            {
+                RushRefTime += Time.deltaTime * 2;
+                Boss.BossPos = Vector3.Lerp(RushPlayerPoint, RushRefEndPoint, RushRefTime);
+                if (RushRefTime >= 1.0f)
+                {
+                    
+                    BossReturnFlg = true;
+                    HPgage.damage = 10;
+                    HPgage.DelHP();
+                    
+                    RushRefFlg = false;
+                    RushTime = 0;
+                    RushRefTime = 0;
+                    Destroy(Fork);
+                    return;
+                }
+            }
+        }
+        
     }
     private void Boss1Attack2()
     {
@@ -230,6 +311,14 @@ public class Boss1Attack : MonoBehaviour
             Knife = Instantiate(Knifeobj, KnifeStartPoint, Quaternion.identity);
             
         }
+        if (RefrectFlg)
+        {
+            KnifeRefFlg = true;
+            KnifePlayerPoint.x = GameData.PlayerPos.x + 3.0f;
+            KnifePlayerPoint.y = GameData.PlayerPos.y;
+            KnifePlayerPoint.z = GameData.PlayerPos.z;
+            RefrectFlg = false;
+        }
         if (OnlyFlg && !KnifeRefFlg)
         {
             KnifeTime += Time.deltaTime * KnifeSpeed;
@@ -243,12 +332,13 @@ public class Boss1Attack : MonoBehaviour
                 return;
             }
         }
+        
         if(KnifeRefFlg)
         {
             KnifeRefTime += Time.deltaTime * 3;
             Knife.transform.position = Vector3.Lerp(KnifePlayerPoint, Boss.BossPos, KnifeRefTime);
-            
-            if(KnifeRefTime >= 1.0f)
+            Debug.Log("Knife " + KnifePlayerPoint);
+            if (KnifeRefTime >= 1.0f)
             {
                 HPgage.damage = 10;
                 HPgage.DelHP();

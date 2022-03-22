@@ -16,7 +16,7 @@ public class Boss1Attack : MonoBehaviour
     static public bool RefrectFlg = false;                //プレイヤーがパリィに成功したかどうかの受け取り用
     //突進用変数群
     //----------------------------------------------------------
-
+    GameObject Forkobj;
     //----------------------------------------------------------
     //イチゴ爆弾変数
     //----------------------------------------------------------
@@ -133,7 +133,6 @@ public class Boss1Attack : MonoBehaviour
     {
         //近距離(突進)
 
-
     }
     private void Boss1Attack2()
     {
@@ -218,10 +217,8 @@ public class Boss1Attack : MonoBehaviour
     private void Boss1Attack3()
     {
         //ナイフ遠距離
-        
         if(!OnlyFlg)
         {
-            
             OnlyFlg = true;
             KnifeStartPoint.x = Boss.BossPos.x;
             KnifeStartPoint.y = Boss.BossPos.y + 2;

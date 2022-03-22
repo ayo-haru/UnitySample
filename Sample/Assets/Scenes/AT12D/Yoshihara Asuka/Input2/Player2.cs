@@ -79,9 +79,10 @@ public class Player2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ForceDirection += move.ReadValue<Vector2>();
-        ForceDirection.Normalize();
-        MovingVelocity = ForceDirection * maxSpeed;
+        //---rb.velocity‚É‚æ‚éˆÚ“®ˆ—
+        //ForceDirection += move.ReadValue<Vector2>();
+        //ForceDirection.Normalize();
+        //MovingVelocity = ForceDirection * maxSpeed;
     }
 
     private void FixedUpdate()
@@ -89,16 +90,19 @@ public class Player2 : MonoBehaviour
         //---ƒWƒƒƒ“ƒv’†‚È‚çˆÚ“®ˆ—‚ğ‚µ‚È‚¢
         if(JumpNow == true)
         {
-            //Gravity(); 
+            Gravity(); 
             return;
         }
 
         //---ˆÚ“®ˆ—(AddForce‚Ìˆ—)
-        //SpeedCheck();
-        //ForceDirection += move.ReadValue<Vector2>();
-        //ForceDirection.Normalize();
-        //rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
-        rb.velocity = new Vector3(MovingVelocity.x,MovingVelocity.y,0);
+        SpeedCheck();
+        ForceDirection += move.ReadValue<Vector2>();
+        ForceDirection.Normalize();
+        rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
+
+        //---ˆÚ“®ˆ—(velocity‚Ìˆ—)
+        //rb.velocity = new Vector3(MovingVelocity.x,MovingVelocity.y,0);
+
         ForceDirection = Vector2.zero;
 
     }

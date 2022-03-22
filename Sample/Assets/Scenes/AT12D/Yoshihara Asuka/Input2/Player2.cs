@@ -21,7 +21,6 @@ public class Player2 : MonoBehaviour
     private Vector3 PlayerPos;                          // プレイヤーの座標
     private Vector2 ForceDirection = Vector2.zero;      // 移動する方向を決める
     private Vector2 MovingVelocity = Vector3.zero;      // 移動するベクトル
-    private Vector2 Movement = Vector3.zero;      // 移動するベクトル
     [SerializeField] private float maxSpeed = 5;        // 移動スピード(歩く早さ)
 
 
@@ -40,8 +39,7 @@ public class Player2 : MonoBehaviour
 
     private void Awake()
     {
-        //rb = GetComponent<Rigidbody>();
-        rb = gameObject.GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         PlayerActionAsset = new Game_pad();             // InputActionインスタンスを生成
     }
 
@@ -78,14 +76,13 @@ public class Player2 : MonoBehaviour
         prefab = (GameObject)Resources.Load("Weapon");
     }
 
-
     // Update is called once per frame
     void Update()
     {
-        ForceDirection += move.ReadValue<Vector2>();
-        ForceDirection.Normalize();
-        MovingVelocity = ForceDirection * maxSpeed;
-
+        //---rb.velocityによる移動処理
+        //ForceDirection += move.ReadValue<Vector2>();
+        //ForceDirection.Normalize();
+        //MovingVelocity = ForceDirection * maxSpeed;
     }
 
     private void FixedUpdate()
@@ -93,26 +90,27 @@ public class Player2 : MonoBehaviour
         //---ジャンプ中なら移動処理をしない
         if(JumpNow == true)
         {
-            //Gravity(); 
+            Gravity(); 
             return;
         }
 
         //---移動処理(AddForceの処理)
-        //SpeedCheck();
-        //ForceDirection += move.ReadValue<Vector2>();
-        //ForceDirection.Normalize();
-        //rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
+        SpeedCheck();
+        ForceDirection += move.ReadValue<Vector2>();
+        ForceDirection.Normalize();
+        rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
 
-        //---移動処理(rb.Velocityでの処理)
-        rb.velocity = new Vector3(MovingVelocity.x,0,0);
+        //---移動処理(velocityの処理)
+        //rb.velocity = new Vector3(MovingVelocity.x,MovingVelocity.y,0);
+
         ForceDirection = Vector2.zero;
 
     }
 
     private void OnMove(InputAction.CallbackContext obj)
     {
-    }
 
+    }
 
     //---攻撃処理
     private void OnAttack(InputAction.CallbackContext obj)

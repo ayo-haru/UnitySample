@@ -7,26 +7,31 @@ using UnityEngine.InputSystem;
 public class Player2 : MonoBehaviour
 {
     //---変数宣言
+
+    //---InputSystem関連
     private Game_pad PlayerActionAsset;                 // InputActionで生成したものを使用
     private InputAction move;                           // InputActionのmoveを扱う
     private InputAction Attack;                         // InputActionのmoveを扱う
 
+    //---コンポーネント取得
     private Rigidbody rb;
-    public GameObject prefab;
+    public GameObject prefab;                           // "Weapon"プレハブを格納する変数
 
-    private Vector2 ForceDirection = Vector2.zero;      // 移動する方向
-    private Vector2 AttackDirection = Vector2.zero;     // 攻撃方向
+    //---移動変数
     private Vector3 PlayerPos;                          // プレイヤーの座標
+    private Vector2 ForceDirection = Vector2.zero;      // 移動する方向を決める
+    private Vector2 MovingVelocity = Vector3.zero;      // 移動するベクトル
+    [SerializeField] private float maxSpeed = 5;        // 移動スピード(歩く早さ)
 
 
-    [SerializeField] private float maxSpeed = 5;        // 移動スピード
-    [SerializeField] private float JumpForce = 5;       // ジャンプ力
+    //---ジャンプ変数
     public float GravityForce = -10.0f;                 // 重力
-
     private bool JumpNow = false;                       // ジャンプしているかどうか
+    [SerializeField] private float JumpForce = 5;       // ジャンプ力
 
 
-    //---攻撃
+    //---攻撃変数
+    private Vector2 AttackDirection = Vector2.zero;     // 攻撃方向
     public float AttckPosHeight = 8.0f;                 // シールド位置上下
     public float AttckPosWidth = 8.0f;                  // シールド位置左右
     public float DestroyTime = 3.0f;                    // シールドが消える時間　
@@ -74,7 +79,10 @@ public class Player2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //---rb.velocityによる移動処理
+        //ForceDirection += move.ReadValue<Vector2>();
+        //ForceDirection.Normalize();
+        //MovingVelocity = ForceDirection * maxSpeed;
     }
 
     private void FixedUpdate()
@@ -86,10 +94,15 @@ public class Player2 : MonoBehaviour
             return;
         }
 
-        //---移動処理
+        //---移動処理(AddForceの処理)
         SpeedCheck();
         ForceDirection += move.ReadValue<Vector2>();
+        ForceDirection.Normalize();
         rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
+
+        //---移動処理(velocityの処理)
+        //rb.velocity = new Vector3(MovingVelocity.x,MovingVelocity.y,0);
+
         ForceDirection = Vector2.zero;
 
     }
@@ -117,7 +130,7 @@ public class Player2 : MonoBehaviour
             AttackDirection.y *= -1;
         }
         //---y軸が－だったら(下パリィする際)ジャンプ中にする
-        if (AttackDirection.y <= 0.0f)
+        if (AttackDirection.y < 0.0f)
         {
             JumpNow = true;
         }
@@ -151,6 +164,7 @@ public class Player2 : MonoBehaviour
         if(JumpNow == true)
         {
             rb.AddForce(new Vector3(0.0f,GravityForce,0.0f));
+            //ForceDirection = Vector2.zero;
         }
     }
 

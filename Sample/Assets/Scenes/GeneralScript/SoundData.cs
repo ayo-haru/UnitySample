@@ -26,9 +26,6 @@ public static class SoundData
 
     public enum eSE {       // SE番号
         SE_CLICK = 0,
-        SE_DORA,
-        SE_BYON,
-        SE_SPON,
 
         MAX_SE
     }
@@ -38,11 +35,13 @@ public static class SoundData
     public static AudioClip[] BGMClip = new AudioClip[(int)eBGM.MAX_BGM];   // データをまとめて入れる
     public static AudioClip[] SEClip = new AudioClip[(int)eSE.MAX_SE];
 
-    public static void SEDataSet() {    // SEのデータを読み込む
-        for (int i = 0; i < (int)eSE.MAX_SE; i++)
-        {
-            //SEClip[i] = AssetDatabase.LoadAssetAtPath<AudioClip>(SEpath[i]);
-            //SEClip[i] = AssetBundle
-        }
+    public static void SEDataSet(AudioClip _SE, int i)    // SEのデータを読み込む
+    {
+        SEClip[i] = _SE;
     }
+    public static void BGMDataSet(AudioClip _BGM, int i)    // SEのデータを読み込む
+    {
+        BGMClip[i] = _BGM;
+    }
+
 }

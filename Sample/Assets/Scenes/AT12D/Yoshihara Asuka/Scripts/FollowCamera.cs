@@ -29,7 +29,7 @@ public class FollowCamera : MonoBehaviour
     void Start()
     {
         //---追従するオブジェクト名を設定
-        this.Player = GameObject.Find("Player");
+        //this.Player = GameObject.Find("Player");
         this.MoveFlg = false;    
     }
 
@@ -37,7 +37,7 @@ public class FollowCamera : MonoBehaviour
     void Update()
     {
         //---プレイヤーに追従する
-        Vector3 PlayerPos = this.Player.transform.position;
+        Vector3 PlayerPos = GameData.PlayerPos;
         
         // *****座標*****
         //transform.position = new Vector3(PlayerPos.x,0.7f, PlayerPos.z - 4.0f);

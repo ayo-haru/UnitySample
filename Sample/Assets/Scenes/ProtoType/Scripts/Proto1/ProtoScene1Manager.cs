@@ -3,7 +3,7 @@
 // シーンマネージャー
 //
 // 作成日:2022/03/11
-// 作成者:小楠裕子
+// 作成者:伊地田真衣
 //
 // <開発履歴>
 // 2022/03/11 作成
@@ -56,23 +56,9 @@ public class ProtoScene1Manager : MonoBehaviour {
             SceneManager.LoadScene(nextSceneName);
         }
 
-        if (Input.GetKey(KeyCode.U))
-        {
-            SoundManager.Play(SoundData.eSE.SE_CLICK, audioSourceList);
-        }
-        if (Input.GetKey(KeyCode.I))
-        {
-            SoundManager.Play(SoundData.eSE.SE_DORA, audioSourceList);
-        }
-        if (Input.GetKey(KeyCode.O))
-        {
-            SoundManager.Play(SoundData.eSE.SE_BYON, audioSourceList);
-        }
-        if (Input.GetKey(KeyCode.P))
-        {
-            SoundManager.Play(SoundData.eSE.SE_SPON, audioSourceList);
-        }
-
-
+        //if (Input.GetKey(KeyCode.U))
+        //{
+        //    SoundManager.Play(SoundData.eSE.SE_CLICK, audioSourceList);
+        //}
     }
 }

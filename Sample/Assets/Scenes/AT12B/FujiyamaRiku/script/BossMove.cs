@@ -105,7 +105,7 @@ public class BossMove : MonoBehaviour
         {
             elapsedTimeOfIdleState = 0f;       //idle状態の経過時間をoffにする
 
-            RandomNumbe = Random.Range(1, 3);//攻撃パターンランダム化
+            RandomNumbe = Random.Range(1, 4);//攻撃パターンランダム化
             Debug.Log("Random" + RandomNumbe);
             switch (RandomNumbe)            //switch分岐
             {

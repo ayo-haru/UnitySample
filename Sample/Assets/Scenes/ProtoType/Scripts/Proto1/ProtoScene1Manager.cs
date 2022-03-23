@@ -18,10 +18,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ProtoScene1Manager : MonoBehaviour {
-    public int roomSize = 50;
-    public GameObject playerPrefab;
+    public int roomSize = 50;           // 部屋の大きさ。フェードに使用
+    public GameObject playerPrefab;     // プレイヤーのプレハブを入れるところ
 
     private AudioSource[] audioSourceList = new AudioSource[5];    // 一回に同時にならせる数
+    private GameObject GardenImage;                                // 開始演出で出す画像
+    private bool isCalledOnce = false;                             // 開始演出で使用。一回だけ処理をするために使う。
+
 
     // Start is called before the first frame update
     void Awake() {
@@ -46,19 +49,24 @@ public class ProtoScene1Manager : MonoBehaviour {
         {
             audioSourceList[i] = gameObject.AddComponent<AudioSource>();
         }
+
+        //----- 開始演出 -----
+        GardenImage = GameObject.Find("Garden");
     }
 
     // Update is called once per frame
     void Update() {
+        if (!isCalledOnce)     // 一回だけ呼ぶ
+        {
+            GardenImage.GetComponent<ImageShow>().Show();
+            isCalledOnce = true;
+        }
+
+
         if (GameData.CurrentMapNumber != GameData.NextMapNumber)    // 保存してあるシーン番号が現在と次が異なったらシーン移動
         {
             string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
             SceneManager.LoadScene(nextSceneName);
         }
-
-        //if (Input.GetKey(KeyCode.U))
-        //{
-        //    SoundManager.Play(SoundData.eSE.SE_CLICK, audioSourceList);
-        //}
     }
 }

@@ -21,7 +21,7 @@ public class DebugStartArea : MonoBehaviour
         //•\Ž¦
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            KitchenImage.GetComponent<ImageShow>().Show();
+            KitchenImage.GetComponent<ImageShow>().Show(60);
         }
         if (Input.GetKeyDown(KeyCode.F2))
         {

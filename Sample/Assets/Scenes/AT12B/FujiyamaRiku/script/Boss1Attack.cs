@@ -24,8 +24,8 @@ public class Boss1Attack : MonoBehaviour
     static public Vector3 RushPlayerPoint;
     static public Vector3 RushRefEndPoint;
     static public bool OnlyRushFlg;
-    [SerializeField] public int SFRushSpeed;
-    static public int RushSpeed;
+    [SerializeField] public float SFRushSpeed;
+    static public float RushSpeed;
     static public bool RushRefFlg = false;
     static public float RushTime;
     static public float RushRefTime;
@@ -43,8 +43,8 @@ public class Boss1Attack : MonoBehaviour
     static public Vector3 StrawberryPos;
     static public bool [] StrawberryUseFlg;
     static public bool [] StrawberryRefFlg;
-    [SerializeField] public int SFStrawberrySpeed;
-    static public int StrawberrySpeed;
+    [SerializeField] public float SFStrawberrySpeed;
+    static public float StrawberrySpeed;
 
     //ベジエ曲線用
     static public Vector3  StartPoint;
@@ -64,8 +64,8 @@ public class Boss1Attack : MonoBehaviour
     static public Vector3 KnifeEndPoint;
     static public Vector3 KnifePlayerPoint;
     static public float KnifeTime;
-    [SerializeField] public int SFKnifeSpeed;
-    static public int KnifeSpeed;
+    [SerializeField] public float SFKnifeSpeed;
+    static public float KnifeSpeed;
 
     static public bool KnifeRefFlg = false;
     static public float KnifeRefTime;
@@ -113,47 +113,7 @@ public class Boss1Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            Boss1AttackState = BossAttack.Attack1;
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Boss1AttackState = BossAttack.Attack2;
-        }
-        if (Input.GetKeyDown(KeyCode.F3))
-        {
-            Boss1AttackState = BossAttack.Attack3;
-        }
-        
 
-        //攻撃によって処理を変える処理
-        //switch (Boss1AttackState)
-        //{
-        //        //突進
-        //    case BossAttack.Attack1:
-        //        {
-        //            Boss1Attack1();
-        //            break;
-        //        }
-        //        //イチゴ
-        //    case BossAttack.Attack2:
-        //        {
-        //            Boss1Attack2();
-        //            break;
-        //        }
-        //        //ナイフ投げ
-        //    case BossAttack.Attack3:
-        //        {
-        //            Boss1Attack3();
-        //            break;
-        //        }
-        //        //疑似通常状態(仮)
-        //    case BossAttack.Idle:
-        //        {
-        //            break;
-        //        }
-        //}
     }
     //それぞれの攻撃処理
     public static void Boss1Attack1()

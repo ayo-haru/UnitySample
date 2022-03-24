@@ -38,12 +38,15 @@ public class FollowCamera : MonoBehaviour
     {
         //---プレイヤーに追従する
         Vector3 PlayerPos = GameData.PlayerPos;
-        
+
         // *****座標*****
-        //transform.position = new Vector3(PlayerPos.x,0.7f, PlayerPos.z - 4.0f);
-        transform.position = new Vector3(PlayerPos.x, 
-                                         PlayerPos.y + FollowCameraPos.y, 
-                                         FollowCameraPos.z);                       // ジャンプ追従
+        transform.position = new Vector3(PlayerPos.x,
+                                 FollowCameraPos.y,
+                                 FollowCameraPos.z);                       // ジャンプ追従
+
+        //transform.position = new Vector3(PlayerPos.x, 
+        //                                 PlayerPos.y + FollowCameraPos.y, 
+        //                                 FollowCameraPos.z);                       // ジャンプ追従
 
         //---画面外設定(x = 45.0fの地点に到達したらカメラの移動を停止)
         if (this.MoveFlg == false && PlayerPos.x > RightScreenOut)

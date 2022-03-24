@@ -23,6 +23,7 @@ public class Boss1Attack : MonoBehaviour
     static public Vector3 RushEndPoint;
     static public Vector3 RushPlayerPoint;
     static public Vector3 RushRefEndPoint;
+    static public Vector3 RushMiddlePoint;
     static public bool OnlyRushFlg;
     [SerializeField] public float SFRushSpeed;
     static public float RushSpeed;
@@ -31,6 +32,8 @@ public class Boss1Attack : MonoBehaviour
     static public float RushRefTime;
     static public bool BossReturnFlg;
     static public float BossReturnTime;
+    static public bool RushEndFlg;
+    static public float RushReturnSpeed;
     //----------------------------------------------------------
     //ƒCƒ`ƒS”š’e•Ï”
     //----------------------------------------------------------
@@ -133,11 +136,20 @@ public class Boss1Attack : MonoBehaviour
             if(BossReturnFlg)
             {
                 
-                BossReturnTime += Time.deltaTime * 2;
-                Boss.BossPos = Vector3.Lerp(RushRefEndPoint, BossStartPoint, BossReturnTime);
+                BossReturnTime += Time.deltaTime * RushReturnSpeed;
+                if (RushEndFlg)
+                {
+                    Boss.BossPos = Beziercurve.SecondCurve(RushEndPoint, RushMiddlePoint, BossStartPoint, BossReturnTime);
+                }
+                if(!RushEndFlg)
+                {
+                    Boss.BossPos = Vector3.Lerp(RushRefEndPoint, BossStartPoint, BossReturnTime);
+                }
 
                 if(BossReturnTime >= 1.0f)
                 {
+
+                    RushEndFlg = false;
                     BossReturnFlg = false;
                     BossReturnTime = 0;
                     BossMove.SetState(BossMove.Boss_State.idle);
@@ -153,7 +165,8 @@ public class Boss1Attack : MonoBehaviour
                 RushPlayerPoint.y = GameData.PlayerPos.y;
                 RushPlayerPoint.z = GameData.PlayerPos.z;
                 RushRefEndPoint = GameObject.Find("ForkRefEndPoint").transform.position;
-                RefrectFlg = false;
+                
+                RefrectFlg = false; 
             }
             if (!RushRefFlg)
             {
@@ -161,10 +174,14 @@ public class Boss1Attack : MonoBehaviour
                 Boss.BossPos = Vector3.Lerp(RushStartPoint, RushEndPoint, RushTime);
                 if (RushTime >= 1.0f)
                 {
+                    RushReturnSpeed = 1;
+                    RushEndFlg = true;
+                    BossReturnFlg = true;
                     OnlyFlg = false;
+                    RushMiddlePoint = GameObject.Find("RushMiddle").transform.position;
                     RushTime = 0;
                     Destroy(Fork);
-                    BossMove.SetState(BossMove.Boss_State.idle);
+                    
                     //Boss1AttackState = BossAttack.Idle;
                     return;
                 }
@@ -175,11 +192,11 @@ public class Boss1Attack : MonoBehaviour
                 Boss.BossPos = Vector3.Lerp(RushPlayerPoint, RushRefEndPoint, RushRefTime);
                 if (RushRefTime >= 1.0f)
                 {
-                    
+                    RushReturnSpeed = 2;
+                    RushRefFlg = false;
                     BossReturnFlg = true;
                     HPgage.damage = 10;
                     HPgage.DelHP();
-                    RushRefFlg = false;
                     RushTime = 0;
                     RushRefTime = 0;
                     Destroy(Fork);

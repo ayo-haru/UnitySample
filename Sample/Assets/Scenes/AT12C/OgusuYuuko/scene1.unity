@@ -173,7 +173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110e0f68ac29dae45a37e354c2ba3444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alphaSpeed: 0.005
+  ShowAlphaSpeed: 0.005
+  HideAlphaSpeed: 0.005
 --- !u!114 &367915142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,6 +225,7 @@ GameObject:
   - component: {fileID: 606553014}
   - component: {fileID: 606553013}
   - component: {fileID: 606553012}
+  - component: {fileID: 606553016}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -291,6 +293,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &606553016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606553011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b719cfb96ff1e14eb2879fa0c69c304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomSize: 0
 --- !u!1 &676070817
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,7 +458,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110e0f68ac29dae45a37e354c2ba3444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alphaSpeed: 0.005
+  ShowAlphaSpeed: 0.005
+  HideAlphaSpeed: 0.005
 --- !u!114 &1564161633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -615,7 +631,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110e0f68ac29dae45a37e354c2ba3444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alphaSpeed: 0.005
+  ShowAlphaSpeed: 0.005
+  HideAlphaSpeed: 0.005
 --- !u!114 &1688662745
 MonoBehaviour:
   m_ObjectHideFlags: 0

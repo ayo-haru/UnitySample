@@ -26,7 +26,10 @@ public class DataManager : MonoBehaviour
     public AudioClip bgm_title;
     //[SerializeField]
     //AudioClip bgm_game;
-    public AudioClip se_click;
+    public AudioClip se_jump;
+    public AudioClip se_land;
+    public AudioClip se_shield;
+    public AudioClip se_reflection;
 
 
     // Start is called before the first frame update
@@ -34,7 +37,10 @@ public class DataManager : MonoBehaviour
     {
         SoundData.BGMDataSet(bgm_title, (int)SoundData.eBGM.BGM_TITLE);
 
-        SoundData.SEDataSet(se_click, (int)SoundData.eSE.SE_CLICK);
+        SoundData.SEDataSet(se_jump, (int)SoundData.eSE.SE_JUMP);
+        SoundData.SEDataSet(se_land, (int)SoundData.eSE.SE_LAND);
+        SoundData.SEDataSet(se_shield, (int)SoundData.eSE.SE_SHIELD);
+        SoundData.SEDataSet(se_reflection, (int)SoundData.eSE.SE_REFLECTION);
     }
 
     // Update is called once per frame

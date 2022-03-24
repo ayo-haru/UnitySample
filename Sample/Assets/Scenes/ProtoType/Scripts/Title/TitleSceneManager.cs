@@ -28,7 +28,6 @@ public class TitleSceneManager : MonoBehaviour {
         {
             string nextSceneName = GameData.GetNextScene(1);
             SceneManager.LoadScene(nextSceneName);
-            SoundManager.Play(SoundData.eSE.SE_CLICK, audioSourceList);
         }
 
         if (Input.GetKeyDown(KeyCode.RightShift))    // ‚Â‚Ã‚«‚©‚ç

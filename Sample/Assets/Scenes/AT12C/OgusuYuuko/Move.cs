@@ -11,12 +11,20 @@ public class Move : MonoBehaviour
 
     Rigidbody rb;
 
+    private AudioSource[] audioSourceList = new AudioSource[5];    // 一回に同時にならせる数
+
     // Start is called before the first frame update
 
     void Start()
     {
         //機能の取得
         rb = gameObject.GetComponent<Rigidbody>();
+
+        for (int i = 0; i < audioSourceList.Length; ++i)
+        {
+            audioSourceList[i] = gameObject.AddComponent<AudioSource>();
+        }
+
     }
 
     // Update is called once per frame
@@ -41,6 +49,7 @@ public class Move : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             rb.AddForce(transform.up * 300.0f);
+            SoundManager.Play(SoundData.eSE.SE_JUMP, audioSourceList);
         }
     }
 }

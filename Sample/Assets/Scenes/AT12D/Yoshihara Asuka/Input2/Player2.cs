@@ -25,8 +25,9 @@ public class Player2 : MonoBehaviour
 
 
     //---ジャンプ変数
-    public float GravityForce = -10.0f;                 // 重力
+    public float GravityForce = -30.0f;                 // 重力
     private bool JumpNow = false;                       // ジャンプしているかどうか
+    private bool UnderParryNow = false;                 // 下パリィ中かどうか(
     [SerializeField] private float JumpForce = 5;       // ジャンプ力
 
 
@@ -52,8 +53,11 @@ public class Player2 : MonoBehaviour
         Attack = PlayerActionAsset.Player.Attack;
 
         //---Actionイベント登録(ボタン入力)
-        PlayerActionAsset.Player.Attack.started += OnAttack;      // started...ボタンが押された瞬間
-        PlayerActionAsset.Player.Jump.canceled += OnJump;       　// performed...ボタンが押された瞬間
+        PlayerActionAsset.Player.Attack.started += OnAttack;
+
+        PlayerActionAsset.Player.Jump.started += OnJump;          // started    ... ボタンが押された瞬間
+        PlayerActionAsset.Player.Jump.performed += OnJump;        // performed  ... 中間くらい
+        PlayerActionAsset.Player.Jump.canceled += OnJump;         // canceled   ... ボタンを離した瞬間
 
 
         //---InputActionの有効化(これかかないと、入力とれない。)
@@ -80,9 +84,9 @@ public class Player2 : MonoBehaviour
     void Update()
     {
         //---rb.velocityによる移動処理
-        //ForceDirection += move.ReadValue<Vector2>();
-        //ForceDirection.Normalize();
-        //MovingVelocity = ForceDirection * maxSpeed;
+        ForceDirection += move.ReadValue<Vector2>();
+        ForceDirection.Normalize();
+        MovingVelocity = ForceDirection * maxSpeed;
     }
 
     private void FixedUpdate()
@@ -95,13 +99,13 @@ public class Player2 : MonoBehaviour
         }
 
         //---移動処理(AddForceの処理)
-        SpeedCheck();
-        ForceDirection += move.ReadValue<Vector2>();
-        ForceDirection.Normalize();
-        rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
+        //SpeedCheck();
+        //ForceDirection += move.ReadValue<Vector2>();
+        //ForceDirection.Normalize();
+        //rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
 
         //---移動処理(velocityの処理)
-        //rb.velocity = new Vector3(MovingVelocity.x,MovingVelocity.y,0);
+        rb.velocity = new Vector3(MovingVelocity.x,rb.velocity.y - MovingVelocity.y,0);
 
         ForceDirection = Vector2.zero;
 
@@ -129,10 +133,11 @@ public class Player2 : MonoBehaviour
         {
             AttackDirection.y *= -1;
         }
-        //---y軸が－だったら(下パリィする際)ジャンプ中にする
+        //---y軸が－だったら(下パリィする際)ジャンプ中にする(03/21時点)
+        //---y軸が－だったら(下パリィする際)下パリィフラグにする(03/25時点)
         if (AttackDirection.y < 0.0f)
         {
-            JumpNow = true;
+            UnderParryNow = true;
         }
         
         //---盾の回転を設定

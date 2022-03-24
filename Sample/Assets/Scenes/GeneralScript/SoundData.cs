@@ -25,7 +25,10 @@ public static class SoundData
     }
 
     public enum eSE {       // SEî‘çÜ
-        SE_CLICK = 0,
+        SE_JUMP = 0,
+        SE_LAND,
+        SE_SHIELD,
+        SE_REFLECTION,
 
         MAX_SE
     }

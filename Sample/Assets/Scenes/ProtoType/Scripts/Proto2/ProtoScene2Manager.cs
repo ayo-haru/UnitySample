@@ -22,6 +22,10 @@ public class ProtoScene2Manager : MonoBehaviour
     public int roomSize = 50;
 
     public GameObject playerPrefab;
+
+    private GameObject KitchenImage;                                // 開始演出で出す画像
+    private bool isCalledOnce = false;                             // 開始演出で使用。一回だけ処理をするために使う。
+
     // Start is called before the first frame update
     void Awake() {
         Application.targetFrameRate = 60;           // フレームレートを固定
@@ -40,10 +44,20 @@ public class ProtoScene2Manager : MonoBehaviour
         //----- マップの番号を保存 -----
         GameData.NextMapNumber =  GameData.CurrentMapNumber = (int)GameData.eSceneState.MAP2_SCENE;
         SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
+
+        //----- 開始演出 -----
+        KitchenImage = GameObject.Find("Kitchen");
+
     }
 
     // Update is called once per frame
     void Update() {
+        if (!isCalledOnce)     // 一回だけ呼ぶ
+        {
+            KitchenImage.GetComponent<ImageShow>().Show(2);
+            isCalledOnce = true;
+        }
+
         if (GameData.CurrentMapNumber != GameData.NextMapNumber)    // 保存してあるシーン番号が現在と次が異なったらシーン移動
         {
             string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);

@@ -58,7 +58,7 @@ public class ProtoScene1Manager : MonoBehaviour {
     void Update() {
         if (!isCalledOnce)     // ˆê‰ñ‚¾‚¯ŒÄ‚Ô
         {
-            GardenImage.GetComponent<ImageShow>().Show();
+            GardenImage.GetComponent<ImageShow>().Show(2);
             isCalledOnce = true;
         }
 

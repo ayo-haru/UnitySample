@@ -108,7 +108,7 @@ public class Player2 : MonoBehaviour
         if(JumpNow == true)
         {
             Gravity(); 
-            return;
+            //return;
         }
 
 

@@ -105,19 +105,12 @@ public class Player2 : MonoBehaviour
     private void FixedUpdate()
     {
         //---ƒWƒƒƒ“ƒv’†‚È‚çˆÚ“®ˆ—‚ğ‚µ‚È‚¢
-<<<<<<< HEAD
-        //if(JumpNow == true)
-        //{
-        //    Gravity(); 
-        //    return;
-        //}
-=======
         if(JumpNow == true)
         {
             Gravity(); 
             //return;
         }
->>>>>>> 59d3a517d5f43940196f200e95e5e08543f91759
+
 
         //---ˆÚ“®ˆ—(AddForce‚Ìˆ—)
         //SpeedCheck();

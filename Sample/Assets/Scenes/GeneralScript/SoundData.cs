@@ -38,6 +38,11 @@ public static class SoundData
     public static AudioClip[] BGMClip = new AudioClip[(int)eBGM.MAX_BGM];   // データをまとめて入れる
     public static AudioClip[] SEClip = new AudioClip[(int)eSE.MAX_SE];
 
+    public static AudioSource[] TitleAudioList = new AudioSource[5];    // 一回に同時にならせる数
+    public static AudioSource[] GameAudioList = new AudioSource[10];    // 一回に同時にならせる数
+
+
+
     public static void SEDataSet(AudioClip _SE, int i)    // SEのデータを読み込む
     {
         SEClip[i] = _SE;

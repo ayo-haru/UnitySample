@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class TitleSceneManager : MonoBehaviour {
-    private AudioSource[] audioSourceList = new AudioSource[5];    // ˆê‰ñ‚É“¯‚É‚È‚ç‚¹‚é”
+    //private AudioSource[] audioSourceList = new AudioSource[5];    // ˆê‰ñ‚É“¯‚É‚È‚ç‚¹‚é”
 
     // Start is called before the first frame update
     void Start() {
@@ -12,13 +12,13 @@ public class TitleSceneManager : MonoBehaviour {
         SaveManager.load();
         GameData.NextMapNumber = SaveManager.sd.LastMapNumber;
         GameData.CurrentMapNumber = (int)GameData.eSceneState.TITLE_SCENE;
-        for (int i = 0; i < audioSourceList.Length; ++i)
+        for (int i = 0; i < SoundData.TitleAudioList.Length; ++i)
         {
-            audioSourceList[i] = gameObject.AddComponent<AudioSource>();
+            SoundData.TitleAudioList[i] = gameObject.AddComponent<AudioSource>();
         }
 
         // ‰¹–Â‚ç‚·
-        SoundManager.Play(SoundData.eBGM.BGM_TITLE, audioSourceList);
+        SoundManager.Play(SoundData.eBGM.BGM_TITLE, SoundData.TitleAudioList);
 
     }
 

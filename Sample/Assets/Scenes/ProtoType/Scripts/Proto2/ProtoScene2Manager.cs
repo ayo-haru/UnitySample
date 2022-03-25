@@ -48,6 +48,12 @@ public class ProtoScene2Manager : MonoBehaviour
         //----- ŠJn‰‰o -----
         KitchenImage = GameObject.Find("Kitchen");
 
+
+        for (int i = 0; i < SoundData.GameAudioList.Length; ++i)
+        {
+            SoundData.GameAudioList[i] = gameObject.AddComponent<AudioSource>();
+        }
+
     }
 
     // Update is called once per frame

@@ -21,7 +21,8 @@ public class ProtoScene1Manager : MonoBehaviour {
     public int roomSize = 50;           // 部屋の大きさ。フェードに使用
     public GameObject playerPrefab;     // プレイヤーのプレハブを入れるところ
 
-    private AudioSource[] audioSourceList = new AudioSource[5];    // 一回に同時にならせる数
+    //[System.NonSerialized]
+    //public AudioSource[] audioSourceList = new AudioSource[5];    // 一回に同時にならせる数
     private GameObject GardenImage;                                // 開始演出で出す画像
     private bool isCalledOnce = false;                             // 開始演出で使用。一回だけ処理をするために使う。
 
@@ -45,9 +46,9 @@ public class ProtoScene1Manager : MonoBehaviour {
         SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
 
         // audioSourceList配列の数だけAudioSourceを自身に生成して配列に格納
-        for (int i = 0; i < audioSourceList.Length; ++i)
+        for (int i = 0; i < SoundData.GameAudioList.Length; ++i)
         {
-            audioSourceList[i] = gameObject.AddComponent<AudioSource>();
+            SoundData.GameAudioList[i] = gameObject.AddComponent<AudioSource>();
         }
 
         //----- 開始演出 -----

@@ -20,6 +20,7 @@ public class Strawberry : MonoBehaviour
     {
         if (collision.gameObject.name == "Weapon(Clone)")
         {
+            
             Boss1Attack.RefrectFlg = true;
         }
         

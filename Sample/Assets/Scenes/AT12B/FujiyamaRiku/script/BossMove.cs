@@ -49,17 +49,17 @@ public class BossMove : MonoBehaviour
         else if (BossState == Boss_State.strawberryBomb)//もしボスの状態がイチゴ爆弾の場合
         {
             //strawberryBomb();
-            Boss1Attack.Boss1Attack2();
+            Boss1Attack.Boss1Strawberry();
         }
         else if (BossState == Boss_State.charge)//もしボスの状態が突進の場合
         {
             //charge();
-            Boss1Attack.Boss1Attack1();
+            Boss1Attack.Boss1Fork();
         }
         else if (BossState == Boss_State.KnifeThrower)//もしボスの状態がナイフ投げの場合
         {
             //KnifeThrower();
-            Boss1Attack.Boss1Attack3();
+            Boss1Attack.Boss1Knife();
         }
     }
 

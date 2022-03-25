@@ -5,11 +5,12 @@ using UnityEngine;
 public class Boss : MonoBehaviour
 {
     public static GameObject Bossobj;
-    public static Vector3 BossPos = new Vector3(10, 0.02f, -2);
+    public static Vector3 BossPos;
     // Start is called before the first frame update
     void Start()
     {
         Bossobj = GameObject.Find("Boss");
+        BossPos = GameObject.Find("BossPoint").transform.position;
         this.gameObject.transform.position = BossPos;
     }
 

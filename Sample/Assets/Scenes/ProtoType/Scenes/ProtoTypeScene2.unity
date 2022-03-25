@@ -1485,6 +1485,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2140457474}
   - component: {fileID: 2140457475}
+  - component: {fileID: 2140457476}
   m_Layer: 0
   m_Name: ProtoScene2Manager
   m_TagString: Untagged
@@ -1520,6 +1521,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomSize: 70
   playerPrefab: {fileID: 5294126684173066432, guid: aa96526a81004bf419ea51af09a882ee, type: 3}
+--- !u!114 &2140457476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140457473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a740273baf2517143b87f9a4f142b240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7534506205848010659
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@
 // 2022/03/18   作成
 // 2022/03/20   移動、攻撃実施(この時点ではAddForce)
 // 2022/03/25   プレイヤーの挙動修正(移動をVelocity計算に変更)
+// 2022/03/25   プレイヤーの挙動修正(ジャンプ中の挙動変更ストレイフアリ)
 //=============================================================================
 using System;
 using System.Collections;
@@ -37,7 +38,7 @@ public class Player2 : MonoBehaviour
 
 
     //---ジャンプ変数
-    public float GravityForce = -30.0f;                 // 重力
+    public float GravityForce = -10.0f;                 // 重力
     private bool JumpNow = false;                       // ジャンプしているかどうか
     private bool UnderParryNow = false;                 // 下パリィ中かどうか(
     [SerializeField] private float JumpForce = 5;       // ジャンプ力
@@ -107,7 +108,7 @@ public class Player2 : MonoBehaviour
         if(JumpNow == true)
         {
             Gravity(); 
-            return;
+            //return;
         }
 
         //---移動処理(AddForceの処理)

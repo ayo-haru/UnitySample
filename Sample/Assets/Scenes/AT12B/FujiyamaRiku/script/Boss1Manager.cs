@@ -21,6 +21,7 @@ public class Boss1Manager : MonoBehaviour
     }
     private void Awake()
     {
+        Application.targetFrameRate = 60;
         //ƒ{ƒX‚ð“|‚µ‚½‚©‚Ç‚¤‚©‚Ì”»’è
         if (!GameData.isAliveBoss1)
         {

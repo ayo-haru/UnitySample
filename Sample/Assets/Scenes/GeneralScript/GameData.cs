@@ -21,6 +21,7 @@ public static class GameData
         TITLE_SCENE = 0,
         MAP1_SCENE,
         MAP2_SCENE,
+        BOSS1_SCENE
     }
 
 
@@ -28,7 +29,7 @@ public static class GameData
     public static int CurrentMapNumber;     // マップの番号いれる
     public static int NextMapNumber;        // マップの番号いれる
     static string[] MapName                 // マップの名前 
-        = { "ProtoTypeTitleScene", "ProtoTypeScene1" , "ProtoTypeScene2" };
+        = { "ProtoTypeTitleScene", "ProtoTypeScene1" , "ProtoTypeScene2","Tester" };
     public static string CurrentMapName;    // 現在のマップの名前
     public static Vector3 PlayerPos;        // プレイヤーの座標（現在はGameManagerで毎フレーム代入しているが本来はPlayerクラスが良い(はず)） 
     public static GameObject Player;

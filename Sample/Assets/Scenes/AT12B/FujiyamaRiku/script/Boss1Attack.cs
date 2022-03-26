@@ -34,6 +34,7 @@ public class Boss1Attack : MonoBehaviour
     static public float BossReturnTime;
     static public bool RushEndFlg;
     static public float RushReturnSpeed;
+    static public float ReturnDelay;
     //----------------------------------------------------------
     //イチゴ爆弾変数
     //----------------------------------------------------------
@@ -49,6 +50,8 @@ public class Boss1Attack : MonoBehaviour
     [SerializeField] public float SFStrawberrySpeed;
     static public float StrawberrySpeed;
     static public bool[] PlayerRefDir;
+    static public Vector3 RefMiss;
+    static bool RefMissFlg;
 
     //ベジエ曲線用
     static public Vector3  StartPoint;
@@ -57,6 +60,7 @@ public class Boss1Attack : MonoBehaviour
     [SerializeField] public Vector3 FirstMiddlePoint;
     [SerializeField] public Vector3 FirstEndPoint;
     static public float [] FinishTime;
+    static public Vector3 RefEndPoint;
     static public float[] Ref_FinishTime;
     static public  Vector3[] PlayerPoint;
     static public Vector3[] PlayerMiddlePoint;
@@ -102,6 +106,7 @@ public class Boss1Attack : MonoBehaviour
         PlayerMiddlePoint = new Vector3[Max_Strawberry];
         BossStartPoint = GameObject.Find("BossPoint").transform.position;
         PlayerRefDir = new bool[Max_Strawberry];
+        RefMiss = GameObject.Find("StrawberryMiss").transform.position;
 
         for (int i= 0;i < Max_Strawberry;i++)
         {
@@ -138,25 +143,24 @@ public class Boss1Attack : MonoBehaviour
         {
             if(BossReturnFlg)
             {
-                
+
                 BossReturnTime += Time.deltaTime * RushReturnSpeed;
                 if (RushEndFlg)
                 {
                     Boss.BossPos = Beziercurve.SecondCurve(RushEndPoint, RushMiddlePoint, BossStartPoint, BossReturnTime);
                 }
-                if(!RushEndFlg)
+                if (!RushEndFlg)
                 {
                     Boss.BossPos = Vector3.Lerp(RushRefEndPoint, BossStartPoint, BossReturnTime);
                 }
 
-                if(BossReturnTime >= 1.0f)
+                if (BossReturnTime >= 1.0f)
                 {
-
+                    ReturnDelay = 0;
                     RushEndFlg = false;
                     BossReturnFlg = false;
                     BossReturnTime = 0;
                     BossMove.SetState(BossMove.Boss_State.idle);
-                    //Boss1AttackState = BossAttack.Idle;
                     OnlyFlg = false;
                 }
                 return;
@@ -177,15 +181,17 @@ public class Boss1Attack : MonoBehaviour
                 Boss.BossPos = Vector3.Lerp(RushStartPoint, RushEndPoint, RushTime);
                 if (RushTime >= 1.0f)
                 {
-                    RushReturnSpeed = 1;
-                    RushEndFlg = true;
-                    BossReturnFlg = true;
-                    OnlyFlg = false;
-                    RushMiddlePoint = GameObject.Find("RushMiddle").transform.position;
-                    RushTime = 0;
-                    Destroy(Fork);
-                    
-                    //Boss1AttackState = BossAttack.Idle;
+                    ReturnDelay += Time.deltaTime;
+                    if (ReturnDelay >= 1.0f)
+                    {
+                        RushReturnSpeed = 1;
+                        RushEndFlg = true;
+                        BossReturnFlg = true;
+                        OnlyFlg = false;
+                        RushMiddlePoint = GameObject.Find("RushMiddle").transform.position;
+                        RushTime = 0;
+                        Destroy(Fork);
+                    }
                     return;
                 }
             }
@@ -195,20 +201,20 @@ public class Boss1Attack : MonoBehaviour
                 Boss.BossPos = Vector3.Lerp(RushPlayerPoint, RushRefEndPoint, RushRefTime);
                 if (RushRefTime >= 1.0f)
                 {
-                    RushReturnSpeed = 2;
-                    RushRefFlg = false;
-                    BossReturnFlg = true;
-                    HPgage.damage = 10;
-                    HPgage.DelHP();
-                    RushTime = 0;
-                    RushRefTime = 0;
-                    Destroy(Fork);
-                   
+                    
+                        RushReturnSpeed = 2;
+                        RushRefFlg = false;
+                        BossReturnFlg = true;
+                        HPgage.damage = 10;
+                        HPgage.DelHP();
+                        RushTime = 0;
+                        RushRefTime = 0;
+                        Destroy(Fork);
+                    
                     return;
                 }
             }
         }
-        
     }
     public static void Boss1Strawberry()
     {
@@ -240,14 +246,15 @@ public class Boss1Attack : MonoBehaviour
                 if (RefrectFlg && !StrawberryRefFlg[i])
                 {
                     StrawberryRefFlg[i] = true;
-                    if (Strawberry[i].transform.position.y >= GameObject.Find("polySurface1").transform.position.y)
+                    if (Strawberry[i].transform.position.y >= GameObject.Find("polySurface1").transform.position.y + 2.0f)
                     {
                         PlayerPoint[i].x = GameData.PlayerPos.x;
                         PlayerPoint[i].y = GameData.PlayerPos.y + 2.0f;
                         PlayerPoint[i].z = GameData.PlayerPos.z;
-                        PlayerMiddlePoint[i].x += GameObject.Find("polySurface1").transform.position.x + 3.0f;
-                        PlayerMiddlePoint[i].y += GameObject.Find("polySurface1").transform.position.y + 3.0f;
+                        PlayerMiddlePoint[i].x += GameObject.Find("polySurface1").transform.position.x + 4.0f;
+                        PlayerMiddlePoint[i].y += GameObject.Find("polySurface1").transform.position.y + 4.0f;
                         PlayerMiddlePoint[i].z += GameObject.Find("polySurface1").transform.position.z;
+                        RefEndPoint = Boss.BossPos;
                         PlayerRefDir[i] = true;
                     }
                     else if (Strawberry[i].transform.position.x >= GameObject.Find("star4").transform.position.x)
@@ -255,19 +262,17 @@ public class Boss1Attack : MonoBehaviour
                         PlayerPoint[i].x = GameData.PlayerPos.x + 2.0f;
                         PlayerPoint[i].y = GameData.PlayerPos.y;
                         PlayerPoint[i].z = GameData.PlayerPos.z;
+                        RefEndPoint = Boss.BossPos;
 
-                        
+
                     }
-
                     else if (Strawberry[i].transform.position.x <= GameObject.Find("polySurface1").transform.position.x)
                     {
                         PlayerPoint[i].x = GameData.PlayerPos.x - 2.0f;
                         PlayerPoint[i].y = GameData.PlayerPos.y;
                         PlayerPoint[i].z = GameData.PlayerPos.z;
-                        PlayerMiddlePoint[i].x += GameObject.Find("polySurface1").transform.position.x - 3.0f;
-                        PlayerMiddlePoint[i].y += GameObject.Find("polySurface1").transform.position.y + 3.0f;
-                        PlayerMiddlePoint[i].z += GameObject.Find("polySurface1").transform.position.z;
-                        PlayerRefDir[i] = true;
+                        RefEndPoint = RefMiss;
+                        RefMissFlg = true;
                     }
                     
 
@@ -278,21 +283,25 @@ public class Boss1Attack : MonoBehaviour
                 if (StrawberryRefFlg[i])
                 {
                     
-                    Ref_FinishTime[i] += Time.deltaTime * 3;
+                    Ref_FinishTime[i] += Time.deltaTime * 2.5f;
                    if(!PlayerRefDir[i])
                     {
-                        Strawberry[i].transform.position = Vector3.Lerp(PlayerPoint[i], Boss.BossPos, Ref_FinishTime[i]);
+                        Strawberry[i].transform.position = Vector3.Lerp(PlayerPoint[i], RefEndPoint, Ref_FinishTime[i]);
                     }
                     if (PlayerRefDir[i])
                     {
-                        Strawberry[i].transform.position = Beziercurve.SecondCurve(PlayerPoint[i], PlayerMiddlePoint[i], 
-                                                                                   Boss.BossPos, Ref_FinishTime[i]);
+                        Strawberry[i].transform.position = Beziercurve.SecondCurve(PlayerPoint[i], PlayerMiddlePoint[i],
+                                                                                   RefEndPoint, Ref_FinishTime[i]);
                     }
                     if (Ref_FinishTime[i] >= 1.0f && StrawberryUseFlg[i])
                     {
                         PlayerRefDir[i] = false;
-                        HPgage.damage = 5;
-                        HPgage.DelHP();
+                        if (!RefMissFlg)
+                        {
+                            HPgage.damage = 5;
+                            HPgage.DelHP();
+                        }
+                        RefMissFlg = false;
                         StrawberryUseFlg[i] = false ;
                         StrawberryRefFlg[i] = false ;
                         Destroy(Strawberry[i]);

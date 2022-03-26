@@ -64,7 +64,7 @@ public class BaunceEnemy : MonoBehaviour
             this.GetComponent<Rigidbody>().isKinematic = true;
 
             // ‰¹‚¾‚·
-            SoundManager.Play(SoundData.eSE.SE_REFLECTION, SoundData.GameAudioList);
+            //SoundManager.Play(SoundData.eSE.SE_REFLECTION, SoundData.GameAudioList);
         }
     }
 }

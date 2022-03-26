@@ -158,7 +158,7 @@ public class Player2 : MonoBehaviour
         weapon.transform.Rotate(new Vector3(0,0,(90 * AttackDirection.y)));
         //Debug.Log("攻撃した！(Weapon)");
         Debug.Log("AttackDirection(正規化後):"+ AttackDirection);
-        SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
+        //SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
         AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする
         Destroy(weapon,DestroyTime);
         return;
@@ -175,7 +175,7 @@ public class Player2 : MonoBehaviour
         Debug.Log("ジャンプ！");
         JumpNow = true;
         rb.AddForce(transform.up * JumpForce,ForceMode.Impulse);
-        SoundManager.Play(SoundData.eSE.SE_JUMP, SoundData.GameAudioList);
+        //SoundManager.Play(SoundData.eSE.SE_JUMP, SoundData.GameAudioList);
     }
 
     //---ジャンプ中の重力を強くする(ジャンプが俊敏に見える効果がある)

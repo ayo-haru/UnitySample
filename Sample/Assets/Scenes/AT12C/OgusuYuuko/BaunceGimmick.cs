@@ -26,8 +26,8 @@ public class BaunceGimmick : MonoBehaviour
     void Start()
     {
         Player = GameObject.Find("Player(Clone)");
-        Player = GameData.Player;
-        player_rb = Player.GetComponent<Rigidbody>();
+        //this.Player = GameData.Player;
+        player_rb = this.Player.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -59,7 +59,7 @@ public class BaunceGimmick : MonoBehaviour
             //íµÇÀï‘Ç∑
             player_rb.AddForce(dir * bounceSpeed, ForceMode.Impulse);
             //èÇè¡ãé!!!!!!
-            Destroy(collision.gameObject);
+            Destroy(collision.gameObject,1.0f);
 
         }
     }

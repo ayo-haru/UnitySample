@@ -43,6 +43,12 @@ public class Player : MonoBehaviour
         {
             GameData.NextMapNumber = (int)GameData.eSceneState.MAP1_SCENE;    // 次のシーン番号を設定、保存
         }
+
+        //if (other.gameObject.tag == "ボスタグだったら")
+        //{
+        //    GameData.NextMapNumber = (int)GameData.eSceneState.MAP1_SCENE;    // 次のシーン番号を設定、保存
+        //}
+
     }
 
 }

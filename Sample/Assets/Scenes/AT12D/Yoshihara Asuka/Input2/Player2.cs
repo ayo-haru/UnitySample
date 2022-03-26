@@ -69,8 +69,8 @@ public class Player2 : MonoBehaviour
         PlayerActionAsset.Player.Attack.started += OnAttack;
 
         PlayerActionAsset.Player.Jump.started += OnJump;          // started    ... ボタンが押された瞬間
-        PlayerActionAsset.Player.Jump.performed += OnJump;        // performed  ... 中間くらい
-        PlayerActionAsset.Player.Jump.canceled += OnJump;         // canceled   ... ボタンを離した瞬間
+        //PlayerActionAsset.Player.Jump.performed += OnJump;        // performed  ... 中間くらい
+        //PlayerActionAsset.Player.Jump.canceled += OnJump;         // canceled   ... ボタンを離した瞬間
 
 
         //---InputActionの有効化(これかかないと、入力とれない。)
@@ -158,7 +158,7 @@ public class Player2 : MonoBehaviour
         weapon.transform.Rotate(new Vector3(0,0,(90 * AttackDirection.y)));
         //Debug.Log("攻撃した！(Weapon)");
         Debug.Log("AttackDirection(正規化後):"+ AttackDirection);
-        SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
+        //SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
         AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする
         Destroy(weapon,DestroyTime);
         return;
@@ -172,10 +172,10 @@ public class Player2 : MonoBehaviour
         {
             return;
         }
-        //Debug.Log("ジャンプ！");
+        Debug.Log("ジャンプ！");
         JumpNow = true;
         rb.AddForce(transform.up * JumpForce,ForceMode.Impulse);
-        SoundManager.Play(SoundData.eSE.SE_JUMP, SoundData.GameAudioList);
+        //SoundManager.Play(SoundData.eSE.SE_JUMP, SoundData.GameAudioList);
     }
 
     //---ジャンプ中の重力を強くする(ジャンプが俊敏に見える効果がある)
@@ -219,7 +219,7 @@ public class Player2 : MonoBehaviour
                 JumpNow = false;
                 UnderParryNow = false;
                 //ForceDirection = Vector2.zero;
-                SoundManager.Play(SoundData.eSE.SE_LAND, SoundData.GameAudioList);
+                //SoundManager.Play(SoundData.eSE.SE_LAND, SoundData.GameAudioList);
             }
         }
 
@@ -235,19 +235,19 @@ public class Player2 : MonoBehaviour
         }
          
         //---ゲームパッドとつながっている時に表示される。
-        GUILayout.Label($"LeftStick:{Gamepad.current.leftStick.ReadValue()}");
-        GUILayout.Label($"RightStick:{Gamepad.current.rightStick.ReadValue()}");
-        GUILayout.Label($"ButtonNorth:{Gamepad.current.buttonNorth.isPressed}");
-        GUILayout.Label($"ButtonSouth:{Gamepad.current.buttonSouth.isPressed}");
-        GUILayout.Label($"ButtonEast:{Gamepad.current.buttonEast.isPressed}");
-        GUILayout.Label($"ButtonWast:{Gamepad.current.buttonWest.isPressed}");
-        GUILayout.Label($"LeftShoulder:{Gamepad.current.leftShoulder.ReadValue()}");
-        GUILayout.Label($"LeftTrigger:{Gamepad.current.leftTrigger.ReadValue()}");
-        GUILayout.Label($"RightShoulder:{Gamepad.current.rightShoulder.ReadValue()}");
-        GUILayout.Label($"RighetTrigger:{Gamepad.current.rightTrigger.ReadValue()}");
-        GUILayout.Label($"LeftStickUp:{Gamepad.current.leftStick.up.ReadValue()}");
-        GUILayout.Label($"Space:{Keyboard.current.spaceKey.ReadValue()}");
-        GUILayout.Label($"JumpFlg:{JumpNow}");
+        //GUILayout.Label($"LeftStick:{Gamepad.current.leftStick.ReadValue()}");
+        //GUILayout.Label($"RightStick:{Gamepad.current.rightStick.ReadValue()}");
+        //GUILayout.Label($"ButtonNorth:{Gamepad.current.buttonNorth.isPressed}");
+        //GUILayout.Label($"ButtonSouth:{Gamepad.current.buttonSouth.isPressed}");
+        //GUILayout.Label($"ButtonEast:{Gamepad.current.buttonEast.isPressed}");
+        //GUILayout.Label($"ButtonWast:{Gamepad.current.buttonWest.isPressed}");
+        //GUILayout.Label($"LeftShoulder:{Gamepad.current.leftShoulder.ReadValue()}");
+        //GUILayout.Label($"LeftTrigger:{Gamepad.current.leftTrigger.ReadValue()}");
+        //GUILayout.Label($"RightShoulder:{Gamepad.current.rightShoulder.ReadValue()}");
+        //GUILayout.Label($"RighetTrigger:{Gamepad.current.rightTrigger.ReadValue()}");
+        //GUILayout.Label($"LeftStickUp:{Gamepad.current.leftStick.up.ReadValue()}");
+        //GUILayout.Label($"Space:{Keyboard.current.spaceKey.ReadValue()}");
+        //GUILayout.Label($"JumpFlg:{JumpNow}");
     }
 
 }

@@ -39,6 +39,7 @@ public static class SoundManager {
             return; // Ä¶‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½
         }
         audioSource.clip = SoundData.SEClip[(int)_seDataNumber];
+        audioSource.volume = 0.3f;
         audioSource.Play();
     }
 

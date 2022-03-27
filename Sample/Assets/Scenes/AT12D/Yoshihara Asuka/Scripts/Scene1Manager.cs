@@ -16,20 +16,26 @@ using UnityEngine;
 
 public class Scene1Manager : MonoBehaviour
 {
-    public GameObject playerPrefab;                     // プレイヤーのプレハブを扱う
+    public GameObject playerPrefab;                             // プレイヤーのプレハブを扱う
+    public GameObject HPSystem;     
 
     private void Awake()
     {
+        //---フレームレート固定
         Application.targetFrameRate = 60;
 
         //---プレイヤープレハブの取得
         if (!GameData.Player)
         {
-            GameData.Player = playerPrefab;             // GameDataのプレイヤーに取得
+            GameData.Player = playerPrefab;                     // GameDataのプレイヤーに取得
         }
         GameData.PlayerPos = GameData.Player.transform.position = new Vector3(2.0f, 2.0f, -1.0f); // プレイヤーの座標を設定
-        GameObject player = Instantiate(GameData.Player);    // プレハブを実体化
+        GameObject player = Instantiate(GameData.Player);       // プレハブを実体化
 
+        //---UIを表示
+        GameObject canvas = GameObject.Find("Canvas");          // シーン上のCanvasを参照し,canvasに定義
+        var instance = Instantiate(HPSystem);                    // HPUIを取得
+        instance.transform.SetParent(canvas.transform,false);   // canvasの子オブジェクトにアタッチ
     }
     // Start is called before the first frame update
     void Start()

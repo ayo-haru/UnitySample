@@ -7,6 +7,7 @@
 //
 // <開発履歴>
 // 2022/03/25 作成
+// 2022/03/28 仮実装
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -15,7 +16,10 @@ using UnityEngine.UI;
 
 public class HPManager : MonoBehaviour
 {
-    public Slider ゲージA;
+    public　Image HP;
+
+    private float MaxHP = 6;        // HPの最大値
+    public float currentHP = 6;     // 現在のHP
 
     private void Awake()
     {
@@ -29,12 +33,12 @@ public class HPManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //ゲージA.value = 5;
+        HP.fillAmount = currentHP / MaxHP;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        HP.fillAmount = currentHP / MaxHP;
     }
 }

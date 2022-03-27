@@ -217,7 +217,11 @@ public class Player2 : MonoBehaviour
     //---当たり判定処理
     private void OnCollisionEnter(Collision collision)
     {
-
+        if(collision.gameObject.tag == "Damaged")
+        {
+            Debug.Log("攻撃をうけた。");
+            hpmanager.currentHP--;
+        }
     }
 
     //---当たり判定処理(GroundCheckのボックスコライダーで判定を取るように)
@@ -235,6 +239,8 @@ public class Player2 : MonoBehaviour
                 //SoundManager.Play(SoundData.eSE.SE_LAND, SoundData.GameAudioList);
             }
         }
+
+
 
     }
 

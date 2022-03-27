@@ -34,7 +34,30 @@ public class Player : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other) {
-
+        if (other.gameObject.tag == "toKitchen1")    // この名前のタグと衝突したら
+        {
+            GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen1_SCENE;
+        }
+        if (other.gameObject.tag == "toKitchen2")    // この名前のタグと衝突したら
+        {
+            GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen2_SCENE;
+        }
+        if (other.gameObject.tag == "toKitchen3")    // この名前のタグと衝突したら
+        {
+            GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen3_SCENE;
+        }
+        if (other.gameObject.tag == "toKitchen4")    // この名前のタグと衝突したら
+        {
+            GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen4_SCENE;
+        }
+        if (other.gameObject.tag == "toKitchen5")    // この名前のタグと衝突したら
+        {
+            GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen5_SCENE;
+        }
+        if (other.gameObject.tag == "toKitchen6")    // この名前のタグと衝突したら
+        {
+            GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen6_SCENE;
+        }
 
 
 

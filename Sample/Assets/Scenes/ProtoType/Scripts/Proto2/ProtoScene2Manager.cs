@@ -42,7 +42,7 @@ public class ProtoScene2Manager : MonoBehaviour
         GameObject player = Instantiate(GameData.Player);
 
         //----- マップの番号を保存 -----
-        GameData.NextMapNumber =  GameData.CurrentMapNumber = (int)GameData.eSceneState.MAP2_SCENE;
+        //GameData.NextMapNumber =  GameData.CurrentMapNumber = (int)GameData.eSceneState.MAP2_SCENE;
         SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
 
         //----- 開始演出 -----

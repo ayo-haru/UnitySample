@@ -17,67 +17,60 @@ public class Boss1Attack : MonoBehaviour
     static public Vector3 BossStartPoint;
     //“Ëi—p•Ï”ŒQ
     //----------------------------------------------------------
-    static GameObject Forkobj;
-    static GameObject Fork;
-    static public Vector3 RushStartPoint;
-    static public Vector3 RushEndPoint;
-    static public Vector3 RushPlayerPoint;
-    static public Vector3 RushRefEndPoint;
-    static public Vector3 RushMiddlePoint;
-    static public bool OnlyRushFlg;
-    [SerializeField] public float SFRushSpeed;
-    static public float RushSpeed;
-    static public bool RushRefFlg = false;
-    static public float RushTime;
-    static public float RushRefTime;
-    static public bool BossReturnFlg;
-    static public float BossReturnTime;
-    static public bool RushEndFlg;
-    static public float RushReturnSpeed;
-    static public float ReturnDelay;
+    GameObject Forkobj;
+    GameObject Fork;
+    Vector3 RushStartPoint;
+    Vector3 RushEndPoint;
+    Vector3 RushPlayerPoint;
+    Vector3 RushRefEndPoint;
+    Vector3 RushMiddlePoint;
+    bool OnlyRushFlg;
+    [SerializeField] public float RushSpeed;
+    bool RushRefFlg = false;
+    float RushTime;
+    float RushRefTime;
+    bool BossReturnFlg;
+    float BossReturnTime;
+    bool RushEndFlg;
+    float RushReturnSpeed;
+    float ReturnDelay;
     //----------------------------------------------------------
     //ƒCƒ`ƒS”š’e•Ï”
     //----------------------------------------------------------
-    static GameObject obj;                                       //ƒCƒ`ƒS¶¬—p
-    static public GameObject [] Strawberry;               //ƒCƒ`ƒS¶¬ŒãŠi”[
-    [SerializeField] public int SFMax_Strawberry;           //‘Å‚Á‚½ƒCƒ`ƒS‚Ì”»’f
-    static public int Max_Strawberry;
-    static public int StrawberryNum;
-    static public int AliveStrawberry;
-    static public Vector3 StrawberryPos;
-    static public bool [] StrawberryUseFlg;
-    static public bool [] StrawberryRefFlg;
-    [SerializeField] public float SFStrawberrySpeed;
-    static public float StrawberrySpeed;
-    static public bool[] PlayerRefDir;
-    static public Vector3 RefMiss;
-    static bool RefMissFlg;
+    GameObject obj;                                       //ƒCƒ`ƒS¶¬—p
+    GameObject [] Strawberry;               //ƒCƒ`ƒS¶¬ŒãŠi”[
+    [SerializeField] public int Max_Strawberry;           //‘Å‚Á‚½ƒCƒ`ƒS‚Ì”»’f
+    int StrawberryNum;
+    int AliveStrawberry;
+    Vector3 StrawberryPos;
+    bool [] StrawberryUseFlg;
+    bool [] StrawberryRefFlg;
+    [SerializeField] public float StrawberrySpeed;
+    bool[] PlayerRefDir;
+    Vector3 RefMiss;
+    bool RefMissFlg;
 
     //ƒxƒWƒG‹Èü—p
-    static public Vector3  StartPoint;
-    static public Vector3 [] MiddlePoint;
-    static public Vector3 [] EndPoint;
-    [SerializeField] public Vector3 FirstMiddlePoint;
-    [SerializeField] public Vector3 FirstEndPoint;
-    static public float [] FinishTime;
-    static public Vector3 RefEndPoint;
-    static public float[] Ref_FinishTime;
-    static public  Vector3[] PlayerPoint;
-    static public Vector3[] PlayerMiddlePoint;
+    Vector3  StartPoint;
+    Vector3 [] MiddlePoint;
+    Vector3 [] EndPoint;
+    float [] FinishTime;
+    Vector3 RefEndPoint;
+    float[] Ref_FinishTime;
+     Vector3[] PlayerPoint;
+    Vector3[] PlayerMiddlePoint;
     //----------------------------------------------------------
     //ƒiƒCƒt“Š‚°•Ï”ŒQ
     //----------------------------------------------------------
-    static GameObject Knifeobj;
-    static GameObject Knife;
-    static public Vector3 KnifeStartPoint;
-    static public Vector3 KnifeEndPoint;
-    static public Vector3 KnifePlayerPoint;
-    static public float KnifeTime;
-    [SerializeField] public float SFKnifeSpeed;
-    static public float KnifeSpeed;
-
-    static public bool KnifeRefFlg = false;
-    static public float KnifeRefTime;
+    GameObject Knifeobj;
+    GameObject Knife;
+    Vector3 KnifeStartPoint;
+    Vector3 KnifeEndPoint;
+    Vector3 KnifePlayerPoint;
+    float KnifeTime;
+    [SerializeField] public float KnifeSpeed;
+    bool KnifeRefFlg = false;
+    float KnifeRefTime;
     //----------------------------------------------------------
 
 
@@ -85,12 +78,6 @@ public class Boss1Attack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-        Max_Strawberry = SFMax_Strawberry;
-        StrawberrySpeed = SFStrawberrySpeed;
-        RushSpeed = SFRushSpeed;
-        KnifeSpeed = SFKnifeSpeed;
-
         obj = (GameObject)Resources.Load("strawberry");
         Knifeobj = (GameObject)Resources.Load("Knife");
         Forkobj = (GameObject)Resources.Load("Fork");
@@ -113,10 +100,10 @@ public class Boss1Attack : MonoBehaviour
             
             StrawberryRefFlg[i] = false;
             StrawberryUseFlg[i] = false;
-            MiddlePoint[i] = FirstMiddlePoint;
-            EndPoint[i] = FirstEndPoint;
-            MiddlePoint[i].x -= (1.7f * i);
-            EndPoint[i].x -= (4f * i);
+            MiddlePoint[i] = GameObject.Find("CubeEnd").transform.position; 
+            EndPoint[i] = GameObject.Find("Cube").transform.position; 
+            MiddlePoint[i].x -= (2.2f * i);
+            EndPoint[i].x -= (4.4f * i);
         }
         OnlyFlg = false;
     }
@@ -127,7 +114,7 @@ public class Boss1Attack : MonoBehaviour
 
     }
     //‚»‚ê‚¼‚ê‚ÌUŒ‚ˆ—
-    public static void Boss1Fork()
+    public void Boss1Fork()
     {
         //‹ß‹——£(“Ëi)
         if(!OnlyFlg)
@@ -184,7 +171,7 @@ public class Boss1Attack : MonoBehaviour
                     ReturnDelay += Time.deltaTime;
                     if (ReturnDelay >= 1.0f)
                     {
-                        RushReturnSpeed = 1;
+                        RushReturnSpeed = 1.5f;
                         RushEndFlg = true;
                         BossReturnFlg = true;
                         OnlyFlg = false;
@@ -216,7 +203,7 @@ public class Boss1Attack : MonoBehaviour
             }
         }
     }
-    public static void Boss1Strawberry()
+    public void Boss1Strawberry()
     {
         if(AliveStrawberry>= Max_Strawberry)
         {
@@ -338,7 +325,7 @@ public class Boss1Attack : MonoBehaviour
         }
     }
     
-    static public void Boss1Knife()
+    public void Boss1Knife()
     {
         //ƒiƒCƒt‰“‹——£
         

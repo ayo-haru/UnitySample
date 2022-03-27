@@ -23,7 +23,6 @@ public class KitchenSceneManager : MonoBehaviour
              * unityのエディタ上でこのシーンだけ動かした場合は値が入らないためシリアライズフィールドで
              * インスペクタービューに表示させたcurrentSceneNumで初期化をする。
              * GameData.NextMapNumberは初期化してない場合はかってに0になってるから==
-             
              */
             GameData.NextMapNumber = currentSceneNum;
         }

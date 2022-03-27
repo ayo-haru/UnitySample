@@ -42,7 +42,7 @@ public class ProtoScene1Manager : MonoBehaviour {
         GameObject player = Instantiate(GameData.Player);
 
         //----- マップの番号を保存 -----
-        GameData.NextMapNumber = GameData.CurrentMapNumber = (int)GameData.eSceneState.MAP1_SCENE;
+        //GameData.NextMapNumber = GameData.CurrentMapNumber = (int)GameData.eSceneState.MAP1_SCENE;
         SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
 
         // audioSourceList配列の数だけAudioSourceを自身に生成して配列に格納

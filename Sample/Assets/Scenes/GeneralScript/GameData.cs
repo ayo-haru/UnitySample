@@ -19,8 +19,12 @@ public static class GameData
 {
    public enum eSceneState {
         TITLE_SCENE = 0,
-        MAP1_SCENE,
-        MAP2_SCENE,
+        Kitchen1_SCENE,
+        Kitchen2_SCENE,
+        Kitchen3_SCENE,
+        Kitchen4_SCENE,
+        Kitchen5_SCENE,
+        Kitchen6_SCENE,
         BOSS1_SCENE
     }
 
@@ -29,12 +33,12 @@ public static class GameData
     public static int CurrentMapNumber;     // マップの番号いれる
     public static int NextMapNumber;        // マップの番号いれる
     static string[] MapName                 // マップの名前 
-        = { "ProtoTypeTitleScene", "ProtoTypeScene1" , "ProtoTypeScene2","Tester" };
+        = { "ProtoTypeTitleScene", "Kitchen001", "Kitchen002", "Kitchen003", "Kitchen004", "Kitchen005", "Kitchen006", "Tester" };
     public static string CurrentMapName;    // 現在のマップの名前
     public static Vector3 PlayerPos;        // プレイヤーの座標（現在はGameManagerで毎フレーム代入しているが本来はPlayerクラスが良い(はず)） 
     public static GameObject Player;
     public static bool isFadeOut = false;   //フェードアウト処理の開始、完了を管理するフラグ
-    public static bool isFadeIn = false;    //フェードイン処理の開始、完了を管理するフラグ
+    public static bool isFadeIn  = false;   //フェードイン処理の開始、完了を管理するフラグ
 
     public static bool isAliveBoss1 = true;    //ボス１の討伐情報保存用
 

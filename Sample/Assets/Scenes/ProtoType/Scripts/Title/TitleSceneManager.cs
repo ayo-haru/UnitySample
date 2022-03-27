@@ -26,7 +26,8 @@ public class TitleSceneManager : MonoBehaviour {
     void Update() {
         if (Input.GetKeyDown(KeyCode.Return))   // ‚Í‚¶‚ß‚©‚ç
         {
-            string nextSceneName = GameData.GetNextScene(1);
+            GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen1_SCENE;
+            string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
             SceneManager.LoadScene(nextSceneName);
         }
 

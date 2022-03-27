@@ -27,7 +27,7 @@ public class HPgage : MonoBehaviour
         slider.value = 1.0f;               //スライダーの最大値
         currentHp = MAXHP;              //現在のHPを最大HPにする
         m_DelHp = 0;
-        Debug.Log("Start currentHp : " + slider.value);
+        //Debug.Log("Start currentHp : " + slider.value);
     }
 
     // Update is called once per frame

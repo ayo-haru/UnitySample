@@ -58,6 +58,10 @@ public class Player : MonoBehaviour
         {
             GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen6_SCENE;
         }
+        if (other.gameObject.tag == "toBoss1")    // Ç±ÇÃñºëOÇÃÉ^ÉOÇ∆è’ìÀÇµÇΩÇÁ
+        {
+            GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
+        }
 
 
 

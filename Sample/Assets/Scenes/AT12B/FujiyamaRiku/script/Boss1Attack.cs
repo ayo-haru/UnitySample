@@ -251,8 +251,8 @@ public class Boss1Attack : MonoBehaviour
                         PlayerPoint[i].x = GameData.PlayerPos.x;
                         PlayerPoint[i].y = GameData.PlayerPos.y + 2.0f;
                         PlayerPoint[i].z = GameData.PlayerPos.z;
-                        PlayerMiddlePoint[i].x += GameObject.Find("polySurface1").transform.position.x + 4.0f;
-                        PlayerMiddlePoint[i].y += GameObject.Find("polySurface1").transform.position.y + 4.0f;
+                        PlayerMiddlePoint[i].x += GameObject.Find("polySurface1").transform.position.x + 3.0f;
+                        PlayerMiddlePoint[i].y += GameObject.Find("polySurface1").transform.position.y + 3.0f;
                         PlayerMiddlePoint[i].z += GameObject.Find("polySurface1").transform.position.z;
                         RefEndPoint = Boss.BossPos;
                         PlayerRefDir[i] = true;
@@ -283,7 +283,7 @@ public class Boss1Attack : MonoBehaviour
                 if (StrawberryRefFlg[i])
                 {
                     
-                    Ref_FinishTime[i] += Time.deltaTime * 2.5f;
+                    Ref_FinishTime[i] += Time.deltaTime * 2;
                    if(!PlayerRefDir[i])
                     {
                         Strawberry[i].transform.position = Vector3.Lerp(PlayerPoint[i], RefEndPoint, Ref_FinishTime[i]);

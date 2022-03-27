@@ -29,6 +29,8 @@ public class Player2 : MonoBehaviour
     //---コンポーネント取得
     private Rigidbody rb;
     public GameObject prefab;                           // "Weapon"プレハブを格納する変数
+    GameObject hp;                                      // HPのオブジェクトを格納
+    HPManager hpmanager;                                // HPManagerのコンポーネントを取得する変数
 
     //---移動変数
     private Vector3 PlayerPos;                          // プレイヤーの座標
@@ -55,6 +57,7 @@ public class Player2 : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         PlayerActionAsset = new Game_pad();             // InputActionインスタンスを生成
+
     }
 
 
@@ -91,6 +94,10 @@ public class Player2 : MonoBehaviour
     void Start()
     {
         prefab = (GameObject)Resources.Load("Weapon");
+
+        hp = GameObject.Find("HPSystem(Clone)");        // HPSystemを参照
+        hpmanager = hp.GetComponent<HPManager>();       // HPSystemの使用するコンポーネント取得
+
     }
 
     // Update is called once per frame
@@ -100,6 +107,12 @@ public class Player2 : MonoBehaviour
         ForceDirection += move.ReadValue<Vector2>();
         ForceDirection.Normalize();
         MovingVelocity = ForceDirection * maxSpeed;
+
+        //---バックスペースキーでHPを減らす(デバッグ)
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            hpmanager.currentHP--;
+        }
     }
 
     private void FixedUpdate()
@@ -204,7 +217,11 @@ public class Player2 : MonoBehaviour
     //---当たり判定処理
     private void OnCollisionEnter(Collision collision)
     {
-
+        if(collision.gameObject.tag == "Damaged")
+        {
+            Debug.Log("攻撃をうけた。");
+            hpmanager.currentHP--;
+        }
     }
 
     //---当たり判定処理(GroundCheckのボックスコライダーで判定を取るように)
@@ -222,6 +239,8 @@ public class Player2 : MonoBehaviour
                 //SoundManager.Play(SoundData.eSE.SE_LAND, SoundData.GameAudioList);
             }
         }
+
+
 
     }
 

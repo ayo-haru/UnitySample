@@ -123,7 +123,8 @@ public class Boss1Attack : MonoBehaviour
             Debug.Log("Pos : " + Boss.BossPos);
             RushStartPoint = Boss.BossPos;
             RushEndPoint = GameObject.Find("ForkEndPoint").transform.position;
-            Fork = Instantiate(Forkobj, RushStartPoint, Quaternion.identity);
+            
+            Fork = Instantiate(Forkobj, RushStartPoint, Quaternion.Euler(0.0f,0.0f,90.0f));
             Fork.transform.parent = Boss.Bossobj.transform;
         }
         if(OnlyFlg)

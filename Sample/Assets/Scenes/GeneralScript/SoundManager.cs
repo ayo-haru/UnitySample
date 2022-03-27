@@ -5,7 +5,8 @@
 //
 // <開発履歴>
 // 2022/03/16 作成
-//
+// 2022/03/26 SEの音量を30％に固定
+// 2022/03/27 音のフェードを追加
 //=============================================================================
 
 using System.Collections;
@@ -52,4 +53,18 @@ public static class SoundManager {
         audioSource.clip = SoundData.BGMClip[(int)_bgmDataNumber];
         audioSource.Play();
     }
+
+    //----------------------------------
+    //
+    //  サウンドフェード
+    //  作成：伊地田真衣
+    //
+    //----------------------------------
+    //public static IEnumerator VolumeDown(AudioSource[] _audioSources) {
+    //    while (_audioSources.volume > 0)
+    //    {
+    //        _audioSources.volume -= 0.01f;
+    //        yield return new WaitForSeconds(0.1f);
+    //    }
+    //}
 }

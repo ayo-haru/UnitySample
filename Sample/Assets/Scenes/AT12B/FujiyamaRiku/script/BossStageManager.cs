@@ -36,7 +36,7 @@ public class BossStageManager : MonoBehaviour
             GameData.Player = PlayerPrefab;                     // プレイヤーの情報がなかったら
                                                                 // GameDataにプレイヤーを定義する
         }
-        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-8.0f,0.0f,-2.0f); // プレイヤーの初期位置を設定
+        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(3.4f,14.8f,24.5f); // プレイヤーの初期位置を設定
         GameObject Player = Instantiate(GameData.Player);       // プレハブをクローン
 
         //---プレイヤーUIを表示

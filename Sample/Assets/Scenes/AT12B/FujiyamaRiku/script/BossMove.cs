@@ -26,7 +26,12 @@ public class BossMove : MonoBehaviour
     private float timeToStayInIdle = 24f;
     //モーションのランダム抽選用の数
     private int RandomNumbe = 0;
-    
+
+    //攻撃数カウント
+    public static int AttackCount = 0;
+    //待機モーションなしの攻撃回数（HP50％以下のみ）
+    [SerializeField]
+    private int MaxAttack = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -103,36 +108,47 @@ public class BossMove : MonoBehaviour
     {
         elapsedTimeOfIdleState += Time.deltaTime;
         //Debug.Log("Time" + elapsedTimeOfIdleState);
+        if (AttackCount == MaxAttack)
+        {
+            //SetState(Boss_State.idle);//待機モーション
+            elapsedTimeOfIdleState = timeToStayInIdle;
+            AttackCount = 0;          //攻撃数カウントをゼロに
+            Debug.Log("アイドル??");
+        }
         //　一定時間が経過したら各種攻撃状態にする
         if (elapsedTimeOfIdleState >= timeToStayInIdle)
         {
             elapsedTimeOfIdleState = 0f;       //idle状態の経過時間をoffにする
-
-            RandomNumbe = Random.Range(1, 4);//攻撃パターンランダム化
-            Debug.Log("Random" + RandomNumbe);
-            switch (RandomNumbe)            //switch分岐
-            {
-                case 1://イチゴ爆弾へ
-                    SetState(Boss_State.strawberryBomb);
-                    RandomNumbe = -1;
-                    Debug.Log("イチゴ爆弾");
-                    break;//break文
-
-                case 2://突進へ
-                    SetState(Boss_State.charge);
-                    RandomNumbe = -1;
-                    Debug.Log("突進攻撃");
-                    break;//break文
-
-                case 3://ナイフ攻撃
-                    if (HPgage.currentHp <= 50)
-                    {
-                        SetState(Boss_State.KnifeThrower);
+            Debug.Log("AttackCount：" + AttackCount);
+            
+                //ランダム数の生成とswitch分岐をこの中へ
+                RandomNumbe = Random.Range(1, 4);//攻撃パターンランダム化
+                Debug.Log("Random" + RandomNumbe);
+                switch (RandomNumbe)            //switch分岐
+                {
+                    case 1://イチゴ爆弾へ
+                        SetState(Boss_State.strawberryBomb);
                         RandomNumbe = -1;
-                    }
-                    Debug.Log("ナイフ攻撃");
-                    break;//break文
-            }
+                        Debug.Log("イチゴ爆弾");
+                        break;//break文
+
+                    case 2://突進へ
+                        SetState(Boss_State.charge);
+                        RandomNumbe = -1;
+                        Debug.Log("突進攻撃");
+                        break;//break文
+
+                    case 3://ナイフ攻撃
+                        if (HPgage.currentHp <= 50)
+                        {
+                            SetState(Boss_State.KnifeThrower);
+                            RandomNumbe = -1;
+                        }
+                        Debug.Log("ナイフ攻撃");
+                        break;//break文
+                }
+            
+            
         }
     }
 }

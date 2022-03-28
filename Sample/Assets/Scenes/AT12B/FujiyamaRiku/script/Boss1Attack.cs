@@ -123,7 +123,8 @@ public class Boss1Attack : MonoBehaviour
             Debug.Log("Pos : " + Boss.BossPos);
             RushStartPoint = Boss.BossPos;
             RushEndPoint = GameObject.Find("ForkEndPoint").transform.position;
-            
+            RushMiddlePoint = GameObject.Find("RushMiddle").transform.position;
+
             Fork = Instantiate(Forkobj, RushStartPoint, Quaternion.Euler(0.0f,0.0f,90.0f));
             Fork.transform.parent = Boss.Bossobj.transform;
         }
@@ -131,7 +132,7 @@ public class Boss1Attack : MonoBehaviour
         {
             if(BossReturnFlg)
             {
-
+                
                 BossReturnTime += Time.deltaTime * RushReturnSpeed;
                 if (RushEndFlg)
                 {
@@ -144,11 +145,23 @@ public class Boss1Attack : MonoBehaviour
 
                 if (BossReturnTime >= 1.0f)
                 {
+                    
+                    Destroy(Fork);
                     ReturnDelay = 0;
                     RushEndFlg = false;
                     BossReturnFlg = false;
                     BossReturnTime = 0;
-                    BossMove.SetState(BossMove.Boss_State.idle);
+                    if (HPgage.currentHp >= 50)
+                    {
+                        BossMove.SetState(BossMove.Boss_State.idle);
+                    }
+                    if(HPgage.currentHp < 50)
+                    {
+                        Debug.Log("アイドルぅ！！！！！！！！！！！");
+                        BossMove.AttackCount += 1;
+                        BossMove.SetState(BossMove.Boss_State.idle);
+                    }
+                    
                     OnlyFlg = false;
                 }
                 return;
@@ -175,10 +188,8 @@ public class Boss1Attack : MonoBehaviour
                         RushReturnSpeed = 1.5f;
                         RushEndFlg = true;
                         BossReturnFlg = true;
-                        OnlyFlg = false;
-                        RushMiddlePoint = GameObject.Find("RushMiddle").transform.position;
                         RushTime = 0;
-                        Destroy(Fork);
+                        
                     }
                     return;
                 }
@@ -197,7 +208,6 @@ public class Boss1Attack : MonoBehaviour
                         HPgage.DelHP();
                         RushTime = 0;
                         RushRefTime = 0;
-                        Destroy(Fork);
                     
                     return;
                 }
@@ -211,7 +221,17 @@ public class Boss1Attack : MonoBehaviour
             
             AliveStrawberry = 0;
             StrawberryNum = 0;
-            BossMove.SetState(BossMove.Boss_State.idle);
+            if (HPgage.currentHp >= 50)
+            {
+                BossMove.SetState(BossMove.Boss_State.idle);
+            }
+            if (HPgage.currentHp < 50)
+            {
+                Debug.Log("アイドルぅ！！！！！！！！！！！");
+                BossMove.AttackCount += 1;
+                BossMove.SetState(BossMove.Boss_State.idle);
+                
+            }
             return;
         }
         //Debug.Log("StrNum:" + StrawberryUseFlg[0]);
@@ -358,7 +378,16 @@ public class Boss1Attack : MonoBehaviour
                 OnlyFlg = false;
                 KnifeTime = 0;
                 Destroy(Knife);
-                BossMove.SetState(BossMove.Boss_State.idle);
+                if (HPgage.currentHp >= 50)
+                {
+                    BossMove.SetState(BossMove.Boss_State.idle);
+                }
+                if (HPgage.currentHp < 50)
+                {
+                    BossMove.AttackCount += 1;
+                    BossMove.SetState(BossMove.Boss_State.idle);
+                    
+                }
                 return;
             }
         }
@@ -377,7 +406,16 @@ public class Boss1Attack : MonoBehaviour
                 KnifeTime = 0;
                 KnifeRefTime = 0;
                 Destroy(Knife);
-                BossMove.SetState(BossMove.Boss_State.idle);
+                if (HPgage.currentHp >= 50)
+                {
+                    BossMove.SetState(BossMove.Boss_State.idle);
+                }
+                if (HPgage.currentHp < 50)
+                {
+                    BossMove.AttackCount += 1;
+                    BossMove.SetState(BossMove.Boss_State.idle);
+                    
+                }
                 return;
             }
         }

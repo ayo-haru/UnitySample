@@ -54,14 +54,14 @@ public class CarrotEnemy : MonoBehaviour
             look = Quaternion.LookRotation(aim);
             transform.localRotation = look;
 
-            transform.Rotate(90, 0, 0);
+            //transform.Rotate(90, 0, 0);
             
         }
 
         if (rb.position == targetPosition)
         {
-            transform.Rotate(-90, 0, 0);
-            rb.constraints = RigidbodyConstraints.FreezeRotationX;
+            //transform.Rotate(-90, 0, 0);
+            //rb.constraints = RigidbodyConstraints.FreezeRotationX;
             Destroy(gameObject, 1.0f);
         }
     }

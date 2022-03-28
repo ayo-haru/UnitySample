@@ -68,7 +68,7 @@ public class EnemyDown : MonoBehaviour
             //取得した法線ベクトルに跳ね返す速さをかけて、跳ね返す
             rb.AddForce(velocity * bouncePower, ForceMode.Force);
             // 回転させる
-            rb.AddTorque(0.0f, 0.0f, -100.0f);
+            rb.AddTorque(-100.0f, -100.0f, -100.0f);
         }
 
         if (isAlive == false && collision.gameObject.CompareTag("Ground"))

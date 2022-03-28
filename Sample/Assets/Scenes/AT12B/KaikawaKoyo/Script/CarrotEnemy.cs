@@ -55,9 +55,7 @@ public class CarrotEnemy : MonoBehaviour
             transform.localRotation = look;
 
             transform.Rotate(90, 0, 0);
-
-            //var goal = targetPosition + aim;
-
+            
         }
 
         if (rb.position == targetPosition)
@@ -79,6 +77,14 @@ public class CarrotEnemy : MonoBehaviour
             InArea = true;
             Look = true;
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        //if (collision.gameObject.CompareTag("Player"))
+        //{
+        //    Destroy(gameObject, 0.0f);
+        //}
     }
 
 }

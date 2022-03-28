@@ -260,19 +260,18 @@ public class Boss1Attack : MonoBehaviour
                     Debug.Log("’e‚¢‚½IF" + i);
                     StrawberryRefFlg[i] = true;
                     
-                    
-                    if (Strawberry[i].transform.position.y >= GameObject.Find("polySurface1").transform.position.y + 2.0f)
+                    if (Strawberry[i].transform.position.y >= GameObject.Find("ear1").transform.position.y + 2.0f)
                     {
                         PlayerPoint[i].x = GameData.PlayerPos.x;
                         PlayerPoint[i].y = GameData.PlayerPos.y + 2.0f;
                         PlayerPoint[i].z = GameData.PlayerPos.z;
-                        PlayerMiddlePoint[i].x += GameObject.Find("polySurface1").transform.position.x + 3.0f;
-                        PlayerMiddlePoint[i].y += GameObject.Find("polySurface1").transform.position.y + 3.0f;
-                        PlayerMiddlePoint[i].z += GameObject.Find("polySurface1").transform.position.z + 3.0f;
+                        PlayerMiddlePoint[i].x += GameObject.Find("ear1").transform.position.x + 3.0f;
+                        PlayerMiddlePoint[i].y += GameObject.Find("ear1").transform.position.y + 3.0f;
+                        PlayerMiddlePoint[i].z += GameObject.Find("ear1").transform.position.z + 3.0f;
                         RefEndPoint = Boss.BossPos;
                         PlayerRefDir[i] = true;
                     }
-                    else if (Strawberry[i].transform.position.x >= GameObject.Find("star4").transform.position.x)
+                    else if (Strawberry[i].transform.position.x >= GameObject.Find("headstar").transform.position.x)
                     {
                         PlayerPoint[i].x = GameData.PlayerPos.x + 2.0f;
                         PlayerPoint[i].y = GameData.PlayerPos.y;
@@ -281,7 +280,7 @@ public class Boss1Attack : MonoBehaviour
 
 
                     }
-                    else if (Strawberry[i].transform.position.x <= GameObject.Find("polySurface1").transform.position.x)
+                    else if (Strawberry[i].transform.position.x <= GameObject.Find("ear1").transform.position.x)
                     {
                         PlayerPoint[i].x = GameData.PlayerPos.x - 2.0f;
                         PlayerPoint[i].y = GameData.PlayerPos.y;

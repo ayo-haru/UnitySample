@@ -43,6 +43,7 @@ public static class GameData
     public static string CurrentMapName;    // 現在のマップの名前
     public static Vector3 PlayerPos;        // プレイヤーの座標（現在はGameManagerで毎フレーム代入しているが本来はPlayerクラスが良い(はず)） 
     public static GameObject Player;
+    public static float HP;                 // HPの保存
     public static bool isFadeOut = false;   //フェードアウト処理の開始、完了を管理するフラグ
     public static bool isFadeIn  = false;   //フェードイン処理の開始、完了を管理するフラグ
 

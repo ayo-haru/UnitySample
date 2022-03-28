@@ -96,7 +96,7 @@ public class Player2 : MonoBehaviour
         prefab = (GameObject)Resources.Load("Weapon");
 
         hp = GameObject.Find("HPSystem(Clone)");        // HPSystemを参照
-        //hpmanager = hp.GetComponent<HPManager>();       // HPSystemの使用するコンポーネント取得
+        hpmanager = hp.GetComponent<HPManager>();       // HPSystemの使用するコンポーネント取得
 
     }
 
@@ -236,7 +236,13 @@ public class Player2 : MonoBehaviour
         if(collision.gameObject.tag == "Damaged")
         {
             Debug.Log("攻撃をうけた。");
-            //hpmanager.currentHP--;
+            hpmanager.currentHP--;
+
+            //HPが0になったらゲームオーバーを表示
+            if(hpmanager.currentHP <= 0)
+            {
+                GameObject.Find("EventSystem").GetComponent<GameOver>().GameOverShow();
+            }
         }
     }
 

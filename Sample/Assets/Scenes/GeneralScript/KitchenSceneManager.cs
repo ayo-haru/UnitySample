@@ -37,22 +37,22 @@ public class KitchenSceneManager : MonoBehaviour
 
         switch(GameData.CurrentMapNumber) {
             case (int)GameData.eSceneState.Kitchen1_SCENE:
-                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-13.0f, 5.0f, -1.0f);
+                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(0.0f, 11.5f, -1.0f);
                 break;
             case (int)GameData.eSceneState.Kitchen2_SCENE:
-                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(2.0f, 2.0f, -1.0f);
+                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-1.0f, 11.5f, -1.0f);
                 break;
             case (int)GameData.eSceneState.Kitchen3_SCENE:
-                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(2.0f, 2.0f, -1.0f);
+                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-1.0f, 11.5f, -1.0f);
                 break;
             case (int)GameData.eSceneState.Kitchen4_SCENE:
-                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(2.0f, 2.0f, -1.0f);
+                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-1.0f, 11.5f, -1.0f);
                 break;
             case (int)GameData.eSceneState.Kitchen5_SCENE:
-                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(2.0f, 2.0f, -1.0f);
+                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-1.0f, 11.5f, -1.0f);
                 break;
             case (int)GameData.eSceneState.Kitchen6_SCENE:
-                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(2.0f, 2.0f, -1.0f);
+                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-1.0f, 11.5f, -1.0f);
                 break;
             default:
                 break;

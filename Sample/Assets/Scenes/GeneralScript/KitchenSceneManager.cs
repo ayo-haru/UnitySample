@@ -70,6 +70,7 @@ public class KitchenSceneManager : MonoBehaviour
         {
             SoundData.GameAudioList[i] = gameObject.AddComponent<AudioSource>();
         }
+        SoundManager.Play(SoundData.eBGM.BGM_KITCHEN, SoundData.GameAudioList);
     }
 
     // Update is called once per frame

@@ -118,6 +118,7 @@ public class Player2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
             hpmanager.currentHP--;
+            //SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
         }
     }
 

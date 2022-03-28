@@ -134,6 +134,22 @@ public class Player2 : MonoBehaviour
         //---ˆÚ“®ˆ—(velocity‚Ìˆ—)
         rb.velocity = new Vector3(MovingVelocity.x,rb.velocity.y - MovingVelocity.y,0);
 
+
+        //---‰ñ“]ˆ—ˆ—
+        if (ForceDirection.magnitude > 0.01f)
+        {
+            transform.rotation = Quaternion.LookRotation(ForceDirection); //Œü‚«‚ð•ÏX‚·‚é
+            //if(ForceDirection.x > 0)
+            //{
+            //    transform.rotation = Quaternion.LookRotation(new Vector3(1.0f, 0.0f, 0.0f));
+            //}
+            //if (ForceDirection.x < 0)
+            //{
+            //    transform.rotation = Quaternion.LookRotation(new Vector3(-1.0f, 0.0f, 0.0f));
+            //}
+        }
+
+
         ForceDirection = Vector2.zero;
 
     }

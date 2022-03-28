@@ -19,6 +19,8 @@ public class EnemyDown : MonoBehaviour
 
     public bool isAlive;
 
+    float DeadTime;
+
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
@@ -30,13 +32,22 @@ public class EnemyDown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isAlive)
+        {
+            DeadTime += Time.deltaTime;
+        }
 
+        if (DeadTime > 1.0f)
+        {
+            Destroy(gameObject, 0.0f);
+        }
     }
 
     public void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name == "Weapon(Clone)")
         {
+            
             //衝突した面の、接触した点における法線ベクトルを取得
             Vector3 normal = collision.contacts[0].normal;
             //衝突した速度ベクトルを単位ベクトルにする
@@ -53,16 +64,17 @@ public class EnemyDown : MonoBehaviour
             rb.angularDrag = 0.0f;
             // 回転軸を中央に
             rb.centerOfMass = new Vector3(0, 0, 0);
-            // 回転させる
-            rb.AddTorque(0.0f, 0.0f, -100.0f);
+            
             //取得した法線ベクトルに跳ね返す速さをかけて、跳ね返す
             rb.AddForce(velocity * bouncePower, ForceMode.Force);
+            // 回転させる
+            rb.AddTorque(0.0f, 0.0f, -100.0f);
         }
 
         if (isAlive == false && collision.gameObject.CompareTag("Ground"))
         {
-            // 壁に当たったら消える
-            Destroy(gameObject, 0.0f);
+            // 壁、床に当たったら消える
+            //Destroy(gameObject, 0.0f);
         }
 
     }

@@ -19,7 +19,8 @@ public static class SoundData
 {
     public enum eBGM {      // BGMî‘çÜ
         BGM_TITLE = 0,
-        BGM_GAME,
+        BGM_KITCHEN,
+        BGM_BOSS1,
 
         MAX_BGM
     }
@@ -29,6 +30,11 @@ public static class SoundData
         SE_LAND,
         SE_SHIELD,
         SE_REFLECTION,
+        SE_BOOS1_DASHU,
+        SE_BOOS1_STRAWBERRY,
+        SE_BOOS1_KNIFE,
+        SE_KETTEI,
+        SE_SELECT,
 
         MAX_SE
     }

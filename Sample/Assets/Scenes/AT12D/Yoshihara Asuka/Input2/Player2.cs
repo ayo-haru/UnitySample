@@ -105,20 +105,23 @@ public class Player2 : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         //---rb.velocityによる移動処理
         ForceDirection += move.ReadValue<Vector2>();
         ForceDirection.Normalize();
         MovingVelocity = ForceDirection * maxSpeed;
 
+        if (!GameObject.Find("HPSystem(Clone)"))
+        {
+            return;
+        }
         //---現時点のHPをGamdataに格納
-        GameData.HP = hpmanager.currentHP; 
+        GameData.HP = hpmanager.currentHP;
         //---バックスペースキーでHPを減らす(デバッグ)
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
             hpmanager.currentHP--;
-            //SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
+            SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
         }
     }
 
@@ -243,6 +246,7 @@ public class Player2 : MonoBehaviour
         if(collision.gameObject.tag == "Damaged")
         {
             Debug.Log("攻撃をうけた。");
+            SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
             if (!GameObject.Find("HPSystem(Clone)"))
             {
                 return;

@@ -68,6 +68,7 @@ public class TomatoEnemy : MonoBehaviour
             if (isGround)
             {
                 rb.AddForce(transform.up * 60.0f, ForceMode.Force);
+                SoundManager.Play(SoundData.eSE.SE_TOMATO_BOUND, SoundData.GameAudioList);
             }
         }
     }
@@ -77,6 +78,7 @@ public class TomatoEnemy : MonoBehaviour
         // ÉvÉåÉCÉÑÅ[Ç…ìñÇΩÇ¡ÇΩÇÁè¡Ç¶ÇÈ
         if (collision.gameObject.CompareTag("Player"))
         {
+            SoundManager.Play(SoundData.eSE.SE_TOMATO_BOMB, SoundData.GameAudioList);
             Destroy(gameObject, 0.0f);
         }
     }

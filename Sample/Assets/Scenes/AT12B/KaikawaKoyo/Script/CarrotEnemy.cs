@@ -27,6 +27,9 @@ public class CarrotEnemy : MonoBehaviour
     bool InArea;
     bool Look;
 
+    private bool isCalledOnce = false;                             // 一回だけ処理をするために使う。
+
+
     private void Start()
     {
         Player = GameObject.FindWithTag("Player");    // プレイヤーのオブジェクトを探す
@@ -55,7 +58,11 @@ public class CarrotEnemy : MonoBehaviour
             transform.localRotation = look;
 
             //transform.Rotate(90, 0, 0);
-            
+            if (!isCalledOnce)     // 一回だけ呼ぶ
+            {
+                SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
+                isCalledOnce = true;
+            }
         }
 
         if (rb.position == targetPosition)

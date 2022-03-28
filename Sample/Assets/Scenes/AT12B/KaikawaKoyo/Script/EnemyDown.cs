@@ -69,6 +69,8 @@ public class EnemyDown : MonoBehaviour
             rb.AddForce(velocity * bouncePower, ForceMode.Force);
             // ‰ñ“]‚³‚¹‚é
             rb.AddTorque(-100.0f, -100.0f, -100.0f);
+
+            SoundManager.Play(SoundData.eSE.SE_REFLECTION, SoundData.GameAudioList);
         }
 
         if (isAlive == false && collision.gameObject.CompareTag("Ground"))

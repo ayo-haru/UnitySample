@@ -24,6 +24,8 @@ public class BroccoliEnemy : MonoBehaviour
     int DetecDist = 8;
     bool InArea = false;
 
+    private bool isCalledOnce = false;                             // 開始演出で使用。一回だけ処理をするために使う。
+
     private void Start()
     {
         Player = GameObject.FindWithTag("Player");    // プレイヤーのオブジェクトを探す
@@ -43,6 +45,12 @@ public class BroccoliEnemy : MonoBehaviour
             // プレイヤーに向かって特攻する
             float step = MoveSpeed * Time.deltaTime;
             rb.position = Vector3.MoveTowards(pos, Target.position, step);
+            if (!isCalledOnce)     // 一回だけ呼ぶ
+            {
+                SoundManager.Play(SoundData.eSE.SE_BUROKORI,SoundData.GameAudioList);
+                isCalledOnce = true;
+            }
+
         }
     }
 

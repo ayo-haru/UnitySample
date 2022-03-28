@@ -35,10 +35,17 @@ public class DataManager : MonoBehaviour
     public AudioClip se_land;
     public AudioClip se_shield;
     public AudioClip se_reflection;
+    public AudioClip se_damege;
 
     public AudioClip se_boss1Dashu;
     public AudioClip se_boss1Strawberry;
     public AudioClip se_boss1Knife;
+    public AudioClip se_boss1Damege;
+
+    public AudioClip se_burokori;
+    public AudioClip se_ninjin;
+    public AudioClip se_tomatobomb;
+    public AudioClip se_tomatobound;
 
     public AudioClip se_kettei;
     public AudioClip se_select;
@@ -73,10 +80,17 @@ public class DataManager : MonoBehaviour
         SoundData.SEDataSet(se_land, (int)SoundData.eSE.SE_LAND);
         SoundData.SEDataSet(se_shield, (int)SoundData.eSE.SE_SHIELD);
         SoundData.SEDataSet(se_reflection, (int)SoundData.eSE.SE_REFLECTION);
+        SoundData.SEDataSet(se_damege, (int)SoundData.eSE.SE_DAMEGE);
 
         SoundData.SEDataSet(se_boss1Dashu, (int)SoundData.eSE.SE_BOOS1_DASHU);
         SoundData.SEDataSet(se_boss1Strawberry, (int)SoundData.eSE.SE_BOOS1_STRAWBERRY);
         SoundData.SEDataSet(se_boss1Knife, (int)SoundData.eSE.SE_BOOS1_KNIFE);
+        SoundData.SEDataSet(se_boss1Damege, (int)SoundData.eSE.SE_BOOS1_DAMEGE);
+
+        SoundData.SEDataSet(se_burokori, (int)SoundData.eSE.SE_BUROKORI);
+        SoundData.SEDataSet(se_ninjin, (int)SoundData.eSE.SE_NINJIN);
+        SoundData.SEDataSet(se_tomatobomb, (int)SoundData.eSE.SE_TOMATO_BOMB);
+        SoundData.SEDataSet(se_tomatobound, (int)SoundData.eSE.SE_TOMATO_BOUND);
 
         SoundData.SEDataSet(se_kettei, (int)SoundData.eSE.SE_KETTEI);
         SoundData.SEDataSet(se_select, (int)SoundData.eSE.SE_SELECT);

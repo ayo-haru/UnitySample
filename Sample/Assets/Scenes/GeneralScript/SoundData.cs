@@ -34,6 +34,11 @@ public static class SoundData
         SE_BOOS1_DASHU,
         SE_BOOS1_STRAWBERRY,
         SE_BOOS1_KNIFE,
+        SE_BOOS1_DAMEGE,
+        SE_BUROKORI,
+        SE_NINJIN,
+        SE_TOMATO_BOMB,
+        SE_TOMATO_BOUND,
         SE_KETTEI,
         SE_SELECT,
 

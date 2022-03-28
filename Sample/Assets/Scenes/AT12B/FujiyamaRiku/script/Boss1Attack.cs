@@ -126,8 +126,9 @@ public class Boss1Attack : MonoBehaviour
             RushStartPoint = Boss.BossPos;
             RushEndPoint = GameObject.Find("ForkEndPoint").transform.position;
             RushMiddlePoint = GameObject.Find("RushMiddle").transform.position;
-
+            RushStartPoint.y -= 1.0f;
             Fork = Instantiate(Forkobj, RushStartPoint, Quaternion.Euler(0.0f,0.0f,90.0f));
+            RushStartPoint.y += 1.0f;
             Fork.transform.parent = Boss.Bossobj.transform;
         }
         if(OnlyFlg)
@@ -264,7 +265,7 @@ public class Boss1Attack : MonoBehaviour
                     {
                         PlayerPoint[i].x = GameData.PlayerPos.x;
                         PlayerPoint[i].y = GameData.PlayerPos.y + 2.0f;
-                        PlayerPoint[i].z = GameData.PlayerPos.z;
+                        PlayerPoint[i].z = GameData.PlayerPos.z + 3.0f;
                         PlayerMiddlePoint[i].x += GameObject.Find("ear1").transform.position.x + 3.0f;
                         PlayerMiddlePoint[i].y += GameObject.Find("ear1").transform.position.y + 3.0f;
                         PlayerMiddlePoint[i].z += GameObject.Find("ear1").transform.position.z + 3.0f;
@@ -284,7 +285,7 @@ public class Boss1Attack : MonoBehaviour
                     {
                         PlayerPoint[i].x = GameData.PlayerPos.x - 2.0f;
                         PlayerPoint[i].y = GameData.PlayerPos.y;
-                        PlayerPoint[i].z = GameData.PlayerPos.z +3.0f;
+                        PlayerPoint[i].z = GameData.PlayerPos.z + 3.0f;
                         RefEndPoint = RefMiss;
                         RefMissFlg = true;
                     }

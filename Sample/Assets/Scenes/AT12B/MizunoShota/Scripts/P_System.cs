@@ -7,13 +7,21 @@ public class P_System: MonoBehaviour
     // Inspector
     [SerializeField] private ParticleSystem particle;
 
-    // 1. 再生
+
+    //スタート時にエフェクトを再生しない。
+    //Hierarchyに無いと生成されないため。そのままだと再生されてしまうから。
+    private void Start()
+    {
+        Stop();
+    }
+
+    // 1. 再生(関数呼び出し、もしくは中の処理を記載すると動きます)
     private void Play()
     {
         particle.Play();
     }
 
-    // 2. 一時停止
+    // 2. 一時停止 これはあまり使わないと思う。
     private void Pause()
     {
         particle.Pause();

@@ -17,6 +17,8 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    private Vector3 ReSpawnPos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +31,7 @@ public class Player : MonoBehaviour
 
         if(this.transform.position.y < -5)
         {
-            this.transform.position = GameData.PlayerPos = GameData.Player.transform.position;
+            this.transform.position = GameData.Player.transform.position = GameData.PlayerPos = ReSpawnPos;
         }
     }
 
@@ -37,8 +39,8 @@ public class Player : MonoBehaviour
         //----- セーブ -----
         if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
         {
-            GameData.PlayerPos = this.transform.position;    // プレイヤーの位置を保存
-            SaveManager.saveLastPlayerPos(GameData.PlayerPos);
+            ReSpawnPos = this.transform.position;    // プレイヤーの位置を保存
+            SaveManager.saveLastPlayerPos(ReSpawnPos);
         }
 
 

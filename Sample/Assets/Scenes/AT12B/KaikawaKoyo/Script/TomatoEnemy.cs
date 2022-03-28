@@ -52,7 +52,7 @@ public class TomatoEnemy : MonoBehaviour
             // íµÇÀÇÈèàóù
             if (isGround)
             {
-                rb.AddForce(transform.up * 10.0f, ForceMode.Force);
+                rb.AddForce(transform.up * 70.0f, ForceMode.Force);
             }
         }
     }

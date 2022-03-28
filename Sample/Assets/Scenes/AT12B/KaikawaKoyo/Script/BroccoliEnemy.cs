@@ -48,10 +48,10 @@ public class BroccoliEnemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            //Destroy(gameObject, 0.0f);
-        }
+        //if (collision.gameObject.CompareTag("Player"))
+        //{
+        //    Destroy(gameObject, 0.0f);
+        //}
     }
 
     public void OnTriggerEnter(Collider other)    // コライダーでプレイヤーを索敵したい

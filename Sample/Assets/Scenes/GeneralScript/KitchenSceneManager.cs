@@ -10,7 +10,7 @@ public class KitchenSceneManager : MonoBehaviour
     private int currentSceneNum;
 
     private GameObject KitchenImage;                                // 開始演出で出す画像
-    private bool isCalledOnce = false;                             // 開始演出で使用。一回だけ処理をするために使う。
+    private bool isCalledOnce = false;                              // 開始演出で使用。一回だけ処理をするために使う。
 
     // Start is called before the first frame update
     void Awake()
@@ -37,7 +37,7 @@ public class KitchenSceneManager : MonoBehaviour
 
         switch(GameData.CurrentMapNumber) {
             case (int)GameData.eSceneState.Kitchen1_SCENE:
-                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(0.0f, 11.5f, -1.0f);
+                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(1.0f, 11.5f, -1.0f);
                 break;
             case (int)GameData.eSceneState.Kitchen2_SCENE:
                 GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-1.0f, 11.5f, -1.0f);

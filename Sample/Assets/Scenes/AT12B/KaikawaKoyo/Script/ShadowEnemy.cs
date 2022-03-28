@@ -25,13 +25,13 @@ public class ShadowEnemy : MonoBehaviour
         switch (EnemyNomber)
         {
             case 0:
-                Enemy = GameObject.Find("CarrotEnemy");
+                Enemy = (GameObject)Resources.Load("CarrotEnemy"); //GameObject.Find("CarrotEnemy");
                 break;
             case 1:
-                Enemy = GameObject.Find("BroccoliEnemy");
+                Enemy = (GameObject)Resources.Load("BroccoliEnemy"); //GameObject.Find("BroccoliEnemy");
                 break;
             case 2:
-                Enemy = GameObject.Find("TomatoEnemy");
+                Enemy = (GameObject)Resources.Load("TomatoEnemy"); //GameObject.Find("TomatoEnemy");
                 break;
         }
     }

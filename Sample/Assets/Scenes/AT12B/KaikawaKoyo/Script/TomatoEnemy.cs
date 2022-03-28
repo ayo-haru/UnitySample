@@ -52,13 +52,13 @@ public class TomatoEnemy : MonoBehaviour
                 rb.position = Vector3.MoveTowards(pos, Target.position, step);
             }
 
-            if (Target.position.x < transform.position.x && look)
+            if (Target.position.x < transform.position.x && look)   // プレイヤーのほうを向く処理
             {
                 transform.Rotate(0, -90, 0);
                 look = false;
             }
 
-            if (Target.position.x > transform.position.x && !look)
+            if (Target.position.x > transform.position.x && !look)  // プレイヤーのほうを向く処理
             {
                 transform.Rotate(0, 90, 0);
                 look = true;

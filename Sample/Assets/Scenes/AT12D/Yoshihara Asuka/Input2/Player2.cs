@@ -112,6 +112,8 @@ public class Player2 : MonoBehaviour
         ForceDirection.Normalize();
         MovingVelocity = ForceDirection * maxSpeed;
 
+        //---現時点のHPをGamdataに格納
+        GameData.HP = hpmanager.currentHP; 
         //---バックスペースキーでHPを減らす(デバッグ)
         if (Input.GetKeyDown(KeyCode.Backspace))
         {

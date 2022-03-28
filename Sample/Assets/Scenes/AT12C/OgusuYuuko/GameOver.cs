@@ -21,9 +21,9 @@ public class GameOver : MonoBehaviour
     //画像
     public GameObject Image;
     //メインカメラ
-    public GameObject mainCam;
+    //public GameObject mainCam;
     //サブカメラ
-    public GameObject subCam;
+    //public GameObject subCam;
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +45,7 @@ public class GameOver : MonoBehaviour
         //画像表示
         Image.GetComponent<ImageShow>().Show();
         //カメラ切り替え　メインカメラ→サブカメラ　補間あり
-        CameraSwitch.StartSwitching(mainCam, subCam, true);
+        //CameraSwitch.StartSwitching(mainCam, subCam, true);
         ////メインカメラオフ
         //mainCam.SetActive(false);
         ////サブカメラオン
@@ -56,7 +56,7 @@ public class GameOver : MonoBehaviour
         //画像消去
         Image.GetComponent<ImageShow>().Hide();
         //カメラ切り替え サブカメラ→メインカメラ　補間なし
-        CameraSwitch.StartSwitching(subCam, mainCam, false);
+        //CameraSwitch.StartSwitching(subCam, mainCam, false);
         ////サブカメラオフ
         //subCam.SetActive(false);
         ////メインカメラオン

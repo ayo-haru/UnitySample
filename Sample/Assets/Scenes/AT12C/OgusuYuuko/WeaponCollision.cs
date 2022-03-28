@@ -42,7 +42,8 @@ public class WeaponCollision : MonoBehaviour
         if(collision.gameObject.tag == "Ground")
         {
             //•ûŒü
-            Vector3 dir = Player.transform.position - collision.transform.position;
+           // Vector3 dir = Player.transform.position - collision.transform.position;
+            Vector3 dir = Player.transform.position - gameObject.transform.position;
             dir.Normalize();
             //’n–ÊƒpƒŠƒC
             player_rb.AddForce(dir * baunceGround,ForceMode.Impulse);

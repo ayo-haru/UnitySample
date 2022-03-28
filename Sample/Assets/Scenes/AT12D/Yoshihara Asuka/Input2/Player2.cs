@@ -237,6 +237,12 @@ public class Player2 : MonoBehaviour
         {
             Debug.Log("攻撃をうけた。");
             hpmanager.currentHP--;
+
+            //HPが0になったらゲームオーバーを表示
+            if(hpmanager.currentHP <= 0)
+            {
+                GameObject.Find("EventSystem").GetComponent<GameOver>().GameOverShow();
+            }
         }
     }
 

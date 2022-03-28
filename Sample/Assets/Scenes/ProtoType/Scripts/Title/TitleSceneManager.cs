@@ -26,6 +26,7 @@ public class TitleSceneManager : MonoBehaviour {
     void Update() {
         if (Input.GetKeyDown(KeyCode.Return))   // ‚Í‚¶‚ß‚©‚ç
         {
+            SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
             GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen1_SCENE;
             string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
             SceneManager.LoadScene(nextSceneName);
@@ -33,6 +34,7 @@ public class TitleSceneManager : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.RightShift))    // ‚Â‚Ã‚«‚©‚ç
         {
+            SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
             string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
             SceneManager.LoadScene(nextSceneName);
         }

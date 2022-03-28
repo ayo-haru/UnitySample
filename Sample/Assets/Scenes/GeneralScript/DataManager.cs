@@ -23,6 +23,10 @@ public class DataManager : MonoBehaviour
      * 
      * 
      */
+
+    //-----------------------------------------------------
+    // BGMÅESE
+    //-----------------------------------------------------
     public AudioClip bgm_title;
     public AudioClip bgm_kitchen;
     public AudioClip bgm_kitchenBoss;
@@ -39,9 +43,28 @@ public class DataManager : MonoBehaviour
     public AudioClip se_kettei;
     public AudioClip se_select;
 
+
+    //-----------------------------------------------------
+    // Efect
+    //-----------------------------------------------------
+    public ParticleSystem ef_fire;
+    public ParticleSystem ef_damage;
+    public ParticleSystem ef_dark;
+    public ParticleSystem ef_enemydeath;
+    public ParticleSystem ef_bossdeath;
+    public ParticleSystem ef_healitem;
+    public ParticleSystem ef_heal;
+    public ParticleSystem ef_shield;
+    public ParticleSystem ef_shield2;
+
+
     // Start is called before the first frame update
     void Awake()
     {
+        //-----------------------------------------------------
+        // BGMÅESE
+        //-----------------------------------------------------
+
         SoundData.BGMDataSet(bgm_title, (int)SoundData.eBGM.BGM_TITLE);
         SoundData.BGMDataSet(bgm_kitchen, (int)SoundData.eBGM.BGM_KITCHEN);
         SoundData.BGMDataSet(bgm_kitchenBoss, (int)SoundData.eBGM.BGM_BOSS1);
@@ -57,6 +80,18 @@ public class DataManager : MonoBehaviour
 
         SoundData.SEDataSet(se_kettei, (int)SoundData.eSE.SE_KETTEI);
         SoundData.SEDataSet(se_select, (int)SoundData.eSE.SE_SELECT);
+
+        //-----------------------------------------------------
+        // Efect
+        //-----------------------------------------------------
+        EffectData.EFDataSet(ef_fire,(int)EffectData.eEFFECT.EF_FIRE);
+        EffectData.EFDataSet(ef_damage,(int)EffectData.eEFFECT.EF_DAMAGE);
+        EffectData.EFDataSet(ef_dark,(int)EffectData.eEFFECT.EF_DARKAREA);
+        EffectData.EFDataSet(ef_enemydeath,(int)EffectData.eEFFECT.EF_ENEMYDOWN);
+        EffectData.EFDataSet(ef_bossdeath,(int)EffectData.eEFFECT.EF_BOSSKILL);
+        EffectData.EFDataSet(ef_healitem,(int)EffectData.eEFFECT.EF_HEALITEM);
+        EffectData.EFDataSet(ef_heal,(int)EffectData.eEFFECT.EF_HEAL);
+        EffectData.EFDataSet(ef_shield,(int)EffectData.eEFFECT.EF_SHEILD2);
     }
 
     // Update is called once per frame

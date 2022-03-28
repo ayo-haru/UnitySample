@@ -17,6 +17,8 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    private Vector3 ReSpawnPos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,11 +31,20 @@ public class Player : MonoBehaviour
 
         if(this.transform.position.y < -5)
         {
-            GameData.PlayerPos = GameData.Player.transform.position = this.transform.position = new Vector3(2.0f, 2.0f, -1.0f);
+            this.transform.position = GameData.Player.transform.position = GameData.PlayerPos = ReSpawnPos;
         }
     }
 
     void OnTriggerEnter(Collider other) {
+        //----- セーブ -----
+        if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
+        {
+            ReSpawnPos = this.transform.position;    // プレイヤーの位置を保存
+            SaveManager.saveLastPlayerPos(ReSpawnPos);
+        }
+
+
+        //----- シーン遷移 -----
         if (other.gameObject.tag == "toKitchen1")    // この名前のタグと衝突したら
         {
             GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen1_SCENE;

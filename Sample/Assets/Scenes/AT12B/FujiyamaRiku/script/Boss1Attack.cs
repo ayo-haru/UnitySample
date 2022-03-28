@@ -49,6 +49,7 @@ public class Boss1Attack : MonoBehaviour
     bool[] PlayerRefDir;
     Vector3 RefMiss;
     bool RefMissFlg;
+    int [] SaveRef;
 
     //ベジエ曲線用
     Vector3  StartPoint;
@@ -91,6 +92,7 @@ public class Boss1Attack : MonoBehaviour
         FinishTime = new float[Max_Strawberry];
         Ref_FinishTime = new float[Max_Strawberry];
         PlayerMiddlePoint = new Vector3[Max_Strawberry];
+        SaveRef = new int[Max_Strawberry];
         BossStartPoint = GameObject.Find("BossPoint").transform.position;
         PlayerRefDir = new bool[Max_Strawberry];
         RefMiss = GameObject.Find("StrawberryMiss").transform.position;
@@ -227,17 +229,17 @@ public class Boss1Attack : MonoBehaviour
             }
             if (HPgage.currentHp < 50)
             {
-                Debug.Log("アイドルぅ！！！！！！！！！！！");
+                
                 BossMove.AttackCount += 1;
                 BossMove.SetState(BossMove.Boss_State.idle);
                 
             }
             return;
         }
-        //Debug.Log("StrNum:" + StrawberryUseFlg[0]);
         if (!StrawberryUseFlg[StrawberryNum])
         {
             //Debug.Log("Strawberry");
+            //Debug.Log("いちごぉ！！！！！！！！！！！：" + StrawberryNum);
             StartPoint.x = Boss.BossPos.x;
             StartPoint.y = Boss.BossPos.y + 4;
             StartPoint.z = Boss.BossPos.z;
@@ -250,10 +252,15 @@ public class Boss1Attack : MonoBehaviour
             //イチゴ
             if (StrawberryUseFlg[i])
             {
+                
                 //弾かれたとき
-                if (RefrectFlg && !StrawberryRefFlg[i])
+                if (!StrawberryRefFlg[i] && RefrectFlg)
                 {
+                    
+                    Debug.Log("弾いた！：" + i);
                     StrawberryRefFlg[i] = true;
+                    
+                    
                     if (Strawberry[i].transform.position.y >= GameObject.Find("polySurface1").transform.position.y + 2.0f)
                     {
                         PlayerPoint[i].x = GameData.PlayerPos.x;
@@ -261,7 +268,7 @@ public class Boss1Attack : MonoBehaviour
                         PlayerPoint[i].z = GameData.PlayerPos.z;
                         PlayerMiddlePoint[i].x += GameObject.Find("polySurface1").transform.position.x + 3.0f;
                         PlayerMiddlePoint[i].y += GameObject.Find("polySurface1").transform.position.y + 3.0f;
-                        PlayerMiddlePoint[i].z += GameObject.Find("polySurface1").transform.position.z;
+                        PlayerMiddlePoint[i].z += GameObject.Find("polySurface1").transform.position.z + 3.0f;
                         RefEndPoint = Boss.BossPos;
                         PlayerRefDir[i] = true;
                     }
@@ -269,7 +276,7 @@ public class Boss1Attack : MonoBehaviour
                     {
                         PlayerPoint[i].x = GameData.PlayerPos.x + 2.0f;
                         PlayerPoint[i].y = GameData.PlayerPos.y;
-                        PlayerPoint[i].z = GameData.PlayerPos.z;
+                        PlayerPoint[i].z = GameData.PlayerPos.z + 3.0f;
                         RefEndPoint = Boss.BossPos;
 
 
@@ -278,20 +285,18 @@ public class Boss1Attack : MonoBehaviour
                     {
                         PlayerPoint[i].x = GameData.PlayerPos.x - 2.0f;
                         PlayerPoint[i].y = GameData.PlayerPos.y;
-                        PlayerPoint[i].z = GameData.PlayerPos.z;
+                        PlayerPoint[i].z = GameData.PlayerPos.z +3.0f;
                         RefEndPoint = RefMiss;
                         RefMissFlg = true;
                     }
                     
-
-
                     RefrectFlg = false;
                 }
                 //弾かれた後
                 if (StrawberryRefFlg[i])
                 {
                     
-                    Ref_FinishTime[i] += Time.deltaTime * 2;
+                    Ref_FinishTime[i] += Time.deltaTime * 2f;
                    if(!PlayerRefDir[i])
                     {
                         Strawberry[i].transform.position = Vector3.Lerp(PlayerPoint[i], RefEndPoint, Ref_FinishTime[i]);
@@ -301,7 +306,7 @@ public class Boss1Attack : MonoBehaviour
                         Strawberry[i].transform.position = Beziercurve.SecondCurve(PlayerPoint[i], PlayerMiddlePoint[i],
                                                                                    RefEndPoint, Ref_FinishTime[i]);
                     }
-                    if (Ref_FinishTime[i] >= 1.0f && StrawberryUseFlg[i])
+                    if (Ref_FinishTime[i] >= 1.0f)
                     {
                         PlayerRefDir[i] = false;
                         if (!RefMissFlg)
@@ -320,17 +325,17 @@ public class Boss1Attack : MonoBehaviour
                 }
                 //イチゴ消えたら初期化するんだぞby私
                 //弾かれていたらこっちの処理しない
+
                 if (!StrawberryRefFlg[i])
                 {
                     Strawberry[i].transform.position = Beziercurve.SecondCurve(StartPoint, MiddlePoint[i], EndPoint[i], FinishTime[i]);
                 }
-                
                 FinishTime[i] += Time.deltaTime * StrawberrySpeed;
                 if (i < Max_Strawberry - 1)
                 {
                     if (FinishTime[i] >= 0.5f && !StrawberryUseFlg[i + 1] && !StrawberryRefFlg[i])
                     {
-                            StrawberryNum++;
+                          StrawberryNum++;
                     }
                 }
                 //----------------------------------------------------------
@@ -343,6 +348,7 @@ public class Boss1Attack : MonoBehaviour
                     AliveStrawberry++;
                 }
             }
+            
         }
     }
     
@@ -420,5 +426,9 @@ public class Boss1Attack : MonoBehaviour
             }
         }
             
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        
     }
 }

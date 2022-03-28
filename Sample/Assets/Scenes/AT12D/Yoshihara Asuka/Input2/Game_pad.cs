@@ -233,6 +233,54 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""eac4c197-8201-41ef-a634-b0e62b8e7169"",
+            ""actions"": [
+                {
+                    ""name"": ""LeftStickSelect"",
+                    ""type"": ""Value"",
+                    ""id"": ""e91d92e6-72d7-4c29-97bf-cdfb8a86cf67"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""RightStickSelect"",
+                    ""type"": ""Value"",
+                    ""id"": ""3d35f0a2-4332-4fa8-9a88-5a6447bfcff5"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""2d22a388-06c7-4083-89a2-362281ce1b64"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftStickSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""24a50e3a-8121-4bc9-b4fa-c1d766f23941"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightStickSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -242,6 +290,10 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_LeftStickSelect = m_UI.FindAction("LeftStickSelect", throwIfNotFound: true);
+        m_UI_RightStickSelect = m_UI.FindAction("RightStickSelect", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -346,10 +398,56 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private IUIActions m_UIActionsCallbackInterface;
+    private readonly InputAction m_UI_LeftStickSelect;
+    private readonly InputAction m_UI_RightStickSelect;
+    public struct UIActions
+    {
+        private @Game_pad m_Wrapper;
+        public UIActions(@Game_pad wrapper) { m_Wrapper = wrapper; }
+        public InputAction @LeftStickSelect => m_Wrapper.m_UI_LeftStickSelect;
+        public InputAction @RightStickSelect => m_Wrapper.m_UI_RightStickSelect;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void SetCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterface != null)
+            {
+                @LeftStickSelect.started -= m_Wrapper.m_UIActionsCallbackInterface.OnLeftStickSelect;
+                @LeftStickSelect.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnLeftStickSelect;
+                @LeftStickSelect.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnLeftStickSelect;
+                @RightStickSelect.started -= m_Wrapper.m_UIActionsCallbackInterface.OnRightStickSelect;
+                @RightStickSelect.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnRightStickSelect;
+                @RightStickSelect.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnRightStickSelect;
+            }
+            m_Wrapper.m_UIActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @LeftStickSelect.started += instance.OnLeftStickSelect;
+                @LeftStickSelect.performed += instance.OnLeftStickSelect;
+                @LeftStickSelect.canceled += instance.OnLeftStickSelect;
+                @RightStickSelect.started += instance.OnRightStickSelect;
+                @RightStickSelect.performed += instance.OnRightStickSelect;
+                @RightStickSelect.canceled += instance.OnRightStickSelect;
+            }
+        }
+    }
+    public UIActions @UI => new UIActions(this);
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnLeftStickSelect(InputAction.CallbackContext context);
+        void OnRightStickSelect(InputAction.CallbackContext context);
     }
 }

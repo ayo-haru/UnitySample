@@ -211,6 +211,54 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "UI",
+            "id": "eac4c197-8201-41ef-a634-b0e62b8e7169",
+            "actions": [
+                {
+                    "name": "LeftStickSelect",
+                    "type": "Value",
+                    "id": "e91d92e6-72d7-4c29-97bf-cdfb8a86cf67",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RightStickSelect",
+                    "type": "Value",
+                    "id": "3d35f0a2-4332-4fa8-9a88-5a6447bfcff5",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2d22a388-06c7-4083-89a2-362281ce1b64",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftStickSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "24a50e3a-8121-4bc9-b4fa-c1d766f23941",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightStickSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

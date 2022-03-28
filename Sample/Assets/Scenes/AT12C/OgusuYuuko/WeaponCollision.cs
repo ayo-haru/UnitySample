@@ -45,6 +45,7 @@ public class WeaponCollision : MonoBehaviour
            // Vector3 dir = Player.transform.position - collision.transform.position;
             Vector3 dir = Player.transform.position - gameObject.transform.position;
             dir.Normalize();
+            player_rb.velocity = Vector3.zero;
             //’n–ÊƒpƒŠƒC
             player_rb.AddForce(dir * baunceGround,ForceMode.Impulse);
         }

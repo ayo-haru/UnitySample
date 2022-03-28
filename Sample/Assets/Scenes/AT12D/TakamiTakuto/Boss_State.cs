@@ -61,9 +61,9 @@ public class Boss : MonoBehaviour
     }
 
     //ボスの状態推移
-    static　public void SetState(Boss_State tmpState, Transform playerTransform = null)
+    static　public void SetState(Boss_State bossState, Transform playerTransform = null)
     {
-        BossState = tmpState;
+        BossState = bossState;
         if (BossState == Boss_State.idle)
         {
             Debug.Log("アイドル");
@@ -85,7 +85,8 @@ public class Boss : MonoBehaviour
             Debug.Log("チェイス");
         }
     }
-    //　状態取得メソッド
+
+    //　状態取得
     public Boss_State GetState()
     {
         return BossState;
@@ -95,23 +96,26 @@ public class Boss : MonoBehaviour
     private void Idle()
     {
         elapsedTimeOfIdleState += Time.deltaTime;
-        //　一定時間が経過したらpatrol状態にする
+
+        //　一定時間が経過したら各種攻撃状態にする
         if (elapsedTimeOfIdleState >= timeToStayInIdle)
         {
-            elapsedTimeOfIdleState = 0f;
+            elapsedTimeOfIdleState = 0f;       //idle状態の経過時間を０ｆにする
 
-            RandomNumbe = Random.Range(3, 5);
-            switch (RandomNumbe)
+            RandomNumbe = Random.Range(3, 5);//攻撃パターンランダム化
+            switch (RandomNumbe)            //switch分岐
             {
-                case 3://処理１
+                case 3://イチゴ爆弾へ
                     SetState(Boss_State.strawberryBomb);
                     Debug.Log("イチゴ爆弾");
                     break;//break文
-                case 4://処理２
+
+                case 4://突進へ
                     SetState(Boss_State.charge);
                     Debug.Log("突進攻撃");
                     break;//break文
-                case 5://処理３
+
+                case 5://ナイフ攻撃
                     //if(HPゲージが半分の場合)
                     SetState(Boss_State.KnifeThrower);
                     Debug.Log("ナイフ攻撃");

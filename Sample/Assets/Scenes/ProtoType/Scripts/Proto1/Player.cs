@@ -29,11 +29,20 @@ public class Player : MonoBehaviour
 
         if(this.transform.position.y < -5)
         {
-            GameData.PlayerPos = GameData.Player.transform.position = this.transform.position = new Vector3(2.0f, 2.0f, -1.0f);
+            this.transform.position = GameData.PlayerPos = GameData.Player.transform.position;
         }
     }
 
     void OnTriggerEnter(Collider other) {
+        //----- セーブ -----
+        if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
+        {
+            GameData.PlayerPos = this.transform.position;    // プレイヤーの位置を保存
+            SaveManager.saveLastPlayerPos(GameData.PlayerPos);
+        }
+
+
+        //----- シーン遷移 -----
         if (other.gameObject.tag == "toKitchen1")    // この名前のタグと衝突したら
         {
             GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen1_SCENE;

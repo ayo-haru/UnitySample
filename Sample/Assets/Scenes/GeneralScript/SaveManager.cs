@@ -7,7 +7,7 @@
 //
 // <開発履歴>
 // 2022/03/15 実装
-//
+// 2022/03/28 セーブの項目を増やした
 //=============================================================================
 
 using System.Collections;
@@ -21,6 +21,8 @@ using System.IO;    // ファイルアクセスに必要
 public struct SaveData {
     public List<string> deck;
     public int LastMapNumber;
+    public Vector3 LastPlayerPos;
+    public float HP;
 }
 /*
     シリアライズとは
@@ -39,10 +41,22 @@ public static class SaveManager {
         save();
     }
 
-    public static void saveLastMapNumber(int _CurrentMapNumber) {  // 得点をJsonに保存する
+    public static void saveLastMapNumber(int _CurrentMapNumber) {  // マップの番号をJsonに保存する
         sd.LastMapNumber = _CurrentMapNumber;
         save();
     }
+
+    public static void saveLastPlayerPos(Vector3 _PlayerPos) {  // PlayerPosをJsonに保存する
+        sd.LastPlayerPos = _PlayerPos;
+        save();
+    }
+
+    public static void saveHP(float _HP) {  // HPをJsonに保存する
+        sd.HP = _HP;
+        save();
+    }
+
+
 
     public static void save() {
         string json = JsonUtility.ToJson(sd);   //  Jsonにシリアアライズ

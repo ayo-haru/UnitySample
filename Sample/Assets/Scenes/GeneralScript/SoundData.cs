@@ -30,6 +30,7 @@ public static class SoundData
         SE_LAND,
         SE_SHIELD,
         SE_REFLECTION,
+        SE_DAMEGE,
         SE_BOOS1_DASHU,
         SE_BOOS1_STRAWBERRY,
         SE_BOOS1_KNIFE,

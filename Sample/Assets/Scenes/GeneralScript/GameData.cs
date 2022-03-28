@@ -32,8 +32,14 @@ public static class GameData
     static int roomSize;                    // 1部屋のサイズは簡単に触れて欲しくないからpublicにしてない
     public static int CurrentMapNumber;     // マップの番号いれる
     public static int NextMapNumber;        // マップの番号いれる
+    public static int MovePoint;            // 次の遷移場所
     static string[] MapName                 // マップの名前 
         = { "ProtoTypeTitleScene", "Kitchen001", "Kitchen002", "Kitchen003", "Kitchen004", "Kitchen005", "Kitchen006", "Tester" };
+
+    static string[] MovePointName
+        = { "KitchenMovePoint001" };
+
+
     public static string CurrentMapName;    // 現在のマップの名前
     public static Vector3 PlayerPos;        // プレイヤーの座標（現在はGameManagerで毎フレーム代入しているが本来はPlayerクラスが良い(はず)） 
     public static GameObject Player;

@@ -178,6 +178,7 @@ public class Player2 : MonoBehaviour
         GameObject weapon = Instantiate(prefab,new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
                                                            PlayerPos.y + (AttackDirection.y * AttckPosHeight),
                                                            PlayerPos.z),Quaternion.identity);
+
         //---コントローラーの倒したXの値が－だったらy軸に-1する(盾の角度の調整)
         if (AttackDirection.x < 0.0f)
         {
@@ -194,6 +195,7 @@ public class Player2 : MonoBehaviour
         weapon.transform.Rotate(new Vector3(0,0,(90 * AttackDirection.y)));
         //Debug.Log("攻撃した！(Weapon)");
         Debug.Log("AttackDirection(正規化後):"+ AttackDirection);
+        EffectData.EF[(int)EffectData.eEFFECT.EF_SHEILD2].Play();
         SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
         AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする
         Destroy(weapon,DestroyTime);

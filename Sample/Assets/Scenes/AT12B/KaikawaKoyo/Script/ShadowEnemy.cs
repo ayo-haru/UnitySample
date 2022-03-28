@@ -16,9 +16,14 @@ public class ShadowEnemy : MonoBehaviour
     GameObject Enemy;
     private Vector3 position;
     public int EnemyNomber;
+    private bool spawn = false;
+    //[SerializeField] private ParticleSystem particle;
+
     // Start is called before the first frame update
     void Start()
     {
+        //particle.Play();
+
         position = transform.position;
 
         // íNÇ…ïœêgÇ∑ÇÈÇ©ÇÃèàóù
@@ -47,7 +52,13 @@ public class ShadowEnemy : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Destroy(gameObject, 0.0f);
-            Instantiate(Enemy, position, Quaternion.identity);
+            //particle.Stop();
+            if(!spawn)
+            {
+                Instantiate(Enemy, position, Quaternion.identity);
+                spawn = true;
+            }
+            
         }
     }
 }

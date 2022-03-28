@@ -212,7 +212,7 @@ public class Boss1Attack : MonoBehaviour
                         HPgage.DelHP();
                         RushTime = 0;
                         RushRefTime = 0;
-                    
+                    SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
                     return;
                 }
             }
@@ -315,6 +315,7 @@ public class Boss1Attack : MonoBehaviour
                         {
                             HPgage.damage = 5;
                             HPgage.DelHP();
+                            SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
                         }
                         RefMissFlg = false;
                         StrawberryUseFlg[i] = false ;
@@ -414,6 +415,8 @@ public class Boss1Attack : MonoBehaviour
                 KnifeRefFlg = false;
                 KnifeTime = 0;
                 KnifeRefTime = 0;
+                SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
+
                 Destroy(Knife);
                 if (HPgage.currentHp >= 50)
                 {

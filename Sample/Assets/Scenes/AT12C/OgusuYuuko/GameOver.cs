@@ -5,10 +5,13 @@
 // 作成日:2022/03/16
 // 作成者:小楠裕子
 //
+// canvasにこのスクリプト入れる
+//
 // <開発履歴>
 // 2022/03/16 作成
 // 2022/03/20 演出時はサブカメラに切り替えるようにした
 // 2022/03/24 CameraSwitchくらすを使ったカメラ切り替えに変更
+// 2022/03/28 prefabから読み込んで表示するようにした
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -19,7 +22,11 @@ public class GameOver : MonoBehaviour
 {
     //ゲームオーバーで使うオブジェクト
     //画像
-    public GameObject Image;
+    private GameObject Image;
+    //プれハブ
+    private GameObject prefab;
+    //キャンバス
+    Canvas canvas;
     //メインカメラ
     //public GameObject mainCam;
     //サブカメラ
@@ -28,7 +35,13 @@ public class GameOver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        canvas = GetComponent<Canvas>();
 
+        prefab = (GameObject)Resources.Load("GameOverImage");
+        Image = Instantiate(prefab, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+
+        //canvasの子に設定
+        Image.transform.SetParent(this.canvas.transform, false);
     }
 
     // Update is called once per frame

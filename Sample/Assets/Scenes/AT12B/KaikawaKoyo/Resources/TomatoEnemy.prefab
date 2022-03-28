@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -5469596591188944473}
   m_Layer: 0
   m_Name: TomatoEnemy
-  m_TagString: Untagged
+  m_TagString: Damaged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,7 +126,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 20
+  m_Radius: 13
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &395062384566178660
 MonoBehaviour:
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6e433a25d8c3c49933cb473fdfa23d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 5
+  MoveSpeed: 4
 --- !u!114 &-5469596591188944473
 MonoBehaviour:
   m_ObjectHideFlags: 0

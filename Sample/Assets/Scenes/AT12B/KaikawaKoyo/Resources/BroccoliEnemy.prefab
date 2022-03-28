@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -967946652816489292}
   m_Layer: 0
   m_Name: BroccoliEnemy
-  m_TagString: Untagged
+  m_TagString: Damaged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,7 +127,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 20
+  m_Radius: 13
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!114 &-2182288766908047017
 MonoBehaviour:
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d9ac35f0244334c90505f41262f702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 5
+  MoveSpeed: 4
 --- !u!114 &-967946652816489292
 MonoBehaviour:
   m_ObjectHideFlags: 0

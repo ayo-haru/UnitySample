@@ -19,19 +19,28 @@ public class Boss1Manager : MonoBehaviour
         BOSS1_START = 0,    //ボスの開始
         BOSS1_BATTLE ,      //ボスとのバトル中
         BOSS1_END,          //ボスを倒したとき
+        BOSS1_DEAD,
     }
     static public Boss1State BossState;
     private int CountDown;
     private float CountDownMax = 5.0f;
     public Text timerText;
+    GameObject Bossobj;
     private void Awake()
     {
+        
+        Bossobj = (GameObject)Resources.Load("Boss");
+        if (GameData.isAliveBoss1)
+        {
+            Instantiate(Bossobj, Boss1Attack.BossStartPoint, Quaternion.identity);
+            BossState = Boss1State.BOSS1_START;
+        }
         Application.targetFrameRate = 60;
-        BossState = Boss1State.BOSS1_START;
         //ボスを倒したかどうかの判定
         if (!GameData.isAliveBoss1)
         {
             //ボスの処理を何もしない処理入れる
+            BossState = Boss1State.BOSS1_DEAD;
             return;
         }
     }
@@ -44,11 +53,12 @@ public class Boss1Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         switch(BossState)
         {
             case Boss1State.BOSS1_START:
                 {
-                    
+
                     CountDownMax -= Time.deltaTime;
                     CountDown = (int)CountDownMax;
                     
@@ -64,10 +74,18 @@ public class Boss1Manager : MonoBehaviour
                 }
             case Boss1State.BOSS1_BATTLE:
                 {
-                    
+                    if (!GameData.isAliveBoss1)
+                    {
+                        BossState = Boss1State.BOSS1_END;
+                    }
                     break;
                 }
             case Boss1State.BOSS1_END:
+                {
+                    Destroy(GameObject.Find("Boss(Clone)"));
+                    break;
+                }
+            case Boss1State.BOSS1_DEAD:
                 {
                     break;
                 }

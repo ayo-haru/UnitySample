@@ -130,6 +130,7 @@ public class Boss1Attack : MonoBehaviour
             Fork = Instantiate(Forkobj, RushStartPoint, Quaternion.Euler(0.0f,0.0f,90.0f));
             RushStartPoint.y += 1.0f;
             Fork.transform.parent = Boss.Bossobj.transform;
+            SoundManager.Play(SoundData.eSE.SE_BOOS1_DASHU, SoundData.GameAudioList);
         }
         if(OnlyFlg)
         {
@@ -246,7 +247,8 @@ public class Boss1Attack : MonoBehaviour
             StartPoint.z = Boss.BossPos.z;
             Strawberry[StrawberryNum] = Instantiate(obj, StartPoint, Quaternion.identity);
             StrawberryUseFlg[StrawberryNum] = true;
-            
+            SoundManager.Play(SoundData.eSE.SE_BOOS1_STRAWBERRY, SoundData.GameAudioList);
+
         }
         for (int i = 0; i < Max_Strawberry; i++)
             {
@@ -365,6 +367,7 @@ public class Boss1Attack : MonoBehaviour
             KnifeStartPoint.z = Boss.BossPos.z;
             KnifeEndPoint = GameData.PlayerPos;
             Knife = Instantiate(Knifeobj, KnifeStartPoint, Quaternion.identity);
+            SoundManager.Play(SoundData.eSE.SE_BOOS1_KNIFE, SoundData.GameAudioList);
             
         }
         if (RefrectFlg)

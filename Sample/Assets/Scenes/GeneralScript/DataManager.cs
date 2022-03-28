@@ -40,7 +40,7 @@ public class DataManager : MonoBehaviour
     public AudioClip se_select;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         SoundData.BGMDataSet(bgm_title, (int)SoundData.eBGM.BGM_TITLE);
         SoundData.BGMDataSet(bgm_kitchen, (int)SoundData.eBGM.BGM_KITCHEN);

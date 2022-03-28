@@ -25,8 +25,6 @@ public class BossStageManager : MonoBehaviour
     public GameObject PlayerPrefab;                             // プレハブ内のプレイヤーを扱う
     public GameObject HPSystem;                                 // プレハブ内のHPUIをクローンする
 
-    [System.NonSerialized]                                      // NonSerialized ... インスペクター上では後悔しないが、取得できる
-    public AudioSource[] audioSourceList = new AudioSource[5];  // 一回に同時にならせる数
 
     private void Awake()
     {
@@ -49,10 +47,13 @@ public class BossStageManager : MonoBehaviour
         {
             SoundData.GameAudioList[i] = gameObject.AddComponent<AudioSource>();
         }
+        SoundManager.Play(SoundData.eBGM.BGM_BOSS1, SoundData.GameAudioList);
 
         //---マップの番号(現在のシーン)を保存
         GameData.CurrentMapNumber = GameData.NextMapNumber;         // ボスシーンに到達している判定
         SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);   // 現在のシーンをセーブ
+
+
     }
     // Start is called before the first frame update
     void Start()

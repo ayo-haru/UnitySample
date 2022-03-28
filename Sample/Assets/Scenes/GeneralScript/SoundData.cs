@@ -45,7 +45,7 @@ public static class SoundData
     public static AudioClip[] SEClip = new AudioClip[(int)eSE.MAX_SE];
 
     public static AudioSource[] TitleAudioList = new AudioSource[5];    // ˆê‰ñ‚É“¯‚É‚È‚ç‚¹‚é”
-    public static AudioSource[] GameAudioList = new AudioSource[10];    // ˆê‰ñ‚É“¯‚É‚È‚ç‚¹‚é”
+    public static AudioSource[] GameAudioList = new AudioSource[20];    // ˆê‰ñ‚É“¯‚É‚È‚ç‚¹‚é”
 
 
 

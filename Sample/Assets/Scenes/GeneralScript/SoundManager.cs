@@ -37,20 +37,24 @@ public static class SoundManager {
         AudioSource audioSource = GetUnusedSource(_audioSourceList);
         if (audioSource == null)
         {
+            Debug.Log("çƒê∂èoóàÇ‹ÇπÇÒÇ≈ÇµÇΩ");
             return; // çƒê∂Ç≈Ç´Ç‹ÇπÇÒÇ≈ÇµÇΩ
         }
         audioSource.clip = SoundData.SEClip[(int)_seDataNumber];
-        audioSource.volume = 0.3f;
-        audioSource.Play();
+        audioSource.volume = 0.5f;
+        //audioSource.Play();
+        audioSource.PlayOneShot(audioSource.clip);
     }
 
     public static void Play(SoundData.eBGM _bgmDataNumber, AudioSource[] _audioSourceList) {
         AudioSource audioSource = GetUnusedSource(_audioSourceList);
         if (audioSource == null)
         {
+            Debug.Log("çƒê∂èoóàÇ‹ÇπÇÒÇ≈ÇµÇΩ");
             return; // çƒê∂Ç≈Ç´Ç‹ÇπÇÒÇ≈ÇµÇΩ
         }
         audioSource.clip = SoundData.BGMClip[(int)_bgmDataNumber];
+        audioSource.volume = 0.2f;
         audioSource.Play();
     }
 

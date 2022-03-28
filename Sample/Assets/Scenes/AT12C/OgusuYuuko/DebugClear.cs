@@ -22,8 +22,8 @@ public class DebugClear : MonoBehaviour
         //ゲームオーバー表示
         if (Input.GetKey(KeyCode.F2))
         {
-            GameObject OverImage = GameObject.Find("EventSystem");
-            OverImage.SendMessage("GameOverShow");
+            GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
+            //OverImage.SendMessage("GameOverShow");
         }
     }
 }

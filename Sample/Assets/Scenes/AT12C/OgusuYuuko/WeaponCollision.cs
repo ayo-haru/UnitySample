@@ -8,6 +8,7 @@
 //
 // <開発履歴>
 // 2022/03/27 作成
+// 2022/03/29 盾の個数制限を付けた
 //=============================================================================
 
 //コメント追加
@@ -23,12 +24,25 @@ public class WeaponCollision : MonoBehaviour
     Rigidbody player_rb;
     //地面パリイした時のはね返り速度
     public float baunceGround = 2.0f;
+    //シールドマネージャ
+    ShieldManager shield_Manager;
     // Start is called before the first frame update
     void Start()
     {
         //Player = GameData.Player;
         Player = GameObject.Find("Player(Clone)");
         player_rb = Player.GetComponent<Rigidbody>();
+        shield_Manager = Player.GetComponent<ShieldManager>();
+        //盾が最大数を超えていたら
+        if (!shield_Manager.AddShield())
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        shield_Manager.DestroyShield();
     }
 
     // Update is called once per frame

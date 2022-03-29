@@ -18,8 +18,7 @@ public class HPManager : MonoBehaviour
 {
     public　Image HP;
 
-    private float MaxHP = 6;        // HPの最大値
-    public float currentHP = 6;     // 現在のHP
+    public int MaxHP = 6;                          // HPの最大値
 
     private void Awake()
     {
@@ -33,12 +32,15 @@ public class HPManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        HP.fillAmount = currentHP / MaxHP;
+        HP.fillAmount = (float)GameData.CurrentHP / MaxHP;
     }
 
     // Update is called once per frame
     void Update()
     {
-        HP.fillAmount = currentHP / MaxHP;
+        HP.fillAmount = (float)GameData.CurrentHP / MaxHP;
+        Debug.Log("HP量:"+HP.fillAmount);
+        Debug.Log("MAXHP:"+MaxHP);
+        Debug.Log("残HP:"+GameData.CurrentHP);
     }
 }

@@ -115,13 +115,21 @@ public class Player2 : MonoBehaviour
         {
             return;
         }
-        //---現時点のHPをGamdataに格納
-        GameData.HP = hpmanager.currentHP;
+
         //---バックスペースキーでHPを減らす(デバッグ)
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
-            hpmanager.currentHP--;
+            GameData.CurrentHP--;
             SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
+        }
+        //---コントローラーキーでHPを増やす(デバッグ)
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            if(GameData.CurrentHP < hpmanager.MaxHP)
+            {
+                GameData.CurrentHP++;
+            }
+
         }
     }
 
@@ -253,10 +261,10 @@ public class Player2 : MonoBehaviour
             {
                 return;
             }
-            hpmanager.currentHP--;
+            GameData.CurrentHP--;
 
             //HPが0になったらゲームオーバーを表示
-            if(hpmanager.currentHP <= 0)
+            if(GameData.CurrentHP <= 0)
             {
                 GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
             }
@@ -278,9 +286,6 @@ public class Player2 : MonoBehaviour
                 //SoundManager.Play(SoundData.eSE.SE_LAND, SoundData.GameAudioList);
             }
         }
-
-
-
     }
 
 

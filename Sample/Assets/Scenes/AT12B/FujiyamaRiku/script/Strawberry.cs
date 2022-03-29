@@ -22,9 +22,6 @@ public class Strawberry : MonoBehaviour
         {
             Boss1Attack.RefrectFlg = true;
         }
-        
-            
-        
         if(collision.gameObject.name == "Boss")
         {
             

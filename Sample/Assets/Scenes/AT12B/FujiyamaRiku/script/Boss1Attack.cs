@@ -80,9 +80,9 @@ public class Boss1Attack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        obj = (GameObject)Resources.Load("strawberry");
-        Knifeobj = (GameObject)Resources.Load("Knife");
-        Forkobj = (GameObject)Resources.Load("Fork");
+        obj = (GameObject)Resources.Load("strawberryPre");
+        Knifeobj = (GameObject)Resources.Load("knifePre");
+        Forkobj = (GameObject)Resources.Load("forkPre");
         StrawberryNum = 0;
         Strawberry = new GameObject[Max_Strawberry];
         StrawberryUseFlg = new bool[Max_Strawberry];
@@ -142,29 +142,29 @@ public class Boss1Attack : MonoBehaviour
         if(!OnlyFlg)
         {
             OnlyFlg = true;
-            Debug.Log("Pos : " + Boss.BossPos);
-            RushStartPoint = Boss.BossPos;
+            Debug.Log("Pos : " + Boss1Manager.BossPos);
+            RushStartPoint = Boss1Manager.BossPos;
             RushEndPoint = GameObject.Find("ForkEndPoint").transform.position;
             RushMiddlePoint = GameObject.Find("RushMiddle").transform.position;
-            RushStartPoint.y -= 1.0f;
+            //RushStartPoint.y -= 5.0f;
             Fork = Instantiate(Forkobj, RushStartPoint, Quaternion.Euler(0.0f,0.0f,90.0f));
-            RushStartPoint.y += 1.0f;
-            Fork.transform.parent = Boss.Bossobj.transform;
+            //RushStartPoint.y += 5.0f;
+            Fork.transform.parent = Boss1Manager.Boss.transform;
             SoundManager.Play(SoundData.eSE.SE_BOOS1_DASHU, SoundData.GameAudioList);
         }
         if(OnlyFlg)
         {
             if(BossReturnFlg)
             {
-                
+                RefrectFlg = false;
                 BossReturnTime += Time.deltaTime * RushReturnSpeed;
                 if (RushEndFlg)
                 {
-                    Boss.BossPos = Beziercurve.SecondCurve(RushEndPoint, RushMiddlePoint, BossStartPoint, BossReturnTime);
+                    Boss1Manager.BossPos = Beziercurve.SecondCurve(RushEndPoint, RushMiddlePoint, BossStartPoint, BossReturnTime);
                 }
                 if (!RushEndFlg)
                 {
-                    Boss.BossPos = Vector3.Lerp(RushRefEndPoint, BossStartPoint, BossReturnTime);
+                    Boss1Manager.BossPos = Vector3.Lerp(RushRefEndPoint, BossStartPoint, BossReturnTime);
                 }
 
                 if (BossReturnTime >= 1.0f)
@@ -203,7 +203,7 @@ public class Boss1Attack : MonoBehaviour
             if (!RushRefFlg)
             {
                 RushTime += Time.deltaTime * RushSpeed;
-                Boss.BossPos = Vector3.Lerp(RushStartPoint, RushEndPoint, RushTime);
+                Boss1Manager.BossPos = Vector3.Lerp(RushStartPoint, RushEndPoint, RushTime);
                 if (RushTime >= 1.0f)
                 {
                     ReturnDelay += Time.deltaTime;
@@ -221,7 +221,7 @@ public class Boss1Attack : MonoBehaviour
             if (RushRefFlg)
             {
                 RushRefTime += Time.deltaTime * 2;
-                Boss.BossPos = Vector3.Lerp(RushPlayerPoint, RushRefEndPoint, RushRefTime);
+                Boss1Manager.BossPos = Vector3.Lerp(RushPlayerPoint, RushRefEndPoint, RushRefTime);
                 if (RushRefTime >= 1.0f)
                 {
                     
@@ -260,12 +260,12 @@ public class Boss1Attack : MonoBehaviour
         }
         if (!StrawberryUseFlg[StrawberryNum] && StrawBerryMany < Max_Strawberry)
         {
-            Debug.Log("呼んだ？！：" + StrawBerryMany);
+            Debug.Log("呼んだ？！：" + StrawberryNum);
             //Debug.Log("Strawberry");
             //Debug.Log("いちごぉ！！！！！！！！！！！：" + StrawberryNum);
-            StartPoint.x = Boss.BossPos.x;
-            StartPoint.y = Boss.BossPos.y + 4;
-            StartPoint.z = Boss.BossPos.z;
+            StartPoint.x = Boss1Manager.BossPos.x;
+            StartPoint.y = Boss1Manager.BossPos.y + 4;
+            StartPoint.z = Boss1Manager.BossPos.z;
             Strawberry[StrawberryNum] = Instantiate(obj, StartPoint, Quaternion.identity);
             StrawberryUseFlg[StrawberryNum] = true;
             StrawBerryMany += 1;
@@ -277,7 +277,6 @@ public class Boss1Attack : MonoBehaviour
             //イチゴ
             if (StrawberryUseFlg[i])
             {
-                
                 //弾かれたとき
                 if (!StrawberryRefFlg[i] && RefrectFlg)
                 {
@@ -292,7 +291,7 @@ public class Boss1Attack : MonoBehaviour
                         PlayerMiddlePoint[i].x += GameObject.Find("ear1").transform.position.x + 3.0f;
                         PlayerMiddlePoint[i].y += GameObject.Find("ear1").transform.position.y + 3.0f;
                         PlayerMiddlePoint[i].z += GameObject.Find("ear1").transform.position.z + 3.0f;
-                        RefEndPoint = Boss.BossPos;
+                        RefEndPoint = Boss1Manager.BossPos;
                         PlayerRefDir[i] = true;
                     }
                     else if (Strawberry[i].transform.position.x >= GameObject.Find("headstar").transform.position.x)
@@ -300,7 +299,7 @@ public class Boss1Attack : MonoBehaviour
                         PlayerPoint[i].x = GameData.PlayerPos.x + 2.0f;
                         PlayerPoint[i].y = GameData.PlayerPos.y;
                         PlayerPoint[i].z = GameData.PlayerPos.z;
-                        RefEndPoint = Boss.BossPos;
+                        RefEndPoint = Boss1Manager.BossPos;
 
 
                     }
@@ -313,11 +312,13 @@ public class Boss1Attack : MonoBehaviour
                         RefMissFlg = true;
                     }
                 }
-                
+                if(RefrectFlg)
+                {
+                    RefrectFlg = false;
+                }
                 //弾かれた後
                 if (StrawberryRefFlg[i])
                 {
-                    RefrectFlg = false;
                     Ref_FinishTime[i] += Time.deltaTime * 2f;
                    if(!PlayerRefDir[i])
                     {
@@ -338,8 +339,6 @@ public class Boss1Attack : MonoBehaviour
                             SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
                         }
                         RefMissFlg = false;
-
-                        
                         StrawberryUseFlg[i] = false ;
                         StrawberryRefFlg[i] = false ;
                         Destroy(Strawberry[i]);
@@ -349,7 +348,6 @@ public class Boss1Attack : MonoBehaviour
                     }
                 }
                 //弾かれていたらこっちの処理しない
-
                 if (!StrawberryRefFlg[i])
                 {
                     Strawberry[i].transform.position = Beziercurve.SecondCurve(StartPoint, MiddlePoint[i], EndPoint[i], FinishTime[i]);
@@ -383,11 +381,11 @@ public class Boss1Attack : MonoBehaviour
         {
             
             OnlyFlg = true;
-            KnifeStartPoint.x = Boss.BossPos.x;
-            KnifeStartPoint.y = Boss.BossPos.y + 4;
-            KnifeStartPoint.z = Boss.BossPos.z;
+            KnifeStartPoint.x = Boss1Manager.BossPos.x;
+            KnifeStartPoint.y = Boss1Manager.BossPos.y + 4;
+            KnifeStartPoint.z = Boss1Manager.BossPos.z;
             KnifeEndPoint = GameData.PlayerPos;
-            Knife = Instantiate(Knifeobj, KnifeStartPoint, Quaternion.identity);
+            Knife = Instantiate(Knifeobj, KnifeStartPoint, Quaternion.Euler(0.0f, 0.0f, 90.0f));
             SoundManager.Play(SoundData.eSE.SE_BOOS1_KNIFE, SoundData.GameAudioList);
             
         }
@@ -425,7 +423,7 @@ public class Boss1Attack : MonoBehaviour
         if(KnifeRefFlg)
         {
             KnifeRefTime += Time.deltaTime * 3;
-            Knife.transform.position = Vector3.Lerp(KnifePlayerPoint, Boss.BossPos, KnifeRefTime);
+            Knife.transform.position = Vector3.Lerp(KnifePlayerPoint, Boss1Manager.BossPos, KnifeRefTime);
             Debug.Log("Knife " + KnifePlayerPoint);
             if (KnifeRefTime >= 1.0f)
             {
@@ -452,9 +450,5 @@ public class Boss1Attack : MonoBehaviour
             }
         }
             
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        
     }
 }

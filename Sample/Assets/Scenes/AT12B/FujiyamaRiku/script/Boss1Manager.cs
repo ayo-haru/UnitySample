@@ -25,14 +25,19 @@ public class Boss1Manager : MonoBehaviour
     private int CountDown;
     private float CountDownMax = 5.0f;
     public Text timerText;
-    GameObject Bossobj;
+    public static GameObject Bossobj;
+    public static GameObject Boss;
+    public static Vector3 BossPos;
     private void Awake()
     {
         
-        Bossobj = (GameObject)Resources.Load("Boss");
+        Bossobj = (GameObject)Resources.Load("PanCake");
+
+        BossPos = GameObject.Find("BossPoint").transform.position;
         if (GameData.isAliveBoss1)
         {
-            Instantiate(Bossobj, Boss1Attack.BossStartPoint, Quaternion.identity);
+            Bossobj.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
+            Boss = Instantiate(Bossobj, BossPos, Quaternion.Euler(0.0f, -90.0f, 0.0f));
             BossState = Boss1State.BOSS1_START;
         }
         Application.targetFrameRate = 60;
@@ -74,15 +79,12 @@ public class Boss1Manager : MonoBehaviour
                 }
             case Boss1State.BOSS1_BATTLE:
                 {
-                    //if (!GameData.isAliveBoss1)
-                    //{
-                    //    BossState = Boss1State.BOSS1_END;
-                    //}
+                    Boss.gameObject.transform.position = BossPos;
                     break;
                 }
             case Boss1State.BOSS1_END:
                 {
-                    Destroy(GameObject.Find("Boss(Clone)"));
+                    Destroy(GameObject.Find("PanCake(Clone)"));
                     break;
                 }
             case Boss1State.BOSS1_DEAD:

@@ -10,7 +10,7 @@ public class Boss : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Bossobj = GameObject.Find("Boss(Clone)");
+        Bossobj = GameObject.Find("PanCake(Clone)");
         BossPos = GameObject.Find("BossPoint").transform.position;
         this.gameObject.transform.position = BossPos;
     }
@@ -19,6 +19,6 @@ public class Boss : MonoBehaviour
     void Update()
     {
         //É{ÉXÇÃç¿ïW
-        this.gameObject.transform.position = BossPos;
+        
     }
 }

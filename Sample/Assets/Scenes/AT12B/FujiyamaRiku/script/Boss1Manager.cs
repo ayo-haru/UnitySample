@@ -74,10 +74,10 @@ public class Boss1Manager : MonoBehaviour
                 }
             case Boss1State.BOSS1_BATTLE:
                 {
-                    if (!GameData.isAliveBoss1)
-                    {
-                        BossState = Boss1State.BOSS1_END;
-                    }
+                    //if (!GameData.isAliveBoss1)
+                    //{
+                    //    BossState = Boss1State.BOSS1_END;
+                    //}
                     break;
                 }
             case Boss1State.BOSS1_END:

@@ -8,6 +8,7 @@
 // <開発履歴>
 // 2022/03/10 作成
 // 2022/03/11 マップの番号を入れとく変数作った
+// 2022/03/30 左右の遷移をできるようにする
 //
 //=============================================================================
 
@@ -30,6 +31,7 @@ public static class GameData
 
 
     static int roomSize;                    // 1部屋のサイズは簡単に触れて欲しくないからpublicにしてない
+    public static int OldMapNumber;         // シーン移動前のマップ番号
     public static int CurrentMapNumber;     // マップの番号いれる
     public static int NextMapNumber;        // マップの番号いれる
     public static int MovePoint;            // 次の遷移場所
@@ -43,7 +45,7 @@ public static class GameData
     public static string CurrentMapName;    // 現在のマップの名前
     public static Vector3 PlayerPos;        // プレイヤーの座標（現在はGameManagerで毎フレーム代入しているが本来はPlayerクラスが良い(はず)） 
     public static GameObject Player;
-    public static float HP;                 // HPの保存
+    public static int CurrentHP = 6 ;       // HPの保存(現在の)
     public static bool isFadeOut = false;   //フェードアウト処理の開始、完了を管理するフラグ
     public static bool isFadeIn  = false;   //フェードイン処理の開始、完了を管理するフラグ
 

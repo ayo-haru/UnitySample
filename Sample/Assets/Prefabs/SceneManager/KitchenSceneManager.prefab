@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8560796169345879313}
   - component: {fileID: 8560796169345879318}
+  - component: {fileID: 7553379192002922078}
   m_Layer: 0
   m_Name: KitchenSceneManager
   m_TagString: Untagged
@@ -45,3 +46,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 5294126684173066432, guid: aa96526a81004bf419ea51af09a882ee, type: 3}
   currentSceneNum: 1
+--- !u!114 &7553379192002922078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8560796169345879312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f400ce149ad4e364692be7903148b000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DisplayHP: {fileID: 7502291967901619318, guid: 9091ff210e0d54c40b450e308e1d6fd9, type: 3}

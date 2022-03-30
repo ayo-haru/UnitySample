@@ -20,6 +20,7 @@ public class TomatoEnemy : MonoBehaviour
     private EnemyDown ED;
     //private Vector3 aim;
     private bool look;
+    private bool isGround;
 
     [SerializeField]
     float MoveSpeed = 2.0f;
@@ -33,16 +34,17 @@ public class TomatoEnemy : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         distance = 1.0f;
         ED = GetComponent<EnemyDown>();
-        look = true;
+        transform.Rotate(0, -90, 0);
+        look = false;
     }
 
     private void Update()
     {
         if (InArea && ED.isAlive)
         {
-            Vector3 rayPosition = transform.position + new Vector3(0.0f, 0.0f, 0.0f);
-            Ray ray = new Ray(rayPosition, Vector3.down);
-            bool isGround = Physics.Raycast(ray, distance); // 接地判定
+            //Vector3 rayPosition = transform.position + new Vector3(0.0f, 0.0f, 0.0f);
+            //Ray ray = new Ray(rayPosition, Vector3.down);
+            //bool isGround = Physics.Raycast(ray, distance); // 接地判定
             Vector3 pos = rb.position;
             // プレイヤーを見つけたら攻撃開始
             if (isGround == false)
@@ -54,33 +56,49 @@ public class TomatoEnemy : MonoBehaviour
 
             if (Target.position.x < transform.position.x && look)   // プレイヤーのほうを向く処理
             {
-                transform.Rotate(0, -90, 0);
+                transform.Rotate(0, -180, 0);
                 look = false;
             }
 
             if (Target.position.x > transform.position.x && !look)  // プレイヤーのほうを向く処理
             {
-                transform.Rotate(0, 90, 0);
+                transform.Rotate(0, 180, 0);
                 look = true;
             }
 
             // 跳ねる処理
             if (isGround)
             {
-                rb.AddForce(transform.up * 60.0f, ForceMode.Force);
+                rb.AddForce(transform.up * 250.0f, ForceMode.Force);
                 SoundManager.Play(SoundData.eSE.SE_TOMATO_BOUND, SoundData.GameAudioList);
+                isGround = false;
             }
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        // 接地判定
+        if(collision.gameObject.CompareTag("Ground"))
+        {
+            isGround = true;
+        }
+
         // プレイヤーに当たったら消える
         if (collision.gameObject.CompareTag("Player"))
         {
             SoundManager.Play(SoundData.eSE.SE_TOMATO_BOMB, SoundData.GameAudioList);
             Destroy(gameObject, 0.0f);
         }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        // 接地判定
+        //if (collision.gameObject.CompareTag("Ground"))
+        //{
+        //    isGround = false;
+        //}
     }
 
     public void OnTriggerEnter(Collider other)    // コライダーでプレイヤーを索敵したい

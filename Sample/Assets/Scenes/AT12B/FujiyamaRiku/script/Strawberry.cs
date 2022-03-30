@@ -20,7 +20,31 @@ public class Strawberry : MonoBehaviour
     {
         if (collision.gameObject.name == "Weapon(Clone)")
         {
-            Boss1Attack.RefrectFlg = true;
+            if (this.gameObject.name == "strawberry0")
+            {
+                Boss1Attack.StrawberryRefFlg[0] = true;
+            }
+            if (this.gameObject.name == "strawberry1")
+            {
+                Boss1Attack.StrawberryRefFlg[1] = true;
+            }
+            if (this.gameObject.name == "strawberry2")
+            {
+                Boss1Attack.StrawberryRefFlg[2] = true;
+            }
+            if (this.gameObject.name == "strawberry3")
+            {
+                Boss1Attack.StrawberryRefFlg[3] = true;
+            }
+            if (this.gameObject.name == "strawberry4")
+            {
+                Boss1Attack.StrawberryRefFlg[4] = true;
+            }
+            if (this.gameObject.name == "strawberry5")
+            {
+                Boss1Attack.StrawberryRefFlg[5] = true;
+            }
+            
         }
         if(collision.gameObject.name == "Boss")
         {

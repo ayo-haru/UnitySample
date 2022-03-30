@@ -44,13 +44,14 @@ public class Boss1Attack : MonoBehaviour
     int AliveStrawberry;
     Vector3 StrawberryPos;
     bool [] StrawberryUseFlg;
-    bool [] StrawberryRefFlg;
+    static public bool [] StrawberryRefFlg;
     [SerializeField] public float StrawberrySpeed;
     bool[] PlayerRefDir;
     Vector3 RefMiss;
     bool RefMissFlg;
     int [] SaveRef;
     int StrawBerryMany;
+    bool[] StrawberryRefOnlyFlg;
 
     //ÉxÉWÉGã»ê¸óp
     Vector3  StartPoint;
@@ -97,6 +98,7 @@ public class Boss1Attack : MonoBehaviour
         BossStartPoint = GameObject.Find("BossPoint").transform.position;
         PlayerRefDir = new bool[Max_Strawberry];
         RefMiss = GameObject.Find("StrawberryMiss").transform.position;
+        StrawberryRefOnlyFlg = new bool[Max_Strawberry];
 
         for (int i= 0;i < Max_Strawberry;i++)
         {
@@ -146,9 +148,9 @@ public class Boss1Attack : MonoBehaviour
             RushStartPoint = Boss1Manager.BossPos;
             RushEndPoint = GameObject.Find("ForkEndPoint").transform.position;
             RushMiddlePoint = GameObject.Find("RushMiddle").transform.position;
-            //RushStartPoint.y -= 5.0f;
+            RushStartPoint.y -= 3.0f;
             Fork = Instantiate(Forkobj, RushStartPoint, Quaternion.Euler(0.0f,0.0f,90.0f));
-            //RushStartPoint.y += 5.0f;
+            RushStartPoint.y +=3.0f;
             Fork.transform.parent = Boss1Manager.Boss.transform;
             SoundManager.Play(SoundData.eSE.SE_BOOS1_DASHU, SoundData.GameAudioList);
         }
@@ -267,6 +269,7 @@ public class Boss1Attack : MonoBehaviour
             StartPoint.y = Boss1Manager.BossPos.y + 4;
             StartPoint.z = Boss1Manager.BossPos.z;
             Strawberry[StrawberryNum] = Instantiate(obj, StartPoint, Quaternion.identity);
+            Strawberry[StrawberryNum].name = "strawberry" + StrawberryNum;
             StrawberryUseFlg[StrawberryNum] = true;
             StrawBerryMany += 1;
             SoundManager.Play(SoundData.eSE.SE_BOOS1_STRAWBERRY, SoundData.GameAudioList);
@@ -278,11 +281,9 @@ public class Boss1Attack : MonoBehaviour
             if (StrawberryUseFlg[i])
             {
                 //íeÇ©ÇÍÇΩÇ∆Ç´
-                if (!StrawberryRefFlg[i] && RefrectFlg)
+                if (!StrawberryRefOnlyFlg[i] && StrawberryRefFlg[i])
                 {
-                    RefrectFlg = false;
-                    StrawberryRefFlg[i] = true;
-                    
+                    StrawberryRefOnlyFlg[i] = true;
                     if (Strawberry[i].transform.position.y >= GameObject.Find("ear1").transform.position.y + 2.0f)
                     {
                         PlayerPoint[i].x = GameData.PlayerPos.x;
@@ -312,10 +313,6 @@ public class Boss1Attack : MonoBehaviour
                         RefMissFlg = true;
                     }
                 }
-                if(RefrectFlg)
-                {
-                    RefrectFlg = false;
-                }
                 //íeÇ©ÇÍÇΩå„
                 if (StrawberryRefFlg[i])
                 {
@@ -341,6 +338,7 @@ public class Boss1Attack : MonoBehaviour
                         RefMissFlg = false;
                         StrawberryUseFlg[i] = false ;
                         StrawberryRefFlg[i] = false ;
+                        StrawberryRefOnlyFlg[i] = false; ;
                         Destroy(Strawberry[i]);
                         Ref_FinishTime[i] = 0;
                         FinishTime[i] = 0;

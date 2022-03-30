@@ -10,6 +10,7 @@
 // 2022/03/16 作成
 // 2022/03/17 スライドを全方向できるようにした
 // 2022/03/24 プレイヤーと盾がくっつかないようにした
+// 2022/03/30 盾がプレイヤーにまとわりつくようにした
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -21,28 +22,27 @@ public class WeaponSlide : MonoBehaviour
     Vector3 dir;
     //スライドの速度
     public float slideSpeed = 0.1f;
-    //リジットボディ
-    Rigidbody rb;
     //プレイヤー位置
     Vector3 PlayerPos;
     //プレイヤーと盾の最小距離
-    public float minDistance = 1.0f;
+    //public float minDistance = 1.0f;
+    //盾の移動量
+    Vector3 move;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
         //Player = GameObject.Find("Player");
         PlayerPos = GameData.PlayerPos;
         dir = gameObject.transform.position - PlayerPos;
+        move = dir;
+        Debug.Log("移動量初期値"+move);
         dir.Normalize();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //反射板位置
-        //Vector3 pos = rb.position;
         //プレイヤー位置
         PlayerPos = GameData.PlayerPos;
 
@@ -76,15 +76,22 @@ public class WeaponSlide : MonoBehaviour
         //Vector3 dir = playerPos - pos;
         //dir.Normalize();
 
+       
+        //移動量保存
+        move += dir * slideSpeed;
+
+        //移動
+        transform.position = PlayerPos + move;
+
         //取得した方向に反射板移動
-        rb.position += dir * slideSpeed;
+        // rb.position += dir * slideSpeed;
 
         //プレイヤーと盾の距離が近い場合は離す
-        float dis = Vector3.Distance(PlayerPos, rb.position);
-        if (dis < minDistance)
-        {
-            rb.position += dir * (minDistance - dis);
-        }
+        //float dis = Vector3.Distance(PlayerPos, rb.position);
+        //if (dis < minDistance)
+        //{
+        //    rb.position += dir * (minDistance - dis);
+        //}
 
     }
 

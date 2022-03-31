@@ -33,12 +33,11 @@ public static class EffectData
     }
 
     //---エフェクトデータの数だけまとめる
-    //public static ParticleSystem[] EF = new ParticleSystem[(int)eEFFECT.MAX_EF];
-    public static GameObject[] EF = new GameObject[(int)eEFFECT.MAX_EF];
+    public static ParticleSystem[] EF = new ParticleSystem[(int)eEFFECT.MAX_EF];
 
 
     //---エフェクトデータを読み込む
-    public static void EFDataSet(GameObject _EF,int i)
+    public static void EFDataSet(ParticleSystem _EF,int i)
     {
         EF[i] = _EF;
     }

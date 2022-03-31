@@ -34,8 +34,9 @@ public class HPgage : MonoBehaviour
     void Update()
     {
         //ダメージを受けたモーション再生後これを実行←だれか任せた
-        if(Input.GetKeyDown(KeyCode.Return))
+        if(Input.GetKeyDown(KeyCode.F1))
         {
+            damage = 51;
             DelHP();
             Debug.Log("After currentHp : " + currentHp);
         }

@@ -40,10 +40,11 @@ public class Boss1Attack : MonoBehaviour
     GameObject obj;                                       //ÉCÉ`ÉSê∂ê¨óp
     GameObject [] Strawberry;               //ÉCÉ`ÉSê∂ê¨å„äiî[
     [SerializeField] public int Max_Strawberry;           //ë≈Ç¡ÇΩÉCÉ`ÉSÇÃîªíf
+    public static int PreMax_Strawberry;
     int StrawberryNum;
     int AliveStrawberry;
     Vector3 StrawberryPos;
-    bool [] StrawberryUseFlg;
+    static bool[] StrawberryUseFlg;
     static public bool [] StrawberryRefFlg;
     [SerializeField] public float StrawberrySpeed;
     bool[] PlayerRefDir;
@@ -52,6 +53,7 @@ public class Boss1Attack : MonoBehaviour
     int [] SaveRef;
     int StrawBerryMany;
     bool[] StrawberryRefOnlyFlg;
+    static public bool[] StrawberryColPlayer;
 
     //ÉxÉWÉGã»ê¸óp
     Vector3  StartPoint;
@@ -99,10 +101,11 @@ public class Boss1Attack : MonoBehaviour
         PlayerRefDir = new bool[Max_Strawberry];
         RefMiss = GameObject.Find("StrawberryMiss").transform.position;
         StrawberryRefOnlyFlg = new bool[Max_Strawberry];
+        StrawberryColPlayer = new bool[Max_Strawberry];
+        PreMax_Strawberry = Max_Strawberry;
 
         for (int i= 0;i < Max_Strawberry;i++)
         {
-            
             StrawberryRefFlg[i] = false;
             StrawberryUseFlg[i] = false;
             MiddlePoint[i] = GameObject.Find("CubeEnd").transform.position; 
@@ -195,8 +198,8 @@ public class Boss1Attack : MonoBehaviour
             if (RefrectFlg)
             {
                 RushRefFlg = true;
-                RushPlayerPoint.x = GameData.PlayerPos.x + 3.0f;
-                RushPlayerPoint.y = GameData.PlayerPos.y;
+                RushPlayerPoint.x = GameData.PlayerPos.x + 2.0f;
+                RushPlayerPoint.y = GameData.PlayerPos.y + 3.0f;
                 RushPlayerPoint.z = GameData.PlayerPos.z;
                 RushRefEndPoint = GameObject.Find("ForkRefEndPoint").transform.position;
                 
@@ -222,7 +225,7 @@ public class Boss1Attack : MonoBehaviour
             }
             if (RushRefFlg)
             {
-                RushRefTime += Time.deltaTime * 2;
+                RushRefTime += Time.deltaTime * 2f;
                 Boss1Manager.BossPos = Vector3.Lerp(RushPlayerPoint, RushRefEndPoint, RushRefTime);
                 if (RushRefTime >= 1.0f)
                 {
@@ -320,11 +323,13 @@ public class Boss1Attack : MonoBehaviour
                    if(!PlayerRefDir[i])
                     {
                         Strawberry[i].transform.position = Vector3.Lerp(PlayerPoint[i], RefEndPoint, Ref_FinishTime[i]);
+                        Strawberry[i].transform.Rotate(new Vector3(0, 0, 10));
                     }
                     if (PlayerRefDir[i])
                     {
                         Strawberry[i].transform.position = Beziercurve.SecondCurve(PlayerPoint[i], PlayerMiddlePoint[i],
                                                                                    RefEndPoint, Ref_FinishTime[i]);
+                        Strawberry[i].transform.Rotate(new Vector3(0, 0, 10));
                     }
                     if (Ref_FinishTime[i] >= 1.0f)
                     {
@@ -349,6 +354,7 @@ public class Boss1Attack : MonoBehaviour
                 if (!StrawberryRefFlg[i])
                 {
                     Strawberry[i].transform.position = Beziercurve.SecondCurve(StartPoint, MiddlePoint[i], EndPoint[i], FinishTime[i]);
+                    Strawberry[i].transform.Rotate(new Vector3(0, 0, 10));
                 }
                 FinishTime[i] += Time.deltaTime * StrawberrySpeed;
                 if (i < Max_Strawberry - 1)
@@ -360,6 +366,13 @@ public class Boss1Attack : MonoBehaviour
                 }
                 //----------------------------------------------------------
                 //íeÇ™ìûíÖÇµÇΩÇÁè¡Ç∑,çUåÇÇÇÕÇ∂Ç¢ÇƒÇ¢ÇΩÇÁèàóùÇÇµÇ»Ç¢
+                if(StrawberryColPlayer[i])
+                {
+                    FinishTime[i] = 0;
+                    StrawberryUseFlg[i] = false;
+                    Destroy(Strawberry[i]);
+                    AliveStrawberry++;
+                }
                 if (FinishTime[i] >= 1.0f && !StrawberryRefFlg[i])
                 {
                     FinishTime[i] = 0;
@@ -383,7 +396,9 @@ public class Boss1Attack : MonoBehaviour
             KnifeStartPoint.y = Boss1Manager.BossPos.y + 4;
             KnifeStartPoint.z = Boss1Manager.BossPos.z;
             KnifeEndPoint = GameData.PlayerPos;
-            Knife = Instantiate(Knifeobj, KnifeStartPoint, Quaternion.Euler(0.0f, 0.0f, 90.0f));
+
+            Knife = Instantiate(Knifeobj, KnifeStartPoint, Quaternion.Euler(0.0f,0.0f,90.0f));
+
             SoundManager.Play(SoundData.eSE.SE_BOOS1_KNIFE, SoundData.GameAudioList);
             
         }

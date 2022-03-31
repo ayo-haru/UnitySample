@@ -19,6 +19,7 @@ public class Fork : MonoBehaviour
     {
         if (collision.gameObject.name == "Weapon(Clone)")
         {
+            GetComponent<Collider>().enabled = false;
             Boss1Attack.RefrectFlg = true;
         }
         

@@ -10,6 +10,7 @@
 // 2022/03/20   移動、攻撃実施(この時点ではAddForce)
 // 2022/03/25   プレイヤーの挙動修正(移動をVelocity計算に変更)
 // 2022/03/25   プレイヤーの挙動修正(ジャンプ中の挙動変更ストレイフアリ)
+// 2022/04/01   アニメーション導入
 //=============================================================================
 using System;
 using System.Collections;
@@ -25,6 +26,10 @@ public class Player2 : MonoBehaviour
     private Game_pad PlayerActionAsset;                 // InputActionで生成したものを使用
     private InputAction move;                           // InputActionのmoveを扱う
     private InputAction Attack;                         // InputActionのmoveを扱う
+
+    //---アニメーション関連
+    [SerializeField] Animator animator;                 // アニメーターコンポーネント取得
+
 
     //---コンポーネント取得
     private Rigidbody rb;
@@ -142,7 +147,6 @@ public class Player2 : MonoBehaviour
             //return;
         }
 
-
         //---移動処理(AddForceの処理)
         //SpeedCheck();
         //ForceDirection += move.ReadValue<Vector2>();
@@ -166,10 +170,7 @@ public class Player2 : MonoBehaviour
             //    transform.rotation = Quaternion.LookRotation(new Vector3(-1.0f, 0.0f, 0.0f));
             //}
         }
-
-
         ForceDirection = Vector2.zero;
-
     }
 
     private void OnMove(InputAction.CallbackContext obj)
@@ -207,9 +208,6 @@ public class Player2 : MonoBehaviour
         //Debug.Log("攻撃した！(Weapon)");
         Debug.Log("AttackDirection(正規化後):"+ AttackDirection);
         //EffectData.EF[(int)EffectData.eEFFECT.EF_SHEILD2].Play();
-        //Instantiate(EffectData.EF[(int)EffectData.eEFFECT.EF_SHEILD2]);
-        GameObject effect = Instantiate(EffectData.EF[(int)EffectData.eEFFECT.EF_SHEILD2]);
-        effect.GetComponent<ParticleSystem>().Play();
         //SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
         AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする
         Destroy(weapon,DestroyTime);
@@ -252,7 +250,6 @@ public class Player2 : MonoBehaviour
         }
     }
 
-
     //---当たり判定処理
     private void OnCollisionEnter(Collision collision)
     {
@@ -290,7 +287,6 @@ public class Player2 : MonoBehaviour
             }
         }
     }
-
 
 
     private void OnGUI()

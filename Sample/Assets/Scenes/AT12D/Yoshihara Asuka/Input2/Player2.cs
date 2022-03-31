@@ -28,7 +28,7 @@ public class Player2 : MonoBehaviour
     private InputAction Attack;                         // InputActionのmoveを扱う
 
     //---アニメーション関連
-    [SerializeField] Animator animator;                 // アニメーターコンポーネント取得
+    [SerializeField] public Animator animator;                 // アニメーターコンポーネント取得
 
 
     //---コンポーネント取得
@@ -55,7 +55,9 @@ public class Player2 : MonoBehaviour
     private Vector2 AttackDirection = Vector2.zero;     // 攻撃方向
     public float AttckPosHeight = 8.0f;                 // シールド位置上下
     public float AttckPosWidth = 8.0f;                  // シールド位置左右
-    public float DestroyTime = 3.0f;                    // シールドが消える時間　
+    public float DestroyTime = 3.0f;                    // シールドが消える時間
+    private Vector3 CurrentScale;                       // 現在のプレイヤーのスケールの値を格納 
+
 
 
     private void Awake()
@@ -115,6 +117,20 @@ public class Player2 : MonoBehaviour
         ForceDirection += move.ReadValue<Vector2>();
         ForceDirection.Normalize();
         MovingVelocity = ForceDirection * maxSpeed;
+
+        if(Mathf.Abs(ForceDirection.x) > 0)
+        {
+            if (!animator.GetBool("Walk"))
+            {
+                animator.SetBool("Walk",true);
+            }
+        }
+        else if (animator.GetBool("Walk"))
+        {
+            animator.SetBool("Walk", false);
+
+        }
+
 
         if (!GameObject.Find("HPSystem(Clone)"))
         {
@@ -183,10 +199,16 @@ public class Player2 : MonoBehaviour
     //---攻撃処理
     private void OnAttack(InputAction.CallbackContext obj)
     {
+        //---アニメーション再生
+        animator.SetTrigger("Attack");                              // 攻撃のステートに移動(攻撃モーション再生)
+
+
+        //---スティック入力
         PlayerPos = transform.position;                             // 攻撃する瞬間のプレイヤーの座標を取得
         AttackDirection += Attack.ReadValue<Vector2>();             // スティックの倒した値を取得
         Debug.Log("AttackDirection(正規化前):" + AttackDirection);
         AttackDirection.Normalize();                                // 取得した値を正規化(ベクトルを１にする)
+
 
         //---倒した値を基に盾の出す場所を指定
         GameObject weapon = Instantiate(prefab,new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
@@ -197,6 +219,7 @@ public class Player2 : MonoBehaviour
         if (AttackDirection.x < 0.0f)
         {
             AttackDirection.y *= -1;
+
         }
         //---y軸が－だったら(下パリィする際)ジャンプ中にする(03/21時点)
         //---y軸が－だったら(下パリィする際)下パリィフラグにする(03/25時点)
@@ -298,21 +321,21 @@ public class Player2 : MonoBehaviour
         {
             return;
         }
-         
+
         //---ゲームパッドとつながっている時に表示される。
-        //GUILayout.Label($"LeftStick:{Gamepad.current.leftStick.ReadValue()}");
-        //GUILayout.Label($"RightStick:{Gamepad.current.rightStick.ReadValue()}");
-        //GUILayout.Label($"ButtonNorth:{Gamepad.current.buttonNorth.isPressed}");
-        //GUILayout.Label($"ButtonSouth:{Gamepad.current.buttonSouth.isPressed}");
-        //GUILayout.Label($"ButtonEast:{Gamepad.current.buttonEast.isPressed}");
-        //GUILayout.Label($"ButtonWast:{Gamepad.current.buttonWest.isPressed}");
-        //GUILayout.Label($"LeftShoulder:{Gamepad.current.leftShoulder.ReadValue()}");
-        //GUILayout.Label($"LeftTrigger:{Gamepad.current.leftTrigger.ReadValue()}");
-        //GUILayout.Label($"RightShoulder:{Gamepad.current.rightShoulder.ReadValue()}");
-        //GUILayout.Label($"RighetTrigger:{Gamepad.current.rightTrigger.ReadValue()}");
-        //GUILayout.Label($"LeftStickUp:{Gamepad.current.leftStick.up.ReadValue()}");
-        //GUILayout.Label($"Space:{Keyboard.current.spaceKey.ReadValue()}");
-        //GUILayout.Label($"JumpFlg:{JumpNow}");
+        GUILayout.Label($"LeftStick:{Gamepad.current.leftStick.ReadValue()}");
+        GUILayout.Label($"RightStick:{Gamepad.current.rightStick.ReadValue()}");
+        GUILayout.Label($"ButtonNorth:{Gamepad.current.buttonNorth.isPressed}");
+        GUILayout.Label($"ButtonSouth:{Gamepad.current.buttonSouth.isPressed}");
+        GUILayout.Label($"ButtonEast:{Gamepad.current.buttonEast.isPressed}");
+        GUILayout.Label($"ButtonWast:{Gamepad.current.buttonWest.isPressed}");
+        GUILayout.Label($"LeftShoulder:{Gamepad.current.leftShoulder.ReadValue()}");
+        GUILayout.Label($"LeftTrigger:{Gamepad.current.leftTrigger.ReadValue()}");
+        GUILayout.Label($"RightShoulder:{Gamepad.current.rightShoulder.ReadValue()}");
+        GUILayout.Label($"RighetTrigger:{Gamepad.current.rightTrigger.ReadValue()}");
+        GUILayout.Label($"LeftStickUp:{Gamepad.current.leftStick.up.ReadValue()}");
+        GUILayout.Label($"Space:{Keyboard.current.spaceKey.ReadValue()}");
+        GUILayout.Label($"JumpFlg:{JumpNow}");
     }
 
 }

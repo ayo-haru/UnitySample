@@ -54,26 +54,15 @@ public class DataManager : MonoBehaviour
     //-----------------------------------------------------
     // Efect
     //-----------------------------------------------------
-    //public ParticleSystem ef_fire;
-    //public ParticleSystem ef_damage;
-    //public ParticleSystem ef_dark;
-    //public ParticleSystem ef_enemydeath;
-    //public ParticleSystem ef_bossdeath;
-    //public ParticleSystem ef_healitem;
-    //public ParticleSystem ef_heal;
-    //public ParticleSystem ef_shield;
-    //public ParticleSystem ef_shield2;
-
-    public GameObject ef_fire;
-    public GameObject ef_damage;
-    public GameObject ef_dark;
-    public GameObject ef_enemydeath;
-    public GameObject ef_bossdeath;
-    public GameObject ef_healitem;
-    public GameObject ef_heal;
-    public GameObject ef_shield;
-    public GameObject ef_shield2;
-
+    public ParticleSystem ef_fire;
+    public ParticleSystem ef_damage;
+    public ParticleSystem ef_dark;
+    public ParticleSystem ef_enemydeath;
+    public ParticleSystem ef_bossdeath;
+    public ParticleSystem ef_healitem;
+    public ParticleSystem ef_heal;
+    public ParticleSystem ef_shield;
+    public ParticleSystem ef_shield2;
 
     // Start is called before the first frame update
     void Awake()

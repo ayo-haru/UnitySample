@@ -34,6 +34,11 @@ public class Player : MonoBehaviour
         {
             this.transform.position = GameData.Player.transform.position = GameData.PlayerPos = ReSpawnPos;
         }
+
+        //if (Input.GetKeyDown(KeyCode.RightArrow))
+        //{
+        //    EffectManager.Play(EffectData.eEFFECT.EF_SHEILD2, GameData.PlayerPos);
+        //}
     }
 
     void OnTriggerEnter(Collider other) {

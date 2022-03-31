@@ -36,7 +36,7 @@ public static class GameData
     public static int NextMapNumber;        // マップの番号いれる
     public static int MovePoint;            // 次の遷移場所
     static string[] MapName                 // マップの名前 
-        = { "ProtoTypeTitleScene", "Kitchen001", "Kitchen002", "Kitchen003", "Kitchen004", "Kitchen005", "Kitchen006", "Tester" };
+        = { "TitleScene", "Kitchen001", "Kitchen002", "Kitchen003", "Kitchen004", "Kitchen005", "Kitchen006", "Tester" };
 
     static string[] MovePointName
         = { "KitchenMovePoint001" };

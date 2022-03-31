@@ -19,13 +19,9 @@ public class Knife : MonoBehaviour
     {
         if (collision.gameObject.name == "Weapon(Clone)")
         {
-            
+            GetComponent<Collider>().enabled = false;
             Boss1Attack.RefrectFlg = true;
         }
         
-        if (collision.gameObject.name == "Boss")
-        {
-
-        }
     }
 }

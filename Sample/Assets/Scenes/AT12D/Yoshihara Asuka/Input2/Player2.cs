@@ -125,6 +125,7 @@ public class Player2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
             GameData.CurrentHP--;
+            EffectManager.Play(EffectData.eEFFECT.EF_DAMAGE, this.transform.position);
             SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
         }
         //---コントローラーキーでHPを増やす(デバッグ)
@@ -132,6 +133,7 @@ public class Player2 : MonoBehaviour
         {
             if(GameData.CurrentHP < hpmanager.MaxHP)
             {
+                EffectManager.Play(EffectData.eEFFECT.EF_HEAL, this.transform.position);
                 GameData.CurrentHP++;
             }
 
@@ -207,8 +209,8 @@ public class Player2 : MonoBehaviour
         weapon.transform.Rotate(new Vector3(0,0,(90 * AttackDirection.y)));
         //Debug.Log("攻撃した！(Weapon)");
         Debug.Log("AttackDirection(正規化後):"+ AttackDirection);
-        //EffectData.EF[(int)EffectData.eEFFECT.EF_SHEILD2].Play();
-        //SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
+        EffectManager.Play(EffectData.eEFFECT.EF_SHEILD2,weapon.transform.position);
+        SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
         AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする
         Destroy(weapon,DestroyTime);
         return;
@@ -256,6 +258,7 @@ public class Player2 : MonoBehaviour
         if(collision.gameObject.tag == "Damaged")
         {
             Debug.Log("攻撃をうけた。");
+            EffectManager.Play(EffectData.eEFFECT.EF_DAMAGE, this.transform.position);
             SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
             if (!GameObject.Find("HPSystem(Clone)"))
             {

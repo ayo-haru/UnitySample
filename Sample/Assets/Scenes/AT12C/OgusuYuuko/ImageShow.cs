@@ -12,6 +12,7 @@
 // 2022/03/16 作成
 // 2022/03/19 表示を終了する関数を追加
 // 2022/03/23 消す秒数を指定できるようにした
+// 2022/03/30 色を変更できるようにした
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -27,6 +28,10 @@ public class ImageShow : MonoBehaviour
     Image Image;
     //画像透明度
     float alpha;
+    //画像色
+    float red = 1.0f;
+    float green = 1.0f;
+    float blue = 1.0f;
     //透明度更新速度
     public float ShowAlphaSpeed = 0.005f;
     public float HideAlphaSpeed = 0.005f;
@@ -43,7 +48,7 @@ public class ImageShow : MonoBehaviour
         Image = GetComponent<Image>();
         alpha = 0.0f;
         //透明に設定
-        Image.color = new Color(1.0f, 1.0f, 1.0f, alpha);
+        Image.color = new Color(red, green, blue, alpha);
     }
 
     // Update is called once per frame
@@ -74,7 +79,7 @@ public class ImageShow : MonoBehaviour
                 
             }
             //色設定
-            Image.color = new Color(1.0f, 1.0f, 1.0f, alpha);
+            Image.color = new Color(red, green, blue, alpha);
             return;
         }
 
@@ -88,7 +93,7 @@ public class ImageShow : MonoBehaviour
                 mode = ImageMode.NONE;
             }
             //色設定
-            Image.color = new Color(1.0f, 1.0f, 1.0f, alpha);
+            Image.color = new Color(red, green, blue, alpha);
             return;
         }
 
@@ -128,6 +133,15 @@ public class ImageShow : MonoBehaviour
         mode = ImageMode.NONE;
         alpha = 0.0f;
         //透明に設定
-        Image.color = new Color(1.0f, 1.0f, 1.0f, alpha);
+        Image.color = new Color(red, green, blue, alpha);
+    }
+
+    public void SetColor(float r ,float g,float b)
+    {
+        red = r;
+        green = g;
+        blue = b;
+        //色設定
+        Image.color = new Color(red, green, blue, alpha);
     }
 }

@@ -117,12 +117,13 @@ public class GameOver : MonoBehaviour
             {
                 case SELECT.RETRY:
                     //ゲームに戻る
-                    //シーン遷移の関数呼び出し
+                    //シーン遷移
                     Debug.Log("リトライを押した");
                     break;
                 case SELECT.BACKTITLE:
                     //タイトルに戻る
-                    //シーン遷移の関数呼び出し
+                    //シーン遷
+                    GameData.NextMapNumber = (int)GameData.eSceneState.TITLE_SCENE;
                     Debug.Log("タイトルに戻るを押した");
                     break;
             }

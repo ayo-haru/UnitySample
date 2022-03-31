@@ -207,6 +207,9 @@ public class Player2 : MonoBehaviour
         //Debug.Log("攻撃した！(Weapon)");
         Debug.Log("AttackDirection(正規化後):"+ AttackDirection);
         //EffectData.EF[(int)EffectData.eEFFECT.EF_SHEILD2].Play();
+        //Instantiate(EffectData.EF[(int)EffectData.eEFFECT.EF_SHEILD2]);
+        GameObject effect = Instantiate(EffectData.EF[(int)EffectData.eEFFECT.EF_SHEILD2]);
+        effect.GetComponent<ParticleSystem>().Play();
         //SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
         AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする
         Destroy(weapon,DestroyTime);

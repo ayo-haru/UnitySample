@@ -28,6 +28,11 @@ public class Player2 : MonoBehaviour
     private InputAction move;                           // InputActionのmoveを扱う
     private InputAction Attack;                         // InputActionのmoveを扱う
 
+    //---振動
+    [SerializeField] private float LowFrequency;        // 左側の振動の値
+    [SerializeField] private float HighFrequency;       // 右側の振動の値
+    [SerializeField] private float VibrationTime;       // 振動時間
+
     //---アニメーション関連
     [SerializeField] public Animator animator;          // アニメーターコンポーネント取得
 
@@ -49,11 +54,11 @@ public class Player2 : MonoBehaviour
     private int Timer = 0;                              //停止時間計測用
 
     public float Amplitude;                             // 振れ幅
-    private int FylFrameCount;                         //　フワフワしてる処理に使うフレームカウント
+    private int FylFrameCount;                          // フワフワしてる処理に使うフレームカウント
 
     //---回転変数
-    private Vector2 beforeDir;                           //最後に入力された方向
-    public float rotationSpeed = 30.0f;                  //回転スピード
+    private Vector2 beforeDir;                          //最後に入力された方向
+    public float rotationSpeed = 30.0f;                 //回転スピード
     private Vector3 scale;                              //スケール
 
     //---ジャンプ変数
@@ -242,6 +247,9 @@ public class Player2 : MonoBehaviour
     //---攻撃処理
     private void OnAttack(InputAction.CallbackContext obj)
     {
+        //---振動させる
+        StartCoroutine(VibrationPlay(LowFrequency,HighFrequency));
+
         //---スティック入力
         PlayerPos = transform.position;                             // 攻撃する瞬間のプレイヤーの座標を取得
         AttackDirection += Attack.ReadValue<Vector2>();             // スティックの倒した値を取得
@@ -265,6 +273,7 @@ public class Player2 : MonoBehaviour
             }
             animator.SetTrigger("Attack_UP");
         }
+
 
 
         //モデルの向きと反対方向に盾出したらモデル回転
@@ -330,6 +339,7 @@ public class Player2 : MonoBehaviour
         SoundManager.Play(SoundData.eSE.SE_JUMP, SoundData.GameAudioList);
     }
 
+    #region Gravity関数
     //---ジャンプ中の重力を強くする(ジャンプが俊敏に見える効果がある)
     private void Gravity()
     {
@@ -339,7 +349,9 @@ public class Player2 : MonoBehaviour
             //ForceDirection = Vector2.zero;
         }
     }
+    #endregion
 
+    #region ふわふわ移動
     //---オブジェクトをフワフワさせる処理
     private void FluffyMove()
     {
@@ -354,7 +366,9 @@ public class Player2 : MonoBehaviour
             iTween.MoveAdd(gameObject, new Vector3(0, Amplitude * posYSin, 0), 0.0f);
         } 
     }
+    #endregion
 
+    #region 速度調整関数(AddForce移動用)
     //---AddForceで力がかかりすぎてしまうため、maxSpeedの値に近い値に固定する処理
     private void SpeedCheck()
     {
@@ -366,6 +380,8 @@ public class Player2 : MonoBehaviour
             rb.velocity = PlayerVelocity.normalized * maxSpeed;
         }
     }
+    #endregion
+
 
     //---当たり判定処理
     private void OnCollisionEnter(Collision collision)
@@ -419,6 +435,21 @@ public class Player2 : MonoBehaviour
 
     }
 
+    //---
+    private IEnumerator VibrationPlay
+    (
+        float lowFrequency,     // 低周波(左) モーターの強さ(0.0 ~ 1.0)
+        float HighFrequency     // 高周波(右) モータ-の強さ(0.0 ~ 1.0)
+    )
+    {
+        Gamepad gamepad = Gamepad.current;
+        if(gamepad != null)
+        {
+            gamepad.SetMotorSpeeds(lowFrequency,HighFrequency);
+            yield return new WaitForSeconds(VibrationTime);
+            gamepad.SetMotorSpeeds(0.0f,0.0f);
+        }
+    }
 
     private void OnGUI()
     {
@@ -443,6 +474,7 @@ public class Player2 : MonoBehaviour
         GUILayout.Label($"JumpFlg:{JumpNow}");
         GUILayout.Label($"GroudFlg:{GroundNow}");
     }
+
 
 }
 

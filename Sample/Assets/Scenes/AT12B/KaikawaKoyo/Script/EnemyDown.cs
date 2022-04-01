@@ -16,6 +16,7 @@ public class EnemyDown : MonoBehaviour
     public float bounceSpeed = 5.0f;
     public float bounceVectorMultiple = 2f;
     private float bouncePower = 1000.0f;
+    private Vector3 Pos;
 
     public bool isAlive;
 
@@ -40,7 +41,9 @@ public class EnemyDown : MonoBehaviour
 
         if (DeadTime > 1.0f)
         {
+            Pos = transform.position;
             Destroy(gameObject, 0.0f);
+            EffectManager.Play(EffectData.eEFFECT.EF_ENEMYDOWN, Pos);
         }
     }
 

@@ -32,6 +32,7 @@ public class EnemyDown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 時間で消える処理
         if (!isAlive)
         {
             DeadTime += Time.deltaTime;
@@ -68,7 +69,7 @@ public class EnemyDown : MonoBehaviour
             //取得した法線ベクトルに跳ね返す速さをかけて、跳ね返す
             rb.AddForce(velocity * bouncePower, ForceMode.Force);
             // 回転させる
-            rb.AddTorque(-100.0f, -100.0f, -100.0f);
+            rb.AddTorque(0.0f, 0.0f, -300.0f);
 
             SoundManager.Play(SoundData.eSE.SE_REFLECTION, SoundData.GameAudioList);
         }

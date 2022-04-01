@@ -6,7 +6,17 @@ ModelImporter:
   - first:
       74: 1345547331991380645
     second: raby_rig_fin
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: body_tex
+    second: {fileID: 2800000, guid: 6ff2a2847b6377c4794a0756d0fea206, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: face_tex
+    second: {fileID: 2800000, guid: d70d525c41dc60348895c7ac7f771225, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -333,7 +343,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 100
     rootMotionBoneName: hip
     hasTranslationDoF: 0
     hasExtraRoot: 0

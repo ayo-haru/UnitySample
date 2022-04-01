@@ -53,6 +53,7 @@ public class Player2 : MonoBehaviour
     //---回転変数
     private Vector2 beforeDir;                           //最後に入力された方向
     public float rotationSpeed = 30.0f;                  //回転スピード
+    private Vector3 scale;                              //スケール
 
     //---ジャンプ変数
     public float GravityForce = -10.0f;                 // 重力
@@ -121,7 +122,7 @@ public class Player2 : MonoBehaviour
             hp = GameObject.Find("HPSystem(Clone)");        // HPSystemを参照
             hpmanager = hp.GetComponent<HPManager>();       // HPSystemの使用するコンポーネント
         }
-
+        scale = transform.localScale;
     }
 
     // Update is called once per frame
@@ -198,8 +199,13 @@ public class Player2 : MonoBehaviour
         }
 
         //---回転処理処理
+        //方向が変わってたらスケールｘを反転
+        if((ForceDirection.x > 0 && beforeDir.x < 0)||(ForceDirection.x < 0 && beforeDir.x > 0)){
+            scale.x *= -1;
+            transform.localScale = scale;
+        }
         //回転の目標値
-        Quaternion target= new Quaternion();
+        Quaternion target = new Quaternion();
         if (ForceDirection.magnitude > 0.01f)
         {
             //方向を保存
@@ -211,7 +217,7 @@ public class Player2 : MonoBehaviour
         {
             //入力されてなかったとき
             //回転が中途半端な時は補正する
-            if(transform.rotation.y != 90.0f && transform.rotation.y != 180.0f)
+            if(transform.rotation.y != 90.0f && transform.rotation.y != -90.0f)
             {
                 target = Quaternion.LookRotation(beforeDir); //向きを変更する
             }
@@ -242,6 +248,22 @@ public class Player2 : MonoBehaviour
         Debug.Log("AttackDirection(正規化前):" + AttackDirection);
         AttackDirection.Normalize();                                // 取得した値を正規化(ベクトルを１にする)
 
+        //モデルの向きと反対方向に盾出したらモデル回転
+        if((AttackDirection.x > 0 && beforeDir.x < 0)||(AttackDirection.x < 0 && beforeDir.x > 0))
+        {
+            //方向を保存
+            beforeDir = AttackDirection;
+            //回転
+            transform.rotation = Quaternion.LookRotation(AttackDirection);
+            //スケールxを反転
+            scale.x *= -1;
+            transform.localScale = scale;
+        }
+        //if (AttackDirection.x < 0 && beforeDir.x > 0)
+        //{
+        //    beforeDir = AttackDirection;
+        //    transform.rotation = Quaternion.LookRotation(AttackDirection);
+        //}
 
         //---倒した値を基に盾の出す場所を指定
         GameObject weapon = Instantiate(prefab,new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),

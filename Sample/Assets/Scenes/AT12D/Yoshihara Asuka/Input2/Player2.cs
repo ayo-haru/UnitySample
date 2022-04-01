@@ -345,7 +345,8 @@ public class Player2 : MonoBehaviour
     {
         if(JumpNow == true)
         {
-            rb.AddForce(new Vector3(0.0f,GravityForce,0.0f));
+            //rb.AddForce(new Vector3(0.0f,GravityForce,0.0f));
+            rb.position += transform.up * GravityForce;
             //ForceDirection = Vector2.zero;
         }
     }

@@ -8,6 +8,7 @@
 // <開発履歴>
 // 2022/03/15 実装
 // 2022/03/28 セーブの項目を増やした
+// 2022/04/01 FileStream
 //=============================================================================
 
 using System.Collections;
@@ -23,6 +24,7 @@ public struct SaveData {
     public int LastMapNumber;
     public Vector3 LastPlayerPos;
     public float HP;
+    public bool isBoss1Alive;
 }
 /*
     シリアライズとは
@@ -55,6 +57,12 @@ public static class SaveManager {
         sd.HP = _HP;
         save();
     }
+
+    public static void saveBossAlive(bool _flg) {  // HPをJsonに保存する
+        sd.isBoss1Alive = _flg;
+        save();
+    }
+
 
 
 

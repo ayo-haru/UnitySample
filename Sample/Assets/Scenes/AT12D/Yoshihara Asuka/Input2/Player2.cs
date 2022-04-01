@@ -157,6 +157,7 @@ public class Player2 : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
             GameData.CurrentHP--;
+            SaveManager.saveHP(GameData.CurrentHP);
             EffectManager.Play(EffectData.eEFFECT.EF_DAMAGE, this.transform.position);
             SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
         }
@@ -167,6 +168,7 @@ public class Player2 : MonoBehaviour
             {
                 EffectManager.Play(EffectData.eEFFECT.EF_HEAL, this.transform.position);
                 GameData.CurrentHP++;
+                SaveManager.saveHP(GameData.CurrentHP);
             }
 
         }
@@ -369,9 +371,10 @@ public class Player2 : MonoBehaviour
                 return;
             }
             GameData.CurrentHP--;
+            SaveManager.saveHP(GameData.CurrentHP);
 
             //HPが0になったらゲームオーバーを表示
-            if(GameData.CurrentHP <= 0)
+            if (GameData.CurrentHP <= 0)
             {
                 GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
             }

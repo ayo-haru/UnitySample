@@ -15,6 +15,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class GameData
 {
@@ -65,5 +66,24 @@ public static class GameData
 
     public static string GetNextScene(int nextscene) {
         return MapName[nextscene];
+    }
+
+    public static void InitData() {
+        CurrentHP = 6;
+        SaveManager.saveHP(CurrentHP);
+        if(CurrentMapName == "Tester")
+        {
+            isAliveBoss1 = true;
+
+        }
+    }
+
+    public static void InitScene() {
+        SceneManager.LoadScene(MapName[CurrentMapNumber]);
+    }
+
+    public static void Init() {
+        InitData();
+        InitScene();
     }
 }

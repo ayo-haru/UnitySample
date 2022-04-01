@@ -40,13 +40,13 @@ public class TomatoEnemy : MonoBehaviour
 
     private void Update()
     {
+        // プレイヤーを見つけたら攻撃開始
         if (InArea && ED.isAlive)
         {
             //Vector3 rayPosition = transform.position + new Vector3(0.0f, 0.0f, 0.0f);
             //Ray ray = new Ray(rayPosition, Vector3.down);
             //bool isGround = Physics.Raycast(ray, distance); // 接地判定
             Vector3 pos = rb.position;
-            // プレイヤーを見つけたら攻撃開始
             if (isGround == false)
             {
                 // プレイヤーに向かって特攻する
@@ -69,7 +69,7 @@ public class TomatoEnemy : MonoBehaviour
             // 跳ねる処理
             if (isGround)
             {
-                rb.AddForce(transform.up * 250.0f, ForceMode.Force);
+                rb.AddForce(transform.up * 200.0f, ForceMode.Force);
                 SoundManager.Play(SoundData.eSE.SE_TOMATO_BOUND, SoundData.GameAudioList);
                 isGround = false;
             }
@@ -92,14 +92,14 @@ public class TomatoEnemy : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit(Collision collision)
-    {
-        // 接地判定
-        //if (collision.gameObject.CompareTag("Ground"))
-        //{
-        //    isGround = false;
-        //}
-    }
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    接地判定
+    //    if (collision.gameObject.CompareTag("Ground"))
+    //    {
+    //        isGround = false;
+    //    }
+    //}
 
     public void OnTriggerEnter(Collider other)    // コライダーでプレイヤーを索敵したい
     {

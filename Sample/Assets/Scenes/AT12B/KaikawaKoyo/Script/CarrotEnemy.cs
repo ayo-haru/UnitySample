@@ -88,10 +88,11 @@ public class CarrotEnemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //if (collision.gameObject.CompareTag("Player"))
-        //{
-        //    Destroy(gameObject, 0.0f);
-        //}
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            //EffectManager.Play(EffectData.eEFFECT.EF_ENEMYDOWN, transform.position);
+            Destroy(gameObject, 0.0f);
+        }
     }
 
 }

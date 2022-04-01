@@ -43,6 +43,12 @@ public class Player2 : MonoBehaviour
     private Vector2 MovingVelocity = Vector3.zero;      // 移動するベクトル
     [SerializeField] private float maxSpeed = 5;        // 移動スピード(歩く早さ)
 
+    public int stopTime = 20;                           //盾出したときに止まる時間
+    private int Timer = 0;                                  //停止時間計測用
+
+    //---回転変数
+    private Vector2 beforeDir;                           //最後に入力された方向
+    public float rotationSpeed = 30.0f;                  //回転スピード
 
     //---ジャンプ変数
     public float GravityForce = -10.0f;                 // 重力
@@ -85,7 +91,9 @@ public class Player2 : MonoBehaviour
 
         //---InputActionの有効化(これかかないと、入力とれない。)
         PlayerActionAsset.Player.Enable();
-        
+
+        //回転変数の初期化
+        beforeDir = new Vector2(1.0f, 0.0f);
     }
 
     private void OnDisable()
@@ -172,22 +180,41 @@ public class Player2 : MonoBehaviour
         //rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
 
         //---移動処理(velocityの処理)
-        rb.velocity = new Vector3(MovingVelocity.x,rb.velocity.y - MovingVelocity.y,0);
+        if(Timer <= 0)
+        {
+            rb.velocity = new Vector3(MovingVelocity.x, rb.velocity.y - MovingVelocity.y, 0);
+        }
+        else
+        {
+            --Timer;
+            rb.velocity = new Vector3(0, rb.velocity.y - MovingVelocity.y, 0);
+        }
+        
+
 
 
         //---回転処理処理
+        //回転の目標値
+        Quaternion target= new Quaternion();
         if (ForceDirection.magnitude > 0.01f)
         {
-            transform.rotation = Quaternion.LookRotation(ForceDirection); //向きを変更する
-            //if(ForceDirection.x > 0)
-            //{
-            //    transform.rotation = Quaternion.LookRotation(new Vector3(1.0f, 0.0f, 0.0f));
-            //}
-            //if (ForceDirection.x < 0)
-            //{
-            //    transform.rotation = Quaternion.LookRotation(new Vector3(-1.0f, 0.0f, 0.0f));
-            //}
+            //方向を保存
+            beforeDir = ForceDirection;
+            //向きを設定
+            target = Quaternion.LookRotation(ForceDirection); 
         }
+        else
+        {
+            //入力されてなかったとき
+            //回転が中途半端な時は補正する
+            if(transform.rotation.y != 90.0f && transform.rotation.y != 180.0f)
+            {
+                target = Quaternion.LookRotation(beforeDir); //向きを変更する
+            }
+        }
+        //ゆっくり回転させる
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotationSpeed);
+
         ForceDirection = Vector2.zero;
     }
 
@@ -199,6 +226,9 @@ public class Player2 : MonoBehaviour
     //---攻撃処理
     private void OnAttack(InputAction.CallbackContext obj)
     {
+        //タイマー設定
+        Timer = stopTime;
+
         //---アニメーション再生
         //animator.SetTrigger("Attack");                              // 攻撃のステートに移動(攻撃モーション再生)
 

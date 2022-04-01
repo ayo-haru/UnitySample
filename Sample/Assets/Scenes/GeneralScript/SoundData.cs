@@ -31,6 +31,7 @@ public static class SoundData
         SE_SHIELD,
         SE_REFLECTION,
         SE_DAMEGE,
+        SE_HEAL,
         SE_BOOS1_DASHU,
         SE_BOOS1_STRAWBERRY,
         SE_BOOS1_KNIFE,
@@ -41,6 +42,7 @@ public static class SoundData
         SE_TOMATO_BOUND,
         SE_KETTEI,
         SE_SELECT,
+        SE_GAMEOVER,
 
         MAX_SE
     }
@@ -51,6 +53,7 @@ public static class SoundData
     public static AudioClip[] SEClip = new AudioClip[(int)eSE.MAX_SE];
 
     public static AudioSource[] TitleAudioList = new AudioSource[5];    // ˆê‰ñ‚É“¯‚É‚È‚ç‚¹‚é”
+    public static AudioSource[] IndelibleAudioList = new AudioSource[3];    // ˆê‰ñ‚É“¯‚É‚È‚ç‚¹‚é”
     public static AudioSource[] GameAudioList = new AudioSource[20];    // ˆê‰ñ‚É“¯‚É‚È‚ç‚¹‚é”
 
 

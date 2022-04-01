@@ -66,7 +66,7 @@ public static class SaveManager {
         string path = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
 #endif
         path += ("/" + SAVE_FILE_PATH); // 保存場所のパスを格納
-        FileStream fs = new FileStream(path, FileMode.OpenOrCreate,FileAccess.ReadWrite);
+        FileStream fs = new FileStream(path, FileMode.Create,FileAccess.ReadWrite);
         StreamWriter writer = new StreamWriter(fs);    //  上書き
         writer.WriteLine(json); // 一行ずつ書き込みして改行
         writer.Flush();         // バッファに残る値をすべて書き出す
@@ -82,7 +82,7 @@ public static class SaveManager {
             string path = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
 #endif
             FileInfo info = new FileInfo(path + "/" + SAVE_FILE_PATH);  // 保存場所からのロード
-            FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            FileStream fs = new FileStream(path, FileMode.Open, FileAccess.ReadWrite);
             StreamReader reader = new StreamReader(fs);    // info.OpenRead()でファイルパスがとれるっぽい
             //StreamReader reader = new StreamReader(info.OpenRead());    // info.OpenRead()でファイルパスがとれるっぽい
             string json = reader.ReadToEnd();                           // ReadToEndは一括読込らしいReadLineで一行ずつ読込

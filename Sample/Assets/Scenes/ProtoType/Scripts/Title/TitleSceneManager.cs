@@ -68,6 +68,9 @@ public class TitleSceneManager : MonoBehaviour {
             // 決定音
             SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
 
+            // プレイヤー初期化
+            GameData.CurrentHP = 6;
+
             // シーン関連
             GameData.OldMapNumber = GameData.CurrentMapNumber;
             GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen1_SCENE;

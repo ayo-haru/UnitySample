@@ -239,17 +239,26 @@ public class Player2 : MonoBehaviour
         //タイマー設定
         Timer = stopTime;
 
-        //---アニメーション再生
-        animator.SetTrigger("Attack");                              // 攻撃のステートに移動(攻撃モーション再生)
-
         //---スティック入力
         PlayerPos = transform.position;                             // 攻撃する瞬間のプレイヤーの座標を取得
         AttackDirection += Attack.ReadValue<Vector2>();             // スティックの倒した値を取得
         Debug.Log("AttackDirection(正規化前):" + AttackDirection);
         AttackDirection.Normalize();                                // 取得した値を正規化(ベクトルを１にする)
 
+        //---アニメーション再生
+        if(Mathf.Abs(AttackDirection.x) > 0)                        // 左右攻撃モーション再生
+        {
+            animator.SetTrigger("Attack");
+        }
+
+        if (AttackDirection.y > 0)                        // 上弾き
+        {
+            animator.SetTrigger("Attack_UP");
+        }
+
+
         //モデルの向きと反対方向に盾出したらモデル回転
-        if((AttackDirection.x > 0 && beforeDir.x < 0)||(AttackDirection.x < 0 && beforeDir.x > 0))
+        if ((AttackDirection.x > 0 && beforeDir.x < 0)||(AttackDirection.x < 0 && beforeDir.x > 0))
         {
             //方向を保存
             beforeDir = AttackDirection;

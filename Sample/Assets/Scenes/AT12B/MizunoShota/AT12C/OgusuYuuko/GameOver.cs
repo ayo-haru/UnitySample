@@ -46,6 +46,8 @@ public class GameOver : MonoBehaviour
     //サブカメラ
     //public GameObject subCam;
 
+    private bool isCalledOnce = false;                              // 開始演出で使用。一回だけ処理をするために使う。
+
     // Start is called before the first frame update
     void Start()
     {
@@ -84,6 +86,14 @@ public class GameOver : MonoBehaviour
             return;
         }
 
+        // ゲームオーバーになったら一回だけ処理を行う
+        if (!isCalledOnce)
+        {
+            SoundManager.Play(SoundData.eSE.SE_GAMEOVER, SoundData.IndelibleAudioList);
+            isCalledOnce = true;
+            Pause.PauseStart();
+        }
+        
         //f4キーが押されたら表示終了
         if (Input.GetKeyDown(KeyCode.F4))
         {

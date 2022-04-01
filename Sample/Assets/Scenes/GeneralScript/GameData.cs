@@ -74,16 +74,18 @@ public static class GameData
         if(CurrentMapName == "Tester")
         {
             isAliveBoss1 = true;
-
         }
+        Pause.PauseFin();
     }
 
     public static void InitScene() {
         SceneManager.LoadScene(MapName[CurrentMapNumber]);
+        Pause.PauseFin();
     }
 
     public static void Init() {
         InitData();
         InitScene();
+        Pause.PauseFin();
     }
 }

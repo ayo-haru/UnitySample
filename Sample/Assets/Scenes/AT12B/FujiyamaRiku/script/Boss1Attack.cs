@@ -15,7 +15,9 @@ public class Boss1Attack : MonoBehaviour
     static public bool RefrectFlg = false;                //プレイヤーがパリィに成功したかどうかの受け取り用
     static public bool OnlyFlg;
     static public Vector3 BossStartPoint;
-    
+    [SerializeField] public int RushDamage;
+    [SerializeField] public int StrawberryDamage;
+    [SerializeField] public int KnifeDamage;
 
     //突進用変数群
     //----------------------------------------------------------
@@ -235,7 +237,7 @@ public class Boss1Attack : MonoBehaviour
                         RushReturnSpeed = 2;
                         RushRefFlg = false;
                         BossReturnFlg = true;
-                        HPgage.damage = 10;
+                        HPgage.damage = RushDamage;
                         HPgage.DelHP();
                         RushTime = 0;
                         RushRefTime = 0;
@@ -267,9 +269,6 @@ public class Boss1Attack : MonoBehaviour
         }
         if (!StrawberryUseFlg[StrawberryNum] && StrawBerryMany < Max_Strawberry)
         {
-            
-            //Debug.Log("Strawberry");
-            //Debug.Log("いちごぉ！！！！！！！！！！！：" + StrawberryNum);
             StartPoint.x = Boss1Manager.BossPos.x;
             StartPoint.y = Boss1Manager.BossPos.y + 4;
             StartPoint.z = Boss1Manager.BossPos.z;
@@ -345,7 +344,7 @@ public class Boss1Attack : MonoBehaviour
                         PlayerRefDir[i] = false;
                         if (!RefMissFlg)
                         {
-                            HPgage.damage = 5;
+                            HPgage.damage = StrawberryDamage;
                             HPgage.DelHP();
                             SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
                         }
@@ -453,7 +452,7 @@ public class Boss1Attack : MonoBehaviour
             Debug.Log("Knife " + KnifePlayerPoint);
             if (KnifeRefTime >= 1.0f)
             {
-                HPgage.damage = 10;
+                HPgage.damage = KnifeDamage;
                 HPgage.DelHP();
                 OnlyFlg = false;
                 KnifeRefFlg = false;

@@ -399,6 +399,10 @@ public class Boss1Attack : MonoBehaviour
 
             Knife = Instantiate(Knifeobj, KnifeStartPoint, Quaternion.Euler(0.0f,0.0f,90.0f));
 
+            Vector3 KnifeDir = GameData.PlayerPos - Knife.transform.position;
+            // ターゲットの方向への回転
+            Knife.transform.rotation = Quaternion.LookRotation(KnifeDir, Vector3.forward);
+
             SoundManager.Play(SoundData.eSE.SE_BOOS1_KNIFE, SoundData.GameAudioList);
             
         }

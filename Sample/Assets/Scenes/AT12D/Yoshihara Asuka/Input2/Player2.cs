@@ -37,6 +37,7 @@ public class Player2 : MonoBehaviour
     public GameObject prefab;                           // "Weapon"プレハブを格納する変数
     GameObject hp;                                      // HPのオブジェクトを格納
     HPManager hpmanager;                                // HPManagerのコンポーネントを取得する変数
+    BoxCollider box_collider;                           //足元の当たり判定
 
     //---移動変数
     private Vector3 PlayerPos;                          // プレイヤーの座標
@@ -124,6 +125,8 @@ public class Player2 : MonoBehaviour
             hpmanager = hp.GetComponent<HPManager>();       // HPSystemの使用するコンポーネント
         }
         scale = transform.localScale;
+
+        box_collider = gameObject.GetComponent<BoxCollider>();
     }
 
     // Update is called once per frame
@@ -396,9 +399,18 @@ public class Player2 : MonoBehaviour
             //---Tag"Ground"と接触している間の処理
             if (JumpNow == true || UnderParryNow == true)
             {
-                Debug.Log("着地中");
-                JumpNow = false;
-                UnderParryNow = false;
+                ////足が地面より上だったら着地中にする
+                //Vector3 footPotision = box_collider.transform.position;
+                //footPotision.y -= 16.0f;
+                
+                //if(other.gameObject.transform.position.y <= footPotision.y)
+                //{
+                //    Debug.Log("足の位置" + footPotision);
+                    Debug.Log("着地中");
+                    JumpNow = false;
+                    UnderParryNow = false;
+                //}
+
             }
           //ForceDirection = Vector2.zero;
           //SoundManager.Play(SoundData.eSE.SE_LAND, SoundData.GameAudioList);

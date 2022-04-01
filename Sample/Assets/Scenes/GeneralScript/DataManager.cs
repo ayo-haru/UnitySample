@@ -36,6 +36,7 @@ public class DataManager : MonoBehaviour
     public AudioClip se_shield;
     public AudioClip se_reflection;
     public AudioClip se_damege;
+    public AudioClip se_heal;
 
     public AudioClip se_boss1Dashu;
     public AudioClip se_boss1Strawberry;
@@ -49,6 +50,7 @@ public class DataManager : MonoBehaviour
 
     public AudioClip se_kettei;
     public AudioClip se_select;
+    public AudioClip se_gameover;
 
 
     //-----------------------------------------------------
@@ -80,6 +82,7 @@ public class DataManager : MonoBehaviour
         SoundData.SEDataSet(se_shield, (int)SoundData.eSE.SE_SHIELD);
         SoundData.SEDataSet(se_reflection, (int)SoundData.eSE.SE_REFLECTION);
         SoundData.SEDataSet(se_damege, (int)SoundData.eSE.SE_DAMEGE);
+        SoundData.SEDataSet(se_heal, (int)SoundData.eSE.SE_HEAL);
 
         SoundData.SEDataSet(se_boss1Dashu, (int)SoundData.eSE.SE_BOOS1_DASHU);
         SoundData.SEDataSet(se_boss1Strawberry, (int)SoundData.eSE.SE_BOOS1_STRAWBERRY);
@@ -93,6 +96,7 @@ public class DataManager : MonoBehaviour
 
         SoundData.SEDataSet(se_kettei, (int)SoundData.eSE.SE_KETTEI);
         SoundData.SEDataSet(se_select, (int)SoundData.eSE.SE_SELECT);
+        SoundData.SEDataSet(se_gameover, (int)SoundData.eSE.SE_GAMEOVER);
 
         //-----------------------------------------------------
         // Efect
@@ -105,6 +109,10 @@ public class DataManager : MonoBehaviour
         EffectData.EFDataSet(ef_healitem,(int)EffectData.eEFFECT.EF_HEALITEM);
         EffectData.EFDataSet(ef_heal,(int)EffectData.eEFFECT.EF_HEAL);
         EffectData.EFDataSet(ef_shield,(int)EffectData.eEFFECT.EF_SHEILD2);
+
+        for (int i = 0; i < 3; i++) {
+            SoundData.IndelibleAudioList[i] = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     // Update is called once per frame

@@ -17,6 +17,9 @@ public class ShadowEnemy : MonoBehaviour
     private Vector3 position;
     public int EnemyNomber;
     private bool spawn = false;
+    private float EFTime = 999.0f;
+    private ParticleSystem effect;
+
     //[SerializeField] private ParticleSystem particle;
 
     // Start is called before the first frame update
@@ -25,7 +28,10 @@ public class ShadowEnemy : MonoBehaviour
         //particle.Play();
 
         position = transform.position;
-
+        
+        effect = Instantiate(EffectData.EF[2]);
+        effect.transform.position = position;
+        effect.Play();
         // 誰に変身するかの処理
         switch (EnemyNomber)
         {
@@ -51,6 +57,7 @@ public class ShadowEnemy : MonoBehaviour
         // プレイヤーを見つけたら敵に変身する
         if (other.CompareTag("Player"))
         {
+            Destroy(effect.gameObject, 0.0f);
             Destroy(gameObject, 0.0f);
             //particle.Stop();
             if(!spawn)

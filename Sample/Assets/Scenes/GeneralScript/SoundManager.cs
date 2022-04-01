@@ -6,7 +6,8 @@
 // <開発履歴>
 // 2022/03/16 作成
 // 2022/03/26 SEの音量を30％に固定
-// 2022/03/27 音のフェードを追加
+// 2022/03/27 音のフェードを追加してない
+// 2022/04/01 音ポーズ
 //=============================================================================
 
 using System.Collections;
@@ -57,6 +58,36 @@ public static class SoundManager {
         audioSource.volume = 0.2f;
         audioSource.Play();
     }
+
+    //----------------------------------
+    //
+    //  サウンドポーズ
+    //  作成：伊地田真衣
+    //  詳細：第一引数はSoundDataの列挙体に定義したやーつ
+    //
+    //----------------------------------
+    public static void SoundPause(AudioSource[] _audioSourceList) {
+        for (int i = 0; i < _audioSourceList.Length; ++i)
+        {
+            if (_audioSourceList[i].isPlaying == false)
+            {
+                break;
+            }
+            _audioSourceList[i].Pause();
+        }
+    }
+    public static void SoundUnPause(AudioSource[] _audioSourceList) {
+        for (int i = 0; i < _audioSourceList.Length; ++i)
+        {
+            if (_audioSourceList[i].isPlaying == false)
+            {
+                break;
+            }
+            _audioSourceList[i].UnPause();
+        }
+    }
+
+
 
     //----------------------------------
     //

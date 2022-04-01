@@ -66,7 +66,8 @@ public static class SaveManager {
         string path = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
 #endif
         path += ("/" + SAVE_FILE_PATH); // 保存場所のパスを格納
-        StreamWriter writer = new StreamWriter(path, false);    //  上書き
+        FileStream fs = new FileStream(path, FileMode.OpenOrCreate,FileAccess.ReadWrite);
+        StreamWriter writer = new StreamWriter(fs);    //  上書き
         writer.WriteLine(json); // 一行ずつ書き込みして改行
         writer.Flush();         // バッファに残る値をすべて書き出す
         writer.Close();         // 書き込みの終了（fclose()みたいなやつ）
@@ -81,7 +82,9 @@ public static class SaveManager {
             string path = AppDomain.CurrentDomain.BaseDirectory.TrimEnd('\\');
 #endif
             FileInfo info = new FileInfo(path + "/" + SAVE_FILE_PATH);  // 保存場所からのロード
-            StreamReader reader = new StreamReader(info.OpenRead());    // info.OpenRead()でファイルパスがとれるっぽい
+            FileStream fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            StreamReader reader = new StreamReader(fs);    // info.OpenRead()でファイルパスがとれるっぽい
+            //StreamReader reader = new StreamReader(info.OpenRead());    // info.OpenRead()でファイルパスがとれるっぽい
             string json = reader.ReadToEnd();                           // ReadToEndは一括読込らしいReadLineで一行ずつ読込
             sd = JsonUtility.FromJson<SaveData>(json);                  // FromJson...Jsonを読み取りインスタンスのデータを上書きする
         }

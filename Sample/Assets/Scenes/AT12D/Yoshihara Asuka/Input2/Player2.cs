@@ -246,14 +246,14 @@ public class Player2 : MonoBehaviour
         AttackDirection.Normalize();                                // 取得した値を正規化(ベクトルを１にする)
 
         //---アニメーション再生
-        if(Mathf.Abs(AttackDirection.x) >= 0)
+        if(Mathf.Abs(AttackDirection.x) >= 0.1)
         {
             //タイマー設定
             Timer = stopTime;
             animator.SetTrigger("Attack");
         }
 
-        if(AttackDirection.y >= 0)
+        if(AttackDirection.y >= 0.1)
         {
             if(GroundNow == true)
             {

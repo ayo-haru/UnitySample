@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3591728901843625248}
-  - component: {fileID: 1096638245119631402}
+  - component: {fileID: 2371544519880944352}
   - component: {fileID: 3612491360129307261}
   - component: {fileID: 8161062027866247687}
   - component: {fileID: 3325120916166657620}
@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3857634528709924325}
   m_Layer: 0
   m_Name: Player2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,14 +30,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6348645415669162143}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalPosition: {x: 1, y: 11.5, z: -1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 1833508750926151775}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &1096638245119631402
+--- !u!54 &2371544519880944352
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,8 +107,11 @@ MonoBehaviour:
   animator: {fileID: 5733577836472293925}
   prefab: {fileID: 0}
   maxSpeed: 20
+  stopTime: 20
+  Amplitude: 0
+  rotationSpeed: 30
   GravityForce: -50
-  JumpForce: 30
+  JumpForce: 20
   AttckPosHeight: 2
   AttckPosWidth: 1
   DestroyTime: 0.5
@@ -179,6 +182,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 7019d26fdfc1ee94197fa4217c60030b, type: 3}
       propertyPath: m_Name
       value: Rulaby
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7019d26fdfc1ee94197fa4217c60030b, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 7019d26fdfc1ee94197fa4217c60030b, type: 3}
       propertyPath: m_Controller

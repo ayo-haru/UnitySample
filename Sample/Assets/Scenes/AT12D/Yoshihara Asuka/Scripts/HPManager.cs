@@ -39,8 +39,8 @@ public class HPManager : MonoBehaviour
     void Update()
     {
         HP.fillAmount = (float)GameData.CurrentHP / MaxHP;
-        Debug.Log("HP—Ê:"+HP.fillAmount);
-        Debug.Log("MAXHP:"+MaxHP);
-        Debug.Log("ŽcHP:"+GameData.CurrentHP);
+        //Debug.Log("HP—Ê:"+HP.fillAmount);
+        //Debug.Log("MAXHP:"+MaxHP);
+        //Debug.Log("ŽcHP:"+GameData.CurrentHP);
     }
 }

@@ -293,18 +293,18 @@ public class Boss1Attack : MonoBehaviour
                     float rad = Mathf.Atan2(Dir.y, Dir.x);
                     float degree = rad * Mathf.Rad2Deg;
 
-                    
-                    if (degree <= 90.0f && degree >= -90.0f)
+                    Debug.Log("はいっちゃうぅぅぅ！！" + degree);
+                    if (degree <= 80.0f && degree >= -90.0f)
                     {
                         Debug.Log("はいっちゃうぅぅぅ！！" + degree);
-                        if (degree >= 60.0f)
+                        if (degree >= 45.0f)
                         {
                             PlayerPoint[i].x = GameData.PlayerPos.x;
                             PlayerPoint[i].y = GameData.PlayerPos.y + 2.0f;
                             PlayerPoint[i].z = GameData.PlayerPos.z;
-                            PlayerMiddlePoint[i].x += GameObject.Find("ear1").transform.position.x + 3.0f;
-                            PlayerMiddlePoint[i].y += GameObject.Find("ear1").transform.position.y + 3.0f;
-                            PlayerMiddlePoint[i].z += GameObject.Find("ear1").transform.position.z + 3.0f;
+                            PlayerMiddlePoint[i].x = GameData.PlayerPos.x + 3.0f;
+                            PlayerMiddlePoint[i].y = GameData.PlayerPos.y + 3.0f;
+                            PlayerMiddlePoint[i].z = GameData.PlayerPos.z;
                             RefEndPoint = Boss1Manager.BossPos;
                             PlayerRefDir[i] = true;
                         }
@@ -316,14 +316,7 @@ public class Boss1Attack : MonoBehaviour
                             RefEndPoint = Boss1Manager.BossPos;
                         }
                     }
-                    //else if (Strawberry[i].transform.position.x >= GameObject.Find("headstar").transform.position.x)
-                    //{
-                    //    PlayerPoint[i].x = GameData.PlayerPos.x + 2.0f;
-                    //    PlayerPoint[i].y = GameData.PlayerPos.y;
-                    //    PlayerPoint[i].z = GameData.PlayerPos.z;
-                    //    RefEndPoint = Boss1Manager.BossPos;
-                    //}
-                    else if (degree >= 90.0f && degree <= -90.0f)
+                    else if (degree >= 80.0f || degree <= -90.0f)
                     {
                         PlayerPoint[i].x = GameData.PlayerPos.x - 2.0f;
                         PlayerPoint[i].y = GameData.PlayerPos.y;

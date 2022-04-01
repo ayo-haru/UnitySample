@@ -118,6 +118,7 @@ public class GameOver : MonoBehaviour
                 case SELECT.RETRY:
                     //ゲームに戻る
                     //シーン遷移
+                    GameData.Init();
                     Debug.Log("リトライを押した");
                     break;
                 case SELECT.BACKTITLE:

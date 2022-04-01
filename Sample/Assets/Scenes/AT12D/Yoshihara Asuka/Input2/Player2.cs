@@ -58,12 +58,13 @@ public class Player2 : MonoBehaviour
     //---ジャンプ変数
     public float GravityForce = -10.0f;                 // 重力
     private bool JumpNow = false;                       // ジャンプしているかどうか
-    private bool UnderParryNow = false;                 // 下パリィ中かどうか(
+    private bool UnderParryNow = false;                 // 下パリィ中かどうか
+    private bool GroundNow = false;                     // 地面と接地中かどうか
     [SerializeField] private float JumpForce = 5;       // ジャンプ力
 
 
     //---攻撃変数
-    private Vector2 AttackDirection = Vector2.zero;     // 攻撃方向
+    public Vector2 AttackDirection = Vector2.zero;     // 攻撃方向
     public float AttckPosHeight = 8.0f;                 // シールド位置上下
     public float AttckPosWidth = 8.0f;                  // シールド位置左右
     public float DestroyTime = 3.0f;                    // シールドが消える時間
@@ -238,8 +239,6 @@ public class Player2 : MonoBehaviour
     //---攻撃処理
     private void OnAttack(InputAction.CallbackContext obj)
     {
-
-
         //---スティック入力
         PlayerPos = transform.position;                             // 攻撃する瞬間のプレイヤーの座標を取得
         AttackDirection += Attack.ReadValue<Vector2>();             // スティックの倒した値を取得
@@ -247,15 +246,20 @@ public class Player2 : MonoBehaviour
         AttackDirection.Normalize();                                // 取得した値を正規化(ベクトルを１にする)
 
         //---アニメーション再生
-        if(Mathf.Abs(AttackDirection.x) > 0)
+        if(Mathf.Abs(AttackDirection.x) >= 0)
         {
             //タイマー設定
             Timer = stopTime;
             animator.SetTrigger("Attack");
         }
 
-        if(AttackDirection.y > 0.1)
+        if(AttackDirection.y >= 0)
         {
+            if(GroundNow == true)
+            {
+                rb.AddForce(transform.up * 3.0f,ForceMode.Impulse);
+                GroundNow = false;
+            }
             animator.SetTrigger("Attack_UP");
         }
 
@@ -294,6 +298,7 @@ public class Player2 : MonoBehaviour
         if (AttackDirection.y < 0.0f)
         {
             UnderParryNow = true;
+            GroundNow = false;
         }
         
         //---盾の回転を設定
@@ -317,6 +322,7 @@ public class Player2 : MonoBehaviour
         }
         Debug.Log("ジャンプ！");
         JumpNow = true;
+        GroundNow = false;
         rb.AddForce(transform.up * JumpForce,ForceMode.Impulse);
         SoundManager.Play(SoundData.eSE.SE_JUMP, SoundData.GameAudioList);
     }
@@ -384,18 +390,21 @@ public class Player2 : MonoBehaviour
     //---当たり判定処理(GroundCheckのボックスコライダーで判定を取るように)
     private void OnTriggerEnter(Collider other)
     {
-        if (JumpNow == true || UnderParryNow == true)
-        {
+         if(other.gameObject.tag == "Ground")
+         {
+            GroundNow = true;
             //---Tag"Ground"と接触している間の処理
-            if (other.gameObject.tag == "Ground")
+            if (JumpNow == true || UnderParryNow == true)
             {
                 Debug.Log("着地中");
                 JumpNow = false;
                 UnderParryNow = false;
-                //ForceDirection = Vector2.zero;
-                //SoundManager.Play(SoundData.eSE.SE_LAND, SoundData.GameAudioList);
             }
-        }
+          //ForceDirection = Vector2.zero;
+          //SoundManager.Play(SoundData.eSE.SE_LAND, SoundData.GameAudioList);
+   
+         }
+
     }
 
 
@@ -420,6 +429,7 @@ public class Player2 : MonoBehaviour
         GUILayout.Label($"LeftStickUp:{Gamepad.current.leftStick.up.ReadValue()}");
         GUILayout.Label($"Space:{Keyboard.current.spaceKey.ReadValue()}");
         GUILayout.Label($"JumpFlg:{JumpNow}");
+        GUILayout.Label($"GroudFlg:{GroundNow}");
     }
 
 }

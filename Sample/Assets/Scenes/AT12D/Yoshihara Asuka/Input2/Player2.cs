@@ -246,33 +246,34 @@ public class Player2 : MonoBehaviour
         AttackDirection.Normalize();                                // 取得した値を正規化(ベクトルを１にする)
 
         //---アニメーション再生
-        if(Mathf.Abs(AttackDirection.x) > 0)                        // 左右攻撃モーション再生
+        if(Mathf.Abs(AttackDirection.x) > 0)
         {
             animator.SetTrigger("Attack");
         }
 
-        if (AttackDirection.y > 0)                        // 上弾き
+        if(AttackDirection.y > 0.1)
         {
             animator.SetTrigger("Attack_UP");
         }
 
 
         //モデルの向きと反対方向に盾出したらモデル回転
-        if ((AttackDirection.x > 0 && beforeDir.x < 0)||(AttackDirection.x < 0 && beforeDir.x > 0))
+        if ((AttackDirection.x > 0 && beforeDir.x < 0) || (AttackDirection.x < 0 && beforeDir.x > 0))
         {
             //方向を保存
-            beforeDir = AttackDirection;
+            beforeDir.x = AttackDirection.x;
             //回転
             transform.rotation = Quaternion.LookRotation(AttackDirection);
             //スケールxを反転
             scale.x *= -1;
             transform.localScale = scale;
         }
-        //if (AttackDirection.x < 0 && beforeDir.x > 0)
-        //{
-        //    beforeDir = AttackDirection;
-        //    transform.rotation = Quaternion.LookRotation(AttackDirection);
-        //}
+
+        if (AttackDirection.x < 0 && beforeDir.x > 0)
+        {
+            beforeDir = AttackDirection;
+            transform.rotation = Quaternion.LookRotation(AttackDirection);
+        }
 
         //---倒した値を基に盾の出す場所を指定
         GameObject weapon = Instantiate(prefab,new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),

@@ -236,8 +236,7 @@ public class Player2 : MonoBehaviour
     //---攻撃処理
     private void OnAttack(InputAction.CallbackContext obj)
     {
-        //タイマー設定
-        Timer = stopTime;
+
 
         //---スティック入力
         PlayerPos = transform.position;                             // 攻撃する瞬間のプレイヤーの座標を取得
@@ -248,6 +247,8 @@ public class Player2 : MonoBehaviour
         //---アニメーション再生
         if(Mathf.Abs(AttackDirection.x) > 0)
         {
+            //タイマー設定
+            Timer = stopTime;
             animator.SetTrigger("Attack");
         }
 

@@ -29,8 +29,8 @@ public class WeaponCollision : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Player = GameData.Player;
-       // Player = GameObject.Find("Player");
+        //Player = GameData.Player;
+        Player = GameObject.Find("Rulaby 1(Clone)");
         player_rb = Player.GetComponent<Rigidbody>();
         shield_Manager = Player.GetComponent<ShieldManager>();
         //‚‚ªÅ‘å”‚ğ’´‚¦‚Ä‚¢‚½‚ç

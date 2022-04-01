@@ -11,6 +11,7 @@
 // 2022/03/25   プレイヤーの挙動修正(移動をVelocity計算に変更)
 // 2022/03/25   プレイヤーの挙動修正(ジャンプ中の挙動変更ストレイフアリ)
 // 2022/04/01   アニメーション導入
+// 2022/04/01   移動ぷかぷかさせるやつ
 //=============================================================================
 using System;
 using System.Collections;
@@ -28,7 +29,7 @@ public class Player2 : MonoBehaviour
     private InputAction Attack;                         // InputActionのmoveを扱う
 
     //---アニメーション関連
-    [SerializeField] public Animator animator;                 // アニメーターコンポーネント取得
+    [SerializeField] public Animator animator;          // アニメーターコンポーネント取得
 
 
     //---コンポーネント取得
@@ -44,7 +45,10 @@ public class Player2 : MonoBehaviour
     [SerializeField] private float maxSpeed = 5;        // 移動スピード(歩く早さ)
 
     public int stopTime = 20;                           //盾出したときに止まる時間
-    private int Timer = 0;                                  //停止時間計測用
+    private int Timer = 0;                              //停止時間計測用
+
+    public float Amplitude;                             // 振れ幅
+    private int FylFrameCount;                         //　フワフワしてる処理に使うフレームカウント
 
     //---回転変数
     private Vector2 beforeDir;                           //最後に入力された方向
@@ -70,7 +74,6 @@ public class Player2 : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         PlayerActionAsset = new Game_pad();             // InputActionインスタンスを生成
-
     }
 
 
@@ -84,21 +87,23 @@ public class Player2 : MonoBehaviour
         //---Actionイベント登録(ボタン入力)
         PlayerActionAsset.Player.Attack.started += OnAttack;
 
-        PlayerActionAsset.Player.Jump.started += OnJump;          // started    ... ボタンが押された瞬間
+        PlayerActionAsset.Player.Jump.started += OnJump;            // started    ... ボタンが押された瞬間
         //PlayerActionAsset.Player.Jump.performed += OnJump;        // performed  ... 中間くらい
         //PlayerActionAsset.Player.Jump.canceled += OnJump;         // canceled   ... ボタンを離した瞬間
 
+        //回転変数の初期化
+        beforeDir = new Vector2(1.0f, 0.0f);
 
         //---InputActionの有効化(これかかないと、入力とれない。)
         PlayerActionAsset.Player.Enable();
 
-        //回転変数の初期化
-        beforeDir = new Vector2(1.0f, 0.0f);
     }
 
     private void OnDisable()
     {
-        PlayerActionAsset.Player.Attack.started -= OnAttack;  // started...ボタンが押された瞬間
+        PlayerActionAsset.Player.Attack.started -= OnAttack;        // started...ボタンが押された瞬間
+        PlayerActionAsset.Player.Jump.started -= OnJump;            // started    ... ボタンが押された瞬間
+
 
         //---InputActionの無効化
         PlayerActionAsset.Player.Disable();
@@ -120,26 +125,28 @@ public class Player2 : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update() 
+    {
         //---rb.velocityによる移動処理
         ForceDirection += move.ReadValue<Vector2>();
         ForceDirection.Normalize();
         MovingVelocity = ForceDirection * maxSpeed;
 
-        if(Mathf.Abs(ForceDirection.x) > 0)
+        //---アニメーション再生
+        if (Mathf.Abs(ForceDirection.x) > 0 && Mathf.Abs(ForceDirection.y) == 0)
         {
             if (!animator.GetBool("Walk"))
             {
-                animator.SetBool("Walk",true);
+                animator.SetBool("Walk", true);
+                
             }
         }
         else if (animator.GetBool("Walk"))
         {
             animator.SetBool("Walk", false);
-
         }
 
-
+        //---HPオブジェクトを検索
         if (!GameObject.Find("HPSystem(Clone)"))
         {
             return;
@@ -180,7 +187,7 @@ public class Player2 : MonoBehaviour
         //rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
 
         //---移動処理(velocityの処理)
-        if(Timer <= 0)
+        if (Timer <= 0)
         {
             rb.velocity = new Vector3(MovingVelocity.x, rb.velocity.y - MovingVelocity.y, 0);
         }
@@ -189,9 +196,6 @@ public class Player2 : MonoBehaviour
             --Timer;
             rb.velocity = new Vector3(0, rb.velocity.y - MovingVelocity.y, 0);
         }
-        
-
-
 
         //---回転処理処理
         //回転の目標値
@@ -230,7 +234,7 @@ public class Player2 : MonoBehaviour
         Timer = stopTime;
 
         //---アニメーション再生
-        //animator.SetTrigger("Attack");                              // 攻撃のステートに移動(攻撃モーション再生)
+        animator.SetTrigger("Attack");                              // 攻撃のステートに移動(攻撃モーション再生)
 
         //---スティック入力
         PlayerPos = transform.position;                             // 攻撃する瞬間のプレイヤーの座標を取得
@@ -290,6 +294,21 @@ public class Player2 : MonoBehaviour
             rb.AddForce(new Vector3(0.0f,GravityForce,0.0f));
             //ForceDirection = Vector2.zero;
         }
+    }
+
+    //---オブジェクトをフワフワさせる処理
+    private void FluffyMove()
+    {
+        FylFrameCount += 1;
+        if(1000 <= FylFrameCount)
+        {
+            FylFrameCount = 0;
+        }
+        if(0 == FylFrameCount % 2)
+        {
+            float posYSin = Mathf.Sin(2.0f * Mathf.PI * (float)(FylFrameCount % 200) / (200.0f - 1.0f));
+            iTween.MoveAdd(gameObject, new Vector3(0, Amplitude * posYSin, 0), 0.0f);
+        } 
     }
 
     //---AddForceで力がかかりすぎてしまうため、maxSpeedの値に近い値に固定する処理

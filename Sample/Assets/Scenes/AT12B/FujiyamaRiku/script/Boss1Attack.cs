@@ -15,6 +15,9 @@ public class Boss1Attack : MonoBehaviour
     static public bool RefrectFlg = false;                //プレイヤーがパリィに成功したかどうかの受け取り用
     static public bool OnlyFlg;
     static public Vector3 BossStartPoint;
+
+    GameObject AttackDir;
+    Vector2 Dir;
     //突進用変数群
     //----------------------------------------------------------
     GameObject Forkobj;
@@ -103,6 +106,7 @@ public class Boss1Attack : MonoBehaviour
         StrawberryRefOnlyFlg = new bool[Max_Strawberry];
         StrawberryColPlayer = new bool[Max_Strawberry];
         PreMax_Strawberry = Max_Strawberry;
+        AttackDir = GameObject.Find("Rulaby 1(Clone)");
 
         for (int i= 0;i < Max_Strawberry;i++)
         {
@@ -119,7 +123,9 @@ public class Boss1Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!GameData.isAliveBoss1)
+        Dir = AttackDir.GetComponent<Player2>().AttackDirection;
+        Debug.Log("呼んdar：" + Dir);
+        if (!GameData.isAliveBoss1)
         {
             if (Knife != null)
             {
@@ -265,7 +271,7 @@ public class Boss1Attack : MonoBehaviour
         }
         if (!StrawberryUseFlg[StrawberryNum] && StrawBerryMany < Max_Strawberry)
         {
-            Debug.Log("呼んだ？！：" + StrawberryNum);
+            
             //Debug.Log("Strawberry");
             //Debug.Log("いちごぉ！！！！！！！！！！！：" + StrawberryNum);
             StartPoint.x = Boss1Manager.BossPos.x;
@@ -287,27 +293,37 @@ public class Boss1Attack : MonoBehaviour
                 if (!StrawberryRefOnlyFlg[i] && StrawberryRefFlg[i])
                 {
                     StrawberryRefOnlyFlg[i] = true;
-                    if (Strawberry[i].transform.position.y >= GameObject.Find("ear1").transform.position.y + 2.0f)
-                    {
-                        PlayerPoint[i].x = GameData.PlayerPos.x;
-                        PlayerPoint[i].y = GameData.PlayerPos.y + 2.0f;
-                        PlayerPoint[i].z = GameData.PlayerPos.z;
-                        PlayerMiddlePoint[i].x += GameObject.Find("ear1").transform.position.x + 3.0f;
-                        PlayerMiddlePoint[i].y += GameObject.Find("ear1").transform.position.y + 3.0f;
-                        PlayerMiddlePoint[i].z += GameObject.Find("ear1").transform.position.z + 3.0f;
-                        RefEndPoint = Boss1Manager.BossPos;
-                        PlayerRefDir[i] = true;
-                    }
-                    else if (Strawberry[i].transform.position.x >= GameObject.Find("headstar").transform.position.x)
-                    {
-                        PlayerPoint[i].x = GameData.PlayerPos.x + 2.0f;
-                        PlayerPoint[i].y = GameData.PlayerPos.y;
-                        PlayerPoint[i].z = GameData.PlayerPos.z;
-                        RefEndPoint = Boss1Manager.BossPos;
 
-
+                    
+                    if (Dir.x >= 0.0f && Dir.y <=1.0f)
+                    {
+                        if (Dir.x >= 0.5f && Dir.y >= 0.5f)
+                        {
+                            PlayerPoint[i].x = GameData.PlayerPos.x;
+                            PlayerPoint[i].y = GameData.PlayerPos.y + 2.0f;
+                            PlayerPoint[i].z = GameData.PlayerPos.z;
+                            PlayerMiddlePoint[i].x += GameObject.Find("ear1").transform.position.x + 3.0f;
+                            PlayerMiddlePoint[i].y += GameObject.Find("ear1").transform.position.y + 3.0f;
+                            PlayerMiddlePoint[i].z += GameObject.Find("ear1").transform.position.z + 3.0f;
+                            RefEndPoint = Boss1Manager.BossPos;
+                            PlayerRefDir[i] = true;
+                        }
+                        else
+                        {
+                            PlayerPoint[i].x = GameData.PlayerPos.x + 2.0f;
+                            PlayerPoint[i].y = GameData.PlayerPos.y;
+                            PlayerPoint[i].z = GameData.PlayerPos.z;
+                            RefEndPoint = Boss1Manager.BossPos;
+                        }
                     }
-                    else if (Strawberry[i].transform.position.x <= GameObject.Find("ear1").transform.position.x)
+                    //else if (Strawberry[i].transform.position.x >= GameObject.Find("headstar").transform.position.x)
+                    //{
+                    //    PlayerPoint[i].x = GameData.PlayerPos.x + 2.0f;
+                    //    PlayerPoint[i].y = GameData.PlayerPos.y;
+                    //    PlayerPoint[i].z = GameData.PlayerPos.z;
+                    //    RefEndPoint = Boss1Manager.BossPos;
+                    //}
+                    else if (Dir.x <= 0.0f && Dir.y <= 1.0f)
                     {
                         PlayerPoint[i].x = GameData.PlayerPos.x - 2.0f;
                         PlayerPoint[i].y = GameData.PlayerPos.y;

@@ -36,7 +36,7 @@ public class GameOver : MonoBehaviour
     //選択
     SELECT select;
     //使用フラグ
-    bool useFlag;
+    public bool GameOverFlag;
     //ImageShowコンポーネント
     ImageShow imageShow_GameOver;
     ImageShow imageShow_Retry;
@@ -72,14 +72,14 @@ public class GameOver : MonoBehaviour
         imageShow_BackTitle = BackTitleImage.GetComponent<ImageShow>();
 
         //使用フラグ設定
-        useFlag = false;
+        GameOverFlag = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         //未使用だったらリターン
-        if (!useFlag)
+        if (!GameOverFlag)
         {
             return;
         }
@@ -152,7 +152,7 @@ public class GameOver : MonoBehaviour
         ////サブカメラオン
         //subCam.SetActive(true);
         //使用フラグ立てる
-        useFlag = true;
+        GameOverFlag = true;
     }
     public void GameOverHide()
     {
@@ -167,7 +167,7 @@ public class GameOver : MonoBehaviour
         ////メインカメラオン
         //mainCam.SetActive(true);
         //使用フラグ下す
-        useFlag = false;
+        GameOverFlag = false;
 
     }
 }

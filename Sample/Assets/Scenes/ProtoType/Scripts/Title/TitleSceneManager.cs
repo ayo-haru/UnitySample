@@ -14,7 +14,6 @@ public class TitleSceneManager : MonoBehaviour {
 
     private Vector2 doLeftStick = Vector2.zero;
     private Vector2 doRightStick = Vector2.zero;
-    //private AudioSource[] audioSourceList = new AudioSource[5];   // 一回に同時にならせる数
 
     private void Awake()
     {
@@ -45,6 +44,7 @@ public class TitleSceneManager : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         Application.targetFrameRate = 60;           // フレームレートを固定
+        // シーン関連
         SaveManager.load();
         GameData.NextMapNumber = SaveManager.sd.LastMapNumber;
         GameData.CurrentMapNumber = (int)GameData.eSceneState.TITLE_SCENE;
@@ -65,7 +65,11 @@ public class TitleSceneManager : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.Return))   // はじめから
         {
+            // 決定音
             SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
+
+            // シーン関連
+            GameData.OldMapNumber = GameData.CurrentMapNumber;
             GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen1_SCENE;
             string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
             SceneManager.LoadScene(nextSceneName);
@@ -73,7 +77,11 @@ public class TitleSceneManager : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.RightShift))    // つづきから
         {
+            // 決定音
             SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
+
+            // シーン関連
+            GameData.OldMapNumber = GameData.CurrentMapNumber;
             string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
             SceneManager.LoadScene(nextSceneName);
         }

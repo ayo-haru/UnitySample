@@ -11,7 +11,7 @@
 // 2022/03/25   プレイヤーの挙動修正(移動をVelocity計算に変更)
 // 2022/03/25   プレイヤーの挙動修正(ジャンプ中の挙動変更ストレイフアリ)
 // 2022/04/01   アニメーション導入
-// 2022/04/01   移動ぷかぷかさせるやつ
+// 2022/04/02   下パリィ導入   
 //=============================================================================
 using System;
 using System.Collections;
@@ -95,7 +95,7 @@ public class Player2 : MonoBehaviour
         //---Actionイベント登録(ボタン入力)
         PlayerActionAsset.Player.Attack.started += OnAttack;
 
-        PlayerActionAsset.Player.Jump.started += OnJump;            // started    ... ボタンが押された瞬間
+        //PlayerActionAsset.Player.Jump.started += OnJump;            // started    ... ボタンが押された瞬間
         //PlayerActionAsset.Player.Jump.performed += OnJump;        // performed  ... 中間くらい
         //PlayerActionAsset.Player.Jump.canceled += OnJump;         // canceled   ... ボタンを離した瞬間
 
@@ -110,7 +110,7 @@ public class Player2 : MonoBehaviour
     private void OnDisable()
     {
         PlayerActionAsset.Player.Attack.started -= OnAttack;        // started...ボタンが押された瞬間
-        PlayerActionAsset.Player.Jump.started -= OnJump;            // started    ... ボタンが押された瞬間
+        //PlayerActionAsset.Player.Jump.started -= OnJump;            // started    ... ボタンが押された瞬間
 
 
         //---InputActionの無効化
@@ -254,17 +254,18 @@ public class Player2 : MonoBehaviour
         PlayerPos = transform.position;                             // 攻撃する瞬間のプレイヤーの座標を取得
         AttackDirection += Attack.ReadValue<Vector2>();             // スティックの倒した値を取得
         Debug.Log("AttackDirection(正規化前):" + AttackDirection);
-        AttackDirection.Normalize();                                // 取得した値を正規化(ベクトルを１にする)
 
         //---アニメーション再生
-        if(Mathf.Abs(AttackDirection.x) >= 0.1)
+        //---左右パリィ
+        if(Mathf.Abs(AttackDirection.x) >= 1)                     
         {
             //タイマー設定
             Timer = stopTime;
             animator.SetTrigger("Attack");
         }
 
-        if(AttackDirection.y >= 0.1)
+        //---上パリィ
+        if(AttackDirection.y >= 1)
         {
             if(GroundNow == true)
             {
@@ -274,7 +275,18 @@ public class Player2 : MonoBehaviour
             animator.SetTrigger("Attack_UP");
         }
 
+        //---下パリィ
+        if (AttackDirection.y <= 1)
+        {
+            if (GroundNow == true)
+            {
+                rb.AddForce(transform.up * 3.0f, ForceMode.Impulse);
+                GroundNow = false;
+            }
+            animator.SetTrigger("Attack_DOWN");
+        }
 
+        AttackDirection.Normalize();                                // 取得した値を正規化(ベクトルを１にする)
 
         //モデルの向きと反対方向に盾出したらモデル回転
         if ((AttackDirection.x > 0 && beforeDir.x < 0) || (AttackDirection.x < 0 && beforeDir.x > 0))

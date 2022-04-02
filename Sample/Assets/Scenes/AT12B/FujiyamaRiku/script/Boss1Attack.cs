@@ -255,7 +255,6 @@ public class Boss1Attack : MonoBehaviour
         //AliveStrawberryが終わっていなくて、最後のイチゴが排出された後でも続けて最後の弾が出ちゃう。
         if (AliveStrawberry >= Max_Strawberry)
         {
-            
             AliveStrawberry = 0;
             StrawberryNum = 0;
             StrawBerryMany = 0;
@@ -355,8 +354,8 @@ public class Boss1Attack : MonoBehaviour
                         StrawberryRefOnlyFlg[i] = false; ;
                         Destroy(Strawberry[i]);
                         Ref_FinishTime[i] = 0;
-                        FinishTime[i] = 0;
                         AliveStrawberry++;
+                        FinishTime[i] = 0;
                     }
                 }
                 //弾かれていたらこっちの処理しない
@@ -368,7 +367,7 @@ public class Boss1Attack : MonoBehaviour
                 FinishTime[i] += Time.deltaTime * StrawberrySpeed;
                 if (i < Max_Strawberry - 1)
                 {
-                    if (FinishTime[i] >= 0.5f && !StrawberryUseFlg[i + 1] && !StrawberryRefFlg[i])
+                    if (FinishTime[i] >= 0.5f && !StrawberryUseFlg[i + 1])
                     {
                         StrawberryNum++;
                     }

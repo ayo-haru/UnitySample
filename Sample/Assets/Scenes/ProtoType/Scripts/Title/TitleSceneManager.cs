@@ -6,7 +6,17 @@ using UnityEngine.InputSystem;
 using System;
 
 public class TitleSceneManager : MonoBehaviour {
-   
+   private enum eSTATETITLE
+    {
+        FROMBIGINING = 0,
+        FROMCONTINUE,
+        QUIT,
+       
+        MAX_STATE
+    }
+
+
+
     //---変数宣言
     private Game_pad UIActionAssets;                                // InputActionのUIを扱う
     private InputAction LeftStickSelect;                                 // InputActionのselectを扱う
@@ -15,9 +25,12 @@ public class TitleSceneManager : MonoBehaviour {
     private Vector2 doLeftStick = Vector2.zero;
     private Vector2 doRightStick = Vector2.zero;
 
+    private int select;
+
     private void Awake()
     {
         UIActionAssets = new Game_pad();                            // InputActionインスタンスを生成
+        select = 0;
     }
 
     private void OnEnable()
@@ -61,33 +74,51 @@ public class TitleSceneManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        
+        if (Input.GetKeyUp(KeyCode.UpArrow))
+        {
+            select--;
+            if(select < 0)
+            {
+                select = 0;
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            select++;
+            if(select >= (int)eSTATETITLE.MAX_STATE)
+            {
+                select = (int)eSTATETITLE.QUIT;
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.Return))   // はじめから
         {
             // 決定音
             SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
 
-            GameData.InitData();
+            if (select == (int)eSTATETITLE.FROMBIGINING)
+            {
+                GameData.InitData();
 
-            // シーン関連
-            GameData.OldMapNumber = GameData.CurrentMapNumber;
-            GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen1_SCENE;
-            string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
-            SceneManager.LoadScene(nextSceneName);
+                // シーン関連
+                GameData.OldMapNumber = GameData.CurrentMapNumber;
+                GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen1_SCENE;
+                string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
+                SceneManager.LoadScene(nextSceneName);
+            }
+            else if (select == (int)eSTATETITLE.FROMCONTINUE)
+            {
+                // シーン関連
+                GameData.OldMapNumber = GameData.CurrentMapNumber;
+                string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
+                SceneManager.LoadScene(nextSceneName);
+            }
+            else if(select == (int)eSTATETITLE.QUIT)
+            {
+                // ゲームやめる
+            }
         }
-
-        if (Input.GetKeyDown(KeyCode.RightShift))    // つづきから
-        {
-            // 決定音
-            SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
-
-            // シーン関連
-            GameData.OldMapNumber = GameData.CurrentMapNumber;
-            string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
-            SceneManager.LoadScene(nextSceneName);
-        }
-
     }
 
     private void OnLeftStick(InputAction.CallbackContext obj)

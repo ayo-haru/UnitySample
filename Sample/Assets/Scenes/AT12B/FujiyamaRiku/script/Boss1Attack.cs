@@ -80,10 +80,13 @@ public class Boss1Attack : MonoBehaviour
     [SerializeField] public float KnifeSpeed;
     bool KnifeRefFlg = false;
     float KnifeRefTime;
+    Quaternion KnifeRotForward;
+    Quaternion KnifeRotDir;
+    [SerializeField] Vector3 KnifeForward;
     //----------------------------------------------------------
 
 
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -291,11 +294,9 @@ public class Boss1Attack : MonoBehaviour
                     Vector2 Dir = Strawberry[i].transform.position - GameData.PlayerPos;
                     float rad = Mathf.Atan2(Dir.y, Dir.x);
                     float degree = rad * Mathf.Rad2Deg;
-
-                    Debug.Log("はいっちゃうぅぅぅ！！" + degree);
+                    
                     if (degree <= 80.0f && degree >= -90.0f)
                     {
-                        Debug.Log("はいっちゃうぅぅぅ！！" + degree);
                         if (degree >= 45.0f)
                         {
                             PlayerPoint[i].x = GameData.PlayerPos.x;
@@ -405,11 +406,12 @@ public class Boss1Attack : MonoBehaviour
             KnifeStartPoint.z = Boss1Manager.BossPos.z;
             KnifeEndPoint = GameData.PlayerPos;
 
-            Knife = Instantiate(Knifeobj, KnifeStartPoint, Quaternion.Euler(0.0f,0.0f,90.0f));
-
+            Knife = Instantiate(Knifeobj, KnifeStartPoint, Quaternion.identity);
             Vector3 KnifeDir = GameData.PlayerPos - Knife.transform.position;
             // ターゲットの方向への回転
-            Knife.transform.rotation = Quaternion.LookRotation(KnifeDir, Vector3.forward);
+            KnifeRotDir = Quaternion.LookRotation(KnifeDir, Vector3.back);
+            KnifeRotForward = Quaternion.FromToRotation(KnifeForward, Vector3.forward);
+            Knife.transform.rotation = KnifeRotDir * KnifeRotForward;
 
             SoundManager.Play(SoundData.eSE.SE_BOOS1_KNIFE, SoundData.GameAudioList);
             

@@ -1,29 +1,47 @@
+//デバッグ用のプログラム
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DebugClear : MonoBehaviour
 {
+    int count = 0;
+    UVScroll Moon;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Moon = GameObject.Find("HPBar").GetComponent<UVScroll>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //クリア表示
-        if (Input.GetKey(KeyCode.F1))
+        ////クリア表示
+        //if (Input.GetKey(KeyCode.F1))
+        //{
+        //    GameObject ClearImage = GameObject.Find("EventSystem");
+        //    ClearImage.SendMessage("GameClearShow");
+        //}
+        ////ゲームオーバー表示
+        //if (Input.GetKey(KeyCode.F2))
+        //{
+        //    GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
+        //    //OverImage.SendMessage("GameOverShow");
+        //}
+
+
+        if (Input.GetKeyDown(KeyCode.F3))
         {
-            GameObject ClearImage = GameObject.Find("EventSystem");
-            ClearImage.SendMessage("GameClearShow");
+            ++count;
+            Moon.SetFrame(count);
         }
-        //ゲームオーバー表示
-        if (Input.GetKey(KeyCode.F2))
+        if (Input.GetKeyDown(KeyCode.F4))
         {
-            GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
-            //OverImage.SendMessage("GameOverShow");
+            --count;
+            Moon.SetFrame(count);
         }
+
+
     }
 }

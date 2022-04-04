@@ -248,16 +248,18 @@ public class Player2 : MonoBehaviour
     private void OnAttack(InputAction.CallbackContext obj)
     {
         //---振動させる
-        StartCoroutine(VibrationPlay(LowFrequency,HighFrequency));
+        //StartCoroutine(VibrationPlay(LowFrequency,HighFrequency));
 
         //---スティック入力
         PlayerPos = transform.position;                             // 攻撃する瞬間のプレイヤーの座標を取得
         AttackDirection += Attack.ReadValue<Vector2>();             // スティックの倒した値を取得
-        Debug.Log("AttackDirection(正規化前):" + AttackDirection);
+        Debug.Log("AttackDirection.x(正規化前):" + AttackDirection.x);
+        Debug.Log("AttackDirection.y(正規化前):" + AttackDirection.y);
+        AttackDirection.Normalize();                                // 取得した値を正規化(ベクトルを１にする)
 
         //---アニメーション再生
         //---左右パリィ
-        if(Mathf.Abs(AttackDirection.x) >= 1)                     
+        if (AttackDirection.x >= 0.1)                     
         {
             //タイマー設定
             Timer = stopTime;
@@ -265,7 +267,7 @@ public class Player2 : MonoBehaviour
         }
 
         //---上パリィ
-        if(AttackDirection.y >= 1)
+        else if(AttackDirection.y >= 0.1)
         {
             if(GroundNow == true)
             {
@@ -276,7 +278,7 @@ public class Player2 : MonoBehaviour
         }
 
         //---下パリィ
-        if (AttackDirection.y <= 1)
+        else if (AttackDirection.y <= 0.1)
         {
             if (GroundNow == true)
             {
@@ -286,7 +288,6 @@ public class Player2 : MonoBehaviour
             animator.SetTrigger("Attack_DOWN");
         }
 
-        AttackDirection.Normalize();                                // 取得した値を正規化(ベクトルを１にする)
 
         //モデルの向きと反対方向に盾出したらモデル回転
         if ((AttackDirection.x > 0 && beforeDir.x < 0) || (AttackDirection.x < 0 && beforeDir.x > 0))

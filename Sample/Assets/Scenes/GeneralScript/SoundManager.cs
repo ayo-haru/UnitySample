@@ -56,6 +56,7 @@ public static class SoundManager {
         }
         audioSource.clip = SoundData.BGMClip[(int)_bgmDataNumber];
         audioSource.volume = 0.2f;
+        audioSource.loop = true;
         audioSource.Play();
     }
 

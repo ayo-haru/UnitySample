@@ -146,6 +146,7 @@ public class BossMove : MonoBehaviour
                         }
                         Debug.Log("ƒiƒCƒtUŒ‚");
                         break;//break•¶
+
                 }
             
             

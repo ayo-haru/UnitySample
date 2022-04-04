@@ -18,7 +18,7 @@ public class Boss1Attack : MonoBehaviour
     [SerializeField] public int RushDamage;
     [SerializeField] public int StrawberryDamage;
     [SerializeField] public int KnifeDamage;
-
+    bool LRSwitchFlg;
     //“Ëi—p•Ï”ŒQ
     //----------------------------------------------------------
     GameObject Forkobj;

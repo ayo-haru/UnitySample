@@ -6,11 +6,11 @@ using UnityEngine.InputSystem;
 using System;
 
 public class TitleSceneManager : MonoBehaviour {
-   private enum eSTATETITLE
+   private enum eSTATETITLE // タイトルシーンから行う動作
     {
-        FROMBIGINING = 0,
-        FROMCONTINUE,
-        QUIT,
+        FROMBIGINING = 0,   // 初めから
+        FROMCONTINUE,       // 続きから
+        QUIT,               // やめる
        
         MAX_STATE
     }
@@ -18,61 +18,56 @@ public class TitleSceneManager : MonoBehaviour {
 
 
     //---変数宣言
-    private Game_pad UIActionAssets;                                // InputActionのUIを扱う
-    private InputAction LeftStickSelect;                                 // InputActionのselectを扱う
-    private InputAction RightStickSelect;                                 // InputActionのselectを扱う
+    private Game_pad UIActionAssets;                // InputActionのUIを扱う
+    private InputAction LeftStickSelect;            // InputActionのselectを扱う
+    private InputAction RightStickSelect;           // InputActionのselectを扱う
 
     private Vector2 doLeftStick = Vector2.zero;
     private Vector2 doRightStick = Vector2.zero;
 
-    private int select;
+    private int select;                             // 選択されているモードの番号 
+
+    private bool isPressButton = false;             // ボタンが押されたかの判定用
+    private bool oncePressButton = false;           // ボタンが押されたときに一回だけ処理をする用
 
     private void Awake()
     {
-        UIActionAssets = new Game_pad();                            // InputActionインスタンスを生成
-        select = 0;
-    }
+        UIActionAssets = new Game_pad();            // InputActionインスタンスを生成
+        select = (int)eSTATETITLE.FROMBIGINING;     // 初期値ははじめから      
 
-    private void OnEnable()
-    {
-        //---スティックの値を取るための設定
-        LeftStickSelect = UIActionAssets.UI.LeftStickSelect;
-        RightStickSelect = UIActionAssets.UI.RightStickSelect;
-
-        //---Actionイベントを登録
-        UIActionAssets.UI.LeftStickSelect.performed += OnLeftStick;
-        UIActionAssets.UI.RightStickSelect.performed += OnRightStick;
-
-
-        //---InputActionの有効化
-        UIActionAssets.UI.Enable();
-    }
-
-
-    private void OnDisable()
-    {
-        //---InputActionの無効化
-        UIActionAssets.UI.Disable();
-    }
-    // Start is called before the first frame update
-    void Start() {
         Application.targetFrameRate = 60;           // フレームレートを固定
-        // シーン関連
+        
+        //----- シーン -----
         SaveManager.load();
         GameData.NextMapNumber = SaveManager.sd.LastMapNumber;
         GameData.CurrentMapNumber = (int)GameData.eSceneState.TITLE_SCENE;
+
+        //----- サウンド -----
         for (int i = 0; i < SoundData.TitleAudioList.Length; ++i)
         {
             SoundData.TitleAudioList[i] = gameObject.AddComponent<AudioSource>();
         }
-
-        // 音鳴らす
-        SoundManager.Play(SoundData.eBGM.BGM_TITLE, SoundData.TitleAudioList);
-
+        SoundManager.Play(SoundData.eBGM.BGM_TITLE, SoundData.TitleAudioList);// 音鳴らす
     }
+
 
     // Update is called once per frame
     void Update() {
+        if (Input.anyKeyDown)
+        {
+            isPressButton = true;
+            GameObject.Find("PressAnyButton").GetComponent<UIBlink>().isBlink = false;
+
+        }
+
+        if (!isPressButton)
+        {
+            GameObject.Find("PressAnyButton").GetComponent<UIBlink>().isBlink = true;
+            return;  // プレスボタンされていなかったら以下の処理をしない
+        }
+
+
+
 
         if (Input.GetKeyUp(KeyCode.UpArrow))
         {
@@ -119,6 +114,26 @@ public class TitleSceneManager : MonoBehaviour {
                 // ゲームやめる
             }
         }
+    }
+
+    private void OnEnable() {
+        //---スティックの値を取るための設定
+        LeftStickSelect = UIActionAssets.UI.LeftStickSelect;
+        RightStickSelect = UIActionAssets.UI.RightStickSelect;
+
+        //---Actionイベントを登録
+        UIActionAssets.UI.LeftStickSelect.performed += OnLeftStick;
+        UIActionAssets.UI.RightStickSelect.performed += OnRightStick;
+
+
+        //---InputActionの有効化
+        UIActionAssets.UI.Enable();
+    }
+
+
+    private void OnDisable() {
+        //---InputActionの無効化
+        UIActionAssets.UI.Disable();
     }
 
     private void OnLeftStick(InputAction.CallbackContext obj)

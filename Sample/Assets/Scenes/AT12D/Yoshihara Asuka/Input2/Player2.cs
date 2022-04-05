@@ -137,49 +137,52 @@ public class Player2 : MonoBehaviour
     // Update is called once per frame
     void Update() 
     {
-        //---rb.velocityによる移動処理
-        ForceDirection += move.ReadValue<Vector2>();
-        ForceDirection.Normalize();
-        MovingVelocity = ForceDirection * maxSpeed;
-
-        //---アニメーション再生
-        if (Mathf.Abs(ForceDirection.x) > 0 && Mathf.Abs(ForceDirection.y) == 0)
+        if (!Pause.isPause)
         {
-            if (!animator.GetBool("Walk"))
+            //---rb.velocityによる移動処理
+            ForceDirection += move.ReadValue<Vector2>();
+            ForceDirection.Normalize();
+            MovingVelocity = ForceDirection * maxSpeed;
+
+            //---アニメーション再生
+            if (Mathf.Abs(ForceDirection.x) > 0 && Mathf.Abs(ForceDirection.y) == 0)
             {
-                animator.SetBool("Walk", true);
-                
+                if (!animator.GetBool("Walk"))
+                {
+                    animator.SetBool("Walk", true);
+
+                }
             }
-        }
-        else if (animator.GetBool("Walk"))
-        {
-            animator.SetBool("Walk", false);
-        }
-
-        //---HPオブジェクトを検索
-        if (!GameObject.Find("HPSystem(Clone)"))
-        {
-            return;
-        }
-
-        //---バックスペースキーでHPを減らす(デバッグ)
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            GameData.CurrentHP--;
-            SaveManager.saveHP(GameData.CurrentHP);
-            EffectManager.Play(EffectData.eEFFECT.EF_DAMAGE, this.transform.position);
-            SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
-        }
-        //---コントローラーキーでHPを増やす(デバッグ)
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            if(GameData.CurrentHP < hpmanager.MaxHP)
+            else if (animator.GetBool("Walk"))
             {
-                EffectManager.Play(EffectData.eEFFECT.EF_HEAL, this.transform.position);
-                GameData.CurrentHP++;
+                animator.SetBool("Walk", false);
+            }
+
+            //---HPオブジェクトを検索
+            if (!GameObject.Find("HPSystem(Clone)"))
+            {
+                return;
+            }
+
+            //---バックスペースキーでHPを減らす(デバッグ)
+            if (Input.GetKeyDown(KeyCode.Backspace))
+            {
+                GameData.CurrentHP--;
                 SaveManager.saveHP(GameData.CurrentHP);
+                EffectManager.Play(EffectData.eEFFECT.EF_DAMAGE, this.transform.position);
+                SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
             }
+            //---コントローラーキーでHPを増やす(デバッグ)
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                if (GameData.CurrentHP < hpmanager.MaxHP)
+                {
+                    EffectManager.Play(EffectData.eEFFECT.EF_HEAL, this.transform.position);
+                    GameData.CurrentHP++;
+                    SaveManager.saveHP(GameData.CurrentHP);
+                }
 
+            }
         }
     }
 

@@ -82,9 +82,9 @@ public static class SoundManager {
         {
             if (_audioSourceList[i].isPlaying == false)
             {
+            _audioSourceList[i].UnPause();
                 break;
             }
-            _audioSourceList[i].UnPause();
         }
     }
 

@@ -16,7 +16,7 @@ public class EnemySceneManager : MonoBehaviour
         {
             GameData.Player = Player;   // GameDataのプレイヤーに取得
         }
-        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-21.0f, 2.0f, 0.0f); // プレイヤーの座標を設定
+        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-50.0f, 20.5f, 0.0f); // プレイヤーの座標を設定
         GameObject player = Instantiate(GameData.Player);       // プレハブを実体化
 
     }

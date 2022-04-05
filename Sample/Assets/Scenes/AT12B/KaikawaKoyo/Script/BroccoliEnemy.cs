@@ -19,10 +19,10 @@ public class BroccoliEnemy : MonoBehaviour
     private Rigidbody rb;
     private EnemyDown ED;
     private int count = 0;
+    private bool loop;
 
     [SerializeField]
     float MoveSpeed = 5.0f;
-    int DetecDist = 8;
     bool InArea = false;
 
     private bool isCalledOnce = false;                             // 開始演出で使用。一回だけ処理をするために使う。
@@ -49,13 +49,13 @@ public class BroccoliEnemy : MonoBehaviour
             float step = MoveSpeed * Time.deltaTime;
             rb.position = Vector3.MoveTowards(pos, Target.position, step);
 
-            //if (rot.z < 0.15f)
+            //if (rot.z < 0.15f && loop)
             //{
-            //    transform.Rotate(new Vector3(0, 0, 15) * Time.deltaTime);
+            //    transform.Rotate(new Vector3(0, 0, 30) * Time.deltaTime);
             //}
-            //if (rot.z > -0.15f)
+            //if (rot.z > -0.15f && !loop)
             //{
-            //    transform.Rotate(new Vector3(0, 0, 15) * Time.deltaTime);
+            //    transform.Rotate(new Vector3(0, 0, -30) * Time.deltaTime);
             //}
 
             // SEの処理

@@ -13,6 +13,7 @@ using UnityEngine;
 
 public class EnemyDown : MonoBehaviour
 {
+    GameObject Item;
     public float bounceSpeed = 5.0f;
     public float bounceVectorMultiple = 2f;
     private float bouncePower = 1000.0f;
@@ -26,6 +27,7 @@ public class EnemyDown : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Item = (GameObject)Resources.Load("Item");
         isAlive = true;
         rb = gameObject.GetComponent<Rigidbody>();
     }
@@ -68,7 +70,11 @@ public class EnemyDown : MonoBehaviour
             rb.angularDrag = 0.0f;
             // 回転軸を中央に
             rb.centerOfMass = new Vector3(0, 0, 0);
-            
+
+            // 回復アイテムを落とす
+            Pos = transform.position;
+            Instantiate(Item, Pos, Quaternion.identity);
+
             //取得した法線ベクトルに跳ね返す速さをかけて、跳ね返す
             rb.AddForce(velocity * bouncePower, ForceMode.Force);
             // 回転させる

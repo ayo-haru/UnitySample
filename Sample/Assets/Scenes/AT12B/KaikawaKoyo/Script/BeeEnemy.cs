@@ -1,22 +1,22 @@
 //==========================================================
-//      ニンジン雑魚の攻撃
-//      作成日　2022/03/16
+//      ハチ雑魚の攻撃
+//      作成日　2022/04/04
 //      作成者　海川晃楊
 //      
 //      <開発履歴>
-//      2022/03/16      
+//      2022/04/04      
 //
 //==========================================================
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarrotEnemy : MonoBehaviour
+public class BeeEnemy : MonoBehaviour
 {
     Transform Target;
     GameObject Player;
     private Rigidbody rb;
-    private Vector3 startPosition, targetPosition;
+    private Vector3 Enemypos;
     private EnemyDown ED;
     private Vector3 aim;
     private Quaternion look;
@@ -26,51 +26,37 @@ public class CarrotEnemy : MonoBehaviour
     float speed = 0.0f;
     bool InArea;
     bool Look;
+    float A = 2.0f;
+    float B = 5.0f;
 
     private bool isCalledOnce = false;                             // 一回だけ処理をするために使う。
 
-
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
         Player = GameObject.FindWithTag("Player");    // プレイヤーのオブジェクトを探す
         rb = gameObject.GetComponent<Rigidbody>();
         InArea = false;
         Look = false;
         ED = GetComponent<EnemyDown>();
+        Enemypos = transform.position;
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
+        transform.position = new Vector3(Mathf.Sin(A * Time.time) * 60.0f + Enemypos.x,
+            Mathf.Cos(B * Time.time) * 7.0f + Enemypos.y, Enemypos.z);
 
-        // プレイヤーを見つけたら攻撃開始
-        if (InArea && ED.isAlive)
+
+        // サウンド処理
+        /*
+        if (!isCalledOnce)     // 一回だけ呼ぶ
         {
-
-            if (speed <= 1)
-            {
-                speed += MoveSpeed * Time.deltaTime;
-            }
-            // プレイヤーに向かって特攻する
-            rb.position = Vector3.Lerp(startPosition, targetPosition, speed);
-
-            aim = targetPosition - transform.position;
-            look = Quaternion.LookRotation(aim);
-            transform.localRotation = look;
-
-            //transform.Rotate(90, 0, 0);
-            if (!isCalledOnce)     // 一回だけ呼ぶ
-            {
-                SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
-                isCalledOnce = true;
-            }
+            SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
+            isCalledOnce = true;
         }
-
-        if (rb.position == targetPosition)
-        {
-            //transform.Rotate(-90, 0, 0);
-            //rb.constraints = RigidbodyConstraints.FreezeRotationX;
-            Destroy(gameObject, 1.0f);
-        }
+        */
     }
 
     public void OnTriggerEnter(Collider other)    // コライダーでプレイヤーを索敵したい
@@ -78,8 +64,6 @@ public class CarrotEnemy : MonoBehaviour
         if (other.CompareTag("Player") && Look == false)
         {
             Target = Player.transform;          // プレイヤーの座標取得
-            targetPosition = Target.position;
-            startPosition = rb.position;
             speed = 0.0f;
             InArea = true;
             Look = true;
@@ -93,5 +77,4 @@ public class CarrotEnemy : MonoBehaviour
             Destroy(gameObject, 0.0f);
         }
     }
-
 }

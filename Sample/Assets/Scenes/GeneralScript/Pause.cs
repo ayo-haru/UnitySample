@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pause : MonoBehaviour
+public static class Pause
 {
-    public static bool isPause;
+    public static bool isPause = false;
 
     public static void PauseStart() {
         Time.timeScale = 0;

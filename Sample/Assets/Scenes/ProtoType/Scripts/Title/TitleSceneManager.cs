@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using System;
+using UnityEngine.UI;
 
 public class TitleSceneManager : MonoBehaviour {
    private enum eSTATETITLE // タイトルシーンから行う動作
@@ -30,6 +31,12 @@ public class TitleSceneManager : MonoBehaviour {
     private bool isPressButton = false;             // ボタンが押されたかの判定用
     private bool oncePressButton = false;           // ボタンが押されたときに一回だけ処理をする用
 
+    private GameObject TitleLogo;
+    private GameObject PressAnyButton;
+    private GameObject GameStart;
+    private GameObject GameContinue;
+    private GameObject GameEnd;
+
     private void Awake()
     {
         UIActionAssets = new Game_pad();            // InputActionインスタンスを生成
@@ -48,31 +55,53 @@ public class TitleSceneManager : MonoBehaviour {
             SoundData.TitleAudioList[i] = gameObject.AddComponent<AudioSource>();
         }
         SoundManager.Play(SoundData.eBGM.BGM_TITLE, SoundData.TitleAudioList);// 音鳴らす
+
+        //----- UI -----
+        TitleLogo = GameObject.Find("Titlelogo");               // UIを見つけて格納しておく
+        PressAnyButton = GameObject.Find("PressAnyButton");
+        GameStart = GameObject.Find("GameStart");
+        GameContinue = GameObject.Find("GameContinue");
+        GameEnd = GameObject.Find("GameEnd");
+        GameStart.GetComponent<UIBlink>().isHide = true;        // ゲームが始まった瞬間は要らないので消す
+        GameContinue.GetComponent<UIBlink>().isHide = true;
+        GameEnd.GetComponent<UIBlink>().isHide = true;
+
     }
 
 
     // Update is called once per frame
     void Update() {
-        if (Input.anyKeyDown)
+        // 何かボタンが押されたら
+        if (Input.anyKeyDown && !isPressButton)
         {
             isPressButton = true;
-            GameObject.Find("PressAnyButton").GetComponent<UIBlink>().isBlink = false;
+            PressAnyButton.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+            PressAnyButton.GetComponent<UIBlink>().isHide = true;   // ボタンが押されたら消す
+            TitleLogo.GetComponent<UIBlink>().isHide = true;
+            GameStart.GetComponent<UIBlink>().isHide = false;       // ボタンが押されたら表示する
+            GameContinue.GetComponent<UIBlink>().isHide = false;
+            GameEnd.GetComponent<UIBlink>().isHide = false;
 
+
+            SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
         }
 
+
+        // プレスボタンされていなかったら以下の処理をしない
         if (!isPressButton)
         {
-            GameObject.Find("PressAnyButton").GetComponent<UIBlink>().isBlink = true;
-            return;  // プレスボタンされていなかったら以下の処理をしない
+            PressAnyButton.GetComponent<UIBlink>().isBlink = true;
+            return;
         }
 
 
-
-
+        // プレスボタンされたとき＝モードの選択になるので
+        // 矢印キーで選択させる
         if (Input.GetKeyUp(KeyCode.UpArrow))
         {
+            SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
             select--;
-            if(select < 0)
+            if (select < 0)
             {
                 select = 0;
             }
@@ -80,20 +109,28 @@ public class TitleSceneManager : MonoBehaviour {
 
         if (Input.GetKeyUp(KeyCode.DownArrow))
         {
+            SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
+
             select++;
-            if(select >= (int)eSTATETITLE.MAX_STATE)
+            if (select >= (int)eSTATETITLE.MAX_STATE)
             {
                 select = (int)eSTATETITLE.QUIT;
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Return))   // はじめから
-        {
-            // 決定音
-            SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
 
-            if (select == (int)eSTATETITLE.FROMBIGINING)
+        // 選択しているものが何かで分岐
+        if (select == (int)eSTATETITLE.FROMBIGINING)
+        {
+            GameStart.GetComponent<UIBlink>().isBlink = true; // UIを点滅
+            GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+            GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+
+            if (Input.GetKeyUp(KeyCode.Return)) // 選択を確定
             {
+                // 決定音
+                SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
+
                 GameData.InitData();
 
                 // シーン関連
@@ -102,17 +139,42 @@ public class TitleSceneManager : MonoBehaviour {
                 string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
                 SceneManager.LoadScene(nextSceneName);
             }
-            else if (select == (int)eSTATETITLE.FROMCONTINUE)
+        }
+        else if (select == (int)eSTATETITLE.FROMCONTINUE)
+        {
+            GameStart.GetComponent<UIBlink>().isBlink = false; // UIを点滅
+            GameContinue.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
+            GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+
+            if (Input.GetKeyUp(KeyCode.Return)) // 選択を確定
             {
+                // 決定音
+                SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
+
                 // シーン関連
                 GameData.OldMapNumber = GameData.CurrentMapNumber;
                 string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
                 SceneManager.LoadScene(nextSceneName);
             }
-            else if(select == (int)eSTATETITLE.QUIT)
+        }
+        else if (select == (int)eSTATETITLE.QUIT)
+        {
+            GameStart.GetComponent<UIBlink>().isBlink = false; // UIを点滅
+            GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+            GameEnd.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
+
+            if (Input.GetKeyUp(KeyCode.Return)) // 選択を確定
             {
-                // ゲームやめる
+                // 決定音
+                SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
+
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+                Application.Quit();
+#endif
             }
+
         }
     }
 

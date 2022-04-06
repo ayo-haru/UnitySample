@@ -43,30 +43,33 @@ public class BossMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Boss1Manager.BossState == Boss1Manager.Boss1State.BOSS1_BATTLE)
+        if(!Pause.isPause)
         {
-            if (BossState == Boss_State.idle)       //もしボスの状態が待機の場合
+            if (Boss1Manager.BossState == Boss1Manager.Boss1State.BOSS1_BATTLE)
             {
-                Idle();
-            }
-            else if (BossState == Boss_State.damage)//もしボスの状態がダメージの場合
-            {
-                //damage();
-            }
-            else if (BossState == Boss_State.strawberryBomb)//もしボスの状態がイチゴ爆弾の場合
-            {
-                //strawberryBomb();
-                this.GetComponent<Boss1Attack>().Boss1Strawberry();
-            }
-            else if (BossState == Boss_State.charge)//もしボスの状態が突進の場合
-            {
-                //charge();
-                this.GetComponent<Boss1Attack>().Boss1Fork();
-            }
-            else if (BossState == Boss_State.KnifeThrower)//もしボスの状態がナイフ投げの場合
-            {
-                //KnifeThrower();
-                this.GetComponent<Boss1Attack>().Boss1Knife();
+                if (BossState == Boss_State.idle)       //もしボスの状態が待機の場合
+                {
+                    Idle();
+                }
+                else if (BossState == Boss_State.damage)//もしボスの状態がダメージの場合
+                {
+                    //damage();
+                }
+                else if (BossState == Boss_State.strawberryBomb)//もしボスの状態がイチゴ爆弾の場合
+                {
+                    //strawberryBomb();
+                    this.GetComponent<Boss1Attack>().Boss1Strawberry();
+                }
+                else if (BossState == Boss_State.charge)//もしボスの状態が突進の場合
+                {
+                    //charge();
+                    this.GetComponent<Boss1Attack>().Boss1Fork();
+                }
+                else if (BossState == Boss_State.KnifeThrower)//もしボスの状態がナイフ投げの場合
+                {
+                    //KnifeThrower();
+                    this.GetComponent<Boss1Attack>().Boss1Knife();
+                }
             }
         }
     }
@@ -120,11 +123,19 @@ public class BossMove : MonoBehaviour
         {
             elapsedTimeOfIdleState = 0f;       //idle状態の経過時間をoffにする
             Debug.Log("AttackCount：" + AttackCount);
-            
-                //ランダム数の生成とswitch分岐をこの中へ
+
+            //ランダム数の生成とswitch分岐をこの中へ
+            if (HPgage.currentHp >= 51)
+            {
+                RandomNumbe = Random.Range(1, 3);//攻撃パターンランダム化
+                Debug.Log("Random" + RandomNumbe);
+            }
+            else
+            {
                 RandomNumbe = Random.Range(1, 4);//攻撃パターンランダム化
                 Debug.Log("Random" + RandomNumbe);
-                switch (RandomNumbe)            //switch分岐
+            }
+            switch (RandomNumbe)            //switch分岐
                 {
                     case 1://イチゴ爆弾へ
                         SetState(Boss_State.strawberryBomb);
@@ -139,11 +150,8 @@ public class BossMove : MonoBehaviour
                         break;//break文
 
                     case 3://ナイフ攻撃
-                        if (HPgage.currentHp <= 50)
-                        {
                             SetState(Boss_State.KnifeThrower);
                             RandomNumbe = -1;
-                        }
                         Debug.Log("ナイフ攻撃");
                         break;//break文
 

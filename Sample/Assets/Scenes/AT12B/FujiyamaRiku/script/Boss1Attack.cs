@@ -12,52 +12,52 @@ public class Boss1Attack : MonoBehaviour
         Attack3,
         Idle,
     }
-    static public bool RefrectFlg = false;                //プレイヤーがパリィに成功したかどうかの受け取り用
-    static public bool OnlyFlg;
-    static public Vector3 BossStartPoint;
-    [SerializeField] public int RushDamage;
-    [SerializeField] public int StrawberryDamage;
-    [SerializeField] public int KnifeDamage;
-    bool LRSwitchFlg;
+    static public bool RefrectFlg = false;                  //プレイヤーがパリィに成功したかどうかの受け取り用
+    static public bool OnlyFlg;                             //それぞれの処理の一回限定の処理用
+    static public Vector3 BossStartPoint;                   //ボスの初期地点
+    [SerializeField] public int RushDamage;                 //突進攻撃のダメージ
+    [SerializeField] public int StrawberryDamage;           //イチゴ攻撃のダメージ
+    [SerializeField] public int KnifeDamage;                //ナイフ攻撃のダメージ
+    [SerializeField] public float RefrectRotOver;           //弾いた角度の上判定用
+    [SerializeField] public float RefrectRotUnder;          //弾いた角度の上判定用
+    bool LRSwitchFlg;                                       //実装するかわからない左右判定用
     //突進用変数群
     //----------------------------------------------------------
-    GameObject Forkobj;
-    GameObject Fork;
-    Vector3 RushStartPoint;
-    Vector3 RushEndPoint;
-    Vector3 RushPlayerPoint;
-    Vector3 RushRefEndPoint;
-    Vector3 RushMiddlePoint;
-    bool OnlyRushFlg;
-    [SerializeField] public float RushSpeed;
-    bool RushRefFlg = false;
-    float RushTime;
-    float RushRefTime;
+    GameObject Forkobj;                                     //フォークのオブジェクト生成用
+    GameObject Fork;                                        //フォークのオブジェクト格納用
+    Vector3 RushStartPoint;                                 //突進開始地点
+    Vector3 RushEndPoint;                                   //突進終了地点
+    Vector3 RushPlayerPoint;                                //突進をはじいたときのプレイヤー座標格納用
+    Vector3 RushRefEndPoint;                                //突進をはじいた後の敵の最終地点
+    Vector3 RushMiddlePoint;                                //突進攻撃後戻ってくるための中間座標
+    bool OnlyRushFlg;                                       //一回限定
+    [SerializeField] public float RushSpeed;                //突進のスピード
+    bool RushRefFlg = false;                                //突進をはじいた判定
+    float RushTime;                                         //突進の経過時間
+    float RushRefTime;                                      //弾いた後の時間経過
     bool BossReturnFlg;
-    float BossReturnTime;
+    float BossReturnTime;                                   //突進後戻るまでの時間
     bool RushEndFlg;
     float RushReturnSpeed;
-    float ReturnDelay;
+    float ReturnDelay;                                      //戻ろうとするまでの時間
     //----------------------------------------------------------
     //イチゴ爆弾変数
     //----------------------------------------------------------
-    GameObject obj;                                       //イチゴ生成用
-    GameObject [] Strawberry;               //イチゴ生成後格納
-    [SerializeField] public int Max_Strawberry;           //打ったイチゴの判断
-    public static int PreMax_Strawberry;
-    int StrawberryNum;
-    int AliveStrawberry;
-    Vector3 StrawberryPos;
-    static bool[] StrawberryUseFlg;
-    static public bool [] StrawberryRefFlg;
-    [SerializeField] public float StrawberrySpeed;
-    bool[] PlayerRefDir;
-    Vector3 RefMiss;
-    bool RefMissFlg;
-    int [] SaveRef;
-    int StrawBerryMany;
-    bool[] StrawberryRefOnlyFlg;
-    static public bool[] StrawberryColPlayer;
+    GameObject obj;                                         //イチゴ生成用
+    GameObject [] Strawberry;                               //イチゴ生成後格納
+    [SerializeField] public int Max_Strawberry;             //イチゴの最大数
+    static public int PreMax_Strawberry;                    //最大数をほかの部分でも使えるように
+    int StrawberryNum;                                      //現在の射出済みイチゴ計算用
+    int AliveStrawberry;                                    //イチゴの生存確認用
+    static bool[] StrawberryUseFlg;                         //イチゴを使っているかどうかのフラグ
+    static public bool [] StrawberryRefFlg;                 //イチゴが弾かれたかどうかのフラグ
+    [SerializeField] public float StrawberrySpeed;          //イチゴが飛んでいく速度
+    bool[] PlayerRefDir;                                    //弾いたときの方向フラグ
+    Vector3 RefMiss;                                        //弾くのに失敗したときの座標格納用
+    bool RefMissFlg;                                        //弾くのに失敗したときに処理を一回だけする用
+    int StrawBerryMany;                                     //イチゴを最大数以上出さないようにするための処理←たぶんいらない
+    bool[] StrawberryRefOnlyFlg;                            //弾かれたもので一回だけ処理するもの用
+    static public bool[] StrawberryColPlayer;               //プレイヤーに当たった時用の処理
 
     //ベジエ曲線用
     Vector3  StartPoint;
@@ -71,18 +71,18 @@ public class Boss1Attack : MonoBehaviour
     //----------------------------------------------------------
     //ナイフ投げ変数群
     //----------------------------------------------------------
-    GameObject Knifeobj;
-    GameObject Knife;
-    Vector3 KnifeStartPoint;
-    Vector3 KnifeEndPoint;
-    Vector3 KnifePlayerPoint;
+    GameObject Knifeobj;                                    //ナイフ生成用
+    GameObject Knife;                                       //ナイフ生成後格納
+    Vector3 KnifeStartPoint;                                //ナイフのスタート座標
+    Vector3 KnifeEndPoint;                                  //ナイフの終了地点
+    Vector3 KnifePlayerPoint;                               
     float KnifeTime;
-    [SerializeField] public float KnifeSpeed;
-    bool KnifeRefFlg = false;
+    [SerializeField] public float KnifeSpeed;               //ナイフの速度
+    bool KnifeRefFlg = false;                               //ナイフが弾かれたかどうか
     float KnifeRefTime;
-    Quaternion KnifeRotForward;
-    Quaternion KnifeRotDir;
-    [SerializeField] Vector3 KnifeForward;
+    Quaternion KnifeRotForward;                             //ナイフの角度変更用
+    Quaternion KnifeRotDir;                                 //ナイフの角度変更用
+    [SerializeField] Vector3 KnifeForward;                  //ナイフの前変更用
     //----------------------------------------------------------
 
 
@@ -103,7 +103,6 @@ public class Boss1Attack : MonoBehaviour
         FinishTime = new float[Max_Strawberry];
         Ref_FinishTime = new float[Max_Strawberry];
         PlayerMiddlePoint = new Vector3[Max_Strawberry];
-        SaveRef = new int[Max_Strawberry];
         BossStartPoint = GameObject.Find("BossPoint").transform.position;
         PlayerRefDir = new bool[Max_Strawberry];
         RefMiss = GameObject.Find("StrawberryMiss").transform.position;
@@ -126,8 +125,10 @@ public class Boss1Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //ボスが死んだら処理をやめる
         if (!GameData.isAliveBoss1)
         {
+            //それぞれの初期化をかける
             if (Knife != null)
             {
                 Destroy(Knife);
@@ -144,13 +145,16 @@ public class Boss1Attack : MonoBehaviour
                     Destroy(Strawberry[i]);
                 }
             }
+            //ボスを倒した何かが起こる場面に移動
             Boss1Manager.BossState = Boss1Manager.Boss1State.BOSS1_END;
         }
     }
     //それぞれの攻撃処理
+    //----------------------------------------------------------
+    //近距離(突進)
     public void Boss1Fork()
     {
-        //近距離(突進)
+        //突進攻撃を始めるために毎回一回だけ処理する部分
         if(!OnlyFlg)
         {
             OnlyFlg = true;
@@ -164,24 +168,27 @@ public class Boss1Attack : MonoBehaviour
             Fork.transform.parent = Boss1Manager.Boss.transform;
             SoundManager.Play(SoundData.eSE.SE_BOOS1_DASHU, SoundData.GameAudioList);
         }
+        //一回の処理が終わっていたら開始
         if(OnlyFlg)
         {
+            //ボスが突進終了後に変える処理
             if(BossReturnFlg)
             {
                 RefrectFlg = false;
                 BossReturnTime += Time.deltaTime * RushReturnSpeed;
+                //最後まで攻撃し終わっていたら
                 if (RushEndFlg)
                 {
                     Boss1Manager.BossPos = Beziercurve.SecondCurve(RushEndPoint, RushMiddlePoint, BossStartPoint, BossReturnTime);
                 }
+                //途中で弾かれていたら
                 if (!RushEndFlg)
                 {
                     Boss1Manager.BossPos = Vector3.Lerp(RushRefEndPoint, BossStartPoint, BossReturnTime);
                 }
-
+                //開始地点まで戻ってきたときにもろもろ初期化
                 if (BossReturnTime >= 1.0f)
                 {
-                    
                     Destroy(Fork);
                     ReturnDelay = 0;
                     RushEndFlg = false;
@@ -197,11 +204,11 @@ public class Boss1Attack : MonoBehaviour
                         BossMove.AttackCount += 1;
                         BossMove.SetState(BossMove.Boss_State.idle);
                     }
-                    
                     OnlyFlg = false;
                 }
                 return;
             }
+            //弾かれたら一回だけ処理する部分
             if (RefrectFlg)
             {
                 RushRefFlg = true;
@@ -212,12 +219,14 @@ public class Boss1Attack : MonoBehaviour
                 
                 RefrectFlg = false; 
             }
+            //弾かれていなかった場合の処理
             if (!RushRefFlg)
             {
                 RushTime += Time.deltaTime * RushSpeed;
                 Boss1Manager.BossPos = Vector3.Lerp(RushStartPoint, RushEndPoint, RushTime);
                 if (RushTime >= 1.0f)
                 {
+                    //最終地点まで行った後そこから初期地点に戻るまでの硬直
                     ReturnDelay += Time.deltaTime;
                     if (ReturnDelay >= 1.0f)
                     {
@@ -230,13 +239,14 @@ public class Boss1Attack : MonoBehaviour
                     return;
                 }
             }
+            //弾かれていた場合の処理
             if (RushRefFlg)
             {
                 RushRefTime += Time.deltaTime * 2f;
+                //壁にぶつけているように見せる
                 Boss1Manager.BossPos = Vector3.Lerp(RushPlayerPoint, RushRefEndPoint, RushRefTime);
                 if (RushRefTime >= 1.0f)
                 {
-                    
                         RushReturnSpeed = 2;
                         RushRefFlg = false;
                         BossReturnFlg = true;
@@ -250,9 +260,11 @@ public class Boss1Attack : MonoBehaviour
             }
         }
     }
+    //----------------------------------------------------------
+    //イチゴ攻撃
     public void Boss1Strawberry()
     {
-        //AliveStrawberryが終わっていなくて、最後のイチゴが排出された後でも続けて最後の弾が出ちゃう。
+        //イチゴの処理が全部終わったら一通り初期化
         if (AliveStrawberry >= Max_Strawberry)
         {
             AliveStrawberry = 0;
@@ -269,32 +281,37 @@ public class Boss1Attack : MonoBehaviour
             }
             return;
         }
+        //イチゴをひとつづつ生成する処理、最大数より多く出ないように。
         if (!StrawberryUseFlg[StrawberryNum] && StrawBerryMany < Max_Strawberry)
         {
+            //イチゴの座標指定
             StartPoint.x = Boss1Manager.BossPos.x;
             StartPoint.y = Boss1Manager.BossPos.y + 4;
             StartPoint.z = Boss1Manager.BossPos.z;
+            //イチゴの生成後それぞれの名前変更
             Strawberry[StrawberryNum] = Instantiate(obj, StartPoint, Quaternion.identity);
             Strawberry[StrawberryNum].name = "strawberry" + StrawberryNum;
+            //イチゴの使用状況変更
             StrawberryUseFlg[StrawberryNum] = true;
             StrawBerryMany += 1;
             SoundManager.Play(SoundData.eSE.SE_BOOS1_STRAWBERRY, SoundData.GameAudioList);
 
         }
+        //毎回使用しているイチゴの探索する
         for (int i = 0; i < Max_Strawberry; i++)
             {
-            //イチゴ
             if (StrawberryUseFlg[i])
             {
-                //弾かれたとき
+                //弾かれたときに一回だけの処理
                 if (!StrawberryRefOnlyFlg[i] && StrawberryRefFlg[i])
                 {
                     StrawberryRefOnlyFlg[i] = true;
                     Vector2 Dir = Strawberry[i].transform.position - GameData.PlayerPos;
                     float rad = Mathf.Atan2(Dir.y, Dir.x);
                     float degree = rad * Mathf.Rad2Deg;
-                    
-                    if (degree <= 80.0f && degree >= -90.0f)
+                    //弾いた角度が〇度だった時に飛んでく方向を変える処理。
+                    //----------------------------------------------------------
+                    if (degree <= RefrectRotOver && degree >= RefrectRotUnder)
                     {
                         if (degree >= 45.0f)
                         {
@@ -315,7 +332,7 @@ public class Boss1Attack : MonoBehaviour
                             RefEndPoint = Boss1Manager.BossPos;
                         }
                     }
-                    else if (degree >= 80.0f || degree <= -90.0f)
+                    else if (degree >= RefrectRotOver || degree <= RefrectRotUnder)
                     {
                         PlayerPoint[i].x = GameData.PlayerPos.x - 2.0f;
                         PlayerPoint[i].y = GameData.PlayerPos.y;
@@ -323,11 +340,14 @@ public class Boss1Attack : MonoBehaviour
                         RefEndPoint = RefMiss;
                         RefMissFlg = true;
                     }
+                    //----------------------------------------------------------
                 }
-                //弾かれた後
+                //弾かれた後の処理
                 if (StrawberryRefFlg[i])
                 {
                     Ref_FinishTime[i] += Time.deltaTime * 2f;
+                    //弾いた方向によって処理の種類を変える
+                    //---------------------------------------------------------
                    if(!PlayerRefDir[i])
                     {
                         Strawberry[i].transform.position = Vector3.Lerp(PlayerPoint[i], RefEndPoint, Ref_FinishTime[i]);
@@ -339,9 +359,12 @@ public class Boss1Attack : MonoBehaviour
                                                                                    RefEndPoint, Ref_FinishTime[i]);
                         Strawberry[i].transform.Rotate(new Vector3(0, 0, 10));
                     }
+                    //---------------------------------------------------------
+                    //弾き終わったら弾いたイチゴを初期化
                     if (Ref_FinishTime[i] >= 1.0f)
                     {
                         PlayerRefDir[i] = false;
+                        //弾い方がしっかりボスの方向だった時にだけダメージの処理する
                         if (!RefMissFlg)
                         {
                             HPgage.damage = StrawberryDamage;
@@ -367,13 +390,14 @@ public class Boss1Attack : MonoBehaviour
                 FinishTime[i] += Time.deltaTime * StrawberrySpeed;
                 if (i < Max_Strawberry - 1)
                 {
+                    //前のイチゴが〇ぐらい進んだときにこの処理をする。
                     if (FinishTime[i] >= 0.5f && !StrawberryUseFlg[i + 1])
                     {
                         StrawberryNum++;
                     }
                 }
                 //----------------------------------------------------------
-                //弾が到着したら消す,攻撃をはじいていたら処理をしない
+                //プレイヤーにあったときに初期化する処理。
                 if(StrawberryColPlayer[i])
                 {
                     FinishTime[i] = 0;
@@ -381,6 +405,7 @@ public class Boss1Attack : MonoBehaviour
                     Destroy(Strawberry[i]);
                     AliveStrawberry++;
                 }
+                //弾が到着したら消す,攻撃をはじいていたら処理をしない
                 if (FinishTime[i] >= 1.0f && !StrawberryRefFlg[i])
                 {
                     FinishTime[i] = 0;
@@ -391,7 +416,7 @@ public class Boss1Attack : MonoBehaviour
             }
         }
     }
-    
+    //----------------------------------------------------------
     public void Boss1Knife()
     {
         //ナイフ遠距離

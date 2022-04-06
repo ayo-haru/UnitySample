@@ -29,9 +29,9 @@ public class ImageShow : MonoBehaviour
     //画像透明度
     float alpha;
     //画像色
-    float red = 1.0f;
-    float green = 1.0f;
-    float blue = 1.0f;
+    float red;
+    float green;
+    float blue;
     //透明度更新速度
     public float ShowAlphaSpeed = 0.005f;
     public float HideAlphaSpeed = 0.005f;
@@ -46,6 +46,9 @@ public class ImageShow : MonoBehaviour
         //useFlag = false;
 
         Image = GetComponent<Image>();
+        red = Image.color.r;
+        green = Image.color.g;
+        blue = Image.color.b;
         alpha = 0.0f;
         //透明に設定
         Image.color = new Color(red, green, blue, alpha);

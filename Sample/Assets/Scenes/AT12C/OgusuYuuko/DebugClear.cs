@@ -8,10 +8,12 @@ public class DebugClear : MonoBehaviour
 {
     int count = 0;
     UVScroll Moon;
+    PieceManager pieceManagewr;
     // Start is called before the first frame update
     void Start()
     {
         Moon = GameObject.Find("HPBar").GetComponent<UVScroll>();
+        pieceManagewr = GameObject.Find("PieceHPManager").GetComponent<PieceManager>();
     }
 
     // Update is called once per frame
@@ -40,6 +42,12 @@ public class DebugClear : MonoBehaviour
         {
             --count;
             Moon.SetFrame(count);
+        }
+
+        //‚©‚¯‚çƒQƒbƒg
+        if(Input.GetKeyDown(KeyCode.F6))
+        {
+            pieceManagewr.GetPiece();
         }
 
 

@@ -73,7 +73,7 @@ public class EnemyDown : MonoBehaviour
 
             // 回復アイテムを落とす
             Pos = transform.position;
-            Instantiate(Item, Pos, Quaternion.identity);
+            //Instantiate(Item, Pos, Quaternion.identity);
 
             //取得した法線ベクトルに跳ね返す速さをかけて、跳ね返す
             rb.AddForce(velocity * bouncePower, ForceMode.Force);

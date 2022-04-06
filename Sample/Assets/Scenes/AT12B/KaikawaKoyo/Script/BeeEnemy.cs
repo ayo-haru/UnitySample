@@ -45,8 +45,8 @@ public class BeeEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(Mathf.Sin(A * Time.time) * 60.0f + Enemypos.x,
-            Mathf.Cos(B * Time.time) * 7.0f + Enemypos.y, Enemypos.z);
+        transform.position = new Vector3(Mathf.Sin(A * Time.time) * 6.0f + Enemypos.x,
+            Mathf.Cos(B * Time.time) * 0.7f + Enemypos.y, Enemypos.z);
 
 
         // ÉTÉEÉìÉhèàóù

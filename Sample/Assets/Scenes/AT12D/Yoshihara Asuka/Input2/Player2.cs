@@ -370,19 +370,19 @@ public class Player2 : MonoBehaviour
 
     #region ふわふわ移動
     //---オブジェクトをフワフワさせる処理
-    private void FluffyMove()
-    {
-        FylFrameCount += 1;
-        if(1000 <= FylFrameCount)
-        {
-            FylFrameCount = 0;
-        }
-        if(0 == FylFrameCount % 2)
-        {
-            float posYSin = Mathf.Sin(2.0f * Mathf.PI * (float)(FylFrameCount % 200) / (200.0f - 1.0f));
-            iTween.MoveAdd(gameObject, new Vector3(0, Amplitude * posYSin, 0), 0.0f);
-        } 
-    }
+    //private void FluffyMove()
+    //{
+    //    FylFrameCount += 1;
+    //    if(1000 <= FylFrameCount)
+    //    {
+    //        FylFrameCount = 0;
+    //    }
+    //    if(0 == FylFrameCount % 2)
+    //    {
+    //        float posYSin = Mathf.Sin(2.0f * Mathf.PI * (float)(FylFrameCount % 200) / (200.0f - 1.0f));
+    //        iTween.MoveAdd(gameObject, new Vector3(0, Amplitude * posYSin, 0), 0.0f);
+    //    } 
+    //}
     #endregion
 
     #region 速度調整関数(AddForce移動用)

@@ -18,16 +18,12 @@ public class BeeEnemy : MonoBehaviour
     private Rigidbody rb;
     private Vector3 Enemypos;
     private EnemyDown ED;
-    private Vector3 aim;
-    private Quaternion look;
 
-    [SerializeField]
-    float MoveSpeed = 1.0f;
-    float speed = 0.0f;
-    bool InArea;
-    bool Look;
+    public bool InArea;
     float A = 2.0f;
     float B = 5.0f;
+    float Width = 6.0f;     // 飛び回る横幅
+    float Vertical = 0.7f;  // 飛び回る縦幅
 
     private bool isCalledOnce = false;                             // 一回だけ処理をするために使う。
 
@@ -37,7 +33,6 @@ public class BeeEnemy : MonoBehaviour
         Player = GameObject.FindWithTag("Player");    // プレイヤーのオブジェクトを探す
         rb = gameObject.GetComponent<Rigidbody>();
         InArea = false;
-        Look = false;
         ED = GetComponent<EnemyDown>();
         Enemypos = transform.position;
     }
@@ -45,10 +40,10 @@ public class BeeEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(Mathf.Sin(A * Time.time) * 6.0f + Enemypos.x,
-            Mathf.Cos(B * Time.time) * 0.7f + Enemypos.y, Enemypos.z);
-
-
+        // 飛び回る処理
+        transform.position = new Vector3(Mathf.Sin(A * Time.time) * Width + Enemypos.x,
+            Mathf.Cos(B * Time.time) * Vertical + Enemypos.y, Enemypos.z);
+        
         // サウンド処理
         /*
         if (!isCalledOnce)     // 一回だけ呼ぶ
@@ -61,20 +56,9 @@ public class BeeEnemy : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)    // コライダーでプレイヤーを索敵したい
     {
-        if (other.CompareTag("Player") && Look == false)
+        if (other.CompareTag("Player"))
         {
-            Target = Player.transform;          // プレイヤーの座標取得
-            speed = 0.0f;
             InArea = true;
-            Look = true;
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Destroy(gameObject, 0.0f);
         }
     }
 }

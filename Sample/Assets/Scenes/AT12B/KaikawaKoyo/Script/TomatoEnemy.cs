@@ -40,40 +40,44 @@ public class TomatoEnemy : MonoBehaviour
 
     private void Update()
     {
-        // プレイヤーを見つけたら攻撃開始
-        if (InArea && ED.isAlive)
+        if(!Pause.isPause)
         {
-            //Vector3 rayPosition = transform.position + new Vector3(0.0f, 0.0f, 0.0f);
-            //Ray ray = new Ray(rayPosition, Vector3.down);
-            //bool isGround = Physics.Raycast(ray, distance); // 接地判定
-            Vector3 pos = rb.position;
-            if (isGround == false)
+            // プレイヤーを見つけたら攻撃開始
+            if (InArea && ED.isAlive)
             {
-                // プレイヤーに向かって特攻する
-                float step = MoveSpeed * Time.deltaTime;
-                rb.position = Vector3.MoveTowards(pos, Target.position, step);
-            }
+                //Vector3 rayPosition = transform.position + new Vector3(0.0f, 0.0f, 0.0f);
+                //Ray ray = new Ray(rayPosition, Vector3.down);
+                //bool isGround = Physics.Raycast(ray, distance); // 接地判定
+                Vector3 pos = rb.position;
+                if (isGround == false)
+                {
+                    // プレイヤーに向かって特攻する
+                    float step = MoveSpeed * Time.deltaTime;
+                    rb.position = Vector3.MoveTowards(pos, Target.position, step);
+                }
 
-            if (Target.position.x < transform.position.x && look)   // プレイヤーのほうを向く処理
-            {
-                transform.Rotate(0, -180, 0);
-                look = false;
-            }
+                if (Target.position.x < transform.position.x && look)   // プレイヤーのほうを向く処理
+                {
+                    transform.Rotate(0, -180, 0);
+                    look = false;
+                }
 
-            if (Target.position.x > transform.position.x && !look)  // プレイヤーのほうを向く処理
-            {
-                transform.Rotate(0, 180, 0);
-                look = true;
-            }
+                if (Target.position.x > transform.position.x && !look)  // プレイヤーのほうを向く処理
+                {
+                    transform.Rotate(0, 180, 0);
+                    look = true;
+                }
 
-            // 跳ねる処理
-            if (isGround)
-            {
-                rb.AddForce(transform.up * 200.0f, ForceMode.Force);
-                SoundManager.Play(SoundData.eSE.SE_TOMATO_BOUND, SoundData.GameAudioList);
-                isGround = false;
+                // 跳ねる処理
+                if (isGround)
+                {
+                    rb.AddForce(transform.up * 200.0f, ForceMode.Force);
+                    SoundManager.Play(SoundData.eSE.SE_TOMATO_BOUND, SoundData.GameAudioList);
+                    isGround = false;
+                }
             }
         }
+        
     }
 
     private void OnCollisionEnter(Collision collision)

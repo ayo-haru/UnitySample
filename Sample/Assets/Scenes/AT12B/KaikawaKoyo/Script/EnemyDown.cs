@@ -18,6 +18,7 @@ public class EnemyDown : MonoBehaviour
     public float bounceVectorMultiple = 2f;
     private float bouncePower = 1000.0f;
     private Vector3 Pos;
+    private Vector3 velocity;
 
     public bool isAlive;
 
@@ -27,7 +28,7 @@ public class EnemyDown : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Item = (GameObject)Resources.Load("Item");
+        Item = (GameObject)Resources.Load("HealItem");
         isAlive = true;
         rb = gameObject.GetComponent<Rigidbody>();
     }
@@ -39,6 +40,7 @@ public class EnemyDown : MonoBehaviour
         if (!isAlive)
         {
             DeadTime += Time.deltaTime;
+            
         }
 
         if (DeadTime > 1.0f)
@@ -57,7 +59,7 @@ public class EnemyDown : MonoBehaviour
             //衝突した面の、接触した点における法線ベクトルを取得
             Vector3 normal = collision.contacts[0].normal;
             //衝突した速度ベクトルを単位ベクトルにする
-            Vector3 velocity = collision.rigidbody.velocity.normalized;
+             velocity = collision.rigidbody.velocity.normalized;
             //x,y,z方向に対して法線ベクトルを取得
             velocity += new Vector3(normal.x * bounceVectorMultiple, normal.y * bounceVectorMultiple, normal.z * bounceVectorMultiple);
             //プレイヤーを逆方向に跳ね返す
@@ -73,7 +75,7 @@ public class EnemyDown : MonoBehaviour
 
             // 回復アイテムを落とす
             Pos = transform.position;
-            //Instantiate(Item, Pos, Quaternion.identity);
+            Instantiate(Item, Pos, Quaternion.identity);
 
             //取得した法線ベクトルに跳ね返す速さをかけて、跳ね返す
             rb.AddForce(velocity * bouncePower, ForceMode.Force);
@@ -82,6 +84,15 @@ public class EnemyDown : MonoBehaviour
 
             SoundManager.Play(SoundData.eSE.SE_REFLECTION, SoundData.GameAudioList);
         }
+
+        //if (!isAlive)
+        //{
+        //    //取得した法線ベクトルに跳ね返す速さをかけて、跳ね返す
+        //    rb.AddForce(velocity * bouncePower, ForceMode.Force);
+        //    // 回転させる
+        //    rb.AddTorque(0.0f, 0.0f, -300.0f);
+
+        //}
 
         if (isAlive == false && collision.gameObject.CompareTag("Ground"))
         {

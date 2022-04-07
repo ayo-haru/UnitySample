@@ -18,11 +18,13 @@ public class BroccoliEnemy : MonoBehaviour
     private Quaternion rot;
     private Rigidbody rb;
     private EnemyDown ED;
-    private int count = 0;
-    private bool loop;
+    //private bool loop = false;
 
     [SerializeField]
     float MoveSpeed = 5.0f;
+    //[SerializeField]
+    //float SwingSpeed;
+    
     bool InArea = false;
 
     private bool isCalledOnce = false;                             // 開始演出で使用。一回だけ処理をするために使う。
@@ -49,13 +51,21 @@ public class BroccoliEnemy : MonoBehaviour
             float step = MoveSpeed * Time.deltaTime;
             rb.position = Vector3.MoveTowards(pos, Target.position, step);
 
-            //if (rot.z < 0.15f && loop)
+            //if (rot.z < 0.20f && loop)
             //{
-            //    transform.Rotate(new Vector3(0, 0, 30) * Time.deltaTime);
+            //    rb.AddTorque(0.0f, 0.0f, -SwingSpeed);
+            //    if (rot.z > 0.20f)
+            //    {
+            //        loop = false;
+            //    }
             //}
-            //if (rot.z > -0.15f && !loop)
+            //if (rot.z > -0.20f && !loop)
             //{
-            //    transform.Rotate(new Vector3(0, 0, -30) * Time.deltaTime);
+            //    rb.AddTorque(0.0f, 0.0f, SwingSpeed);
+            //    if (rot.z < -0.20f)
+            //    {
+            //        loop = true;
+            //    }
             //}
 
             // SEの処理
@@ -69,10 +79,11 @@ public class BroccoliEnemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //if (collision.gameObject.CompareTag("Player"))
-        //{
-        //    Destroy(gameObject, 0.0f);
-        //}
+        // 接地判定
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            rb.constraints = RigidbodyConstraints.FreezePositionY;
+        }
     }
 
     public void OnTriggerEnter(Collider other)    // コライダーでプレイヤーを索敵したい

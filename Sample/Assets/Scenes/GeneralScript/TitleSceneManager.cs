@@ -72,7 +72,7 @@ public class TitleSceneManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         // ‰½‚©ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚ç
-        if (Input.anyKeyDown && !isPressButton)
+        if ((Input.anyKey || Input.GetKeyUp(KeyCode.Return)) && !isPressButton )
         {
             isPressButton = true;
             PressAnyButton.GetComponent<UIBlink>().isBlink = false; // UI‚Ì“_–Å‚ğÁ‚·
@@ -84,6 +84,10 @@ public class TitleSceneManager : MonoBehaviour {
 
 
             SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
+
+            Input.ResetInputAxes();
+            //StartCoroutine(InputEnter());
+            return;
         }
 
 
@@ -256,6 +260,10 @@ public class TitleSceneManager : MonoBehaviour {
 
     }
 
+
+    IEnumerator InputEnter() {
+        yield return new WaitForSeconds(1);
+    }
 }
 
 

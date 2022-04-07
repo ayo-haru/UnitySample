@@ -76,6 +76,13 @@ public class Player : MonoBehaviour
         }
         if (other.gameObject.tag == "toKitchen3")    // この名前のタグと衝突したら
         {
+            if(GameData.CurrentMapNumber == (int)GameData.eSceneState.BOSS1_SCENE)  // 今いるシーンがボスシーンだった時ボスが生きてたらシーン遷移しない
+            {
+                if (GameData.isAliveBoss1)
+                {
+                    return;
+                }
+            }
             GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen3_SCENE;
         }
         if (other.gameObject.tag == "toKitchen4")    // この名前のタグと衝突したら

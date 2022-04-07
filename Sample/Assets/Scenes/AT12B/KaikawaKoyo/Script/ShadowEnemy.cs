@@ -54,18 +54,22 @@ public class ShadowEnemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // プレイヤーを見つけたら敵に変身する
-        if (other.CompareTag("Player"))
+        if(!Pause.isPause)
         {
-            Destroy(effect.gameObject, 0.0f);
-            Destroy(gameObject, 0.0f);
-            //particle.Stop();
-            if(!spawn)
+            // プレイヤーを見つけたら敵に変身する
+            if (other.CompareTag("Player"))
             {
-                Instantiate(Enemy, position, Quaternion.identity);
-                spawn = true;
+                Destroy(effect.gameObject, 0.0f);
+                Destroy(gameObject, 0.0f);
+                //particle.Stop();
+                if (!spawn)
+                {
+                    Instantiate(Enemy, position, Quaternion.identity);
+                    spawn = true;
+                }
+
             }
-            
         }
+       
     }
 }

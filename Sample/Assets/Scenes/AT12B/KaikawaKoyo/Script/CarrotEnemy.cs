@@ -41,36 +41,39 @@ public class CarrotEnemy : MonoBehaviour
 
     private void Update()
     {
-
-        // プレイヤーを見つけたら攻撃開始
-        if (InArea && ED.isAlive)
+        if(!Pause.isPause)
         {
-
-            if (speed <= 1)
+            // プレイヤーを見つけたら攻撃開始
+            if (InArea && ED.isAlive)
             {
-                speed += MoveSpeed * Time.deltaTime;
+
+                if (speed <= 1)
+                {
+                    speed += MoveSpeed * Time.deltaTime;
+                }
+                // プレイヤーに向かって特攻する
+                rb.position = Vector3.Lerp(startPosition, targetPosition, speed);
+
+                aim = targetPosition - transform.position;
+                look = Quaternion.LookRotation(aim);
+                transform.localRotation = look;
+
+                //transform.Rotate(90, 0, 0);
+                if (!isCalledOnce)     // 一回だけ呼ぶ
+                {
+                    SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
+                    isCalledOnce = true;
+                }
             }
-            // プレイヤーに向かって特攻する
-            rb.position = Vector3.Lerp(startPosition, targetPosition, speed);
 
-            aim = targetPosition - transform.position;
-            look = Quaternion.LookRotation(aim);
-            transform.localRotation = look;
-
-            //transform.Rotate(90, 0, 0);
-            if (!isCalledOnce)     // 一回だけ呼ぶ
+            if (rb.position == targetPosition)
             {
-                SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
-                isCalledOnce = true;
+                //transform.Rotate(-90, 0, 0);
+                //rb.constraints = RigidbodyConstraints.FreezeRotationX;
+                Destroy(gameObject, 1.0f);
             }
         }
-
-        if (rb.position == targetPosition)
-        {
-            //transform.Rotate(-90, 0, 0);
-            //rb.constraints = RigidbodyConstraints.FreezeRotationX;
-            Destroy(gameObject, 1.0f);
-        }
+        
     }
 
     public void OnTriggerEnter(Collider other)    // コライダーでプレイヤーを索敵したい

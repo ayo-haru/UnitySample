@@ -57,8 +57,7 @@ public class BeeAim : MonoBehaviour
 
     private void PoisonShot()
     {
-        Vector3 BulletPosition = FiringPoint.transform.position;
-        GameObject newBall = Instantiate(BeeBullet, BulletPosition, transform.rotation);
+        GameObject newBall = Instantiate(BeeBullet, transform.position, transform.rotation);
         Vector3 direction = newBall.transform.forward;
         newBall.GetComponent<Rigidbody>().AddForce(direction * speed, ForceMode.Impulse);
 

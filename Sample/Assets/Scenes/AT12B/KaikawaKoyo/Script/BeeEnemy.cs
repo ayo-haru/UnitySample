@@ -40,18 +40,22 @@ public class BeeEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 飛び回る処理
-        transform.position = new Vector3(Mathf.Sin(A * Time.time) * Width + Enemypos.x,
-            Mathf.Cos(B * Time.time) * Vertical + Enemypos.y, Enemypos.z);
-        
-        // サウンド処理
-        /*
-        if (!isCalledOnce)     // 一回だけ呼ぶ
+        if(!Pause.isPause)
         {
-            SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
-            isCalledOnce = true;
+            // 飛び回る処理
+            transform.position = new Vector3(Mathf.Sin(A * Time.time) * Width + Enemypos.x,
+                Mathf.Cos(B * Time.time) * Vertical + Enemypos.y, Enemypos.z);
+
+            // サウンド処理
+            /*
+            if (!isCalledOnce)     // 一回だけ呼ぶ
+            {
+                SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
+                isCalledOnce = true;
+            }
+            */
         }
-        */
+
     }
 
     public void OnTriggerEnter(Collider other)    // コライダーでプレイヤーを索敵したい

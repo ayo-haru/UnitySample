@@ -256,21 +256,20 @@ public class Player2 : MonoBehaviour
         //---スティック入力
         PlayerPos = transform.position;                             // 攻撃する瞬間のプレイヤーの座標を取得
         AttackDirection += Attack.ReadValue<Vector2>();             // スティックの倒した値を取得
-        Debug.Log("AttackDirection.x(正規化前):" + AttackDirection.x);
-        Debug.Log("AttackDirection.y(正規化前):" + AttackDirection.y);
         AttackDirection.Normalize();                                // 取得した値を正規化(ベクトルを１にする)
 
         //---アニメーション再生
         //---左右パリィ
-        if (AttackDirection.x >= 0.1)                     
+        if (Mathf.Abs(AttackDirection.x) >= 0.1)                     
         {
             //タイマー設定
             Timer = stopTime;
             animator.SetTrigger("Attack");
+            Debug.Log("左右攻撃");
         }
 
         //---上パリィ
-        else if(AttackDirection.y >= 0.1)
+        if(AttackDirection.y >= 0.1)
         {
             if(GroundNow == true)
             {
@@ -281,7 +280,7 @@ public class Player2 : MonoBehaviour
         }
 
         //---下パリィ
-        else if (AttackDirection.y <= 0.1)
+        if (AttackDirection.y <= 0.1)
         {
             if (GroundNow == true)
             {
@@ -289,6 +288,7 @@ public class Player2 : MonoBehaviour
                 GroundNow = false;
             }
             animator.SetTrigger("Attack_DOWN");
+
         }
 
 
@@ -415,8 +415,8 @@ public class Player2 : MonoBehaviour
             GameData.CurrentHP--;
             SaveManager.saveHP(GameData.CurrentHP);
 
-            //HPが0になったらゲームオーバーを表示
-            if (GameData.CurrentHP <= 0)
+        //HPが0になったらゲームオーバーを表示
+        if (GameData.CurrentHP <= 0)
             {
                 GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
             }

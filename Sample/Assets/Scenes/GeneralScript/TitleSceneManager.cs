@@ -72,6 +72,7 @@ public class TitleSceneManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+
         // 何かボタンが押されたら
         if ((Input.anyKey || Input.GetKeyUp(KeyCode.Return)) && !isPressButton )
         {
@@ -87,6 +88,8 @@ public class TitleSceneManager : MonoBehaviour {
             SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
 
             Input.ResetInputAxes();
+            //gamepad.bButton.ResetToDefaultStateInEvent;
+
             return;
         }
 
@@ -118,8 +121,10 @@ public class TitleSceneManager : MonoBehaviour {
             GameStart.GetComponent<UIBlink>().isBlink = true; // UIを点滅
             GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+            Gamepad gamepad = Gamepad.current;
 
-            if (Input.GetKeyUp(KeyCode.Return)) // 選択を確定
+
+            if (Input.GetKeyUp(KeyCode.Return) || gamepad.bButton.wasReleasedThisFrame) // 選択を確定
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
@@ -139,7 +144,7 @@ public class TitleSceneManager : MonoBehaviour {
             GameContinue.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
 
-            if (Input.GetKeyUp(KeyCode.Return)) // 選択を確定
+            if (Input.GetKeyUp(KeyCode.Return)/* || gamepad.bButton.wasReleasedThisFrame*/) // 選択を確定
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
@@ -156,7 +161,8 @@ public class TitleSceneManager : MonoBehaviour {
             GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
 
-            if (Input.GetKeyUp(KeyCode.Return)) // 選択を確定
+
+            if (Input.GetKeyUp(KeyCode.Return)/* || gamepad.bButton.wasReleasedThisFrame*/) // 選択を確定
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
@@ -196,8 +202,8 @@ public class TitleSceneManager : MonoBehaviour {
         RightStickSelect = UIActionAssets.UI.RightStickSelect;
 
         //---Actionイベントを登録
-        UIActionAssets.UI.LeftStickSelect.performed += OnLeftStick;
-        UIActionAssets.UI.RightStickSelect.performed += OnRightStick;
+        UIActionAssets.UI.LeftStickSelect.started += OnLeftStick;
+        UIActionAssets.UI.RightStickSelect.started += OnRightStick;
 
 
         //---InputActionの有効化
@@ -212,35 +218,33 @@ public class TitleSceneManager : MonoBehaviour {
 
     private void OnLeftStick(InputAction.CallbackContext obj)
     {
+        if (!isPressButton)
+        {
+            return;
+        }
+
         //---左ステックのステック入力を取得
         Vector2 doLeftStick = Vector2.zero;
         doLeftStick = LeftStickSelect.ReadValue<Vector2>();
 
         //---少しでも倒されたら処理に入る
-        if (doLeftStick.y > 0.5f && onceTiltStick == false)
+        if (doLeftStick.y > 0.0f)
         {
             SelectUp();
-            onceTiltStick = true;
-            Debug.Log(doLeftStick);
         }
-        else if(doLeftStick.y < 0.5f && onceTiltStick == false)
+        else if (doLeftStick.y < 0.0f)
         {
             SelectDown();
-            onceTiltStick = true;
-            Debug.Log(doLeftStick);
-
         }
-        else
-        {
-            onceTiltStick = false;
-            LeftStickSelect.Reset();
-            doLeftStick = Vector2.zero;
-        }
-
     }
 
     private void OnRightStick(InputAction.CallbackContext obj)
     {
+        if (!isPressButton)
+        {
+            return;
+        }
+
         //---右ステックのステック入力を取得
         Vector2 doRightStick = Vector2.zero;
         doRightStick = RightStickSelect.ReadValue<Vector2>();

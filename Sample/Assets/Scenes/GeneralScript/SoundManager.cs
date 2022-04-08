@@ -80,9 +80,9 @@ public static class SoundManager {
     public static void SoundUnPause(AudioSource[] _audioSourceList) {
         for (int i = 0; i < _audioSourceList.Length; ++i)
         {
-            if (_audioSourceList[i].isPlaying == false)
+            if (_audioSourceList[i].isPlaying == false && _audioSourceList[i].clip)
             {
-            _audioSourceList[i].UnPause();
+                _audioSourceList[i].UnPause();
                 break;
             }
         }

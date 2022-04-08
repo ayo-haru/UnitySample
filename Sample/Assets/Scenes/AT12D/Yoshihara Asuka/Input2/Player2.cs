@@ -399,7 +399,7 @@ public class Player2 : MonoBehaviour
     }
     #endregion
 
-
+    #region あたり判定処理
     //---当たり判定処理
     private void OnCollisionEnter(Collision collision)
     {
@@ -451,8 +451,10 @@ public class Player2 : MonoBehaviour
          }
 
     }
+    #endregion 
 
-    //---
+    #region コントローラー振動
+    //---コントローラー振動処理
     private IEnumerator VibrationPlay
     (
         float lowFrequency,     // 低周波(左) モーターの強さ(0.0 ~ 1.0)
@@ -467,6 +469,7 @@ public class Player2 : MonoBehaviour
             gamepad.SetMotorSpeeds(0.0f,0.0f);
         }
     }
+    #endregion
 
     private void OnGUI()
     {

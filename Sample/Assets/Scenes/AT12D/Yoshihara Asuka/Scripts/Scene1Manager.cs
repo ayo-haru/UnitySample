@@ -40,6 +40,11 @@ public class Scene1Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        for(int i = 0; i < SoundData.GameAudioList.Length; ++i)
+        {
+            SoundData.GameAudioList[i] = gameObject.AddComponent<AudioSource>();
+        }
+        SoundManager.Play(SoundData.eBGM.BGM_TITLE,SoundData.GameAudioList);
     }
 
     // Update is called once per frame

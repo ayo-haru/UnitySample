@@ -23,8 +23,8 @@ public class TitleSceneManager : MonoBehaviour {
     private InputAction LeftStickSelect;            // InputActionのselectを扱う
     private InputAction RightStickSelect;           // InputActionのselectを扱う
 
-    private Vector2 doLeftStick = Vector2.zero;
-    private Vector2 doRightStick = Vector2.zero;
+    //private Vector2 doLeftStick = Vector2.zero;
+    //private Vector2 doRightStick = Vector2.zero;
 
     private int select;                             // 選択されているモードの番号 
 
@@ -213,6 +213,7 @@ public class TitleSceneManager : MonoBehaviour {
     private void OnLeftStick(InputAction.CallbackContext obj)
     {
         //---左ステックのステック入力を取得
+        Vector2 doLeftStick = Vector2.zero;
         doLeftStick = LeftStickSelect.ReadValue<Vector2>();
 
         //---少しでも倒されたら処理に入る
@@ -241,6 +242,7 @@ public class TitleSceneManager : MonoBehaviour {
     private void OnRightStick(InputAction.CallbackContext obj)
     {
         //---右ステックのステック入力を取得
+        Vector2 doRightStick = Vector2.zero;
         doRightStick = RightStickSelect.ReadValue<Vector2>();
 
         //---少しでも倒されたら処理に入る
@@ -275,7 +277,6 @@ public class TitleSceneManager : MonoBehaviour {
         GUILayout.Label($"RighetTrigger:{Gamepad.current.rightTrigger.ReadValue()}");
         GUILayout.Label($"LeftStickUp:{Gamepad.current.leftStick.up.ReadValue()}");
         GUILayout.Label($"Space:{Keyboard.current.spaceKey.ReadValue()}");
-        GUILayout.Label($"LeftStick:{doLeftStick}");
 
     }
 }

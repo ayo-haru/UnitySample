@@ -30,6 +30,7 @@ public class TitleSceneManager : MonoBehaviour {
 
     private bool isPressButton = false;             // ボタンが押されたかの判定用
     private bool oncePressButton = false;           // ボタンが押されたときに一回だけ処理をする用
+    private bool onceTiltStick = false;
 
     private GameObject TitleLogo;
     private GameObject PressAnyButton;
@@ -86,7 +87,6 @@ public class TitleSceneManager : MonoBehaviour {
             SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
 
             Input.ResetInputAxes();
-            //StartCoroutine(InputEnter());
             return;
         }
 
@@ -103,23 +103,12 @@ public class TitleSceneManager : MonoBehaviour {
         // 矢印キーで選択させる
         if (Input.GetKeyUp(KeyCode.UpArrow))
         {
-            SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
-            select--;
-            if (select < 0)
-            {
-                select = 0;
-            }
+            SelectUp();
         }
 
         if (Input.GetKeyUp(KeyCode.DownArrow))
         {
-            SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
-
-            select++;
-            if (select >= (int)eSTATETITLE.MAX_STATE)
-            {
-                select = (int)eSTATETITLE.QUIT;
-            }
+            SelectDown();
         }
 
 
@@ -182,6 +171,25 @@ public class TitleSceneManager : MonoBehaviour {
         }
     }
 
+    private void SelectUp() {
+        SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
+        select--;
+        if (select < 0)
+        {
+            select = 0;
+        }
+    }
+
+    private void SelectDown() {
+        SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
+
+        select++;
+        if (select >= (int)eSTATETITLE.MAX_STATE)
+        {
+            select = (int)eSTATETITLE.QUIT;
+        }
+    }
+
     private void OnEnable() {
         //---スティックの値を取るための設定
         LeftStickSelect = UIActionAssets.UI.LeftStickSelect;
@@ -208,15 +216,26 @@ public class TitleSceneManager : MonoBehaviour {
         doLeftStick = LeftStickSelect.ReadValue<Vector2>();
 
         //---少しでも倒されたら処理に入る
-        if(doLeftStick.x >=0.1f || doLeftStick.y >= 0.1f )
+        if (doLeftStick.y > 0.5f && onceTiltStick == false)
         {
-            Debug.Log("左スティックが倒された");
-            SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
-            GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen1_SCENE;
-            string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
-            SceneManager.LoadScene(nextSceneName);
+            SelectUp();
+            onceTiltStick = true;
+            Debug.Log(doLeftStick);
+        }
+        else if(doLeftStick.y < 0.5f && onceTiltStick == false)
+        {
+            SelectDown();
+            onceTiltStick = true;
+            Debug.Log(doLeftStick);
 
         }
+        else
+        {
+            onceTiltStick = false;
+            LeftStickSelect.Reset();
+            doLeftStick = Vector2.zero;
+        }
+
     }
 
     private void OnRightStick(InputAction.CallbackContext obj)
@@ -225,15 +244,15 @@ public class TitleSceneManager : MonoBehaviour {
         doRightStick = RightStickSelect.ReadValue<Vector2>();
 
         //---少しでも倒されたら処理に入る
-        if (doRightStick.x >= 0.1f || doRightStick.y >= 0.1f)
+        if (doRightStick.y > 0.0f)
         {
-            Debug.Log("右スティックが倒された");
-
-            SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
-            string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
-            SceneManager.LoadScene(nextSceneName);
-
+            SelectUp();
         }
+        else if (doRightStick.y < 0.0f)
+        {
+            SelectDown();
+        }
+        
     }
 
     private void OnGUI()
@@ -258,11 +277,6 @@ public class TitleSceneManager : MonoBehaviour {
         GUILayout.Label($"Space:{Keyboard.current.spaceKey.ReadValue()}");
         GUILayout.Label($"LeftStick:{doLeftStick}");
 
-    }
-
-
-    IEnumerator InputEnter() {
-        yield return new WaitForSeconds(1);
     }
 }
 

@@ -92,7 +92,7 @@ public static class SaveManager {
             //FileInfo info = new FileInfo(path + "/" + SAVE_FILE_PATH);  // 保存場所からのロード
             path += ("/" + SAVE_FILE_PATH); // 保存場所のパスを格納
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.ReadWrite);
-            StreamReader reader = new StreamReader(fs);    // info.OpenRead()でファイルパスがとれるっぽい
+            StreamReader reader = new StreamReader(fs);
             //StreamReader reader = new StreamReader(info.OpenRead());    // info.OpenRead()でファイルパスがとれるっぽい
             string json = reader.ReadToEnd();                           // ReadToEndは一括読込らしいReadLineで一行ずつ読込
             sd = JsonUtility.FromJson<SaveData>(json);                  // FromJson...Jsonを読み取りインスタンスのデータを上書きする

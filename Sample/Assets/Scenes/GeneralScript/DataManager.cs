@@ -13,6 +13,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DataManager : MonoBehaviour
 {
@@ -110,8 +111,15 @@ public class DataManager : MonoBehaviour
         EffectData.EFDataSet(ef_heal,(int)EffectData.eEFFECT.EF_HEAL);
         EffectData.EFDataSet(ef_shield,(int)EffectData.eEFFECT.EF_SHEILD2);
 
+        // 絶対に消されない音のいれる場所
         for (int i = 0; i < 3; i++) {
             SoundData.IndelibleAudioList[i] = gameObject.AddComponent<AudioSource>();
+        }
+
+        // ゲームパッド初期化
+        if (Gamepad.current != null)
+        {
+            GameData.gamepad = Gamepad.current;
         }
     }
 

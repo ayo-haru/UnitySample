@@ -23,6 +23,8 @@ public class TitleSceneManager : MonoBehaviour {
     private InputAction LeftStickSelect;            // InputActionのselectを扱う
     private InputAction RightStickSelect;           // InputActionのselectを扱う
 
+    //public GamePadManager gamepadmanager;
+
     //private Vector2 doLeftStick = Vector2.zero;
     //private Vector2 doRightStick = Vector2.zero;
 
@@ -72,9 +74,15 @@ public class TitleSceneManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if (Gamepad.current != null)
+        {
+            GameData.gamepad = Gamepad.current;
+        }
+        Keyboard keyboard = Keyboard.current;
+       
 
         // 何かボタンが押されたら
-        if ((Input.anyKey || Input.GetKeyUp(KeyCode.Return)) && !isPressButton )
+        if ((keyboard.anyKey.wasReleasedThisFrame || GamePadManager.ReleaseAnyButton(GamePadManager.eGamePadType.ALLTYPE)) && !isPressButton )
         {
             isPressButton = true;
             PressAnyButton.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
@@ -88,7 +96,8 @@ public class TitleSceneManager : MonoBehaviour {
             SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
 
             Input.ResetInputAxes();
-            //gamepad.bButton.ResetToDefaultStateInEvent;
+            InputSystem.ResetDevice(GameData.gamepad);
+            InputSystem.ResetDevice(keyboard);
 
             return;
         }
@@ -104,12 +113,12 @@ public class TitleSceneManager : MonoBehaviour {
 
         // プレスボタンされたとき＝モードの選択になるので
         // 矢印キーで選択させる
-        if (Input.GetKeyUp(KeyCode.UpArrow))
+        if (keyboard.upArrowKey.wasReleasedThisFrame || GameData.gamepad.dpad.up.wasReleasedThisFrame)
         {
             SelectUp();
         }
 
-        if (Input.GetKeyUp(KeyCode.DownArrow))
+        if (keyboard.downArrowKey.wasReleasedThisFrame || GameData.gamepad.dpad.down.wasReleasedThisFrame)
         {
             SelectDown();
         }
@@ -121,10 +130,8 @@ public class TitleSceneManager : MonoBehaviour {
             GameStart.GetComponent<UIBlink>().isBlink = true; // UIを点滅
             GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
-            Gamepad gamepad = Gamepad.current;
 
-
-            if (Input.GetKeyUp(KeyCode.Return) || gamepad.bButton.wasReleasedThisFrame) // 選択を確定
+            if (keyboard.enterKey.wasReleasedThisFrame || GameData.gamepad.buttonEast.wasReleasedThisFrame) // 選択を確定
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
@@ -144,7 +151,7 @@ public class TitleSceneManager : MonoBehaviour {
             GameContinue.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
 
-            if (Input.GetKeyUp(KeyCode.Return)/* || gamepad.bButton.wasReleasedThisFrame*/) // 選択を確定
+            if (keyboard.enterKey.wasReleasedThisFrame || GameData.gamepad.buttonEast.wasReleasedThisFrame) // 選択を確定
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
@@ -162,7 +169,7 @@ public class TitleSceneManager : MonoBehaviour {
             GameEnd.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
 
 
-            if (Input.GetKeyUp(KeyCode.Return)/* || gamepad.bButton.wasReleasedThisFrame*/) // 選択を確定
+            if (keyboard.enterKey.wasReleasedThisFrame || GameData.gamepad.buttonEast.wasReleasedThisFrame) // 選択を確定
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);

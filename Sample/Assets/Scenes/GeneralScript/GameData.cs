@@ -16,6 +16,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public static class GameData
 {
@@ -30,6 +31,7 @@ public static class GameData
         BOSS1_SCENE
     }
 
+    public static Gamepad gamepad;
 
     static int roomSize;                    // 1部屋のサイズは簡単に触れて欲しくないからpublicにしてない
     public static int OldMapNumber;         // シーン移動前のマップ番号

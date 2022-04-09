@@ -122,7 +122,7 @@ public class Player2 : MonoBehaviour
     void Start()
     {
         prefab = (GameObject)Resources.Load("Weapon");
-
+        
 
         if (GameObject.Find("HPSystem(Clone)"))
         {
@@ -256,40 +256,40 @@ public class Player2 : MonoBehaviour
         //---スティック入力
         PlayerPos = transform.position;                             // 攻撃する瞬間のプレイヤーの座標を取得
         AttackDirection += Attack.ReadValue<Vector2>();             // スティックの倒した値を取得
-        AttackDirection.Normalize();                                // 取得した値を正規化(ベクトルを１にする)
+        //AttackDirection.Normalize();                              // 取得した値を正規化(ベクトルを１にする)
 
         //---アニメーション再生
         //---左右パリィ
-        if (Mathf.Abs(AttackDirection.x) >= 0.1)                     
-        {
-            //タイマー設定
-            Timer = stopTime;
-            animator.SetTrigger("Attack");
-            Debug.Log("左右攻撃");
-        }
+        //if (Mathf.Abs(AttackDirection.x) >= 1)                     
+        //{
+        //    //タイマー設定
+        //    Timer = stopTime;
+        //    animator.SetTrigger("Attack");
+        //    Debug.Log("左右攻撃");
+        //}
 
         //---上パリィ
-        if(AttackDirection.y >= 0.1)
-        {
-            if(GroundNow == true)
-            {
-                rb.AddForce(transform.up * 3.0f,ForceMode.Impulse);
-                GroundNow = false;
-            }
-            animator.SetTrigger("Attack_UP");
-        }
+        //if(AttackDirection.y >= 1)
+        //{
+        //    if(GroundNow == true)
+        //    {
+        //        rb.AddForce(transform.up * 3.0f,ForceMode.Impulse);
+        //        GroundNow = false;
+        //    }
+        //    animator.SetTrigger("Attack_UP");
+        //}
 
         //---下パリィ
-        if (AttackDirection.y <= 0.1)
-        {
-            if (GroundNow == true)
-            {
-                rb.AddForce(transform.up * 3.0f, ForceMode.Impulse);
-                GroundNow = false;
-            }
-            animator.SetTrigger("Attack_DOWN");
+        //if (AttackDirection.y <= 1)
+        //{
+        //    if (GroundNow == true)
+        //    {
+        //        rb.AddForce(transform.up * 3.0f, ForceMode.Impulse);
+        //        GroundNow = false;
+        //    }
+        //    animator.SetTrigger("Attack_DOWN");
 
-        }
+        //}
 
 
         //モデルの向きと反対方向に盾出したらモデル回転
@@ -332,7 +332,6 @@ public class Player2 : MonoBehaviour
         //---盾の回転を設定
         weapon.transform.Rotate(new Vector3(0,0,(90 * AttackDirection.y)));
         //Debug.Log("攻撃した！(Weapon)");
-        Debug.Log("AttackDirection(正規化後):"+ AttackDirection);
         //EffectManager.Play(EffectData.eEFFECT.EF_SHEILD2,weapon.transform.position);
         SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
         AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする

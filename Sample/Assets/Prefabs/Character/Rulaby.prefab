@@ -3812,8 +3812,8 @@ GameObject:
   - component: {fileID: -6696369569860024393}
   - component: {fileID: 1444884787768172029}
   - component: {fileID: 9159929892793763547}
-  - component: {fileID: 6492456336151494021}
   - component: {fileID: -6832975577122789175}
+  - component: {fileID: 8831804049535463901}
   m_Layer: 0
   m_Name: Rulaby
   m_TagString: Player
@@ -3912,7 +3912,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2401f2f8bb428e0489ea15fd55028795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6492456336151494021
+--- !u!114 &-6832975577122789175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8096165991751645957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf4f376438a297b42b918319d41e0b78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max_Quantity: 1
+--- !u!114 &8831804049535463901
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3928,7 +3941,7 @@ MonoBehaviour:
   HighFrequency: 0
   VibrationTime: 0
   animator: {fileID: 3310322107056520133}
-  prefab: {fileID: 4654677824866976037, guid: d407407250610cb409791d5c7d43d367, type: 3}
+  prefab: {fileID: 0}
   maxSpeed: 5
   stopTime: 20
   Amplitude: 0
@@ -3936,22 +3949,9 @@ MonoBehaviour:
   GravityForce: -10
   JumpForce: 5
   AttackDirection: {x: 0, y: 0}
-  AttckPosHeight: 2.5
+  AttckPosHeight: 2
   AttckPosWidth: 2
   DestroyTime: 1
---- !u!114 &-6832975577122789175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8096165991751645957}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf4f376438a297b42b918319d41e0b78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  max_Quantity: 1
 --- !u!1 &8210451501496886489
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,9 +12,6 @@ public static class GamePadManager
         ALLTYPE
     }
 
-    // Start is called before the first frame update
-
-    // Update is called once per frame
     public static bool PressAnyButton(eGamePadType gamepadtype) {
         if(GameData.gamepad == null)
         {
@@ -39,6 +36,26 @@ public static class GamePadManager
             {
                 return true;
             }
+            if (GameData.gamepad.dpad.up.wasPressedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.down.wasPressedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.right.wasPressedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.left.wasPressedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.startButton.wasPressedThisFrame)
+            {
+                return true;
+            }
         }
         else if(gamepadtype == eGamePadType.DUALSHOCK4)
         {
@@ -55,6 +72,26 @@ public static class GamePadManager
                 return true;
             }
             if (GameData.gamepad.triangleButton.wasPressedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.up.wasPressedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.down.wasPressedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.right.wasPressedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.left.wasPressedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.startButton.wasPressedThisFrame)
             {
                 return true;
             }
@@ -75,6 +112,26 @@ public static class GamePadManager
                 return true;
             }
             if (GameData.gamepad.buttonSouth.wasPressedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.up.wasPressedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.down.wasPressedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.right.wasPressedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.left.wasPressedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.startButton.wasPressedThisFrame)
             {
                 return true;
             }
@@ -106,6 +163,27 @@ public static class GamePadManager
             {
                 return true;
             }
+            if (GameData.gamepad.dpad.up.wasReleasedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.down.wasReleasedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.right.wasReleasedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.left.wasReleasedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.startButton.wasReleasedThisFrame)
+            {
+                return true;
+            }
+
         }
         else if (gamepadtype == eGamePadType.DUALSHOCK4)
         {
@@ -122,6 +200,26 @@ public static class GamePadManager
                 return true;
             }
             if (GameData.gamepad.triangleButton.wasReleasedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.up.wasReleasedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.down.wasReleasedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.right.wasReleasedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.left.wasReleasedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.startButton.wasReleasedThisFrame)
             {
                 return true;
             }
@@ -145,6 +243,27 @@ public static class GamePadManager
             {
                 return true;
             }
+            if (GameData.gamepad.dpad.up.wasReleasedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.down.wasReleasedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.right.wasReleasedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.dpad.left.wasReleasedThisFrame)
+            {
+                return true;
+            }
+            if (GameData.gamepad.startButton.wasReleasedThisFrame)
+            {
+                return true;
+            }
+
         }
         return false;
     }

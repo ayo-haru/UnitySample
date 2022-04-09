@@ -23,6 +23,11 @@ public class StockManager : MonoBehaviour
     {
         //とりあえず０にしてるけど、ゲームデータクラスから回復のストックの数取得して入れる
         nStock = 0;
+        //ストックの所持数分表示する
+        for(int i = 0; i < nStock; ++i)
+        {
+            stock[i].GetComponent<ImageShow>().Show();
+        }
     }
 
     // Update is called once per frame
@@ -52,7 +57,7 @@ public class StockManager : MonoBehaviour
     public void AddStock()
     {
         //ストックが最大数だったらリターン
-        if(nStock >= 3)
+        if(nStock >= stock.Length)
         {
             return;
         }
@@ -65,7 +70,7 @@ public class StockManager : MonoBehaviour
 
     public bool IsAddStock()
     {
-        if(nStock >= 3)
+        if(nStock >= stock.Length)
         {
             return false;
         }

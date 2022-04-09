@@ -25,6 +25,11 @@ public class PieceManager : MonoBehaviour
     {
         //とりあえず０にしてるけど、ゲームデータクラスから回復のかけらの数取得して入れる
         nPiece = 0;
+        for(int i = 0; i < nPiece; ++i)
+        {
+            //かけらの所持数分表示する
+            piece[i].GetComponent<ImageShow>().Show();
+        }
 
         stockManager = GameObject.Find("StockHPManager").GetComponent<StockManager>();
     }
@@ -33,7 +38,7 @@ public class PieceManager : MonoBehaviour
     void Update()
     {
         //かけらが５個ある時
-        if(nPiece == 5)
+        if(nPiece == piece.Length)
         {
             if (stockManager.IsAddStock())
             {
@@ -42,7 +47,7 @@ public class PieceManager : MonoBehaviour
                 stockManager.AddStock();
                 //かけら消す
                 nPiece = 0;
-                for (int i = 0; i < 5; ++i)
+                for (int i = 0; i < piece.Length; ++i)
                 {
                     piece[i].GetComponent<ImageShow>().Hide();
                 }
@@ -59,7 +64,7 @@ public class PieceManager : MonoBehaviour
         //かけらの数更新
         ++nPiece;
         //かけらが5個集まったら回復のストックを増やす
-        if(nPiece >= 5)
+        if(nPiece >= piece.Length)
         {
             if (stockManager.IsAddStock())
             {
@@ -68,14 +73,14 @@ public class PieceManager : MonoBehaviour
                 stockManager.AddStock();
                 //かけら消す
                 nPiece = 0;
-                for (int i = 0; i < 5; ++i)
+                for (int i = 0; i < piece.Length; ++i)
                 {
                     piece[i].GetComponent<ImageShow>().Hide();
                 }
             }else
             {
                 //増やせなかったら
-                nPiece = 5;
+                nPiece = piece.Length;
                 piece[nPiece - 1].GetComponent<ImageShow>().Show();
             }
         }

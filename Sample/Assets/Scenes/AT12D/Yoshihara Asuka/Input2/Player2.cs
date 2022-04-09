@@ -34,7 +34,7 @@ public class Player2 : MonoBehaviour
     [SerializeField] private float VibrationTime;       // 振動時間
 
     //---アニメーション関連
-    [SerializeField] public Animator animator;          // アニメーターコンポーネント取得
+    public Animator animator;                           // アニメーターコンポーネント取得
 
 
     //---コンポーネント取得
@@ -111,7 +111,6 @@ public class Player2 : MonoBehaviour
     {
         PlayerActionAsset.Player.Attack.started -= OnAttack;        // started...ボタンが押された瞬間
         //PlayerActionAsset.Player.Jump.started -= OnJump;            // started    ... ボタンが押された瞬間
-
 
         //---InputActionの無効化
         PlayerActionAsset.Player.Disable();
@@ -260,20 +259,20 @@ public class Player2 : MonoBehaviour
 
         //---アニメーション再生
         //---左右パリィ
-        //if (Mathf.Abs(AttackDirection.x) >= 1)                     
-        //{
-        //    //タイマー設定
-        //    Timer = stopTime;
-        //    animator.SetTrigger("Attack");
-        //    Debug.Log("左右攻撃");
-        //}
+        if (Mathf.Abs(AttackDirection.x) >= 1)
+        {
+            //タイマー設定
+            Timer = stopTime;
+            animator.SetTrigger("Attack");
+            Debug.Log("左右攻撃");
+        }
 
         //---上パリィ
-        //if(AttackDirection.y >= 1)
+        //if (AttackDirection.y >= 1)
         //{
-        //    if(GroundNow == true)
+        //    if (GroundNow == true)
         //    {
-        //        rb.AddForce(transform.up * 3.0f,ForceMode.Impulse);
+        //        rb.AddForce(transform.up * 3.0f, ForceMode.Impulse);
         //        GroundNow = false;
         //    }
         //    animator.SetTrigger("Attack_UP");

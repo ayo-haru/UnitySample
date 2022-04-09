@@ -24,6 +24,7 @@ public class Scene1Manager : MonoBehaviour
         //---フレームレート固定
         Application.targetFrameRate = 60;
 
+
         //---プレイヤープレハブの取得
         if (!GameData.Player)
         {
@@ -36,6 +37,8 @@ public class Scene1Manager : MonoBehaviour
         GameObject canvas = GameObject.Find("Canvas");          // シーン上のCanvasを参照し,canvasに定義
         var instance = Instantiate(HPSystem);                    // HPUIを取得
         instance.transform.SetParent(canvas.transform,false);   // canvasの子オブジェクトにアタッチ
+
+
     }
     // Start is called before the first frame update
     void Start()

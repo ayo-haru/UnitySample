@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 using System;
 using UnityEngine.UI;
 
 public class TitleSceneManager : MonoBehaviour {
    private enum eSTATETITLE // タイトルシーンから行う動作
-    {
+   {
         FROMBIGINING = 0,   // 初めから
         FROMCONTINUE,       // 続きから
         QUIT,               // やめる
@@ -22,8 +23,6 @@ public class TitleSceneManager : MonoBehaviour {
     private Game_pad UIActionAssets;                // InputActionのUIを扱う
     private InputAction LeftStickSelect;            // InputActionのselectを扱う
     private InputAction RightStickSelect;           // InputActionのselectを扱う
-
-    //public GamePadManager gamepadmanager;
 
     //private Vector2 doLeftStick = Vector2.zero;
     //private Vector2 doRightStick = Vector2.zero;
@@ -74,12 +73,13 @@ public class TitleSceneManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        bool isSetGamePad = false;
         if (Gamepad.current != null)
         {
             GameData.gamepad = Gamepad.current;
+            isSetGamePad = true;
         }
         Keyboard keyboard = Keyboard.current;
-       
 
         // 何かボタンが押されたら
         if ((keyboard.anyKey.wasReleasedThisFrame || GamePadManager.ReleaseAnyButton(GamePadManager.eGamePadType.ALLTYPE)) && !isPressButton )
@@ -95,10 +95,6 @@ public class TitleSceneManager : MonoBehaviour {
 
             SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
 
-            Input.ResetInputAxes();
-            InputSystem.ResetDevice(GameData.gamepad);
-            InputSystem.ResetDevice(keyboard);
-
             return;
         }
 
@@ -113,15 +109,30 @@ public class TitleSceneManager : MonoBehaviour {
 
         // プレスボタンされたとき＝モードの選択になるので
         // 矢印キーで選択させる
-        if (keyboard.upArrowKey.wasReleasedThisFrame || GameData.gamepad.dpad.up.wasReleasedThisFrame)
+        if (keyboard.upArrowKey.wasReleasedThisFrame)
         {
             SelectUp();
         }
+        else if (isSetGamePad)
+        {
+            if (GameData.gamepad.dpad.up.wasReleasedThisFrame)
+            {
+                SelectUp();
+            }
+        }
 
-        if (keyboard.downArrowKey.wasReleasedThisFrame || GameData.gamepad.dpad.down.wasReleasedThisFrame)
+        if (keyboard.downArrowKey.wasReleasedThisFrame)
         {
             SelectDown();
         }
+        else if (isSetGamePad)
+        {
+            if (GameData.gamepad.dpad.down.wasReleasedThisFrame)
+            {
+                SelectDown();
+            }
+        }
+
 
 
         // 選択しているものが何かで分岐
@@ -131,19 +142,24 @@ public class TitleSceneManager : MonoBehaviour {
             GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
 
-            if (keyboard.enterKey.wasReleasedThisFrame || GameData.gamepad.buttonEast.wasReleasedThisFrame) // 選択を確定
+            if (!keyboard.enterKey.wasReleasedThisFrame || isSetGamePad) // 選択を確定
             {
-                // 決定音
-                SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
-
-                GameData.InitData();
-
-                // シーン関連
-                GameData.OldMapNumber = GameData.CurrentMapNumber;
-                GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen1_SCENE;
-                string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
-                SceneManager.LoadScene(nextSceneName);
+                if (!GameData.gamepad.buttonEast.wasReleasedThisFrame)
+                {
+                    return;
+                }
             }
+
+            // 決定音
+            SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
+
+            GameData.InitData();
+
+            // シーン関連
+            GameData.OldMapNumber = GameData.CurrentMapNumber;
+            GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen1_SCENE;
+            string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
+            SceneManager.LoadScene(nextSceneName);
         }
         else if (select == (int)eSTATETITLE.FROMCONTINUE)
         {
@@ -151,16 +167,21 @@ public class TitleSceneManager : MonoBehaviour {
             GameContinue.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
 
-            if (keyboard.enterKey.wasReleasedThisFrame || GameData.gamepad.buttonEast.wasReleasedThisFrame) // 選択を確定
+            if (!keyboard.enterKey.wasReleasedThisFrame || isSetGamePad) // 選択を確定
             {
-                // 決定音
-                SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
-
-                // シーン関連
-                GameData.OldMapNumber = GameData.CurrentMapNumber;
-                string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
-                SceneManager.LoadScene(nextSceneName);
+                if (!GameData.gamepad.buttonEast.wasReleasedThisFrame)
+                {
+                    return;
+                }
             }
+
+            // 決定音
+            SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
+
+            // シーン関連
+            GameData.OldMapNumber = GameData.CurrentMapNumber;
+            string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
+            SceneManager.LoadScene(nextSceneName);
         }
         else if (select == (int)eSTATETITLE.QUIT)
         {
@@ -168,18 +189,22 @@ public class TitleSceneManager : MonoBehaviour {
             GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
 
-
-            if (keyboard.enterKey.wasReleasedThisFrame || GameData.gamepad.buttonEast.wasReleasedThisFrame) // 選択を確定
+            if (!keyboard.enterKey.wasReleasedThisFrame || isSetGamePad) // 選択を確定
             {
-                // 決定音
-                SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
+                if (!GameData.gamepad.buttonEast.wasReleasedThisFrame)
+                {
+                    return;
+                }
+            }
+
+            // 決定音
+            SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
 
 #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
+            UnityEditor.EditorApplication.isPlaying = false;
 #else
                 Application.Quit();
 #endif
-            }
 
         }
     }

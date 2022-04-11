@@ -20,8 +20,10 @@ public class HPgage : MonoBehaviour
     //public Slider slider;               //スライダー
     //ゲージ用画像
     private Image HpGageImage;
-    public static int m_DelHp ;         //ダメージ収納用変数
-    public static int damage = 0;
+    private int m_DelHp ;         //ダメージ収納用変数
+    private int damage = 0;
+    private float DamageTimer;
+    private int HpDelNow;
 
     // Start is called before the first frame update
     void Start()
@@ -39,11 +41,15 @@ public class HPgage : MonoBehaviour
         //ダメージを受けたモーション再生後これを実行←だれか任せた
         if(Input.GetKeyDown(KeyCode.F1))
         {
-           
-                damage = 51;
-                DelHP();
+            DelHP(10);
             Debug.Log("After currentHp : " + currentHp);
         }//ゲージの長さ
+        if(DamageTimer>=0.0f && HpDelNow > 0)
+        {
+            DamageTimer -= 1.0f;
+            currentHp -= 1;
+            HpDelNow -= 1;
+        }
         HpGageImage.fillAmount = (float)currentHp / MAXHP;
         if (currentHp <= 0)
         {
@@ -52,12 +58,13 @@ public class HPgage : MonoBehaviour
         }
     }
     //ダメージ受けた時処理
-    public static void DelHP()
+    public void DelHP(int Damage)
     {
-        m_DelHp = damage;                //受けたダメージを受け取る
-        currentHp = currentHp - m_DelHp;               //現在のHPから受けたダメージ分減らす
-        Debug.Log("delHP : " + m_DelHp);
-        Debug.Log("m_damage : " + damage);
+            HpDelNow = Damage;                //受けたダメージを受け取る
+            DamageTimer = Damage;             //現在のHPから受けたダメージ分減らす
+            Debug.Log("delHP : " + m_DelHp);
+            Debug.Log("m_damage : " + damage);
+        
     }
     
 }

@@ -268,27 +268,27 @@ public class Player2 : MonoBehaviour
         }
 
         //---上パリィ
-        //if (AttackDirection.y >= 1)
-        //{
-        //    if (GroundNow == true)
-        //    {
-        //        rb.AddForce(transform.up * 3.0f, ForceMode.Impulse);
-        //        GroundNow = false;
-        //    }
-        //    animator.SetTrigger("Attack_UP");
-        //}
+        if (AttackDirection.y >= 1)
+        {
+            if (GroundNow == true)
+            {
+                rb.AddForce(transform.up * 3.0f, ForceMode.Impulse);
+                GroundNow = false;
+            }
+            animator.SetTrigger("Attack_UP");
+        }
 
         //---下パリィ
-        //if (AttackDirection.y <= 1)
-        //{
-        //    if (GroundNow == true)
-        //    {
-        //        rb.AddForce(transform.up * 3.0f, ForceMode.Impulse);
-        //        GroundNow = false;
-        //    }
-        //    animator.SetTrigger("Attack_DOWN");
+        if (AttackDirection.y <= 1)
+        {
+            if (GroundNow == true)
+            {
+                rb.AddForce(transform.up * 3.0f, ForceMode.Impulse);
+                GroundNow = false;
+            }
+            animator.SetTrigger("Attack_DOWN");
 
-        //}
+        }
 
 
         //モデルの向きと反対方向に盾出したらモデル回転

@@ -17,14 +17,17 @@ public class HPgage : MonoBehaviour
 {
     [SerializeField] int MAXHP = 0;     //最大HP数値変更可
     public static int currentHp;        //現在HP
-    public Slider slider;               //スライダー
+    //public Slider slider;               //スライダー
+    //ゲージ用画像
+    private Image HpGageImage;
     public static int m_DelHp ;         //ダメージ収納用変数
     public static int damage = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        slider.value = 1.0f;               //スライダーの最大値
+        HpGageImage = gameObject.GetComponent<Image>();
+        HpGageImage.fillAmount = 1.0f;
         currentHp = MAXHP;              //現在のHPを最大HPにする
         m_DelHp = 0;
         //Debug.Log("Start currentHp : " + slider.value);
@@ -36,11 +39,12 @@ public class HPgage : MonoBehaviour
         //ダメージを受けたモーション再生後これを実行←だれか任せた
         if(Input.GetKeyDown(KeyCode.F1))
         {
-            damage = 51;
-            DelHP();
+           
+                damage = 51;
+                DelHP();
             Debug.Log("After currentHp : " + currentHp);
-        }
-        slider.value = (float)currentHp / (float)MAXHP;  //スライダーの長さの計算
+        }//ゲージの長さ
+        HpGageImage.fillAmount = (float)currentHp / MAXHP;
         if (currentHp <= 0)
         {
             //ボスのタグ付けして全部のボスで使えるようにしたい所存

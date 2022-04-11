@@ -20,10 +20,13 @@ public class Boss1Attack : MonoBehaviour
     [SerializeField] public int KnifeDamage;                //ナイフ攻撃のダメージ
     [SerializeField] public float RefrectRotOver;           //弾いた角度の上判定用
     [SerializeField] public float RefrectRotUnder;          //弾いた角度の上判定用
-    bool LRSwitchFlg;                                       //実装するかわからない左右判定用
-    //突進用変数群
-    //----------------------------------------------------------
-    GameObject Forkobj;                                     //フォークのオブジェクト生成用
+    bool LRSwitchFlg;
+    private GameObject HpObject;
+    HPgage HpScript;
+        //実装するかわからない左右判定用
+        //突進用変数群
+        //----------------------------------------------------------
+        GameObject Forkobj;                                     //フォークのオブジェクト生成用
     GameObject Fork;                                        //フォークのオブジェクト格納用
     Vector3 RushStartPoint;                                 //突進開始地点
     Vector3 RushEndPoint;                                   //突進終了地点
@@ -109,6 +112,8 @@ public class Boss1Attack : MonoBehaviour
         StrawberryRefOnlyFlg = new bool[Max_Strawberry];
         StrawberryColPlayer = new bool[Max_Strawberry];
         PreMax_Strawberry = Max_Strawberry;
+        HpObject = GameObject.Find("HPGage");
+        HpScript = HpObject.GetComponent<HPgage>();
 
         for (int i= 0;i < Max_Strawberry;i++)
         {
@@ -250,8 +255,7 @@ public class Boss1Attack : MonoBehaviour
                         RushReturnSpeed = 2;
                         RushRefFlg = false;
                         BossReturnFlg = true;
-                        HPgage.damage = RushDamage;
-                        HPgage.DelHP();
+                        HpScript.DelHP(RushDamage);
                         RushTime = 0;
                         RushRefTime = 0;
                     SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
@@ -367,8 +371,7 @@ public class Boss1Attack : MonoBehaviour
                         //弾い方がしっかりボスの方向だった時にだけダメージの処理する
                         if (!RefMissFlg)
                         {
-                            HPgage.damage = StrawberryDamage;
-                            HPgage.DelHP();
+                            HpScript.DelHP(StrawberryDamage);
                             SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
                         }
                         RefMissFlg = false;
@@ -478,8 +481,7 @@ public class Boss1Attack : MonoBehaviour
             Debug.Log("Knife " + KnifePlayerPoint);
             if (KnifeRefTime >= 1.0f)
             {
-                HPgage.damage = KnifeDamage;
-                HPgage.DelHP();
+                HpScript.DelHP(KnifeDamage);
                 OnlyFlg = false;
                 KnifeRefFlg = false;
                 KnifeTime = 0;

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
+
 
 public static class GamePadManager
 {
@@ -12,6 +14,11 @@ public static class GamePadManager
         ALLTYPE
     }
 
+    //==========================================================================
+    //
+    //  ゲームパッドの十字に配置されたボタン、十字キー、スタートボタンがおされた
+    //
+    //==========================================================================
     public static bool PressAnyButton(eGamePadType gamepadtype) {
         if(GameData.gamepad == null)
         {
@@ -139,6 +146,11 @@ public static class GamePadManager
         return false;
     }
 
+    //==========================================================================
+    //
+    //  ゲームパッドの十字に配置されたボタン、十字キー、スタートボタンが離された
+    //
+    //==========================================================================
     public static bool ReleaseAnyButton(eGamePadType gamepadtype) {
         if (GameData.gamepad == null)
         {

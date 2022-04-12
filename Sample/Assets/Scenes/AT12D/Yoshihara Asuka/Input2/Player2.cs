@@ -26,7 +26,7 @@ public class Player2 : MonoBehaviour
     //---InputSystem関連
     private Game_pad PlayerActionAsset;                 // InputActionで生成したものを使用
     private InputAction move;                           // InputActionのmoveを扱う
-    private InputAction Attack;                         // InputActionのmoveを扱う
+    private InputAction Attacking;                      // InputActionのmoveを扱う
 
     //---振動
     [SerializeField] private float LowFrequency;        // 左側の振動の値
@@ -74,6 +74,7 @@ public class Player2 : MonoBehaviour
     public float AttckPosHeight = 8.0f;                 // シールド位置上下
     public float AttckPosWidth = 8.0f;                  // シールド位置左右
     public float DestroyTime = 3.0f;                    // シールドが消える時間
+    private bool isAttack;                              // 攻撃フラグ
     private Vector3 CurrentScale;                       // 現在のプレイヤーのスケールの値を格納 
 
 
@@ -90,7 +91,7 @@ public class Player2 : MonoBehaviour
     {
         //---スティック入力を取るための設定
         move = PlayerActionAsset.Player.Move;           
-        Attack = PlayerActionAsset.Player.Attack;
+        Attacking = PlayerActionAsset.Player.Attack;
 
         //---Actionイベント登録(ボタン入力)
         PlayerActionAsset.Player.Attack.started += OnAttack;
@@ -143,6 +144,11 @@ public class Player2 : MonoBehaviour
             ForceDirection.Normalize();
             MovingVelocity = ForceDirection * maxSpeed;
 
+            if (isAttack)
+            {
+                Attack();
+            }
+
             //---アニメーション再生
             if (Mathf.Abs(ForceDirection.x) > 0 && Mathf.Abs(ForceDirection.y) == 0)
             {
@@ -187,58 +193,63 @@ public class Player2 : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //---ジャンプ中なら移動処理をしない
-        if(JumpNow == true)
+        if (!Pause.isPause)
         {
-            Gravity(); 
-            //return;
-        }
 
-        //---移動処理(AddForceの処理)
-        //SpeedCheck();
-        //ForceDirection += move.ReadValue<Vector2>();
-        //ForceDirection.Normalize();
-        //rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
-
-        //---移動処理(velocityの処理)
-        if (Timer <= 0)
-        {
-            rb.velocity = new Vector3(MovingVelocity.x, rb.velocity.y - MovingVelocity.y, 0);
-        }
-        else
-        {
-            --Timer;
-            rb.velocity = new Vector3(0, rb.velocity.y - MovingVelocity.y, 0);
-        }
-
-        //---回転処理処理
-        //方向が変わってたらスケールｘを反転
-        if((ForceDirection.x > 0 && beforeDir.x < 0)||(ForceDirection.x < 0 && beforeDir.x > 0)){
-            scale.x *= -1;
-            transform.localScale = scale;
-        }
-        //回転の目標値
-        Quaternion target = new Quaternion();
-        if (ForceDirection.magnitude > 0.01f)
-        {
-            //方向を保存
-            beforeDir = ForceDirection;
-            //向きを設定
-            target = Quaternion.LookRotation(ForceDirection); 
-        }
-        else
-        {
-            //入力されてなかったとき
-            //回転が中途半端な時は補正する
-            if(transform.rotation.y != 90.0f && transform.rotation.y != -90.0f)
+            //---ジャンプ中なら移動処理をしない
+            if (JumpNow == true)
             {
-                target = Quaternion.LookRotation(beforeDir); //向きを変更する
+                Gravity();
+                //return;
             }
-        }
-        //ゆっくり回転させる
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotationSpeed);
 
-        ForceDirection = Vector2.zero;
+            //---移動処理(AddForceの処理)
+            //SpeedCheck();
+            //ForceDirection += move.ReadValue<Vector2>();
+            //ForceDirection.Normalize();
+            //rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
+
+            //---移動処理(velocityの処理)
+            if (Timer <= 0)
+            {
+                rb.velocity = new Vector3(MovingVelocity.x, rb.velocity.y - MovingVelocity.y, 0);
+            }
+            else
+            {
+                --Timer;
+                rb.velocity = new Vector3(0, rb.velocity.y - MovingVelocity.y, 0);
+            }
+
+            //---回転処理処理
+            //方向が変わってたらスケールｘを反転
+            if ((ForceDirection.x > 0 && beforeDir.x < 0) || (ForceDirection.x < 0 && beforeDir.x > 0))
+            {
+                scale.x *= -1;
+                transform.localScale = scale;
+            }
+            //回転の目標値
+            Quaternion target = new Quaternion();
+            if (ForceDirection.magnitude > 0.01f)
+            {
+                //方向を保存
+                beforeDir = ForceDirection;
+                //向きを設定
+                target = Quaternion.LookRotation(ForceDirection);
+            }
+            else
+            {
+                //入力されてなかったとき
+                //回転が中途半端な時は補正する
+                if (transform.rotation.y != 90.0f && transform.rotation.y != -90.0f)
+                {
+                    target = Quaternion.LookRotation(beforeDir); //向きを変更する
+                }
+            }
+            //ゆっくり回転させる
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotationSpeed);
+
+            ForceDirection = Vector2.zero;
+        }
     }
 
     private void OnMove(InputAction.CallbackContext obj)
@@ -246,15 +257,25 @@ public class Player2 : MonoBehaviour
 
     }
 
-    //---攻撃処理
+
+    //===================================================================
+    //
+    //  攻撃
+    //  OnAttackとAttackでセット。OnAttackで攻撃フラグを立てて、
+    //  Attackの中に攻撃の処理を書く
+    //
+    //===================================================================
     private void OnAttack(InputAction.CallbackContext obj)
     {
+        isAttack = true;       
+    }
+    private void Attack() {
         //---振動させる
         //StartCoroutine(VibrationPlay(LowFrequency,HighFrequency));
 
         //---スティック入力
         PlayerPos = transform.position;                             // 攻撃する瞬間のプレイヤーの座標を取得
-        AttackDirection += Attack.ReadValue<Vector2>();             // スティックの倒した値を取得
+        AttackDirection += Attacking.ReadValue<Vector2>();             // スティックの倒した値を取得
         //AttackDirection.Normalize();                              // 取得した値を正規化(ベクトルを１にする)
 
         //---アニメーション再生
@@ -310,9 +331,9 @@ public class Player2 : MonoBehaviour
         }
 
         //---倒した値を基に盾の出す場所を指定
-        GameObject weapon = Instantiate(prefab,new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+        GameObject weapon = Instantiate(prefab, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
                                                            PlayerPos.y + (AttackDirection.y * AttckPosHeight),
-                                                           PlayerPos.z),Quaternion.identity);
+                                                           PlayerPos.z), Quaternion.identity);
 
         //---コントローラーの倒したXの値が－だったらy軸に-1する(盾の角度の調整)
         if (AttackDirection.x < 0.0f)
@@ -327,15 +348,17 @@ public class Player2 : MonoBehaviour
             UnderParryNow = true;
             GroundNow = false;
         }
-        
+
         //---盾の回転を設定
-        weapon.transform.Rotate(new Vector3(0,0,(90 * AttackDirection.y)));
+        weapon.transform.Rotate(new Vector3(0, 0, (90 * AttackDirection.y)));
         //Debug.Log("攻撃した！(Weapon)");
         //EffectManager.Play(EffectData.eEFFECT.EF_SHEILD2,weapon.transform.position);
         SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
         AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする
-        Destroy(weapon,DestroyTime);
-        return;
+        Destroy(weapon, DestroyTime);
+
+
+        isAttack = false;
     }
 
     //---ジャンプ処理

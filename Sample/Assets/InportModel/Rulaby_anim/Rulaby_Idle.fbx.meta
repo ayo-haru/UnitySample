@@ -1,0 +1,350 @@
+fileFormatVersion: 2
+guid: cf4673e1237ae3745bdc38726df5e734
+ModelImporter:
+  serializedVersion: 20200
+  internalIDToNameTable:
+  - first:
+      74: 1445085061054877593
+    second: raby_anime_idling
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: raby_anime_idling
+      takeName: raby_anime_idling
+      internalID: 0
+      firstFrame: 1
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: all_base
+        weight: 1
+      - path: all_base/all_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/elbow_L_base
+        weight: 1
+      - path: all_base/all_ctrl/elbow_L_base/elbow_L_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/elbow_L_base/elbow_L_ctrl/locator2
+        weight: 1
+      - path: all_base/all_ctrl/elbow_R_base
+        weight: 1
+      - path: all_base/all_ctrl/elbow_R_base/elbow_R_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/elbow_R_base/elbow_R_ctrl/locator1
+        weight: 1
+      - path: all_base/all_ctrl/foot_L_base
+        weight: 1
+      - path: all_base/all_ctrl/foot_L_base/foot_L_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/foot_L_base/foot_L_ctrl/ikHandle1
+        weight: 1
+      - path: all_base/all_ctrl/foot_R_base
+        weight: 1
+      - path: all_base/all_ctrl/foot_R_base/foot_R_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/foot_R_base/foot_R_ctrl/ikHandle2
+        weight: 1
+      - path: all_base/all_ctrl/hand_L_base
+        weight: 1
+      - path: all_base/all_ctrl/hand_L_base/hand_L_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/hand_L_base/hand_L_ctrl/ikHandle3
+        weight: 1
+      - path: all_base/all_ctrl/hand_R_base1
+        weight: 1
+      - path: all_base/all_ctrl/hand_R_base1/hand_R_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/hand_R_base1/hand_R_ctrl/ikHandle4
+        weight: 1
+      - path: all_base/all_ctrl/hip_base
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/spine1_base
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/spine1_base/spine1_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/spine1_base/spine1_ctrl/neck_base
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/spine1_base/spine1_ctrl/neck_base/neck_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/spine1_base/spine1_ctrl/neck_base/neck_ctrl/head_base
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/spine1_base/spine1_ctrl/neck_base/neck_ctrl/head_base/head_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/spine1_base/spine1_ctrl/neck_base/neck_ctrl/head_base/head_ctrl/ear1_L_base
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/spine1_base/spine1_ctrl/neck_base/neck_ctrl/head_base/head_ctrl/ear1_L_base/ear1_L_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/spine1_base/spine1_ctrl/neck_base/neck_ctrl/head_base/head_ctrl/ear1_L_base/ear1_L_ctrl/ear2_L_base
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/spine1_base/spine1_ctrl/neck_base/neck_ctrl/head_base/head_ctrl/ear1_L_base/ear1_L_ctrl/ear2_L_base/ear2_L_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/spine1_base/spine1_ctrl/neck_base/neck_ctrl/head_base/head_ctrl/ear1_L_base/ear1_L_ctrl/ear2_L_base/ear2_L_ctrl/ear3_L_base
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/spine1_base/spine1_ctrl/neck_base/neck_ctrl/head_base/head_ctrl/ear1_L_base/ear1_L_ctrl/ear2_L_base/ear2_L_ctrl/ear3_L_base/ear3_L_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/spine1_base/spine1_ctrl/neck_base/neck_ctrl/head_base/head_ctrl/ear1_R_base
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/spine1_base/spine1_ctrl/neck_base/neck_ctrl/head_base/head_ctrl/ear1_R_base/ear1_R_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/spine1_base/spine1_ctrl/neck_base/neck_ctrl/head_base/head_ctrl/ear1_R_base/ear1_R_ctrl/ear2_R_base
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/spine1_base/spine1_ctrl/neck_base/neck_ctrl/head_base/head_ctrl/ear1_R_base/ear1_R_ctrl/ear2_R_base/ear2_R_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/spine1_base/spine1_ctrl/neck_base/neck_ctrl/head_base/head_ctrl/ear1_R_base/ear1_R_ctrl/ear2_R_base/ear2_R_ctrl/ear3_R_base
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/spine1_base/spine1_ctrl/neck_base/neck_ctrl/head_base/head_ctrl/ear1_R_base/ear1_R_ctrl/ear2_R_base/ear2_R_ctrl/ear3_R_base/ear3_R_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/tail1_base
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/tail1_base/tail1_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/tail1_base/tail1_ctrl/tail2_base
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/tail1_base/tail1_ctrl/tail2_base/tail2_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/tail1_base/tail1_ctrl/tail2_base/tail2_ctrl/tail3_base
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/tail1_base/tail1_ctrl/tail2_base/tail2_ctrl/tail3_base/tail3_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/tail1_base/tail1_ctrl/tail2_base/tail2_ctrl/tail3_base/tail3_ctrl/tail4_base
+        weight: 1
+      - path: all_base/all_ctrl/hip_base/hip_ctrl/tail1_base/tail1_ctrl/tail2_base/tail2_ctrl/tail3_base/tail3_ctrl/tail4_base/tail4_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/knee_L_base
+        weight: 1
+      - path: all_base/all_ctrl/knee_L_base/knee_L_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/knee_L_base/knee_L_ctrl/locator4
+        weight: 1
+      - path: all_base/all_ctrl/knee_R_base
+        weight: 1
+      - path: all_base/all_ctrl/knee_R_base/knee_R_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/knee_R_base/knee_R_ctrl/locator3
+        weight: 1
+      - path: hip
+        weight: 1
+      - path: hip/spine1
+        weight: 1
+      - path: hip/spine1/neck
+        weight: 1
+      - path: hip/spine1/neck/head
+        weight: 1
+      - path: hip/spine1/neck/head/ear1_L
+        weight: 1
+      - path: hip/spine1/neck/head/ear1_L/ear2_L
+        weight: 1
+      - path: hip/spine1/neck/head/ear1_L/ear2_L/ear3_L
+        weight: 1
+      - path: hip/spine1/neck/head/ear1_L/ear2_L/ear3_L/eartop_L
+        weight: 1
+      - path: hip/spine1/neck/head/ear1_R
+        weight: 1
+      - path: hip/spine1/neck/head/ear1_R/ear2_R
+        weight: 1
+      - path: hip/spine1/neck/head/ear1_R/ear2_R/ear3_R
+        weight: 1
+      - path: hip/spine1/neck/head/ear1_R/ear2_R/ear3_R/eartop_R
+        weight: 1
+      - path: hip/spine1/neck/head/headtop
+        weight: 1
+      - path: hip/spine1/upperarm_L
+        weight: 1
+      - path: hip/spine1/upperarm_L/forearm_L
+        weight: 1
+      - path: hip/spine1/upperarm_L/forearm_L/hand_L
+        weight: 1
+      - path: hip/spine1/upperarm_R
+        weight: 1
+      - path: hip/spine1/upperarm_R/forearm_R
+        weight: 1
+      - path: hip/spine1/upperarm_R/forearm_R/hand_R
+        weight: 1
+      - path: hip/tail1
+        weight: 1
+      - path: hip/tail1/tail2
+        weight: 1
+      - path: hip/tail1/tail2/tail3
+        weight: 1
+      - path: hip/tail1/tail2/tail3/tail4
+        weight: 1
+      - path: hip/tail1/tail2/tail3/tail4/tailtop
+        weight: 1
+      - path: hip/upleg_L
+        weight: 1
+      - path: hip/upleg_L/lowleg_L
+        weight: 1
+      - path: hip/upleg_L/lowleg_L/foot_L
+        weight: 1
+      - path: hip/upleg_L/lowleg_L/foot_L/toe_L
+        weight: 1
+      - path: hip/upleg_R
+        weight: 1
+      - path: hip/upleg_R/lowleg_R
+        weight: 1
+      - path: hip/upleg_R/lowleg_R/foot_R
+        weight: 1
+      - path: hip/upleg_R/lowleg_R/foot_R/toe_R
+        weight: 1
+      - path: raby
+        weight: 1
+      - path: raby/body
+        weight: 1
+      - path: raby/ear
+        weight: 1
+      - path: raby/ear/ear1
+        weight: 1
+      - path: raby/ear/ear2
+        weight: 1
+      - path: raby/ear/ear3
+        weight: 1
+      - path: raby/earL
+        weight: 1
+      - path: raby/earL/ear1 1
+        weight: 1
+      - path: raby/earL/ear2 1
+        weight: 1
+      - path: raby/earL/ear3 1
+        weight: 1
+      - path: raby/face
+        weight: 1
+      - path: raby/finger
+        weight: 1
+      - path: raby/fingerL
+        weight: 1
+      - path: raby/fur
+        weight: 1
+      - path: raby/handstar
+        weight: 1
+      - path: raby/handstarL
+        weight: 1
+      - path: raby/headstar
+        weight: 1
+      - path: raby/tail
+        weight: 1
+      - path: raby/tail/ribbon
+        weight: 1
+      - path: raby/tail/tail1 1
+        weight: 1
+      - path: raby/tail/tailstar
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0.59999996
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 100
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 100
+    rootMotionBoneName: hip
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

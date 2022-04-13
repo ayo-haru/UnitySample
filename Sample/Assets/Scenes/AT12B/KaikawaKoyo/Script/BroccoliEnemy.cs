@@ -41,40 +41,43 @@ public class BroccoliEnemy : MonoBehaviour
 
     private void Update()
     {
-        rot = transform.rotation;
-        print(rot.z);
-        // プレイヤーを見つけたら攻撃開始
-        if (InArea && ED.isAlive)
+        if(!Pause.isPause)
         {
-            Vector3 pos = rb.position;
-            // プレイヤーに向かって特攻する
-            float step = MoveSpeed * Time.deltaTime;
-            rb.position = Vector3.MoveTowards(pos, Target.position, step);
-
-            //if (rot.z < 0.20f && loop)
-            //{
-            //    rb.AddTorque(0.0f, 0.0f, -SwingSpeed);
-            //    if (rot.z > 0.20f)
-            //    {
-            //        loop = false;
-            //    }
-            //}
-            //if (rot.z > -0.20f && !loop)
-            //{
-            //    rb.AddTorque(0.0f, 0.0f, SwingSpeed);
-            //    if (rot.z < -0.20f)
-            //    {
-            //        loop = true;
-            //    }
-            //}
-
-            // SEの処理
-            if (!isCalledOnce)     // 一回だけ呼ぶ
+            rot = transform.rotation;
+            // プレイヤーを見つけたら攻撃開始
+            if (InArea && ED.isAlive)
             {
-                SoundManager.Play(SoundData.eSE.SE_BUROKORI,SoundData.GameAudioList);
-                isCalledOnce = true;
+                Vector3 pos = rb.position;
+                // プレイヤーに向かって特攻する
+                float step = MoveSpeed * Time.deltaTime;
+                rb.position = Vector3.MoveTowards(pos, Target.position, step);
+
+                //if (rot.z < 0.20f && loop)
+                //{
+                //    rb.AddTorque(0.0f, 0.0f, -SwingSpeed);
+                //    if (rot.z > 0.20f)
+                //    {
+                //        loop = false;
+                //    }
+                //}
+                //if (rot.z > -0.20f && !loop)
+                //{
+                //    rb.AddTorque(0.0f, 0.0f, SwingSpeed);
+                //    if (rot.z < -0.20f)
+                //    {
+                //        loop = true;
+                //    }
+                //}
+
+                // SEの処理
+                if (!isCalledOnce)     // 一回だけ呼ぶ
+                {
+                    SoundManager.Play(SoundData.eSE.SE_BUROKORI, SoundData.GameAudioList);
+                    isCalledOnce = true;
+                }
             }
         }
+       
     }
 
     private void OnCollisionEnter(Collision collision)

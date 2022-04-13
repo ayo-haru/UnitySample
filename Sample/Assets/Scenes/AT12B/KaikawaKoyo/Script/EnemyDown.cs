@@ -22,7 +22,7 @@ public class EnemyDown : MonoBehaviour
 
     public bool isAlive;
 
-    float DeadTime;
+    float DeadTime = 0.0f;
 
     Rigidbody rb;
     // Start is called before the first frame update

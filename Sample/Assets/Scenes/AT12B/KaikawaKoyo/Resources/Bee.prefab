@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 8696296323626127629}
   - component: {fileID: 228222861240281362}
   - component: {fileID: 3381794048081029677}
-  m_Layer: 0
+  - component: {fileID: 29559698045176701}
+  m_Layer: 11
   m_Name: BeeAim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025572605345194150}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: -0.788, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 4185586182040851391}
@@ -48,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025572605345194150}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -95,6 +96,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &29559698045176701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025572605345194150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0d1f8c62d0754e9a7ec2abc8a03f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4185586182040851381
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +123,8 @@ GameObject:
   - component: {fileID: 4185586182040851379}
   - component: {fileID: -444088276604084364}
   - component: {fileID: 4185586182040851380}
-  m_Layer: 0
+  - component: {fileID: 6211107805653084611}
+  m_Layer: 9
   m_Name: Bee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,4 +249,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f29b0ac0f6cbead42b15f40cd5fdedff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAlive: 0
   InArea: 0
+  FiringPoint: {fileID: 1025572605345194150}
+  BeeBullet: {fileID: 4245801130054866025, guid: 765e514cf81337d43996e927e4c88b14, type: 3}
+  speed: 20
+--- !u!114 &6211107805653084611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4185586182040851381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a934461c2c2061419e7c920f8cc2a8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounceSpeed: 5
+  bounceVectorMultiple: 2
+  isAlive: 0

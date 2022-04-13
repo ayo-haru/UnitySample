@@ -16,7 +16,7 @@ public class TomatoEnemy : MonoBehaviour
     Transform Target;
     GameObject Player;
     private Rigidbody rb;
-    private float distance;
+    //private float distance;
     private EnemyDown ED;
     //private Vector3 aim;
     private bool look;
@@ -24,7 +24,7 @@ public class TomatoEnemy : MonoBehaviour
 
     [SerializeField]
     float MoveSpeed = 2.0f;
-    int DetecDist = 8;
+    //int DetecDist = 8;
     bool InArea = false;
 
     private void Start()
@@ -32,7 +32,7 @@ public class TomatoEnemy : MonoBehaviour
         Player = GameObject.FindWithTag("Player");    // プレイヤーのオブジェクトを探す
         Target = Player.transform;                    // プレイヤーの座標取得
         rb = gameObject.GetComponent<Rigidbody>();
-        distance = 1.0f;
+        //distance = 1.0f;
         ED = GetComponent<EnemyDown>();
         transform.Rotate(0, -90, 0);
         look = false;

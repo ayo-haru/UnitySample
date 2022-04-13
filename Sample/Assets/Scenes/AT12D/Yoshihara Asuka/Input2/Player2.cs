@@ -48,9 +48,9 @@ public class Player2 : MonoBehaviour
     private Vector3 PlayerPos;                          // プレイヤーの座標
     private Vector2 ForceDirection = Vector2.zero;      // 移動する方向を決める
     private Vector2 MovingVelocity = Vector3.zero;      // 移動するベクトル
-    [SerializeField] private float maxSpeed = 5;        // 移動スピード(歩く早さ)
+    [SerializeField] private float maxSpeed = 10.0f;    // 移動スピード(歩く早さ)
 
-    public int stopTime = 20;                           //盾出したときに止まる時間
+    public int stopTime = 5;                            //盾出したときに止まる時間
     private int Timer = 0;                              //停止時間計測用
 
     public float Amplitude;                             // 振れ幅
@@ -71,9 +71,9 @@ public class Player2 : MonoBehaviour
 
     //---攻撃変数
     public Vector2 AttackDirection = Vector2.zero;     // 攻撃方向
-    public float AttckPosHeight = 8.0f;                 // シールド位置上下
-    public float AttckPosWidth = 8.0f;                  // シールド位置左右
-    public float DestroyTime = 3.0f;                    // シールドが消える時間
+    public float AttckPosHeight = 2.0f;                 // シールド位置上下
+    public float AttckPosWidth = 2.0f;                  // シールド位置左右
+    public float DestroyTime = 0.1f;                    // シールドが消える時間
     private bool isAttack;                              // 攻撃フラグ
     private Vector3 CurrentScale;                       // 現在のプレイヤーのスケールの値を格納 
 

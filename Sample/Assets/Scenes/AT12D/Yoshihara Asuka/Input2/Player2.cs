@@ -155,7 +155,7 @@ public class Player2 : MonoBehaviour
                 if (!animator.GetBool("Walk"))
                 {
                     animator.SetBool("Walk", true);
-
+                    
                 }
             }
             else if (animator.GetBool("Walk"))
@@ -195,6 +195,7 @@ public class Player2 : MonoBehaviour
     {
         if (!Pause.isPause)
         {
+            animator.speed = 1.0f;
 
             //---ジャンプ中なら移動処理をしない
             if (JumpNow == true)
@@ -249,6 +250,10 @@ public class Player2 : MonoBehaviour
             transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotationSpeed);
 
             ForceDirection = Vector2.zero;
+        }
+        else
+        {
+            animator.speed = 0.0f;
         }
     }
 
@@ -310,7 +315,6 @@ public class Player2 : MonoBehaviour
             animator.SetTrigger("Attack_DOWN");
 
         }
-
 
         //モデルの向きと反対方向に盾出したらモデル回転
         if ((AttackDirection.x > 0 && beforeDir.x < 0) || (AttackDirection.x < 0 && beforeDir.x > 0))

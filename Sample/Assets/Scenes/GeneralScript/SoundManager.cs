@@ -45,6 +45,8 @@ public static class SoundManager {
         audioSource.volume = 0.5f;
         //audioSource.Play();
         audioSource.PlayOneShot(audioSource.clip);
+        float endTime = audioSource.clip.length * Time.timeScale;
+
     }
 
     public static void Play(SoundData.eBGM _bgmDataNumber, AudioSource[] _audioSourceList) {
@@ -59,6 +61,23 @@ public static class SoundManager {
         audioSource.loop = true;
         audioSource.Play();
     }
+
+    public static void IgnorePlay(SoundData.eSE _seDataNumber, AudioSource[] _audioSourceList) {
+        AudioSource audioSource = GetUnusedSource(_audioSourceList);
+        if (audioSource == null)
+        {
+            Debug.Log("çƒê∂èoóàÇ‹ÇπÇÒÇ≈ÇµÇΩ");
+            return; // çƒê∂Ç≈Ç´Ç‹ÇπÇÒÇ≈ÇµÇΩ
+        }
+        audioSource.ignoreListenerPause = true;
+        audioSource.clip = SoundData.SEClip[(int)_seDataNumber];
+        audioSource.volume = 0.5f;
+        //audioSource.Play();
+        audioSource.PlayOneShot(audioSource.clip);
+        float endTime = audioSource.clip.length * Time.timeScale;
+
+    }
+
 
     //----------------------------------
     //
@@ -83,7 +102,6 @@ public static class SoundManager {
             if (_audioSourceList[i].isPlaying == false && _audioSourceList[i].clip)
             {
                 _audioSourceList[i].UnPause();
-                break;
             }
         }
     }

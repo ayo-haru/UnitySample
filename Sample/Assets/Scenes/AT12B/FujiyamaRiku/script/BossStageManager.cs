@@ -60,7 +60,7 @@ public class BossStageManager : MonoBehaviour
             GameData.OldMapNumber = GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
         }
         GameData.CurrentMapNumber = GameData.NextMapNumber;         // ボスシーンに到達している判定
-        SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);   // 現在のシーンをセーブ
+        //SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);   // 現在のシーンをセーブ
 
 
     }

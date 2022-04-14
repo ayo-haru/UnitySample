@@ -93,9 +93,9 @@ public class Boss1Attack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        obj = (GameObject)Resources.Load("strawberryPre");
-        Knifeobj = (GameObject)Resources.Load("knifePre");
-        Forkobj = (GameObject)Resources.Load("forkPre");
+        obj = (GameObject)Resources.Load("strawberry");
+        Knifeobj = (GameObject)Resources.Load("knife");
+        Forkobj = (GameObject)Resources.Load("fork");
         StrawberryNum = 0;
         Strawberry = new GameObject[Max_Strawberry];
         StrawberryUseFlg = new bool[Max_Strawberry];
@@ -119,10 +119,10 @@ public class Boss1Attack : MonoBehaviour
         {
             StrawberryRefFlg[i] = false;
             StrawberryUseFlg[i] = false;
-            MiddlePoint[i] = GameObject.Find("CubeEnd").transform.position; 
-            EndPoint[i] = GameObject.Find("Cube").transform.position; 
-            MiddlePoint[i].x -= (2.2f * i);
-            EndPoint[i].x -= (4.4f * i);
+            MiddlePoint[i] = GameObject.Find("Cube").transform.position; 
+            EndPoint[i] = GameObject.Find("CubeEnd").transform.position; 
+            MiddlePoint[i].x -= (11f * i);
+            EndPoint[i].x -= (22f * i);
         }
         OnlyFlg = false;
     }

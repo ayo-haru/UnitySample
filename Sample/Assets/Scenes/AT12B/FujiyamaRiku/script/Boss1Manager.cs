@@ -28,6 +28,8 @@ public class Boss1Manager : MonoBehaviour
     public static GameObject Bossobj;
     public static GameObject Boss;
     public static Vector3 BossPos;
+    private GameObject Warp;
+    private Vector3 WarpEFPoint;
     private void Awake()
     {
         
@@ -51,8 +53,9 @@ public class Boss1Manager : MonoBehaviour
     }
     // Start is called before the first frame update
     void Start()
-    {   
-       
+    {
+        Warp = GameObject.Find("MovePointToKitchen6");
+        Warp.SetActive(false);
     }
 
     // Update is called once per frame
@@ -84,7 +87,11 @@ public class Boss1Manager : MonoBehaviour
                 }
             case Boss1State.BOSS1_END:
                 {
-                    Destroy(GameObject.Find("PanCake(Clone)"));
+                    Destroy(Boss);
+                    Warp.SetActive(true);
+                    WarpEFPoint = Warp.transform.position;
+                    WarpEFPoint.y = 11.7f;
+                    EffectManager.Play(EffectData.eEFFECT.EF_DARKAREA, WarpEFPoint);
                     break;
                 }
             case Boss1State.BOSS1_DEAD:

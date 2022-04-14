@@ -136,7 +136,7 @@ public class GameOver : MonoBehaviour
                     //タイトルに戻る
                     //シーン遷
                     GameData.NextMapNumber = (int)GameData.eSceneState.TITLE_SCENE;
-                    SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
+                    //SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
                     Debug.Log("タイトルに戻るを押した");
                     break;
             }

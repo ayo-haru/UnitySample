@@ -27,7 +27,7 @@ public class KitchenSceneManager : MonoBehaviour
             GameData.OldMapNumber = GameData.NextMapNumber = currentSceneNum;
         }
         GameData.CurrentMapNumber =  GameData.NextMapNumber;
-        SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
+        //SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
 
         //----- ƒvƒŒƒCƒ„[‰Šú‰» -----
         if (!GameData.Player)

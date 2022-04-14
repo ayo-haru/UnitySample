@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
+
+
 public class Boss1Attack : MonoBehaviour
 {
     //ボスの攻撃の種類
@@ -23,10 +26,10 @@ public class Boss1Attack : MonoBehaviour
     bool LRSwitchFlg;
     private GameObject HpObject;
     HPgage HpScript;
-        //実装するかわからない左右判定用
-        //突進用変数群
-        //----------------------------------------------------------
-        GameObject Forkobj;                                     //フォークのオブジェクト生成用
+    //実装するかわからない左右判定用
+    //突進用変数群
+    //----------------------------------------------------------
+    GameObject Forkobj;                                     //フォークのオブジェクト生成用
     GameObject Fork;                                        //フォークのオブジェクト格納用
     Vector3 RushStartPoint;                                 //突進開始地点
     Vector3 RushEndPoint;                                   //突進終了地点
@@ -432,7 +435,6 @@ public class Boss1Attack : MonoBehaviour
             KnifeStartPoint.y = Boss1Manager.BossPos.y + 4;
             KnifeStartPoint.z = Boss1Manager.BossPos.z;
             KnifeEndPoint = GameData.PlayerPos;
-
             Knife = Instantiate(Knifeobj, KnifeStartPoint, Quaternion.identity);
             Vector3 KnifeDir = GameData.PlayerPos - Knife.transform.position;
             // ターゲットの方向への回転

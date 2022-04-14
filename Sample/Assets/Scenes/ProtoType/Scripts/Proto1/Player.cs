@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     {
         GameData.PlayerPos = this.transform.position;    // プレイヤーの位置を保存
 
-        if(this.transform.position.y < -5)
+        if (this.transform.position.y < -5)
         {
             this.transform.position = GameData.Player.transform.position = GameData.PlayerPos = ReSpawnPos;
         }

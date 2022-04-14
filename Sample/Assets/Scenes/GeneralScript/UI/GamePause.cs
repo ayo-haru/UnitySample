@@ -171,14 +171,6 @@ public class GamePause : MonoBehaviour
             BackTitle.GetComponent<UIBlink>().isBlink = true; // UIを点滅
             GameEnd.GetComponent<UIBlink>().isBlink = false;  // UIの点滅を消す
 
-            if (!keyboard.enterKey.wasReleasedThisFrame || isSetGamePad) // 選択を確定
-            {
-                if (!GameData.gamepad.buttonEast.wasReleasedThisFrame)
-                {
-                    return;
-                }
-            }
-
             if (keyboard.enterKey.wasReleasedThisFrame) // 選択を確定
             {
                 // 決定音

@@ -64,7 +64,7 @@ public class Player2 : MonoBehaviour
     //---ジャンプ変数
     public float GravityForce = -10.0f;                 // 重力
     private bool JumpNow = false;                       // ジャンプしているかどうか
-    private bool UnderParryNow = false;                 // 下パリィ中かどうか
+    [System.NonSerialized]public bool UnderParryNow = false;                 // 下パリィ中かどうか
     private bool GroundNow = false;                     // 地面と接地中かどうか
     [SerializeField] private float JumpForce = 5;       // ジャンプ力
 
@@ -173,7 +173,7 @@ public class Player2 : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Backspace))
             {
                 GameData.CurrentHP--;
-                SaveManager.saveHP(GameData.CurrentHP);
+                //SaveManager.saveHP(GameData.CurrentHP);
                 EffectManager.Play(EffectData.eEFFECT.EF_DAMAGE, this.transform.position);
                 SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
             }
@@ -184,7 +184,7 @@ public class Player2 : MonoBehaviour
                 {
                     EffectManager.Play(EffectData.eEFFECT.EF_HEAL, this.transform.position);
                     GameData.CurrentHP++;
-                    SaveManager.saveHP(GameData.CurrentHP);
+                    //SaveManager.saveHP(GameData.CurrentHP);
                 }
 
             }
@@ -438,7 +438,7 @@ public class Player2 : MonoBehaviour
                 return;
             }
             GameData.CurrentHP--;
-            SaveManager.saveHP(GameData.CurrentHP);
+            //SaveManager.saveHP(GameData.CurrentHP);
 
         //HPが0になったらゲームオーバーを表示
         if (GameData.CurrentHP <= 0)

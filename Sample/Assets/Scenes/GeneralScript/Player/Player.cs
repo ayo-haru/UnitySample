@@ -60,8 +60,14 @@ public class Player : MonoBehaviour
         //----- セーブ -----
         if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
         {
-            ReSpawnPos = this.transform.position;    // プレイヤーの位置を保存
-            SaveManager.saveLastPlayerPos(ReSpawnPos);
+            if (this.GetComponent<Player2>().UnderParryNow)
+            {
+                ReSpawnPos = this.transform.position;    // プレイヤーの位置を保存
+                SaveManager.saveLastPlayerPos(ReSpawnPos);
+                SaveManager.saveBossAlive(GameData.isAliveBoss1);
+                SaveManager.saveHP(GameData.CurrentHP);
+                SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
+            }
         }
 
 

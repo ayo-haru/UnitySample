@@ -89,6 +89,7 @@ public class GameOver : MonoBehaviour
         // ゲームオーバーになったら一回だけ処理を行う
         if (!isCalledOnce)
         {
+            //SoundManager.IgnorePlay(SoundData.eSE.SE_GAMEOVER, SoundData.GameAudioList);
             SoundManager.Play(SoundData.eSE.SE_GAMEOVER, SoundData.IndelibleAudioList);
             isCalledOnce = true;
             Pause.PauseStart();

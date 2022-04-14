@@ -77,8 +77,7 @@ public class GamePause : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         bool isSetGamePad = false;
         if (Gamepad.current != null)
         {
@@ -145,23 +144,32 @@ public class GamePause : MonoBehaviour
             BackTitle.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
 
-            if (!keyboard.enterKey.wasReleasedThisFrame || isSetGamePad) // 選択を確定
+            if (keyboard.enterKey.wasReleasedThisFrame) // 選択を確定
             {
-                if (!GameData.gamepad.buttonEast.wasReleasedThisFrame)
+                // 決定音
+                SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
+                Pause.isPause = false;
+                backgame.GetComponent<UIBlink>().isHide = true;
+                BackGame.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+            }
+            else if (isSetGamePad)
+            {
+                if (GameData.gamepad.buttonEast.wasReleasedThisFrame)
                 {
-                    return;
+                    // 決定音
+                    SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
+                    Pause.isPause = false;
+                    backgame.GetComponent<UIBlink>().isHide = true;
+                    BackGame.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+
                 }
             }
-
-            // 決定音
-            SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
-            Pause.isPause = false;
         }
         else if (select == (int)eSTATEPAUSE.RETURNTITLE)
         {
-            BackGame.GetComponent<UIBlink>().isBlink = false; // UIを点滅
-            BackTitle.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
-            GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+            BackGame.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+            BackTitle.GetComponent<UIBlink>().isBlink = true; // UIを点滅
+            GameEnd.GetComponent<UIBlink>().isBlink = false;  // UIの点滅を消す
 
             if (!keyboard.enterKey.wasReleasedThisFrame || isSetGamePad) // 選択を確定
             {
@@ -171,39 +179,70 @@ public class GamePause : MonoBehaviour
                 }
             }
 
-            // 決定音
-            SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
+            if (keyboard.enterKey.wasReleasedThisFrame) // 選択を確定
+            {
+                // 決定音
+                SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
 
-            // シーン関連
-            GameData.OldMapNumber = GameData.CurrentMapNumber;
-            string nextSceneName = GameData.GetNextScene((int)GameData.eSceneState.TITLE_SCENE);
-            SceneManager.LoadScene(nextSceneName);
+                // シーン関連
+                GameData.OldMapNumber = GameData.CurrentMapNumber;
+                string nextSceneName = GameData.GetNextScene((int)GameData.eSceneState.TITLE_SCENE);
+                SceneManager.LoadScene(nextSceneName);
+            }
+            else if (isSetGamePad)
+            {
+                if (GameData.gamepad.buttonEast.wasReleasedThisFrame)
+                {
+                    // 決定音
+                    SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
+
+                    // シーン関連
+                    GameData.OldMapNumber = GameData.CurrentMapNumber;
+                    string nextSceneName = GameData.GetNextScene((int)GameData.eSceneState.TITLE_SCENE);
+                    SceneManager.LoadScene(nextSceneName);
+
+                }
+            }
+
+
         }
         else if (select == (int)eSTATEPAUSE.QUITGAME)
         {
-            BackGame.GetComponent<UIBlink>().isBlink = false; // UIを点滅
+            BackGame.GetComponent<UIBlink>().isBlink = false;  // UIの点滅を消す
             BackTitle.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
-            GameEnd.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
+            GameEnd.GetComponent<UIBlink>().isBlink = true;    // UIを点滅
 
-            if (!keyboard.enterKey.wasReleasedThisFrame || isSetGamePad) // 選択を確定
+            if (keyboard.enterKey.wasReleasedThisFrame) // 選択を確定
             {
-                if (!GameData.gamepad.buttonEast.wasReleasedThisFrame)
-                {
-                    return;
-                }
-            }
-
-            // 決定音
-            SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
+                // 決定音
+                SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
 
 #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
+                UnityEditor.EditorApplication.isPlaying = false;
 #else
                 Application.Quit();
 #endif
 
-        }
+            }
 
+            else if (isSetGamePad)
+            {
+                if (GameData.gamepad.buttonEast.wasReleasedThisFrame)
+                {
+                    // 決定音
+                    SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
+
+#if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPlaying = false;
+#else
+                Application.Quit();
+#endif
+
+                }
+
+            }
+
+        }
     }
 
     private void SelectUp() {

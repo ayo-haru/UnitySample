@@ -92,7 +92,8 @@ public class GameOver : MonoBehaviour
             //SoundManager.IgnorePlay(SoundData.eSE.SE_GAMEOVER, SoundData.GameAudioList);
             SoundManager.Play(SoundData.eSE.SE_GAMEOVER, SoundData.IndelibleAudioList);
             isCalledOnce = true;
-            Pause.PauseStart();
+
+            Pause.isPause = true;
         }
         
         //f4キーが押されたら表示終了

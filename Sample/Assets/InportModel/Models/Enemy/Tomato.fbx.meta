@@ -3,7 +3,17 @@ guid: 45bc6a30d6c7eb24484d3c5f178e4788
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tomato_tex
+    second: {fileID: 2100000, guid: 5c639b98316a8b74d8ed73174b272e3b, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: tomato_color
+    second: {fileID: 2800000, guid: b247ca6451813b345952b56df0d0dc77, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -85,7 +95,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 1
+    globalScale: 100
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

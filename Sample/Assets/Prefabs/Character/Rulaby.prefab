@@ -619,8 +619,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1774375754255055915}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 44, y: 40.5, z: -1}
+
+  m_LocalPosition: {x: 5, y: 80, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+
   m_Children:
   - {fileID: 4109368582605353708}
   - {fileID: 7621637556933144987}
@@ -726,8 +728,8 @@ MonoBehaviour:
   GravityForce: -10
   JumpForce: 5
   AttackDirection: {x: 0, y: 0}
-  AttckPosHeight: 2
-  AttckPosWidth: 2
+  AttckPosHeight: 3
+  AttckPosWidth: 3
   DestroyTime: 0.1
 --- !u!114 &5176105881544950201
 MonoBehaviour:

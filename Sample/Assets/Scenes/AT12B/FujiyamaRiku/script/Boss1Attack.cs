@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.UI;
+
+
 public class Boss1Attack : MonoBehaviour
 {
     //ボスの攻撃の種類
@@ -23,10 +26,10 @@ public class Boss1Attack : MonoBehaviour
     bool LRSwitchFlg;
     private GameObject HpObject;
     HPgage HpScript;
-        //実装するかわからない左右判定用
-        //突進用変数群
-        //----------------------------------------------------------
-        GameObject Forkobj;                                     //フォークのオブジェクト生成用
+    //実装するかわからない左右判定用
+    //突進用変数群
+    //----------------------------------------------------------
+    GameObject Forkobj;                                     //フォークのオブジェクト生成用
     GameObject Fork;                                        //フォークのオブジェクト格納用
     Vector3 RushStartPoint;                                 //突進開始地点
     Vector3 RushEndPoint;                                   //突進終了地点
@@ -93,9 +96,9 @@ public class Boss1Attack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        obj = (GameObject)Resources.Load("strawberryPre");
-        Knifeobj = (GameObject)Resources.Load("knifePre");
-        Forkobj = (GameObject)Resources.Load("forkPre");
+        obj = (GameObject)Resources.Load("strawberry");
+        Knifeobj = (GameObject)Resources.Load("knife");
+        Forkobj = (GameObject)Resources.Load("fork");
         StrawberryNum = 0;
         Strawberry = new GameObject[Max_Strawberry];
         StrawberryUseFlg = new bool[Max_Strawberry];
@@ -119,10 +122,10 @@ public class Boss1Attack : MonoBehaviour
         {
             StrawberryRefFlg[i] = false;
             StrawberryUseFlg[i] = false;
-            MiddlePoint[i] = GameObject.Find("CubeEnd").transform.position; 
-            EndPoint[i] = GameObject.Find("Cube").transform.position; 
-            MiddlePoint[i].x -= (2.2f * i);
-            EndPoint[i].x -= (4.4f * i);
+            MiddlePoint[i] = GameObject.Find("Cube").transform.position; 
+            EndPoint[i] = GameObject.Find("CubeEnd").transform.position; 
+            MiddlePoint[i].x -= (11f * i);
+            EndPoint[i].x -= (22f * i);
         }
         OnlyFlg = false;
     }
@@ -432,7 +435,6 @@ public class Boss1Attack : MonoBehaviour
             KnifeStartPoint.y = Boss1Manager.BossPos.y + 4;
             KnifeStartPoint.z = Boss1Manager.BossPos.z;
             KnifeEndPoint = GameData.PlayerPos;
-
             Knife = Instantiate(Knifeobj, KnifeStartPoint, Quaternion.identity);
             Vector3 KnifeDir = GameData.PlayerPos - Knife.transform.position;
             // ターゲットの方向への回転

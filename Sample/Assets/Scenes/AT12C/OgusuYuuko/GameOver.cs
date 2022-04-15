@@ -89,6 +89,7 @@ public class GameOver : MonoBehaviour
         // ゲームオーバーになったら一回だけ処理を行う
         if (!isCalledOnce)
         {
+            //SoundManager.IgnorePlay(SoundData.eSE.SE_GAMEOVER, SoundData.GameAudioList);
             SoundManager.Play(SoundData.eSE.SE_GAMEOVER, SoundData.IndelibleAudioList);
             isCalledOnce = true;
             Pause.PauseStart();
@@ -135,7 +136,7 @@ public class GameOver : MonoBehaviour
                     //タイトルに戻る
                     //シーン遷
                     GameData.NextMapNumber = (int)GameData.eSceneState.TITLE_SCENE;
-                    SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
+                    //SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
                     Debug.Log("タイトルに戻るを押した");
                     break;
             }

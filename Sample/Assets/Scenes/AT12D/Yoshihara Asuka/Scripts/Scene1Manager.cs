@@ -18,9 +18,12 @@ public class Scene1Manager : MonoBehaviour
 {
     public GameObject playerPrefab;                             // プレイヤーのプレハブを扱う
     public GameObject HPSystem;     
+    private int SceneNumber = (int)GameData.eSceneState.Kitchen1_SCENE;
 
     private void Awake()
     {
+
+        Debug.Log("Awake");
         //---フレームレート固定
         Application.targetFrameRate = 60;
 
@@ -38,21 +41,35 @@ public class Scene1Manager : MonoBehaviour
         var instance = Instantiate(HPSystem);                    // HPUIを取得
         instance.transform.SetParent(canvas.transform,false);   // canvasの子オブジェクトにアタッチ
 
+        //for (int i = 0; i < SoundData.GameAudioList.Length; ++i)
+        //{
+        //    SoundData.GameAudioList[i] = gameObject.AddComponent<AudioSource>();
+        //}
+        SoundManager.Play(SoundData.eBGM.BGM_TITLE, SoundData.GameAudioList);
 
+        Debug.Log(SceneNumber);
+        Debug.Log("Awake");
     }
     // Start is called before the first frame update
-    void Start()
+    //void Start()
+    //{
+    //    for (int i = 0; i < SoundData.GameAudioList.Length; ++i)
+    //    {
+    //        SoundData.GameAudioList[i] = gameObject.AddComponent<AudioSource>();
+    //    }
+    //    SoundManager.Play(SoundData.eBGM.BGM_TITLE,SoundData.GameAudioList);
+    //}
+
+    private void Start()
     {
-        for(int i = 0; i < SoundData.GameAudioList.Length; ++i)
-        {
-            SoundData.GameAudioList[i] = gameObject.AddComponent<AudioSource>();
-        }
-        SoundManager.Play(SoundData.eBGM.BGM_TITLE,SoundData.GameAudioList);
+        Debug.Log("start");
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log("log");
+
     }
 }

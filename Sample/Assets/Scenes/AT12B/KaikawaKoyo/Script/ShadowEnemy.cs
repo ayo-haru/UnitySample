@@ -29,7 +29,6 @@ public class ShadowEnemy : MonoBehaviour
 
         position = transform.position;
         
-        // 黒い靄のエフェクトを出す
         effect = Instantiate(EffectData.EF[2]);
         effect.transform.position = position;
         effect.Play();
@@ -43,7 +42,7 @@ public class ShadowEnemy : MonoBehaviour
                 Enemy = (GameObject)Resources.Load("BroccoliEnemy");
                 break;
             case 2:
-                Enemy = (GameObject)Resources.Load("Tomato");
+                Enemy = (GameObject)Resources.Load("tomato");
                 break;
         }
     }

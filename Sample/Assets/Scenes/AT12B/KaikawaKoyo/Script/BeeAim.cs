@@ -22,9 +22,25 @@ public class BeeAim : MonoBehaviour
     private Vector3 targetPosition;
     private float FiringTime;
 
+    //[SerializeField]
+    //private GameObject FiringPoint;
+
+    //[SerializeField]
+    //private GameObject BeeBullet;
+
+    //[SerializeField]
+    //private float speed = 30.0f;
+
+    //[SerializeField]
+    //private float TimeOut = 3.0f;
+
+    // Start is called before the first frame update
     void Start()
     {
         Player = GameObject.FindWithTag("Player");    // プレイヤーのオブジェクトを探す
+        //BeeEnemy = GameObject.Find("Bee");
+        //BE = BeeEnemy.GetComponent<BeeEnemy>();
+        
     }
 
     // Update is called once per frame

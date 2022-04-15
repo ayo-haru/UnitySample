@@ -111,10 +111,12 @@ public class BeeEnemy : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)    // コライダーでプレイヤーを索敵したい
     {
+        
         if (other.CompareTag("Player"))
         {
             InArea = true;
         }
+        
     }
 
     private void OnCollisionEnter(Collision collision)

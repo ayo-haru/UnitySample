@@ -64,6 +64,9 @@ public class Boss1Attack : MonoBehaviour
     int StrawBerryMany;                                     //イチゴを最大数以上出さないようにするための処理←たぶんいらない
     bool[] StrawberryRefOnlyFlg;                            //弾かれたもので一回だけ処理するもの用
     static public bool[] StrawberryColPlayer;               //プレイヤーに当たった時用の処理
+    GameObject StrawberryAimObj;
+    GameObject [] StrawberryAim;
+    Vector3 [] StrawberryAimScale;
 
     //ベジエ曲線用
     Vector3  StartPoint;
@@ -89,6 +92,8 @@ public class Boss1Attack : MonoBehaviour
     Quaternion KnifeRotForward;                             //ナイフの角度変更用
     Quaternion KnifeRotDir;                                 //ナイフの角度変更用
     [SerializeField] Vector3 KnifeForward;                  //ナイフの前変更用
+
+    [SerializeField] public float KnifeThrowTime;
     //----------------------------------------------------------
 
 
@@ -99,6 +104,7 @@ public class Boss1Attack : MonoBehaviour
         obj = (GameObject)Resources.Load("strawberry");
         Knifeobj = (GameObject)Resources.Load("knife");
         Forkobj = (GameObject)Resources.Load("fork");
+        StrawberryAimObj = (GameObject)Resources.Load("StrawberryAim");
         StrawberryNum = 0;
         Strawberry = new GameObject[Max_Strawberry];
         StrawberryUseFlg = new bool[Max_Strawberry];
@@ -109,6 +115,8 @@ public class Boss1Attack : MonoBehaviour
         FinishTime = new float[Max_Strawberry];
         Ref_FinishTime = new float[Max_Strawberry];
         PlayerMiddlePoint = new Vector3[Max_Strawberry];
+        StrawberryAim = new GameObject[Max_Strawberry];
+        StrawberryAimScale = new Vector3[Max_Strawberry];
         BossStartPoint = GameObject.Find("BossPoint").transform.position;
         PlayerRefDir = new bool[Max_Strawberry];
         RefMiss = GameObject.Find("StrawberryMiss").transform.position;
@@ -298,6 +306,9 @@ public class Boss1Attack : MonoBehaviour
             //イチゴの生成後それぞれの名前変更
             Strawberry[StrawberryNum] = Instantiate(obj, StartPoint, Quaternion.identity);
             Strawberry[StrawberryNum].name = "strawberry" + StrawberryNum;
+            StrawberryAim[StrawberryNum] = Instantiate(StrawberryAimObj, EndPoint[StrawberryNum], Quaternion.Euler(-7.952f, 0f,0f));
+            StrawberryAim[StrawberryNum].transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            StrawberryAimScale[StrawberryNum] = new Vector3(1.0f, 1.0f, 1.0f);
             //イチゴの使用状況変更
             StrawberryUseFlg[StrawberryNum] = true;
             StrawBerryMany += 1;
@@ -309,6 +320,13 @@ public class Boss1Attack : MonoBehaviour
             {
             if (StrawberryUseFlg[i])
             {
+                if (StrawberryAimScale[i].x <= 2.5f)
+                {
+                    StrawberryAim[i].transform.localScale = new Vector3(StrawberryAimScale[i].x, StrawberryAimScale[i].y, StrawberryAimScale[i].z);
+                    StrawberryAimScale[i].x += 0.025f;
+                    StrawberryAimScale[i].y += 0.025f;
+                    StrawberryAimScale[i].z += 0.025f;
+                }
                 //弾かれたときに一回だけの処理
                 if (!StrawberryRefOnlyFlg[i] && StrawberryRefFlg[i])
                 {
@@ -382,6 +400,7 @@ public class Boss1Attack : MonoBehaviour
                         StrawberryRefFlg[i] = false ;
                         StrawberryRefOnlyFlg[i] = false; ;
                         Destroy(Strawberry[i]);
+                        Destroy(StrawberryAim[i]);
                         Ref_FinishTime[i] = 0;
                         AliveStrawberry++;
                         FinishTime[i] = 0;
@@ -409,6 +428,7 @@ public class Boss1Attack : MonoBehaviour
                     FinishTime[i] = 0;
                     StrawberryUseFlg[i] = false;
                     Destroy(Strawberry[i]);
+                    Destroy(StrawberryAim[i]);
                     AliveStrawberry++;
                 }
                 //弾が到着したら消す,攻撃をはじいていたら処理をしない
@@ -417,6 +437,7 @@ public class Boss1Attack : MonoBehaviour
                     FinishTime[i] = 0;
                     StrawberryUseFlg[i] = false;
                     Destroy(Strawberry[i]);
+                    Destroy(StrawberryAim[i]);
                     AliveStrawberry++;
                 }
             }

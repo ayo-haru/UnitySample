@@ -46,7 +46,6 @@ public class CarrotEnemy : MonoBehaviour
             // プレイヤーを見つけたら攻撃開始
             if (InArea && ED.isAlive)
             {
-
                 if (speed <= 1)
                 {
                     speed += MoveSpeed * Time.deltaTime;

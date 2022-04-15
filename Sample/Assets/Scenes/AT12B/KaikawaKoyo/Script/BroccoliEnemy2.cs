@@ -1,17 +1,17 @@
 //==========================================================
-//      ブロッコリー雑魚の攻撃
-//      作成日　2022/03/18
+//      ブロッコリー雑魚2の攻撃
+//      作成日　2022/04/15
 //      作成者　海川晃楊
 //      
 //      <開発履歴>
-//      2022/03/18      
+//      2022/04/15      
 //
 //==========================================================
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BroccoliEnemy : MonoBehaviour
+public class BroccoliEnemy2 : MonoBehaviour
 {
     Transform Target;
     GameObject Player;
@@ -22,9 +22,11 @@ public class BroccoliEnemy : MonoBehaviour
 
     [SerializeField]
     float MoveSpeed = 5.0f;
-    //[SerializeField]
-    //float SwingSpeed;
-    
+    private float PosY;
+    private float Jump = 500.0f;
+    private bool jump = false;
+    private float delay;
+
     bool InArea = false;
     private bool look = false;
 
@@ -43,9 +45,11 @@ public class BroccoliEnemy : MonoBehaviour
 
     private void Update()
     {
-        if(!Pause.isPause)
+        if (!Pause.isPause)
         {
             rot = transform.rotation;
+
+            PosY = transform.position.y + 6.0f;
             // プレイヤーを見つけたら攻撃開始
             if (InArea && ED.isAlive)
             {
@@ -53,6 +57,21 @@ public class BroccoliEnemy : MonoBehaviour
                 // プレイヤーに向かって特攻する
                 float step = MoveSpeed * Time.deltaTime;
                 rb.position = Vector3.MoveTowards(pos, Target.position, step);
+
+                // プレイヤーのジャンプに合わせてジャンプする
+                //transform.position = new Vector3(0.0f, Target.position.y, 0.0f);
+
+                if (Target.position.y > PosY && !jump)
+                {
+                    delay += Time.deltaTime;
+                    if (delay > 0.3f)
+                    {
+                        rb.AddForce(transform.up * Jump, ForceMode.Force);
+                        jump = true;
+                        delay = 0.0f;
+                    }
+                        
+                }
 
                 if (Target.position.x < transform.position.x && look)   // プレイヤーのほうを向く処理
                 {
@@ -74,7 +93,7 @@ public class BroccoliEnemy : MonoBehaviour
                 }
             }
         }
-       
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -82,7 +101,7 @@ public class BroccoliEnemy : MonoBehaviour
         // 接地判定
         if (collision.gameObject.CompareTag("Ground"))
         {
-            rb.constraints = RigidbodyConstraints.FreezePositionY;
+            jump = false;
         }
     }
 

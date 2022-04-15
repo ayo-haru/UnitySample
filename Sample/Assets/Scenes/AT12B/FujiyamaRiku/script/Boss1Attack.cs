@@ -94,6 +94,12 @@ public class Boss1Attack : MonoBehaviour
     [SerializeField] Vector3 KnifeForward;                  //ナイフの前変更用
 
     [SerializeField] public float KnifeThrowTime;
+    float KnifeThrowNowTime;
+    GameObject KnifeAimObj;
+    GameObject KnifeAim;
+    Vector3 KnifeAimPos;
+    bool AimFlg;
+    bool AimOnly;
     //----------------------------------------------------------
 
 
@@ -105,6 +111,7 @@ public class Boss1Attack : MonoBehaviour
         Knifeobj = (GameObject)Resources.Load("knife");
         Forkobj = (GameObject)Resources.Load("fork");
         StrawberryAimObj = (GameObject)Resources.Load("StrawberryAim");
+        KnifeAimObj = (GameObject)Resources.Load("KnifeAim");
         StrawberryNum = 0;
         Strawberry = new GameObject[Max_Strawberry];
         StrawberryUseFlg = new bool[Max_Strawberry];
@@ -447,8 +454,30 @@ public class Boss1Attack : MonoBehaviour
     public void Boss1Knife()
     {
         //ナイフ遠距離
-        
-        if(!OnlyFlg)
+        if(!AimFlg)
+        {
+            if (!AimOnly)
+            {
+                KnifeAim = Instantiate(KnifeAimObj, GameData.PlayerPos, Quaternion.Euler(90f, 0f, 0f));
+                AimOnly = true;
+            }
+            KnifeAimPos.x = GameData.PlayerPos.x;
+            KnifeAimPos.y = GameData.PlayerPos.y;
+            KnifeAimPos.z = GameData.PlayerPos.z + 3.0f;
+            
+            if (KnifeThrowTime >= KnifeThrowNowTime)
+            {
+                KnifeAim.transform.position = KnifeAimPos;
+                KnifeThrowNowTime += Time.deltaTime;
+            }
+            else
+            {
+                AimFlg = true;
+                AimOnly = false;
+                KnifeThrowNowTime = 0;
+            }
+        }
+        if(!OnlyFlg && AimFlg)
         {
             
             OnlyFlg = true;
@@ -462,7 +491,6 @@ public class Boss1Attack : MonoBehaviour
             KnifeRotDir = Quaternion.LookRotation(KnifeDir, Vector3.back);
             KnifeRotForward = Quaternion.FromToRotation(KnifeForward, Vector3.forward);
             Knife.transform.rotation = KnifeRotDir * KnifeRotForward;
-
             SoundManager.Play(SoundData.eSE.SE_BOOS1_KNIFE, SoundData.GameAudioList);
             
         }
@@ -481,8 +509,10 @@ public class Boss1Attack : MonoBehaviour
             if (KnifeTime >= 1.0f)
             {
                 OnlyFlg = false;
+                AimFlg = false;
                 KnifeTime = 0;
                 Destroy(Knife);
+                Destroy(KnifeAim);
                 if (HPgage.currentHp >= 50)
                 {
                     BossMove.SetState(BossMove.Boss_State.idle);
@@ -507,8 +537,10 @@ public class Boss1Attack : MonoBehaviour
                 HpScript.DelHP(KnifeDamage);
                 OnlyFlg = false;
                 KnifeRefFlg = false;
+                AimFlg = false;
                 KnifeTime = 0;
                 KnifeRefTime = 0;
+                Destroy(KnifeAim);
                 SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
 
                 Destroy(Knife);

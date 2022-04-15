@@ -21,6 +21,7 @@ public class TomatoEnemy : MonoBehaviour
     //private Vector3 aim;
     private bool look;
     private bool isGround;
+    private float delay;
 
     [SerializeField]
     float MoveSpeed = 2.0f;
@@ -71,9 +72,15 @@ public class TomatoEnemy : MonoBehaviour
                 // íµÇÀÇÈèàóù
                 if (isGround)
                 {
-                    rb.AddForce(transform.up * 200.0f, ForceMode.Force);
-                    SoundManager.Play(SoundData.eSE.SE_TOMATO_BOUND, SoundData.GameAudioList);
-                    isGround = false;
+                    delay += Time.deltaTime;
+                    if(delay > 0.5f)
+                    {
+                        rb.AddForce(transform.up * 200.0f, ForceMode.Force);
+                        //SoundManager.Play(SoundData.eSE.SE_TOMATO_BOUND, SoundData.GameAudioList);
+                        isGround = false;
+                        delay = 0.0f;
+                    }
+                    
                 }
             }
         }
@@ -91,7 +98,7 @@ public class TomatoEnemy : MonoBehaviour
         // ÉvÉåÉCÉÑÅ[Ç…ìñÇΩÇ¡ÇΩÇÁè¡Ç¶ÇÈ
         if (collision.gameObject.CompareTag("Player"))
         {
-            SoundManager.Play(SoundData.eSE.SE_TOMATO_BOMB, SoundData.GameAudioList);
+            //SoundManager.Play(SoundData.eSE.SE_TOMATO_BOMB, SoundData.GameAudioList);
             Destroy(gameObject, 0.0f);
         }
     }

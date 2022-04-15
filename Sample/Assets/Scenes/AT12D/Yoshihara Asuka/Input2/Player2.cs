@@ -1,17 +1,17 @@
 //=============================================================================
 //
-// ƒRƒ“ƒgƒ[ƒ‰[‘Î‰Player
+// ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼å¯¾å¿œPlayer
 //
-// ì¬“ú:2022/03/18
-// ì¬Ò:‹gŒ´”ò’¹
+// ä½œæˆæ—¥:2022/03/18
+// ä½œæˆè€…:å‰åŸé£›é³¥
 //
-// <ŠJ”­—š—ğ>
-// 2022/03/18   ì¬
-// 2022/03/20   ˆÚ“®AUŒ‚À{(‚±‚Ì“_‚Å‚ÍAddForce)
-// 2022/03/25   ƒvƒŒƒCƒ„[‚Ì‹““®C³(ˆÚ“®‚ğVelocityŒvZ‚É•ÏX)
-// 2022/03/25   ƒvƒŒƒCƒ„[‚Ì‹““®C³(ƒWƒƒƒ“ƒv’†‚Ì‹““®•ÏXƒXƒgƒŒƒCƒtƒAƒŠ)
-// 2022/04/01   ƒAƒjƒ[ƒVƒ‡ƒ““±“ü
-// 2022/04/02   ‰ºƒpƒŠƒB“±“ü   
+// <é–‹ç™ºå±¥æ­´>
+// 2022/03/18   ä½œæˆ
+// 2022/03/20   ç§»å‹•ã€æ”»æ’ƒå®Ÿæ–½(ã“ã®æ™‚ç‚¹ã§ã¯AddForce)
+// 2022/03/25   ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æŒ™å‹•ä¿®æ­£(ç§»å‹•ã‚’Velocityè¨ˆç®—ã«å¤‰æ›´)
+// 2022/03/25   ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æŒ™å‹•ä¿®æ­£(ã‚¸ãƒ£ãƒ³ãƒ—ä¸­ã®æŒ™å‹•å¤‰æ›´ã‚¹ãƒˆãƒ¬ã‚¤ãƒ•ã‚¢ãƒª)
+// 2022/04/01   ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å°å…¥
+// 2022/04/02   ä¸‹ãƒ‘ãƒªã‚£å°å…¥   
 //=============================================================================
 using System;
 using System.Collections;
@@ -21,99 +21,98 @@ using UnityEngine.InputSystem;
 
 public class Player2 : MonoBehaviour
 {
-    //---•Ï”éŒ¾
+    //---å¤‰æ•°å®£è¨€
 
-    //---InputSystemŠÖ˜A
-    private Game_pad PlayerActionAsset;                 // InputAction‚Å¶¬‚µ‚½‚à‚Ì‚ğg—p
-    private InputAction move;                           // InputAction‚Ìmove‚ğˆµ‚¤
-    private InputAction Attacking;                      // InputAction‚Ìmove‚ğˆµ‚¤
+    //---InputSystemé–¢é€£
+    private Game_pad PlayerActionAsset;                 // InputActionã§ç”Ÿæˆã—ãŸã‚‚ã®ã‚’ä½¿ç”¨
+    private InputAction move;                           // InputActionã®moveã‚’æ‰±ã†
+    private InputAction Attacking;                      // InputActionã®moveã‚’æ‰±ã†
 
-    //---U“®
-    [SerializeField] private float LowFrequency;        // ¶‘¤‚ÌU“®‚Ì’l
-    [SerializeField] private float HighFrequency;       // ‰E‘¤‚ÌU“®‚Ì’l
-    [SerializeField] private float VibrationTime;       // U“®ŠÔ
+    //---æŒ¯å‹•
+    [SerializeField] private float LowFrequency;        // å·¦å´ã®æŒ¯å‹•ã®å€¤
+    [SerializeField] private float HighFrequency;       // å³å´ã®æŒ¯å‹•ã®å€¤
+    [SerializeField] private float VibrationTime;       // æŒ¯å‹•æ™‚é–“
 
-    //---ƒAƒjƒ[ƒVƒ‡ƒ“ŠÖ˜A
-    public Animator animator;                           // ƒAƒjƒ[ƒ^[ƒRƒ“ƒ|[ƒlƒ“ƒgæ“¾
+    //---ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–¢é€£
+    public Animator animator;                           // ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚¿ãƒ¼ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆå–å¾—
 
 
-    //---ƒRƒ“ƒ|[ƒlƒ“ƒgæ“¾
+    //---ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆå–å¾—
     private Rigidbody rb;
-    public GameObject prefab;                           // "Weapon"ƒvƒŒƒnƒu‚ğŠi”[‚·‚é•Ï”
-    GameObject hp;                                      // HP‚ÌƒIƒuƒWƒFƒNƒg‚ğŠi”[
-    HPManager hpmanager;                                // HPManager‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ğæ“¾‚·‚é•Ï”
-    BoxCollider box_collider;                           //‘«Œ³‚Ì“–‚½‚è”»’è
+    public GameObject prefab;                           // "Weapon"ãƒ—ãƒ¬ãƒãƒ–ã‚’æ ¼ç´ã™ã‚‹å¤‰æ•°
+    GameObject hp;                                      // HPã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ ¼ç´
+    HPManager hpmanager;                                // HPManagerã®ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚’å–å¾—ã™ã‚‹å¤‰æ•°
+    BoxCollider box_collider;                           //è¶³å…ƒã®å½“ãŸã‚Šåˆ¤å®š
 
-    //---ˆÚ“®•Ï”
-    private Vector3 PlayerPos;                          // ƒvƒŒƒCƒ„[‚ÌÀ•W
-    private Vector2 ForceDirection = Vector2.zero;      // ˆÚ“®‚·‚é•ûŒü‚ğŒˆ‚ß‚é
-    private Vector2 MovingVelocity = Vector3.zero;      // ˆÚ“®‚·‚éƒxƒNƒgƒ‹
-    [SerializeField] private float maxSpeed = 10.0f;    // ˆÚ“®ƒXƒs[ƒh(•à‚­‘‚³)
+    //---ç§»å‹•å¤‰æ•°
+    private Vector3 PlayerPos;                          // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åº§æ¨™
+    private Vector2 ForceDirection = Vector2.zero;      // ç§»å‹•ã™ã‚‹æ–¹å‘ã‚’æ±ºã‚ã‚‹
+    private Vector2 MovingVelocity = Vector3.zero;      // ç§»å‹•ã™ã‚‹ãƒ™ã‚¯ãƒˆãƒ«
+    [SerializeField] private float maxSpeed = 10.0f;    // ç§»å‹•ã‚¹ãƒ”ãƒ¼ãƒ‰(æ­©ãæ—©ã•)
 
-    public int stopTime = 5;                            //‚o‚µ‚½‚Æ‚«‚É~‚Ü‚éŠÔ
-    private int Timer = 0;                              //’â~ŠÔŒv‘ª—p
+    public int stopTime = 5;                            //ç›¾å‡ºã—ãŸã¨ãã«æ­¢ã¾ã‚‹æ™‚é–“
+    private int Timer = 0;                              //åœæ­¢æ™‚é–“è¨ˆæ¸¬ç”¨
 
-    public float Amplitude;                             // U‚ê•
-    private int FylFrameCount;                          // ƒtƒƒtƒ‚µ‚Ä‚éˆ—‚Ég‚¤ƒtƒŒ[ƒ€ƒJƒEƒ“ƒg
+    public float Amplitude;                             // æŒ¯ã‚Œå¹…
+    private int FylFrameCount;                          // ãƒ•ãƒ¯ãƒ•ãƒ¯ã—ã¦ã‚‹å‡¦ç†ã«ä½¿ã†ãƒ•ãƒ¬ãƒ¼ãƒ ã‚«ã‚¦ãƒ³ãƒˆ
 
-    //---‰ñ“]•Ï”
-    private Vector2 beforeDir;                          //ÅŒã‚É“ü—Í‚³‚ê‚½•ûŒü
-    public float rotationSpeed = 30.0f;                 //‰ñ“]ƒXƒs[ƒh
-    private Vector3 scale;                              //ƒXƒP[ƒ‹
+    //---å›è»¢å¤‰æ•°
+    private Vector2 beforeDir;                          //æœ€å¾Œã«å…¥åŠ›ã•ã‚ŒãŸæ–¹å‘
+    public float rotationSpeed = 30.0f;                 //å›è»¢ã‚¹ãƒ”ãƒ¼ãƒ‰
+    private Vector3 scale;                              //ã‚¹ã‚±ãƒ¼ãƒ«
 
-    //---ƒWƒƒƒ“ƒv•Ï”
-    public float GravityForce = -10.0f;                         // d—Í
-    [System.NonSerialized]public bool JumpNow = false;          // ƒWƒƒƒ“ƒv‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
-    [System.NonSerialized] public bool UnderParryNow = false;   // ‰ºƒpƒŠƒB’†‚©‚Ç‚¤‚©
-    [System.NonSerialized] public bool GroundNow = false;       // ’n–Ê‚ÆÚ’n’†‚©‚Ç‚¤‚©
-    [SerializeField] private float JumpForce = 5;               // ƒWƒƒƒ“ƒv—Í
+    //---ã‚¸ãƒ£ãƒ³ãƒ—å¤‰æ•°
+    public float GravityForce = -10.0f;                         // é‡åŠ›
+    [System.NonSerialized]public bool JumpNow = false;          // ã‚¸ãƒ£ãƒ³ãƒ—ã—ã¦ã„ã‚‹ã‹ã©ã†ã‹
+    [System.NonSerialized] public bool UnderParryNow = false;   // ä¸‹ãƒ‘ãƒªã‚£ä¸­ã‹ã©ã†ã‹
+    [System.NonSerialized] public bool GroundNow = false;       // åœ°é¢ã¨æ¥åœ°ä¸­ã‹ã©ã†ã‹
+    [SerializeField] private float JumpForce = 5;               // ã‚¸ãƒ£ãƒ³ãƒ—åŠ›
 
-
-    //---UŒ‚•Ï”
-    public Vector2 AttackDirection = Vector2.zero;     // UŒ‚•ûŒü
-    public float AttckPosHeight = 2.0f;                 // ƒV[ƒ‹ƒhˆÊ’uã‰º
-    public float AttckPosWidth = 2.0f;                  // ƒV[ƒ‹ƒhˆÊ’u¶‰E
-    public float DestroyTime = 0.1f;                    // ƒV[ƒ‹ƒh‚ªÁ‚¦‚éŠÔ
-    private bool isAttack;                              // UŒ‚ƒtƒ‰ƒO
-    private Vector3 CurrentScale;                       // Œ»İ‚ÌƒvƒŒƒCƒ„[‚ÌƒXƒP[ƒ‹‚Ì’l‚ğŠi”[ 
+    //---æ”»æ’ƒå¤‰æ•°
+    public Vector2 AttackDirection = Vector2.zero;     // æ”»æ’ƒæ–¹å‘
+    public float AttckPosHeight = 2.0f;                 // ã‚·ãƒ¼ãƒ«ãƒ‰ä½ç½®ä¸Šä¸‹
+    public float AttckPosWidth = 2.0f;                  // ã‚·ãƒ¼ãƒ«ãƒ‰ä½ç½®å·¦å³
+    public float DestroyTime = 0.1f;                    // ã‚·ãƒ¼ãƒ«ãƒ‰ãŒæ¶ˆãˆã‚‹æ™‚é–“
+    private bool isAttack;                              // æ”»æ’ƒãƒ•ãƒ©ã‚°
+    private Vector3 CurrentScale;                       // ç¾åœ¨ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¹ã‚±ãƒ¼ãƒ«ã®å€¤ã‚’æ ¼ç´ 
 
 
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        PlayerActionAsset = new Game_pad();             // InputActionƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+        PlayerActionAsset = new Game_pad();             // InputActionã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
     }
 
 
-    //---ƒ{ƒ^ƒ“ƒ“‚Ì“ü—Í‚ğŒ‹‚Ñ•t‚¯‚é
+    //---ãƒœã‚¿ãƒ³ãƒ³ã®å…¥åŠ›ã‚’çµã³ä»˜ã‘ã‚‹
     private void OnEnable()
     {
-        //---ƒXƒeƒBƒbƒN“ü—Í‚ğæ‚é‚½‚ß‚Ìİ’è
+        //---ã‚¹ãƒ†ã‚£ãƒƒã‚¯å…¥åŠ›ã‚’å–ã‚‹ãŸã‚ã®è¨­å®š
         move = PlayerActionAsset.Player.Move;           
         Attacking = PlayerActionAsset.Player.Attack;
 
-        //---ActionƒCƒxƒ“ƒg“o˜^(ƒ{ƒ^ƒ““ü—Í)
+        //---Actionã‚¤ãƒ™ãƒ³ãƒˆç™»éŒ²(ãƒœã‚¿ãƒ³å…¥åŠ›)
         PlayerActionAsset.Player.Attack.started += OnAttack;
 
-        //PlayerActionAsset.Player.Jump.started += OnJump;            // started    ... ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½uŠÔ
-        //PlayerActionAsset.Player.Jump.performed += OnJump;        // performed  ... ’†ŠÔ‚­‚ç‚¢
-        //PlayerActionAsset.Player.Jump.canceled += OnJump;         // canceled   ... ƒ{ƒ^ƒ“‚ğ—£‚µ‚½uŠÔ
+        //PlayerActionAsset.Player.Jump.started += OnJump;            // started    ... ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸç¬é–“
+        //PlayerActionAsset.Player.Jump.performed += OnJump;        // performed  ... ä¸­é–“ãã‚‰ã„
+        //PlayerActionAsset.Player.Jump.canceled += OnJump;         // canceled   ... ãƒœã‚¿ãƒ³ã‚’é›¢ã—ãŸç¬é–“
 
-        //‰ñ“]•Ï”‚Ì‰Šú‰»
+        //å›è»¢å¤‰æ•°ã®åˆæœŸåŒ–
         beforeDir = new Vector2(1.0f, 0.0f);
 
-        //---InputAction‚Ì—LŒø‰»(‚±‚ê‚©‚©‚È‚¢‚ÆA“ü—Í‚Æ‚ê‚È‚¢B)
+        //---InputActionã®æœ‰åŠ¹åŒ–(ã“ã‚Œã‹ã‹ãªã„ã¨ã€å…¥åŠ›ã¨ã‚Œãªã„ã€‚)
         PlayerActionAsset.Player.Enable();
 
     }
 
     private void OnDisable()
     {
-        PlayerActionAsset.Player.Attack.started -= OnAttack;        // started...ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½uŠÔ
-        //PlayerActionAsset.Player.Jump.started -= OnJump;            // started    ... ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½uŠÔ
+        PlayerActionAsset.Player.Attack.started -= OnAttack;        // started...ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸç¬é–“
+        //PlayerActionAsset.Player.Jump.started -= OnJump;            // started    ... ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸç¬é–“
 
-        //---InputAction‚Ì–³Œø‰»
+        //---InputActionã®ç„¡åŠ¹åŒ–
         PlayerActionAsset.Player.Disable();
     }
 
@@ -126,8 +125,8 @@ public class Player2 : MonoBehaviour
 
         if (GameObject.Find("HPSystem(Clone)"))
         {
-            hp = GameObject.Find("HPSystem(Clone)");        // HPSystem‚ğQÆ
-            hpmanager = hp.GetComponent<HPManager>();       // HPSystem‚Ìg—p‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒg
+            hp = GameObject.Find("HPSystem(Clone)");        // HPSystemã‚’å‚ç…§
+            hpmanager = hp.GetComponent<HPManager>();       // HPSystemã®ä½¿ç”¨ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
         }
         scale = transform.localScale;
 
@@ -139,7 +138,7 @@ public class Player2 : MonoBehaviour
     {
         if (!Pause.isPause)
         {
-            //---rb.velocity‚É‚æ‚éˆÚ“®ˆ—
+            //---rb.velocityã«ã‚ˆã‚‹ç§»å‹•å‡¦ç†
             ForceDirection += move.ReadValue<Vector2>();
             ForceDirection.Normalize();
             MovingVelocity = ForceDirection * maxSpeed;
@@ -149,7 +148,7 @@ public class Player2 : MonoBehaviour
                 Attack();
             }
 
-            //---ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶
+            //---ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿ
             if (Mathf.Abs(ForceDirection.x) > 0 && Mathf.Abs(ForceDirection.y) == 0)
             {
                 if (!animator.GetBool("Walk"))
@@ -163,28 +162,28 @@ public class Player2 : MonoBehaviour
                 animator.SetBool("Walk", false);
             }
 
-            //---HPƒIƒuƒWƒFƒNƒg‚ğŒŸõ
+            //---HPã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æ¤œç´¢
             if (!GameObject.Find("HPSystem(Clone)"))
             {
                 return;
             }
 
-            //---ƒoƒbƒNƒXƒy[ƒXƒL[‚ÅHP‚ğŒ¸‚ç‚·(ƒfƒoƒbƒO)
+            //---ãƒãƒƒã‚¯ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ã§HPã‚’æ¸›ã‚‰ã™(ãƒ‡ãƒãƒƒã‚°)
             if (Input.GetKeyDown(KeyCode.Backspace))
             {
                 GameData.CurrentHP--;
-                SaveManager.saveHP(GameData.CurrentHP);
+                //SaveManager.saveHP(GameData.CurrentHP);
                 EffectManager.Play(EffectData.eEFFECT.EF_DAMAGE, this.transform.position);
                 SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
             }
-            //---ƒRƒ“ƒgƒ[ƒ‰[ƒL[‚ÅHP‚ğ‘‚â‚·(ƒfƒoƒbƒO)
+            //---ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã‚­ãƒ¼ã§HPã‚’å¢—ã‚„ã™(ãƒ‡ãƒãƒƒã‚°)
             if (Input.GetKeyDown(KeyCode.LeftControl))
             {
                 if (GameData.CurrentHP < hpmanager.MaxHP)
                 {
                     EffectManager.Play(EffectData.eEFFECT.EF_HEAL, this.transform.position);
                     GameData.CurrentHP++;
-                    SaveManager.saveHP(GameData.CurrentHP);
+                    //SaveManager.saveHP(GameData.CurrentHP);
                 }
 
             }
@@ -197,20 +196,20 @@ public class Player2 : MonoBehaviour
         {
             animator.speed = 1.0f;
 
-            //---ƒWƒƒƒ“ƒv’†‚È‚çˆÚ“®ˆ—‚ğ‚µ‚È‚¢
+            //---ã‚¸ãƒ£ãƒ³ãƒ—ä¸­ãªã‚‰ç§»å‹•å‡¦ç†ã‚’ã—ãªã„
             if (JumpNow == true)
             {
                 Gravity();
                 //return;
             }
 
-            //---ˆÚ“®ˆ—(AddForce‚Ìˆ—)
+            //---ç§»å‹•å‡¦ç†(AddForceã®å‡¦ç†)
             //SpeedCheck();
             //ForceDirection += move.ReadValue<Vector2>();
             //ForceDirection.Normalize();
             //rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
 
-            //---ˆÚ“®ˆ—(velocity‚Ìˆ—)
+            //---ç§»å‹•å‡¦ç†(velocityã®å‡¦ç†)
             if (Timer <= 0)
             {
                 rb.velocity = new Vector3(MovingVelocity.x, rb.velocity.y - MovingVelocity.y, 0);
@@ -221,32 +220,32 @@ public class Player2 : MonoBehaviour
                 rb.velocity = new Vector3(0, rb.velocity.y - MovingVelocity.y, 0);
             }
 
-            //---‰ñ“]ˆ—ˆ—
-            //•ûŒü‚ª•Ï‚í‚Á‚Ä‚½‚çƒXƒP[ƒ‹‚˜‚ğ”½“]
+            //---å›è»¢å‡¦ç†å‡¦ç†
+            //æ–¹å‘ãŒå¤‰ã‚ã£ã¦ãŸã‚‰ã‚¹ã‚±ãƒ¼ãƒ«ï½˜ã‚’åè»¢
             if ((ForceDirection.x > 0 && beforeDir.x < 0) || (ForceDirection.x < 0 && beforeDir.x > 0))
             {
                 scale.x *= -1;
                 transform.localScale = scale;
             }
-            //‰ñ“]‚Ì–Ú•W’l
+            //å›è»¢ã®ç›®æ¨™å€¤
             Quaternion target = new Quaternion();
             if (ForceDirection.magnitude > 0.01f)
             {
-                //•ûŒü‚ğ•Û‘¶
+                //æ–¹å‘ã‚’ä¿å­˜
                 beforeDir = ForceDirection;
-                //Œü‚«‚ğİ’è
+                //å‘ãã‚’è¨­å®š
                 target = Quaternion.LookRotation(ForceDirection);
             }
             else
             {
-                //“ü—Í‚³‚ê‚Ä‚È‚©‚Á‚½‚Æ‚«
-                //‰ñ“]‚ª’†“r”¼’[‚È‚Í•â³‚·‚é
+                //å…¥åŠ›ã•ã‚Œã¦ãªã‹ã£ãŸã¨ã
+                //å›è»¢ãŒä¸­é€”åŠç«¯ãªæ™‚ã¯è£œæ­£ã™ã‚‹
                 if (transform.rotation.y != 90.0f && transform.rotation.y != -90.0f)
                 {
-                    target = Quaternion.LookRotation(beforeDir); //Œü‚«‚ğ•ÏX‚·‚é
+                    target = Quaternion.LookRotation(beforeDir); //å‘ãã‚’å¤‰æ›´ã™ã‚‹
                 }
             }
-            //‚ä‚Á‚­‚è‰ñ“]‚³‚¹‚é
+            //ã‚†ã£ãã‚Šå›è»¢ã•ã›ã‚‹
             transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotationSpeed);
 
             ForceDirection = Vector2.zero;
@@ -265,9 +264,9 @@ public class Player2 : MonoBehaviour
 
     //===================================================================
     //
-    //  UŒ‚
-    //  OnAttack‚ÆAttack‚ÅƒZƒbƒgBOnAttack‚ÅUŒ‚ƒtƒ‰ƒO‚ğ—§‚Ä‚ÄA
-    //  Attack‚Ì’†‚ÉUŒ‚‚Ìˆ—‚ğ‘‚­
+    //  æ”»æ’ƒ
+    //  OnAttackã¨Attackã§ã‚»ãƒƒãƒˆã€‚OnAttackã§æ”»æ’ƒãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã¦ã€
+    //  Attackã®ä¸­ã«æ”»æ’ƒã®å‡¦ç†ã‚’æ›¸ã
     //
     //===================================================================
     private void OnAttack(InputAction.CallbackContext obj)
@@ -275,25 +274,25 @@ public class Player2 : MonoBehaviour
         isAttack = true;       
     }
     private void Attack() {
-        //---U“®‚³‚¹‚é
+        //---æŒ¯å‹•ã•ã›ã‚‹
         //StartCoroutine(VibrationPlay(LowFrequency,HighFrequency));
 
-        //---ƒXƒeƒBƒbƒN“ü—Í
-        PlayerPos = transform.position;                             // UŒ‚‚·‚éuŠÔ‚ÌƒvƒŒƒCƒ„[‚ÌÀ•W‚ğæ“¾
-        AttackDirection += Attacking.ReadValue<Vector2>();             // ƒXƒeƒBƒbƒN‚Ì“|‚µ‚½’l‚ğæ“¾
-        //AttackDirection.Normalize();                              // æ“¾‚µ‚½’l‚ğ³‹K‰»(ƒxƒNƒgƒ‹‚ğ‚P‚É‚·‚é)
+        //---ã‚¹ãƒ†ã‚£ãƒƒã‚¯å…¥åŠ›
+        PlayerPos = transform.position;                             // æ”»æ’ƒã™ã‚‹ç¬é–“ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åº§æ¨™ã‚’å–å¾—
+        AttackDirection += Attacking.ReadValue<Vector2>();             // ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å€’ã—ãŸå€¤ã‚’å–å¾—
+        //AttackDirection.Normalize();                              // å–å¾—ã—ãŸå€¤ã‚’æ­£è¦åŒ–(ãƒ™ã‚¯ãƒˆãƒ«ã‚’ï¼‘ã«ã™ã‚‹)
 
-        //---ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶
-        //---¶‰EƒpƒŠƒB
+        //---ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿ
+        //---å·¦å³ãƒ‘ãƒªã‚£
         if (Mathf.Abs(AttackDirection.x) >= 1)
         {
-            //ƒ^ƒCƒ}[İ’è
+            //ã‚¿ã‚¤ãƒãƒ¼è¨­å®š
             Timer = stopTime;
             animator.SetTrigger("Attack");
-            Debug.Log("¶‰EUŒ‚");
+            Debug.Log("å·¦å³æ”»æ’ƒ");
         }
 
-        //---ãƒpƒŠƒB
+        //---ä¸Šãƒ‘ãƒªã‚£
         if (AttackDirection.y >= 1)
         {
             if (GroundNow == true)
@@ -304,7 +303,7 @@ public class Player2 : MonoBehaviour
             animator.SetTrigger("Attack_UP");
         }
 
-        //---‰ºƒpƒŠƒB
+        //---ä¸‹ãƒ‘ãƒªã‚£
         if (AttackDirection.y <= 1)
         {
             if (GroundNow == true)
@@ -316,14 +315,14 @@ public class Player2 : MonoBehaviour
 
         }
 
-        //ƒ‚ƒfƒ‹‚ÌŒü‚«‚Æ”½‘Î•ûŒü‚É‚o‚µ‚½‚çƒ‚ƒfƒ‹‰ñ“]
+        //ãƒ¢ãƒ‡ãƒ«ã®å‘ãã¨åå¯¾æ–¹å‘ã«ç›¾å‡ºã—ãŸã‚‰ãƒ¢ãƒ‡ãƒ«å›è»¢
         if ((AttackDirection.x > 0 && beforeDir.x < 0) || (AttackDirection.x < 0 && beforeDir.x > 0))
         {
-            //•ûŒü‚ğ•Û‘¶
+            //æ–¹å‘ã‚’ä¿å­˜
             beforeDir.x = AttackDirection.x;
-            //‰ñ“]
+            //å›è»¢
             transform.rotation = Quaternion.LookRotation(AttackDirection);
-            //ƒXƒP[ƒ‹x‚ğ”½“]
+            //ã‚¹ã‚±ãƒ¼ãƒ«xã‚’åè»¢
             scale.x *= -1;
             transform.localScale = scale;
         }
@@ -334,54 +333,54 @@ public class Player2 : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(AttackDirection);
         }
 
-        //---“|‚µ‚½’l‚ğŠî‚É‚‚Ìo‚·êŠ‚ğw’è
+        //---å€’ã—ãŸå€¤ã‚’åŸºã«ç›¾ã®å‡ºã™å ´æ‰€ã‚’æŒ‡å®š
         GameObject weapon = Instantiate(prefab, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
                                                            PlayerPos.y + (AttackDirection.y * AttckPosHeight),
                                                            PlayerPos.z), Quaternion.identity);
 
-        //---ƒRƒ“ƒgƒ[ƒ‰[‚Ì“|‚µ‚½X‚Ì’l‚ª|‚¾‚Á‚½‚çy²‚É-1‚·‚é(‚‚ÌŠp“x‚Ì’²®)
+        //---ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã®å€’ã—ãŸXã®å€¤ãŒï¼ã ã£ãŸã‚‰yè»¸ã«-1ã™ã‚‹(ç›¾ã®è§’åº¦ã®èª¿æ•´)
         if (AttackDirection.x < 0.0f)
         {
             AttackDirection.y *= -1;
 
         }
-        //---y²‚ª|‚¾‚Á‚½‚ç(‰ºƒpƒŠƒB‚·‚éÛ)ƒWƒƒƒ“ƒv’†‚É‚·‚é(03/21“_)
-        //---y²‚ª|‚¾‚Á‚½‚ç(‰ºƒpƒŠƒB‚·‚éÛ)‰ºƒpƒŠƒBƒtƒ‰ƒO‚É‚·‚é(03/25“_)
+        //---yè»¸ãŒï¼ã ã£ãŸã‚‰(ä¸‹ãƒ‘ãƒªã‚£ã™ã‚‹éš›)ã‚¸ãƒ£ãƒ³ãƒ—ä¸­ã«ã™ã‚‹(03/21æ™‚ç‚¹)
+        //---yè»¸ãŒï¼ã ã£ãŸã‚‰(ä¸‹ãƒ‘ãƒªã‚£ã™ã‚‹éš›)ä¸‹ãƒ‘ãƒªã‚£ãƒ•ãƒ©ã‚°ã«ã™ã‚‹(03/25æ™‚ç‚¹)
         if (AttackDirection.y < 0.0f)
         {
             UnderParryNow = true;
             GroundNow = false;
         }
 
-        //---‚‚Ì‰ñ“]‚ğİ’è
+        //---ç›¾ã®å›è»¢ã‚’è¨­å®š
         weapon.transform.Rotate(new Vector3(0, 0, (90 * AttackDirection.y)));
-        //Debug.Log("UŒ‚‚µ‚½I(Weapon)");
+        //Debug.Log("æ”»æ’ƒã—ãŸï¼(Weapon)");
         //EffectManager.Play(EffectData.eEFFECT.EF_SHEILD2,weapon.transform.position);
         SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
-        AttackDirection = Vector2.zero;                           // “ü—Í‚ğæ‚é“xAV‚µ‚¢’l‚ª—~‚µ‚¢‚½‚ßˆê“x‚O‚É‚·‚é
+        AttackDirection = Vector2.zero;                           // å…¥åŠ›ã‚’å–ã‚‹åº¦ã€æ–°ã—ã„å€¤ãŒæ¬²ã—ã„ãŸã‚ä¸€åº¦ï¼ã«ã™ã‚‹
         Destroy(weapon, DestroyTime);
 
 
         isAttack = false;
     }
 
-    //---ƒWƒƒƒ“ƒvˆ—
+    //---ã‚¸ãƒ£ãƒ³ãƒ—å‡¦ç†
     private void OnJump(InputAction.CallbackContext obj)
     {
-        //---ƒWƒƒƒ“ƒv’†‚Å‚ ‚ê‚ÎƒWƒƒƒ“ƒv‚µ‚È‚¢
+        //---ã‚¸ãƒ£ãƒ³ãƒ—ä¸­ã§ã‚ã‚Œã°ã‚¸ãƒ£ãƒ³ãƒ—ã—ãªã„
         if(JumpNow == true)
         {
             return;
         }
-        Debug.Log("ƒWƒƒƒ“ƒvI");
+        Debug.Log("ã‚¸ãƒ£ãƒ³ãƒ—ï¼");
         JumpNow = true;
         GroundNow = false;
         rb.AddForce(transform.up * JumpForce,ForceMode.Impulse);
         SoundManager.Play(SoundData.eSE.SE_JUMP, SoundData.GameAudioList);
     }
 
-    #region GravityŠÖ”
-    //---ƒWƒƒƒ“ƒv’†‚Ìd—Í‚ğ‹­‚­‚·‚é(ƒWƒƒƒ“ƒv‚ªr•q‚ÉŒ©‚¦‚éŒø‰Ê‚ª‚ ‚é)
+    #region Gravityé–¢æ•°
+    //---ã‚¸ãƒ£ãƒ³ãƒ—ä¸­ã®é‡åŠ›ã‚’å¼·ãã™ã‚‹(ã‚¸ãƒ£ãƒ³ãƒ—ãŒä¿Šæ•ã«è¦‹ãˆã‚‹åŠ¹æœãŒã‚ã‚‹)
     private void Gravity()
     {
         if(JumpNow == true)
@@ -393,8 +392,8 @@ public class Player2 : MonoBehaviour
     }
     #endregion
 
-    #region ‚Ó‚í‚Ó‚íˆÚ“®
-    //---ƒIƒuƒWƒFƒNƒg‚ğƒtƒƒtƒ‚³‚¹‚éˆ—
+    #region ãµã‚ãµã‚ç§»å‹•
+    //---ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ãƒ•ãƒ¯ãƒ•ãƒ¯ã•ã›ã‚‹å‡¦ç†
     //private void FluffyMove()
     //{
     //    FylFrameCount += 1;
@@ -410,8 +409,8 @@ public class Player2 : MonoBehaviour
     //}
     #endregion
 
-    #region ‘¬“x’²®ŠÖ”(AddForceˆÚ“®—p)
-    //---AddForce‚Å—Í‚ª‚©‚©‚è‚·‚¬‚Ä‚µ‚Ü‚¤‚½‚ßAmaxSpeed‚Ì’l‚É‹ß‚¢’l‚ÉŒÅ’è‚·‚éˆ—
+    #region é€Ÿåº¦èª¿æ•´é–¢æ•°(AddForceç§»å‹•ç”¨)
+    //---AddForceã§åŠ›ãŒã‹ã‹ã‚Šã™ãã¦ã—ã¾ã†ãŸã‚ã€maxSpeedã®å€¤ã«è¿‘ã„å€¤ã«å›ºå®šã™ã‚‹å‡¦ç†
     private void SpeedCheck()
     {
         Vector3 PlayerVelocity = rb.velocity;
@@ -424,13 +423,13 @@ public class Player2 : MonoBehaviour
     }
     #endregion
 
-    #region ‚ ‚½‚è”»’èˆ—
-    //---“–‚½‚è”»’èˆ—
+    #region ã‚ãŸã‚Šåˆ¤å®šå‡¦ç†
+    //---å½“ãŸã‚Šåˆ¤å®šå‡¦ç†
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Damaged")
         {
-            Debug.Log("UŒ‚‚ğ‚¤‚¯‚½B");
+            Debug.Log("æ”»æ’ƒã‚’ã†ã‘ãŸã€‚");
             EffectManager.Play(EffectData.eEFFECT.EF_DAMAGE, this.transform.position);
             SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
             if (!GameObject.Find("HPSystem(Clone)"))
@@ -438,9 +437,9 @@ public class Player2 : MonoBehaviour
                 return;
             }
             GameData.CurrentHP--;
-            SaveManager.saveHP(GameData.CurrentHP);
+            //SaveManager.saveHP(GameData.CurrentHP);
 
-        //HP‚ª0‚É‚È‚Á‚½‚çƒQ[ƒ€ƒI[ƒo[‚ğ•\¦
+        //HPãŒ0ã«ãªã£ãŸã‚‰ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼ã‚’è¡¨ç¤º
         if (GameData.CurrentHP <= 0)
             {
                 GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
@@ -448,23 +447,23 @@ public class Player2 : MonoBehaviour
         }
     }
 
-    //---“–‚½‚è”»’èˆ—(GroundCheck‚Ìƒ{ƒbƒNƒXƒRƒ‰ƒCƒ_[‚Å”»’è‚ğæ‚é‚æ‚¤‚É)
+    //---å½“ãŸã‚Šåˆ¤å®šå‡¦ç†(GroundCheckã®ãƒœãƒƒã‚¯ã‚¹ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã§åˆ¤å®šã‚’å–ã‚‹ã‚ˆã†ã«)
     private void OnTriggerEnter(Collider other)
     {
          if(other.gameObject.tag == "Ground")
          {
             GroundNow = true;
-            //---Tag"Ground"‚ÆÚG‚µ‚Ä‚¢‚éŠÔ‚Ìˆ—
+            //---Tag"Ground"ã¨æ¥è§¦ã—ã¦ã„ã‚‹é–“ã®å‡¦ç†
             if (JumpNow == true || UnderParryNow == true)
             {
-                ////‘«‚ª’n–Ê‚æ‚èã‚¾‚Á‚½‚ç’…’n’†‚É‚·‚é
+                ////è¶³ãŒåœ°é¢ã‚ˆã‚Šä¸Šã ã£ãŸã‚‰ç€åœ°ä¸­ã«ã™ã‚‹
                 //Vector3 footPotision = box_collider.transform.position;
                 //footPotision.y -= 16.0f;
                 
                 //if(other.gameObject.transform.position.y <= footPotision.y)
                 //{
-                //    Debug.Log("‘«‚ÌˆÊ’u" + footPotision);
-                    Debug.Log("’…’n’†");
+                //    Debug.Log("è¶³ã®ä½ç½®" + footPotision);
+                    Debug.Log("ç€åœ°ä¸­");
                     JumpNow = false;
                     UnderParryNow = false;
                 //}
@@ -478,12 +477,12 @@ public class Player2 : MonoBehaviour
     }
     #endregion 
 
-    #region ƒRƒ“ƒgƒ[ƒ‰[U“®
-    //---ƒRƒ“ƒgƒ[ƒ‰[U“®ˆ—
+    #region ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼æŒ¯å‹•
+    //---ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼æŒ¯å‹•å‡¦ç†
     private IEnumerator VibrationPlay
     (
-        float lowFrequency,     // ’áü”g(¶) ƒ‚[ƒ^[‚Ì‹­‚³(0.0 ~ 1.0)
-        float HighFrequency     // ‚ü”g(‰E) ƒ‚[ƒ^-‚Ì‹­‚³(0.0 ~ 1.0)
+        float lowFrequency,     // ä½å‘¨æ³¢(å·¦) ãƒ¢ãƒ¼ã‚¿ãƒ¼ã®å¼·ã•(0.0 ~ 1.0)
+        float HighFrequency     // é«˜å‘¨æ³¢(å³) ãƒ¢ãƒ¼ã‚¿-ã®å¼·ã•(0.0 ~ 1.0)
     )
     {
         Gamepad gamepad = Gamepad.current;
@@ -503,7 +502,7 @@ public class Player2 : MonoBehaviour
             return;
         }
 
-        //---ƒQ[ƒ€ƒpƒbƒh‚Æ‚Â‚È‚ª‚Á‚Ä‚¢‚é‚É•\¦‚³‚ê‚éB
+        //---ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã¨ã¤ãªãŒã£ã¦ã„ã‚‹æ™‚ã«è¡¨ç¤ºã•ã‚Œã‚‹ã€‚
         GUILayout.Label($"LeftStick:{Gamepad.current.leftStick.ReadValue()}");
         GUILayout.Label($"RightStick:{Gamepad.current.rightStick.ReadValue()}");
         GUILayout.Label($"ButtonNorth:{Gamepad.current.buttonNorth.isPressed}");

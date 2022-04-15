@@ -74,7 +74,7 @@ public static class GameData
 
     public static void InitData() {
         CurrentHP = 6;
-        SaveManager.saveHP(CurrentHP);
+        //SaveManager.saveHP(CurrentHP);
         if(CurrentMapName == "Tester")
         {
             isAliveBoss1 = true;

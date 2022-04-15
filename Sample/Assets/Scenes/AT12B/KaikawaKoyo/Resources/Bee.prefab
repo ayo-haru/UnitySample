@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025572605345194150}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.788, z: 0}
+  m_LocalPosition: {x: 0, y: -0.501, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 4185586182040851391}
@@ -123,7 +123,6 @@ GameObject:
   - component: {fileID: 4185586182040851379}
   - component: {fileID: -444088276604084364}
   - component: {fileID: 4185586182040851380}
-  - component: {fileID: 6211107805653084611}
   m_Layer: 9
   m_Name: Bee
   m_TagString: Untagged
@@ -249,23 +248,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f29b0ac0f6cbead42b15f40cd5fdedff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bounceVectorMultiple: 2
   isAlive: 0
   InArea: 0
   FiringPoint: {fileID: 1025572605345194150}
   BeeBullet: {fileID: 4245801130054866025, guid: 765e514cf81337d43996e927e4c88b14, type: 3}
   speed: 20
---- !u!114 &6211107805653084611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4185586182040851381}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a934461c2c2061419e7c920f8cc2a8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bounceSpeed: 5
-  bounceVectorMultiple: 2
-  isAlive: 0

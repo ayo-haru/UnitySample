@@ -13,6 +13,7 @@ using UnityEngine;
 
 public class EnemyDown : MonoBehaviour
 {
+    [SerializeField]
     GameObject Item;
     public float bounceSpeed = 5.0f;
     public float bounceVectorMultiple = 2f;
@@ -28,7 +29,6 @@ public class EnemyDown : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Item = (GameObject)Resources.Load("HealItem");
         isAlive = true;
         rb = gameObject.GetComponent<Rigidbody>();
     }

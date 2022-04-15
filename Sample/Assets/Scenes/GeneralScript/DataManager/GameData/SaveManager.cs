@@ -36,6 +36,8 @@ public struct SaveData {
 
 public static class SaveManager {
     public static SaveData sd;
+    public static bool shouldSave = false;
+    public static bool canSave = false;
     const string SAVE_FILE_PATH = "save.json";  // セーブデータの名前
 
     public static void saveDeck(List<string> _deck) {

@@ -8,6 +8,7 @@ public static class Pause
 
     public static void PauseStart() {
         //Time.timeScale = 0;
+        isPause = true;
         if (GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
         {
             SoundManager.SoundPause(SoundData.TitleAudioList);
@@ -20,6 +21,7 @@ public static class Pause
 
     public static void PauseFin() {
         //Time.timeScale = 1.0f;
+        isPause = false;
         if (GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
         {
             SoundManager.SoundUnPause(SoundData.TitleAudioList);

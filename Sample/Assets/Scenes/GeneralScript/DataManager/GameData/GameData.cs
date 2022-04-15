@@ -79,17 +79,17 @@ public static class GameData
         {
             isAliveBoss1 = true;
         }
-        Pause.PauseFin();
+        Pause.isPause = false;
     }
 
     public static void InitScene() {
         SceneManager.LoadScene(MapName[CurrentMapNumber]);
-        Pause.PauseFin();
+        Pause.isPause = false;
     }
 
     public static void Init() {
         InitData();
         InitScene();
-        Pause.PauseFin();
+        Pause.isPause = false;
     }
 }

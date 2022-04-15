@@ -56,21 +56,29 @@ public class Player : MonoBehaviour
         //}
     }
 
-    void OnTriggerEnter(Collider other) {
+    private void OnTriggerStay(Collider other) {
         //----- セーブ -----
         if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
         {
             if (this.GetComponent<Player2>().UnderParryNow)
             {
-                ReSpawnPos = this.transform.position;    // プレイヤーの位置を保存
-                SaveManager.saveLastPlayerPos(ReSpawnPos);
-                SaveManager.saveBossAlive(GameData.isAliveBoss1);
-                SaveManager.saveHP(GameData.CurrentHP);
-                SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
+                Pause.isPause = true;
+                SaveManager.canSave = true;
+                if (SaveManager.shouldSave)
+                {
+                    Debug.Log("セーブした");
+                    ReSpawnPos = this.transform.position;    // プレイヤーの位置を保存
+                    SaveManager.saveLastPlayerPos(ReSpawnPos);
+                    SaveManager.saveBossAlive(GameData.isAliveBoss1);
+                    SaveManager.saveHP(GameData.CurrentHP);
+                    SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
+                    SaveManager.canSave = false;
+                }
             }
         }
+    }
 
-
+    void OnTriggerEnter(Collider other) { 
         //----- シーン遷移 -----
         if (other.gameObject.tag == "toKitchen1")    // この名前のタグと衝突したら
         {

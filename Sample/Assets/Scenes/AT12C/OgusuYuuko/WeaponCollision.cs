@@ -64,8 +64,11 @@ public class WeaponCollision : MonoBehaviour
             player_rb.AddForce(dir * baunceGround,ForceMode.Impulse);
         }
 
-        //盾消去
-        Destroy(gameObject);
+        //プレイヤー以外と当たってたら盾消去
+        if (collision.gameObject.tag != "Player")
+        {
+            Destroy(gameObject);
+        }
 
         Debug.Log(collision.gameObject.name + "と当たった");
     }

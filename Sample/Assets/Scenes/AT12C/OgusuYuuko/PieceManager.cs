@@ -19,7 +19,7 @@ public class PieceManager : MonoBehaviour
     //現在のかけらの数
     private int nPiece;
     //回復のストックマネージャー
-    private StockManager stockManager;
+   // private StockManager stockManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,69 +27,103 @@ public class PieceManager : MonoBehaviour
         nPiece = 0;
         for(int i = 0; i < nPiece; ++i)
         {
-            //かけらの所持数分表示する
+            //かけらの所持数分黄色にして表示
+            piece[i].GetComponent<ImageShow>().Show();
+        }
+        for(int i = nPiece; i < piece.Length; ++i)
+        {
+            //かけらを黒色にして表示
+            piece[i].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
             piece[i].GetComponent<ImageShow>().Show();
         }
 
-        stockManager = GameObject.Find("StockHPManager").GetComponent<StockManager>();
+       // stockManager = GameObject.Find("StockHPManager").GetComponent<StockManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
         //かけらが５個ある時
-        if(nPiece == piece.Length)
-        {
-            if (stockManager.IsAddStock())
-            {
-                //ストック増やせるなら
-                //ストック増やす
-                stockManager.AddStock();
-                //かけら消す
-                nPiece = 0;
-                for (int i = 0; i < piece.Length; ++i)
-                {
-                    piece[i].GetComponent<ImageShow>().Hide();
-                }
-                //ゲームデータ更新
-                //セーブデータ更新
-            }
+        //if(nPiece == piece.Length)
+        //{
+        //    if (stockManager.IsAddStock())
+        //    {
+        //        //ストック増やせるなら
+        //        //ストック増やす
+        //        stockManager.AddStock();
+        //        //かけら消す
+        //        nPiece = 0;
+        //        for (int i = 0; i < piece.Length; ++i)
+        //        {
+        //            piece[i].GetComponent<ImageShow>().Hide();
+        //        }
+        //        //ゲームデータ更新
+        //        //セーブデータ更新
+        //    }
 
-            //ストック増やせないならそのまま
-        }
+        //    //ストック増やせないならそのまま
+        //}
     }
 
     public void GetPiece()
     {
         //かけらの数更新
-        ++nPiece;
-        //かけらが5個集まったら回復のストックを増やす
-        if(nPiece >= piece.Length)
+        //++nPiece;
+        ////かけらが5個集まったら回復のストックを増やす
+        //if(nPiece >= piece.Length)
+        //{
+        //    if (stockManager.IsAddStock())
+        //    {
+        //        //回復のストック増やす
+        //        //増やせたら
+        //        stockManager.AddStock();
+        //        //かけら消す
+        //        nPiece = 0;
+        //        for (int i = 0; i < piece.Length; ++i)
+        //        {
+        //            piece[i].GetComponent<ImageShow>().Hide();
+        //        }
+        //    }else
+        //    {
+        //        //増やせなかったら
+        //        nPiece = piece.Length;
+        //        piece[nPiece - 1].GetComponent<ImageShow>().Show();
+        //    }
+        //}
+        //else
+        //{
+        //    piece[nPiece - 1].GetComponent<ImageShow>().Show();
+        //}
+
+        //HPがＭＡＸだったらかけらを増やす
+        if(GameData.CurrentHP >= 5)
         {
-            if (stockManager.IsAddStock())
-            {
-                //回復のストック増やす
-                //増やせたら
-                stockManager.AddStock();
-                //かけら消す
-                nPiece = 0;
-                for (int i = 0; i < piece.Length; ++i)
-                {
-                    piece[i].GetComponent<ImageShow>().Hide();
-                }
-            }else
-            {
-                //増やせなかったら
-                nPiece = piece.Length;
-                piece[nPiece - 1].GetComponent<ImageShow>().Show();
-            }
+            //かけら増やす
+            ++nPiece;
+            piece[nPiece - 1].GetComponent<ImageShow>().SetColor(1.0f,1.0f,1.0f);
+            //ゲームデータ更新
         }
         else
         {
-            piece[nPiece - 1].GetComponent<ImageShow>().Show();
-        }
+            //HPが減っていたらＨＰを1回復
+            ++GameData.CurrentHP;
+        } 
+    }
 
-        //ゲームデータ更新
-        //セーブデータ更新
+    public void DelPiece()
+    {
+        //かけらが無かったら
+        if(nPiece <= 0)
+        {
+            //HP減らす
+            --GameData.CurrentHP;
+        }
+        else
+        {
+            //かけら減らす
+            --nPiece;
+            //かけらの色を黒にする
+            piece[nPiece].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
+        }
     }
 }

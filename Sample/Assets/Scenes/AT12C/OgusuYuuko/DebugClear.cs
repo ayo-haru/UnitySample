@@ -7,14 +7,14 @@ using UnityEngine;
 public class DebugClear : MonoBehaviour
 {
     int currenthp = 100;
-    HPGage hpGage;
+   // HPGage hpGage;
     int count = 0;
     UVScroll Moon;
     PieceManager pieceManagewr;
     // Start is called before the first frame update
     void Start()
     {
-        hpGage = GameObject.Find("MaskImage").GetComponent<HPGage>();
+        //hpGage = GameObject.Find("MaskImage").GetComponent<HPGage>();
         Moon = GameObject.Find("HPBar").GetComponent<UVScroll>();
         pieceManagewr = GameObject.Find("PieceHPManager").GetComponent<PieceManager>();
     }
@@ -51,15 +51,22 @@ public class DebugClear : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.F6))
         {
             pieceManagewr.GetPiece();
+            Debug.Log("‚©‚¯‚çƒQƒbƒg");
+        }
+        if (Input.GetKeyDown(KeyCode.F7))
+        {
+            pieceManagewr.DelPiece();
+            Debug.Log("‚©‚¯‚çŒ¸‚Á‚½");
         }
 
+
         //‘Ì—ÍŒ¸‚ç‚·
-        if (Input.GetKeyDown(KeyCode.F10))
-        {
-            currenthp -= 1;
-            hpGage.HpGageDel(currenthp);
-            Debug.Log(currenthp);
-        }
+        //if (Input.GetKeyDown(KeyCode.F10))
+        //{
+        //    currenthp -= 1;
+        //    hpGage.HpGageDel(currenthp);
+        //    Debug.Log(currenthp);
+        //}
 
 
 

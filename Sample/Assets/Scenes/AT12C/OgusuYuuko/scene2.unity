@@ -461,11 +461,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8465456954451653389, guid: f8963946bb0559f4f85d92e00901b94c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 850
+      value: -848
       objectReference: {fileID: 0}
     - target: {fileID: 8465456954451653389, guid: f8963946bb0559f4f85d92e00901b94c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 450
+      value: 407
       objectReference: {fileID: 0}
     - target: {fileID: 8465456954451653389, guid: f8963946bb0559f4f85d92e00901b94c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -485,6 +485,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8465456954451653390, guid: f8963946bb0559f4f85d92e00901b94c, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8556758109603561254, guid: f8963946bb0559f4f85d92e00901b94c, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8556758109603561254, guid: f8963946bb0559f4f85d92e00901b94c, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8556758109603561254, guid: f8963946bb0559f4f85d92e00901b94c, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8556758109603561254, guid: f8963946bb0559f4f85d92e00901b94c, type: 3}
+      propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -621,7 +637,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 850, y: 450}
+  m_AnchoredPosition: {x: -848, y: 407}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &814730491
@@ -1083,7 +1099,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1431092490445117944, guid: fe42e8e6c4618864795f93880956eed9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -770
+      value: 771
       objectReference: {fileID: 0}
     - target: {fileID: 1431092490445117944, guid: fe42e8e6c4618864795f93880956eed9, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1647,6 +1663,10 @@ PrefabInstance:
     - target: {fileID: 4040382942247018349, guid: d987d9aead8a9ff4dbdc195af6007768, type: 3}
       propertyPath: m_Name
       value: StockHPManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4040382942247018349, guid: d987d9aead8a9ff4dbdc195af6007768, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4040382942247018350, guid: d987d9aead8a9ff4dbdc195af6007768, type: 3}
       propertyPath: m_Pivot.x

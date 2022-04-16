@@ -21,8 +21,8 @@ public class Heal : MonoBehaviour
     public float BounceVectorMultiple = 2.0f;           // 法線ベクトルに乗算する値
     public float BouncePower = 100.0f;                  // 弾かれる値
     private Vector3 Velocity;                           // 弾くベクトル
-    private Vector3 TargetPos;                          // 武器を弾いた個所
-    [System.NonSerialized] public bool isAlive;         // 生存フラグ
+    [System.NonSerialized]bool isGroundFlg = false;     // 地面との接地フラグ
+    private float aTime;
 
     // Start is called before the first frame update
     void Start()
@@ -34,18 +34,39 @@ public class Heal : MonoBehaviour
         //                                  Quaternion.identity);
         rb = GetComponent<Rigidbody>();
 
-        isAlive = true;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // 地面についたらちょっと浮いてから空中に留まる
+        if (isGroundFlg)
+        {
+            aTime += Time.deltaTime;
+            if (aTime < 1.0f)
+            {
+                rb.AddForce(transform.up * (2.0f * aTime), ForceMode.Force);
+            }
+            else
+            {
+                rb.constraints = RigidbodyConstraints.FreezePositionY;
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "Weapon(Clone)")
+
+        // 接地判定
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            rb.constraints = RigidbodyConstraints.FreezePositionX;
+            rb.useGravity = false;
+            isGroundFlg = true;
+        }
+
+        if (collision.gameObject.name == "Weapon(Clone)" && isGroundFlg)
         {
             // 衝突した面の接地点のベクトルを取得
             Vector3 normal = collision.contacts[0].normal; 
@@ -62,7 +83,6 @@ public class Heal : MonoBehaviour
             collision.rigidbody.AddForce(-Velocity * BounceSpeed,ForceMode.Impulse);
 
             
-            isAlive = false;                                // 弾かれたら消す
             rb.useGravity = false;                          // 重力を消す
             rb.angularDrag = 0.0f;                          // 空気抵抗をゼロに
             rb.centerOfMass = new Vector3(0.0f,0.0f,0.0f);  // 回転軸を中央にする
@@ -70,11 +90,8 @@ public class Heal : MonoBehaviour
             // 取得した法線ベクトルに跳ね返す早さをかけて、跳ね返す
             rb.AddForce(Velocity * BouncePower,ForceMode.Impulse);
 
-            if(isAlive == false)
-            {
-                Destroy(prefab,0.0f);
-            }
-
         }
+
+
     }
 }

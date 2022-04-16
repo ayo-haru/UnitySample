@@ -503,20 +503,21 @@ public class Player2 : MonoBehaviour
         }
 
         //---ゲームパッドとつながっている時に表示される。
-        GUILayout.Label($"LeftStick:{Gamepad.current.leftStick.ReadValue()}");
-        GUILayout.Label($"RightStick:{Gamepad.current.rightStick.ReadValue()}");
-        GUILayout.Label($"ButtonNorth:{Gamepad.current.buttonNorth.isPressed}");
-        GUILayout.Label($"ButtonSouth:{Gamepad.current.buttonSouth.isPressed}");
-        GUILayout.Label($"ButtonEast:{Gamepad.current.buttonEast.isPressed}");
-        GUILayout.Label($"ButtonWast:{Gamepad.current.buttonWest.isPressed}");
-        GUILayout.Label($"LeftShoulder:{Gamepad.current.leftShoulder.ReadValue()}");
-        GUILayout.Label($"LeftTrigger:{Gamepad.current.leftTrigger.ReadValue()}");
-        GUILayout.Label($"RightShoulder:{Gamepad.current.rightShoulder.ReadValue()}");
-        GUILayout.Label($"RighetTrigger:{Gamepad.current.rightTrigger.ReadValue()}");
-        GUILayout.Label($"LeftStickUp:{Gamepad.current.leftStick.up.ReadValue()}");
-        GUILayout.Label($"Space:{Keyboard.current.spaceKey.ReadValue()}");
+        //GUILayout.Label($"LeftStick:{Gamepad.current.leftStick.ReadValue()}");
+        //GUILayout.Label($"RightStick:{Gamepad.current.rightStick.ReadValue()}");
+        //GUILayout.Label($"ButtonNorth:{Gamepad.current.buttonNorth.isPressed}");
+        //GUILayout.Label($"ButtonSouth:{Gamepad.current.buttonSouth.isPressed}");
+        //GUILayout.Label($"ButtonEast:{Gamepad.current.buttonEast.isPressed}");
+        //GUILayout.Label($"ButtonWast:{Gamepad.current.buttonWest.isPressed}");
+        //GUILayout.Label($"LeftShoulder:{Gamepad.current.leftShoulder.ReadValue()}");
+        //GUILayout.Label($"LeftTrigger:{Gamepad.current.leftTrigger.ReadValue()}");
+        //GUILayout.Label($"RightShoulder:{Gamepad.current.rightShoulder.ReadValue()}");
+        //GUILayout.Label($"RighetTrigger:{Gamepad.current.rightTrigger.ReadValue()}");
+        //GUILayout.Label($"LeftStickUp:{Gamepad.current.leftStick.up.ReadValue()}");
+        //GUILayout.Label($"Space:{Keyboard.current.spaceKey.ReadValue()}");
         GUILayout.Label($"JumpFlg:{JumpNow}");
         GUILayout.Label($"GroudFlg:{GroundNow}");
+        GUILayout.Label($"UnderParryFlg:{UnderParryNow}");
     }
 
 

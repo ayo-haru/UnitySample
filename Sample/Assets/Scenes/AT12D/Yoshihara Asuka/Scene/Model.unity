@@ -250,10 +250,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 23276726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35507d0dd8d024c49a9d67065bedaa35, type: 3}
+  m_Script: {fileID: 11500000, guid: 5da5bb4d3d060884496dc765de038b0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 1774375754255055915, guid: 7566f4ae74d7d194f91f027b47f5a24e, type: 3}
+  FollowCameraPos: {x: 0, y: 8, z: -12}
+  RightScreenOut: 0
+  LeftScreenOut: 0
+  MovePoint: 0
 --- !u!1001 &132513286
 PrefabInstance:
   m_ObjectHideFlags: 0

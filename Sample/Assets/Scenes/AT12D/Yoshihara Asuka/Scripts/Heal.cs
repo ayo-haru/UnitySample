@@ -20,7 +20,7 @@ public class Heal : MonoBehaviour
     Rigidbody rb;
     public float BounceSpeed = 10.0f;                   // 弾かれるスピード
     public float BounceVectorMultiple = 2.0f;           // 法線ベクトルに乗算する値
-    public float BouncePower = 100.0f;                  // 弾かれる値
+    public float BouncePower = 10000.0f;                  // 弾かれる値
     private Vector3 vec;                                // 弾くベクトル
     [System.NonSerialized]bool isGroundFlg = false;     // 地面との接地フラグ
     private float aTime;

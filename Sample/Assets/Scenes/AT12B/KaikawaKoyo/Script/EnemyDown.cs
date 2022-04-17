@@ -16,12 +16,14 @@ public class EnemyDown : MonoBehaviour
     [SerializeField]
     GameObject Item;
     GameObject Player;
-    public float bounceSpeed = 5.0f;
-    public float bounceVectorMultiple = 2f;
-    private float bouncePower = 1000.0f;
+    private float bouncePower = 8000.0f;
     private Vector3 Pos;
     private Vector3 velocity;
     private Vector3 vec;
+
+    [SerializeField]
+    private int DropRate;           // 回復アイテムのドロップ率
+    private int Drop;
 
     public bool isAlive;
 
@@ -34,6 +36,7 @@ public class EnemyDown : MonoBehaviour
         Player = GameObject.FindWithTag("Player");
         isAlive = true;
         rb = gameObject.GetComponent<Rigidbody>();
+        Random.InitState(System.DateTime.Now.Millisecond);
     }
 
     // Update is called once per frame
@@ -42,12 +45,12 @@ public class EnemyDown : MonoBehaviour
         if(!Pause.isPause)
         {
             vec = (Player.transform.position - transform.position).normalized;
+            
 
             // 時間で消える処理
             if (!isAlive)
             {
                 DeadTime += Time.deltaTime;
-
             }
 
             if (DeadTime > 1.0f)
@@ -66,18 +69,8 @@ public class EnemyDown : MonoBehaviour
         {
             if (collision.gameObject.name == "Weapon(Clone)")
             {
-
-                ////衝突した面の、接触した点における法線ベクトルを取得
-                //Vector3 normal = collision.contacts[0].normal;
-                ////衝突した速度ベクトルを単位ベクトルにする
-                //velocity = collision.rigidbody.velocity.normalized;
-                ////x,y,z方向に対して法線ベクトルを取得
-                //velocity += new Vector3(normal.x * bounceVectorMultiple, normal.y * bounceVectorMultiple, normal.z * bounceVectorMultiple);
                 //プレイヤーを逆方向に跳ね返す
-                //collision.rigidbody.AddForce(-velocity * bounceSpeed, ForceMode.Impulse);
-
-                //プレイヤーを逆方向に跳ね返す(別バージョン)
-                collision.rigidbody.AddForce(vec * bounceSpeed, ForceMode.Impulse);
+                collision.rigidbody.AddForce(vec * 5.0f, ForceMode.Impulse);
 
                 //弾いたら消す
                 isAlive = false;
@@ -90,7 +83,11 @@ public class EnemyDown : MonoBehaviour
 
                 // 回復アイテムを落とす
                 Pos = transform.position;
-                Instantiate(Item, Pos, Quaternion.identity);
+                Drop = Random.Range(0, 100);
+                if (Drop < DropRate)
+                {
+                    Instantiate(Item, Pos, Quaternion.identity);
+                }
 
                 //取得した法線ベクトルに跳ね返す速さをかけて、跳ね返す
                 //rb.AddForce(velocity * bouncePower, ForceMode.Force);
@@ -99,9 +96,9 @@ public class EnemyDown : MonoBehaviour
                 rb.AddForce(-vec * bouncePower, ForceMode.Force);
 
                 // 回転させる
-                rb.AddTorque(0.0f, 0.0f, -300.0f);
+                rb.AddTorque(-300.0f, 0.0f, 0.0f);
 
-                SoundManager.Play(SoundData.eSE.SE_REFLECTION, SoundData.GameAudioList);
+                //SoundManager.Play(SoundData.eSE.SE_REFLECTION, SoundData.GameAudioList);
             }
 
             //if (!isAlive)

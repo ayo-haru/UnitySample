@@ -17,6 +17,7 @@ public class CarrotEnemy : MonoBehaviour
     GameObject Player;
     private Rigidbody rb;
     private Vector3 startPosition, targetPosition;
+    private Vector3 vec;
     private EnemyDown ED;
     private Vector3 aim;
     private Quaternion look;
@@ -26,6 +27,7 @@ public class CarrotEnemy : MonoBehaviour
     float speed = 0.0f;
     bool InArea;
     bool Look;
+    bool Attack = false;
 
     private bool isCalledOnce = false;                             // 一回だけ処理をするために使う。
 
@@ -46,12 +48,12 @@ public class CarrotEnemy : MonoBehaviour
             // プレイヤーを見つけたら攻撃開始
             if (InArea && ED.isAlive)
             {
-                if (speed <= 1)
+                vec = (Player.transform.position - transform.position).normalized;
+                if (!Attack)
                 {
-                    speed += MoveSpeed * Time.deltaTime;
+                    rb.velocity = vec * MoveSpeed;
+                    Attack = true;
                 }
-                // プレイヤーに向かって特攻する
-                rb.position = Vector3.Lerp(startPosition, targetPosition, speed);
 
                 aim = targetPosition - transform.position;
                 look = Quaternion.LookRotation(aim);
@@ -60,16 +62,14 @@ public class CarrotEnemy : MonoBehaviour
                 //transform.Rotate(90, 0, 0);
                 if (!isCalledOnce)     // 一回だけ呼ぶ
                 {
-                    SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
+                    //SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
                     isCalledOnce = true;
                 }
             }
 
-            if (rb.position == targetPosition)
+            if (Attack)
             {
-                //transform.Rotate(-90, 0, 0);
-                //rb.constraints = RigidbodyConstraints.FreezeRotationX;
-                Destroy(gameObject, 1.0f);
+                Destroy(gameObject, 5.0f);
             }
         }
         

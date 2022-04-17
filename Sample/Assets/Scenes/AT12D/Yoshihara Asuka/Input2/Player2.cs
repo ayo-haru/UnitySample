@@ -136,6 +136,11 @@ public class Player2 : MonoBehaviour
     // Update is called once per frame
     void Update() 
     {
+        if (UnderParryNow == true || GroundNow == true)
+        {
+            Gravity();
+        }
+
         if (!Pause.isPause)
         {
             //---rb.velocityによる移動処理
@@ -188,6 +193,8 @@ public class Player2 : MonoBehaviour
 
             }
         }
+
+
     }
 
     private void FixedUpdate()
@@ -201,11 +208,6 @@ public class Player2 : MonoBehaviour
             {
                 Gravity();
                 //return;
-            }
-
-            if(UnderParryNow == true)
-            {
-                Gravity();
             }
 
             //---移動処理(AddForceの処理)
@@ -259,6 +261,12 @@ public class Player2 : MonoBehaviour
         {
             animator.speed = 0.0f;
         }
+
+        if (this.gameObject.transform.position.y > 250)
+        {
+            transform.position = new Vector3(transform.position.x, 250.0f, transform.position.z);
+        }
+
     }
 
     private void OnMove(InputAction.CallbackContext obj)

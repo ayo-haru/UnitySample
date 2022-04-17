@@ -16,13 +16,17 @@ public class EnemyDown : MonoBehaviour
     [SerializeField]
     GameObject Item;
     GameObject Player;
-    private float bouncePower = 10000.0f;
+    private float bouncePower = 200.0f;
     private Vector3 Pos;
+    private Vector3 EnemyPos;
     private Vector3 velocity;
     private Vector3 vec;
 
     [SerializeField]
     private int DropRate;           // 回復アイテムのドロップ率
+
+    [SerializeField]
+    private int EnemyNumber;        // 敵識別
     private int Drop;
 
     public bool isAlive;
@@ -44,9 +48,6 @@ public class EnemyDown : MonoBehaviour
     {
         if(!Pause.isPause)
         {
-            vec = (Player.transform.position - transform.position).normalized;
-            
-
             // 時間で消える処理
             if (!isAlive)
             {
@@ -69,6 +70,9 @@ public class EnemyDown : MonoBehaviour
         {
             if (collision.gameObject.name == "Weapon(Clone)")
             {
+                //EnemyPos = transform.position + new Vector3(0.0f, 50.0f, 0.0f);
+                //print(EnemyPos);
+                vec = (Player.transform.position - transform.position).normalized;
                 //プレイヤーを逆方向に跳ね返す
                 collision.rigidbody.AddForce(vec * 5.0f, ForceMode.Impulse);
 
@@ -78,8 +82,20 @@ public class EnemyDown : MonoBehaviour
                 rb.useGravity = false;
                 // 空気抵抗をゼロに
                 rb.angularDrag = 0.0f;
-                // 回転軸を中央に
-                rb.centerOfMass = new Vector3(0, 0, 0);
+
+                // 回転軸を変更
+                if(EnemyNumber == 1)
+                {
+                    rb.centerOfMass = new Vector3(0, 5, 0);
+                }
+                else if (EnemyNumber == 2)
+                {
+                    rb.centerOfMass = new Vector3(0, 3, 0);
+                }
+                else
+                {
+                    rb.centerOfMass = new Vector3(0, 0, 0);
+                }
 
                 // 回復アイテムを落とす
                 Pos = transform.position;
@@ -93,10 +109,10 @@ public class EnemyDown : MonoBehaviour
                 //rb.AddForce(velocity * bouncePower, ForceMode.Force);
 
                 //プレイヤーと逆方向に跳ね返す
-                rb.AddForce(-vec * bouncePower, ForceMode.Force);
+                rb.velocity = -vec * bouncePower;
 
                 // 回転させる
-                rb.AddTorque(0.0f, 0.0f, -10000.0f);
+                rb.angularVelocity = new Vector3(0.0f, 0.0f, -500.0f);
 
                 //SoundManager.Play(SoundData.eSE.SE_REFLECTION, SoundData.GameAudioList);
             }

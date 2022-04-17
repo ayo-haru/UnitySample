@@ -16,9 +16,15 @@ using UnityEngine.UI;
 
 public class HPManager : MonoBehaviour
 {
-    public　Image HP;
+   // public　Image HP;
 
-    public int MaxHP = 6;                          // HPの最大値
+   public int MaxHP = 5;                          // HPの最大値
+
+    public GameObject PieceManager;                 //かけらマネージャー
+    public GameObject HPImage;                      //ｈｐ画像
+
+    private PieceManager pieceManager;          //かけらマネージャーコンポーネント
+    private UVScroll hpTex;                     //ｈｐのUVScrollコンポーネント
 
     private void Awake()
     {
@@ -28,19 +34,38 @@ public class HPManager : MonoBehaviour
         //GameObject.Find("Harf Moon2").SetActive(false);
         //GameObject.Find("Harf Moon3").SetActive(false);
         //GameObject.Find("New Moon").SetActive(false);
+
+        pieceManager = PieceManager.GetComponent<PieceManager>();
+        hpTex = HPImage.GetComponent<UVScroll>();
+
+
     }
     // Start is called before the first frame update
     void Start()
     {
-        HP.fillAmount = (float)GameData.CurrentHP / MaxHP;
+        //現在のｈｐをもとにテクスチャ座標設定
+        hpTex.SetFrame(GameData.CurrentHP);
+       // HP.fillAmount = (float)GameData.CurrentHP / MaxHP;
     }
 
     // Update is called once per frame
     void Update()
     {
-        HP.fillAmount = (float)GameData.CurrentHP / MaxHP;
+      //  HP.fillAmount = (float)GameData.CurrentHP / MaxHP;
         //Debug.Log("HP量:"+HP.fillAmount);
         //Debug.Log("MAXHP:"+MaxHP);
         //Debug.Log("残HP:"+GameData.CurrentHP);
+    }
+
+    public void GetPiece()
+    {
+        pieceManager.GetPiece();
+        hpTex.SetFrame(GameData.CurrentHP);
+    }
+
+    public void Damaged()
+    {
+        pieceManager.DelPiece();
+        hpTex.SetFrame(GameData.CurrentHP);
     }
 }

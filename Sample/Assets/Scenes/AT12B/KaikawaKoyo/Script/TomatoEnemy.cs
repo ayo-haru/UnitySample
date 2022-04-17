@@ -19,14 +19,17 @@ public class TomatoEnemy : MonoBehaviour
     //private float distance;
     private EnemyDown ED;
     //private Vector3 aim;
-    private bool look;
-    private bool isGround;
-    private float delay;
+    private bool look;              // プレイヤーのほうを見るフラグ
+    private bool isGround;          // 接地フラグ
+    private float delay;            // ジャンプのディレイ
 
     [SerializeField]
-    float MoveSpeed = 2.0f;
+    private float JumpPower;        // ジャンプ力
+
+    [SerializeField]
+    float MoveSpeed = 2.0f;          // 移動速度
     //int DetecDist = 8;
-    bool InArea = false;
+    bool InArea = false;                
 
     private void Start()
     {
@@ -35,22 +38,22 @@ public class TomatoEnemy : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         //distance = 1.0f;
         ED = GetComponent<EnemyDown>();
-        transform.Rotate(0, -90, 0);
+        transform.Rotate(0, -90, 0);     
         look = false;
+        rb.velocity += new Vector3(0.0f, -0.5f, 0.0f);
     }
 
     private void Update()
     {
         if(!Pause.isPause)
         {
+            print(rb.velocity.y);
+
             // プレイヤーを見つけたら攻撃開始
             if (InArea && ED.isAlive)
             {
-                //Vector3 rayPosition = transform.position + new Vector3(0.0f, 0.0f, 0.0f);
-                //Ray ray = new Ray(rayPosition, Vector3.down);
-                //bool isGround = Physics.Raycast(ray, distance); // 接地判定
                 Vector3 pos = rb.position;
-                if (isGround == false)
+                if (!isGround)
                 {
                     // プレイヤーに向かって特攻する
                     float step = MoveSpeed * Time.deltaTime;
@@ -62,29 +65,32 @@ public class TomatoEnemy : MonoBehaviour
                     transform.Rotate(0, -180, 0);
                     look = false;
                 }
-
                 if (Target.position.x > transform.position.x && !look)  // プレイヤーのほうを向く処理
                 {
                     transform.Rotate(0, 180, 0);
                     look = true;
                 }
-
+                
                 // 跳ねる処理
                 if (isGround)
                 {
                     delay += Time.deltaTime;
-                    if(delay > 0.5f)
+                    if(delay > 0.3f)
                     {
-                        rb.AddForce(transform.up * 200.0f, ForceMode.Force);
+                        rb.velocity = new Vector3(0.0f, JumpPower, 0.0f);
                         //SoundManager.Play(SoundData.eSE.SE_TOMATO_BOUND, SoundData.GameAudioList);
                         isGround = false;
                         delay = 0.0f;
                     }
-                    
+                }
+
+                // 上昇速度&落下速度調整
+                if (!isGround)
+                {
+                    rb.velocity += new Vector3(0.0f, -0.8f, 0.0f);
                 }
             }
         }
-        
     }
 
     private void OnCollisionEnter(Collision collision)

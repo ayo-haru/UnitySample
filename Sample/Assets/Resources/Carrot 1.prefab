@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08a96a83d1c331c4a8ec6f43de2179d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 1
+  MoveSpeed: 100
 --- !u!114 &5457498936898903218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,8 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Item: {fileID: 651809217550476092, guid: f8de026749d6f894892749266da478ed, type: 3}
-  bounceSpeed: 5
-  bounceVectorMultiple: 2
+  DropRate: 50
   isAlive: 0
 --- !u!1 &7557595700561971205
 GameObject:

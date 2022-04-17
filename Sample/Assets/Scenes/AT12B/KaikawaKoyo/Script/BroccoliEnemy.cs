@@ -22,11 +22,10 @@ public class BroccoliEnemy : MonoBehaviour
 
     [SerializeField]
     float MoveSpeed = 5.0f;
-    //[SerializeField]
-    //float SwingSpeed;
     
     bool InArea = false;
     private bool look = false;
+    private bool isGround = false;
 
     private bool isCalledOnce = false;                             // 開始演出で使用。一回だけ処理をするために使う。
 
@@ -50,6 +49,7 @@ public class BroccoliEnemy : MonoBehaviour
             if (InArea && ED.isAlive)
             {
                 Vector3 pos = rb.position;
+
                 // プレイヤーに向かって特攻する
                 float step = MoveSpeed * Time.deltaTime;
                 rb.position = Vector3.MoveTowards(pos, Target.position, step);
@@ -64,6 +64,11 @@ public class BroccoliEnemy : MonoBehaviour
                 {
                     transform.Rotate(0, 180, 0);
                     look = true;
+                }
+
+                if(!isGround)
+                {
+                    rb.velocity += new Vector3(0.0f, -0.5f, 0.0f);
                 }
 
                 // SEの処理

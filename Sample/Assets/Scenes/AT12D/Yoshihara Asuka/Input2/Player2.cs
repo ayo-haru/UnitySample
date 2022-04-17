@@ -441,7 +441,8 @@ public class Player2 : MonoBehaviour
             {
                 return;
             }
-            GameData.CurrentHP--;
+            hpmanager.Damaged();
+            //GameData.CurrentHP--;
             //SaveManager.saveHP(GameData.CurrentHP);
 
         //HPが0になったらゲームオーバーを表示

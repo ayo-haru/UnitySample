@@ -16,6 +16,7 @@ public class Heal : MonoBehaviour
 {
     //---変数宣言
     public GameObject prefab;
+    HPManager hpmanager;
     GameObject Player;
     Rigidbody rb;
     public float BounceSpeed = 10.0f;                   // 弾かれるスピード
@@ -29,13 +30,12 @@ public class Heal : MonoBehaviour
     void Start()
     {
         // プレハブを複製
-        
         //GameObject HealItem = Instantiate(prefab,
         //                                  new Vector3(0.0f,0.0f,0.0f),
         //                                  Quaternion.identity);
         rb = GetComponent<Rigidbody>();
         Player = GameObject.FindWithTag("Player");
-
+        hpmanager = GetComponent<HPManager>();
     }
 
     // Update is called once per frame
@@ -69,6 +69,8 @@ public class Heal : MonoBehaviour
             rb.useGravity = false;
             isGroundFlg = true;
             Destroy(prefab,1.0f);
+            hpmanager.GetPiece();
+            
         }
 
         if (collision.gameObject.name == "Weapon(Clone)")

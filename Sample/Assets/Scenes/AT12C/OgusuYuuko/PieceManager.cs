@@ -24,7 +24,7 @@ public class PieceManager : MonoBehaviour
     void Start()
     {
         //とりあえず０にしてるけど、ゲームデータクラスから回復のかけらの数取得して入れる
-        nPiece = 0;
+        nPiece = GameData.CurrentPiece;
         for(int i = 0; i < nPiece; ++i)
         {
             //かけらの所持数分黄色にして表示
@@ -98,10 +98,15 @@ public class PieceManager : MonoBehaviour
         //HPがＭＡＸだったらかけらを増やす
         if(GameData.CurrentHP >= 5)
         {
+            if (nPiece >= piece.Length)
+            {
+                return;
+            }
             //かけら増やす
             ++nPiece;
             piece[nPiece - 1].GetComponent<ImageShow>().SetColor(1.0f,1.0f,1.0f);
             //ゲームデータ更新
+            ++GameData.CurrentPiece;
         }
         else
         {
@@ -124,6 +129,8 @@ public class PieceManager : MonoBehaviour
             --nPiece;
             //かけらの色を黒にする
             piece[nPiece].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
+            //ゲームデータ更新
+            --GameData.CurrentPiece;
         }
     }
 }

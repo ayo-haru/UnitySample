@@ -68,9 +68,10 @@ public class Heal : MonoBehaviour
             rb.constraints = RigidbodyConstraints.FreezePositionX;
             rb.useGravity = false;
             isGroundFlg = true;
+            Destroy(prefab,1.0f);
         }
 
-        if (collision.gameObject.name == "Weapon(Clone)" && isGroundFlg)
+        if (collision.gameObject.name == "Weapon(Clone)")
         {
             //// 衝突した面の接地点のベクトルを取得
             //Vector3 normal = collision.contacts[0].normal; 

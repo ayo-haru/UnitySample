@@ -62,7 +62,7 @@ public class Player2 : MonoBehaviour
     private Vector3 scale;                              //スケール
 
     //---ジャンプ変数
-    public float GravityForce = -10.0f;                         // 重力
+    public float GravityForce = -50.0f;                         // 重力
     [System.NonSerialized]public bool JumpNow = false;          // ジャンプしているかどうか
     [System.NonSerialized] public bool UnderParryNow = false;   // 下パリィ中かどうか
     [System.NonSerialized] public bool GroundNow = false;       // 地面と接地中かどうか

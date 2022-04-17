@@ -277,7 +277,7 @@ public class GamePause : MonoBehaviour
     }
 
     private void OnLeftStick(InputAction.CallbackContext obj) {
-        if (Pause.isPause)
+        if (!Pause.isPause)
         {
             return;
         }
@@ -298,7 +298,7 @@ public class GamePause : MonoBehaviour
     }
 
     private void OnRightStick(InputAction.CallbackContext obj) {
-        if (Pause.isPause)
+        if (!Pause.isPause)
         {
             return;
         }

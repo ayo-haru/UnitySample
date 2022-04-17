@@ -9,14 +9,16 @@ public class DebugClear : MonoBehaviour
     int currenthp = 100;
    // HPGage hpGage;
     int count = 0;
-    UVScroll Moon;
-    PieceManager pieceManagewr;
+  //  UVScroll Moon;
+   // PieceManager pieceManagewr;
+    GameObject hpsystem;
     // Start is called before the first frame update
     void Start()
     {
         //hpGage = GameObject.Find("MaskImage").GetComponent<HPGage>();
-        Moon = GameObject.Find("HPBar").GetComponent<UVScroll>();
-        pieceManagewr = GameObject.Find("PieceHPManager").GetComponent<PieceManager>();
+       // Moon = GameObject.Find("HPBar").GetComponent<UVScroll>();
+      //  pieceManagewr = GameObject.Find("PieceHPManager").GetComponent<PieceManager>();
+        hpsystem = GameObject.Find("HPSystem(2)");
     }
 
     // Update is called once per frame
@@ -36,28 +38,61 @@ public class DebugClear : MonoBehaviour
         //}
 
 
-        if (Input.GetKeyDown(KeyCode.F3))
+        //if (Input.GetKeyDown(KeyCode.F3))
+        //{
+        //    ++count;
+        //    Moon.SetFrame(count);
+        //}
+        //if (Input.GetKeyDown(KeyCode.F4))
+        //{
+        //    --count;
+        //    Moon.SetFrame(count);
+        //}
+
+        ////‚©‚¯‚çƒQƒbƒg
+        //if(Input.GetKeyDown(KeyCode.F6))
+        //{
+        //    pieceManagewr.GetPiece();
+        //    Debug.Log("‚©‚¯‚çƒQƒbƒg");
+        //}
+        //if (Input.GetKeyDown(KeyCode.F7))
+        //{
+        //    pieceManagewr.DelPiece();
+        //    Debug.Log("‚©‚¯‚çŒ¸‚Á‚½");
+        //}        //if (Input.GetKeyDown(KeyCode.F3))
+        //{
+        //    ++count;
+        //    Moon.SetFrame(count);
+        //}
+        //if (Input.GetKeyDown(KeyCode.F4))
+        //{
+        //    --count;
+        //    Moon.SetFrame(count);
+        //}
+
+        ////‚©‚¯‚çƒQƒbƒg
+        //if(Input.GetKeyDown(KeyCode.F6))
+        //{
+        //    pieceManagewr.GetPiece();
+        //    Debug.Log("‚©‚¯‚çƒQƒbƒg");
+        //}
+        //if (Input.GetKeyDown(KeyCode.F7))
+        //{
+        //    pieceManagewr.DelPiece();
+        //    Debug.Log("‚©‚¯‚çŒ¸‚Á‚½");
+        //}
+
+        if (Input.GetKeyDown(KeyCode.F10))
         {
-            ++count;
-            Moon.SetFrame(count);
+            hpsystem.GetComponent<HPManager>().GetPiece();
+            Debug.Log("HP"+GameData.CurrentHP);
         }
-        if (Input.GetKeyDown(KeyCode.F4))
+        if (Input.GetKeyDown(KeyCode.F11))
         {
-            --count;
-            Moon.SetFrame(count);
+            hpsystem.GetComponent<HPManager>().Damaged();
+            Debug.Log("HP" + GameData.CurrentHP);
         }
 
-        //‚©‚¯‚çƒQƒbƒg
-        if(Input.GetKeyDown(KeyCode.F6))
-        {
-            pieceManagewr.GetPiece();
-            Debug.Log("‚©‚¯‚çƒQƒbƒg");
-        }
-        if (Input.GetKeyDown(KeyCode.F7))
-        {
-            pieceManagewr.DelPiece();
-            Debug.Log("‚©‚¯‚çŒ¸‚Á‚½");
-        }
 
 
         //‘Ì—ÍŒ¸‚ç‚·

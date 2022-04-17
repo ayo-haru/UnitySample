@@ -67,10 +67,10 @@ public class CarrotEnemy : MonoBehaviour
                 }
             }
 
-            if (Attack)
-            {
-                Destroy(gameObject, 5.0f);
-            }
+            //if (Attack)
+            //{
+            //    Destroy(gameObject, 5.0f);
+            //}
         }
         
     }

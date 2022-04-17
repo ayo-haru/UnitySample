@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4977503956885150343}
   - component: {fileID: 7317983530642119426}
   - component: {fileID: 3649023108240909010}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: dot3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 243647602048796704}
   - component: {fileID: 1588634768592015609}
   - component: {fileID: 6381004665287858083}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 2917335761046405910}
   - component: {fileID: 9085395683514223062}
   - component: {fileID: 3844535118094594853}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: dot4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,9 +258,9 @@ GameObject:
   - component: {fileID: 202817742557859716}
   - component: {fileID: 4521484493621723722}
   - component: {fileID: 3449320264879925361}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Broccoli 1
-  m_TagString: Untagged
+  m_TagString: Damaged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -339,7 +339,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 8
+  m_Constraints: 56
   m_CollisionDetection: 0
 --- !u!114 &4521484493621723722
 MonoBehaviour:
@@ -353,7 +353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d9ac35f0244334c90505f41262f702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 10
+  MoveSpeed: 13
 --- !u!114 &3449320264879925361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,6 +368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Item: {fileID: 651809217550476092, guid: f8de026749d6f894892749266da478ed, type: 3}
   DropRate: 50
+  EnemyNumber: 1
   isAlive: 0
 --- !u!1 &3235390255520848847
 GameObject:
@@ -380,7 +381,7 @@ GameObject:
   - component: {fileID: 6710227613356733442}
   - component: {fileID: 7915551479665547185}
   - component: {fileID: 237618402514004603}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: lip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -459,7 +460,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5402963822456381445}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: dots
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -495,7 +496,7 @@ GameObject:
   - component: {fileID: 5733380262267162609}
   - component: {fileID: 6797244388109419925}
   - component: {fileID: 4559778690842007725}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -576,7 +577,7 @@ GameObject:
   - component: {fileID: 6246828329432644701}
   - component: {fileID: 3269151166057767836}
   - component: {fileID: 5647792483757712995}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: dot2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -657,7 +658,7 @@ GameObject:
   - component: {fileID: 2756498943938300533}
   - component: {fileID: 7031080846094279480}
   - component: {fileID: 8639108065444341161}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: dot1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -738,7 +739,7 @@ GameObject:
   - component: {fileID: 7222394778561626834}
   - component: {fileID: 6357912146799038063}
   - component: {fileID: 8667174178104284572}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}

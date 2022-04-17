@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3314368647716921964}
   - component: {fileID: 8559006491177240550}
   - component: {fileID: 131377551858242843}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: tooth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 526862319760701276}
   - component: {fileID: 2502859781416382317}
   - component: {fileID: 3795589647332770589}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: jet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 4010404332773212457}
   - component: {fileID: 2765903169258949453}
   - component: {fileID: 5147976153541219957}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,9 +257,9 @@ GameObject:
   - component: {fileID: 4731040293661321435}
   - component: {fileID: 7308890754304753699}
   - component: {fileID: 5457498936898903218}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Carrot 1
-  m_TagString: Untagged
+  m_TagString: Damaged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -324,7 +324,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 104
+  m_Constraints: 56
   m_CollisionDetection: 0
 --- !u!114 &7308890754304753699
 MonoBehaviour:
@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08a96a83d1c331c4a8ec6f43de2179d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 100
+  MoveSpeed: 80
 --- !u!114 &5457498936898903218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,6 +353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Item: {fileID: 651809217550476092, guid: f8de026749d6f894892749266da478ed, type: 3}
   DropRate: 50
+  EnemyNumber: 0
   isAlive: 0
 --- !u!1 &7557595700561971205
 GameObject:
@@ -365,7 +366,7 @@ GameObject:
   - component: {fileID: 8887646825053914872}
   - component: {fileID: 7943550816114843169}
   - component: {fileID: 2358547453682047355}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -446,7 +447,7 @@ GameObject:
   - component: {fileID: 7010917995284211902}
   - component: {fileID: 7084623204764513856}
   - component: {fileID: 6725587309388482294}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: tongue
   m_TagString: Untagged
   m_Icon: {fileID: 0}

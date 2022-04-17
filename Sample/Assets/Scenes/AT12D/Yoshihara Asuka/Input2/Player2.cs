@@ -48,7 +48,7 @@ public class Player2 : MonoBehaviour
     private Vector3 PlayerPos;                          // プレイヤーの座標
     private Vector2 ForceDirection = Vector2.zero;      // 移動する方向を決める
     private Vector2 MovingVelocity = Vector3.zero;      // 移動するベクトル
-    [SerializeField] private float maxSpeed = 10.0f;    // 移動スピード(歩く早さ)
+    [SerializeField] private float maxSpeed = 50.0f;    // 移動スピード(歩く早さ)
 
     public int stopTime = 5;                            //盾出したときに止まる時間
     private int Timer = 0;                              //停止時間計測用
@@ -70,9 +70,9 @@ public class Player2 : MonoBehaviour
 
     //---攻撃変数
     public Vector2 AttackDirection = Vector2.zero;     // 攻撃方向
-    public float AttckPosHeight = 2.0f;                 // シールド位置上下
-    public float AttckPosWidth = 2.0f;                  // シールド位置左右
-    public float DestroyTime = 0.1f;                    // シールドが消える時間
+    public float AttckPosHeight = 6.0f;                 // シールド位置上下
+    public float AttckPosWidth = 4.0f;                  // シールド位置左右
+    public float DestroyTime = 0.5f;                    // シールドが消える時間
     private bool isAttack;                              // 攻撃フラグ
     private Vector3 CurrentScale;                       // 現在のプレイヤーのスケールの値を格納 
 
@@ -279,6 +279,7 @@ public class Player2 : MonoBehaviour
         isAttack = true;       
     }
     private void Attack() {
+
         //---振動させる
         //StartCoroutine(VibrationPlay(LowFrequency,HighFrequency));
 
@@ -388,10 +389,10 @@ public class Player2 : MonoBehaviour
     //---ジャンプ中の重力を強くする(ジャンプが俊敏に見える効果がある)
     private void Gravity()
     {
-        if(JumpNow == true)
+        if(JumpNow == true || UnderParryNow == true)
         {
-            //rb.AddForce(new Vector3(0.0f,GravityForce,0.0f));
-            rb.position += transform.up * GravityForce;
+            rb.AddForce(new Vector3(0.0f,GravityForce,0.0f));
+            //rb.position += transform.up * GravityForce;
             //ForceDirection = Vector2.zero;
         }
     }

@@ -203,6 +203,11 @@ public class Player2 : MonoBehaviour
                 //return;
             }
 
+            if(UnderParryNow == true)
+            {
+                Gravity();
+            }
+
             //---移動処理(AddForceの処理)
             //SpeedCheck();
             //ForceDirection += move.ReadValue<Vector2>();

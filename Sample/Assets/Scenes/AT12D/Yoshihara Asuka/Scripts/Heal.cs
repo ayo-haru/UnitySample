@@ -50,7 +50,7 @@ public class Heal : MonoBehaviour
             aTime += Time.deltaTime;
             if (aTime < 1.0f)
             {
-                rb.AddForce(transform.up * (2.0f * aTime), ForceMode.Force);
+                rb.AddForce(transform.up * (10.0f * aTime), ForceMode.Force);
             }
             else
             {

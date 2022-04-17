@@ -123,9 +123,9 @@ public class Player2 : MonoBehaviour
         prefab = (GameObject)Resources.Load("Weapon");
         
 
-        if (GameObject.Find("HPSystem(Clone)"))
+        if (GameObject.Find("HPSystem(2)(Clone)"))
         {
-            hp = GameObject.Find("HPSystem(Clone)");        // HPSystemを参照
+            hp = GameObject.Find("HPSystem(2)(Clone)");        // HPSystemを参照
             hpmanager = hp.GetComponent<HPManager>();       // HPSystemの使用するコンポーネント
         }
         scale = transform.localScale;
@@ -163,7 +163,7 @@ public class Player2 : MonoBehaviour
             }
 
             //---HPオブジェクトを検索
-            if (!GameObject.Find("HPSystem(Clone)"))
+            if (!GameObject.Find("HPSystem(2)(Clone)"))
             {
                 return;
             }

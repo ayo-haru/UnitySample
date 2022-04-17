@@ -17,6 +17,7 @@ public class Heal : MonoBehaviour
     //---変数宣言
     public GameObject prefab;
     HPManager hpmanager;
+    GameObject HP;
     GameObject Player;
     Rigidbody rb;
     public float BounceSpeed = 10.0f;                   // 弾かれるスピード
@@ -35,6 +36,7 @@ public class Heal : MonoBehaviour
         //                                  Quaternion.identity);
         rb = GetComponent<Rigidbody>();
         Player = GameObject.FindWithTag("Player");
+        HP = GameObject.Find("HPSystem(2)(Clone)");
         hpmanager = GetComponent<HPManager>();
     }
 

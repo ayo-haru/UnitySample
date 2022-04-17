@@ -16,7 +16,7 @@ public class EnemyDown : MonoBehaviour
     [SerializeField]
     GameObject Item;
     GameObject Player;
-    private float bouncePower = 8000.0f;
+    private float bouncePower = 10000.0f;
     private Vector3 Pos;
     private Vector3 velocity;
     private Vector3 vec;
@@ -96,7 +96,7 @@ public class EnemyDown : MonoBehaviour
                 rb.AddForce(-vec * bouncePower, ForceMode.Force);
 
                 // ‰ñ“]‚³‚¹‚é
-                rb.AddTorque(-300.0f, 0.0f, 0.0f);
+                rb.AddTorque(0.0f, 0.0f, -10000.0f);
 
                 //SoundManager.Play(SoundData.eSE.SE_REFLECTION, SoundData.GameAudioList);
             }

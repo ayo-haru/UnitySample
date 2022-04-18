@@ -8,7 +8,7 @@
 // <開発履歴>
 // 2022/03/11 作成
 // 2022/03/30 HP保存
-//
+// 2022/04/18 アニメーション保存
 //=============================================================================
 
 using System.Collections;
@@ -18,6 +18,7 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    //---変数宣言
     private Vector3 ReSpawnPos;
 
     [System.NonSerialized]

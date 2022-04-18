@@ -30,8 +30,8 @@ public class TitleSceneManager : MonoBehaviour {
     private int select;                             // 選択されているモードの番号 
 
     private bool isPressButton = false;             // ボタンが押されたかの判定用
-    private bool oncePressButton = false;           // ボタンが押されたときに一回だけ処理をする用
-    private bool onceTiltStick = false;
+    //private bool oncePressButton = false;           // ボタンが押されたときに一回だけ処理をする用
+    //private bool onceTiltStick = false;
 
     private GameObject TitleLogo;
     private GameObject PressAnyButton;

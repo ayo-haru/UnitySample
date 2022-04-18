@@ -20,9 +20,13 @@ public class Player : MonoBehaviour
 {
     private Vector3 ReSpawnPos;
 
+    [System.NonSerialized]
+    public static bool isHitSavePoint; 
+
     // Start is called before the first frame update
     void Start()
     {
+        isHitSavePoint = false;
     }
 
     // Update is called once per frame
@@ -50,35 +54,50 @@ public class Player : MonoBehaviour
             Pause.PauseFin();
         }
 
+        if (SaveManager.shouldSave)
+        {
+            Debug.Log("セーブした");
+            ReSpawnPos = this.transform.position;    // プレイヤーの位置を保存
+            SaveManager.saveLastPlayerPos(ReSpawnPos);
+            SaveManager.saveBossAlive(GameData.isAliveBoss1);
+            SaveManager.saveHP(GameData.CurrentHP);
+            SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
+            //SaveManager.canSave = false;
+            SaveManager.shouldSave = false;
+        }
+
         //if (Input.GetKeyDown(KeyCode.RightArrow))
         //{
         //    EffectManager.Play(EffectData.eEFFECT.EF_SHEILD2, GameData.PlayerPos);
         //}
     }
 
-    private void OnTriggerStay(Collider other) {
+    //private void OnTriggerStay(Collider other) {
         //----- セーブ -----
+        //if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
+        //{
+        //    if (this.GetComponent<Player2>().UnderParryNow)
+        //    {
+        //        Pause.isPause = true;
+        //        SaveManager.canSave = true;
+        //        if (SaveManager.shouldSave)
+        //        {
+        //        }
+        //    }
+        //}
+    //}
+
+    void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
         {
-            if (this.GetComponent<Player2>().UnderParryNow)
+            isHitSavePoint = true;
+            if (GamePadManager.onceTiltStick)
             {
-                Pause.isPause = true;
                 SaveManager.canSave = true;
-                if (SaveManager.shouldSave)
-                {
-                    Debug.Log("セーブした");
-                    ReSpawnPos = this.transform.position;    // プレイヤーの位置を保存
-                    SaveManager.saveLastPlayerPos(ReSpawnPos);
-                    SaveManager.saveBossAlive(GameData.isAliveBoss1);
-                    SaveManager.saveHP(GameData.CurrentHP);
-                    SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
-                    SaveManager.canSave = false;
-                }
             }
+            //GamePadManager.onceTiltStick = false;
         }
-    }
 
-    void OnTriggerEnter(Collider other) { 
         //----- シーン遷移 -----
         if (other.gameObject.tag == "toKitchen1")    // この名前のタグと衝突したら
         {
@@ -135,5 +154,13 @@ public class Player : MonoBehaviour
         //{
         //    GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;    // 次のシーン番号を設定、保存
         //}
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
+        {
+            isHitSavePoint = false;
+            //SaveManager.canSave = false;
+        }
     }
 }

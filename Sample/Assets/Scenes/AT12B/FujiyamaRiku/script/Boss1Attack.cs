@@ -26,6 +26,7 @@ public class Boss1Attack : MonoBehaviour
     bool LRSwitchFlg;
     private GameObject HpObject;
     HPgage HpScript;
+    Animation BossAnim;
     //実装するかわからない左右判定用
     //突進用変数群
     //----------------------------------------------------------
@@ -107,9 +108,9 @@ public class Boss1Attack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        obj = (GameObject)Resources.Load("strawberry");
-        Knifeobj = (GameObject)Resources.Load("knife");
-        Forkobj = (GameObject)Resources.Load("fork");
+        obj = (GameObject)Resources.Load("StrawBerry");
+        Knifeobj = (GameObject)Resources.Load("Knife");
+        Forkobj = (GameObject)Resources.Load("Fork");
         StrawberryAimObj = (GameObject)Resources.Load("StrawberryAim");
         KnifeAimObj = (GameObject)Resources.Load("KnifeAim");
         StrawberryNum = 0;
@@ -132,6 +133,7 @@ public class Boss1Attack : MonoBehaviour
         PreMax_Strawberry = Max_Strawberry;
         HpObject = GameObject.Find("HPGage");
         HpScript = HpObject.GetComponent<HPgage>();
+        BossAnim = this.gameObject.GetComponent<Animation>();
 
         for (int i= 0;i < Max_Strawberry;i++)
         {

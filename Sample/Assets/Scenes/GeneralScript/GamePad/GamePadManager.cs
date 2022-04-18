@@ -14,6 +14,9 @@ public static class GamePadManager
         ALLTYPE
     }
 
+    [System.NonSerialized]
+    public static bool onceTiltStick = false;
+
     //==========================================================================
     //
     //  ゲームパッドの十字に配置されたボタン、十字キー、スタートボタンがおされた

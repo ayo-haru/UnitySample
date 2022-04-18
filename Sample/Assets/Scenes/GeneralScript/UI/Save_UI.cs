@@ -75,7 +75,7 @@ public class Save_UI : MonoBehaviour
             SaveCharacter.GetComponent<UIBlink>().isHide = false;
             YesCharacter.GetComponent<UIBlink>().isHide = false;
             NoCharacter.GetComponent<UIBlink>().isHide = false;
-
+            Pause.isPause = true;
         }
 
         if (keyboard.leftArrowKey.wasReleasedThisFrame)
@@ -85,7 +85,7 @@ public class Save_UI : MonoBehaviour
         }
         else if (isSetGamePad)
         {
-            if (GameData.gamepad.dpad.up.wasReleasedThisFrame)
+            if (GameData.gamepad.dpad.left.wasReleasedThisFrame)
             {
                 SelectUp();
                 return;
@@ -99,7 +99,7 @@ public class Save_UI : MonoBehaviour
         }
         else if (isSetGamePad)
         {
-            if (GameData.gamepad.dpad.down.wasReleasedThisFrame)
+            if (GameData.gamepad.dpad.right.wasReleasedThisFrame)
             {
                 SelectDown();
                 return;

@@ -13,18 +13,14 @@ using UnityEngine;
 
 public class CarrotEnemy : MonoBehaviour
 {
-    Transform Target;
     GameObject Player;
     private Rigidbody rb;
-    private Vector3 startPosition, targetPosition;
     private Vector3 vec;
     private EnemyDown ED;
-    private Vector3 aim;
     private Quaternion look;
 
     [SerializeField]
     float MoveSpeed = 1.0f;
-    float speed = 0.0f;
     bool InArea;
     bool Look;
     bool Attack = false;
@@ -48,18 +44,15 @@ public class CarrotEnemy : MonoBehaviour
             // プレイヤーを見つけたら攻撃開始
             if (InArea && ED.isAlive)
             {
-                vec = (Player.transform.position - transform.position).normalized;
                 if (!Attack)
                 {
+                    vec = (Player.transform.position - transform.position).normalized;
+                    look = Quaternion.LookRotation(vec);
+                    transform.localRotation = look;
                     rb.velocity = vec * MoveSpeed;
                     Attack = true;
                 }
 
-                aim = targetPosition - transform.position;
-                look = Quaternion.LookRotation(aim);
-                transform.localRotation = look;
-
-                //transform.Rotate(90, 0, 0);
                 if (!isCalledOnce)     // 一回だけ呼ぶ
                 {
                     //SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
@@ -67,10 +60,10 @@ public class CarrotEnemy : MonoBehaviour
                 }
             }
 
-            //if (Attack)
-            //{
-            //    Destroy(gameObject, 5.0f);
-            //}
+            if (Attack)
+            {
+                Destroy(gameObject, 2.0f);
+            }
         }
         
     }
@@ -79,10 +72,6 @@ public class CarrotEnemy : MonoBehaviour
     {
         if (other.CompareTag("Player") && Look == false)
         {
-            Target = Player.transform;          // プレイヤーの座標取得
-            targetPosition = Target.position;
-            startPosition = rb.position;
-            speed = 0.0f;
             InArea = true;
             Look = true;
         }

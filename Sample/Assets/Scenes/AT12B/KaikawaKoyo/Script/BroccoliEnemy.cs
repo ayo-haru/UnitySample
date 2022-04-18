@@ -79,7 +79,6 @@ public class BroccoliEnemy : MonoBehaviour
                 }
             }
         }
-       
     }
 
     private void OnCollisionEnter(Collision collision)

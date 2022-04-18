@@ -13,19 +13,21 @@ using UnityEngine;
 
 public class CarrotEnemy2 : MonoBehaviour
 {
-    Transform Target;
     GameObject Player;
     private Rigidbody rb;
-    private Vector3 startPosition, targetPosition;
+    private Vector3 vec;
+    private Vector3 PP;
     private EnemyDown ED;
-    private Vector3 aim;
     private Quaternion look;
 
     [SerializeField]
     float MoveSpeed = 1.0f;
-    float speed = 0.0f;
-    bool InArea;
-    bool Look;
+    private int AttackPattern = 1;
+    private float AttackTime;
+    private float RandomTime;
+    private bool InArea;
+    private bool Look;
+    private bool Attack = false;
 
     private bool isCalledOnce = false;                             // 一回だけ処理をするために使う。
 
@@ -37,6 +39,7 @@ public class CarrotEnemy2 : MonoBehaviour
         InArea = false;
         Look = false;
         ED = GetComponent<EnemyDown>();
+        Random.InitState(System.DateTime.Now.Millisecond);
     }
 
     private void Update()
@@ -46,45 +49,64 @@ public class CarrotEnemy2 : MonoBehaviour
             // プレイヤーを見つけたら攻撃開始
             if (InArea && ED.isAlive)
             {
-                if (speed <= 1)
+                if (!Attack)
                 {
-                    speed += MoveSpeed * Time.deltaTime;
+                    switch(AttackPattern)
+                    {
+                        case 0:
+                            vec = (Player.transform.position - transform.position).normalized;
+                            look = Quaternion.LookRotation(vec);
+                            transform.localRotation = look;
+                            rb.velocity = vec * MoveSpeed;
+                            Attack = true;
+                            break;
+                        case 1:
+                            PP = Player.transform.position + new Vector3(0.0f, 40.0f, 0.0f);
+                            vec = (PP - transform.position).normalized;
+                            look = Quaternion.LookRotation(vec);
+                            transform.localRotation = look;
+                            rb.velocity = vec * MoveSpeed;
+                            RandomTime = Random.Range(0.0f, 1.5f);
+                            Attack = true;
+                            break;
+                        //case 2:
+                        //    break;
+                        //case 3:
+                        //    break;
+
+                    }
                 }
-                // プレイヤーに向かって特攻する
-                rb.position = Vector3.Slerp(startPosition, targetPosition, speed);
 
-                aim = targetPosition - transform.position;
-                look = Quaternion.LookRotation(aim);
-                transform.localRotation = look;
+                if (AttackTime > RandomTime)
+                {
+                    vec = (Player.transform.position - transform.position).normalized;
+                    look = Quaternion.LookRotation(vec);
+                    transform.localRotation = look;
+                    rb.velocity = vec * MoveSpeed;
+                }
 
-                //transform.Rotate(90, 0, 0);
                 if (!isCalledOnce)     // 一回だけ呼ぶ
                 {
-                    SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
+                    //SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
                     isCalledOnce = true;
                 }
-            }
 
-            if (rb.position == targetPosition)
-            {
-                //transform.Rotate(-90, 0, 0);
-                //rb.constraints = RigidbodyConstraints.FreezeRotationX;
-                Destroy(gameObject, 1.0f);
+                if (Attack)
+                {
+                    AttackTime += Time.deltaTime;
+                    Destroy(gameObject, 3.0f);
+                }
             }
         }
-
     }
 
     public void OnTriggerEnter(Collider other)    // コライダーでプレイヤーを索敵したい
     {
         if (other.CompareTag("Player") && Look == false)
         {
-            Target = Player.transform;          // プレイヤーの座標取得
-            targetPosition = Target.position;
-            startPosition = rb.position;
-            speed = 0.0f;
             InArea = true;
             Look = true;
+            //AttackPattern = Random.Range(0, 4);
         }
     }
 

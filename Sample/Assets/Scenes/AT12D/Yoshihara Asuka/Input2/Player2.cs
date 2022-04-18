@@ -23,15 +23,16 @@ public class Player2 : MonoBehaviour
 {
     //---変数宣言
 
-    //---InputSystem関連
-    public static Game_pad PlayerActionAsset;                 // InputActionで生成したものを使用
-    private InputAction move;                           // InputActionのmoveを扱う
-    private InputAction Attacking;                      // InputActionのmoveを扱う
 
     //---振動
     [SerializeField] private float LowFrequency;        // 左側の振動の値
     [SerializeField] private float HighFrequency;       // 右側の振動の値
     [SerializeField] private float VibrationTime;       // 振動時間
+
+    //---InputSystem関連
+    public static Game_pad PlayerActionAsset;           // InputActionで生成したものを使用
+    private InputAction move;                           // InputActionのmoveを扱う
+    private InputAction Attacking;                      // InputActionのmoveを扱う
 
     //---アニメーション関連
     public Animator animator;                           // アニメーターコンポーネント取得
@@ -39,7 +40,7 @@ public class Player2 : MonoBehaviour
 
     //---コンポーネント取得
     private Rigidbody rb;
-    public GameObject prefab;                           // "Weapon"プレハブを格納する変数
+    public GameObject Weapon;                           // "Weapon"プレハブを格納する変数
     GameObject hp;                                      // HPのオブジェクトを格納
     HPManager hpmanager;                                // HPManagerのコンポーネントを取得する変数
     BoxCollider box_collider;                           // 足元の当たり判定
@@ -110,7 +111,7 @@ public class Player2 : MonoBehaviour
     private void OnDisable()
     {
         PlayerActionAsset.Player.Attack.started -= OnAttack;        // started...ボタンが押された瞬間
-        //PlayerActionAsset.Player.Jump.started -= OnJump;            // started    ... ボタンが押された瞬間
+        //PlayerActionAsset.Player.Jump.started -= OnJump;          // started    ... ボタンが押された瞬間
 
         //---InputActionの無効化
         PlayerActionAsset.Player.Disable();
@@ -120,13 +121,12 @@ public class Player2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        prefab = (GameObject)Resources.Load("Weapon");
+        Weapon = (GameObject)Resources.Load("Weapon");
         
-
         if (GameObject.Find("HPSystem(2)(Clone)"))
         {
-            hp = GameObject.Find("HPSystem(2)(Clone)");        // HPSystemを参照
-            hpmanager = hp.GetComponent<HPManager>();       // HPSystemの使用するコンポーネント
+            hp = GameObject.Find("HPSystem(2)(Clone)");         // HPSystemを参照
+            hpmanager = hp.GetComponent<HPManager>();           // HPSystemの使用するコンポーネント
         }
         scale = transform.localScale;
 
@@ -143,28 +143,9 @@ public class Player2 : MonoBehaviour
 
         if (!Pause.isPause)
         {
-            //---rb.velocityによる移動処理
-            ForceDirection += move.ReadValue<Vector2>();
-            ForceDirection.Normalize();
-            MovingVelocity = ForceDirection * maxSpeed;
-
             if (isAttack)
             {
                 Attack();
-            }
-
-            //---アニメーション再生
-            if (Mathf.Abs(ForceDirection.x) > 0 && Mathf.Abs(ForceDirection.y) == 0)
-            {
-                if (!animator.GetBool("Walk"))
-                {
-                    animator.SetBool("Walk", true);
-                    
-                }
-            }
-            else if (animator.GetBool("Walk"))
-            {
-                animator.SetBool("Walk", false);
             }
 
             //---HPオブジェクトを検索
@@ -193,8 +174,6 @@ public class Player2 : MonoBehaviour
 
             }
         }
-
-
     }
 
     private void FixedUpdate()
@@ -210,52 +189,7 @@ public class Player2 : MonoBehaviour
                 //return;
             }
 
-            //---移動処理(AddForceの処理)
-            //SpeedCheck();
-            //ForceDirection += move.ReadValue<Vector2>();
-            //ForceDirection.Normalize();
-            //rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
-
-            //---移動処理(velocityの処理)
-            if (Timer <= 0)
-            {
-                rb.velocity = new Vector3(MovingVelocity.x, rb.velocity.y - MovingVelocity.y, 0);
-            }
-            else
-            {
-                --Timer;
-                rb.velocity = new Vector3(0, rb.velocity.y - MovingVelocity.y, 0);
-            }
-
-            //---回転処理処理
-            //方向が変わってたらスケールｘを反転
-            if ((ForceDirection.x > 0 && beforeDir.x < 0) || (ForceDirection.x < 0 && beforeDir.x > 0))
-            {
-                scale.x *= -1;
-                transform.localScale = scale;
-            }
-            //回転の目標値
-            Quaternion target = new Quaternion();
-            if (ForceDirection.magnitude > 0.01f)
-            {
-                //方向を保存
-                beforeDir = ForceDirection;
-                //向きを設定
-                target = Quaternion.LookRotation(ForceDirection);
-            }
-            else
-            {
-                //入力されてなかったとき
-                //回転が中途半端な時は補正する
-                if (transform.rotation.y != 90.0f && transform.rotation.y != -90.0f)
-                {
-                    target = Quaternion.LookRotation(beforeDir); //向きを変更する
-                }
-            }
-            //ゆっくり回転させる
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotationSpeed);
-
-            ForceDirection = Vector2.zero;
+            Move("Velocity");
         }
         else
         {
@@ -266,15 +200,92 @@ public class Player2 : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, 250.0f, transform.position.z);
         }
-
     }
 
-    private void OnMove(InputAction.CallbackContext obj)
+    #region 移動処理
+    //===================================================================
+    //  移動処理
+    //===================================================================
+    private void Move(string ModeName)
     {
+        switch (ModeName)
+        { 
+            //---Velocityを使用した移動処理
+            case "Velocity":
+                ForceDirection += move.ReadValue<Vector2>();
+                ForceDirection.Normalize();
+                MovingVelocity = ForceDirection * maxSpeed;
+                if (Timer <= 0)
+                {
+                    rb.velocity = new Vector3(MovingVelocity.x, rb.velocity.y - MovingVelocity.y, 0);
+                }
+                else
+                {
+                    --Timer;
+                    rb.velocity = new Vector3(0, rb.velocity.y - MovingVelocity.y, 0);
+                }
+            break;
+
+            //---AddForceを使用した処理
+            case "AddForce":
+                SpeedCheck();
+                ForceDirection += move.ReadValue<Vector2>();
+                ForceDirection.Normalize();
+                rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
+            break;
+
+            default:
+            break;
+        }
+
+        //---アニメーション再生
+        if (Mathf.Abs(ForceDirection.x) > 0 && Mathf.Abs(ForceDirection.y) == 0)
+        {
+            if (!animator.GetBool("Walk"))
+            {
+                animator.SetBool("Walk", true);
+
+            }
+        }
+        else if (animator.GetBool("Walk"))
+        {
+            animator.SetBool("Walk", false);
+        }
+
+        //---回転処理処理
+        //方向が変わってたらスケールｘを反転
+        if ((ForceDirection.x > 0 && beforeDir.x < 0) || (ForceDirection.x < 0 && beforeDir.x > 0))
+        {
+            scale.x *= -1;
+            transform.localScale = scale;
+        }
+        //回転の目標値
+        Quaternion target = new Quaternion();
+        if (ForceDirection.magnitude > 0.01f)
+        {
+            //方向を保存
+            beforeDir = ForceDirection;
+            //向きを設定
+            target = Quaternion.LookRotation(ForceDirection);
+        }
+        else
+        {
+            //入力されてなかったとき
+            //回転が中途半端な時は補正する
+            if (transform.rotation.y != 90.0f && transform.rotation.y != -90.0f)
+            {
+                target = Quaternion.LookRotation(beforeDir); //向きを変更する
+            }
+        }
+        //ゆっくり回転させる
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotationSpeed);
+
+        ForceDirection = Vector2.zero;
 
     }
+    #endregion
 
-
+    #region 攻撃処理
     //===================================================================
     //
     //  攻撃
@@ -348,19 +359,19 @@ public class Player2 : MonoBehaviour
         }
 
         //---倒した値を基に盾の出す場所を指定
-        GameObject weapon = Instantiate(prefab, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+        GameObject weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
                                                            PlayerPos.y + (AttackDirection.y * AttckPosHeight),
                                                            PlayerPos.z), Quaternion.identity);
 
         //---コントローラーの倒したXの値が－だったらy軸に-1する(盾の角度の調整)
-        if (AttackDirection.x < 0.0f)
+        if (AttackDirection.x < 0)
         {
             AttackDirection.y *= -1;
 
         }
         //---y軸が－だったら(下パリィする際)ジャンプ中にする(03/21時点)
         //---y軸が－だったら(下パリィする際)下パリィフラグにする(03/25時点)
-        if (AttackDirection.y < 0.0f)
+        if (AttackDirection.y < 0)
         {
             UnderParryNow = true;
             GroundNow = false;
@@ -377,7 +388,9 @@ public class Player2 : MonoBehaviour
 
         isAttack = false;
     }
+    #endregion
 
+    #region ジャンプ処理
     //---ジャンプ処理
     private void OnJump(InputAction.CallbackContext obj)
     {
@@ -392,6 +405,7 @@ public class Player2 : MonoBehaviour
         rb.AddForce(transform.up * JumpForce,ForceMode.Impulse);
         SoundManager.Play(SoundData.eSE.SE_JUMP, SoundData.GameAudioList);
     }
+    #endregion
 
     #region Gravity関数
     //---ジャンプ中の重力を強くする(ジャンプが俊敏に見える効果がある)
@@ -516,7 +530,6 @@ public class Player2 : MonoBehaviour
         {
             return;
         }
-
         //---ゲームパッドとつながっている時に表示される。
         //GUILayout.Label($"LeftStick:{Gamepad.current.leftStick.ReadValue()}");
         //GUILayout.Label($"RightStick:{Gamepad.current.rightStick.ReadValue()}");
@@ -534,7 +547,5 @@ public class Player2 : MonoBehaviour
         GUILayout.Label($"GroudFlg:{GroundNow}");
         GUILayout.Label($"UnderParryFlg:{UnderParryNow}");
     }
-
-
 }
 

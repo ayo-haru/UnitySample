@@ -24,7 +24,7 @@ public class Player2 : MonoBehaviour
     //---変数宣言
 
     //---InputSystem関連
-    private Game_pad PlayerActionAsset;                 // InputActionで生成したものを使用
+    public static Game_pad PlayerActionAsset;                 // InputActionで生成したものを使用
     private InputAction move;                           // InputActionのmoveを扱う
     private InputAction Attacking;                      // InputActionのmoveを扱う
 
@@ -42,7 +42,7 @@ public class Player2 : MonoBehaviour
     public GameObject prefab;                           // "Weapon"プレハブを格納する変数
     GameObject hp;                                      // HPのオブジェクトを格納
     HPManager hpmanager;                                // HPManagerのコンポーネントを取得する変数
-    BoxCollider box_collider;                           //足元の当たり判定
+    BoxCollider box_collider;                           // 足元の当たり判定
 
     //---移動変数
     private Vector3 PlayerPos;                          // プレイヤーの座標

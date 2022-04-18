@@ -363,6 +363,7 @@ public class Player2 : MonoBehaviour
         if (AttackDirection.y < 0.0f)
         {
             UnderParryNow = true;
+            GamePadManager.onceTiltStick = true;
             GroundNow = false;
         }
 

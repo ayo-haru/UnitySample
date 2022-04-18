@@ -94,8 +94,9 @@ public class Player : MonoBehaviour
             if (GamePadManager.onceTiltStick)
             {
                 SaveManager.canSave = true;
+                
             }
-            //GamePadManager.onceTiltStick = false;
+            GamePadManager.onceTiltStick = false;
         }
 
         //----- ƒV[ƒ“‘JˆÚ -----

@@ -552,7 +552,6 @@ GameObject:
   m_Component:
   - component: {fileID: 602515332}
   - component: {fileID: 602515331}
-  - component: {fileID: 602515334}
   - component: {fileID: 602515333}
   m_Layer: 0
   m_Name: BossStageManager
@@ -603,29 +602,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeToStayInIdle: 1.4
   MaxAttack: 2
---- !u!114 &602515334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 602515330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b081c5af3c2f94429f544a04fc5e6b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RushDamage: 15
-  StrawberryDamage: 10
-  KnifeDamage: 10
-  RefrectRotOver: 80
-  RefrectRotUnder: -90
-  RushSpeed: 0.5
-  Max_Strawberry: 6
-  StrawberrySpeed: 1
-  KnifeSpeed: 2
-  KnifeForward: {x: 0, y: 1, z: 0}
-  KnifeThrowTime: 1
 --- !u!1 &755579427
 GameObject:
   m_ObjectHideFlags: 0

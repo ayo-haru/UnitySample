@@ -38,7 +38,7 @@ public class Boss1Manager : MonoBehaviour
         BossPos = GameObject.Find("BossPoint").transform.position;
         if (GameData.isAliveBoss1)
         {
-            Bossobj.transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
+            //Bossobj.transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
             Boss = Instantiate(Bossobj, BossPos, Quaternion.Euler(0.0f, -90.0f, 0.0f));
             BossState = Boss1State.BOSS1_START;
         }

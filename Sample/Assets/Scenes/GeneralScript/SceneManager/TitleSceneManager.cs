@@ -150,7 +150,7 @@ public class TitleSceneManager : MonoBehaviour {
 
                 // シーン関連
                 GameData.OldMapNumber = GameData.CurrentMapNumber;
-                GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen1_SCENE;
+                GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
                 string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
                 SceneManager.LoadScene(nextSceneName);
 
@@ -166,7 +166,7 @@ public class TitleSceneManager : MonoBehaviour {
 
                     // シーン関連
                     GameData.OldMapNumber = GameData.CurrentMapNumber;
-                    GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen1_SCENE;
+                    GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
                     string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
                     SceneManager.LoadScene(nextSceneName);
 

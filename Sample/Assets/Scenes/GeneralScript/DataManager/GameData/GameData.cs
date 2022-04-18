@@ -30,6 +30,9 @@ public static class GameData
         Kitchen4_SCENE,
         Kitchen5_SCENE,
         Kitchen6_SCENE,
+        KitchenXXX_SCENE,
+        KitchenYYY_SCENE,
+
         BOSS1_SCENE
     }
 
@@ -41,7 +44,7 @@ public static class GameData
     public static int NextMapNumber;        // マップの番号いれる
     public static int MovePoint;            // 次の遷移場所
     static string[] MapName                 // マップの名前 
-        = { "TitleScene", "Kitchen", "KitchenScene", "Kitchen001", "Kitchen002", "Kitchen003", "Kitchen004", "Kitchen005", "Kitchen006", "Tester" };
+        = { "TitleScene", "Kitchen", "KitchenScene", "Kitchen001", "Kitchen002", "Kitchen003", "Kitchen004", "Kitchen005", "Kitchen006","KitchenStage", "KitchenStage 1","Tester" };
 
     static string[] MovePointName
         = { "KitchenMovePoint001" };

@@ -1,19 +1,17 @@
 fileFormatVersion: 2
-guid: 178485c2575fe524ca607108f286eb23
+guid: 0dd5006c5677cd54c9839ad3fd92e31f
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 4413436633992129478
+    second: pancakeboss_anime_jump
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: pancake_tex
     second: {fileID: 2100000, guid: d1bb071574b0d2d43957db0fedff226a, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: pancakefin02_lambert1_BaseColor
-    second: {fileID: 2800000, guid: 5ec5b1b23154ed34fa1cbd437e81ec03, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -40,7 +38,36 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: pancakeboss_anime_jump
+      takeName: pancakeboss_anime_jump
+      internalID: 0
+      firstFrame: 1
+      lastFrame: 112
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0.59999996
     isReadable: 0
   meshes:
     lODScreenPercentages: []

@@ -24,7 +24,7 @@ public class Player2 : MonoBehaviour
     //---変数宣言
 
     //---InputSystem関連
-    private Game_pad PlayerActionAsset;                 // InputActionで生成したものを使用
+    public static Game_pad PlayerActionAsset;                 // InputActionで生成したものを使用
     private InputAction move;                           // InputActionのmoveを扱う
     private InputAction Attacking;                      // InputActionのmoveを扱う
 
@@ -42,7 +42,7 @@ public class Player2 : MonoBehaviour
     public GameObject prefab;                           // "Weapon"プレハブを格納する変数
     GameObject hp;                                      // HPのオブジェクトを格納
     HPManager hpmanager;                                // HPManagerのコンポーネントを取得する変数
-    BoxCollider box_collider;                           //足元の当たり判定
+    BoxCollider box_collider;                           // 足元の当たり判定
 
     //---移動変数
     private Vector3 PlayerPos;                          // プレイヤーの座標
@@ -136,6 +136,11 @@ public class Player2 : MonoBehaviour
     // Update is called once per frame
     void Update() 
     {
+        if (UnderParryNow == true || GroundNow == true)
+        {
+            Gravity();
+        }
+
         if (!Pause.isPause)
         {
             //---rb.velocityによる移動処理
@@ -188,6 +193,8 @@ public class Player2 : MonoBehaviour
 
             }
         }
+
+
     }
 
     private void FixedUpdate()
@@ -201,11 +208,6 @@ public class Player2 : MonoBehaviour
             {
                 Gravity();
                 //return;
-            }
-
-            if(UnderParryNow == true)
-            {
-                Gravity();
             }
 
             //---移動処理(AddForceの処理)
@@ -259,6 +261,12 @@ public class Player2 : MonoBehaviour
         {
             animator.speed = 0.0f;
         }
+
+        if (this.gameObject.transform.position.y > 250)
+        {
+            transform.position = new Vector3(transform.position.x, 250.0f, transform.position.z);
+        }
+
     }
 
     private void OnMove(InputAction.CallbackContext obj)

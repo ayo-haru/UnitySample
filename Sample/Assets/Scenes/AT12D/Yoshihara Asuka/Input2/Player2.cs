@@ -183,7 +183,7 @@ public class Player2 : MonoBehaviour
             animator.speed = 1.0f;
 
             //---ジャンプ中なら移動処理をしない
-            if (JumpNow == true)
+            if (JumpNow == true || UnderParryNow == true)
             {
                 Gravity();
                 //return;
@@ -303,9 +303,9 @@ public class Player2 : MonoBehaviour
         //StartCoroutine(VibrationPlay(LowFrequency,HighFrequency));
 
         //---スティック入力
-        PlayerPos = transform.position;                             // 攻撃する瞬間のプレイヤーの座標を取得
+        PlayerPos = transform.position;                                             // 攻撃する瞬間のプレイヤーの座標を取得
         AttackDirection += Attacking.ReadValue<Vector2>();             // スティックの倒した値を取得
-        //AttackDirection.Normalize();                              // 取得した値を正規化(ベクトルを１にする)
+        //AttackDirection.Normalize();                                               // 取得した値を正規化(ベクトルを１にする)
 
         //---アニメーション再生
         //---左右パリィ
@@ -328,20 +328,20 @@ public class Player2 : MonoBehaviour
             animator.SetTrigger("Attack_UP");
         }
 
-        //---下パリィ
-        if (AttackDirection.y <= 1)
-        {
-            if (GroundNow == true)
-            {
-                rb.AddForce(transform.up * 3.0f, ForceMode.Impulse);
-                GroundNow = false;
-            }
-            animator.SetTrigger("Attack_DOWN");
+		//---下パリィ
+		if (AttackDirection.y < 0)
+		{
+			if (GroundNow == true)
+			{
+				rb.AddForce(transform.up * 3.0f, ForceMode.Impulse);
+				GroundNow = false;
+			}
+			animator.SetTrigger("Attack_DOWN");
 
-        }
+		}
 
-        //モデルの向きと反対方向に盾出したらモデル回転
-        if ((AttackDirection.x > 0 && beforeDir.x < 0) || (AttackDirection.x < 0 && beforeDir.x > 0))
+		//モデルの向きと反対方向に盾出したらモデル回転
+		if ((AttackDirection.x > 0 && beforeDir.x < 0) || (AttackDirection.x < 0 && beforeDir.x > 0))
         {
             //方向を保存
             beforeDir.x = AttackDirection.x;

@@ -30,7 +30,7 @@ public class WeaponCollision : MonoBehaviour
     void Start()
     {
         //Player = GameData.Player;
-        Player = GameObject.Find("Rulaby(Clone)");
+        Player = GameObject.Find(GameData.Player.name);
         player_rb = Player.GetComponent<Rigidbody>();
         shield_Manager = Player.GetComponent<ShieldManager>();
         //‚‚ªÅ‘å”‚ğ’´‚¦‚Ä‚¢‚½‚ç

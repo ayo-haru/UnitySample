@@ -7,7 +7,8 @@ public class SavePoint : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EffectManager.Play(EffectData.eEFFECT.EF_HEAL, this.transform.position);
+        Vector3 Pos = this.transform.position;
+        EffectManager.Play(EffectData.eEFFECT.EF_MAGICSQUARE, new Vector3(Pos.x, Pos.y - 5.0f, Pos.z),false);
     }
 
     // Update is called once per frame

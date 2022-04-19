@@ -28,6 +28,7 @@ public static class EffectData
         EF_HEAL,
         EF_SHIELD,
         EF_SHEILD2,
+        EF_MAGICSQUARE,
 
         MAX_EF
     }
@@ -35,6 +36,7 @@ public static class EffectData
     //---エフェクトデータの数だけまとめる
     public static ParticleSystem[] EF = new ParticleSystem[(int)eEFFECT.MAX_EF];
 
+    public static bool isSetEffect = false;
 
     //---エフェクトデータを読み込む
     public static void EFDataSet(ParticleSystem _EF,int i)

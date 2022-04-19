@@ -56,6 +56,7 @@ public static class SoundData
     public static AudioSource[] IndelibleAudioList = new AudioSource[3];    // ˆê‰ñ‚É“¯‚É‚È‚ç‚¹‚é”
     public static AudioSource[] GameAudioList = new AudioSource[20];    // ˆê‰ñ‚É“¯‚É‚È‚ç‚¹‚é”
 
+    public static bool isSetSound = false;
 
 
     public static void SEDataSet(AudioClip _SE, int i)    // SE‚Ìƒf[ƒ^‚ğ“Ç‚İ‚Ş

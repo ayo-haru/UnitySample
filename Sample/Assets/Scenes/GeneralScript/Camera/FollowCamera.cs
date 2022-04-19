@@ -34,7 +34,7 @@ public class FollowCamera : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         //---プレイヤーに追従する
         Vector3 PlayerPos = GameData.PlayerPos;
@@ -48,29 +48,25 @@ public class FollowCamera : MonoBehaviour
                                          PlayerPos.y + FollowCameraPos.y,
                                          FollowCameraPos.z);                       // ジャンプ追従
 
-        ////---画面外設定(x = 45.0fの地点に到達したらカメラの移動を停止)
-        //if (this.MoveFlg == false && PlayerPos.x > RightScreenOut)
-        //{
-        //    //transform.position = new Vector3(45.0f, 0.7f, PlayerPos.z - 4.5f);
-        //    transform.position = new Vector3(RightScreenOut, 
-        //                                     PlayerPos.y + FollowCameraPos.y, 
-        //                                     FollowCameraPos.z);         // ジャンプ追従
-        //    //if (PlayerPos.x >= MovePoint){
-        //    //    this.MoveFlg = true;
-        //    //    if(this.MoveFlg == true){
-        //    //        this.transform.position = new Vector3(60.0f, 1.5f, -4.0f);    // カメラの場所を再定
-        //    //    }
-        //    //}
-        //}
-
-
-        ////---画面外設定(x = 15.0fの地点に到達したらカメラの移動を停止)
-        //else if (PlayerPos.x < LeftScreenOut)
-        //{
-        //    //transform.position = new Vector3(15.0f, 0.7f, PlayerPos.z - 4.5f);
-        //    transform.position = new Vector3(LeftScreenOut, 
-        //                                     PlayerPos.y + FollowCameraPos.y, 
-        //                                     FollowCameraPos.z);          // ジャンプ追従
-        //}
-    }
+		////---画面外設定(x = 45.0fの地点に到達したらカメラの移動を停止)
+		if (this.MoveFlg == false && PlayerPos.x > RightScreenOut)
+		{
+			//transform.position = new Vector3(45.0f, 0.7f, PlayerPos.z - 4.5f);
+			transform.position = new Vector3(RightScreenOut,PlayerPos.y + FollowCameraPos.y,FollowCameraPos.z);         // ジャンプ追従
+		    //if (PlayerPos.x >= MovePoint){
+		    //    this.MoveFlg = true;
+		    //    if(this.MoveFlg == true){
+		    //        this.transform.position = new Vector3(60.0f, 1.5f, -4.0f);    // カメラの場所を再定
+		    //    }
+		    //}
+		}
+		//---画面外設定(x = 15.0fの地点に到達したらカメラの移動を停止)
+		if (PlayerPos.x < LeftScreenOut)
+		{
+			//transform.position = new Vector3(15.0f, 0.7f, PlayerPos.z - 4.5f);
+			transform.position = new Vector3(LeftScreenOut,
+											 PlayerPos.y + FollowCameraPos.y,
+											 FollowCameraPos.z);          // ジャンプ追従
+		}
+	}
 }

@@ -131,7 +131,8 @@ public class KitchenSceneManager : MonoBehaviour
 
 
         GameObject player = Instantiate(GameData.Player);
-
+        player.name = GameData.Player.name;                     // 名前の後ろに(Clone)とつくのを防ぐため、
+                                                                                      // 強制的にプレハブ名にする処理
 
         //----- 開始演出 -----
         //KitchenImage = GameObject.Find("Kitchen");

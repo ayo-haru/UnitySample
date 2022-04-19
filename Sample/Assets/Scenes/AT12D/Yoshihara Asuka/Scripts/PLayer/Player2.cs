@@ -244,7 +244,6 @@ public class Player2 : MonoBehaviour
             if (!animator.GetBool("Walk"))
             {
                 animator.SetBool("Walk", true);
-
             }
         }
         else if (animator.GetBool("Walk"))

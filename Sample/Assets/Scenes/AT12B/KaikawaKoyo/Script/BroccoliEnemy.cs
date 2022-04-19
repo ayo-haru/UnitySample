@@ -21,11 +21,13 @@ public class BroccoliEnemy : MonoBehaviour
     //private bool loop = false;
 
     [SerializeField]
-    float MoveSpeed = 5.0f;
+    private float MoveSpeed = 5.0f;
+    private float InvincibleTime;
     
     bool InArea = false;
     private bool look = false;
     private bool isGround = false;
+    private bool Invincible = false;
 
     private bool isCalledOnce = false;                             // 開始演出で使用。一回だけ処理をするために使う。
 
@@ -45,6 +47,21 @@ public class BroccoliEnemy : MonoBehaviour
         if(!Pause.isPause)
         {
             rot = transform.rotation;
+            print(Invincible);
+            if(Invincible)
+            {
+                gameObject.layer = LayerMask.NameToLayer("Invincible");
+                transform.Rotate(0, 0, 0);
+                InvincibleTime += Time.deltaTime;
+                if (InvincibleTime > 2.0f)
+                {
+                    gameObject.layer = LayerMask.NameToLayer("Enemy");
+                    InvincibleTime = 0.0f;
+                    Invincible = false;
+                }
+            }
+           
+            
             // プレイヤーを見つけたら攻撃開始
             if (InArea && ED.isAlive)
             {
@@ -87,6 +104,12 @@ public class BroccoliEnemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             rb.constraints = RigidbodyConstraints.FreezePositionY;
+        }
+
+        // 接地判定
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Invincible = true;
         }
     }
 

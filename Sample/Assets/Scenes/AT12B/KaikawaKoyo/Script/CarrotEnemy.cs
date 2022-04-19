@@ -21,9 +21,11 @@ public class CarrotEnemy : MonoBehaviour
 
     [SerializeField]
     float MoveSpeed = 1.0f;
+    private float InvincibleTime;
     bool InArea;
     bool Look;
     bool Attack = false;
+    private bool Invincible = false;
 
     private bool isCalledOnce = false;                             // 一回だけ処理をするために使う。
 
@@ -44,6 +46,16 @@ public class CarrotEnemy : MonoBehaviour
             // プレイヤーを見つけたら攻撃開始
             if (InArea && ED.isAlive)
             {
+                if (Invincible)
+                {
+                    gameObject.layer = LayerMask.NameToLayer("Invincible");
+                    InvincibleTime += Time.deltaTime;
+                }
+                if (InvincibleTime > 2.0f)
+                {
+                    gameObject.layer = LayerMask.NameToLayer("Enemy");
+                    Invincible = false;
+                }
                 if (!Attack)
                 {
                     vec = (Player.transform.position - transform.position).normalized;
@@ -81,7 +93,8 @@ public class CarrotEnemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Destroy(gameObject, 0.0f);
+            Invincible = true;
+            //Destroy(gameObject, 0.0f);
         }
     }
 

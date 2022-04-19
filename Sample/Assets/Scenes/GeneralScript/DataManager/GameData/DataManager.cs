@@ -111,6 +111,8 @@ public class DataManager : MonoBehaviour
         EffectData.EFDataSet(ef_heal,(int)EffectData.eEFFECT.EF_HEAL);
         EffectData.EFDataSet(ef_shield,(int)EffectData.eEFFECT.EF_SHEILD2);
 
+        SoundData.isSetSound = true;    // デバッグ時サウンド初期化してない場合にエラーが出るからけす
+
         // 絶対に消されない音のいれる場所
         for (int i = 0; i < 3; i++) {
             SoundData.IndelibleAudioList[i] = gameObject.AddComponent<AudioSource>();

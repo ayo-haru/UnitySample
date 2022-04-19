@@ -11,16 +11,27 @@ public class EffectManager : MonoBehaviour
     //  詳細：第一引数はEffectDataの列挙体に定義したやーつ
     //
     //----------------------------------
-    public static void Play(EffectData.eEFFECT _effectDataNumber,Vector3 _pos) {
+    public static void Play(EffectData.eEFFECT _effectDataNumber,Vector3 _pos,bool _destroy = true) {
+        if (!EffectData.isSetEffect)
+        {
+            return; // エフェクトデータ未設定
+        }
         //エフェクトを生成する
         ParticleSystem effect = Instantiate(EffectData.EF[(int)_effectDataNumber]);
         //エフェクトが発生する場所を決定する(敵オブジェクトの場所)
         effect.transform.position = _pos;
         effect.Play();
-        Destroy(effect.gameObject, 5.0f);
+        if (_destroy)
+        {
+            Destroy(effect.gameObject, 5.0f);
+        }
     }
 
     public static void Play(EffectData.eEFFECT _effectDataNumber, Vector3 _pos,float _destroyTime) {
+        if (!EffectData.isSetEffect)
+        {
+            return; // エフェクトデータ未設定
+        }
         //エフェクトを生成する
         ParticleSystem effect = Instantiate(EffectData.EF[(int)_effectDataNumber]);
         //エフェクトが発生する場所を決定する(敵オブジェクトの場所)
@@ -30,5 +41,4 @@ public class EffectManager : MonoBehaviour
         // 生存時間を設定したものにする
         Destroy(effect.gameObject, _destroyTime);
     }
-
 }

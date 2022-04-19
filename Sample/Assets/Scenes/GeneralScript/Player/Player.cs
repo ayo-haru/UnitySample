@@ -55,6 +55,16 @@ public class Player : MonoBehaviour
             Pause.PauseFin();
         }
 
+        if (isHitSavePoint)
+        {
+            if (GamePadManager.onceTiltStick)
+            {
+                SaveManager.canSave = true;
+
+            }
+            GamePadManager.onceTiltStick = false;
+        }
+
         if (SaveManager.shouldSave)
         {
             Debug.Log("セーブした");
@@ -92,12 +102,6 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
         {
             isHitSavePoint = true;
-            if (GamePadManager.onceTiltStick)
-            {
-                SaveManager.canSave = true;
-                
-            }
-            GamePadManager.onceTiltStick = false;
         }
 
         //----- シーン遷移 -----
@@ -162,7 +166,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
         {
             isHitSavePoint = false;
-            //SaveManager.canSave = false;
+            SaveManager.canSave = false;
         }
     }
 }

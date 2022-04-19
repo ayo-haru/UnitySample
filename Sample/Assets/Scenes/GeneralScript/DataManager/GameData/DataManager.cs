@@ -28,44 +28,75 @@ public class DataManager : MonoBehaviour
     //-----------------------------------------------------
     // BGM・SE
     //-----------------------------------------------------
-    public AudioClip bgm_title;
-    public AudioClip bgm_kitchen;
-    public AudioClip bgm_kitchenBoss;
+    [SerializeField]
+    private AudioClip bgm_title;
+    [SerializeField]
+    private AudioClip bgm_kitchen;
+    [SerializeField]
+    private AudioClip bgm_kitchenBoss;
 
-    public AudioClip se_jump;
-    public AudioClip se_land;
-    public AudioClip se_shield;
-    public AudioClip se_reflection;
-    public AudioClip se_damege;
-    public AudioClip se_heal;
+    [SerializeField]
+    private AudioClip se_jump;
+    [SerializeField]
+    private AudioClip se_land;
+    [SerializeField]
+    private AudioClip se_shield;
+    [SerializeField]
+    private AudioClip se_reflection;
+    [SerializeField]
+    private AudioClip se_damege;
+    [SerializeField]
+    private AudioClip se_heal;
 
-    public AudioClip se_boss1Dashu;
-    public AudioClip se_boss1Strawberry;
-    public AudioClip se_boss1Knife;
-    public AudioClip se_boss1Damege;
+    [SerializeField]
+    private AudioClip se_boss1Dashu;
+    [SerializeField]
+    private AudioClip se_boss1Strawberry;
+    [SerializeField]
+    private AudioClip se_boss1Knife;
+    [SerializeField]
+    private AudioClip se_boss1Damege;
 
-    public AudioClip se_burokori;
-    public AudioClip se_ninjin;
-    public AudioClip se_tomatobomb;
-    public AudioClip se_tomatobound;
+    [SerializeField]
+    private AudioClip se_burokori;
+    [SerializeField]
+    private AudioClip se_ninjin;
+    [SerializeField]
+    private AudioClip se_tomatobomb;
+    [SerializeField]
+    private AudioClip se_tomatobound;
 
-    public AudioClip se_kettei;
-    public AudioClip se_select;
-    public AudioClip se_gameover;
+    [SerializeField]
+    private AudioClip se_kettei;
+    [SerializeField]
+    private AudioClip se_select;
+    [SerializeField]
+    private AudioClip se_gameover;
 
 
     //-----------------------------------------------------
     // Efect
     //-----------------------------------------------------
-    public ParticleSystem ef_fire;
-    public ParticleSystem ef_damage;
-    public ParticleSystem ef_dark;
-    public ParticleSystem ef_enemydeath;
-    public ParticleSystem ef_bossdeath;
-    public ParticleSystem ef_healitem;
-    public ParticleSystem ef_heal;
-    public ParticleSystem ef_shield;
-    public ParticleSystem ef_shield2;
+    [SerializeField]
+    private ParticleSystem ef_fire;
+    [SerializeField]
+    private ParticleSystem ef_damage;
+    [SerializeField]
+    private ParticleSystem ef_dark;
+    [SerializeField]
+    private ParticleSystem ef_enemydeath;
+    [SerializeField]
+    private ParticleSystem ef_bossdeath;
+    [SerializeField]
+    private ParticleSystem ef_healitem;
+    [SerializeField]
+    private ParticleSystem ef_heal;
+    [SerializeField]
+    private ParticleSystem ef_shield;
+    [SerializeField]
+    private ParticleSystem ef_shield2;
+    [SerializeField]
+    private ParticleSystem ef_magicspuare;
 
     // Start is called before the first frame update
     void Awake()
@@ -110,8 +141,10 @@ public class DataManager : MonoBehaviour
         EffectData.EFDataSet(ef_healitem,(int)EffectData.eEFFECT.EF_HEALITEM);
         EffectData.EFDataSet(ef_heal,(int)EffectData.eEFFECT.EF_HEAL);
         EffectData.EFDataSet(ef_shield,(int)EffectData.eEFFECT.EF_SHEILD2);
+        EffectData.EFDataSet(ef_magicspuare,(int)EffectData.eEFFECT.EF_MAGICSQUARE);
 
         SoundData.isSetSound = true;    // デバッグ時サウンド初期化してない場合にエラーが出るからけす
+        EffectData.isSetEffect = true;  // デバッグ時エフェクト初期化していない場合にエラーを出さない
 
         // 絶対に消されない音のいれる場所
         for (int i = 0; i < 3; i++) {

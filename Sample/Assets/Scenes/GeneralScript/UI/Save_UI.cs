@@ -15,6 +15,9 @@ public class Save_UI : MonoBehaviour
     [SerializeField]
     private GameObject nocharacter;
     private GameObject NoCharacter;
+    [SerializeField]
+    private GameObject stick;
+    private GameObject Stick;
 
     private Canvas canvas;
 
@@ -39,16 +42,19 @@ public class Save_UI : MonoBehaviour
         SaveCharacter = Instantiate(savecharacter);
         YesCharacter = Instantiate(yescharacter);
         NoCharacter = Instantiate(nocharacter);
+        Stick = Instantiate(stick);
 
         // キャンバスの子にする
         SaveCharacter.transform.SetParent(this.canvas.transform, false);
         YesCharacter.transform.SetParent(this.canvas.transform, false);
         NoCharacter.transform.SetParent(this.canvas.transform, false);
+        Stick.transform.SetParent(this.canvas.transform,false);
 
         // 通常は非表示
         SaveCharacter.GetComponent<UIBlink>().isHide = true;
         YesCharacter.GetComponent<UIBlink>().isHide = true;
         NoCharacter.GetComponent<UIBlink>().isHide = true;
+        Stick.GetComponent<UIBlink>().isHide = true;
     }
 
     // Update is called once per frame
@@ -67,6 +73,11 @@ public class Save_UI : MonoBehaviour
             SaveCharacter.GetComponent<UIBlink>().isHide = true;
             YesCharacter.GetComponent<UIBlink>().isHide = true;
             NoCharacter.GetComponent<UIBlink>().isHide = true;
+            Stick.GetComponent<UIBlink>().isHide = true;
+            if (Player.isHitSavePoint)
+            {
+                Stick.GetComponent<UIBlink>().isHide = false;
+            }
 
             return;
         }
@@ -75,6 +86,8 @@ public class Save_UI : MonoBehaviour
             SaveCharacter.GetComponent<UIBlink>().isHide = false;
             YesCharacter.GetComponent<UIBlink>().isHide = false;
             NoCharacter.GetComponent<UIBlink>().isHide = false;
+            Stick.GetComponent<UIBlink>().isHide = true;
+
             Pause.isPause = true;
         }
 

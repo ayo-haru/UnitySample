@@ -92,6 +92,11 @@ public class DebugClear : MonoBehaviour
             hpsystem.GetComponent<HPManager>().Damaged();
             Debug.Log("HP" + GameData.CurrentHP);
         }
+        if (Input.GetKeyDown(KeyCode.F12))
+        {
+            hpsystem.GetComponent<HPManager>().GetItem();
+           // Debug.Log("HP" + GameData.CurrentHP);
+        }
 
 
 

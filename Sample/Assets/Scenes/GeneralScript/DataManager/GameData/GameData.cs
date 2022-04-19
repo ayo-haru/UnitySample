@@ -55,6 +55,7 @@ public static class GameData
     public static GameObject Player;
     public static int CurrentHP = 5 ;       // HPの保存(現在の)
     public static int CurrentPiece = 0;     //かけらの所持数
+    public static int CurrentPieceGrade = 0;    //かけらの所持枠
     public static bool isFadeOut = false;   //フェードアウト処理の開始、完了を管理するフラグ
     public static bool isFadeIn  = false;   //フェードイン処理の開始、完了を管理するフラグ
 

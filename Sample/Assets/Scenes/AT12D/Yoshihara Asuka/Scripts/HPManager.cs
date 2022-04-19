@@ -8,6 +8,7 @@
 // <開発履歴>
 // 2022/03/25 作成
 // 2022/03/28 仮実装
+// 2022/04/19 アイテム取得時の処理追加
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -67,5 +68,10 @@ public class HPManager : MonoBehaviour
     {
         pieceManager.DelPiece();
         hpTex.SetFrame(GameData.CurrentHP);
+    }
+
+    public void GetItem()
+    {
+        pieceManager.GetItem();
     }
 }

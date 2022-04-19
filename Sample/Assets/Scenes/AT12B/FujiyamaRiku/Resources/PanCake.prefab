@@ -3440,6 +3440,7 @@ GameObject:
   - component: {fileID: 6716867760421792139}
   - component: {fileID: 853211640702383089}
   - component: {fileID: 5827865096574767079}
+  - component: {fileID: -3330591475259124122}
   m_Layer: 0
   m_Name: PanCake
   m_TagString: Untagged
@@ -3506,6 +3507,20 @@ MonoBehaviour:
   KnifeSpeed: 2
   KnifeForward: {x: 0, y: 1, z: 0}
   KnifeThrowTime: 1
+--- !u!114 &-3330591475259124122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6232079251362198321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b073f09c60585af4385b655d72833134, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToStayInIdle: 2.4
+  MaxAttack: 2
 --- !u!1 &6374558938003141172
 GameObject:
   m_ObjectHideFlags: 0

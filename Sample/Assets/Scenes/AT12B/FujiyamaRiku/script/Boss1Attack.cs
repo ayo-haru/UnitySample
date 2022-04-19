@@ -26,7 +26,7 @@ public class Boss1Attack : MonoBehaviour
     bool LRSwitchFlg;
     private GameObject HpObject;
     HPgage HpScript;
-    Animation BossAnim;
+    Animator BossAnim;
     //実装するかわからない左右判定用
     //突進用変数群
     //----------------------------------------------------------
@@ -133,7 +133,7 @@ public class Boss1Attack : MonoBehaviour
         PreMax_Strawberry = Max_Strawberry;
         HpObject = GameObject.Find("HPGage");
         HpScript = HpObject.GetComponent<HPgage>();
-        BossAnim = this.gameObject.GetComponent<Animation>();
+        BossAnim = this.gameObject.GetComponent<Animator>();
 
         for (int i= 0;i < Max_Strawberry;i++)
         {
@@ -191,6 +191,8 @@ public class Boss1Attack : MonoBehaviour
             Fork = Instantiate(Forkobj, RushStartPoint, Quaternion.Euler(0.0f,0.0f,90.0f));
             RushStartPoint.y +=3.0f;
             Fork.transform.parent = Boss1Manager.Boss.transform;
+            //BossAnim.SetBool("IdleToTake", true);
+            BossAnim.SetBool("IdleToTake", false);
             SoundManager.Play(SoundData.eSE.SE_BOOS1_DASHU, SoundData.GameAudioList);
         }
         //一回の処理が終わっていたら開始

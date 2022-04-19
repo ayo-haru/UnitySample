@@ -7,6 +7,7 @@
 //
 // <開発履歴>
 // 2022/04/06 作成
+// 2022/04/19 アイテム取得時の処理追加
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -18,19 +19,28 @@ public class PieceManager : MonoBehaviour
     public GameObject[] piece;
     //現在のかけらの数
     private int nPiece;
+    //かけら所持枠
+    private int PieceGrade;
+    //所持枠最大値
+    private int MaxPieceGrade;
     //回復のストックマネージャー
    // private StockManager stockManager;
     // Start is called before the first frame update
     void Start()
     {
-        //とりあえず０にしてるけど、ゲームデータクラスから回復のかけらの数取得して入れる
+        MaxPieceGrade = piece.Length;
+        //ゲームデータクラスから回復のかけらの数取得して入れる
         nPiece = GameData.CurrentPiece;
+        //とりあえず0にしてるけど、ゲームデータクラスから取得していれる
+        PieceGrade = GameData.CurrentPieceGrade;
+
         for(int i = 0; i < nPiece; ++i)
         {
             //かけらの所持数分黄色にして表示
             piece[i].GetComponent<ImageShow>().Show();
         }
-        for(int i = nPiece; i < piece.Length; ++i)
+
+        for(int i = nPiece; i < PieceGrade; ++i)
         {
             //かけらを黒色にして表示
             piece[i].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
@@ -98,10 +108,12 @@ public class PieceManager : MonoBehaviour
         //HPがＭＡＸだったらかけらを増やす
         if(GameData.CurrentHP >= 5)
         {
-            if (nPiece >= piece.Length)
+            //所持枠より多かったらリターン
+            if (nPiece >= PieceGrade)
             {
                 return;
             }
+
             //かけら増やす
             ++nPiece;
             piece[nPiece - 1].GetComponent<ImageShow>().SetColor(1.0f,1.0f,1.0f);
@@ -132,5 +144,23 @@ public class PieceManager : MonoBehaviour
             //ゲームデータ更新
             --GameData.CurrentPiece;
         }
+    }
+
+    public void GetItem()
+    {
+        //既に上限値がマックスだったらリターン
+        if(PieceGrade >= MaxPieceGrade)
+        {
+            return;
+        }
+
+        //かけら所持枠を増やす
+        ++PieceGrade;
+        //ゲームデータ更新
+        ++GameData.CurrentPieceGrade;
+        //表示
+        piece[PieceGrade - 1].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
+        piece[PieceGrade - 1].GetComponent<ImageShow>().Show();
+
     }
 }

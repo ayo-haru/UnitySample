@@ -135,6 +135,8 @@ public class Boss1Attack : MonoBehaviour
         HpScript = HpObject.GetComponent<HPgage>();
         BossAnim = this.gameObject.GetComponent<Animator>();
 
+
+
         for (int i= 0;i < Max_Strawberry;i++)
         {
             StrawberryRefFlg[i] = false;
@@ -179,8 +181,105 @@ public class Boss1Attack : MonoBehaviour
     //近距離(突進)
     public void Boss1Fork()
     {
+        //アニメーション再生
+        BossAnim.SetTrigger("IdleToTakeTr");
+        //一回の処理が終わっていたら開始
+
+        if (OnlyFlg)
+            {
+                //ボスが突進終了後に変える処理
+                if (BossReturnFlg)
+                {
+                    RefrectFlg = false;
+                    BossReturnTime += Time.deltaTime * RushReturnSpeed;
+                    //最後まで攻撃し終わっていたら
+                    if (RushEndFlg)
+                    {
+                        Boss1Manager.BossPos = Beziercurve.SecondCurve(RushEndPoint, RushMiddlePoint, BossStartPoint, BossReturnTime);
+                    }
+                    //途中で弾かれていたら
+                    if (!RushEndFlg)
+                    {
+                        Boss1Manager.BossPos = Vector3.Lerp(RushRefEndPoint, BossStartPoint, BossReturnTime);
+                    }
+                    //開始地点まで戻ってきたときにもろもろ初期化
+                    if (BossReturnTime >= 1.0f)
+                    {
+                        Destroy(Fork);
+                        ReturnDelay = 0;
+                        RushEndFlg = false;
+                        BossReturnFlg = false;
+                        BossReturnTime = 0;
+                        if (HPgage.currentHp >= 50)
+                        {
+                            BossMove.SetState(BossMove.Boss_State.idle);
+                        }
+                        if (HPgage.currentHp < 50)
+                        {
+                            Debug.Log("アイドルぅ！！！！！！！！！！！");
+                            BossMove.AttackCount += 1;
+                            BossMove.SetState(BossMove.Boss_State.idle);
+                        }
+                        OnlyFlg = false;
+                    }
+                    return;
+                }
+                //弾かれたら一回だけ処理する部分
+                if (RefrectFlg)
+                {
+                    RushRefFlg = true;
+                    RushPlayerPoint.x = GameData.PlayerPos.x + 2.0f;
+                    RushPlayerPoint.y = GameData.PlayerPos.y + 3.0f;
+                    RushPlayerPoint.z = GameData.PlayerPos.z;
+                    RushRefEndPoint = GameObject.Find("ForkRefEndPoint").transform.position;
+
+                    RefrectFlg = false;
+                }
+                //弾かれていなかった場合の処理
+                if (!RushRefFlg)
+                {
+                    RushTime += Time.deltaTime * RushSpeed;
+                    Boss1Manager.BossPos = Vector3.Lerp(RushStartPoint, RushEndPoint, RushTime);
+                    //if (RushTime >= 1.0f)
+                    //{
+                    //    //最終地点まで行った後そこから初期地点に戻るまでの硬直
+                    //    ReturnDelay += Time.deltaTime;
+                    //    if (ReturnDelay >= 1.0f)
+                    //    {
+                    //        RushReturnSpeed = 1.5f;
+                    //        RushEndFlg = true;
+                    //        BossReturnFlg = true;
+                    //        RushTime = 0;
+
+                    //    }
+                    //    return;
+                    //}
+                }
+                //弾かれていた場合の処理
+                if (RushRefFlg)
+                {
+                    RushRefTime += Time.deltaTime * 2f;
+                    //壁にぶつけているように見せる
+                    Boss1Manager.BossPos = Vector3.Lerp(RushPlayerPoint, RushRefEndPoint, RushRefTime);
+                    if (RushRefTime >= 1.0f)
+                    {
+                        RushReturnSpeed = 2;
+                        RushRefFlg = false;
+                        BossReturnFlg = true;
+                        HpScript.DelHP(RushDamage);
+                        RushTime = 0;
+                        RushRefTime = 0;
+                        SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
+                        return;
+                    }
+                }
+            }
+        
+    }
+    void BossRushAnim()
+    {
         //突進攻撃を始めるために毎回一回だけ処理する部分
-        if(!OnlyFlg)
+        if (!OnlyFlg)
         {
             OnlyFlg = true;
             Debug.Log("Pos : " + Boss1Manager.BossPos);
@@ -188,102 +287,10 @@ public class Boss1Attack : MonoBehaviour
             RushEndPoint = GameObject.Find("ForkEndPoint").transform.position;
             RushMiddlePoint = GameObject.Find("RushMiddle").transform.position;
             RushStartPoint.y -= 3.0f;
-            Fork = Instantiate(Forkobj, RushStartPoint, Quaternion.Euler(0.0f,0.0f,90.0f));
-            RushStartPoint.y +=3.0f;
-            Fork.transform.parent = Boss1Manager.Boss.transform;
-            //BossAnim.SetBool("IdleToTake", true);
-            BossAnim.SetBool("IdleToTake", false);
+            Fork = Instantiate(Forkobj, GameObject.Find("middle1_R").transform.position, Quaternion.identity);
+            RushStartPoint.y += 3.0f;
+            Fork.transform.parent = GameObject.Find("middle1_R").transform;
             SoundManager.Play(SoundData.eSE.SE_BOOS1_DASHU, SoundData.GameAudioList);
-        }
-        //一回の処理が終わっていたら開始
-        if(OnlyFlg)
-        {
-            //ボスが突進終了後に変える処理
-            if(BossReturnFlg)
-            {
-                RefrectFlg = false;
-                BossReturnTime += Time.deltaTime * RushReturnSpeed;
-                //最後まで攻撃し終わっていたら
-                if (RushEndFlg)
-                {
-                    Boss1Manager.BossPos = Beziercurve.SecondCurve(RushEndPoint, RushMiddlePoint, BossStartPoint, BossReturnTime);
-                }
-                //途中で弾かれていたら
-                if (!RushEndFlg)
-                {
-                    Boss1Manager.BossPos = Vector3.Lerp(RushRefEndPoint, BossStartPoint, BossReturnTime);
-                }
-                //開始地点まで戻ってきたときにもろもろ初期化
-                if (BossReturnTime >= 1.0f)
-                {
-                    Destroy(Fork);
-                    ReturnDelay = 0;
-                    RushEndFlg = false;
-                    BossReturnFlg = false;
-                    BossReturnTime = 0;
-                    if (HPgage.currentHp >= 50)
-                    {
-                        BossMove.SetState(BossMove.Boss_State.idle);
-                    }
-                    if(HPgage.currentHp < 50)
-                    {
-                        Debug.Log("アイドルぅ！！！！！！！！！！！");
-                        BossMove.AttackCount += 1;
-                        BossMove.SetState(BossMove.Boss_State.idle);
-                    }
-                    OnlyFlg = false;
-                }
-                return;
-            }
-            //弾かれたら一回だけ処理する部分
-            if (RefrectFlg)
-            {
-                RushRefFlg = true;
-                RushPlayerPoint.x = GameData.PlayerPos.x + 2.0f;
-                RushPlayerPoint.y = GameData.PlayerPos.y + 3.0f;
-                RushPlayerPoint.z = GameData.PlayerPos.z;
-                RushRefEndPoint = GameObject.Find("ForkRefEndPoint").transform.position;
-                
-                RefrectFlg = false; 
-            }
-            //弾かれていなかった場合の処理
-            if (!RushRefFlg)
-            {
-                RushTime += Time.deltaTime * RushSpeed;
-                Boss1Manager.BossPos = Vector3.Lerp(RushStartPoint, RushEndPoint, RushTime);
-                if (RushTime >= 1.0f)
-                {
-                    //最終地点まで行った後そこから初期地点に戻るまでの硬直
-                    ReturnDelay += Time.deltaTime;
-                    if (ReturnDelay >= 1.0f)
-                    {
-                        RushReturnSpeed = 1.5f;
-                        RushEndFlg = true;
-                        BossReturnFlg = true;
-                        RushTime = 0;
-                        
-                    }
-                    return;
-                }
-            }
-            //弾かれていた場合の処理
-            if (RushRefFlg)
-            {
-                RushRefTime += Time.deltaTime * 2f;
-                //壁にぶつけているように見せる
-                Boss1Manager.BossPos = Vector3.Lerp(RushPlayerPoint, RushRefEndPoint, RushRefTime);
-                if (RushRefTime >= 1.0f)
-                {
-                        RushReturnSpeed = 2;
-                        RushRefFlg = false;
-                        BossReturnFlg = true;
-                        HpScript.DelHP(RushDamage);
-                        RushTime = 0;
-                        RushRefTime = 0;
-                    SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
-                    return;
-                }
-            }
         }
     }
     //----------------------------------------------------------

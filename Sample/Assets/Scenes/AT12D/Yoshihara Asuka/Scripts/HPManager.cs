@@ -60,14 +60,26 @@ public class HPManager : MonoBehaviour
 
     public void GetPiece()
     {
-        pieceManager.GetPiece();
-        hpTex.SetFrame(GameData.CurrentHP);
+        //HP‚ªŒ¸‚Á‚Ä‚¢‚½‚çHP‚ð1‰ñ•œ
+        if(GameData.CurrentHP < MaxHP)
+        {
+            ++GameData.CurrentHP;
+            hpTex.SetFrame(GameData.CurrentHP);
+        }
+        else//HP‚ª–žƒ^ƒ“‚¾‚Á‚½‚ç‚©‚¯‚ç‚ð‘‚â‚·
+        {
+            pieceManager.GetPiece();
+        }
     }
 
     public void Damaged()
     {
-        pieceManager.DelPiece();
-        hpTex.SetFrame(GameData.CurrentHP);
+        if (!pieceManager.DelPiece())
+        {
+            //‚©‚¯‚ç‚ª‚È‚©‚Á‚½‚çHPŒ¸‚ç‚·
+            --GameData.CurrentHP;
+            hpTex.SetFrame(GameData.CurrentHP);
+        }
     }
 
     public void GetItem()

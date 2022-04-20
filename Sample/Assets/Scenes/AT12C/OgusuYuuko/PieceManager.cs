@@ -8,6 +8,7 @@
 // <開発履歴>
 // 2022/04/06 作成
 // 2022/04/19 アイテム取得時の処理追加
+// 2022/04/20 hpの制御をHPManagerに移動
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -28,10 +29,11 @@ public class PieceManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //所持枠最大値設定
         MaxPieceGrade = piece.Length;
         //ゲームデータクラスから回復のかけらの数取得して入れる
         nPiece = GameData.CurrentPiece;
-        //とりあえず0にしてるけど、ゲームデータクラスから取得していれる
+        //ゲームデータクラスから取得していれる
         PieceGrade = GameData.CurrentPieceGrade;
 
         for(int i = 0; i < nPiece; ++i)
@@ -104,10 +106,6 @@ public class PieceManager : MonoBehaviour
         //{
         //    piece[nPiece - 1].GetComponent<ImageShow>().Show();
         //}
-
-        //HPがＭＡＸだったらかけらを増やす
-        if(GameData.CurrentHP >= 5)
-        {
             //所持枠より多かったらリターン
             if (nPiece >= PieceGrade)
             {
@@ -116,24 +114,21 @@ public class PieceManager : MonoBehaviour
 
             //かけら増やす
             ++nPiece;
+            //表示
             piece[nPiece - 1].GetComponent<ImageShow>().SetColor(1.0f,1.0f,1.0f);
             //ゲームデータ更新
             ++GameData.CurrentPiece;
-        }
-        else
-        {
-            //HPが減っていたらＨＰを1回復
-            ++GameData.CurrentHP;
-        } 
+
     }
 
-    public void DelPiece()
+    public bool DelPiece()
     {
         //かけらが無かったら
         if(nPiece <= 0)
         {
             //HP減らす
-            --GameData.CurrentHP;
+            //--GameData.CurrentHP;
+            return false;
         }
         else
         {
@@ -143,6 +138,8 @@ public class PieceManager : MonoBehaviour
             piece[nPiece].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
             //ゲームデータ更新
             --GameData.CurrentPiece;
+
+            return true;
         }
     }
 

@@ -41,4 +41,14 @@ public class EffectManager : MonoBehaviour
         // ¶‘¶ŠÔ‚ğİ’è‚µ‚½‚à‚Ì‚É‚·‚é
         Destroy(effect.gameObject, _destroyTime);
     }
+
+    public static void EffectPause() {
+        for(int i = 0;i < (int)EffectData.eEFFECT.MAX_EF; i++)
+        {
+            //if (EffectData.EF[i].isPlaying)
+            //{
+                //EffectData.EF[i].Pause();
+            //}
+        }
+    }
 }

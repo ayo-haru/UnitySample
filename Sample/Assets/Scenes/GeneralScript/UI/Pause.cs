@@ -13,17 +13,20 @@ public static class Pause
         //Time.timeScale = 0;
         //isPause = true;
 
-        if (!SoundData.isSetSound)  // サウンド未使用のシーンなら以下の処理をスキップ
-        {
-            return;
+        if (EffectData.isSetEffect){
+            EffectManager.EffectPause();
         }
-        if (GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
+
+        if (SoundData.isSetSound)  // サウンド未使用のシーンなら以下の処理をスキップ
         {
-            SoundManager.SoundPause(SoundData.TitleAudioList);
-        }
-        else
-        {
-            SoundManager.SoundPause(SoundData.GameAudioList);
+            if (GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
+            {
+                SoundManager.SoundPause(SoundData.TitleAudioList);
+            }
+            else
+            {
+                SoundManager.SoundPause(SoundData.GameAudioList);
+            }
         }
     }
 

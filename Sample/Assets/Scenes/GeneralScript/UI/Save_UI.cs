@@ -1,3 +1,14 @@
+//=============================================================================
+//
+// セーブポイントによるセーブのUI管理
+//
+// 作成日:2022/04
+// 作成者:伊地田真衣
+//
+// <開発履歴>
+// 2022/04/19 セーブポイントによるセーブ実装
+//=============================================================================
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +17,7 @@ using UnityEngine.InputSystem;
 
 public class Save_UI : MonoBehaviour
 {
+    // 表示するUIの変数
     [SerializeField]
     private GameObject savecharacter;
     private GameObject SaveCharacter;
@@ -19,9 +31,9 @@ public class Save_UI : MonoBehaviour
     private GameObject stick;
     private GameObject Stick;
 
-    private Canvas canvas;
+    private Canvas canvas;  // このシーンのキャンバスを保存
 
-    private int select;
+    private int select; // 選択を保存
 
     private Game_pad UIActionAssets;                // InputActionのUIを扱う
     private InputAction LeftStickSelect;            // InputActionのselectを扱う
@@ -33,7 +45,7 @@ public class Save_UI : MonoBehaviour
     {
         UIActionAssets = new Game_pad();            // InputActionインスタンスを生成
 
-        select = 0;
+        select = 0; // 選択を初期化
 
         // キャンバスを指定
         canvas = GetComponent<Canvas>();
@@ -60,6 +72,7 @@ public class Save_UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 入力初期化処理
         bool isSetGamePad = false;
         if (Gamepad.current != null)
         {
@@ -68,29 +81,34 @@ public class Save_UI : MonoBehaviour
         }
         Keyboard keyboard = Keyboard.current;
 
+
         if (!SaveManager.canSave)
         {
+            // セーブ可能でないときはUIを隠す
             SaveCharacter.GetComponent<UIBlink>().isHide = true;
             YesCharacter.GetComponent<UIBlink>().isHide = true;
             NoCharacter.GetComponent<UIBlink>().isHide = true;
             Stick.GetComponent<UIBlink>().isHide = true;
-            if (Player.isHitSavePoint)
+            if (Player.isHitSavePoint)  // セーブポイントに当たったら操作方法を表示
             {
                 Stick.GetComponent<UIBlink>().isHide = false;
             }
 
-            return;
+            return; // セーブできないときは以下の処理は必要ないので返す
         }
         else
         {
+            // セーブ可能になったらUIを表示
             SaveCharacter.GetComponent<UIBlink>().isHide = false;
             YesCharacter.GetComponent<UIBlink>().isHide = false;
             NoCharacter.GetComponent<UIBlink>().isHide = false;
             Stick.GetComponent<UIBlink>().isHide = true;
 
-            Pause.isPause = true;
+            Pause.isPause = true;   // UI表示時はポーズ
         }
 
+
+        // セーブ可能になったら選択させる
         if (keyboard.leftArrowKey.wasReleasedThisFrame)
         {
             SelectUp();
@@ -104,7 +122,6 @@ public class Save_UI : MonoBehaviour
                 return;
             }
         }
-
         if (keyboard.rightArrowKey.wasReleasedThisFrame)
         {
             SelectDown();
@@ -123,71 +140,62 @@ public class Save_UI : MonoBehaviour
         // 選択しているものが何かで分岐
         if (select == 0)
         {
-            YesCharacter.GetComponent<UIBlink>().isBlink = true;
-            NoCharacter.GetComponent<UIBlink>().isBlink = false;
+            YesCharacter.GetComponent<UIBlink>().isBlink = true;    // UIを点滅
+            NoCharacter.GetComponent<UIBlink>().isBlink = false;    // 点滅を消す
 
             if (keyboard.enterKey.wasReleasedThisFrame) // 選択を確定
             {
-                // 決定音
-                SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
-                Pause.isPause = false;
-                SaveManager.canSave = false;
-                SaveManager.shouldSave = true;
-                YesCharacter.GetComponent<UIBlink>().isHide = true;
+                SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);   // 決定音
+                Pause.isPause = false;  // ポーズやめる
+                SaveManager.canSave = false;    // セーブ可能下す
+                SaveManager.shouldSave = true;  // セーブするべきなのでフラグを立てる
+                YesCharacter.GetComponent<UIBlink>().isHide = true; // UI表示を隠す
                 NoCharacter.GetComponent<UIBlink>().isHide = true;
-                YesCharacter.GetComponent<UIBlink>().isBlink = false;
+                YesCharacter.GetComponent<UIBlink>().isBlink = false;   // 点滅を消す
             }
             else if (isSetGamePad)
             {
                 if (GameData.gamepad.buttonEast.wasReleasedThisFrame)
                 {
-                    // 決定音
-                    SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
-                    Pause.isPause = false;
-                    SaveManager.canSave = false;
-                    SaveManager.shouldSave = true;
-                    YesCharacter.GetComponent<UIBlink>().isHide = true;
+                    SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);   // 決定音
+                    Pause.isPause = false;  // ポーズやめる
+                    SaveManager.canSave = false;    // セーブ可能下す
+                    SaveManager.shouldSave = true;  // セーブするべきなのでフラグを立てる
+                    YesCharacter.GetComponent<UIBlink>().isHide = true; // UI表示を隠す
                     NoCharacter.GetComponent<UIBlink>().isHide = true;
-                    YesCharacter.GetComponent<UIBlink>().isBlink = false;
-
+                    YesCharacter.GetComponent<UIBlink>().isBlink = false;   // 点滅を消す
                 }
             }
         }
         else
         {
-            YesCharacter.GetComponent<UIBlink>().isBlink = false;
-            NoCharacter.GetComponent<UIBlink>().isBlink = true;
+            YesCharacter.GetComponent<UIBlink>().isBlink = false;   // 点滅を消す
+            NoCharacter.GetComponent<UIBlink>().isBlink = true;     // UIを点滅
 
             if (keyboard.enterKey.wasReleasedThisFrame) // 選択を確定
             {
-                // 決定音
-                SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
-                SaveManager.canSave = false;
-                Pause.isPause = false;
-                GameData.Player.GetComponent<Player2>().UnderParryNow = false;
-                YesCharacter.GetComponent<UIBlink>().isHide = true;
+                SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList); // 決定音
+                SaveManager.canSave = false;    // セーブ可能を下す
+                Pause.isPause = false;  // ポーズをやめる
+                YesCharacter.GetComponent<UIBlink>().isHide = true; // UIを消す
                 NoCharacter.GetComponent<UIBlink>().isHide = true;
-                NoCharacter.GetComponent<UIBlink>().isBlink = false;
+                NoCharacter.GetComponent<UIBlink>().isBlink = false;    // UIの点滅を消す
             }
             else if (isSetGamePad)
             {
                 if (GameData.gamepad.buttonEast.wasReleasedThisFrame)
                 {
-                    // 決定音
-                    SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
-                    SaveManager.canSave = false;
-                    Pause.isPause = false;
-                    GameData.Player.GetComponent<Player2>().UnderParryNow = false;
-                    YesCharacter.GetComponent<UIBlink>().isHide = true;
+                    SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList); // 決定音
+                    SaveManager.canSave = false;    // セーブ可能を下す
+                    Pause.isPause = false;  // ポーズをやめる
+                    YesCharacter.GetComponent<UIBlink>().isHide = true; // UIを消す
                     NoCharacter.GetComponent<UIBlink>().isHide = true;
-                    NoCharacter.GetComponent<UIBlink>().isBlink = false;
-
+                    NoCharacter.GetComponent<UIBlink>().isBlink = false;    // UIの点滅を消す
                 }
             }
-
         }
-
     }
+
     private void SelectUp() {
         SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.IndelibleAudioList);
         select--;

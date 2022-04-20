@@ -143,6 +143,8 @@ public class Player2 : MonoBehaviour
 
         if (!Pause.isPause)
         {
+            GamePadManager.onceTiltStick = false;
+
             if (isAttack)
             {
                 Attack();

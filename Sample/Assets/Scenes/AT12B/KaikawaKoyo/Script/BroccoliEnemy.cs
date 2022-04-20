@@ -61,7 +61,6 @@ public class BroccoliEnemy : MonoBehaviour
                 }
             }
 
-
             // プレイヤーを見つけたら攻撃開始
             if (ED.isAlive)
             {

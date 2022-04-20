@@ -50,10 +50,13 @@ public class CarrotEnemy : MonoBehaviour
             // プレイヤーを見つけたら攻撃開始
             if (ED.isAlive)
             {
-                print(InArea);
                 PlayerPos = Player.transform.position;
                 EnemyPos = transform.position;
                 dis = Vector3.Distance(EnemyPos, PlayerPos);
+                if(dis >= 100.0f)
+                {
+                    Destroy(gameObject, 0.0f);
+                }
                 if (Invincible)
                 {
                     gameObject.layer = LayerMask.NameToLayer("Invincible");
@@ -101,14 +104,6 @@ public class CarrotEnemy : MonoBehaviour
         
     }
 
-    public void OnTriggerEnter(Collider other)    // コライダーでプレイヤーを索敵したい
-    {
-        //if (other.CompareTag("Player") && !Look)
-        //{
-        //    InArea = true;
-        //    Look = true;
-        //}
-    }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -123,7 +118,7 @@ public class CarrotEnemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             //Invincible = true;
-            //Destroy(gameObject, 0.0f);
+            Destroy(gameObject, 0.0f);
         }
         if (collision.gameObject.CompareTag("Ground"))
         {

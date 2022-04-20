@@ -13,15 +13,16 @@
 // 2022/03/24 CameraSwitchくらすを使ったカメラ切り替えに変更
 // 2022/03/28 prefabから読み込んで表示するようにした
 // 2022/03/30 リトライとタイトルに戻るを追加
+// 2022/04/20 コントローラー対応させる
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
-public class GameOver : MonoBehaviour
-{
-    private enum SELECT {RETRY,BACKTITLE};
+public class GameOver : MonoBehaviour {
+    private enum SELECT { RETRY, BACKTITLE };
     //ゲームオーバーで使うオブジェクト
     //ゲームオーバー画像
     private GameObject GameOverImage;
@@ -46,11 +47,19 @@ public class GameOver : MonoBehaviour
     //サブカメラ
     //public GameObject subCam;
 
+    private Game_pad UIActionAssets;                // InputActionのUIを扱う
+    private InputAction LeftStickSelect;            // InputActionのselectを扱う
+    private InputAction RightStickSelect;           // InputActionのselectを扱う
+
+
     private bool isCalledOnce = false;                              // 開始演出で使用。一回だけ処理をするために使う。
 
+    private void Awake() {
+        UIActionAssets = new Game_pad();            // InputActionインスタンスを生成
+    }
+
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         //キャンバス取得
         canvas = GetComponent<Canvas>();
         //ゲームオーバー画像取得
@@ -78,8 +87,18 @@ public class GameOver : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
+
+        // 入力初期化処理
+        bool isSetGamePad = false;
+        if (Gamepad.current != null)
+        {
+            GameData.gamepad = Gamepad.current;
+            isSetGamePad = true;
+        }
+        Keyboard keyboard = Keyboard.current;
+
+
         //未使用だったらリターン
         if (!GameOverFlag)
         {
@@ -95,35 +114,64 @@ public class GameOver : MonoBehaviour
 
             Pause.isPause = true;
         }
-        
-        //f4キーが押されたら表示終了
-        if (Input.GetKeyDown(KeyCode.F4))
+
+        ////f4キーが押されたら表示終了
+        //if (Input.GetKeyDown(KeyCode.F4))
+        //{
+        //    GameOverHide();
+        //}
+
+        // セーブ可能になったら選択させる
+        if (keyboard.leftArrowKey.wasReleasedThisFrame)
         {
-            GameOverHide();
+            SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.IndelibleAudioList);
+            select = SELECT.RETRY;
+            return;
+        }
+        else if (isSetGamePad)
+        {
+            if (GameData.gamepad.dpad.left.wasReleasedThisFrame)
+            {
+                SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.IndelibleAudioList);
+                select = SELECT.RETRY;
+                return;
+            }
+        }
+        if (keyboard.rightArrowKey.wasReleasedThisFrame)
+        {
+            SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.IndelibleAudioList);
+            select = SELECT.BACKTITLE;
+            return;
+        }
+        else if (isSetGamePad)
+        {
+            if (GameData.gamepad.dpad.right.wasReleasedThisFrame)
+            {
+                SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.IndelibleAudioList);
+                select = SELECT.BACKTITLE;
+                return;
+            }
         }
 
-        //f5が押されたらリトライ（スティック左に倒したら）
-        if (Input.GetKeyDown(KeyCode.F5))
+        if (select == SELECT.RETRY)
         {
-            select = SELECT.RETRY;
             //リトライ画像　黄色
-            imageShow_Retry.SetColor(1.0f,1.0f,0.0f);
+            imageShow_Retry.SetColor(1.0f, 1.0f, 0.0f);
             //タイトルに戻る画像　白
             imageShow_BackTitle.SetColor(1.0f, 1.0f, 1.0f);
             Debug.Log("リトライ選択中");
         }
-        //f6が押されたらタイトルに戻る（スティック右に倒したら）
-        if (Input.GetKeyDown(KeyCode.F6))
+        else if (select == SELECT.BACKTITLE)
         {
-            select = SELECT.BACKTITLE;
             //タイトルに戻る画像　黄色
             imageShow_BackTitle.SetColor(1.0f, 1.0f, 0.0f);
             // リトライ画像　白
             imageShow_Retry.SetColor(1.0f, 1.0f, 1.0f);
             Debug.Log("タイトルに戻る選択中");
         }
+
         //f7が押されたら決定
-        if (Input.GetKeyDown(KeyCode.F7))
+        if (keyboard.enterKey.wasReleasedThisFrame) // 選択を確定
         {
             switch (select)
             {
@@ -144,10 +192,33 @@ public class GameOver : MonoBehaviour
             //ゲームオーバー表示終了
             GameOverHide();
         }
+        else if (isSetGamePad)
+        {
+            if (GameData.gamepad.buttonEast.wasReleasedThisFrame)
+            {
+                switch (select)
+                {
+                    case SELECT.RETRY:
+                        //ゲームに戻る
+                        //シーン遷移
+                        GameData.Init();
+                        Debug.Log("リトライを押した");
+                        break;
+                    case SELECT.BACKTITLE:
+                        //タイトルに戻る
+                        //シーン遷
+                        GameData.NextMapNumber = (int)GameData.eSceneState.TITLE_SCENE;
+                        //SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
+                        Debug.Log("タイトルに戻るを押した");
+                        break;
+                }
+                //ゲームオーバー表示終了
+                GameOverHide();
+            }
+        }
 
     }
-    public void GameOverShow()
-    {
+    public void GameOverShow() {
         //色初期化
         imageShow_Retry.SetColor(1.0f, 1.0f, 0.0f);
         imageShow_BackTitle.SetColor(1.0f, 1.0f, 1.0f);
@@ -166,8 +237,7 @@ public class GameOver : MonoBehaviour
         //使用フラグ立てる
         GameOverFlag = true;
     }
-    public void GameOverHide()
-    {
+    public void GameOverHide() {
         //画像消去
         imageShow_GameOver.Hide();
         imageShow_Retry.Hide();
@@ -182,4 +252,72 @@ public class GameOver : MonoBehaviour
         GameOverFlag = false;
 
     }
+
+    private void OnEnable() {
+        //---スティックの値を取るための設定
+        LeftStickSelect = UIActionAssets.UI.LeftStickSelect;
+        RightStickSelect = UIActionAssets.UI.RightStickSelect;
+
+        //---Actionイベントを登録
+        UIActionAssets.UI.LeftStickSelect.started += OnLeftStick;
+        UIActionAssets.UI.RightStickSelect.started += OnRightStick;
+
+
+        //---InputActionの有効化
+        UIActionAssets.UI.Enable();
+    }
+
+
+    private void OnDisable() {
+        //---InputActionの無効化
+        UIActionAssets.UI.Disable();
+    }
+
+    private void OnLeftStick(InputAction.CallbackContext obj) {
+        if (!GameOverFlag)
+        {
+            return;
+        }
+
+        //---左ステックのステック入力を取得
+        Vector2 doLeftStick = Vector2.zero;
+        doLeftStick = LeftStickSelect.ReadValue<Vector2>();
+
+        //---少しでも倒されたら処理に入る
+        if (doLeftStick.x > 0.0f)
+        {
+            SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.IndelibleAudioList);
+            select = SELECT.BACKTITLE;
+        }
+        else if (doLeftStick.x < 0.0f)
+        {
+            SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.IndelibleAudioList);
+            select = SELECT.RETRY;
+        }
+    }
+
+    private void OnRightStick(InputAction.CallbackContext obj) {
+        if (!GameOverFlag)
+        {
+            return;
+        }
+
+        //---右ステックのステック入力を取得
+        Vector2 doRightStick = Vector2.zero;
+        doRightStick = RightStickSelect.ReadValue<Vector2>();
+
+        //---少しでも倒されたら処理に入る
+        if (doRightStick.x > 0.0f)
+        {
+            SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.IndelibleAudioList);
+            select = SELECT.BACKTITLE;
+        }
+        else if (doRightStick.x < 0.0f)
+        {
+            SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.IndelibleAudioList);
+            select = SELECT.RETRY;
+        }
+
+    }
+
 }

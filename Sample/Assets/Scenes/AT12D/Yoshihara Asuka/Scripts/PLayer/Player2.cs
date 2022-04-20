@@ -143,6 +143,7 @@ public class Player2 : MonoBehaviour
 
         if (!Pause.isPause)
         {
+            //rb.Resume(gameObject);
             GamePadManager.onceTiltStick = false;
 
             if (isAttack)
@@ -175,6 +176,10 @@ public class Player2 : MonoBehaviour
                 }
 
             }
+        }
+        else
+        {
+            //rb.Pause(gameObject);
         }
     }
 
@@ -315,7 +320,7 @@ public class Player2 : MonoBehaviour
             //タイマー設定
             Timer = stopTime;
             animator.SetTrigger("Attack");
-            Debug.Log("左右攻撃");
+            //Debug.Log("左右攻撃");
         }
 
         //---上パリィ
@@ -401,7 +406,7 @@ public class Player2 : MonoBehaviour
         {
             return;
         }
-        Debug.Log("ジャンプ！");
+        //Debug.Log("ジャンプ！");
         JumpNow = true;
         GroundNow = false;
         rb.AddForce(transform.up * JumpForce,ForceMode.Impulse);
@@ -459,7 +464,7 @@ public class Player2 : MonoBehaviour
     {
         if(collision.gameObject.tag == "Damaged")
         {
-            Debug.Log("攻撃をうけた。");
+            //Debug.Log("攻撃をうけた。");
             EffectManager.Play(EffectData.eEFFECT.EF_DAMAGE, this.transform.position);
             SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
             if (!GameObject.Find("HPSystem(Clone)"))
@@ -494,7 +499,7 @@ public class Player2 : MonoBehaviour
                 //if(other.gameObject.transform.position.y <= footPotision.y)
                 //{
                 //    Debug.Log("足の位置" + footPotision);
-                    Debug.Log("着地中");
+                    //Debug.Log("着地中");
                     JumpNow = false;
                     UnderParryNow = false;
                 //}

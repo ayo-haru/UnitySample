@@ -6,9 +6,12 @@ public static class Pause
 {
     public static bool isPause = false;
 
+    /// <summary>
+    /// ポーズスタート
+    /// </summary>
     public static void PauseStart() {
         //Time.timeScale = 0;
-        isPause = true;
+        //isPause = true;
 
         if (!SoundData.isSetSound)  // サウンド未使用のシーンなら以下の処理をスキップ
         {
@@ -24,9 +27,12 @@ public static class Pause
         }
     }
 
+    /// <summary>
+    /// ポーズ終わり
+    /// </summary>
     public static void PauseFin() {
         //Time.timeScale = 1.0f;
-        isPause = false;
+        //isPause = false;
 
         if (!SoundData.isSetSound)  // サウンド未使用のシーンなら以下の処理をスキップ
         {

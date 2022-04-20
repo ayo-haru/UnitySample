@@ -276,6 +276,10 @@ public class GamePause : MonoBehaviour
         UIActionAssets.UI.Disable();
     }
 
+    /// <summary>
+    /// 左スティック
+    /// </summary>
+    /// <param name="obj"></param>
     private void OnLeftStick(InputAction.CallbackContext obj) {
         if (!Pause.isPause)
         {

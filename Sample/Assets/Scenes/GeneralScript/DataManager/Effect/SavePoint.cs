@@ -48,6 +48,9 @@ public class SavePoint : MonoBehaviour
         isHitPlayer = false;
     }
 
+    /// <summary>
+    /// 呼ばれた時だけUIの位置を変更
+    /// </summary>
     void OnUIPositionUpdate() {
         // オブジェクトの位置
         Vector3 targetWorldPos = this.transform.position;

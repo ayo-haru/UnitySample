@@ -61,7 +61,6 @@ public class Player : MonoBehaviour
             if (GamePadManager.onceTiltStick)
             {
                 SaveManager.canSave = true;
-
             }
         }
 
@@ -127,6 +126,7 @@ public class Player : MonoBehaviour
         {
             isHitSavePoint = false; // 当たったフラグを下す
             SaveManager.canSave = false;    // セーブ可能ではないためフラグを下す
+            Pause.isPause = false;  // バグ防止
         }
     }
 }

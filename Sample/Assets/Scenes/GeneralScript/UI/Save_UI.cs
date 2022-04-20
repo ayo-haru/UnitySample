@@ -41,7 +41,7 @@ public class Save_UI : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         UIActionAssets = new Game_pad();            // InputActionインスタンスを生成
 
@@ -88,6 +88,8 @@ public class Save_UI : MonoBehaviour
             SaveCharacter.GetComponent<UIBlink>().isHide = true;
             YesCharacter.GetComponent<UIBlink>().isHide = true;
             NoCharacter.GetComponent<UIBlink>().isHide = true;
+            YesCharacter.GetComponent<UIBlink>().isBlink = false;
+            NoCharacter.GetComponent<UIBlink>().isBlink = false;
             Stick.GetComponent<UIBlink>().isHide = true;
             if (Player.isHitSavePoint)  // セーブポイントに当たったら操作方法を表示
             {
@@ -213,6 +215,69 @@ public class Save_UI : MonoBehaviour
         {
             select = 0;
         }
+    }
+
+    private void OnEnable() {
+        //---スティックの値を取るための設定
+        LeftStickSelect = UIActionAssets.UI.LeftStickSelect;
+        RightStickSelect = UIActionAssets.UI.RightStickSelect;
+
+        //---Actionイベントを登録
+        UIActionAssets.UI.LeftStickSelect.started += OnLeftStick;
+        UIActionAssets.UI.RightStickSelect.started += OnRightStick;
+
+
+        //---InputActionの有効化
+        UIActionAssets.UI.Enable();
+    }
+
+
+    private void OnDisable() {
+        //---InputActionの無効化
+        UIActionAssets.UI.Disable();
+    }
+
+    private void OnLeftStick(InputAction.CallbackContext obj) {
+        if (!SaveManager.canSave)
+        {
+            return;
+        }
+
+        //---左ステックのステック入力を取得
+        Vector2 doLeftStick = Vector2.zero;
+        doLeftStick = LeftStickSelect.ReadValue<Vector2>();
+
+        //---少しでも倒されたら処理に入る
+        if (doLeftStick.x > 0.0f)
+        {
+            SelectDown();
+        }
+        else if (doLeftStick.x < 0.0f)
+        {
+            SelectUp();
+        }
+    }
+
+    private void OnRightStick(InputAction.CallbackContext obj) {
+        if (!SaveManager.canSave)
+        {
+            return;
+        }
+
+        //---右ステックのステック入力を取得
+        Vector2 doRightStick = Vector2.zero;
+        doRightStick = RightStickSelect.ReadValue<Vector2>();
+
+        //---少しでも倒されたら処理に入る
+        if (doRightStick.x > 0.0f)
+        {
+            SelectDown();
+        }
+        else if (doRightStick.x < 0.0f)
+        {
+            SelectUp();
+        }
+
     }
 
 }

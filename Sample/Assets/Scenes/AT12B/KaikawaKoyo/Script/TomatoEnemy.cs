@@ -16,12 +16,13 @@ public class TomatoEnemy : MonoBehaviour
     Transform Target;
     GameObject Player;
     private Rigidbody rb;
-    //private float distance;
     private EnemyDown ED;
-    //private Vector3 aim;
+    private Vector3 TargetPos;
     private bool look;              // プレイヤーのほうを見るフラグ
     private bool isGround;          // 接地フラグ
+    private bool Invincible = false;
     private float delay;            // ジャンプのディレイ
+    private float InvincibleTime;
 
     [SerializeField]
     private float JumpPower;        // ジャンプ力
@@ -47,17 +48,29 @@ public class TomatoEnemy : MonoBehaviour
     {
         if(!Pause.isPause)
         {
-            print(rb.velocity.y);
+            if (Invincible)
+            {
+                gameObject.layer = LayerMask.NameToLayer("Invincible");
+                transform.Rotate(0, 0, 0);
+                InvincibleTime += Time.deltaTime;
+                if (InvincibleTime > 2.0f)
+                {
+                    gameObject.layer = LayerMask.NameToLayer("Enemy");
+                    InvincibleTime = 0.0f;
+                    Invincible = false;
+                }
+            }
 
             // プレイヤーを見つけたら攻撃開始
-            if (InArea && ED.isAlive)
+            if (ED.isAlive)
             {
                 Vector3 pos = rb.position;
                 if (!isGround)
                 {
                     // プレイヤーに向かって特攻する
                     float step = MoveSpeed * Time.deltaTime;
-                    rb.position = Vector3.MoveTowards(pos, Target.position, step);
+                    TargetPos = Target.position - new Vector3(0.0f, 2.0f, 0.0f);
+                    rb.position = Vector3.MoveTowards(pos, TargetPos, step);
                 }
 
                 if (Target.position.x < transform.position.x && look)   // プレイヤーのほうを向く処理
@@ -77,6 +90,9 @@ public class TomatoEnemy : MonoBehaviour
                     delay += Time.deltaTime;
                     if(delay > 0.3f)
                     {
+                        rb.constraints = RigidbodyConstraints.FreezePositionZ |
+                                         RigidbodyConstraints.FreezeRotationX |
+                                         RigidbodyConstraints.FreezeRotationY;
                         rb.velocity = new Vector3(0.0f, JumpPower, 0.0f);
                         //SoundManager.Play(SoundData.eSE.SE_TOMATO_BOUND, SoundData.GameAudioList);
                         isGround = false;
@@ -96,40 +112,21 @@ public class TomatoEnemy : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // 接地判定
-        if(collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             isGround = true;
+            rb.constraints = RigidbodyConstraints.FreezePositionY |
+                RigidbodyConstraints.FreezePositionZ |
+                RigidbodyConstraints.FreezeRotationX |
+                RigidbodyConstraints.FreezeRotationY;
         }
 
         // プレイヤーに当たったら消える
         if (collision.gameObject.CompareTag("Player"))
         {
             //SoundManager.Play(SoundData.eSE.SE_TOMATO_BOMB, SoundData.GameAudioList);
-            Destroy(gameObject, 0.0f);
-        }
-    }
-
-    //private void OnCollisionExit(Collision collision)
-    //{
-    //    接地判定
-    //    if (collision.gameObject.CompareTag("Ground"))
-    //    {
-    //        isGround = false;
-    //    }
-    //}
-
-    public void OnTriggerEnter(Collider other)    // コライダーでプレイヤーを索敵したい
-    {
-        if (other.CompareTag("Player"))
-        {
-            InArea = true;
-        }
-    }
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            InArea = false;
+            //Destroy(gameObject, 0.0f);
+            Invincible = true;
         }
     }
 }

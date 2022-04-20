@@ -16,13 +16,17 @@ public class CarrotEnemy : MonoBehaviour
     GameObject Player;
     private Rigidbody rb;
     private Vector3 vec;
+    private Vector3 PlayerPos;
+    private Vector3 EnemyPos;
     private EnemyDown ED;
     private Quaternion look;
 
     [SerializeField]
     float MoveSpeed = 1.0f;
+    private float dis;
     private float InvincibleTime;
-    bool InArea;
+    private float AttackTime;
+    bool InArea = true;
     bool Look;
     bool Attack = false;
     private bool Invincible = false;
@@ -34,7 +38,7 @@ public class CarrotEnemy : MonoBehaviour
     {
         Player = GameObject.FindWithTag("Player");    // プレイヤーのオブジェクトを探す
         rb = gameObject.GetComponent<Rigidbody>();
-        InArea = false;
+        //InArea = false;
         Look = false;
         ED = GetComponent<EnemyDown>();
     }
@@ -44,16 +48,21 @@ public class CarrotEnemy : MonoBehaviour
         if(!Pause.isPause)
         {
             // プレイヤーを見つけたら攻撃開始
-            if (InArea && ED.isAlive)
+            if (ED.isAlive)
             {
+                print(InArea);
+                PlayerPos = Player.transform.position;
+                EnemyPos = transform.position;
+                dis = Vector3.Distance(EnemyPos, PlayerPos);
                 if (Invincible)
                 {
                     gameObject.layer = LayerMask.NameToLayer("Invincible");
                     InvincibleTime += Time.deltaTime;
                 }
-                if (InvincibleTime > 2.0f)
+                if (InvincibleTime > 0.3f)
                 {
                     gameObject.layer = LayerMask.NameToLayer("Enemy");
+                    InvincibleTime = 0.0f;
                     Invincible = false;
                 }
                 if (!Attack)
@@ -70,11 +79,23 @@ public class CarrotEnemy : MonoBehaviour
                     //SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
                     isCalledOnce = true;
                 }
-            }
-
-            if (Attack)
-            {
-                Destroy(gameObject, 2.0f);
+                if (!InArea)
+                {
+                    rb.constraints = RigidbodyConstraints.FreezePosition |
+                        RigidbodyConstraints.FreezeRotationX |
+                        RigidbodyConstraints.FreezeRotationY;
+                    AttackTime += Time.deltaTime;
+                    transform.Rotate(new Vector3(30.0f, 0.0f, 0.0f), Space.Self);
+                    if (AttackTime > 0.5f)
+                    {
+                        rb.constraints = RigidbodyConstraints.FreezePositionZ |
+                                  RigidbodyConstraints.FreezeRotationX |
+                                  RigidbodyConstraints.FreezeRotationY;
+                        Attack = false;
+                        InArea = true;
+                        AttackTime = 0.0f;
+                    }
+                }
             }
         }
         
@@ -82,10 +103,18 @@ public class CarrotEnemy : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)    // コライダーでプレイヤーを索敵したい
     {
-        if (other.CompareTag("Player") && Look == false)
+        //if (other.CompareTag("Player") && !Look)
+        //{
+        //    InArea = true;
+        //    Look = true;
+        //}
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
-            InArea = true;
-            Look = true;
+            InArea = false;
+            Look = false;
         }
     }
 
@@ -93,8 +122,12 @@ public class CarrotEnemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Invincible = true;
+            //Invincible = true;
             //Destroy(gameObject, 0.0f);
+        }
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            Attack = false;
         }
     }
 

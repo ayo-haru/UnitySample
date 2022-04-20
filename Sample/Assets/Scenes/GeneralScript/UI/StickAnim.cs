@@ -8,17 +8,11 @@ public class StickAnim : MonoBehaviour
     private int AnimTimer;        // アニメーションのタイマー
     private int ANIMTIMER = 66 * 2;   // アニメーションのタイマー
 
-    /*
-        フレーム数をカウントする変数。ゲッター作ったらけす。
-    */
-    private int _nframe;
-
     // Start is called before the first frame update
     void Start()
     {
         _uvscroll = this.GetComponent<UVScroll>();  // 自身のUVスクロールを取得
         AnimTimer = ANIMTIMER;
-        _nframe = 0;
     }
 
     // Update is called once per frame
@@ -27,14 +21,13 @@ public class StickAnim : MonoBehaviour
         AnimTimer--;
         if(AnimTimer < 0)
         {
-            if (_nframe == 0)
+            if (_uvscroll.GetnFrame() == 0)
             {
                 _uvscroll.SetNext();
-                _nframe++;
-            }else if(_nframe == 1)
+            }
+            else if(_uvscroll.GetnFrame() == 1)
             {
                 _uvscroll.SetPrev();
-                _nframe--;
             }
 
             AnimTimer = ANIMTIMER;

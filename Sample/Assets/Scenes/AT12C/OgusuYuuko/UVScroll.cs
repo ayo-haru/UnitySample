@@ -115,4 +115,13 @@ public class UVScroll : MonoBehaviour
                                       pearent.transform.position.y - (rt.sizeDelta.y / 2) + (height / 2) + (nFrame / split_x) / split_y * height,
                                        0.0f);
     }
+
+    /*
+     *
+     *  nFrame�̎擾
+     * 
+     */
+    public int GetnFrame() {
+        return nFrame;
+    }
 }

@@ -8,7 +8,8 @@
 // <開発履歴>
 // 2022/03/11 作成
 // 2022/03/30 HP保存
-// 2022/04/18 アニメーション保存
+// 2022/04/18 アニメーション保存してないわ
+// 2022/04/19 セーブポイントによるセーブ実装
 //=============================================================================
 
 using System.Collections;
@@ -19,15 +20,15 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     //---変数宣言
-    private Vector3 ReSpawnPos;
+    private Vector3 ReSpawnPos;     // リスポーン位置を保存
 
     [System.NonSerialized]
-    public static bool isHitSavePoint; 
+    public static bool isHitSavePoint; // セーブポイントに当たったか
 
     // Start is called before the first frame update
     void Start()
     {
-        isHitSavePoint = false;
+        isHitSavePoint = false; // フラグ初期化
     }
 
     // Update is called once per frame
@@ -35,18 +36,18 @@ public class Player : MonoBehaviour
     {
         GameData.PlayerPos = this.transform.position;    // プレイヤーの位置を保存
 
-        if (this.transform.position.y < -10000)
+        if (this.transform.position.y < -10000) // 落下死時にリスポーン
         {
             this.transform.position = GameData.Player.transform.position = GameData.PlayerPos = ReSpawnPos;
         }
 
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P))    // ポーズする
         {
-            Pause.isPause = !Pause.isPause;
+            Pause.isPause = !Pause.isPause; // トグル
         }
 
-        if (Pause.isPause)
+        if (Pause.isPause)  // ポーズフラグによってポーズするかやめるか
         {
             Pause.PauseStart();
         }
@@ -55,53 +56,32 @@ public class Player : MonoBehaviour
             Pause.PauseFin();
         }
 
-        if (isHitSavePoint)
+        if (isHitSavePoint) // セーブポイントに当たっていて、そのフレームの最初にスティックが傾けられたら
         {
             if (GamePadManager.onceTiltStick)
             {
                 SaveManager.canSave = true;
 
             }
-            GamePadManager.onceTiltStick = false;
         }
 
-        if (SaveManager.shouldSave)
+        if (SaveManager.shouldSave) // セーブするが選択されたら
         {
-            Debug.Log("セーブした");
+            //Debug.Log("セーブした");
             ReSpawnPos = this.transform.position;    // プレイヤーの位置を保存
-            SaveManager.saveLastPlayerPos(ReSpawnPos);
-            SaveManager.saveBossAlive(GameData.isAliveBoss1);
-            SaveManager.saveHP(GameData.CurrentHP);
-            SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
-            //SaveManager.canSave = false;
+            SaveManager.saveLastPlayerPos(ReSpawnPos);  // プレイヤーの位置を保存
+            SaveManager.saveBossAlive(GameData.isAliveBoss1);   // ボス１の生存フラグを保存
+            SaveManager.saveHP(GameData.CurrentHP); // 現在のHPを保存
+            SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);   // 今いるマップの番号を保存
+            SaveManager.canSave = false;        // セーブが終わったのでフラグを下す
             SaveManager.shouldSave = false;
         }
-
-        //if (Input.GetKeyDown(KeyCode.RightArrow))
-        //{
-        //    EffectManager.Play(EffectData.eEFFECT.EF_SHEILD2, GameData.PlayerPos);
-        //}
     }
-
-    //private void OnTriggerStay(Collider other) {
-        //----- セーブ -----
-        //if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
-        //{
-        //    if (this.GetComponent<Player2>().UnderParryNow)
-        //    {
-        //        Pause.isPause = true;
-        //        SaveManager.canSave = true;
-        //        if (SaveManager.shouldSave)
-        //        {
-        //        }
-        //    }
-        //}
-    //}
 
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
         {
-            isHitSavePoint = true;
+            isHitSavePoint = true;  // 当たったフラグを立てる
         }
 
         //----- シーン遷移 -----
@@ -140,33 +120,13 @@ public class Player : MonoBehaviour
         {
             GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
         }
-
-
-
-        //*************************************************************************************************
-        // 以下プロトタイプ遷移
-        //*************************************************************************************************
-        //if (other.gameObject.tag == "MovePoint1to2")    // この名前のタグと衝突したら
-        //{
-        //    GameData.NextMapNumber = (int)GameData.eSceneState.MAP2_SCENE;   // 次のシーン番号を設定、保存
-        //}
-
-        //if (other.gameObject.tag == "MovePoint2to1")
-        //{
-        //    GameData.NextMapNumber = (int)GameData.eSceneState.MAP1_SCENE;    // 次のシーン番号を設定、保存
-        //}
-
-        //if (other.gameObject.tag == "MovePoint2toBoss")
-        //{
-        //    GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;    // 次のシーン番号を設定、保存
-        //}
     }
 
     private void OnTriggerExit(Collider other) {
         if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
         {
-            isHitSavePoint = false;
-            SaveManager.canSave = false;
+            isHitSavePoint = false; // 当たったフラグを下す
+            SaveManager.canSave = false;    // セーブ可能ではないためフラグを下す
         }
     }
 }

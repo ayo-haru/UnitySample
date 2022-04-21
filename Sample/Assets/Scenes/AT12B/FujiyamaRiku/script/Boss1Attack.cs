@@ -29,6 +29,7 @@ public class Boss1Attack : MonoBehaviour
     Animator BossAnim;
     bool AnimFlg;
     bool MoveFlg;
+    BossMove.Boss_State BossTakeCase;
     //実装するかわからない左右判定用
     //突進用変数群
     //----------------------------------------------------------
@@ -104,6 +105,7 @@ public class Boss1Attack : MonoBehaviour
     Vector3 KnifeAimPos;
     bool AimFlg;
     bool AimOnly;
+    bool AimStart;
     //----------------------------------------------------------
 
 
@@ -191,6 +193,14 @@ public class Boss1Attack : MonoBehaviour
         }
         
     }
+    void BossTakeToCase()
+    {
+        if(BossTakeCase == BossMove.Boss_State.charge)
+        {
+            BossRushAnim();
+        }
+        
+    }
     void AnimMoveFlgOnOff()
     {
         if (!MoveFlg)
@@ -209,9 +219,14 @@ public class Boss1Attack : MonoBehaviour
     public void Boss1Fork()
     {
         //アニメーション再生
-        BossAnim.SetTrigger("IdleToTakeTr");
+        if (!AnimFlg)
+        {
+            AnimFlagOnOff();
+            BossAnim.SetBool("IdleToTake", true);
+            BossTakeCase = BossMove.Boss_State.charge;
+        }
         //一回の処理が終わっていたら開始
-        
+
         if (OnlyFlg && MoveFlg)
         {
                 //ボスが突進終了後に変える処理
@@ -237,6 +252,7 @@ public class Boss1Attack : MonoBehaviour
                         RushEndFlg = false;
                         BossReturnFlg = false;
                         AnimMoveFlgOnOff();
+                        AnimFlagOnOff();
                         BossReturnTime = 0;
                         if (HPgage.currentHp >= 50)
                         {
@@ -272,13 +288,10 @@ public class Boss1Attack : MonoBehaviour
                 {
                     //最終地点まで行った後そこから初期地点に戻るまでの硬直
                     ReturnDelay += Time.deltaTime;
-                    
-                        RushReturnSpeed = 1.5f;
-                        RushEndFlg = true;
-                        BossReturnFlg = true;
-                        RushTime = 0;
-
-                    
+                    RushReturnSpeed = 1f;
+                    RushEndFlg = true;
+                    BossReturnFlg = true;
+                    RushTime = 0;
                     return;
                 }
             }
@@ -293,9 +306,11 @@ public class Boss1Attack : MonoBehaviour
                         RushReturnSpeed = 2;
                         RushRefFlg = false;
                         BossReturnFlg = true;
+                        OnlyFlg = false;
                         HpScript.DelHP(RushDamage);
                         RushTime = 0;
                         RushRefTime = 0;
+                        AnimFlagOnOff();
                         SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
                         return;
                     }
@@ -318,7 +333,7 @@ public class Boss1Attack : MonoBehaviour
             Fork.transform.parent = GameObject.Find("ForkPos").transform;
             BossAnim.SetTrigger("TakeToRushTr");
             BossAnim.SetTrigger("RushToJumpTr");
-            AnimFlagOnOff();
+            BossAnim.SetBool("IdleToTake", false);
             SoundManager.Play(SoundData.eSE.SE_BOOS1_DASHU, SoundData.GameAudioList);
         }
     }
@@ -498,110 +513,139 @@ public class Boss1Attack : MonoBehaviour
     //----------------------------------------------------------
     public void Boss1Knife()
     {
+        if (!AnimFlg)
+        {
+            AnimFlagOnOff();
+            BossAnim.SetBool("TakeToKnife",true);
+        }
         //ナイフ遠距離
-        if(!AimFlg)
-        {
-            if (!AimOnly)
-            {
-                KnifeAim = Instantiate(KnifeAimObj, GameData.PlayerPos, Quaternion.Euler(90f, 0f, 0f));
-                AimOnly = true;
-            }
-            KnifeAimPos.x = GameData.PlayerPos.x;
-            KnifeAimPos.y = GameData.PlayerPos.y;
-            KnifeAimPos.z = GameData.PlayerPos.z + 3.0f;
-            
-            if (KnifeThrowTime >= KnifeThrowNowTime)
-            {
-                KnifeAim.transform.position = KnifeAimPos;
-                KnifeThrowNowTime += Time.deltaTime;
-            }
-            else
-            {
-                AimFlg = true;
-                AimOnly = false;
-                KnifeThrowNowTime = 0;
-            }
-        }
-        if(!OnlyFlg && AimFlg)
-        {
-            
-            OnlyFlg = true;
-            KnifeStartPoint.x = Boss1Manager.BossPos.x;
-            KnifeStartPoint.y = Boss1Manager.BossPos.y + 4;
-            KnifeStartPoint.z = Boss1Manager.BossPos.z;
-            KnifeEndPoint = GameData.PlayerPos;
-            Knife = Instantiate(Knifeobj, KnifeStartPoint, Quaternion.identity);
-            Vector3 KnifeDir = GameData.PlayerPos - Knife.transform.position;
-            // ターゲットの方向への回転
-            KnifeRotDir = Quaternion.LookRotation(KnifeDir, Vector3.back);
-            KnifeRotForward = Quaternion.FromToRotation(KnifeForward, Vector3.forward);
-            Knife.transform.rotation = KnifeRotDir * KnifeRotForward;
-            SoundManager.Play(SoundData.eSE.SE_BOOS1_KNIFE, SoundData.GameAudioList);
-            
-        }
-        if (RefrectFlg)
-        {
-            KnifeRefFlg = true;
-            KnifePlayerPoint.x = GameData.PlayerPos.x + 3.0f;
-            KnifePlayerPoint.y = GameData.PlayerPos.y;
-            KnifePlayerPoint.z = GameData.PlayerPos.z;
-            RefrectFlg = false;
-        }
-        if (OnlyFlg && !KnifeRefFlg)
-        {
-            KnifeTime += Time.deltaTime * KnifeSpeed;
-            Knife.transform.position = Vector3.Lerp(KnifeStartPoint, KnifeEndPoint, KnifeTime);
-            if (KnifeTime >= 1.0f)
-            {
-                OnlyFlg = false;
-                AimFlg = false;
-                KnifeTime = 0;
-                Destroy(Knife);
-                Destroy(KnifeAim);
-                if (HPgage.currentHp >= 50)
-                {
-                    BossMove.SetState(BossMove.Boss_State.idle);
-                }
-                if (HPgage.currentHp < 50)
-                {
-                    BossMove.AttackCount += 1;
-                    BossMove.SetState(BossMove.Boss_State.idle);
-                    
-                }
-                return;
-            }
-        }
         
-        if(KnifeRefFlg)
-        {
-            KnifeRefTime += Time.deltaTime * 3;
-            Knife.transform.position = Vector3.Lerp(KnifePlayerPoint, Boss1Manager.BossPos, KnifeRefTime);
-            Debug.Log("Knife " + KnifePlayerPoint);
-            if (KnifeRefTime >= 1.0f)
+            if (!AimFlg)
             {
-                HpScript.DelHP(KnifeDamage);
-                OnlyFlg = false;
-                KnifeRefFlg = false;
-                AimFlg = false;
-                KnifeTime = 0;
-                KnifeRefTime = 0;
-                Destroy(KnifeAim);
-                SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
+                if (!AimOnly)
+                {
+                    KnifeAim = Instantiate(KnifeAimObj, GameData.PlayerPos, Quaternion.Euler(90f, 0f, 0f));
+                    AimOnly = true;
+                }
+                KnifeAimPos.x = GameData.PlayerPos.x;
+                KnifeAimPos.y = GameData.PlayerPos.y;
+                KnifeAimPos.z = GameData.PlayerPos.z + 3.0f;
 
-                Destroy(Knife);
-                if (HPgage.currentHp >= 50)
+                if (KnifeThrowTime >= KnifeThrowNowTime)
                 {
-                    BossMove.SetState(BossMove.Boss_State.idle);
+                    KnifeAim.transform.position = KnifeAimPos;
+                    KnifeThrowNowTime += Time.deltaTime;
                 }
-                if (HPgage.currentHp < 50)
+                else
                 {
-                    BossMove.AttackCount += 1;
-                    BossMove.SetState(BossMove.Boss_State.idle);
-                    
+                    AimFlg = true;
+                    AimOnly = false;
+                    KnifeThrowNowTime = 0;
                 }
-                return;
+            }
+
+        if (AimStart)
+        {
+            if (!OnlyFlg)
+            {
+                OnlyFlg = true;
+                GameObject.Find("knife(Clone)").transform.parent.DetachChildren();
+                Vector3 KnifeDir = GameData.PlayerPos - Knife.transform.position;
+                // ターゲットの方向への回転
+                KnifeRotDir = Quaternion.LookRotation(KnifeDir, Vector3.back);
+                KnifeRotForward = Quaternion.FromToRotation(KnifeForward, Vector3.forward);
+                Knife.transform.rotation = KnifeRotDir * KnifeRotForward;
+            }
+
+            if (RefrectFlg)
+            {
+                KnifeRefFlg = true;
+                KnifePlayerPoint.x = GameData.PlayerPos.x + 3.0f;
+                KnifePlayerPoint.y = GameData.PlayerPos.y;
+                KnifePlayerPoint.z = GameData.PlayerPos.z;
+                RefrectFlg = false;
+            }
+            if (OnlyFlg && !KnifeRefFlg)
+            {
+                KnifeTime += Time.deltaTime * KnifeSpeed;
+                Knife.transform.position = Vector3.Lerp(KnifeStartPoint, KnifeEndPoint, KnifeTime);
+                if (KnifeTime >= 1.0f)
+                {
+                    OnlyFlg = false;
+                    AimFlg = false;
+                    AnimFlagOnOff();
+                    Debug.Log("Aパターンが通ったよー");
+                    BossAnim.SetBool("TakeToKnife", false);
+                    KnifeTime = 0;
+                    AimOnly = false;
+                    AimStart = false;
+                    Destroy(Knife);
+                    Destroy(KnifeAim);
+                    if (HPgage.currentHp >= 50)
+                    {
+                        BossMove.SetState(BossMove.Boss_State.idle);
+                    }
+                    if (HPgage.currentHp < 50)
+                    {
+                        BossMove.AttackCount += 1;
+                        BossMove.SetState(BossMove.Boss_State.idle);
+
+                    }
+                    return;
+                }
+            }
+
+            if (KnifeRefFlg)
+            {
+                KnifeRefTime += Time.deltaTime * 3;
+                Knife.transform.position = Vector3.Lerp(KnifePlayerPoint, Boss1Manager.BossPos, KnifeRefTime);
+                Debug.Log("Knife " + KnifePlayerPoint);
+                if (KnifeRefTime >= 1.0f)
+                {
+                    HpScript.DelHP(KnifeDamage);
+                    OnlyFlg = false;
+                    KnifeRefFlg = false;
+                    AimFlg = false;
+                    BossAnim.SetBool("??ToDamage", true);
+                    BossAnim.Play("Damage");
+                    BossAnim.SetBool("??ToDamage", false);
+                    BossAnim.SetBool("TakeToKnife", false);
+                    AnimFlagOnOff();
+                    AimOnly = false;
+                    AimStart = false;
+                    KnifeTime = 0;
+                    KnifeRefTime = 0;
+                    Destroy(KnifeAim);
+                    SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
+
+                    Destroy(Knife);
+                    if (HPgage.currentHp >= 50)
+                    {
+                        BossMove.SetState(BossMove.Boss_State.idle);
+                    }
+                    if (HPgage.currentHp < 50)
+                    {
+                        BossMove.AttackCount += 1;
+                        BossMove.SetState(BossMove.Boss_State.idle);
+
+                    }
+                    return;
+                }
             }
         }
             
     }
+    void StartShotAnim()
+    {
+        AimStart = true;
+        KnifeStartPoint.x = Boss1Manager.BossPos.x;
+        KnifeStartPoint.y = Boss1Manager.BossPos.y + 4;
+        KnifeStartPoint.z = Boss1Manager.BossPos.z;
+        KnifeEndPoint = GameData.PlayerPos;
+        ForkPos = GameObject.Find("KnifePos").transform.position;
+        Knife = Instantiate(Knifeobj, ForkPos, Quaternion.identity);
+        Knife.transform.parent = GameObject.Find("KnifePos").transform;
+        SoundManager.Play(SoundData.eSE.SE_BOOS1_KNIFE, SoundData.GameAudioList);
+    }
+    
 }

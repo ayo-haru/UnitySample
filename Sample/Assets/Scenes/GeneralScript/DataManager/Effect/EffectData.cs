@@ -39,6 +39,7 @@ public static class EffectData
     public static bool isSetEffect = false;
     public static bool oncePauseEffect = true;
     public static GameObject[] activeEffect = new GameObject[(int)eEFFECT.MAX_EF * 5];
+    //public static ParticleSystem[] activeEffect = new ParticleSystem[(int)eEFFECT.MAX_EF * 5];
 
     //---エフェクトデータを読み込む
     public static void EFDataSet(ParticleSystem _EF,int i)

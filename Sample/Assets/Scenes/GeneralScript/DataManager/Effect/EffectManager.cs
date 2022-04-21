@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class EffectManager : MonoBehaviour
 {
-    //----------------------------------
-    //
-    //  エフェクト再生
-    //  作成：伊地田真衣
-    //  詳細：第一引数はEffectDataの列挙体に定義したやーつ
-    //
-    //----------------------------------
+    /// <summary>
+    /// エフェクトの再生
+    /// </summary>
+    /// <param name="_effectDataNumber">EffectDataで定義したやつ</param>
+    /// <param name="_pos">表示したい座標。オブジェクトの座標のままだと中心点に出るので注意。</param>
+    /// <param name="_destroy">消したくない場合のみfalseで指定</param>
     public static void Play(EffectData.eEFFECT _effectDataNumber,Vector3 _pos,bool _destroy = true) {
         if (!EffectData.isSetEffect)
         {
@@ -27,6 +26,12 @@ public class EffectManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// エフェクトの再生
+    /// </summary>
+    /// <param name="_effectDataNumber">EffectDataで定義したやつ</param>
+    /// <param name="_pos">表示したい座標。オブジェクトの座標のままだと中心点に出るので注意。</param>
+    /// <param name="_destroyTime">消える秒数指定</param>
     public static void Play(EffectData.eEFFECT _effectDataNumber, Vector3 _pos,float _destroyTime) {
         if (!EffectData.isSetEffect)
         {
@@ -60,12 +65,15 @@ public class EffectManager : MonoBehaviour
         for (int i = 0; i < EffectData.activeEffect.Length; i++) {  
             if (EffectData.activeEffect[i] != null)// エフェクトの数だけポーズする
             {
-                //EffectData.activeEffect[i].GetComponent<ParticleSystem>().Pause();
                 EffectData.activeEffect[i].GetComponent<ParticleSystem>().playbackSpeed = 0.0f;
+                //EffectData.activeEffect[i].playbackSpeed = 0.0f;
             }
         }
     }
 
+    /// <summary>
+    /// エフェクトのポーズ解除
+    /// </summary>
     public static void EffectUnPause() {
         if (!EffectData.isSetEffect)    // エフェクトデータ未設定ならやらない
         {
@@ -76,8 +84,8 @@ public class EffectManager : MonoBehaviour
         {
             if (EffectData.activeEffect[i] != null)// エフェクトの数だけポーズ解除
             {
-                //EffectData.activeEffect[i].GetComponent<ParticleSystem>()
                 EffectData.activeEffect[i].GetComponent<ParticleSystem>().playbackSpeed = 1.0f;
+                //EffectData.activeEffect[i].playbackSpeed = 1.0f;
                 EffectData.activeEffect[i] = null;
             }
         }
@@ -90,15 +98,31 @@ public class EffectManager : MonoBehaviour
     /// </summary>
     private static void SetAllActiveEffect() {
        int index = 0;
-        foreach (GameObject obj in UnityEngine.Object.FindObjectsOfType(typeof(GameObject)))
+        foreach (GameObject obj in UnityEngine.Object.FindObjectsOfType(typeof(GameObject)))    // そのシーンのすべてのオブジェクトをだす
         {
-            if (obj.GetComponent<ParticleSystem>())
+            if (obj.GetComponent<ParticleSystem>()) // 出したオブジェクトがパーティクルシステムだったらエフェクトのデータに渡す
             {
                 EffectData.activeEffect[index] = obj;
-                Debug.Log(EffectData.activeEffect[index]);
-                Debug.Log(index);
+                //Debug.Log(EffectData.activeEffect[index]);
+                //Debug.Log(index);
                 index++;
             }
         }
+
+        int cnt = 0;
+        //foreach (GameObject obj in UnityEngine.Object.FindObjectsOfType(typeof(GameObject)))
+        //{
+        //    if (obj.GetComponent<ParticleSystem>())
+        //    {
+        //        if (!obj.transform.parent)
+        //        {
+        //            EffectData.activeEffect[index] = obj.GetComponent<ParticleSystem>();
+        //            Debug.Log(EffectData.activeEffect[index]);
+        //            Debug.Log(index);
+        //            index++;
+        //        }
+        //    }
+        //}
+
     }
 }

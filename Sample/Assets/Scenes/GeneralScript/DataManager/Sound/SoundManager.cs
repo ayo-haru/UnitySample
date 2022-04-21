@@ -15,7 +15,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public static class SoundManager {
-    private static AudioSource GetUnusedSource(AudioSource[] audioSourceList) { // 未使用のAudioSourceを探す
+    /// <summary>
+    /// 未使用のAudioSourceを探す
+    /// </summary>
+    /// <param name="audioSourceList">そのシーンで使用しているオーディオリスト</param>
+    /// <returns>未使用のオーディオリストを見つけて返す</returns>
+    private static AudioSource GetUnusedSource(AudioSource[] audioSourceList) { 
         for (int i = 0; i < audioSourceList.Length; ++i)
         {
             if (audioSourceList[i].isPlaying == false)
@@ -27,13 +32,12 @@ public static class SoundManager {
     }
 
 
-    //----------------------------------
-    //
-    //  サウンド再生
-    //  作成：伊地田真衣
-    //  詳細：第一引数はSoundDataの列挙体に定義したやーつ
-    //
-    //----------------------------------
+    /// <summary>
+    /// サウンド再生
+    /// </summary>
+    /// <remarks>SE専用</remarks>
+    /// <param name="_seDataNumber">第一引数はSoundDataの列挙体に定義したやつ</param>
+    /// <param name="_audioSourceList">ゲームオーディオリストかタイトルオーディオリストを渡す</param>
     public static void Play(SoundData.eSE _seDataNumber, AudioSource[] _audioSourceList) {
         AudioSource audioSource = GetUnusedSource(_audioSourceList);
         if (audioSource == null)
@@ -49,6 +53,12 @@ public static class SoundManager {
 
     }
 
+    /// <summary>
+    /// サウンド再生
+    /// </summary>
+    /// <remarks>BGM専用</remarks>
+    /// <param name="_seDataNumber">第一引数はSoundDataの列挙体に定義したやつ</param>
+    /// <param name="_audioSourceList">ゲームオーディオリストかタイトルオーディオリストを渡す</param>
     public static void Play(SoundData.eBGM _bgmDataNumber, AudioSource[] _audioSourceList) {
         AudioSource audioSource = GetUnusedSource(_audioSourceList);
         if (audioSource == null)
@@ -62,6 +72,12 @@ public static class SoundManager {
         audioSource.Play();
     }
 
+    /// <summary>
+    /// サウンド再生
+    /// </summary>
+    /// <remarks>消えない音専用のはずだった</remarks>
+    /// <param name="_seDataNumber">第一引数はSoundDataの列挙体に定義したやつ</param>
+    /// <param name="_audioSourceList">ゲームオーディオリストかタイトルオーディオリストを渡す</param>
     public static void IgnorePlay(SoundData.eSE _seDataNumber, AudioSource[] _audioSourceList) {
         AudioSource audioSource = GetUnusedSource(_audioSourceList);
         if (audioSource == null)
@@ -79,13 +95,10 @@ public static class SoundManager {
     }
 
 
-    //----------------------------------
-    //
-    //  サウンドポーズ
-    //  作成：伊地田真衣
-    //  詳細：第一引数はSoundDataの列挙体に定義したやーつ
-    //
-    //----------------------------------
+    /// <summary>
+    /// サウンドポーズ
+    /// </summary>
+    /// <param name="_audioSourceList">そのシーンで使用しているオーディオリスト</param>
     public static void SoundPause(AudioSource[] _audioSourceList) {
         for (int i = 0; i < _audioSourceList.Length; ++i)
         {
@@ -96,6 +109,11 @@ public static class SoundManager {
             _audioSourceList[i].Pause();
         }
     }
+
+    /// <summary>
+    /// サウンドのポーズ解除
+    /// </summary>
+    /// <param name="_audioSourceList">そのシーンで使用しているオーディオリスト</param>
     public static void SoundUnPause(AudioSource[] _audioSourceList) {
         for (int i = 0; i < _audioSourceList.Length; ++i)
         {

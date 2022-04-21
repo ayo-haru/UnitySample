@@ -41,11 +41,17 @@ public class SavePoint : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        isHitPlayer = true;
+        if (other.gameObject.tag == "Player")
+        {
+            isHitPlayer = true;
+        }
     }
 
     private void OnTriggerExit(Collider other) {
-        isHitPlayer = false;
+        if (other.gameObject.tag == "Player")
+        {
+            isHitPlayer = false;
+        }
     }
 
     /// <summary>

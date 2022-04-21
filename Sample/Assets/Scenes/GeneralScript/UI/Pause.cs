@@ -37,6 +37,12 @@ public static class Pause
         //Time.timeScale = 1.0f;
         //isPause = false;
 
+        if (EffectData.isSetEffect)
+        {
+            EffectManager.EffectUnPause();
+        }
+
+
         if (!SoundData.isSetSound)  // サウンド未使用のシーンなら以下の処理をスキップ
         {
             return;

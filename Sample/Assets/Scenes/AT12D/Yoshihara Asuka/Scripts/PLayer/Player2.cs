@@ -37,6 +37,8 @@ public class Player2 : MonoBehaviour
     //---アニメーション関連
     public Animator animator;                           // アニメーターコンポーネント取得
 
+    
+
 
     //---コンポーネント取得
     private Rigidbody rb;

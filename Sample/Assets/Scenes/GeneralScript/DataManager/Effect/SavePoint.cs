@@ -5,13 +5,13 @@ using UnityEngine.InputSystem;
 
 public class SavePoint : MonoBehaviour
 {
-    private Camera _targetCamera;
-    private Canvas _parentUIobj;
-    private GameObject _targetUIobj;
-    private RectTransform _parentUI;
-    private RectTransform _targetUI;
+    private Camera _targetCamera;   // このシーンで使われてるカメラを取得
+    private Canvas _parentUIobj;    // UIの親（今回はキャンバス）
+    private GameObject _targetUIobj;    // 目的のUI
+    private RectTransform _parentUI;    // 親のUIのレクトトランスフォーム
+    private RectTransform _targetUI;    // 目的のUIのレクトトランスフォーム
 
-    private bool isHitPlayer;
+    private bool isHitPlayer;   // プレイヤーと衝突したか
 
     private Game_pad UIActionAssets;                // InputActionのUIを扱う
     private InputAction LeftStickSelect;            // InputActionのselectを扱う
@@ -21,20 +21,20 @@ public class SavePoint : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isHitPlayer = false;
-        Vector3 Pos = this.transform.position;
-        EffectManager.Play(EffectData.eEFFECT.EF_MAGICSQUARE, new Vector3(Pos.x, Pos.y - 5.0f, Pos.z),false);
-        _targetCamera = Camera.main;
-        _parentUIobj = GameObject.Find("Canvas").GetComponent<Canvas>();
-        _parentUI = _parentUIobj.GetComponent<RectTransform>();
-        _targetUIobj = _parentUIobj.transform.GetChild(3).gameObject;
-        _targetUI = _targetUIobj.GetComponent<RectTransform>();
+        isHitPlayer = false;    // 初期化あたっていないのでfalse
+        Vector3 Pos = this.transform.position;  // UIの描画の基準値
+        EffectManager.Play(EffectData.eEFFECT.EF_MAGICSQUARE, new Vector3(Pos.x, Pos.y - 5.0f, Pos.z),false);   // 表示するUI
+        _targetCamera = Camera.main;    // メインカメラを取得
+        _parentUIobj = GameObject.Find("Canvas").GetComponent<Canvas>();    // キャンバスを取得
+        _parentUI = _parentUIobj.GetComponent<RectTransform>(); // キャンバスのレクトトランスフォーム
+        _targetUIobj = _parentUIobj.transform.GetChild(3).gameObject;   // 目的のUIを取得
+        _targetUI = _targetUIobj.GetComponent<RectTransform>(); // 目的のUIのレクトトランスフォーム
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isHitPlayer)
+        if (isHitPlayer)    // プレイヤーが当たったら座標を変更
         {
             OnUIPositionUpdate();
         }

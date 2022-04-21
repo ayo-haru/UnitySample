@@ -1,7 +1,6 @@
 //  RigidbodyExtension.cs
 //  http://kan-kikuchi.hatenablog.com/entry/Pause_Resume
 //
-//  Created by kan kikuchi on 2015.11.26.
 // 書けないからネットから拝借（伊地田）
 using UnityEngine;
 using System.Collections;

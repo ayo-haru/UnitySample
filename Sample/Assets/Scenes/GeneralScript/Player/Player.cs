@@ -42,10 +42,10 @@ public class Player : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.P))    // ポーズする
-        {
-            Pause.isPause = !Pause.isPause; // トグル
-        }
+        //if (Input.GetKeyDown(KeyCode.P))    // ポーズする
+        //{
+        //    Pause.isPause = !Pause.isPause; // トグル
+        //}
 
         if (Pause.isPause)  // ポーズフラグによってポーズするかやめるか
         {
@@ -80,6 +80,7 @@ public class Player : MonoBehaviour
             SaveManager.shouldSave = false;
         }
     }
+
 
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら

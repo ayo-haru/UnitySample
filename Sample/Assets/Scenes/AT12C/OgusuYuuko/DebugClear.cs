@@ -18,7 +18,7 @@ public class DebugClear : MonoBehaviour
         //hpGage = GameObject.Find("MaskImage").GetComponent<HPGage>();
        // Moon = GameObject.Find("HPBar").GetComponent<UVScroll>();
       //  pieceManagewr = GameObject.Find("PieceHPManager").GetComponent<PieceManager>();
-        hpsystem = GameObject.Find("HPSystem(2)");
+        hpsystem = GameObject.Find("HPSystem(2)(Clone)");
     }
 
     // Update is called once per frame
@@ -86,11 +86,13 @@ public class DebugClear : MonoBehaviour
         {
             hpsystem.GetComponent<HPManager>().GetPiece();
             Debug.Log("HP"+GameData.CurrentHP);
+            Debug.Log("Piece" + GameData.CurrentPiece);
         }
         if (Input.GetKeyDown(KeyCode.F11))
         {
             hpsystem.GetComponent<HPManager>().Damaged();
             Debug.Log("HP" + GameData.CurrentHP);
+            Debug.Log("Piece" + GameData.CurrentPiece);
         }
         if (Input.GetKeyDown(KeyCode.F12))
         {

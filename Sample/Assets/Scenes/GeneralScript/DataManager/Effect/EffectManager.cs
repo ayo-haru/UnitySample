@@ -89,25 +89,15 @@ public class EffectManager : MonoBehaviour
     /// 現在使われているエフェクトをすべて探す
     /// </summary>
     private static void SetAllActiveEffect() {
-        int i = 0;
+       int index = 0;
         foreach (GameObject obj in UnityEngine.Object.FindObjectsOfType(typeof(GameObject)))
         {
             if (obj.GetComponent<ParticleSystem>())
             {
-                if (i > 0)
-                {
-                    Debug.Log(EffectData.activeEffect[i - 1].transform.parent.gameObject);
-                    Debug.Log(EffectData.activeEffect[i].transform.parent.gameObject);
-                }
-
-
-                    EffectData.activeEffect[i] = obj.transform.parent.gameObject;
-                    Debug.Log(EffectData.activeEffect[i]);
-                    Debug.Log(i);
-                if (EffectData.activeEffect[i - 1].transform.parent.gameObject != EffectData.activeEffect[i].transform.parent.gameObject)
-                {
-                    i++;
-                }
+                EffectData.activeEffect[index] = obj;
+                Debug.Log(EffectData.activeEffect[index]);
+                Debug.Log(index);
+                index++;
             }
         }
     }

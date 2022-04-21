@@ -33,6 +33,7 @@ public class Player2 : MonoBehaviour
     public static Game_pad PlayerActionAsset;           // InputActionで生成したものを使用
     private InputAction move;                           // InputActionのmoveを扱う
     private InputAction Attacking;                      // InputActionのmoveを扱う
+    private InputAction _Pause;                          // InputActionのpauseを扱う
 
     //---アニメーション関連
     public Animator animator;                           // アニメーターコンポーネント取得
@@ -86,14 +87,17 @@ public class Player2 : MonoBehaviour
 
 
     //---ボタンンの入力を結び付ける
-    private void OnEnable()
-    {
+    private void OnEnable() {
         //---スティック入力を取るための設定
-        move = PlayerActionAsset.Player.Move;           
+        move = PlayerActionAsset.Player.Move;
         Attacking = PlayerActionAsset.Player.Attack;
+        _Pause = PlayerActionAsset.UI.Start;
 
         //---Actionイベント登録(ボタン入力)
         PlayerActionAsset.Player.Attack.started += OnAttack;
+        Debug.Log(PlayerActionAsset.Player.Attack);
+        PlayerActionAsset.UI.Start.started += PauseTggle;
+        Debug.Log(PlayerActionAsset.UI.Start);
 
         //PlayerActionAsset.Player.Jump.started += OnJump;            // started    ... ボタンが押された瞬間
         //PlayerActionAsset.Player.Jump.performed += OnJump;        // performed  ... 中間くらい
@@ -104,6 +108,7 @@ public class Player2 : MonoBehaviour
 
         //---InputActionの有効化(これかかないと、入力とれない。)
         PlayerActionAsset.Player.Enable();
+        PlayerActionAsset.UI.Enable();
 
     }
 
@@ -111,9 +116,12 @@ public class Player2 : MonoBehaviour
     {
         PlayerActionAsset.Player.Attack.started -= OnAttack;        // started...ボタンが押された瞬間
         //PlayerActionAsset.Player.Jump.started -= OnJump;          // started    ... ボタンが押された瞬間
+        PlayerActionAsset.UI.Start.started -= PauseTggle;        // started...ボタンが押された瞬間
+
 
         //---InputActionの無効化
         PlayerActionAsset.Player.Disable();
+        PlayerActionAsset.UI.Disable();
     }
 
 
@@ -132,28 +140,32 @@ public class Player2 : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update() 
-    {
+    void Update() {
         //---重力を与える(条件調整中(04/21地点))
-        if (UnderParryNow == true || GroundNow == false){
+        if (UnderParryNow == true || GroundNow == false)
+        {
             Gravity();
         }
 
-        if (!Pause.isPause){
+        if (!Pause.isPause)
+        {
             //rb.Resume(gameObject);
             GamePadManager.onceTiltStick = false;
 
-            if (isAttack){
+            if (isAttack)
+            {
                 Attack();
             }
 
             //---HPオブジェクトを検索
-            if (!GameObject.Find("HPSystem(2)(Clone)")){
+            if (!GameObject.Find("HPSystem(2)(Clone)"))
+            {
                 return;
             }
 
             //---バックスペースキーでHPを減らす(デバッグ)
-            if (Input.GetKeyDown(KeyCode.Backspace)){
+            if (Input.GetKeyDown(KeyCode.Backspace))
+            {
                 GameData.CurrentHP--;
                 //SaveManager.saveHP(GameData.CurrentHP);
                 EffectManager.Play(EffectData.eEFFECT.EF_DAMAGE, this.transform.position);
@@ -161,15 +173,29 @@ public class Player2 : MonoBehaviour
             }
 
             //---コントローラーキーでHPを増やす(デバッグ)
-            if (Input.GetKeyDown(KeyCode.LeftControl)){
-                if (GameData.CurrentHP < hpmanager.MaxHP){
+            if (Input.GetKeyDown(KeyCode.LeftControl))
+            {
+                if (GameData.CurrentHP < hpmanager.MaxHP)
+                {
                     EffectManager.Play(EffectData.eEFFECT.EF_HEAL, this.transform.position);
                     GameData.CurrentHP++;
                     //SaveManager.saveHP(GameData.CurrentHP);
                 }
             }
+
+            //---地面と当たった時にジャンプフラグ・下パリイフラグを下す
+            if (GroundNow)
+            {
+                if (JumpNow == true || UnderParryNow == true)
+                {
+                    Debug.Log("着地した");
+                    JumpNow = false;
+                    UnderParryNow = false;
+                }
+            }
         }
-        else{
+        else
+        {
             //rb.Pause(gameObject);
         }
     }
@@ -308,6 +334,7 @@ public class Player2 : MonoBehaviour
             GamePadManager.onceTiltStick = true;
             GroundNow = false;
             animator.SetTrigger("Attack_DOWN");
+            Debug.Log("したはじきした");
 		}
 
 		//モデルの向きと反対方向に盾出したらモデル回転
@@ -407,6 +434,11 @@ public class Player2 : MonoBehaviour
     }
     #endregion
 
+    private void PauseTggle(InputAction.CallbackContext obj) {
+        Pause.isPause = !Pause.isPause; // トグル
+
+    }
+
     #region あたり判定処理
     //---当たり判定処理
     private void OnCollisionEnter(Collision collision)
@@ -434,38 +466,54 @@ public class Player2 : MonoBehaviour
 		
 	}
 
-	//---当たり判定処理(GroundCheckのボックスコライダーで判定を取るように)
-	private void OnTriggerEnter(Collider other)
-    {
+    //---当たり判定処理(GroundCheckのボックスコライダーで判定を取るように)
+    //private void OnTriggerEnter(Collider other)
+    //   {
+    //       //---Tag"Ground"と接触している間の処理
+    //       if (other.gameObject.tag == "Ground")
+    //       {
+    //           GroundNow = true;
+    //           if (JumpNow == true || UnderParryNow == true)
+    //           {
+    //               ////足が地面より上だったら着地中にする
+    //               //Vector3 footPotision = box_collider.transform.position;
+    //               //footPotision.y -= 16.0f;
+
+    //               //if(other.gameObject.transform.position.y <= footPotision.y)
+    //               //{
+    //               //    Debug.Log("足の位置" + footPotision);
+    //               Debug.Log("着地した");
+    //               JumpNow = false;
+    //               UnderParryNow = false;
+    //               //}
+    //           }
+
+    //           //ForceDirection = Vector2.zero;
+    //           //SoundManager.Play(SoundData.eSE.SE_LAND, SoundData.GameAudioList);
+    //       }
+
+    //   }
+    private void OnTriggerEnter(Collider other) {
         //---Tag"Ground"と接触している間の処理
         if (other.gameObject.tag == "Ground")
         {
             GroundNow = true;
-            if (JumpNow == true || UnderParryNow == true)
-            {
-                ////足が地面より上だったら着地中にする
-                //Vector3 footPotision = box_collider.transform.position;
-                //footPotision.y -= 16.0f;
-
-                //if(other.gameObject.transform.position.y <= footPotision.y)
-                //{
-                //    Debug.Log("足の位置" + footPotision);
-                //Debug.Log("着地中");
-                JumpNow = false;
-                UnderParryNow = false;
-                //}
-            }
-
-            //ForceDirection = Vector2.zero;
-            //SoundManager.Play(SoundData.eSE.SE_LAND, SoundData.GameAudioList);
         }
 
     }
-    #endregion
 
-    #region コントローラー振動
-    //---コントローラー振動処理
-    private IEnumerator VibrationPlay
+    private void OnTriggerExit(Collider other) {
+        if (other.gameObject.tag == "Ground")
+        {
+            GroundNow = false;
+
+        }
+    }
+        #endregion
+
+        #region コントローラー振動
+        //---コントローラー振動処理
+        private IEnumerator VibrationPlay
     (
         float lowFrequency,     // 低周波(左) モーターの強さ(0.0 ~ 1.0)
         float HighFrequency     // 高周波(右) モータ-の強さ(0.0 ~ 1.0)

@@ -42,13 +42,63 @@ public class EffectManager : MonoBehaviour
         Destroy(effect.gameObject, _destroyTime);
     }
 
+    /// <summary>
+    /// エフェクトポーズ
+    /// </summary>
     public static void EffectPause() {
-        for(int i = 0;i < (int)EffectData.eEFFECT.MAX_EF; i++)
+        if (!EffectData.isSetEffect)    // エフェクトデータ未設定ならやらない
         {
-            //if (EffectData.EF[i].isPlaying)
-            //{
-                //EffectData.EF[i].Pause();
-            //}
+            return;
+        }
+
+        if (EffectData.oncePauseEffect) // ポーズに入ったら一回だけ実行（オブジェクトを探す処理が重いため））
+        {
+            SetAllActiveEffect();   // 重たいから絶対に毎フレームやらない
+            EffectData.oncePauseEffect = false; // 一度だけやるためにフラグを下す
+        }
+
+        for (int i = 0; i < EffectData.activeEffect.Length; i++) {  
+            if (EffectData.activeEffect[i] != null)// エフェクトの数だけポーズする
+            {
+                //EffectData.activeEffect[i].GetComponent<ParticleSystem>().Pause();
+                EffectData.activeEffect[i].GetComponent<ParticleSystem>().playbackSpeed = 0.0f;
+            }
+        }
+    }
+
+    public static void EffectUnPause() {
+        if (!EffectData.isSetEffect)    // エフェクトデータ未設定ならやらない
+        {
+            return;
+        }
+
+        for (int i = 0; i < EffectData.activeEffect.Length; i++)
+        {
+            if (EffectData.activeEffect[i] != null)// エフェクトの数だけポーズ解除
+            {
+                //EffectData.activeEffect[i].GetComponent<ParticleSystem>()
+                EffectData.activeEffect[i].GetComponent<ParticleSystem>().playbackSpeed = 1.0f;
+                EffectData.activeEffect[i] = null;
+            }
+        }
+
+        EffectData.oncePauseEffect = true;
+    }
+
+    /// <summary>
+    /// 現在使われているエフェクトをすべて探す
+    /// </summary>
+    private static void SetAllActiveEffect() {
+       int index = 0;
+        foreach (GameObject obj in UnityEngine.Object.FindObjectsOfType(typeof(GameObject)))
+        {
+            if (obj.GetComponent<ParticleSystem>())
+            {
+                EffectData.activeEffect[index] = obj;
+                Debug.Log(EffectData.activeEffect[index]);
+                Debug.Log(index);
+                index++;
+            }
         }
     }
 }

@@ -22,6 +22,8 @@ public static class GameData
 {
    public enum eSceneState {
         TITLE_SCENE = 0,
+        KitchenStage001,
+        KitchenStage002,
         KitchenStage_SCENE,
         Kitchen_SCENE,
         Kitchen1_SCENE,
@@ -44,7 +46,8 @@ public static class GameData
     public static int NextMapNumber;        // マップの番号いれる
     public static int MovePoint;            // 次の遷移場所
     static string[] MapName                 // マップの名前 
-        = { "TitleScene", "Kitchen", "KitchenScene", "Kitchen001", "Kitchen002", "Kitchen003", "Kitchen004", "Kitchen005", "Kitchen006","KitchenStage", "KitchenStage 1","Tester" };
+        = { "TitleScene", "KitchenStage001", "KitchenStage002", "Kitchen", "KitchenScene", "Kitchen001", 
+        "Kitchen002", "Kitchen003", "Kitchen004", "Kitchen005", "Kitchen006","KitchenStage", "KitchenStage 1","Tester" };
 
     static string[] MovePointName
         = { "KitchenMovePoint001" };

@@ -17,16 +17,11 @@ public class ShadowEnemy : MonoBehaviour
     private Vector3 position;
     public int EnemyNomber;
     private bool spawn = false;
-    private float EFTime = 999.0f;
     private ParticleSystem effect;
-
-    //[SerializeField] private ParticleSystem particle;
-
+    
     // Start is called before the first frame update
     void Start()
     {
-        //particle.Play();
-
         position = transform.position;
         
         effect = Instantiate(EffectData.EF[2]);
@@ -61,7 +56,6 @@ public class ShadowEnemy : MonoBehaviour
             {
                 Destroy(effect.gameObject, 0.0f);
                 Destroy(gameObject, 0.0f);
-                //particle.Stop();
                 if (!spawn)
                 {
                     Instantiate(Enemy, position, Quaternion.identity);

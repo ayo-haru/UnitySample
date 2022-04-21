@@ -25,10 +25,11 @@ public class CarrotEnemy2 : MonoBehaviour
     private int AttackPattern = 1;
     private float AttackTime;
     private float RandomTime;
+    private float rotTime;
     private bool InArea;
     private bool Look;
     private bool Attack = false;
-
+    private bool Attack2 = false;
     private bool isCalledOnce = false;                             // ˆê‰ñ‚¾‚¯ˆ—‚ð‚·‚é‚½‚ß‚ÉŽg‚¤B
 
 
@@ -61,7 +62,7 @@ public class CarrotEnemy2 : MonoBehaviour
                             Attack = true;
                             break;
                         case 1:
-                            PP = Player.transform.position + new Vector3(0.0f, 40.0f, 0.0f);
+                            PP = Player.transform.position + new Vector3(0.0f, 30.0f, 0.0f);
                             vec = (PP - transform.position).normalized;
                             look = Quaternion.LookRotation(vec);
                             transform.localRotation = look;
@@ -69,20 +70,32 @@ public class CarrotEnemy2 : MonoBehaviour
                             RandomTime = Random.Range(0.0f, 1.5f);
                             Attack = true;
                             break;
-                        //case 2:
-                        //    break;
-                        //case 3:
-                        //    break;
+                        case 2:
+
+                            break;
 
                     }
                 }
 
-                if (AttackTime > RandomTime)
+                if (AttackTime > RandomTime && !Attack2)
                 {
-                    vec = (Player.transform.position - transform.position).normalized;
-                    look = Quaternion.LookRotation(vec);
-                    transform.localRotation = look;
-                    rb.velocity = vec * MoveSpeed;
+                    rb.constraints = RigidbodyConstraints.FreezePosition |
+                                         RigidbodyConstraints.FreezeRotationX |
+                                         RigidbodyConstraints.FreezeRotationY;
+                    rotTime += Time.deltaTime;
+                    transform.Rotate(new Vector3(30.0f, 0.0f, 0.0f), Space.Self);
+                    if (rotTime > 0.5f)
+                    {
+                        rb.constraints = RigidbodyConstraints.FreezePositionZ |
+                                       RigidbodyConstraints.FreezeRotationX |
+                                       RigidbodyConstraints.FreezeRotationY;
+                        rb.angularVelocity = new Vector3(0.0f, 0.0f, 0.0f);
+                        vec = (Player.transform.position - transform.position).normalized;
+                        look = Quaternion.LookRotation(vec);
+                        transform.localRotation = look;
+                        rb.velocity = vec * MoveSpeed;
+                        Attack2 = true;
+                    }
                 }
 
                 if (!isCalledOnce)     // ˆê‰ñ‚¾‚¯ŒÄ‚Ô

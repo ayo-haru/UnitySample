@@ -6,27 +6,36 @@ public static class Pause
 {
     public static bool isPause = false;
 
+    /// <summary>
+    /// ポーズスタート
+    /// </summary>
     public static void PauseStart() {
         //Time.timeScale = 0;
-        isPause = true;
+        //isPause = true;
 
-        if (!SoundData.isSetSound)  // サウンド未使用のシーンなら以下の処理をスキップ
-        {
-            return;
+        if (EffectData.isSetEffect){
+            EffectManager.EffectPause();
         }
-        if (GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
+
+        if (SoundData.isSetSound)  // サウンド未使用のシーンなら以下の処理をスキップ
         {
-            SoundManager.SoundPause(SoundData.TitleAudioList);
-        }
-        else
-        {
-            SoundManager.SoundPause(SoundData.GameAudioList);
+            if (GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
+            {
+                SoundManager.SoundPause(SoundData.TitleAudioList);
+            }
+            else
+            {
+                SoundManager.SoundPause(SoundData.GameAudioList);
+            }
         }
     }
 
+    /// <summary>
+    /// ポーズ終わり
+    /// </summary>
     public static void PauseFin() {
         //Time.timeScale = 1.0f;
-        isPause = false;
+        //isPause = false;
 
         if (!SoundData.isSetSound)  // サウンド未使用のシーンなら以下の処理をスキップ
         {

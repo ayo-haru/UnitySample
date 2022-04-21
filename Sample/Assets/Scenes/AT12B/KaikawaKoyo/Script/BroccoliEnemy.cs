@@ -22,8 +22,9 @@ public class BroccoliEnemy : MonoBehaviour
 
     [SerializeField]
     private float MoveSpeed = 5.0f;
-    private float InvincibleTime;
-    
+
+    private float InvincibleTime = 2.0f;
+    private float DamageTime;
     bool InArea = false;
     private bool look = false;
     private bool isGround = false;
@@ -47,23 +48,21 @@ public class BroccoliEnemy : MonoBehaviour
         if(!Pause.isPause)
         {
             rot = transform.rotation;
-            print(Invincible);
-            if(Invincible)
+            if (Invincible)
             {
                 gameObject.layer = LayerMask.NameToLayer("Invincible");
                 transform.Rotate(0, 0, 0);
-                InvincibleTime += Time.deltaTime;
-                if (InvincibleTime > 2.0f)
+                DamageTime += Time.deltaTime;
+                if (DamageTime > InvincibleTime)
                 {
                     gameObject.layer = LayerMask.NameToLayer("Enemy");
-                    InvincibleTime = 0.0f;
+                    DamageTime = 0.0f;
                     Invincible = false;
                 }
             }
-           
-            
+
             // プレイヤーを見つけたら攻撃開始
-            if (InArea && ED.isAlive)
+            if (ED.isAlive)
             {
                 Vector3 pos = rb.position;
 
@@ -103,29 +102,17 @@ public class BroccoliEnemy : MonoBehaviour
         // 接地判定
         if (collision.gameObject.CompareTag("Ground"))
         {
-            rb.constraints = RigidbodyConstraints.FreezePositionY;
+            rb.constraints = RigidbodyConstraints.FreezePositionY |
+              RigidbodyConstraints.FreezePositionZ |
+              RigidbodyConstraints.FreezeRotationX |
+              RigidbodyConstraints.FreezeRotationY;
         }
 
-        // 接地判定
+        // 接触判定
         if (collision.gameObject.CompareTag("Player"))
         {
             Invincible = true;
         }
     }
 
-    public void OnTriggerEnter(Collider other)    // コライダーでプレイヤーを索敵したい
-    {
-        if (other.CompareTag("Player"))
-        {
-            InArea = true;
-        }
-    }
-
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            InArea = false;
-        }
-    }
 }

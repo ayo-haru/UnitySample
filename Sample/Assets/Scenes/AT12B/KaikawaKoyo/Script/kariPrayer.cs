@@ -36,6 +36,19 @@ public class kariPrayer : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (gameObject.CompareTag("Ground"))
+        {
+            jump = false;
+        }
+
+        if(gameObject.CompareTag("Damaged"))
+        {
+            rb.AddForce(transform.right * 10.0f, ForceMode.Force);
+        }
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if(gameObject.CompareTag("Ground"))

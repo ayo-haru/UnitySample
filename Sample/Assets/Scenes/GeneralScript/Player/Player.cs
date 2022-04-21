@@ -49,25 +49,28 @@ public class Player : MonoBehaviour
 
         if (Pause.isPause)  // ポーズフラグによってポーズするかやめるか
         {
+            this.GetComponent<Rigidbody>().Pause(gameObject);
             Pause.PauseStart();
         }
         else
         {
+            this.GetComponent<Rigidbody>().Resume(gameObject);
             Pause.PauseFin();
         }
 
         if (isHitSavePoint) // セーブポイントに当たっていて、そのフレームの最初にスティックが傾けられたら
         {
+            //Debug.Log("セーブポイントに当たってる");
             if (GamePadManager.onceTiltStick)
             {
                 SaveManager.canSave = true;
-
+                //Debug.Log("セーブかのう");
             }
         }
 
         if (SaveManager.shouldSave) // セーブするが選択されたら
         {
-            //Debug.Log("セーブした");
+            Debug.Log("セーブした");
             ReSpawnPos = this.transform.position;    // プレイヤーの位置を保存
             SaveManager.saveLastPlayerPos(ReSpawnPos);  // プレイヤーの位置を保存
             SaveManager.saveBossAlive(GameData.isAliveBoss1);   // ボス１の生存フラグを保存
@@ -126,7 +129,9 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
         {
             isHitSavePoint = false; // 当たったフラグを下す
-            SaveManager.canSave = false;    // セーブ可能ではないためフラグを下す
+            //SaveManager.canSave = false;    // セーブ可能ではないためフラグを下す
+            Pause.isPause = false;  // バグ防止
+            //Debug.Log("セーブ可能じゃない");
         }
     }
 }

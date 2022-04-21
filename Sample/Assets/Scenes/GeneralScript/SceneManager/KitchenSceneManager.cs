@@ -131,11 +131,11 @@ public class KitchenSceneManager : MonoBehaviour
         }
 
         //---プレイヤーを空オブジェクトの子に複製する
-        Empty = GameObject.Find("Player");
+        //Empty = GameObject.Find("Player");
         GameObject player = Instantiate(GameData.Player);
         player.name = GameData.Player.name;                     // 名前の後ろに(Clone)とつくのを防ぐため、
                                                                                       // 強制的にプレハブ名にする処理
-        player.transform.SetParent(Empty.transform, false);
+        //player.transform.SetParent(Empty.transform, false);
 
         //----- 開始演出 -----
         //KitchenImage = GameObject.Find("Kitchen");

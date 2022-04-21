@@ -90,11 +90,11 @@ public class Player : MonoBehaviour
         //----- シーン遷移 -----
         if (other.gameObject.tag == "toKitchen1")    // この名前のタグと衝突したら
         {
-            GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen1_SCENE;
+            GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001;
         }
         if (other.gameObject.tag == "toKitchen2")    // この名前のタグと衝突したら
         {
-            GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen2_SCENE;
+            GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage002;
         }
         if (other.gameObject.tag == "toKitchen3")    // この名前のタグと衝突したら
         {

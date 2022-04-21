@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class KitchenSceneManager : MonoBehaviour
 {
     public GameObject playerPrefab;
+    private GameObject Empty;
     [SerializeField]
     private int currentSceneNum;
 
@@ -129,10 +130,12 @@ public class KitchenSceneManager : MonoBehaviour
                 break;
         }
 
-
+        //---プレイヤーを空オブジェクトの子に複製する
+        Empty = GameObject.Find("Player");
         GameObject player = Instantiate(GameData.Player);
         player.name = GameData.Player.name;                     // 名前の後ろに(Clone)とつくのを防ぐため、
                                                                                       // 強制的にプレハブ名にする処理
+        player.transform.SetParent(Empty.transform, false);
 
         //----- 開始演出 -----
         //KitchenImage = GameObject.Find("Kitchen");

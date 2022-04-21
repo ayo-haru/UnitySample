@@ -132,7 +132,7 @@ public class BossMove : MonoBehaviour
             }
             else
             {
-                RandomNumbe = Random.Range(1, 4);//攻撃パターンランダム化
+                RandomNumbe = Random.Range(2, 4);//攻撃パターンランダム化
                 Debug.Log("Random" + RandomNumbe);
             }
             switch (RandomNumbe)            //switch分岐

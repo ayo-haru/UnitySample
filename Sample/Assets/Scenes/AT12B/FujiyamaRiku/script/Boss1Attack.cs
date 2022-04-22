@@ -72,6 +72,8 @@ public class Boss1Attack : MonoBehaviour
     GameObject StrawberryAimObj;
     GameObject [] StrawberryAim;
     Vector3 [] StrawberryAimScale;
+    int StrawBerryLag;
+    bool []StrawBerryLagFlg;
 
     //ベジエ曲線用
     Vector3  StartPoint;
@@ -130,6 +132,7 @@ public class Boss1Attack : MonoBehaviour
         PlayerMiddlePoint = new Vector3[Max_Strawberry];
         StrawberryAim = new GameObject[Max_Strawberry];
         StrawberryAimScale = new Vector3[Max_Strawberry];
+        StrawBerryLagFlg = new bool[Max_Strawberry];
         BossStartPoint = GameObject.Find("BossPoint").transform.position;
         PlayerRefDir = new bool[Max_Strawberry];
         RefMiss = GameObject.Find("StrawberryMiss").transform.position;
@@ -251,6 +254,8 @@ public class Boss1Attack : MonoBehaviour
                         ReturnDelay = 0;
                         RushEndFlg = false;
                         BossReturnFlg = false;
+                        AnimFlagOnOff();
+                        BossAnim.SetBool("IdleToTake", false);
                         AnimMoveFlgOnOff();
                         AnimFlagOnOff();
                         BossReturnTime = 0;
@@ -307,6 +312,8 @@ public class Boss1Attack : MonoBehaviour
                         RushRefFlg = false;
                         BossReturnFlg = true;
                         OnlyFlg = false;
+                        AnimFlagOnOff();
+                        BossAnim.SetBool("IdleToTake", false);
                         HpScript.DelHP(RushDamage);
                         RushTime = 0;
                         RushRefTime = 0;
@@ -337,21 +344,29 @@ public class Boss1Attack : MonoBehaviour
             SoundManager.Play(SoundData.eSE.SE_BOOS1_DASHU, SoundData.GameAudioList);
         }
     }
-    void BossRushToJump()
-    {
-        
-        
-    }
+
     //----------------------------------------------------------
     //イチゴ攻撃
     public void Boss1Strawberry()
     {
+        
+        if (!OnlyFlg)
+        {
+            OnlyFlg = true;
+            //BossAnim.SetBool("IdleToStrawberry", true);
+            BossAnim.SetTrigger("Strawberry");
+            BossAnim.Play("StrawBerry");
+            
+        }
         //イチゴの処理が全部終わったら一通り初期化
         if (AliveStrawberry >= Max_Strawberry)
         {
+            
+            
             AliveStrawberry = 0;
             StrawberryNum = 0;
             StrawBerryMany = 0;
+            OnlyFlg = false;
             if (HPgage.currentHp >= 50)
             {
                 BossMove.SetState(BossMove.Boss_State.idle);
@@ -363,152 +378,210 @@ public class Boss1Attack : MonoBehaviour
             }
             return;
         }
-        //イチゴをひとつづつ生成する処理、最大数より多く出ないように。
-        if (!StrawberryUseFlg[StrawberryNum] && StrawBerryMany < Max_Strawberry)
-        {
-            //イチゴの座標指定
-            StartPoint.x = Boss1Manager.BossPos.x;
-            StartPoint.y = Boss1Manager.BossPos.y + 4;
-            StartPoint.z = Boss1Manager.BossPos.z;
-            //イチゴの生成後それぞれの名前変更
-            Strawberry[StrawberryNum] = Instantiate(obj, StartPoint, Quaternion.identity);
-            Strawberry[StrawberryNum].name = "strawberry" + StrawberryNum;
-            StrawberryAim[StrawberryNum] = Instantiate(StrawberryAimObj, EndPoint[StrawberryNum], Quaternion.Euler(-7.952f, 0f,0f));
-            StrawberryAim[StrawberryNum].transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-            StrawberryAimScale[StrawberryNum] = new Vector3(1.0f, 1.0f, 1.0f);
-            //イチゴの使用状況変更
-            StrawberryUseFlg[StrawberryNum] = true;
-            StrawBerryMany += 1;
-            SoundManager.Play(SoundData.eSE.SE_BOOS1_STRAWBERRY, SoundData.GameAudioList);
-
-        }
+        
         //毎回使用しているイチゴの探索する
         for (int i = 0; i < Max_Strawberry; i++)
+        {
+            if (StrawBerryLagFlg[i])
             {
-            if (StrawberryUseFlg[i])
-            {
-                if (StrawberryAimScale[i].x <= 2.5f)
+                if (StrawberryUseFlg[i])
                 {
-                    StrawberryAim[i].transform.localScale = new Vector3(StrawberryAimScale[i].x, StrawberryAimScale[i].y, StrawberryAimScale[i].z);
-                    StrawberryAimScale[i].x += 0.025f;
-                    StrawberryAimScale[i].y += 0.025f;
-                    StrawberryAimScale[i].z += 0.025f;
-                }
-                //弾かれたときに一回だけの処理
-                if (!StrawberryRefOnlyFlg[i] && StrawberryRefFlg[i])
-                {
-                    StrawberryRefOnlyFlg[i] = true;
-                    Vector2 Dir = Strawberry[i].transform.position - GameData.PlayerPos;
-                    float rad = Mathf.Atan2(Dir.y, Dir.x);
-                    float degree = rad * Mathf.Rad2Deg;
-                    //弾いた角度が〇度だった時に飛んでく方向を変える処理。
-                    //----------------------------------------------------------
-                    if (degree <= RefrectRotOver && degree >= RefrectRotUnder)
+                    
+                    if (StrawberryAimScale[i].x <= 2.5f)
                     {
-                        if (degree >= 45.0f)
+                        StrawberryAim[i].transform.localScale = new Vector3(StrawberryAimScale[i].x, StrawberryAimScale[i].y, StrawberryAimScale[i].z);
+                        StrawberryAimScale[i].x += 0.025f;
+                        StrawberryAimScale[i].y += 0.025f;
+                        StrawberryAimScale[i].z += 0.025f;
+                    }
+                    //弾かれたときに一回だけの処理
+                    if (!StrawberryRefOnlyFlg[i] && StrawberryRefFlg[i])
+                    {
+                        StrawberryRefOnlyFlg[i] = true;
+                        Vector2 Dir = Strawberry[i].transform.position - GameData.PlayerPos;
+                        float rad = Mathf.Atan2(Dir.y, Dir.x);
+                        float degree = rad * Mathf.Rad2Deg;
+                        //弾いた角度が〇度だった時に飛んでく方向を変える処理。
+                        //----------------------------------------------------------
+                        if (degree <= RefrectRotOver && degree >= RefrectRotUnder)
                         {
-                            PlayerPoint[i].x = GameData.PlayerPos.x;
-                            PlayerPoint[i].y = GameData.PlayerPos.y + 2.0f;
-                            PlayerPoint[i].z = GameData.PlayerPos.z;
-                            PlayerMiddlePoint[i].x = GameData.PlayerPos.x + 3.0f;
-                            PlayerMiddlePoint[i].y = GameData.PlayerPos.y + 3.0f;
-                            PlayerMiddlePoint[i].z = GameData.PlayerPos.z;
-                            RefEndPoint = Boss1Manager.BossPos;
-                            PlayerRefDir[i] = true;
+                            if (degree >= 45.0f)
+                            {
+                                PlayerPoint[i].x = GameData.PlayerPos.x;
+                                PlayerPoint[i].y = GameData.PlayerPos.y + 2.0f;
+                                PlayerPoint[i].z = GameData.PlayerPos.z;
+                                PlayerMiddlePoint[i].x = GameData.PlayerPos.x + 3.0f;
+                                PlayerMiddlePoint[i].y = GameData.PlayerPos.y + 3.0f;
+                                PlayerMiddlePoint[i].z = GameData.PlayerPos.z;
+                                RefEndPoint = Boss1Manager.BossPos;
+                                PlayerRefDir[i] = true;
+                            }
+                            else
+                            {
+                                PlayerPoint[i].x = GameData.PlayerPos.x + 2.0f;
+                                PlayerPoint[i].y = GameData.PlayerPos.y;
+                                PlayerPoint[i].z = GameData.PlayerPos.z;
+                                RefEndPoint = Boss1Manager.BossPos;
+                            }
                         }
-                        else
+                        else if (degree >= RefrectRotOver || degree <= RefrectRotUnder)
                         {
-                            PlayerPoint[i].x = GameData.PlayerPos.x + 2.0f;
+                            PlayerPoint[i].x = GameData.PlayerPos.x - 2.0f;
                             PlayerPoint[i].y = GameData.PlayerPos.y;
                             PlayerPoint[i].z = GameData.PlayerPos.z;
-                            RefEndPoint = Boss1Manager.BossPos;
+                            RefEndPoint = RefMiss;
+                            RefMissFlg = true;
+                        }
+                        //----------------------------------------------------------
+                    }
+                    //弾かれた後の処理
+                    if (StrawberryRefFlg[i])
+                    {
+                        Ref_FinishTime[i] += Time.deltaTime * 2f;
+                        //弾いた方向によって処理の種類を変える
+                        //---------------------------------------------------------
+                        if (!PlayerRefDir[i])
+                        {
+                            Strawberry[i].transform.position = Vector3.Lerp(PlayerPoint[i], RefEndPoint, Ref_FinishTime[i]);
+                            Strawberry[i].transform.Rotate(new Vector3(0, 0, 10));
+                        }
+                        if (PlayerRefDir[i])
+                        {
+                            Strawberry[i].transform.position = Beziercurve.SecondCurve(PlayerPoint[i], PlayerMiddlePoint[i],
+                                                                                       RefEndPoint, Ref_FinishTime[i]);
+                            Strawberry[i].transform.Rotate(new Vector3(0, 0, 10));
+                        }
+                        //---------------------------------------------------------
+                        //弾き終わったら弾いたイチゴを初期化
+                        if (Ref_FinishTime[i] >= 1.0f)
+                        {
+                            //BossAnim.SetBool("??ToDamage", true);
+                            BossAnim.Play("DamageAdd");
+                            //BossAnim.SetBool("??ToDamage", false);
+                            PlayerRefDir[i] = false;
+                            //弾い方がしっかりボスの方向だった時にだけダメージの処理する
+                            if (!RefMissFlg)
+                            {
+                                HpScript.DelHP(StrawberryDamage);
+                                SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
+                            }
+                            RefMissFlg = false;
+                            StrawberryUseFlg[i] = false;
+                            StrawberryRefFlg[i] = false;
+                            StrawberryRefOnlyFlg[i] = false;
+                            StrawBerryLagFlg[i] = false;
+                            Destroy(Strawberry[i]);
+                            Destroy(StrawberryAim[i]);
+                            Ref_FinishTime[i] = 0;
+                            AliveStrawberry++;
+                            FinishTime[i] = 0;
                         }
                     }
-                    else if (degree >= RefrectRotOver || degree <= RefrectRotUnder)
+                    //弾かれていたらこっちの処理しない
+                    if (!StrawberryRefFlg[i])
                     {
-                        PlayerPoint[i].x = GameData.PlayerPos.x - 2.0f;
-                        PlayerPoint[i].y = GameData.PlayerPos.y;
-                        PlayerPoint[i].z = GameData.PlayerPos.z;
-                        RefEndPoint = RefMiss;
-                        RefMissFlg = true;
+                        Strawberry[i].transform.position = Beziercurve.SecondCurve(StartPoint, MiddlePoint[i], EndPoint[i], FinishTime[i]);
+                        Strawberry[i].transform.Rotate(new Vector3(0, 0, 10));
+                    }
+                    FinishTime[i] += Time.deltaTime * StrawberrySpeed;
+                    if (i < Max_Strawberry - 1)
+                    {
+                        //前のイチゴが〇ぐらい進んだときにこの処理をする。
+                        if (FinishTime[i] >= 0.5f && !StrawberryUseFlg[i + 1])
+                        {
+                            //StrawberryNum++;
+                        }
                     }
                     //----------------------------------------------------------
-                }
-                //弾かれた後の処理
-                if (StrawberryRefFlg[i])
-                {
-                    Ref_FinishTime[i] += Time.deltaTime * 2f;
-                    //弾いた方向によって処理の種類を変える
-                    //---------------------------------------------------------
-                   if(!PlayerRefDir[i])
+                    //プレイヤーにあったときに初期化する処理。
+                    if (StrawberryColPlayer[i])
                     {
-                        Strawberry[i].transform.position = Vector3.Lerp(PlayerPoint[i], RefEndPoint, Ref_FinishTime[i]);
-                        Strawberry[i].transform.Rotate(new Vector3(0, 0, 10));
-                    }
-                    if (PlayerRefDir[i])
-                    {
-                        Strawberry[i].transform.position = Beziercurve.SecondCurve(PlayerPoint[i], PlayerMiddlePoint[i],
-                                                                                   RefEndPoint, Ref_FinishTime[i]);
-                        Strawberry[i].transform.Rotate(new Vector3(0, 0, 10));
-                    }
-                    //---------------------------------------------------------
-                    //弾き終わったら弾いたイチゴを初期化
-                    if (Ref_FinishTime[i] >= 1.0f)
-                    {
-                        PlayerRefDir[i] = false;
-                        //弾い方がしっかりボスの方向だった時にだけダメージの処理する
-                        if (!RefMissFlg)
-                        {
-                            HpScript.DelHP(StrawberryDamage);
-                            SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
-                        }
-                        RefMissFlg = false;
-                        StrawberryUseFlg[i] = false ;
-                        StrawberryRefFlg[i] = false ;
-                        StrawberryRefOnlyFlg[i] = false; ;
+                        FinishTime[i] = 0;
+                        StrawberryUseFlg[i] = false;
                         Destroy(Strawberry[i]);
                         Destroy(StrawberryAim[i]);
-                        Ref_FinishTime[i] = 0;
+                        StrawBerryLagFlg[i] = false;
                         AliveStrawberry++;
-                        FinishTime[i] = 0;
+                        
                     }
-                }
-                //弾かれていたらこっちの処理しない
-                if (!StrawberryRefFlg[i])
-                {
-                    Strawberry[i].transform.position = Beziercurve.SecondCurve(StartPoint, MiddlePoint[i], EndPoint[i], FinishTime[i]);
-                    Strawberry[i].transform.Rotate(new Vector3(0, 0, 10));
-                }
-                FinishTime[i] += Time.deltaTime * StrawberrySpeed;
-                if (i < Max_Strawberry - 1)
-                {
-                    //前のイチゴが〇ぐらい進んだときにこの処理をする。
-                    if (FinishTime[i] >= 0.5f && !StrawberryUseFlg[i + 1])
+                    //弾が到着したら消す,攻撃をはじいていたら処理をしない
+                    if (FinishTime[i] >= 1.0f && !StrawberryRefFlg[i])
                     {
-                        StrawberryNum++;
+                        FinishTime[i] = 0;
+                        StrawberryUseFlg[i] = false;
+                        Destroy(Strawberry[i]);
+                        Destroy(StrawberryAim[i]);
+                        StrawBerryLagFlg[i] = false;
+                        AliveStrawberry++;
+                        
                     }
-                }
-                //----------------------------------------------------------
-                //プレイヤーにあったときに初期化する処理。
-                if(StrawberryColPlayer[i])
-                {
-                    FinishTime[i] = 0;
-                    StrawberryUseFlg[i] = false;
-                    Destroy(Strawberry[i]);
-                    Destroy(StrawberryAim[i]);
-                    AliveStrawberry++;
-                }
-                //弾が到着したら消す,攻撃をはじいていたら処理をしない
-                if (FinishTime[i] >= 1.0f && !StrawberryRefFlg[i])
-                {
-                    FinishTime[i] = 0;
-                    StrawberryUseFlg[i] = false;
-                    Destroy(Strawberry[i]);
-                    Destroy(StrawberryAim[i]);
-                    AliveStrawberry++;
                 }
             }
         }
+    }
+
+    //イチゴをひとつづつ生成する処理、最大数より多く出ないように。
+    void StrawBerryCreate()
+        {
+        if (!StrawberryUseFlg[StrawberryNum] && StrawberryNum < Max_Strawberry)
+        {
+            //イチゴの座標指定
+            if (StrawberryNum % 2 == 0)
+            {
+                StartPoint.x = GameObject.Find("middle2_R").transform.position.x;
+                StartPoint.y = GameObject.Find("middle2_R").transform.position.y;
+                StartPoint.z = GameObject.Find("middle2_R").transform.position.z;
+            }
+            if (StrawberryNum % 2 != 0)
+            {
+                StartPoint.x = GameObject.Find("middle2_L").transform.position.x;
+                StartPoint.y = GameObject.Find("middle2_L").transform.position.y;
+                StartPoint.z = GameObject.Find("middle2_L").transform.position.z;
+            }
+            //StartPoint.x = Boss1Manager.BossPos.x;
+            //StartPoint.y = Boss1Manager.BossPos.y;
+            //StartPoint.z = Boss1Manager.BossPos.z;
+            //イチゴの生成後それぞれの名前変更
+            Strawberry[StrawberryNum] = Instantiate(obj, StartPoint, Quaternion.identity);
+            if (StrawberryNum % 2 == 0)
+            {
+                Strawberry[StrawberryNum].transform.parent = GameObject.Find("middle2_R").transform;
+            }
+            if (StrawberryNum % 2 != 0)
+            {
+                Strawberry[StrawberryNum].transform.parent = GameObject.Find("middle2_L").transform;
+            }
+            Strawberry[StrawberryNum].name = "strawberry" + StrawberryNum;
+            StrawberryUseFlg[StrawberryNum] = true;
+            //イチゴの使用状況変更
+            StrawberryAim[StrawberryNum] = Instantiate(StrawberryAimObj, EndPoint[StrawberryNum], Quaternion.Euler(-7.952f, 0f, 0f));
+            StrawberryAim[StrawberryNum].transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            StrawberryAimScale[StrawberryNum] = new Vector3(1.0f, 1.0f, 1.0f);
+            StrawberryNum++;
+            SoundManager.Play(SoundData.eSE.SE_BOOS1_STRAWBERRY, SoundData.GameAudioList);
+
+        }
+        
+    }
+    void ShotStrawberry()
+    {
+        if (StrawBerryMany % 2 == 0)
+        {
+            StartPoint.x = GameObject.Find("middle2_R").transform.position.x;
+            StartPoint.y = GameObject.Find("middle2_R").transform.position.y;
+            StartPoint.z = GameObject.Find("middle2_R").transform.position.z;
+            Strawberry[StrawBerryMany].transform.parent.DetachChildren();
+        }
+        else if (StrawBerryMany % 2 == 1)
+        {
+            StartPoint.x = GameObject.Find("middle2_L").transform.position.x;
+            StartPoint.y = GameObject.Find("middle2_L").transform.position.y;
+            StartPoint.z = GameObject.Find("middle2_L").transform.position.z;
+            Strawberry[StrawBerryMany].transform.parent.DetachChildren();
+        }
+        StrawBerryLagFlg[StrawBerryMany] = true;
+        
+        StrawBerryMany++;
     }
     //----------------------------------------------------------
     public void Boss1Knife()

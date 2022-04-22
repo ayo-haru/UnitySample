@@ -127,12 +127,12 @@ public class BossMove : MonoBehaviour
             //ランダム数の生成とswitch分岐をこの中へ
             if (HPgage.currentHp >= 51)
             {
-                RandomNumbe = Random.Range(2, 3);//攻撃パターンランダム化
+                RandomNumbe = Random.Range(1, 2);//攻撃パターンランダム化
                 Debug.Log("Random" + RandomNumbe);
             }
             else
             {
-                RandomNumbe = Random.Range(2, 4);//攻撃パターンランダム化
+                RandomNumbe = Random.Range(1, 4);//攻撃パターンランダム化
                 Debug.Log("Random" + RandomNumbe);
             }
             switch (RandomNumbe)            //switch分岐

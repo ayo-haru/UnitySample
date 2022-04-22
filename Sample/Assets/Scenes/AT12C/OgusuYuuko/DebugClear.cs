@@ -6,19 +6,28 @@ using UnityEngine;
 
 public class DebugClear : MonoBehaviour
 {
-    int currenthp = 100;
+    public GameObject MAP_UI;
+    //int currenthp = 100;
    // HPGage hpGage;
-    int count = 0;
+    //int count = 0;
   //  UVScroll Moon;
    // PieceManager pieceManagewr;
-    GameObject hpsystem;
+   // GameObject hpsystem;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //hpGage = GameObject.Find("MaskImage").GetComponent<HPGage>();
-       // Moon = GameObject.Find("HPBar").GetComponent<UVScroll>();
-      //  pieceManagewr = GameObject.Find("PieceHPManager").GetComponent<PieceManager>();
-        hpsystem = GameObject.Find("HPSystem(2)(Clone)");
+        // Moon = GameObject.Find("HPBar").GetComponent<UVScroll>();
+        //  pieceManagewr = GameObject.Find("PieceHPManager").GetComponent<PieceManager>();
+        //hpsystem = GameObject.Find("HPSystem(2)(Clone)");
+        GameObject canvas = GameObject.Find("Canvas");
+        MAP_UI = Instantiate(MAP_UI);
+        MAP_UI.transform.SetParent(canvas.transform, false);
+    }
+
+    private void Start()
+    {
+        MAP_UI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -82,22 +91,46 @@ public class DebugClear : MonoBehaviour
         //    Debug.Log("かけら減った");
         //}
 
-        if (Input.GetKeyDown(KeyCode.F10))
+        //if (Input.GetKeyDown(KeyCode.F10))
+        //{
+        //    hpsystem.GetComponent<HPManager>().GetPiece();
+        //    Debug.Log("HP"+GameData.CurrentHP);
+        //    Debug.Log("Piece" + GameData.CurrentPiece);
+        //}
+        //if (Input.GetKeyDown(KeyCode.F11))
+        //{
+        //    hpsystem.GetComponent<HPManager>().Damaged();
+        //    Debug.Log("HP" + GameData.CurrentHP);
+        //    Debug.Log("Piece" + GameData.CurrentPiece);
+        //}
+        //if (Input.GetKeyDown(KeyCode.F12))
+        //{
+        //    hpsystem.GetComponent<HPManager>().GetItem();
+        //   // Debug.Log("HP" + GameData.CurrentHP);
+        //}
+
+        if (Input.GetKeyDown(KeyCode.F1))
         {
-            hpsystem.GetComponent<HPManager>().GetPiece();
-            Debug.Log("HP"+GameData.CurrentHP);
-            Debug.Log("Piece" + GameData.CurrentPiece);
+            MAP_UI.SetActive(false);
         }
-        if (Input.GetKeyDown(KeyCode.F11))
+        if (Input.GetKeyDown(KeyCode.F2))
         {
-            hpsystem.GetComponent<HPManager>().Damaged();
-            Debug.Log("HP" + GameData.CurrentHP);
-            Debug.Log("Piece" + GameData.CurrentPiece);
+            MAP_UI.SetActive(true);
         }
-        if (Input.GetKeyDown(KeyCode.F12))
+        if (Input.GetKeyDown(KeyCode.F3))
         {
-            hpsystem.GetComponent<HPManager>().GetItem();
-           // Debug.Log("HP" + GameData.CurrentHP);
+            GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage001;
+            Debug.Log("シーン" + GameData.CurrentMapNumber);
+        }
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage002;
+            Debug.Log("シーン" + GameData.CurrentMapNumber);
+        }
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            GameData.CurrentMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
+            Debug.Log("シーン" + GameData.CurrentMapNumber);
         }
 
 

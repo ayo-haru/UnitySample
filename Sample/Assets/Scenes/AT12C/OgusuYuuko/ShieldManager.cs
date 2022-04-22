@@ -50,6 +50,4 @@ public class ShieldManager : MonoBehaviour
         Debug.Log("èÇè¡ÇµÇΩ" + now_Quantity);
     }
 
-
-
 }

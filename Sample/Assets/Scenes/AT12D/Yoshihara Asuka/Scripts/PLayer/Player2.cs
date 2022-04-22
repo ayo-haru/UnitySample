@@ -45,6 +45,7 @@ public class Player2 : MonoBehaviour
     GameObject hp;                                      // HPのオブジェクトを格納
     HPManager hpmanager;                                // HPManagerのコンポーネントを取得する変数
     BoxCollider box_collider;                           // 足元の当たり判定
+    ShieldManager shieldManager;                        // 盾の最大数
 
     //---移動変数
     private Vector3 PlayerPos;                          // プレイヤーの座標
@@ -71,7 +72,7 @@ public class Player2 : MonoBehaviour
     [SerializeField] private float JumpForce = 5;               // ジャンプ力
 
     //---攻撃変数
-    public Vector2 AttackDirection = Vector2.zero;     // 攻撃方向
+    public Vector2 AttackDirection = Vector2.zero;      // 攻撃方向
     public float AttckPosHeight = 6.0f;                 // シールド位置上下
     public float AttckPosWidth = 4.0f;                  // シールド位置左右
     public float DestroyTime = 0.5f;                    // シールドが消える時間
@@ -83,6 +84,7 @@ public class Player2 : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        shieldManager = GetComponent<ShieldManager>();
         PlayerActionAsset = new Game_pad();             // InputActionインスタンスを生成
     }
 
@@ -100,7 +102,7 @@ public class Player2 : MonoBehaviour
         PlayerActionAsset.UI.Start.started += PauseToggle;
         Debug.Log(PlayerActionAsset.UI.Start);
 
-        //PlayerActionAsset.Player.Jump.started += OnJump;            // started    ... ボタンが押された瞬間
+        PlayerActionAsset.Player.Jump.started += OnJump;            // started    ... ボタンが押された瞬間
         //PlayerActionAsset.Player.Jump.performed += OnJump;        // performed  ... 中間くらい
         //PlayerActionAsset.Player.Jump.canceled += OnJump;         // canceled   ... ボタンを離した瞬間
 
@@ -116,7 +118,7 @@ public class Player2 : MonoBehaviour
     private void OnDisable()
     {
         PlayerActionAsset.Player.Attack.started -= OnAttack;        // started...ボタンが押された瞬間
-        //PlayerActionAsset.Player.Jump.started -= OnJump;          // started    ... ボタンが押された瞬間
+        PlayerActionAsset.Player.Jump.started -= OnJump;          // started    ... ボタンが押された瞬間
         PlayerActionAsset.UI.Start.started -= PauseToggle;        // started...ボタンが押された瞬間
 
 
@@ -143,7 +145,7 @@ public class Player2 : MonoBehaviour
     // Update is called once per frame
     void Update() {
         //---重力を与える(条件調整中(04/21地点))
-        if (UnderParryNow == true || GroundNow == false)
+        if (UnderParryNow == true || GroundNow == false || JumpNow == true)
         {
             Gravity();
         }
@@ -207,7 +209,7 @@ public class Player2 : MonoBehaviour
     {
         if (!Pause.isPause){
             animator.speed = 1.0f;
-            Move("AddForce");
+            Move("Velocity");
         }
         else{
             animator.speed = 0.0f;
@@ -297,8 +299,9 @@ public class Player2 : MonoBehaviour
     //===================================================================
     private void OnAttack(InputAction.CallbackContext obj)
     {
-        isAttack = true;       
-    }
+        isAttack = true;
+        
+    } 
     private void Attack() {
 
         //---振動させる
@@ -319,7 +322,7 @@ public class Player2 : MonoBehaviour
         }
 
         //---上パリィ
-        if (AttackDirection.y >= 1){
+        if (AttackDirection.y > 0){
             if (GroundNow == true){
                 rb.AddForce(transform.up * 10.0f, ForceMode.Impulse);
             }
@@ -387,7 +390,7 @@ public class Player2 : MonoBehaviour
             return;
         }
 
-        //Debug.Log("ジャンプ！");
+        Debug.Log("ジャンプ！");
         JumpNow = true;
         GroundNow = false;
         rb.AddForce(transform.up * JumpForce,ForceMode.Impulse);
@@ -464,11 +467,6 @@ public class Player2 : MonoBehaviour
         }
     }
 
-	private void OnCollisionStay(Collision collision)
-	{
-		
-	}
-
     //---当たり判定処理(GroundCheckのボックスコライダーで判定を取るように)
     //private void OnTriggerEnter(Collider other)
     //   {
@@ -508,13 +506,13 @@ public class Player2 : MonoBehaviour
     private void OnTriggerExit(Collider other) {
         if (other.gameObject.tag == "Ground")
         {
-            GroundNow = false;
+            JumpNow = true;
 
         }
     }
         #endregion
 
-        #region コントローラー振動
+    #region コントローラー振動
         //---コントローラー振動処理
         private IEnumerator VibrationPlay
     (

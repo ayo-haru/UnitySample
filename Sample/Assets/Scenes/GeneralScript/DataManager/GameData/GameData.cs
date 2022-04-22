@@ -80,6 +80,9 @@ public static class GameData
         return MapName[nextscene];
     }
 
+    /// <summary>
+    /// データの初期化
+    /// </summary>
     public static void InitData() {
         CurrentHP = 5;
         //SaveManager.saveHP(CurrentHP);
@@ -90,6 +93,9 @@ public static class GameData
         Pause.isPause = false;
     }
 
+    /// <summary>
+    /// シーンの初期化
+    /// </summary>
     public static void InitScene() {
         SceneManager.LoadScene(MapName[CurrentMapNumber]);
         Pause.isPause = false;

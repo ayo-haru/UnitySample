@@ -109,7 +109,6 @@ public class EffectManager : MonoBehaviour
             }
         }
 
-        int cnt = 0;
         //foreach (GameObject obj in UnityEngine.Object.FindObjectsOfType(typeof(GameObject)))
         //{
         //    if (obj.GetComponent<ParticleSystem>())

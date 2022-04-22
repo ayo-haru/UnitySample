@@ -44,6 +44,8 @@ public class DataManager : MonoBehaviour
     [SerializeField]
     private AudioClip se_reflection;
     [SerializeField]
+    private AudioClip se_reflectionstar;
+    [SerializeField]
     private AudioClip se_damege;
     [SerializeField]
     private AudioClip se_heal;
@@ -113,6 +115,7 @@ public class DataManager : MonoBehaviour
         SoundData.SEDataSet(se_land, (int)SoundData.eSE.SE_LAND);
         SoundData.SEDataSet(se_shield, (int)SoundData.eSE.SE_SHIELD);
         SoundData.SEDataSet(se_reflection, (int)SoundData.eSE.SE_REFLECTION);
+        SoundData.SEDataSet(se_reflectionstar, (int)SoundData.eSE.SE_REFLECTION_STAR);
         SoundData.SEDataSet(se_damege, (int)SoundData.eSE.SE_DAMEGE);
         SoundData.SEDataSet(se_heal, (int)SoundData.eSE.SE_HEAL);
 

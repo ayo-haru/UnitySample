@@ -30,10 +30,11 @@ public class Player2 : MonoBehaviour
     [SerializeField] private float VibrationTime;       // 振動時間
 
     //---InputSystem関連
+    [System.NonSerialized]
     public static Game_pad PlayerActionAsset;           // InputActionで生成したものを使用
     private InputAction move;                           // InputActionのmoveを扱う
     private InputAction Attacking;                      // InputActionのmoveを扱う
-    private InputAction _Pause;                          // InputActionのpauseを扱う
+    private InputAction _Pause;                         // InputActionのpauseを扱う
 
     //---アニメーション関連
     public Animator animator;                           // アニメーターコンポーネント取得
@@ -96,7 +97,7 @@ public class Player2 : MonoBehaviour
         //---Actionイベント登録(ボタン入力)
         PlayerActionAsset.Player.Attack.started += OnAttack;
         Debug.Log(PlayerActionAsset.Player.Attack);
-        PlayerActionAsset.UI.Start.started += PauseTggle;
+        PlayerActionAsset.UI.Start.started += PauseToggle;
         Debug.Log(PlayerActionAsset.UI.Start);
 
         //PlayerActionAsset.Player.Jump.started += OnJump;            // started    ... ボタンが押された瞬間
@@ -116,7 +117,7 @@ public class Player2 : MonoBehaviour
     {
         PlayerActionAsset.Player.Attack.started -= OnAttack;        // started...ボタンが押された瞬間
         //PlayerActionAsset.Player.Jump.started -= OnJump;          // started    ... ボタンが押された瞬間
-        PlayerActionAsset.UI.Start.started -= PauseTggle;        // started...ボタンが押された瞬間
+        PlayerActionAsset.UI.Start.started -= PauseToggle;        // started...ボタンが押された瞬間
 
 
         //---InputActionの無効化
@@ -436,7 +437,7 @@ public class Player2 : MonoBehaviour
     }
     #endregion
 
-    private void PauseTggle(InputAction.CallbackContext obj) {
+    private void PauseToggle(InputAction.CallbackContext obj) {
         Pause.isPause = !Pause.isPause; // トグル
 
     }

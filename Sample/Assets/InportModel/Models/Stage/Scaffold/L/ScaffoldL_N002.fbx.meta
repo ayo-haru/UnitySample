@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: 65b01f4672a9b0343823fdb20d32dd94
+guid: 4d88bdde86a4dc84abf495aa1d469060
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: asiba_tex
+    second: {fileID: 2100000, guid: 920116c4663365d42b04ac0cfcfe0772, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -85,7 +90,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 30
+    globalScale: 3000
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

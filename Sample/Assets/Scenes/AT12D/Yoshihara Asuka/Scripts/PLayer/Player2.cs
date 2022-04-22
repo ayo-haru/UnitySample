@@ -170,6 +170,7 @@ public class Player2 : MonoBehaviour
                 //SaveManager.saveHP(GameData.CurrentHP);
                 EffectManager.Play(EffectData.eEFFECT.EF_DAMAGE, this.transform.position);
                 SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
+                hpmanager.Damaged();
             }
 
             //---コントローラーキーでHPを増やす(デバッグ)
@@ -178,8 +179,9 @@ public class Player2 : MonoBehaviour
                 if (GameData.CurrentHP < hpmanager.MaxHP)
                 {
                     EffectManager.Play(EffectData.eEFFECT.EF_HEAL, this.transform.position);
-                    GameData.CurrentHP++;
+                    //GameData.CurrentHP++;
                     //SaveManager.saveHP(GameData.CurrentHP);
+                    hpmanager.GetItem();
                 }
             }
 

@@ -30,6 +30,7 @@ public static class SoundData
         SE_LAND,
         SE_SHIELD,
         SE_REFLECTION,
+        SE_REFLECTION_STAR,
         SE_DAMEGE,
         SE_HEAL,
         SE_BOOS1_DASHU,

@@ -38,6 +38,11 @@ public class KitchenSceneManager : MonoBehaviour
 
         switch(GameData.CurrentMapNumber) 
         {
+            //---ステージシーン
+            case (int)GameData.eSceneState.KitchenStage_SCENE:
+                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(5.0f, 80.0f, 0.0f);
+                break;
+
             //---ステージ1
             case (int)GameData.eSceneState.KitchenStage001:
                 GameData.PlayerPos = GameData.Player.transform.position = new Vector3(5.0f, 16.0f, 0.0f);
@@ -46,12 +51,6 @@ public class KitchenSceneManager : MonoBehaviour
             //---ステージ2
             case (int)GameData.eSceneState.KitchenStage002:
                 GameData.PlayerPos = GameData.Player.transform.position = new Vector3(380.0f, 84.0f, 0.0f);
-                break;
-
-
-            //---ステージシーン
-            case (int)GameData.eSceneState.KitchenStage_SCENE:
-                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(5.0f, 80.0f, 0.0f);
                 break;
 
             ////---シーン0

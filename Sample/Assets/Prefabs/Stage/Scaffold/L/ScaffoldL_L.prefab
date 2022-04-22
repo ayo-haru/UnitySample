@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3029564203237709408}
-  - component: {fileID: 9001288571940031514}
   - component: {fileID: 4474913539771518733}
   m_Layer: 0
   m_Name: ScaffoldL_L
@@ -34,25 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!95 &9001288571940031514
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2396192336197012698}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 89891b23037020b4bb3dc9ceb2858131, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 0
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!65 &4474913539771518733
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -64,8 +44,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 31, y: 30, z: 31}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 31, y: 5, z: 31}
+  m_Center: {x: -0, y: 12.5, z: -0}
 --- !u!1 &3443007294064653198
 GameObject:
   m_ObjectHideFlags: 0

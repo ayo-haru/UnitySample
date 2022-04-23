@@ -39,7 +39,7 @@ public class TomatoEnemy : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         //distance = 1.0f;
         ED = GetComponent<EnemyDown>();
-        transform.Rotate(0, -90, 0);     
+        transform.Rotate(0, -44, 0);     
         look = false;
         rb.velocity += new Vector3(0.0f, -0.5f, 0.0f);
     }

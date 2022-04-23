@@ -40,7 +40,7 @@ public class BroccoliEnemy : MonoBehaviour
         ED = GetComponent<EnemyDown>();
         rb.centerOfMass = new Vector3(0, -1, 0);
         //transform.Rotate(new Vector3(0, 0, 15));
-        transform.Rotate(0, -90, 0);
+        transform.Rotate(0, -50, 0);
     }
 
     private void Update()

@@ -21,6 +21,7 @@ public class EnemyDown : MonoBehaviour
     private Vector3 EnemyPos;
     private Vector3 velocity;
     private Vector3 vec;
+    public Animator animator;
 
     [SerializeField]
     private int DropRate;           // 回復アイテムのドロップ率
@@ -75,7 +76,8 @@ public class EnemyDown : MonoBehaviour
                 vec = (Player.transform.position - transform.position).normalized;
                 //プレイヤーを逆方向に跳ね返す
                 collision.rigidbody.AddForce(vec * 5.0f, ForceMode.Impulse);
-
+                // アニメーションを止める
+                animator.speed = 0;
                 //弾いたら消す
                 isAlive = false;
                 // 重力を消す

@@ -72,11 +72,10 @@ public class Boss1Attack : MonoBehaviour
     GameObject StrawberryAimObj;
     GameObject [] StrawberryAim;
     Vector3 [] StrawberryAimScale;
-    int StrawBerryLag;
     bool []StrawBerryLagFlg;
 
     //ベジエ曲線用
-    Vector3  StartPoint;
+    Vector3  []StartPoint;
     Vector3 [] MiddlePoint;
     Vector3 [] EndPoint;
     float [] FinishTime;
@@ -127,6 +126,7 @@ public class Boss1Attack : MonoBehaviour
         MiddlePoint = new Vector3[Max_Strawberry];
         EndPoint = new Vector3[Max_Strawberry];
         PlayerPoint = new Vector3[Max_Strawberry];
+        StartPoint = new Vector3[Max_Strawberry];
         FinishTime = new float[Max_Strawberry];
         Ref_FinishTime = new float[Max_Strawberry];
         PlayerMiddlePoint = new Vector3[Max_Strawberry];
@@ -257,7 +257,6 @@ public class Boss1Attack : MonoBehaviour
                         AnimFlagOnOff();
                         BossAnim.SetBool("IdleToTake", false);
                         AnimMoveFlgOnOff();
-                        AnimFlagOnOff();
                         BossReturnTime = 0;
                         if (HPgage.currentHp >= 50)
                         {
@@ -317,7 +316,6 @@ public class Boss1Attack : MonoBehaviour
                         HpScript.DelHP(RushDamage);
                         RushTime = 0;
                         RushRefTime = 0;
-                        AnimFlagOnOff();
                         SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
                         return;
                     }
@@ -361,8 +359,6 @@ public class Boss1Attack : MonoBehaviour
         //イチゴの処理が全部終わったら一通り初期化
         if (AliveStrawberry >= Max_Strawberry)
         {
-            
-            
             AliveStrawberry = 0;
             StrawberryNum = 0;
             StrawBerryMany = 0;
@@ -455,9 +451,6 @@ public class Boss1Attack : MonoBehaviour
                         //弾き終わったら弾いたイチゴを初期化
                         if (Ref_FinishTime[i] >= 1.0f)
                         {
-                            //BossAnim.SetBool("??ToDamage", true);
-                            BossAnim.Play("DamageAdd");
-                            //BossAnim.SetBool("??ToDamage", false);
                             PlayerRefDir[i] = false;
                             //弾い方がしっかりボスの方向だった時にだけダメージの処理する
                             if (!RefMissFlg)
@@ -480,18 +473,11 @@ public class Boss1Attack : MonoBehaviour
                     //弾かれていたらこっちの処理しない
                     if (!StrawberryRefFlg[i])
                     {
-                        Strawberry[i].transform.position = Beziercurve.SecondCurve(StartPoint, MiddlePoint[i], EndPoint[i], FinishTime[i]);
+                        //Strawberry[i].transform.position = Beziercurve.SecondCurve(StartPoint[i], MiddlePoint[i], EndPoint[i], FinishTime[i]);
+                        Strawberry[i].transform.position = Vector3.Lerp(StartPoint[i], EndPoint[i], FinishTime[i]);
                         Strawberry[i].transform.Rotate(new Vector3(0, 0, 10));
                     }
                     FinishTime[i] += Time.deltaTime * StrawberrySpeed;
-                    if (i < Max_Strawberry - 1)
-                    {
-                        //前のイチゴが〇ぐらい進んだときにこの処理をする。
-                        if (FinishTime[i] >= 0.5f && !StrawberryUseFlg[i + 1])
-                        {
-                            //StrawberryNum++;
-                        }
-                    }
                     //----------------------------------------------------------
                     //プレイヤーにあったときに初期化する処理。
                     if (StrawberryColPlayer[i])
@@ -528,21 +514,21 @@ public class Boss1Attack : MonoBehaviour
             //イチゴの座標指定
             if (StrawberryNum % 2 == 0)
             {
-                StartPoint.x = GameObject.Find("middle2_R").transform.position.x;
-                StartPoint.y = GameObject.Find("middle2_R").transform.position.y;
-                StartPoint.z = GameObject.Find("middle2_R").transform.position.z;
+                StartPoint[StrawberryNum].x = GameObject.Find("middle2_R").transform.position.x;
+                StartPoint[StrawberryNum].y = GameObject.Find("middle2_R").transform.position.y;
+                StartPoint[StrawberryNum].z = GameObject.Find("middle2_R").transform.position.z;
             }
             if (StrawberryNum % 2 != 0)
             {
-                StartPoint.x = GameObject.Find("middle2_L").transform.position.x;
-                StartPoint.y = GameObject.Find("middle2_L").transform.position.y;
-                StartPoint.z = GameObject.Find("middle2_L").transform.position.z;
+                StartPoint[StrawberryNum].x = GameObject.Find("middle2_L").transform.position.x;
+                StartPoint[StrawberryNum].y = GameObject.Find("middle2_L").transform.position.y;
+                StartPoint[StrawberryNum].z = GameObject.Find("middle2_L").transform.position.z;
             }
             //StartPoint.x = Boss1Manager.BossPos.x;
             //StartPoint.y = Boss1Manager.BossPos.y;
             //StartPoint.z = Boss1Manager.BossPos.z;
             //イチゴの生成後それぞれの名前変更
-            Strawberry[StrawberryNum] = Instantiate(obj, StartPoint, Quaternion.identity);
+            Strawberry[StrawberryNum] = Instantiate(obj, StartPoint[StrawberryNum], Quaternion.identity);
             if (StrawberryNum % 2 == 0)
             {
                 Strawberry[StrawberryNum].transform.parent = GameObject.Find("middle2_R").transform;
@@ -567,17 +553,21 @@ public class Boss1Attack : MonoBehaviour
     {
         if (StrawBerryMany % 2 == 0)
         {
-            StartPoint.x = GameObject.Find("middle2_R").transform.position.x;
-            StartPoint.y = GameObject.Find("middle2_R").transform.position.y;
-            StartPoint.z = GameObject.Find("middle2_R").transform.position.z;
+            
+            StartPoint[StrawBerryMany].x = GameObject.Find("middle2_R").transform.position.x;
+            StartPoint[StrawBerryMany].y = GameObject.Find("middle2_R").transform.position.y;
+            StartPoint[StrawBerryMany].z = GameObject.Find("middle2_R").transform.position.z;
             Strawberry[StrawBerryMany].transform.parent.DetachChildren();
+
         }
         else if (StrawBerryMany % 2 == 1)
         {
-            StartPoint.x = GameObject.Find("middle2_L").transform.position.x;
-            StartPoint.y = GameObject.Find("middle2_L").transform.position.y;
-            StartPoint.z = GameObject.Find("middle2_L").transform.position.z;
+            
+            StartPoint[StrawBerryMany].x = GameObject.Find("middle2_L").transform.position.x;
+            StartPoint[StrawBerryMany].y = GameObject.Find("middle2_L").transform.position.y;
+            StartPoint[StrawBerryMany].z = GameObject.Find("middle2_L").transform.position.z;
             Strawberry[StrawBerryMany].transform.parent.DetachChildren();
+
         }
         StrawBerryLagFlg[StrawBerryMany] = true;
         

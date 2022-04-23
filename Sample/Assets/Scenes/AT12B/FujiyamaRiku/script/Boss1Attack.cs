@@ -314,7 +314,6 @@ public class Boss1Attack : MonoBehaviour
                         RushReturnSpeed = 2;
                         RushRefFlg = false;
                         BossReturnFlg = true;
-                        
                         BossAnim.SetBool("IdleToTake", false);
                         BossAnim.SetBool("RushToJump", false);
                         HpScript.DelHP(RushDamage);
@@ -356,7 +355,6 @@ public class Boss1Attack : MonoBehaviour
         if (!OnlyFlg)
         {
             OnlyFlg = true;
-            //BossAnim.SetBool("IdleToStrawberry", true);
             BossAnim.SetTrigger("Strawberry");
             BossAnim.Play("StrawBerry");
             
@@ -478,9 +476,20 @@ public class Boss1Attack : MonoBehaviour
                     //íeÇ©ÇÍÇƒÇ¢ÇΩÇÁÇ±Ç¡ÇøÇÃèàóùÇµÇ»Ç¢
                     if (!StrawberryRefFlg[i])
                     {
-                        //Strawberry[i].transform.position = Beziercurve.SecondCurve(StartPoint[i], MiddlePoint[i], EndPoint[i], FinishTime[i]);
-                        Strawberry[i].transform.position = Vector3.Lerp(StartPoint[i], EndPoint[i], FinishTime[i]);
+                        Strawberry[i].transform.position = Beziercurve.SecondCurve(StartPoint[i], MiddlePoint[i], EndPoint[i], FinishTime[i]);
                         Strawberry[i].transform.Rotate(new Vector3(0, 0, 10));
+                    }
+                    if(i == 0)
+                    {
+                        StrawberrySpeed = 2;
+                    }
+                    else if(i == 1)
+                    {
+                        StrawberrySpeed = 1.5f;
+                    }
+                    else
+                    {
+                        StrawberrySpeed = 1;
                     }
                     FinishTime[i] += Time.deltaTime * StrawberrySpeed;
                     //----------------------------------------------------------

@@ -98,7 +98,10 @@ public class DataManager : MonoBehaviour
     [SerializeField]
     private ParticleSystem ef_shield2;
     [SerializeField]
-    private ParticleSystem ef_magicspuare;
+    private ParticleSystem ef_magicspuare_red;
+    [SerializeField]
+    private ParticleSystem ef_magicspuare_blue;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -144,7 +147,8 @@ public class DataManager : MonoBehaviour
         EffectData.EFDataSet(ef_healitem,(int)EffectData.eEFFECT.EF_HEALITEM);
         EffectData.EFDataSet(ef_heal,(int)EffectData.eEFFECT.EF_HEAL);
         EffectData.EFDataSet(ef_shield,(int)EffectData.eEFFECT.EF_SHEILD2);
-        EffectData.EFDataSet(ef_magicspuare,(int)EffectData.eEFFECT.EF_MAGICSQUARE);
+        EffectData.EFDataSet(ef_magicspuare_red,(int)EffectData.eEFFECT.EF_MAGICSQUARE_RED);
+        EffectData.EFDataSet(ef_magicspuare_blue,(int)EffectData.eEFFECT.EF_MAGICSQUARE_BLUE);
 
         SoundData.isSetSound = true;    // デバッグ時サウンド初期化してない場合にエラーが出るからけす
         EffectData.isSetEffect = true;  // デバッグ時エフェクト初期化していない場合にエラーを出さない
@@ -159,11 +163,5 @@ public class DataManager : MonoBehaviour
         {
             GameData.gamepad = Gamepad.current;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

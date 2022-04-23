@@ -24,11 +24,14 @@ public class Player : MonoBehaviour
 
     [System.NonSerialized]
     public static bool isHitSavePoint; // セーブポイントに当たったか
+    [System.NonSerialized]
+    public static bool HitSavePointColorisRed;
 
     // Start is called before the first frame update
     void Start()
     {
         isHitSavePoint = false; // フラグ初期化
+        HitSavePointColorisRed = false;
     }
 
     // Update is called once per frame
@@ -63,7 +66,14 @@ public class Player : MonoBehaviour
             //Debug.Log("セーブポイントに当たってる");
             if (GamePadManager.onceTiltStick)
             {
-                SaveManager.canSave = true;
+                if (HitSavePointColorisRed)
+                {
+                    Warp.canWarp = true;
+                }
+                else
+                {
+                    SaveManager.canSave = true;
+                }
                 //Debug.Log("セーブかのう");
             }
         }
@@ -78,6 +88,12 @@ public class Player : MonoBehaviour
             SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);   // 今いるマップの番号を保存
             SaveManager.canSave = false;        // セーブが終わったのでフラグを下す
             SaveManager.shouldSave = false;
+        }
+
+        if (Warp.shouldWarp)
+        {
+            GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
+            Warp.shouldWarp = false;
         }
     }
 

@@ -28,7 +28,8 @@ public static class EffectData
         EF_HEAL,
         EF_SHIELD,
         EF_SHEILD2,
-        EF_MAGICSQUARE,
+        EF_MAGICSQUARE_RED,
+        EF_MAGICSQUARE_BLUE,
 
         MAX_EF
     }

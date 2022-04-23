@@ -55,7 +55,7 @@ public class CarrotEnemy : MonoBehaviour
                 dis = Vector3.Distance(EnemyPos, PlayerPos);
                 if(dis >= 100.0f)
                 {
-                    Destroy(gameObject, 0.0f);
+                    //Destroy(gameObject, 0.0f);
                 }
                 if (Invincible)
                 {

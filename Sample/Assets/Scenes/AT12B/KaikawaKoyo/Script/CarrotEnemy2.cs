@@ -22,7 +22,7 @@ public class CarrotEnemy2 : MonoBehaviour
 
     [SerializeField]
     float MoveSpeed = 1.0f;
-    private int AttackPattern = 1;
+    private int AttackPattern = 2;
     private float AttackTime;
     private float RandomTime;
     private float rotTime;
@@ -67,17 +67,25 @@ public class CarrotEnemy2 : MonoBehaviour
                             look = Quaternion.LookRotation(vec);
                             transform.localRotation = look;
                             rb.velocity = vec * MoveSpeed;
-                            RandomTime = Random.Range(0.0f, 1.5f);
+                            RandomTime = Random.Range(0.5f, 1.5f);
                             Attack = true;
                             break;
                         case 2:
-
+                            rb.velocity = new Vector3(0.0f, -MoveSpeed, 0.0f);
+                            vec = ((transform.position -= new Vector3(0.0f, 15.0f, 0.0f)) - transform.position).normalized;
+                            look = Quaternion.LookRotation(vec);
+                            transform.localRotation = look;
+                            Attack = true;
                             break;
-
                     }
                 }
 
-                if (AttackTime > RandomTime && !Attack2)
+                if (AttackPattern == 1)
+                {
+                    AttackTime += Time.deltaTime;
+                }
+
+                if (AttackTime > RandomTime && AttackPattern == 1)
                 {
                     rb.constraints = RigidbodyConstraints.FreezePosition |
                                          RigidbodyConstraints.FreezeRotationX |
@@ -94,7 +102,39 @@ public class CarrotEnemy2 : MonoBehaviour
                         look = Quaternion.LookRotation(vec);
                         transform.localRotation = look;
                         rb.velocity = vec * MoveSpeed;
-                        Attack2 = true;
+                        AttackPattern = 3;
+                    }
+                }
+
+                if (AttackPattern == 2)
+                {
+                    if (rb.velocity.y < 0.0f)
+                    {
+                        rb.velocity += new Vector3(0.0f, 3.0f, 0.0f);
+                    }
+                    if (transform.position.x > Player.transform.position.x && rb.velocity.x > -MoveSpeed)
+                    {
+                        rb.velocity -= new Vector3(3.0f, 0.0f, 0.0f);
+                        if (rb.velocity.x <= -MoveSpeed)
+                        {
+                            vec = (Player.transform.position - transform.position).normalized;
+                            look = Quaternion.LookRotation(vec);
+                            transform.localRotation = look;
+                            rb.velocity = vec * MoveSpeed;
+                            AttackPattern = 3;
+                        }
+                    }
+                    if (transform.position.x < Player.transform.position.x && rb.velocity.x < MoveSpeed)
+                    {
+                        rb.velocity += new Vector3(3.0f, 0.0f, 0.0f);
+                        if (rb.velocity.x >= MoveSpeed)
+                        {
+                            vec = (Player.transform.position - transform.position).normalized;
+                            look = Quaternion.LookRotation(vec);
+                            transform.localRotation = look;
+                            rb.velocity = vec * MoveSpeed;
+                            AttackPattern = 3;
+                        }
                     }
                 }
 
@@ -102,12 +142,6 @@ public class CarrotEnemy2 : MonoBehaviour
                 {
                     //SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
                     isCalledOnce = true;
-                }
-
-                if (Attack)
-                {
-                    AttackTime += Time.deltaTime;
-                    Destroy(gameObject, 3.0f);
                 }
             }
         }

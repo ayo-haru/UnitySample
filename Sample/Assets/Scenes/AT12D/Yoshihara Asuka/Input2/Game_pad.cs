@@ -264,6 +264,24 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Decision"",
+                    ""type"": ""Value"",
+                    ""id"": ""de3c6307-8f56-4d52-abb5-2f03aa2af851"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Select"",
+                    ""type"": ""Value"",
+                    ""id"": ""b15abb3a-e67f-455d-a926-339e8f9490b5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -277,116 +295,6 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
                     ""action"": ""LeftStickSelect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""KeyBord"",
-                    ""id"": ""b10c69f9-4f67-42d3-9a59-5058afa26faf"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftStickSelect"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""069331bf-585b-4464-a4be-df9d0f7929d9"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftStickSelect"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""31d86dd3-1219-425b-acfe-47c5d3e58429"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftStickSelect"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""35c8205d-9595-420e-ae7d-b7effd53ae79"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftStickSelect"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""654c698e-e57d-4faa-baa7-938026592416"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftStickSelect"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""PadButton"",
-                    ""id"": ""201658a9-92aa-4e13-81ff-3579d99c3eb0"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftStickSelect"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""8bc466c7-a2ca-4db7-92f9-01e6b95d202b"",
-                    ""path"": ""<Gamepad>/dpad/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftStickSelect"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""2cd9f20a-4b03-4cc7-a69a-ef068a9cfef9"",
-                    ""path"": ""<Gamepad>/dpad/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftStickSelect"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""f460e32b-aa61-477a-a61a-52f208951476"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftStickSelect"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""eb57bf71-7aae-465c-8cf1-56861bc189dc"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LeftStickSelect"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
@@ -420,6 +328,50 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
                     ""action"": ""Start"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9f251b47-5c58-4f7d-9a35-097db615c3a0"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Decision"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""272f7708-4911-421c-a505-69fcff1d44f5"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Decision"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8f118c6b-6299-4a60-92b8-3b36066c24a0"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""db0ac103-d874-4bb1-96bc-a74488828e13"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -436,6 +388,8 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
         m_UI_LeftStickSelect = m_UI.FindAction("LeftStickSelect", throwIfNotFound: true);
         m_UI_RightStickSelect = m_UI.FindAction("RightStickSelect", throwIfNotFound: true);
         m_UI_Start = m_UI.FindAction("Start", throwIfNotFound: true);
+        m_UI_Decision = m_UI.FindAction("Decision", throwIfNotFound: true);
+        m_UI_Select = m_UI.FindAction("Select", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -547,6 +501,8 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_LeftStickSelect;
     private readonly InputAction m_UI_RightStickSelect;
     private readonly InputAction m_UI_Start;
+    private readonly InputAction m_UI_Decision;
+    private readonly InputAction m_UI_Select;
     public struct UIActions
     {
         private @Game_pad m_Wrapper;
@@ -554,6 +510,8 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
         public InputAction @LeftStickSelect => m_Wrapper.m_UI_LeftStickSelect;
         public InputAction @RightStickSelect => m_Wrapper.m_UI_RightStickSelect;
         public InputAction @Start => m_Wrapper.m_UI_Start;
+        public InputAction @Decision => m_Wrapper.m_UI_Decision;
+        public InputAction @Select => m_Wrapper.m_UI_Select;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -572,6 +530,12 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
                 @Start.started -= m_Wrapper.m_UIActionsCallbackInterface.OnStart;
                 @Start.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnStart;
                 @Start.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnStart;
+                @Decision.started -= m_Wrapper.m_UIActionsCallbackInterface.OnDecision;
+                @Decision.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnDecision;
+                @Decision.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnDecision;
+                @Select.started -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect;
+                @Select.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect;
+                @Select.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -585,6 +549,12 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
                 @Start.started += instance.OnStart;
                 @Start.performed += instance.OnStart;
                 @Start.canceled += instance.OnStart;
+                @Decision.started += instance.OnDecision;
+                @Decision.performed += instance.OnDecision;
+                @Decision.canceled += instance.OnDecision;
+                @Select.started += instance.OnSelect;
+                @Select.performed += instance.OnSelect;
+                @Select.canceled += instance.OnSelect;
             }
         }
     }
@@ -600,5 +570,7 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
         void OnLeftStickSelect(InputAction.CallbackContext context);
         void OnRightStickSelect(InputAction.CallbackContext context);
         void OnStart(InputAction.CallbackContext context);
+        void OnDecision(InputAction.CallbackContext context);
+        void OnSelect(InputAction.CallbackContext context);
     }
 }

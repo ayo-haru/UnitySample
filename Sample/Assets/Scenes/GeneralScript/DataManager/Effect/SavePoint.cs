@@ -17,13 +17,23 @@ public class SavePoint : MonoBehaviour
     private InputAction LeftStickSelect;            // InputActionのselectを扱う
     private InputAction RightStickSelect;           // InputActionのselectを扱う
 
+    [SerializeField]
+    private bool isRed = true;
 
     // Start is called before the first frame update
     void Start()
     {
         isHitPlayer = false;    // 初期化あたっていないのでfalse
         Vector3 Pos = this.transform.position;  // UIの描画の基準値
-        EffectManager.Play(EffectData.eEFFECT.EF_MAGICSQUARE, new Vector3(Pos.x, Pos.y - 5.0f, Pos.z),false);   // 表示するUI
+        if (isRed)
+        {
+            EffectManager.Play(EffectData.eEFFECT.EF_MAGICSQUARE_RED, new Vector3(Pos.x, Pos.y - 5.0f, Pos.z), false);   // 表示するUI
+        }
+        else
+        {
+            EffectManager.Play(EffectData.eEFFECT.EF_MAGICSQUARE_BLUE, new Vector3(Pos.x, Pos.y - 5.0f, Pos.z), false);   // 表示するUI
+        }
+
         _targetCamera = Camera.main;    // メインカメラを取得
         _parentUIobj = GameObject.Find("Canvas").GetComponent<Canvas>();    // キャンバスを取得
         _parentUI = _parentUIobj.GetComponent<RectTransform>(); // キャンバスのレクトトランスフォーム
@@ -44,6 +54,7 @@ public class SavePoint : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             isHitPlayer = true;
+            Player.HitSavePointColorisRed = isRed;
         }
     }
 
@@ -51,6 +62,7 @@ public class SavePoint : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             isHitPlayer = false;
+            Player.HitSavePointColorisRed = isRed;
         }
     }
 

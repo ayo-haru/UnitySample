@@ -24,10 +24,10 @@ public class TitleSceneManager : MonoBehaviour {
     private InputAction LeftStickSelect;            // InputActionのselectを扱う
     private InputAction RightStickSelect;           // InputActionのselectを扱う
 
-    //private Vector2 doLeftStick = Vector2.zero;
-    //private Vector2 doRightStick = Vector2.zero;
 
     private int select;                             // 選択されているモードの番号 
+    private bool isDecision;
+
 
     private bool isPressButton = false;             // ボタンが押されたかの判定用
     //private bool oncePressButton = false;           // ボタンが押されたときに一回だけ処理をする用
@@ -41,7 +41,9 @@ public class TitleSceneManager : MonoBehaviour {
 
     private void Awake() {
         UIActionAssets = new Game_pad();            // InputActionインスタンスを生成
-        select = (int)eSTATETITLE.FROMBIGINING;     // 初期値ははじめから      
+        select = (int)eSTATETITLE.FROMBIGINING;     // 初期値ははじめから
+        isDecision = false;
+
 
         Application.targetFrameRate = 60;           // フレームレートを固定
 
@@ -141,7 +143,7 @@ public class TitleSceneManager : MonoBehaviour {
             GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
 
-            if (keyboard.enterKey.wasReleasedThisFrame) // 選択を確定
+            if (isDecision)
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
@@ -150,27 +152,12 @@ public class TitleSceneManager : MonoBehaviour {
 
                 // シーン関連
                 GameData.OldMapNumber = GameData.CurrentMapNumber;
-                GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
+                throw new Exception("シーン名なし。下のコメントアウト書き換えてね！！！！！");
+                //GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
                 string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
                 SceneManager.LoadScene(nextSceneName);
+                isDecision = false;
 
-            }
-            else if (isSetGamePad)
-            {
-                if (GameData.gamepad.buttonEast.wasReleasedThisFrame)
-                {
-                    // 決定音
-                    SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
-
-                    GameData.InitData();
-
-                    // シーン関連
-                    GameData.OldMapNumber = GameData.CurrentMapNumber;
-                    GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
-                    string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
-                    SceneManager.LoadScene(nextSceneName);
-
-                }
             }
         }
         else if (select == (int)eSTATETITLE.FROMCONTINUE)
@@ -179,7 +166,7 @@ public class TitleSceneManager : MonoBehaviour {
             GameContinue.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
 
-            if (keyboard.enterKey.wasReleasedThisFrame) // 選択を確定
+            if (isDecision)
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
@@ -188,22 +175,8 @@ public class TitleSceneManager : MonoBehaviour {
                 GameData.OldMapNumber = GameData.CurrentMapNumber;
                 string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
                 SceneManager.LoadScene(nextSceneName);
-
+                isDecision = false;
             }
-            else if (isSetGamePad)
-            {
-                if (GameData.gamepad.buttonEast.wasReleasedThisFrame)
-                {
-                    // 決定音
-                    SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
-
-                    // シーン関連
-                    GameData.OldMapNumber = GameData.CurrentMapNumber;
-                    string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
-                    SceneManager.LoadScene(nextSceneName);
-                }
-            }
-
         }
         else if (select == (int)eSTATETITLE.QUIT)
         {
@@ -211,26 +184,11 @@ public class TitleSceneManager : MonoBehaviour {
             GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
 
-            if (keyboard.enterKey.wasReleasedThisFrame) // 選択を確定
+            if (isDecision)
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
-
-#if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-#else
-                Application.Quit();
-#endif
-
-            }
-        }
-        else if (isSetGamePad)
-        {
-            if (GameData.gamepad.buttonEast.wasReleasedThisFrame)
-            {
-                // 決定音
-                SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
-
+                isDecision = false;
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -240,9 +198,6 @@ public class TitleSceneManager : MonoBehaviour {
             }
         }
     }
-
-
-
 
     private void SelectUp() {
         SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
@@ -271,6 +226,7 @@ public class TitleSceneManager : MonoBehaviour {
         //---Actionイベントを登録
         UIActionAssets.UI.LeftStickSelect.started += OnLeftStick;
         UIActionAssets.UI.RightStickSelect.started += OnRightStick;
+        UIActionAssets.UI.Decision.started += OnDecision;
 
 
         //---InputActionの有効化
@@ -326,6 +282,18 @@ public class TitleSceneManager : MonoBehaviour {
             SelectDown();
         }
         
+    }
+    
+    /// <summary>
+    /// 決定ボタン
+    /// </summary>
+    private void OnDecision(InputAction.CallbackContext obj)
+    {
+        if (!isPressButton)
+        {
+            return;
+        }
+        isDecision = true;
     }
 
     private void OnGUI()

@@ -25,14 +25,15 @@ public class Boss1Manager : MonoBehaviour
     private int CountDown;
     private float CountDownMax = 5.0f;
     public Text timerText;
-    public static GameObject Bossobj;
+    public GameObject Bossobj;
     public static GameObject Boss;
     public static Vector3 BossPos;
     private GameObject Warp;
+    BossEntry Entry;
     private Vector3 WarpEFPoint;
     private void Awake()
     {
-        
+        Entry = GameObject.Find("BossStageManager").GetComponent<BossEntry>();
         Bossobj = (GameObject)Resources.Load("PanCake");
 
         BossPos = GameObject.Find("BossPoint").transform.position;
@@ -67,17 +68,17 @@ public class Boss1Manager : MonoBehaviour
             case Boss1State.BOSS1_START:
                 {
 
-                    CountDownMax -= Time.deltaTime;
-                    CountDown = (int)CountDownMax;
+                    Entry.Entry();
+                    //CountDownMax -= Time.deltaTime;
+                    //CountDown = (int)CountDownMax;
                     
-                    timerText.text = CountDown.ToString();
-                    if (CountDown <= 0)
-                    {
-                        //Debug.Log("Time : " + CountDownMax);
-                        timerText.enabled = false;
-                        BossState = Boss1State.BOSS1_BATTLE;
-                        
-                    }
+                    //timerText.text = CountDown.ToString();
+                    //if (CountDown <= 0)
+                    //{
+                    //    //Debug.Log("Time : " + CountDownMax);
+                    //    timerText.enabled = false;
+                    //    BossState = Boss1State.BOSS1_BATTLE;
+                    //}
                     break;
                 }
             case Boss1State.BOSS1_BATTLE:

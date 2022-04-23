@@ -117,9 +117,9 @@ public class Player2 : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerActionAsset.Player.Attack.started -= OnAttack;        // started...ボタンが押された瞬間
-        PlayerActionAsset.Player.Jump.started -= OnJump;          // started    ... ボタンが押された瞬間
-        PlayerActionAsset.UI.Start.started -= PauseToggle;        // started...ボタンが押された瞬間
+        PlayerActionAsset.Player.Attack.started -= OnAttack;        // started ...ボタンが押された瞬間
+        PlayerActionAsset.Player.Jump.started -= OnJump;            // started ... ボタンが押された瞬間
+        PlayerActionAsset.UI.Start.started -= PauseToggle;          // started ...ボタンが押された瞬間
 
 
         //---InputActionの無効化

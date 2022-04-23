@@ -256,6 +256,7 @@ public class Boss1Attack : MonoBehaviour
                         BossReturnFlg = false;
                         AnimFlagOnOff();
                         BossAnim.SetBool("IdleToTake", false);
+                        BossAnim.SetBool("RushToJump", false);
                         AnimMoveFlgOnOff();
                         BossReturnTime = 0;
                         if (HPgage.currentHp >= 50)
@@ -280,7 +281,10 @@ public class Boss1Attack : MonoBehaviour
                     RushPlayerPoint.y = GameData.PlayerPos.y + 3.0f;
                     RushPlayerPoint.z = GameData.PlayerPos.z;
                     RushRefEndPoint = GameObject.Find("ForkRefEndPoint").transform.position;
-
+                    BossAnim.SetBool("RushToJump", false);
+                    BossAnim.SetBool("??ToDamage", true);
+                    BossAnim.Play("Damage");
+                    
                     RefrectFlg = false;
                 }
                 //弾かれていなかった場合の処理
@@ -291,7 +295,7 @@ public class Boss1Attack : MonoBehaviour
                 if (RushTime >= 1.0f)
                 {
                     //最終地点まで行った後そこから初期地点に戻るまでの硬直
-                    ReturnDelay += Time.deltaTime;
+                    
                     RushReturnSpeed = 1f;
                     RushEndFlg = true;
                     BossReturnFlg = true;
@@ -310,12 +314,13 @@ public class Boss1Attack : MonoBehaviour
                         RushReturnSpeed = 2;
                         RushRefFlg = false;
                         BossReturnFlg = true;
-                        OnlyFlg = false;
-                        AnimFlagOnOff();
+                        
                         BossAnim.SetBool("IdleToTake", false);
+                        BossAnim.SetBool("RushToJump", false);
                         HpScript.DelHP(RushDamage);
                         RushTime = 0;
                         RushRefTime = 0;
+                        BossAnim.SetBool("??ToDamage", false);
                         SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
                         return;
                     }
@@ -337,7 +342,7 @@ public class Boss1Attack : MonoBehaviour
             Fork = Instantiate(Forkobj, ForkPos, Quaternion.Euler(GameObject.Find("ForkPos").transform.rotation.eulerAngles));
             Fork.transform.parent = GameObject.Find("ForkPos").transform;
             BossAnim.SetTrigger("TakeToRushTr");
-            BossAnim.SetTrigger("RushToJumpTr");
+            BossAnim.SetBool("RushToJump",true);
             BossAnim.SetBool("IdleToTake", false);
             SoundManager.Play(SoundData.eSE.SE_BOOS1_DASHU, SoundData.GameAudioList);
         }

@@ -102,20 +102,26 @@ public class BroccoliEnemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // ê⁄ínîªíË
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            rb.constraints = RigidbodyConstraints.FreezePositionY |
-              RigidbodyConstraints.FreezePositionZ |
-              RigidbodyConstraints.FreezeRotationX |
-              RigidbodyConstraints.FreezeRotationY;
-        }
-
         // ê⁄êGîªíË
         if (collision.gameObject.CompareTag("Player"))
         {
             Invincible = true;
         }
     }
-
+    private void OnCollisionStay(Collision collision)
+    {
+        // ê⁄ínîªíË
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGround = true;
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        // ê⁄ínîªíË
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGround = false;
+        }
+    }
 }

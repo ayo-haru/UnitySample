@@ -136,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1998075290005920896, guid: a086a57b6b1edf245b45a32318a974d4, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 1998075290005920896, guid: a086a57b6b1edf245b45a32318a974d4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -176,6 +176,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1998075290005920896, guid: a086a57b6b1edf245b45a32318a974d4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635006847011467745, guid: a086a57b6b1edf245b45a32318a974d4, type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -446,7 +450,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1998075290005920896, guid: a086a57b6b1edf245b45a32318a974d4, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1998075290005920896, guid: a086a57b6b1edf245b45a32318a974d4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -486,6 +490,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1998075290005920896, guid: a086a57b6b1edf245b45a32318a974d4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635006847011467745, guid: a086a57b6b1edf245b45a32318a974d4, type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -706,6 +714,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N002 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
 --- !u!4 &140794957 stripped
@@ -811,6 +823,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N003
       objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
 --- !u!4 &153570602 stripped
@@ -825,9 +841,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 315759037}
     m_Modifications:
+    - target: {fileID: 1648083407840730443, guid: 31c16837112e40d4ca225d5a8adeffba, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4762716410722599698, guid: 31c16837112e40d4ca225d5a8adeffba, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4762716410722599698, guid: 31c16837112e40d4ca225d5a8adeffba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1029,7 +1049,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 190236124844017864, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 190236124844017864, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1074,6 +1094,10 @@ PrefabInstance:
     - target: {fileID: 713831621928030834, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N003 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
@@ -1261,6 +1285,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N002
       objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
 --- !u!4 &225459536 stripped
@@ -1275,9 +1303,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 315759037}
     m_Modifications:
+    - target: {fileID: 2323977519214874852, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5007834362617656946, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5007834362617656946, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1297,7 +1329,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5007834362617656946, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5007834362617656946, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_LocalRotation.y
@@ -1305,7 +1337,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5007834362617656946, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5007834362617656946, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1322,6 +1354,10 @@ PrefabInstance:
     - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N002
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
@@ -1579,6 +1615,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N003 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
 --- !u!4 &263456325 stripped
@@ -1640,6 +1680,10 @@ PrefabInstance:
     - target: {fileID: 713831621928030834, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N003 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
@@ -1703,6 +1747,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N003 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
 --- !u!4 &271813208 stripped
@@ -1764,6 +1812,10 @@ PrefabInstance:
     - target: {fileID: 713831621928030834, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N003 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
@@ -1841,9 +1893,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 315759037}
     m_Modifications:
+    - target: {fileID: 2323977519214874852, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5007834362617656946, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 5007834362617656946, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1888,6 +1944,10 @@ PrefabInstance:
     - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N002 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
@@ -2011,6 +2071,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5425970217973058089, guid: 5aea9c1a86f5eac44b83573d21fa09f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7906267530837619213, guid: 5aea9c1a86f5eac44b83573d21fa09f8, type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2349,6 +2413,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N002
       objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
 --- !u!4 &335571158 stripped
@@ -2425,9 +2493,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 315759037}
     m_Modifications:
+    - target: {fileID: 2323977519214874852, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5007834362617656946, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5007834362617656946, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2472,6 +2544,10 @@ PrefabInstance:
     - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N002 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
@@ -2556,9 +2632,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 315759037}
     m_Modifications:
+    - target: {fileID: 1648083407840730443, guid: 31c16837112e40d4ca225d5a8adeffba, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4762716410722599698, guid: 31c16837112e40d4ca225d5a8adeffba, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4762716410722599698, guid: 31c16837112e40d4ca225d5a8adeffba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2686,7 +2766,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1998075290005920896, guid: a086a57b6b1edf245b45a32318a974d4, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1998075290005920896, guid: a086a57b6b1edf245b45a32318a974d4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2728,6 +2808,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5635006847011467745, guid: a086a57b6b1edf245b45a32318a974d4, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a086a57b6b1edf245b45a32318a974d4, type: 3}
 --- !u!4 &465335641 stripped
@@ -2742,9 +2826,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 315759037}
     m_Modifications:
+    - target: {fileID: 2323977519214874852, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5007834362617656946, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5007834362617656946, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2789,6 +2877,10 @@ PrefabInstance:
     - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N002 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
@@ -3056,6 +3148,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N002 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
 --- !u!4 &524021913 stripped
@@ -3180,6 +3276,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N002
       objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
 --- !u!4 &528915302 stripped
@@ -3241,6 +3341,10 @@ PrefabInstance:
     - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N002
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
@@ -3573,6 +3677,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N003 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
 --- !u!4 &591407398 stripped
@@ -3697,6 +3805,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N003
       objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
 --- !u!4 &611335048 stripped
@@ -3759,6 +3871,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N002 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
 --- !u!4 &625651933 stripped
@@ -3820,6 +3936,10 @@ PrefabInstance:
     - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N002 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
@@ -3944,6 +4064,10 @@ PrefabInstance:
     - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N002 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
@@ -4255,6 +4379,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N002 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
 --- !u!4 &744807364 stripped
@@ -4439,6 +4567,10 @@ PrefabInstance:
     - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N002
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
@@ -4718,6 +4850,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N003 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
 --- !u!4 &805249901 stripped
@@ -4836,7 +4972,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4985332302105435506, guid: 41fdd07aad52cc147b12651930c263ea, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 16
+      value: 18.6
       objectReference: {fileID: 0}
     - target: {fileID: 4985332302105435506, guid: 41fdd07aad52cc147b12651930c263ea, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4935,6 +5071,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N003 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
 --- !u!4 &839492488 stripped
@@ -4996,6 +5136,10 @@ PrefabInstance:
     - target: {fileID: 713831621928030834, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N003 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
@@ -5120,6 +5264,10 @@ PrefabInstance:
     - target: {fileID: 713831621928030834, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N003 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
@@ -5369,6 +5517,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N003 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
 --- !u!4 &930570103 stripped
@@ -5463,6 +5615,10 @@ PrefabInstance:
     - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N002 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
@@ -5720,6 +5876,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N003 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
 --- !u!4 &966599755 stripped
@@ -5781,6 +5941,10 @@ PrefabInstance:
     - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N002 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
@@ -5906,6 +6070,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N003 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
 --- !u!4 &1000566754 stripped
@@ -5967,6 +6135,10 @@ PrefabInstance:
     - target: {fileID: 713831621928030834, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N003
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
@@ -6381,6 +6553,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N002 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
 --- !u!4 &1108674298 stripped
@@ -6521,7 +6697,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 190236124844017864, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 190236124844017864, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6566,6 +6742,10 @@ PrefabInstance:
     - target: {fileID: 713831621928030834, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N003 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
@@ -7526,6 +7706,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N003
       objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
 --- !u!4 &1365863468 stripped
@@ -7752,6 +7936,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N003 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
 --- !u!4 &1393500070 stripped
@@ -7814,6 +8002,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N002 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
 --- !u!4 &1394911857 stripped
@@ -7830,7 +8022,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 190236124844017864, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 190236124844017864, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7875,6 +8067,10 @@ PrefabInstance:
     - target: {fileID: 713831621928030834, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N003
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
@@ -8061,6 +8257,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N002 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
 --- !u!4 &1415804380 stripped
@@ -8216,6 +8416,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N002
       objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
 --- !u!4 &1456809996 stripped
@@ -8277,6 +8481,10 @@ PrefabInstance:
     - target: {fileID: 713831621928030834, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N003 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
@@ -8595,6 +8803,10 @@ PrefabInstance:
     - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N002 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
@@ -8986,6 +9198,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N002 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
 --- !u!4 &1577057107 stripped
@@ -9047,6 +9263,10 @@ PrefabInstance:
     - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N002 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
@@ -9110,6 +9330,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N003
       objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
 --- !u!4 &1606268841 stripped
@@ -9172,6 +9396,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N002 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
 --- !u!4 &1609777277 stripped
@@ -9219,9 +9447,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 315759037}
     m_Modifications:
+    - target: {fileID: 1648083407840730443, guid: 31c16837112e40d4ca225d5a8adeffba, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4762716410722599698, guid: 31c16837112e40d4ca225d5a8adeffba, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4762716410722599698, guid: 31c16837112e40d4ca225d5a8adeffba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9577,6 +9809,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N003 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
 --- !u!4 &1649391804 stripped
@@ -9700,6 +9936,10 @@ PrefabInstance:
     - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N002
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
@@ -9885,6 +10125,10 @@ PrefabInstance:
     - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N002 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
@@ -10072,6 +10316,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N003 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
 --- !u!4 &1774461436 stripped
@@ -10133,6 +10381,10 @@ PrefabInstance:
     - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N002 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
@@ -10380,6 +10632,7 @@ GameObject:
   - component: {fileID: 1816711527}
   - component: {fileID: 1816711526}
   - component: {fileID: 1816711529}
+  - component: {fileID: 1816711530}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -10485,6 +10738,22 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &1816711530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816711525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da5bb4d3d060884496dc765de038b0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FollowCameraPos: {x: 0, y: 25, z: -120}
+  RightScreenOut: 100
+  LeftScreenOut: -100
+  MovePoint: 0
 --- !u!1001 &1831956023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10539,6 +10808,10 @@ PrefabInstance:
     - target: {fileID: 713831621928030834, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N003
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
@@ -10649,7 +10922,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 190236124844017864, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 190236124844017864, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10694,6 +10967,10 @@ PrefabInstance:
     - target: {fileID: 713831621928030834, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N003 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
@@ -10827,6 +11104,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScaffoldM_N003 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
 --- !u!4 &1860509543 stripped
@@ -10953,6 +11234,10 @@ PrefabInstance:
     - target: {fileID: 713831621928030834, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N003 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
@@ -11715,7 +12000,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1998075290005920896, guid: a086a57b6b1edf245b45a32318a974d4, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1998075290005920896, guid: a086a57b6b1edf245b45a32318a974d4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11755,6 +12040,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1998075290005920896, guid: a086a57b6b1edf245b45a32318a974d4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635006847011467745, guid: a086a57b6b1edf245b45a32318a974d4, type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -12136,6 +12425,10 @@ PrefabInstance:
     - target: {fileID: 713831621928030834, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N003
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541788756368813983, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
@@ -12524,6 +12817,10 @@ PrefabInstance:
     - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
       propertyPath: m_Name
       value: ScaffoldM_N002 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635329683603172552, guid: a54342af9b001b2489c56f55bec836eb, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a54342af9b001b2489c56f55bec836eb, type: 3}

@@ -45,7 +45,7 @@ public class KitchenSceneManager : MonoBehaviour
 
             //---ステージ1
             case (int)GameData.eSceneState.KitchenStage001:
-                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(5.0f, 16.0f, 0.0f);
+                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(5.0f, 20.0f, 0.0f);
                 break;
 
             //---ステージ2

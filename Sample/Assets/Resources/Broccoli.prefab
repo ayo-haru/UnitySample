@@ -343,7 +343,6 @@ GameObject:
   - component: {fileID: 6889583778835646089}
   - component: {fileID: 683591827721755891}
   - component: {fileID: 4859242533531299353}
-  - component: {fileID: 4081156996889102010}
   - component: {fileID: 479321843006706992}
   - component: {fileID: 6990666228239251013}
   - component: {fileID: 8066859575807329296}
@@ -403,24 +402,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1.4
-  m_Height: 7
+  m_Radius: 6
+  m_Height: 12
   m_Direction: 1
-  m_Center: {x: 0, y: 2.8, z: 0}
---- !u!136 &4081156996889102010
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6113468668870040627}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 3.5
-  m_Height: 10.3
-  m_Direction: 2
-  m_Center: {x: 0, y: 7.7, z: 0.5}
+  m_Center: {x: 0, y: 5.2, z: 1}
 --- !u!54 &479321843006706992
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -449,7 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d9ac35f0244334c90505f41262f702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 13
+  MoveSpeed: 20
 --- !u!114 &8066859575807329296
 MonoBehaviour:
   m_ObjectHideFlags: 0

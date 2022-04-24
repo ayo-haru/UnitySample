@@ -1442,7 +1442,7 @@ Transform:
   - {fileID: 1123216144}
   - {fileID: 1938541410}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &592636807
 GameObject:
@@ -1683,8 +1683,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FollowCameraPos: {x: 0, y: 38, z: -100}
-  RightScreenOut: 0
-  LeftScreenOut: 0
+  RightScreenOut: 1020
+  LeftScreenOut: 100
   MovePoint: 0
 --- !u!1001 &637880027
 PrefabInstance:
@@ -2944,7 +2944,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1400121091726405847, guid: 26708210ec3564946993d06d60b4af66, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1400121091726405847, guid: 26708210ec3564946993d06d60b4af66, type: 3}
       propertyPath: m_LocalScale.y
@@ -2952,7 +2952,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1400121091726405847, guid: 26708210ec3564946993d06d60b4af66, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1130
+      value: 1125
       objectReference: {fileID: 0}
     - target: {fileID: 1400121091726405847, guid: 26708210ec3564946993d06d60b4af66, type: 3}
       propertyPath: m_LocalPosition.y

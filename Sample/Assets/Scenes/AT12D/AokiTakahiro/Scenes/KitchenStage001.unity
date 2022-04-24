@@ -4741,6 +4741,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3923560635116109304, guid: 1e7cb34e04297584f81a61665c0623b7, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4182708757669479716, guid: 1e7cb34e04297584f81a61665c0623b7, type: 3}
       propertyPath: m_RootOrder
       value: 15
@@ -4968,11 +4972,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4985332302105435506, guid: 41fdd07aad52cc147b12651930c263ea, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 1119
       objectReference: {fileID: 0}
     - target: {fileID: 4985332302105435506, guid: 41fdd07aad52cc147b12651930c263ea, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 18.6
+      value: 20.3
       objectReference: {fileID: 0}
     - target: {fileID: 4985332302105435506, guid: 41fdd07aad52cc147b12651930c263ea, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8166,7 +8170,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4203372108298222916, guid: 15ea1103d75ee5a4cbeff0abfa4a9a7b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4203372108298222916, guid: 15ea1103d75ee5a4cbeff0abfa4a9a7b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8199,6 +8203,14 @@ PrefabInstance:
     - target: {fileID: 4203372108298222916, guid: 15ea1103d75ee5a4cbeff0abfa4a9a7b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5558047683091918422, guid: 15ea1103d75ee5a4cbeff0abfa4a9a7b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7362490332990567461, guid: 15ea1103d75ee5a4cbeff0abfa4a9a7b, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15ea1103d75ee5a4cbeff0abfa4a9a7b, type: 3}
@@ -10679,7 +10691,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8127
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -10750,9 +10762,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5da5bb4d3d060884496dc765de038b0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FollowCameraPos: {x: 0, y: 25, z: -120}
-  RightScreenOut: 100
-  LeftScreenOut: -100
+  FollowCameraPos: {x: 0, y: 38, z: -100}
+  RightScreenOut: 1000
+  LeftScreenOut: 100
   MovePoint: 0
 --- !u!1001 &1831956023
 PrefabInstance:

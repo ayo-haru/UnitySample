@@ -39,19 +39,32 @@ public class KitchenSceneManager : MonoBehaviour
         switch(GameData.CurrentMapNumber) 
         {
             //---ステージシーン
-            case (int)GameData.eSceneState.KitchenStage_SCENE:
-                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(5.0f, 80.0f, 0.0f);
-                break;
+            //case (int)GameData.eSceneState.KitchenStage_SCENE:
+            //    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(5.0f, 80.0f, 0.0f);
+            //    break;
 
             //---ステージ1
             case (int)GameData.eSceneState.KitchenStage001:
-                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(5.0f, 20.0f, 0.0f);
+                if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage002)
+                {
+                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(398.0f, 15.0f, 0.0f);
+                }
+                else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage004)
+                {
+                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(1120.0f, 20.0f, 0.0f);
+                }
+                else
+                {
+                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(15.0f, 20.0f, 0.0f);
+                    break;
+                }
                 break;
 
             //---ステージ2
             case (int)GameData.eSceneState.KitchenStage002:
-                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(380.0f, 84.0f, 0.0f);
+                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(470.0f, 80.0f, 0.0f);
                 break;
+
 
             ////---シーン0
             //case (int)GameData.eSceneState.Kitchen_SCENE:
@@ -119,7 +132,7 @@ public class KitchenSceneManager : MonoBehaviour
             //        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-1.0f, 11.5f, -1.0f);
             //    }
             //    break;
-            
+
             ////---シーン6
             //case (int)GameData.eSceneState.Kitchen6_SCENE:
             //    if (GameData.OldMapNumber == (int)GameData.eSceneState.Kitchen3_SCENE)

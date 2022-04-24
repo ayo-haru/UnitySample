@@ -132,19 +132,19 @@ public class Player : MonoBehaviour
                     return;
                 }
             }
-            GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen3_SCENE;
+            GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage003;
         }
         if (other.gameObject.tag == "toKitchen4")    // この名前のタグと衝突したら
         {
-            GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen4_SCENE;
+            GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage004;
         }
         if (other.gameObject.tag == "toKitchen5")    // この名前のタグと衝突したら
         {
-            GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen5_SCENE;
+            GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage005;
         }
         if (other.gameObject.tag == "toKitchen6")    // この名前のタグと衝突したら
         {
-            GameData.NextMapNumber = (int)GameData.eSceneState.Kitchen6_SCENE;
+            GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage006;
         }
         if (other.gameObject.tag == "toBoss1")    // この名前のタグと衝突したら
         {

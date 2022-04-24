@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class DebugClear : MonoBehaviour
 {
-    public GameObject MAP_UI;
+    private GameObject MAP_UI;
     //int currenthp = 100;
    // HPGage hpGage;
     //int count = 0;
@@ -20,13 +20,14 @@ public class DebugClear : MonoBehaviour
         // Moon = GameObject.Find("HPBar").GetComponent<UVScroll>();
         //  pieceManagewr = GameObject.Find("PieceHPManager").GetComponent<PieceManager>();
         //hpsystem = GameObject.Find("HPSystem(2)(Clone)");
-        GameObject canvas = GameObject.Find("Canvas");
-        MAP_UI = Instantiate(MAP_UI);
-        MAP_UI.transform.SetParent(canvas.transform, false);
+        //GameObject canvas = GameObject.Find("Canvas");
+        
+        //MAP_UI.transform.SetParent(canvas.transform, false);
     }
 
     private void Start()
     {
+        MAP_UI = GameObject.Find("MapManager(Clonet)");
         MAP_UI.SetActive(false);
     }
 
@@ -129,7 +130,22 @@ public class DebugClear : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.F5))
         {
-            GameData.CurrentMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
+            GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage003;
+            Debug.Log("シーン" + GameData.CurrentMapNumber);
+        }
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage004;
+            Debug.Log("シーン" + GameData.CurrentMapNumber);
+        }
+        if (Input.GetKeyDown(KeyCode.F7))
+        {
+            GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage005;
+            Debug.Log("シーン" + GameData.CurrentMapNumber);
+        }
+        if (Input.GetKeyDown(KeyCode.F8))
+        {
+            GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage006;
             Debug.Log("シーン" + GameData.CurrentMapNumber);
         }
 

@@ -51,17 +51,23 @@ public class KitchenSceneManager : MonoBehaviour
                 }
                 else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage004)
                 {
-                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(1120.0f, 18.0f, 0.0f);
+                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(1110.0f, 18.0f, 0.0f);
                 }
-                else
-                {
-                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(15.0f, 20.0f, 0.0f);
-                    break;
-                }
-                //else // テスト用
+                //else
+                //{
+                //    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(25.0f, 20.0f, 0.0f);
+                //}
+                //else // ステージ1テスト用
                 //{
                 //    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(800.0f, 18.0f, 0.0f);
-                //    break;
+                //}
+                else // ステージ4テスト用
+                {
+                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(400.0f, 18.0f, 0.0f);
+                }
+                //else // ステージ3, 5テスト用
+                //{
+                //    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(1050.0f, 18.0f, 0.0f);
                 //}
                 break;
 
@@ -79,15 +85,15 @@ public class KitchenSceneManager : MonoBehaviour
             case (int)GameData.eSceneState.KitchenStage004:
                 if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage001)
                 {
-                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(15.0f, 18.0f, 0.0f);
+                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(25.0f, 18.0f, 0.0f);
                 }
                 else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage005)
                 {
-                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(122.0f, 18.0f, 0.0f);
+                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(125.0f, 18.0f, 0.0f);
                 }
                 else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage006)
                 {
-                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(620.0f, 18.0f, 0.0f);
+                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(615.0f, 18.0f, 0.0f);
                 }
                 break;
 
@@ -99,7 +105,7 @@ public class KitchenSceneManager : MonoBehaviour
                 }
                 else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage006)
                 {
-                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(570.0f, 53.0f, 0.0f);
+                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(570.0f, 50.0f, 0.0f);
                 }
                 break;
 

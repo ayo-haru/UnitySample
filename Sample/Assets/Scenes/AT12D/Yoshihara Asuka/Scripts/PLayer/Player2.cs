@@ -145,13 +145,20 @@ public class Player2 : MonoBehaviour
     // Update is called once per frame
     void Update() {
         //---重力を与える(条件調整中(04/21地点))
-        if (UnderParryNow == true || GroundNow == false || JumpNow == true)
+        //if (UnderParryNow == true || GroundNow == false || JumpNow == true)
+        //{
+        //    Gravity();
+        //}
+        if (/*UnderParryNow == true || */GroundNow == false)
         {
             Gravity();
         }
 
+
         if (!Pause.isPause)
         {
+            animator.speed = 1.0f;
+
             //rb.Resume(gameObject);
             GamePadManager.onceTiltStick = false;
 
@@ -188,6 +195,11 @@ public class Player2 : MonoBehaviour
                 }
             }
 
+            Debug.Log("したぱりい"+UnderParryNow);
+            Debug.Log("じゃんぷなう" + JumpNow);
+            Debug.Log("じめんなう" + GroundNow);
+
+
             //---地面と当たった時にジャンプフラグ・下パリイフラグを下す
             if (GroundNow)
             {
@@ -201,6 +213,8 @@ public class Player2 : MonoBehaviour
         }
         else
         {
+            animator.speed = 0.0f;
+
             //rb.Pause(gameObject);
         }
     }
@@ -208,11 +222,9 @@ public class Player2 : MonoBehaviour
     private void FixedUpdate()
     {
         if (!Pause.isPause){
-            animator.speed = 1.0f;
             Move("Velocity");
         }
         else{
-            animator.speed = 0.0f;
         }
     }
 
@@ -338,7 +350,7 @@ public class Player2 : MonoBehaviour
 			}
             UnderParryNow = true;
             GamePadManager.onceTiltStick = true;
-            GroundNow = false;
+            //GroundNow = false;
             animator.SetTrigger("Attack_DOWN");
             Debug.Log("したはじきした");
 		}
@@ -386,13 +398,14 @@ public class Player2 : MonoBehaviour
     private void OnJump(InputAction.CallbackContext obj)
     {
         //---ジャンプ中であればジャンプしない
-        if(JumpNow == true){
+        //if(JumpNow == true){
+        if( UnderParryNow == false){
             return;
         }
 
         Debug.Log("ジャンプ！");
         JumpNow = true;
-        GroundNow = false;
+        //GroundNow = false;
         rb.AddForce(transform.up * JumpForce,ForceMode.Impulse);
         SoundManager.Play(SoundData.eSE.SE_JUMP, SoundData.GameAudioList);
     }
@@ -402,7 +415,7 @@ public class Player2 : MonoBehaviour
     //---ジャンプ中の重力を強くする(ジャンプが俊敏に見える効果がある)
     private void Gravity()
     {
-        if(JumpNow == true || UnderParryNow == true || GroundNow == false){
+        if(/*JumpNow == true || UnderParryNow == true ||*/ GroundNow == false){
             rb.AddForce(new Vector3(0.0f,GravityForce,0.0f));
             //rb.position += transform.up * GravityForce;
             //ForceDirection = Vector2.zero;
@@ -506,7 +519,8 @@ public class Player2 : MonoBehaviour
     private void OnTriggerExit(Collider other) {
         if (other.gameObject.tag == "Ground")
         {
-            JumpNow = true;
+            //JumpNow = true;
+            GroundNow = false;
 
         }
     }

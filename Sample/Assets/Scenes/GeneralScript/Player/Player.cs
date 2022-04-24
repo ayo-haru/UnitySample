@@ -16,6 +16,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class Player : MonoBehaviour
 {
@@ -92,7 +93,16 @@ public class Player : MonoBehaviour
 
         if (Warp.shouldWarp)
         {
-            GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
+            if (GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE)
+            {
+                GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
+            }
+            else
+            {
+                throw new Exception("シーン名どこに戻るかわからなかったからボスシーンから戻れなくしてある");
+                // 下のネクストに入れるのシーン番号を新しいのにしてね
+                GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
+            }
             Warp.shouldWarp = false;
         }
     }

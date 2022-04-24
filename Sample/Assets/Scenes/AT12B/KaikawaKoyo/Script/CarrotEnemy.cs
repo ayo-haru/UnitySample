@@ -27,8 +27,8 @@ public class CarrotEnemy : MonoBehaviour
     private float InvincibleTime;
     private float AttackTime;
     bool InArea = true;
-    bool Look;
     bool Attack = false;
+    bool pause = false;
     private bool Invincible = false;
 
     private bool isCalledOnce = false;                             // 一回だけ処理をするために使う。
@@ -38,8 +38,6 @@ public class CarrotEnemy : MonoBehaviour
     {
         Player = GameObject.FindWithTag("Player");    // プレイヤーのオブジェクトを探す
         rb = gameObject.GetComponent<Rigidbody>();
-        //InArea = false;
-        Look = false;
         ED = GetComponent<EnemyDown>();
     }
 
@@ -47,6 +45,9 @@ public class CarrotEnemy : MonoBehaviour
     {
         if(!Pause.isPause)
         {
+            rb.Resume(gameObject);
+            //print(InArea);
+            //print(rb.velocity);
             // プレイヤーを見つけたら攻撃開始
             if (ED.isAlive)
             {
@@ -76,6 +77,11 @@ public class CarrotEnemy : MonoBehaviour
                     rb.velocity = vec * MoveSpeed;
                     Attack = true;
                 }
+                //if (pause)
+                //{
+                //    rb.velocity = vec * MoveSpeed;
+                //    pause = false;
+                //}
 
                 if (!isCalledOnce)     // 一回だけ呼ぶ
                 {
@@ -101,15 +107,21 @@ public class CarrotEnemy : MonoBehaviour
                 }
             }
         }
-        
+        else
+        {
+            rb.Pause(gameObject);
+            //pause = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!Pause.isPause)
         {
-            InArea = false;
-            Look = false;
+            if (other.CompareTag("Player"))
+            {
+                //InArea = false;
+            }
         }
     }
 
@@ -117,7 +129,6 @@ public class CarrotEnemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            //Invincible = true;
             Destroy(gameObject, 0.0f);
         }
         if (collision.gameObject.CompareTag("Ground"))

@@ -83,7 +83,7 @@ public class BroccoliEnemy : MonoBehaviour
                 // —‰ºˆ—
                 if(!isGround)
                 {
-                    rb.velocity += new Vector3(0.0f, -0.5f, 0.0f);
+                    rb.velocity += new Vector3(0.0f, -1.0f, 0.0f);
                 }
 
                 // SE‚Ìˆ—

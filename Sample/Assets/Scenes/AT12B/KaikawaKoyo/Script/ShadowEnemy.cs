@@ -15,26 +15,27 @@ public class ShadowEnemy : MonoBehaviour
 {
     GameObject Enemy;
     private Vector3 position;
-    public int EnemyNomber;
+    public int EnemyNumber;
     private bool spawn = false;
     private ParticleSystem effect;
     
     // Start is called before the first frame update
     void Start()
     {
+        
         position = transform.position;
         
         effect = Instantiate(EffectData.EF[2]);
         effect.transform.position = position;
         effect.Play();
         // íNÇ…ïœêgÇ∑ÇÈÇ©ÇÃèàóù
-        switch (EnemyNomber)
+        switch (EnemyNumber)
         {
             case 0:
                 Enemy = (GameObject)Resources.Load("Carrot_Attack");
                 break;
             case 1:
-                Enemy = (GameObject)Resources.Load("Broccoli_Attack");
+                Enemy = (GameObject)Resources.Load("Broccoli");
                 break;
             case 2:
                 Enemy = (GameObject)Resources.Load("Tomato_Attack");

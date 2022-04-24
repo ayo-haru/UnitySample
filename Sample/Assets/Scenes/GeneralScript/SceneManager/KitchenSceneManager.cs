@@ -51,11 +51,16 @@ public class KitchenSceneManager : MonoBehaviour
                 }
                 else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage004)
                 {
-                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(1120.0f, 20.0f, 0.0f);
+                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(1120.0f, 18.0f, 0.0f);
                 }
-                else
+                //else
+                //{
+                //    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(15.0f, 20.0f, 0.0f);
+                //    break;
+                //}
+                else // テスト用
                 {
-                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(15.0f, 20.0f, 0.0f);
+                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(800.0f, 18.0f, 0.0f);
                     break;
                 }
                 break;

@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// マップマネージャー
+// キッチンマップマネージャー
 //
 // 作成日:2022/04/22
 // 作成者:小楠裕子
@@ -13,7 +13,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MapManager : MonoBehaviour
 {
@@ -29,7 +28,7 @@ public class MapManager : MonoBehaviour
         //プレイヤーアイコンを非表示
         for (int i = 0; i < PlayerIcon.Length; ++i)
         {
-            PlayerIcon[i].GetComponent<ImageShow>().Hide();
+            PlayerIcon[i].SetActive(false);
         }
 
         OnceFlag = true;
@@ -49,54 +48,37 @@ public class MapManager : MonoBehaviour
             return;
         }
 
-        //プレイヤーがいるシーンによって表示するプレイヤーアイコンを変える
-        //switch (GameData.CurrentMapNumber)
+        //シーン名で分岐　CurrentMapNumber分かったらそっちに変える予定
+        //switch (SceneManager.GetActiveScene().name)
         //{
-        //    case (int)GameData.eSceneState.BOSS1_SCENE:
-        //        PlayerIcon[(int)MapNo.No_4].GetComponent<ImageShow>().Show();
+        //    case "KitchenStage001":
+        //        PlayerIcon[0].SetActive(true);
         //        break;
-        //    case (int)GameData.eSceneState.KitchenStage001:
-        //        PlayerIcon[(int)MapNo.No_1to7].GetComponent<ImageShow>().Show();
+        //    case "KitchenStage002":
+        //        PlayerIcon[1].SetActive(true);
         //        break;
-        //    case (int)GameData.eSceneState.KitchenStage002:
-        //        PlayerIcon[(int)MapNo.No_8to10].GetComponent<ImageShow>().Show();
+        //    case "KitchenStage003":
+        //        PlayerIcon[2].SetActive(true);
+        //        break;
+        //    case "KitchenStage004":
+        //        PlayerIcon[3].SetActive(true);
+        //        break;
+        //    case "KitchenStage005":
+        //        PlayerIcon[4].SetActive(true);
+        //        break;
+        //    case "KitchenStage006":
+        //        PlayerIcon[5].SetActive(true);
         //        break;
         //    default:
-        //        PlayerIcon[(int)MapNo.No_17].GetComponent<ImageShow>().Show();
+        //        PlayerIcon[3].SetActive(true);
         //        break;
-        //        //case (int)GameData.eSceneState.BOSS1_SCENE:
-        //        //    PlayerIcon[(int)MapNo.No_4].GetComponent<ImageShow>().Show();
-        //        //    break;
-        //        //case (int)GameData.eSceneState.BOSS1_SCENE:
-        //        //    PlayerIcon[(int)MapNo.No_4].GetComponent<ImageShow>().Show();
-        //        //    break;
-        //        //case (int)GameData.eSceneState.BOSS1_SCENE:
-        //        //    PlayerIcon[(int)MapNo.No_4].GetComponent<ImageShow>().Show();
-        //        //    break;
         //}
 
-        //シーン名で分岐　CurrentMapNumber分かったらそっちに変える予定
-        switch (SceneManager.GetActiveScene().name)
-        {
-            case "KitchenStage001":
-                PlayerIcon[0].GetComponent<ImageShow>().Show();
-                break;
-            case "KitchenStage002":
-                PlayerIcon[1].GetComponent<ImageShow>().Show();
-                break;
-            case "KitchenStage003":
-                PlayerIcon[2].GetComponent<ImageShow>().Show();
-                break;
-            case "KitchenStage004":
-                PlayerIcon[3].GetComponent<ImageShow>().Show();
-                break;
-            case "KitchenStage005":
-                PlayerIcon[4].GetComponent<ImageShow>().Show();
-                break;
-            case "KitchenStage006":
-                PlayerIcon[5].GetComponent<ImageShow>().Show();
-                break;
-        }
+        //CurrentMapNumberを元に表示するプレイヤーアイコン設定
+        //eSceneStateが変更されても、連番なら[]の中変更しなくていいようにした
+        PlayerIcon[GameData.CurrentMapNumber - (int)GameData.eSceneState.KitchenStage001].SetActive(true);
+
+
         OnceFlag = false;
     }
 }

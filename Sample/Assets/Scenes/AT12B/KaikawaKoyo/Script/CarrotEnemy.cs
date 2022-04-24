@@ -46,8 +46,6 @@ public class CarrotEnemy : MonoBehaviour
         if(!Pause.isPause)
         {
             rb.Resume(gameObject);
-            //print(InArea);
-            //print(rb.velocity);
             // プレイヤーを見つけたら攻撃開始
             if (ED.isAlive)
             {
@@ -56,7 +54,7 @@ public class CarrotEnemy : MonoBehaviour
                 dis = Vector3.Distance(EnemyPos, PlayerPos);
                 if(dis >= 100.0f)
                 {
-                    //Destroy(gameObject, 0.0f);
+                    Destroy(gameObject, 0.0f);
                 }
                 if (Invincible)
                 {
@@ -120,7 +118,7 @@ public class CarrotEnemy : MonoBehaviour
         {
             if (other.CompareTag("Player"))
             {
-                //InArea = false;
+                InArea = false;
             }
         }
     }

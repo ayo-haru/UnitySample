@@ -121,7 +121,7 @@ public class EnemyDown : MonoBehaviour
 
                 //取得した法線ベクトルに跳ね返す速さをかけて、跳ね返す
                 //rb.AddForce(velocity * bouncePower, ForceMode.Force);
-
+                rb.constraints = RigidbodyConstraints.FreezePositionZ;
                 //プレイヤーと逆方向に跳ね返す
                 rb.velocity = -vec * bouncePower;
 

@@ -15,7 +15,7 @@ public class BigShadowEnemy : MonoBehaviour
 {
     GameObject Enemy;
     private Vector3 position;
-    public int EnemyNomber;
+    public int EnemyNumber;
     private bool spawn = false;
     private bool look = false;
     private float spawnTime;
@@ -33,19 +33,20 @@ public class BigShadowEnemy : MonoBehaviour
 
         effect = Instantiate(EffectData.EF[2]);
         effect.transform.position = position;
+        effect.transform.localScale = new Vector3(SpawnNumber, SpawnNumber, SpawnNumber);
         effect.Play();
         SpawnNumber -= 1;
         // íNÇ…ïœêgÇ∑ÇÈÇ©ÇÃèàóù
-        switch (EnemyNomber)
+        switch (EnemyNumber)
         {
             case 0:
-                Enemy = (GameObject)Resources.Load("Carrot 1");
+                Enemy = (GameObject)Resources.Load("Carrot_Attack");
                 break;
             case 1:
-                Enemy = (GameObject)Resources.Load("Broccoli 1");
+                Enemy = (GameObject)Resources.Load("Broccoli");
                 break;
             case 2:
-                Enemy = (GameObject)Resources.Load("Tomato 1");
+                Enemy = (GameObject)Resources.Load("Tomato_Attack");
                 break;
         }
     }
@@ -61,6 +62,7 @@ public class BigShadowEnemy : MonoBehaviour
                 Instantiate(Enemy, position, Quaternion.identity);
                 spawnTime = 0.0f;
                 NowSpawn++;
+                effect.transform.localScale = new Vector3(SpawnNumber - NowSpawn, SpawnNumber - NowSpawn, SpawnNumber - NowSpawn);
             }
             if(SpawnNumber == NowSpawn)
             {
@@ -80,6 +82,7 @@ public class BigShadowEnemy : MonoBehaviour
                 if(!spawn)
                 {
                     Instantiate(Enemy, position, Quaternion.identity);
+                    effect.transform.localScale = new Vector3(SpawnNumber, SpawnNumber, SpawnNumber);
                     spawn = true;
                 }
             }

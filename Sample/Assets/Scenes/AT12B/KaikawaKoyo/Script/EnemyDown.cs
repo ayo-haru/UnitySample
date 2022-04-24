@@ -21,7 +21,7 @@ public class EnemyDown : MonoBehaviour
     private Vector3 EnemyPos;
     private Vector3 velocity;
     private Vector3 vec;
-    public Animator animator;
+    private Animator animator;
 
     [SerializeField]
     private int DropRate;           // 回復アイテムのドロップ率
@@ -39,6 +39,7 @@ public class EnemyDown : MonoBehaviour
     void Start()
     {
         Player = GameObject.FindWithTag("Player");
+        animator = gameObject.GetComponent<Animator>();
         isAlive = true;
         rb = gameObject.GetComponent<Rigidbody>();
         Random.InitState(System.DateTime.Now.Millisecond);
@@ -49,6 +50,11 @@ public class EnemyDown : MonoBehaviour
     {
         if(!Pause.isPause)
         {
+            rb.Resume(gameObject);
+            if(isAlive)
+            {
+                animator.speed = 1;
+            }
             // 時間で消える処理
             if (!isAlive)
             {
@@ -62,6 +68,11 @@ public class EnemyDown : MonoBehaviour
                 EffectManager.Play(EffectData.eEFFECT.EF_ENEMYDOWN, Pos);
             }
         }
+        else
+        {
+            rb.Pause(gameObject);
+            animator.speed = 0;
+        }
  
     }
 
@@ -69,6 +80,7 @@ public class EnemyDown : MonoBehaviour
     {
         if(!Pause.isPause)
         {
+            rb.Resume(gameObject);
             if (collision.gameObject.name == "Weapon(Clone)")
             {
                 //EnemyPos = transform.position + new Vector3(0.0f, 50.0f, 0.0f);
@@ -114,7 +126,7 @@ public class EnemyDown : MonoBehaviour
                 rb.velocity = -vec * bouncePower;
 
                 // 回転させる
-                rb.angularVelocity = new Vector3(0.0f, 0.0f, -500.0f);
+                rb.angularVelocity = new Vector3(-500.0f, 0.0f, -500.0f);
 
                 //SoundManager.Play(SoundData.eSE.SE_REFLECTION, SoundData.GameAudioList);
             }
@@ -128,12 +140,15 @@ public class EnemyDown : MonoBehaviour
 
             //}
 
-            if (isAlive == false && collision.gameObject.CompareTag("Ground"))
-            {
-                // 壁、床に当たったら消える
-                //Destroy(gameObject, 0.0f);
-            }
-
+            //if (isAlive == false && collision.gameObject.CompareTag("Ground"))
+            //{
+            //    // 壁、床に当たったら消える
+            //    Destroy(gameObject, 0.0f);
+            //}
+        }
+        else
+        {
+            rb.Pause(gameObject);
         }
     }
 }

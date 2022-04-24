@@ -15,17 +15,15 @@ public class BroccoliEnemy : MonoBehaviour
 {
     Transform Target;
     GameObject Player;
-    private Quaternion rot;
     private Rigidbody rb;
     private EnemyDown ED;
-    //private bool loop = false;
 
     [SerializeField]
     private float MoveSpeed = 5.0f;
 
     private float InvincibleTime = 2.0f;
     private float DamageTime;
-    bool InArea = false;
+    //bool InArea = false;
     private bool look = false;
     private bool isGround = false;
     private bool Invincible = false;
@@ -47,7 +45,7 @@ public class BroccoliEnemy : MonoBehaviour
     {
         if(!Pause.isPause)
         {
-            rot = transform.rotation;
+            rb.Resume(gameObject);
             if (Invincible)
             {
                 gameObject.layer = LayerMask.NameToLayer("Invincible");
@@ -82,6 +80,7 @@ public class BroccoliEnemy : MonoBehaviour
                     look = true;
                 }
 
+                // óéâ∫èàóù
                 if(!isGround)
                 {
                     rb.velocity += new Vector3(0.0f, -0.5f, 0.0f);
@@ -94,6 +93,10 @@ public class BroccoliEnemy : MonoBehaviour
                     isCalledOnce = true;
                 }
             }
+        }
+        else
+        {
+            rb.Pause(gameObject);
         }
     }
 

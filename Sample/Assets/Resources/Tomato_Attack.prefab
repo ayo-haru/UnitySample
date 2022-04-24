@@ -80,7 +80,7 @@ SphereCollider:
   m_GameObject: {fileID: 447393855354216634}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 70
   m_Center: {x: 0, y: 0, z: 0}
@@ -127,7 +127,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Item: {fileID: 651809217550476092, guid: f8de026749d6f894892749266da478ed, type: 3}
-  animator: {fileID: 6601866039596228730}
   DropRate: 50
   EnemyNumber: 2
   isAlive: 0

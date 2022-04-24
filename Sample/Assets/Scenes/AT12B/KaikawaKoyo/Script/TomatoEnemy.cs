@@ -30,7 +30,7 @@ public class TomatoEnemy : MonoBehaviour
     [SerializeField]
     float MoveSpeed = 2.0f;          // 移動速度
     //int DetecDist = 8;
-    bool InArea = false;                
+    //bool InArea = false;                
 
     private void Start()
     {
@@ -48,18 +48,8 @@ public class TomatoEnemy : MonoBehaviour
     {
         if(!Pause.isPause)
         {
-            if (Invincible)
-            {
-                gameObject.layer = LayerMask.NameToLayer("Invincible");
-                transform.Rotate(0, 0, 0);
-                InvincibleTime += Time.deltaTime;
-                if (InvincibleTime > 2.0f)
-                {
-                    gameObject.layer = LayerMask.NameToLayer("Enemy");
-                    InvincibleTime = 0.0f;
-                    Invincible = false;
-                }
-            }
+            rb.Resume(gameObject);
+            //print(rb.velocity);
 
             // プレイヤーを見つけたら攻撃開始
             if (ED.isAlive)
@@ -107,6 +97,10 @@ public class TomatoEnemy : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            rb.Pause(gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -125,8 +119,7 @@ public class TomatoEnemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             //SoundManager.Play(SoundData.eSE.SE_TOMATO_BOMB, SoundData.GameAudioList);
-            //Destroy(gameObject, 0.0f);
-            Invincible = true;
+            Destroy(gameObject, 0.0f);
         }
     }
 }

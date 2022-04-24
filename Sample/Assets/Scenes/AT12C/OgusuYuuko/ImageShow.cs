@@ -122,6 +122,10 @@ public class ImageShow : MonoBehaviour
 
     public void Show(int second)
     {
+        if (mode != ImageMode.NONE)
+        {
+            return;
+        }
         mode = ImageMode.SHOW;
         Timer = second;
     }

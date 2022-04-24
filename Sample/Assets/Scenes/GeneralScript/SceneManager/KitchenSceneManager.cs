@@ -53,16 +53,16 @@ public class KitchenSceneManager : MonoBehaviour
                 {
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(1120.0f, 18.0f, 0.0f);
                 }
-                //else
-                //{
-                //    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(15.0f, 20.0f, 0.0f);
-                //    break;
-                //}
-                else // テスト用
+                else
                 {
-                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(800.0f, 18.0f, 0.0f);
+                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(15.0f, 20.0f, 0.0f);
                     break;
                 }
+                //else // テスト用
+                //{
+                //    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(800.0f, 18.0f, 0.0f);
+                //    break;
+                //}
                 break;
 
             //---ステージ2

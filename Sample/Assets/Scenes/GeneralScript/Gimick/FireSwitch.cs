@@ -9,7 +9,9 @@ public class FireSwitch : MonoBehaviour
     private MeshRenderer Mesh_On;
     private GameObject switch_OFF;
     private MeshRenderer Mesh_Off;
-    private bool OnOff;
+    private GameObject stove;
+    [System.NonSerialized]
+    public static bool OnOff;
 
     // Start is called before the first frame update
     void Start()
@@ -20,8 +22,12 @@ public class FireSwitch : MonoBehaviour
         Mesh_Off = switch_OFF.GetComponent<MeshRenderer>();
         OnOff = true;
 
+        stove = GameObject.Find("Stove");
+
         Mesh_On.enabled = true;
         Mesh_Off.enabled = false;
+        stove.GetComponent<Stove>().Ignition();
+
     }
 
     // Update is called once per frame
@@ -37,12 +43,13 @@ public class FireSwitch : MonoBehaviour
         {
             Mesh_On.enabled = true;
             Mesh_Off.enabled = false;
-
+            stove.GetComponent<Stove>().Ignition();
         }
         else
         {
             Mesh_On.enabled = false;
             Mesh_Off.enabled = true;
+            stove.GetComponent<Stove>().Extinguish();
         }
 
 

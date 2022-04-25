@@ -343,6 +343,8 @@ GameObject:
   - component: {fileID: 6889583778835646089}
   - component: {fileID: 683591827721755891}
   - component: {fileID: 4859242533531299353}
+  - component: {fileID: 3203042348583060142}
+  - component: {fileID: 8624780316597132186}
   - component: {fileID: 479321843006706992}
   - component: {fileID: 6990666228239251013}
   - component: {fileID: 8066859575807329296}
@@ -384,9 +386,9 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 95328805fc5dc9243b8ae0a9fe4d999e, type: 3}
   m_Controller: {fileID: 9100000, guid: 4ade33980a1f2b142a9a1036d047456a, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 0
@@ -402,10 +404,38 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 6
-  m_Height: 12
+  m_Radius: 2
+  m_Height: 7
   m_Direction: 1
-  m_Center: {x: 0, y: 5.2, z: 1}
+  m_Center: {x: 0, y: 3, z: 0}
+--- !u!136 &3203042348583060142
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113468668870040627}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 3
+  m_Height: 10
+  m_Direction: 2
+  m_Center: {x: 0, y: 7.5, z: 0}
+--- !u!136 &8624780316597132186
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113468668870040627}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 3
+  m_Height: 8
+  m_Direction: 1
+  m_Center: {x: 0, y: 4, z: 4}
 --- !u!54 &479321843006706992
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -420,7 +450,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 48
+  m_Constraints: 56
   m_CollisionDetection: 0
 --- !u!114 &6990666228239251013
 MonoBehaviour:

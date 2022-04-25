@@ -28,16 +28,16 @@ public static class GameData
         KitchenStage004,
         KitchenStage005,
         KitchenStage006,
-        KitchenStage_SCENE,
-        Kitchen_SCENE,
-        Kitchen1_SCENE,
-        Kitchen2_SCENE,
-        Kitchen3_SCENE,
-        Kitchen4_SCENE,
-        Kitchen5_SCENE,
-        Kitchen6_SCENE,
-        KitchenXXX_SCENE,
-        KitchenYYY_SCENE,
+        //KitchenStage_SCENE,
+        //Kitchen_SCENE,
+        //Kitchen1_SCENE,
+        //Kitchen2_SCENE,
+        //Kitchen3_SCENE,
+        //Kitchen4_SCENE,
+        //Kitchen5_SCENE,
+        //Kitchen6_SCENE,
+        //KitchenXXX_SCENE,
+        //KitchenYYY_SCENE,
 
         BOSS1_SCENE
     }
@@ -52,8 +52,8 @@ public static class GameData
     static string[] MapName                 // マップの名前 
         = { "TitleScene",
         "KitchenStage001", "KitchenStage002", "KitchenStage003", "KitchenStage004", "KitchenStage005", "KitchenStage006",
-        "Kitchen", "KitchenScene", "Kitchen001", "Kitchen002", "Kitchen003", "Kitchen004", 
-        "Kitchen005", "Kitchen006","KitchenStage", "KitchenStage 1","Tester" };
+        //"Kitchen", "KitchenScene", "Kitchen001", "Kitchen002", "Kitchen003", "Kitchen004", 
+        /*"Kitchen005", "Kitchen006","KitchenStage", "KitchenStage 1",*/"Tester" };
 
     static string[] MovePointName
         = { "KitchenMovePoint001" };

@@ -7,11 +7,11 @@ public class FadeController : MonoBehaviour
 {
     //----- 変数初期化 -----
     //--- 部屋の変数
-    int roomNumber_X;         // 今左から数えて何部屋目
+    //int roomNumber_X;         // 今左から数えて何部屋目
    
     //--- プレイヤーの変数
-    Vector3 nowPlayerPos;
-    Vector3 oldPlayerPos;
+    //Vector3 nowPlayerPos;
+    //Vector3 oldPlayerPos;
 
     //--- フェードの変数
     float fadeOutSpeed = 0.01f;        //透明度が変わるスピードを管理
@@ -21,9 +21,9 @@ public class FadeController : MonoBehaviour
     Image fadeImage;                //透明度を変更するパネルのイメージ
 
     void Start() {
-        oldPlayerPos = nowPlayerPos = GameData.PlayerPos;   // プレイヤーの座標の保存
+        //oldPlayerPos = nowPlayerPos = GameData.PlayerPos;   // プレイヤーの座標の保存
 
-        roomNumber_X = (int)(nowPlayerPos.x / GameData.GetroomSize());    // プレイヤーが今何部屋目にいるか
+        //roomNumber_X = (int)(nowPlayerPos.x / GameData.GetroomSize());    // プレイヤーが今何部屋目にいるか
 
         fadeImage = GetComponent<Image>();  // フェードの色関連
         red = fadeImage.color.r;
@@ -33,32 +33,35 @@ public class FadeController : MonoBehaviour
     }
 
     void Update() {
-        roomNumber_X = (int)(nowPlayerPos.x / GameData.GetroomSize());    // プレイヤーが今何部屋目にいるか
-        float fadePoint = roomNumber_X * GameData.GetroomSize();
+        //roomNumber_X = (int)(nowPlayerPos.x / GameData.GetroomSize());    // プレイヤーが今何部屋目にいるか
+        //float fadePoint = roomNumber_X * GameData.GetroomSize();
 
-        oldPlayerPos = nowPlayerPos;
-        nowPlayerPos = GameData.PlayerPos;
+        //oldPlayerPos = nowPlayerPos;
+        //nowPlayerPos = GameData.PlayerPos;
 
-        if(oldPlayerPos.x < fadePoint + GameData.GetroomSize() && fadePoint + GameData.GetroomSize() < nowPlayerPos.x)
-        {
-            GameData.isFadeOut = true;
-        }
+        //if(oldPlayerPos.x < fadePoint + GameData.GetroomSize() && fadePoint + GameData.GetroomSize() < nowPlayerPos.x)
+        //{
+        //    GameData.isFadeOut = true;
+        //}
 
-        if (nowPlayerPos.x < fadePoint && fadePoint < oldPlayerPos.x)
-        {
-            GameData.isFadeOut = true;
-        }
+        //if (nowPlayerPos.x < fadePoint && fadePoint < oldPlayerPos.x)
+        //{
+        //    GameData.isFadeOut = true;
+        //}
 
 
         if (GameData.isFadeIn)
         {
             StartFadeIn();
+            //Time.timeScale = 0;
         }
 
         if (GameData.isFadeOut)
         {
             StartFadeOut();
+            //Time.timeScale = 0;
         }
+        //Time.timeScale = 1.0f;
     }
 
     void StartFadeIn() {
@@ -79,6 +82,7 @@ public class FadeController : MonoBehaviour
         {             // d)完全に不透明になったら処理を抜ける
             GameData.isFadeOut = false;
             GameData.isFadeIn = true;
+            Pause.isPause = false;  // フェード中は恐らくポーズ中だからポーズをやめる
         }
     }
 

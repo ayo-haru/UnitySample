@@ -55,10 +55,6 @@ public static class GameData
         //"Kitchen", "KitchenScene", "Kitchen001", "Kitchen002", "Kitchen003", "Kitchen004", 
         /*"Kitchen005", "Kitchen006","KitchenStage", "KitchenStage 1",*/"Tester" };
 
-    static string[] MovePointName
-        = { "KitchenMovePoint001" };
-
-
     public static string CurrentMapName;    // 現在のマップの名前
     public static Vector3 PlayerPos;        // プレイヤーの座標（現在はGameManagerで毎フレーム代入しているが本来はPlayerクラスが良い(はず)） 
     public static GameObject Player;
@@ -67,6 +63,8 @@ public static class GameData
     public static int CurrentPieceGrade = 0;    //かけらの所持枠
     public static bool isFadeOut = false;   //フェードアウト処理の開始、完了を管理するフラグ
     public static bool isFadeIn  = false;   //フェードイン処理の開始、完了を管理するフラグ
+
+    public static bool FireOnOff = true;
 
     public static bool isAliveBoss1 = true;    //ボス１の討伐情報保存用
 

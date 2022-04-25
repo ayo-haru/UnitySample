@@ -4,21 +4,14 @@ using UnityEngine;
 
 public class Stove : MonoBehaviour
 {
-    private GameObject fireswitch;
-
     // Start is called before the first frame update
     void Start()
     {
-        //fireswitch = GameObject.Find("FireSwitch");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (FireSwitch.OnOff)
-        {
-
-        }
     }
 
     /// <summary>

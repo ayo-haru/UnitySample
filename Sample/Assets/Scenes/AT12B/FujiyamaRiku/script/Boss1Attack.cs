@@ -50,7 +50,7 @@ public class Boss1Attack : MonoBehaviour
     float BossReturnTime;                                   //突進後戻るまでの時間
     bool RushEndFlg;
     float RushReturnSpeed;
-    float ReturnDelay;                                      //戻ろうとするまでの時間
+    bool ReturnDelay;                                      //戻ろうとするまでの時間
     //----------------------------------------------------------
     //イチゴ爆弾変数
     //----------------------------------------------------------
@@ -250,8 +250,11 @@ public class Boss1Attack : MonoBehaviour
                     //開始地点まで戻ってきたときにもろもろ初期化
                     if (BossReturnTime >= 1.0f)
                     {
+                    if (Fork != null)
+                    {
                         Destroy(Fork);
-                        ReturnDelay = 0;
+                    }
+                        ReturnDelay = false;
                         RushEndFlg = false;
                         BossReturnFlg = false;
                         AnimFlagOnOff();
@@ -259,7 +262,8 @@ public class Boss1Attack : MonoBehaviour
                         BossAnim.SetBool("RushToJump", false);
                         AnimMoveFlgOnOff();
                         BossReturnTime = 0;
-                        if (HPgage.currentHp >= 50)
+                         BossAnim.speed = 1;
+                    if (HPgage.currentHp >= 50)
                         {
                             BossMove.SetState(BossMove.Boss_State.idle);
                         }
@@ -282,8 +286,7 @@ public class Boss1Attack : MonoBehaviour
                     RushPlayerPoint.z = GameData.PlayerPos.z;
                     RushRefEndPoint = GameObject.Find("ForkRefEndPoint").transform.position;
                     BossAnim.SetBool("RushToJump", false);
-                    BossAnim.SetBool("??ToDamage", true);
-                    BossAnim.Play("Damage");
+                    BossAnim.SetBool("Blow", true);
                     
                     RefrectFlg = false;
                 }
@@ -311,7 +314,14 @@ public class Boss1Attack : MonoBehaviour
                     Boss1Manager.BossPos = Vector3.Lerp(RushPlayerPoint, RushRefEndPoint, RushRefTime);
                     if (RushRefTime >= 1.0f)
                     {
-                        RushReturnSpeed = 2;
+                        Destroy(Fork);
+                        BossAnim.SetBool("Blow", false);
+                        BossAnim.SetTrigger("WallHit");
+                        BossAnim.Play("WallHit");
+                        BossAnim.speed = 0.3f;
+                    if (ReturnDelay)
+                    {
+                        RushReturnSpeed = 1.5f;
                         RushRefFlg = false;
                         BossReturnFlg = true;
                         BossAnim.SetBool("IdleToTake", false);
@@ -319,13 +329,17 @@ public class Boss1Attack : MonoBehaviour
                         HpScript.DelHP(RushDamage);
                         RushTime = 0;
                         RushRefTime = 0;
-                        BossAnim.SetBool("??ToDamage", false);
                         SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
                         return;
+                    }
                     }
                 }
             }
         
+    }
+    void ReturnGround()
+    {
+        ReturnDelay = true;
     }
     void BossRushAnim()
     {

@@ -15,7 +15,7 @@ public class FadeController : MonoBehaviour
 
     //--- フェードの変数
     float fadeOutSpeed = 0.01f;        //透明度が変わるスピードを管理
-    float fadeInSpeed = 0.02f;        //透明度が変わるスピードを管理
+    float fadeInSpeed = 0.01f;        //透明度が変わるスピードを管理
     float red, green, blue, alfa;   //パネルの色、不透明度を管理
 
     Image fadeImage;                //透明度を変更するパネルのイメージ
@@ -30,6 +30,15 @@ public class FadeController : MonoBehaviour
         green = fadeImage.color.g;
         blue = fadeImage.color.b;
         alfa = fadeImage.color.a;
+
+        if (GameData.isFadeIn)
+        {
+            alfa = 1.0f;
+        }
+        if (GameData.isFadeOut)
+        {
+            alfa = 0.0f;
+        }
     }
 
     void Update() {

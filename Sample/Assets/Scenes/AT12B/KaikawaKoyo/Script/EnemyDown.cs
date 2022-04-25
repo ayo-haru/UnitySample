@@ -65,7 +65,11 @@ public class EnemyDown : MonoBehaviour
             {
                 Pos = transform.position;
                 Destroy(gameObject, 0.0f);
-                EffectManager.Play(EffectData.eEFFECT.EF_ENEMYDOWN, Pos);
+                if(EnemyNumber == 2)
+                {
+                    EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);
+                }
+                EffectManager.Play(EffectData.eEFFECT.EF_ENEMYDOWN, Pos, 2.0f);
             }
         }
         else
@@ -94,6 +98,8 @@ public class EnemyDown : MonoBehaviour
                 rb.useGravity = false;
                 // 空気抵抗をゼロに
                 rb.angularDrag = 0.0f;
+                // レイヤー変更
+                gameObject.layer = LayerMask.NameToLayer("DownEnemy");
 
                 // 回転軸を変更
                 if (EnemyNumber == 1)

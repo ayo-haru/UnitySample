@@ -152,8 +152,7 @@ public class TitleSceneManager : MonoBehaviour {
 
                 // シーン関連
                 GameData.OldMapNumber = GameData.CurrentMapNumber;
-                throw new Exception("シーン名なし。下のコメントアウト書き換えてね！！！！！");
-                //GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
+                GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001;
                 string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
                 SceneManager.LoadScene(nextSceneName);
                 isDecision = false;

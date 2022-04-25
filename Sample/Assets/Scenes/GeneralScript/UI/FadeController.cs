@@ -71,6 +71,7 @@ public class FadeController : MonoBehaviour
         {                    //c)完全に透明になったら処理を抜ける
             GameData.isFadeIn = false;
             fadeImage.enabled = false;    //d)パネルの表示をオフにする
+            Pause.isPause = false;  // フェード中は恐らくポーズ中だからポーズをやめる
         }
     }
 
@@ -82,7 +83,7 @@ public class FadeController : MonoBehaviour
         {             // d)完全に不透明になったら処理を抜ける
             GameData.isFadeOut = false;
             GameData.isFadeIn = true;
-            Pause.isPause = false;  // フェード中は恐らくポーズ中だからポーズをやめる
+            //Pause.isPause = false;  // フェード中は恐らくポーズ中だからポーズをやめる
         }
     }
 

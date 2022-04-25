@@ -16,6 +16,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,6 +24,21 @@ public class Player2 : MonoBehaviour
 {
     //---変数宣言
 
+    //---プレイヤーのステートの列挙型
+    enum PLAYERSTATE 
+    {
+        NORMAL = 0,         // 0:通常時
+        DAMAGED,            // 1:被弾時
+        INVISIBLE,          // 2:無敵時
+
+        MAX_STATE
+    }
+
+    //---ダメージ処理
+    private PLAYERSTATE state = PLAYERSTATE.NORMAL;     // STATE型の変数
+    public float WaitTime = 1.0f;                       // 無敵時間
+    public float KnockBackPower;                        // ノックバックする時間
+    private Vector3 Distination;                        // 被弾時の位置と距離を算出するための変数
 
     //---振動
     [SerializeField] private float LowFrequency;        // 左側の振動の値
@@ -42,12 +58,14 @@ public class Player2 : MonoBehaviour
     //---コンポーネント取得
     private Rigidbody rb;
     public GameObject Weapon;                           // "Weapon"プレハブを格納する変数
-    GameObject hp;                                      // HPのオブジェクトを格納
-    HPManager hpmanager;                                // HPManagerのコンポーネントを取得する変数
-    BoxCollider box_collider;                           // 足元の当たり判定
-    ShieldManager shieldManager;                        // 盾の最大数
+    private GameObject hp;                              // HPのオブジェクトを格納
+    private GameObject canvas;                          // キャンバスを格納
+    private HPManager hpmanager;                        // HPManagerのコンポーネントを取得する変数
+    private BoxCollider box_collider;                   // 足元の当たり判定
+    private ShieldManager shieldManager;                // 盾の最大数
 
     //---移動変数
+    private Vector2 AttackDirection = Vector2.zero;
     private Vector3 PlayerPos;                          // プレイヤーの座標
     private Vector2 ForceDirection = Vector2.zero;      // 移動する方向を決める
     private Vector2 MovingVelocity = Vector3.zero;      // 移動するベクトル
@@ -72,7 +90,6 @@ public class Player2 : MonoBehaviour
     [SerializeField] private float JumpForce = 5;               // ジャンプ力
 
     //---攻撃変数
-    public Vector2 AttackDirection = Vector2.zero;      // 攻撃方向
     public float AttckPosHeight = 6.0f;                 // シールド位置上下
     public float AttckPosWidth = 4.0f;                  // シールド位置左右
     public float DestroyTime = 0.5f;                    // シールドが消える時間
@@ -138,6 +155,11 @@ public class Player2 : MonoBehaviour
             hpmanager = hp.GetComponent<HPManager>();           // HPSystemの使用するコンポーネント
         }
 
+        if (GameObject.Find("Canvas"))
+        {
+            canvas = GameObject.Find("Canvas");                 // シーン内のCanvasを検索
+        }
+
         scale = transform.localScale;
         box_collider = gameObject.GetComponent<BoxCollider>();
     }
@@ -149,14 +171,20 @@ public class Player2 : MonoBehaviour
         //{
         //    Gravity();
         //}
-        if (/*UnderParryNow == true || */GroundNow == false)
-        {
-            Gravity();
-        }
-
 
         if (!Pause.isPause)
         {
+            // プレイヤーがダメージ中は以降の処理はしない
+            if (state == PLAYERSTATE.DAMAGED)
+            {
+                return;
+            }
+
+            if (/*UnderParryNow == true || */GroundNow == false)
+            {
+                Gravity();
+            }
+
             animator.speed = 1.0f;
 
             //rb.Resume(gameObject);
@@ -168,7 +196,7 @@ public class Player2 : MonoBehaviour
             }
 
             //---HPオブジェクトを検索
-            if (!GameObject.Find("HPSystem(2)(Clone)"))
+            if (!hp)
             {
                 return;
             }
@@ -321,7 +349,7 @@ public class Player2 : MonoBehaviour
 
         //---スティック入力
         PlayerPos = transform.position;                                             // 攻撃する瞬間のプレイヤーの座標を取得
-        AttackDirection += Attacking.ReadValue<Vector2>();             // スティックの倒した値を取得
+        AttackDirection += Attacking.ReadValue<Vector2>();                          // スティックの倒した値を取得
         //AttackDirection.Normalize();                                               // 取得した値を正規化(ベクトルを１にする)
 
         //---アニメーション再生
@@ -411,6 +439,69 @@ public class Player2 : MonoBehaviour
     }
     #endregion
 
+    #region ダメージ処理
+    //===================================================================
+    //  ダメージ
+    // <memo>
+    //      Damage()でアニメーションの再生,HPの減少,EF,SEの再生を行い
+    //      Invicible()で無敵中の処理(のけぞり)を行う
+    //      無敵時間の処理はコルーチン(InvicibleTIme())で処理する
+    //===================================================================
+    private void Damaged()
+    {
+        if (!hp){                        // hpのUIがない場合は処理終了
+            return;
+        }
+        
+        // ステートを被弾時に変更
+        state = PLAYERSTATE.DAMAGED;
+        //Debug.Log("攻撃をうけた。");
+        if(animator.GetBool("Damagae") == false)
+        {
+            animator.SetBool("Damage",true);
+        }
+        EffectManager.Play(EffectData.eEFFECT.EF_DAMAGE, this.transform.position);
+        SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
+
+        hpmanager.Damaged();
+        //GameData.CurrentHP--;
+        //SaveManager.saveHP(GameData.CurrentHP);
+
+        Invicible();
+    }
+
+    //===================================================================
+    //  無敵中の処理
+    //===================================================================
+    public void Invicible()
+    {
+        // 無敵時は処理をしない
+        if(state == PLAYERSTATE.INVISIBLE)
+        {
+            return;
+        }
+
+        state = PLAYERSTATE.INVISIBLE;
+
+        // ノックバック処理
+        rb.velocity = Vector3.zero;
+        ForceDirection = Vector2.zero;
+
+        rb.AddForce(Distination * KnockBackPower,ForceMode.VelocityChange);
+
+        StartCoroutine("InvicibleTime");
+    }
+
+    //===================================================================
+    //  無敵時間のコルーチン
+    //===================================================================
+    IEnumerator InvicibleTime()
+    {
+        yield return new WaitForSeconds(WaitTime);
+        state = PLAYERSTATE.NORMAL;
+    }
+    #endregion
+
     #region Gravity関数
     //---ジャンプ中の重力を強くする(ジャンプが俊敏に見える効果がある)
     private void Gravity()
@@ -453,33 +544,45 @@ public class Player2 : MonoBehaviour
     }
     #endregion
 
+    #region ポーズの入力処理
     private void PauseToggle(InputAction.CallbackContext obj) {
         Pause.isPause = !Pause.isPause; // トグル
 
     }
+    #endregion
 
-    #region あたり判定処理
-    //---当たり判定処理
+    #region 各種あたり判定処理
+    //---HPがゼロになった時の処理
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.tag == "Damaged"){
-            //Debug.Log("攻撃をうけた。");
-            EffectManager.Play(EffectData.eEFFECT.EF_DAMAGE, this.transform.position);
-            SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
-            if (!GameObject.Find("HPSystem(Clone)")){
-                return;
-            }
-            hpmanager.Damaged();
-            //GameData.CurrentHP--;
-            //SaveManager.saveHP(GameData.CurrentHP);
+            //HPが0になったらゲームオーバーを表示
+            if (GameData.CurrentHP <= 0){
+                //GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
+                hp.GetComponent<GameOver>().GameOverShow();
 
-        //HPが0になったらゲームオーバーを表示
-        if (GameData.CurrentHP <= 0){
-                GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
             }
         }
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Damaged")
+        {
+
+            //---自分の位置と接触してきたオブジェクトの位置を計算し、距離と方向を算出
+            Distination = (transform.position - collision.transform.position).normalized;
+            // プレイヤーがダメージを食らっていないとき
+            if (state == PLAYERSTATE.NORMAL){
+                Damaged();
+            }
+        }
+        else{
+            if (animator.GetBool("Damage")){
+                animator.SetBool("Damage",false);
+            }
+        }
+    }
     //---当たり判定処理(GroundCheckのボックスコライダーで判定を取るように)
     //private void OnTriggerEnter(Collider other)
     //   {

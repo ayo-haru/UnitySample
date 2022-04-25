@@ -263,6 +263,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fire_kari (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6568895404396273915, guid: 95ee3a5b6769fb34a838ee042ea35745, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6568895404396273915, guid: 95ee3a5b6769fb34a838ee042ea35745, type: 3}
+      propertyPath: m_TagString
+      value: Damaged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95ee3a5b6769fb34a838ee042ea35745, type: 3}
 --- !u!1 &78597723
@@ -1736,6 +1744,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7b0931274b01444aa3bac57b93a4c28, type: 3}
+--- !u!1 &1619421748 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6568895404396273915, guid: 95ee3a5b6769fb34a838ee042ea35745, type: 3}
+  m_PrefabInstance: {fileID: 48965183}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1619421752
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619421748}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0117203, y: 0.9291471, z: 1.7904153}
+  m_Center: {x: 0.0749321, y: -0.03874256, z: 0.46184397}
 --- !u!1001 &1644803839
 PrefabInstance:
   m_ObjectHideFlags: 0

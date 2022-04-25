@@ -25,11 +25,11 @@ public class ShadowEnemy : MonoBehaviour
         
         position = transform.position;
 
-        EffectManager.Play(EffectData.eEFFECT.EF_DARKAREA, position,false);
+        //EffectManager.Play(EffectData.eEFFECT.EF_DARKAREA, position,false);
 
-        //effect = Instantiate(EffectData.EF[2]);
-        //effect.transform.position = position;
-        //effect.Play();
+        effect = Instantiate(EffectData.EF[3]);
+        effect.transform.position = position;
+        effect.Play();
         // íNÇ…ïœêgÇ∑ÇÈÇ©ÇÃèàóù
         switch (EnemyNumber)
         {

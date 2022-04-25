@@ -21,8 +21,10 @@ public static class EffectData
     {
         EF_FIRE = 0,
         EF_DAMAGE,
+        EF_DEATH,
         EF_DARKAREA,
         EF_ENEMYDOWN,
+        EF_TOMATOBOMB,
         EF_BOSSKILL,
         EF_HEALITEM,
         EF_HEAL,

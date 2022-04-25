@@ -113,23 +113,17 @@ public class Player : MonoBehaviour
         {
             GameData.isFadeOut = true;
             Pause.isPause = true;
-            if (!GameData.isFadeOut)
-            {
-                GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001;
-            }
+            GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001;
         }
         if (other.gameObject.tag == "toKitchen2")    // この名前のタグと衝突したら
         {
             GameData.isFadeOut = true;
             Pause.isPause = true;
-            if (!GameData.isFadeOut)
-            {
-                GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage002;
-            }
+            GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage002;
         }
         if (other.gameObject.tag == "toKitchen3")    // この名前のタグと衝突したら
         {
-            if(GameData.CurrentMapNumber == (int)GameData.eSceneState.BOSS1_SCENE)  // 今いるシーンがボスシーンだった時ボスが生きてたらシーン遷移しない
+            if (GameData.CurrentMapNumber == (int)GameData.eSceneState.BOSS1_SCENE)  // 今いるシーンがボスシーンだった時ボスが生きてたらシーン遷移しない
             {
                 if (GameData.isAliveBoss1)
                 {
@@ -138,46 +132,31 @@ public class Player : MonoBehaviour
             }
             GameData.isFadeOut = true;
             Pause.isPause = true;
-            if (!GameData.isFadeOut)
-            {
-                GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage003;
-            }
+            GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage003;
         }
         if (other.gameObject.tag == "toKitchen4")    // この名前のタグと衝突したら
         {
             GameData.isFadeOut = true;
             Pause.isPause = true;
-            if (!GameData.isFadeOut)
-            {
-                GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage004;
-            }
+            GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage004;
         }
         if (other.gameObject.tag == "toKitchen5")    // この名前のタグと衝突したら
         {
             GameData.isFadeOut = true;
             Pause.isPause = true;
-            if (!GameData.isFadeOut)
-            {
-                GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage005;
-            }
+            GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage005;
         }
         if (other.gameObject.tag == "toKitchen6")    // この名前のタグと衝突したら
         {
             GameData.isFadeOut = true;
             Pause.isPause = true;
-            if (!GameData.isFadeOut)
-            {
-                GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage006;
-            }
+            GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage006;
         }
         if (other.gameObject.tag == "toBoss1")    // この名前のタグと衝突したら
         {
             GameData.isFadeOut = true;
             Pause.isPause = true;
-            if (!GameData.isFadeOut)
-            {
-                GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
-            }
+            GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
         }
     }
 

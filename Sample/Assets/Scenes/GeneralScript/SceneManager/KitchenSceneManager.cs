@@ -256,9 +256,12 @@ public class KitchenSceneManager : MonoBehaviour
 
         if (GameData.CurrentMapNumber != GameData.NextMapNumber)    // 保存してあるシーン番号が現在と次が異なったらシーン移動
         {
-            GameData.OldMapNumber = GameData.CurrentMapNumber;
-            string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
-            SceneManager.LoadScene(nextSceneName);
+            if (!GameData.isFadeOut)
+            {
+                GameData.OldMapNumber = GameData.CurrentMapNumber;
+                string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
+                SceneManager.LoadScene(nextSceneName);
+            }
         }
     }
 }

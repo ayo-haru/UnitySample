@@ -53,7 +53,7 @@ public class WeaponCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Ground")
+        if(collision.gameObject.tag == "Ground" || collision.gameObject.tag == "GroundDameged")
         {
             //•ûŒü
            // Vector3 dir = Player.transform.position - collision.transform.position;

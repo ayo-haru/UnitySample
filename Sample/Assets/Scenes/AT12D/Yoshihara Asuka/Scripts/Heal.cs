@@ -19,6 +19,7 @@ public class Heal : MonoBehaviour
     HPManager hpmanager;
     GameObject HP;
     GameObject Player;
+    GameObject Star_Fragment;
     Rigidbody rb;
     public float BounceSpeed = 10.0f;                   // 弾かれるスピード
     public float BounceVectorMultiple = 2.0f;           // 法線ベクトルに乗算する値
@@ -36,8 +37,9 @@ public class Heal : MonoBehaviour
         //                                  Quaternion.identity);
         rb = GetComponent<Rigidbody>();
         Player = GameObject.FindWithTag("Player");
+
         HP = GameObject.Find("HPSystem(2)(Clone)");
-        hpmanager = GetComponent<HPManager>();
+        hpmanager = HP.GetComponent<HPManager>();
     }
 
     // Update is called once per frame
@@ -70,8 +72,6 @@ public class Heal : MonoBehaviour
             rb.constraints = RigidbodyConstraints.FreezePositionX;
             rb.useGravity = false;
             isGroundFlg = true;
-            Destroy(prefab,1.0f);
-            hpmanager.GetPiece();
             
         }
 
@@ -98,6 +98,8 @@ public class Heal : MonoBehaviour
             //プレイヤーと逆方向に跳ね返す
             rb.AddForce(-vec * BouncePower, ForceMode.Force);
 
+            Destroy(prefab, 1.5f);
+            hpmanager.GetPiece();
 
         }
 

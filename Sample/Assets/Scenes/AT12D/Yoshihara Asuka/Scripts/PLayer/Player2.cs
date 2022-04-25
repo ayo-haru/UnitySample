@@ -223,9 +223,9 @@ public class Player2 : MonoBehaviour
                 }
             }
 
-            Debug.Log("したぱりい"+UnderParryNow);
-            Debug.Log("じゃんぷなう" + JumpNow);
-            Debug.Log("じめんなう" + GroundNow);
+            //Debug.Log("したぱりい"+UnderParryNow);
+            //Debug.Log("じゃんぷなう" + JumpNow);
+            //Debug.Log("じめんなう" + GroundNow);
 
 
             //---地面と当たった時にジャンプフラグ・下パリイフラグを下す
@@ -455,7 +455,7 @@ public class Player2 : MonoBehaviour
         
         // ステートを被弾時に変更
         state = PLAYERSTATE.DAMAGED;
-        //Debug.Log("攻撃をうけた。");
+        Debug.Log("攻撃をうけた。");
         if(animator.GetBool("Damagae") == false)
         {
             animator.SetBool("Damage",true);
@@ -563,25 +563,28 @@ public class Player2 : MonoBehaviour
 
             }
         }
-    }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.tag == "Damaged")
+        if (collision.gameObject.tag == "Damaged" || collision.gameObject.tag == "GroundDameged")
         {
 
             //---自分の位置と接触してきたオブジェクトの位置を計算し、距離と方向を算出
             Distination = (transform.position - collision.transform.position).normalized;
             // プレイヤーがダメージを食らっていないとき
-            if (state == PLAYERSTATE.NORMAL){
+            if (state == PLAYERSTATE.NORMAL)
+            {
                 Damaged();
             }
         }
-        else{
-            if (animator.GetBool("Damage")){
-                animator.SetBool("Damage",false);
-            }
+        else
+        {
+            animator.SetBool("Damage", false);
+
         }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+
     }
     //---当たり判定処理(GroundCheckのボックスコライダーで判定を取るように)
     //private void OnTriggerEnter(Collider other)

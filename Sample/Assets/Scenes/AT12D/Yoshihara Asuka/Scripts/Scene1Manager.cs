@@ -18,7 +18,7 @@ public class Scene1Manager : MonoBehaviour
 {
     public GameObject playerPrefab;                             // プレイヤーのプレハブを扱う
     public GameObject HPSystem;     
-    private int SceneNumber = (int)GameData.eSceneState.Kitchen1_SCENE;
+    //private int SceneNumber = (int)GameData.eSceneState.Kitchen1_SCENE;
 
     private void Awake()
     {
@@ -47,7 +47,7 @@ public class Scene1Manager : MonoBehaviour
         //}
         SoundManager.Play(SoundData.eBGM.BGM_TITLE, SoundData.GameAudioList);
 
-        Debug.Log(SceneNumber);
+        //Debug.Log(SceneNumber);
         Debug.Log("Awake");
     }
     // Start is called before the first frame update

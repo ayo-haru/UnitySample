@@ -7,6 +7,14 @@ public class Stove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (GameData.FireOnOff)
+        {
+            Ignition();
+        }
+        else
+        {
+            Extinguish();
+        }
     }
 
     // Update is called once per frame

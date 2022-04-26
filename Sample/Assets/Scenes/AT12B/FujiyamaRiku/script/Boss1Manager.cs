@@ -69,16 +69,7 @@ public class Boss1Manager : MonoBehaviour
                 {
 
                     Entry.Entry();
-                    //CountDownMax -= Time.deltaTime;
-                    //CountDown = (int)CountDownMax;
-                    
-                    //timerText.text = CountDown.ToString();
-                    //if (CountDown <= 0)
-                    //{
-                    //    //Debug.Log("Time : " + CountDownMax);
-                    //    timerText.enabled = false;
-                    //    BossState = Boss1State.BOSS1_BATTLE;
-                    //}
+                   
                     break;
                 }
             case Boss1State.BOSS1_BATTLE:

@@ -350,7 +350,7 @@ public class Player2 : MonoBehaviour
         //---スティック入力
         PlayerPos = transform.position;                                             // 攻撃する瞬間のプレイヤーの座標を取得
         AttackDirection += Attacking.ReadValue<Vector2>();                          // スティックの倒した値を取得
-        //AttackDirection.Normalize();                                               // 取得した値を正規化(ベクトルを１にする)
+        AttackDirection.Normalize();                                               // 取得した値を正規化(ベクトルを１にする)
 
         //---アニメーション再生
         //---左右パリィ
@@ -366,6 +366,7 @@ public class Player2 : MonoBehaviour
             if (GroundNow == true){
                 rb.AddForce(transform.up * 10.0f, ForceMode.Impulse);
             }
+            Timer = stopTime;
             animator.SetTrigger("Attack_UP");
         }
 
@@ -415,6 +416,7 @@ public class Player2 : MonoBehaviour
         //EffectManager.Play(EffectData.eEFFECT.EF_SHEILD2,weapon.transform.position);
         SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
         AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする
+
         Destroy(weapon, DestroyTime);
 
         isAttack = false;

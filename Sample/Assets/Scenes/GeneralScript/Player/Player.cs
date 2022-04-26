@@ -21,7 +21,7 @@ using System;
 public class Player : MonoBehaviour
 {
     //---変数宣言
-    private Vector3 ReSpawnPos;     // リスポーン位置を保存
+    //private Vector3 ReSpawnPos;     // リスポーン位置を保存
 
     [System.NonSerialized]
     public static bool isHitSavePoint; // セーブポイントに当たったか
@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
 
         if (this.transform.position.y < -10000) // 落下死時にリスポーン
         {
-            this.transform.position = GameData.Player.transform.position = GameData.PlayerPos = ReSpawnPos;
+            this.transform.position = GameData.Player.transform.position = GameData.PlayerPos = GameData.ReSpawnPos;
         }
 
         if (Pause.isPause)  // ポーズフラグによってポーズするかやめるか
@@ -76,8 +76,8 @@ public class Player : MonoBehaviour
         if (SaveManager.shouldSave) // セーブするが選択されたら
         {
             Debug.Log("セーブした");
-            ReSpawnPos = this.transform.position;    // プレイヤーの位置を保存
-            SaveManager.saveLastPlayerPos(ReSpawnPos);  // プレイヤーの位置を保存
+            GameData.ReSpawnPos = this.transform.position;    // プレイヤーの位置を保存
+            SaveManager.saveLastPlayerPos(GameData.ReSpawnPos);  // プレイヤーの位置を保存
             SaveManager.saveBossAlive(GameData.isAliveBoss1);   // ボス１の生存フラグを保存
             SaveManager.saveHP(GameData.CurrentHP); // 現在のHPを保存
             SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);   // 今いるマップの番号を保存

@@ -25,7 +25,10 @@ public class KitchenSceneManager : MonoBehaviour
              * インスペクタービューに表示させたcurrentSceneNumで初期化をする。
              * GameData.NextMapNumberは初期化してない場合はかってに0になってるから==
              */
+            SaveManager.load();
             GameData.OldMapNumber = GameData.NextMapNumber = currentSceneNum;
+            
+            GameData.ReSpawnPos = SaveManager.sd.LastPlayerPos;
         }
         GameData.CurrentMapNumber =  GameData.NextMapNumber;
         //SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);

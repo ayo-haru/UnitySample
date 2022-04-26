@@ -557,10 +557,13 @@ public class Player2 : MonoBehaviour
     {
         if(collision.gameObject.tag == "Damaged"){
             //HPが0になったらゲームオーバーを表示
-            if (GameData.CurrentHP <= 0){
+            if (GameData.CurrentHP < 1){
                 //GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
-                hp.GetComponent<GameOver>().GameOverShow();
+                //hp.GetComponent<GameOver>().GameOverShow();
 
+                Pause.isPause = true;
+                GameData.isFadeOut = true;
+                GameData.Init();
             }
         }
 

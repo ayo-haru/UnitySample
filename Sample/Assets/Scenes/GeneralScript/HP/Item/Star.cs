@@ -40,6 +40,5 @@ public class Star : MonoBehaviour
             EffectManager.Play(EffectData.eEFFECT.EF_HEALITEM, effekctPos);
             //Debug.Log("‚°‚Á‚Æ‚ ‚¢‚Ä‚Þ");
         }
-
     }
 }

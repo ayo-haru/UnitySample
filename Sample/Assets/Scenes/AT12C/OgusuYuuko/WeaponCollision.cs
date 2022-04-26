@@ -26,6 +26,8 @@ public class WeaponCollision : MonoBehaviour
     public float baunceGround = 2.0f;
     //シールドマネージャ
     ShieldManager shield_Manager;
+
+    private bool CanCollision = true;                      // 当たり判定の使用フラグ
     // Start is called before the first frame update
     void Start()
     {
@@ -53,15 +55,19 @@ public class WeaponCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Ground" || collision.gameObject.tag == "GroundDameged")
+        if (CanCollision)
         {
-            //方向
-           // Vector3 dir = Player.transform.position - collision.transform.position;
-            Vector3 dir = Player.transform.position - gameObject.transform.position;
-            dir.Normalize();
-            player_rb.velocity = Vector3.zero;
-            //地面パリイ
-            player_rb.AddForce(dir * baunceGround,ForceMode.Impulse);
+            if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "GroundDameged")
+            {
+                //方向
+                // Vector3 dir = Player.transform.position - collision.transform.position;
+                Vector3 dir = Player.transform.position - gameObject.transform.position;
+                dir.Normalize();
+                player_rb.velocity = Vector3.zero;
+                //地面パリイ
+                player_rb.AddForce(dir * baunceGround, ForceMode.Impulse);
+                CanCollision = false;
+            }
         }
 
         //プレイヤー以外と当たってたら盾消去

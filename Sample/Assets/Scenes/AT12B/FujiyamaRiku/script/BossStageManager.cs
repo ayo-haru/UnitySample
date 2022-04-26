@@ -35,9 +35,10 @@ public class BossStageManager : MonoBehaviour
         }
         GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-80, 19.9f, 0f); // プレイヤーの初期位置を設定
         GameObject Player = Instantiate(GameData.Player);       // プレハブをクローン
-        
-        //---プレイヤーUIを表示
-        GameObject canvas = GameObject.Find("Canvas");          // シーン上のCanvasを参照し、canvasに定義
+        Player.name = GameData.Player.name;                         // プレハブの名前通りにする
+
+         //---プレイヤーUIを表示
+         GameObject canvas = GameObject.Find("Canvas");          // シーン上のCanvasを参照し、canvasに定義
         GameObject HPUI = Instantiate(HPSystem);                // プレハブをクローン
         HPUI.transform.SetParent(canvas.transform,false);       // シーン上のCanvasに子オブジェクトとしてアタッチ
 

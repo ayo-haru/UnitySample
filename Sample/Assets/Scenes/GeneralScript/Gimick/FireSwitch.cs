@@ -25,13 +25,13 @@ public class FireSwitch : MonoBehaviour
         {
             Mesh_On.enabled = true;
             Mesh_Off.enabled = false;
-            stove.GetComponent<Stove>().Ignition();
+            //stove.GetComponent<Stove>().Ignition();
         }
         else
         {
             Mesh_On.enabled = false;
             Mesh_Off.enabled = true;
-            stove.GetComponent<Stove>().Extinguish();
+            //stove.GetComponent<Stove>().Extinguish();
         }
 
     }
@@ -49,13 +49,13 @@ public class FireSwitch : MonoBehaviour
         {
             Mesh_On.enabled = true;
             Mesh_Off.enabled = false;
-            stove.GetComponent<Stove>().Ignition();
+            //stove.GetComponent<Stove>().Ignition();
         }
         else
         {
             Mesh_On.enabled = false;
             Mesh_Off.enabled = true;
-            stove.GetComponent<Stove>().Extinguish();
+            //stove.GetComponent<Stove>().Extinguish();
         }
     }
 

@@ -107,13 +107,23 @@ public static class GameData
     }
 
     public static void LoadData() {
-        ReSpawnPos = SaveManager.sd.LastPlayerPos;
+        PlayerPos = Player.transform.position = ReSpawnPos = SaveManager.sd.LastPlayerPos;
         CurrentMapNumber = SaveManager.sd.LastMapNumber;
+        isAliveBoss1 = SaveManager.sd.isBoss1Alive;
     }
 
     public static void Init() {
         InitScene();
         InitData();
+        Pause.isPause = false;
+    }
+
+    public static void RespawnPlayer() {
+        InitScene();
+        LoadData();
+        CurrentHP = 5;
+
+
         Pause.isPause = false;
     }
 }

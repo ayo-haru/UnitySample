@@ -51,6 +51,8 @@ public class Boss1Attack : MonoBehaviour
     bool RushEndFlg;
     float RushReturnSpeed;
     bool ReturnDelay;                                      //ñﬂÇÎÇ§Ç∆Ç∑ÇÈÇ‹Ç≈ÇÃéûä‘
+    Vector3 RotateJump;
+    Vector3 Scale;
     //----------------------------------------------------------
     //ÉCÉ`ÉSîöíeïœêî
     //----------------------------------------------------------
@@ -142,6 +144,7 @@ public class Boss1Attack : MonoBehaviour
         HpObject = GameObject.Find("HPGage");
         HpScript = HpObject.GetComponent<HPgage>();
         BossAnim = this.gameObject.GetComponent<Animator>();
+        Scale = Boss1Manager.Boss.transform.localScale;
         for (int i= 0;i < Max_Strawberry;i++)
         {
             StrawberryRefFlg[i] = false;
@@ -240,7 +243,17 @@ public class Boss1Attack : MonoBehaviour
                     //ç≈å„Ç‹Ç≈çUåÇÇµèIÇÌÇ¡ÇƒÇ¢ÇΩÇÁ
                     if (RushEndFlg)
                     {
-                        Boss1Manager.BossPos = Beziercurve.SecondCurve(RushEndPoint, RushMiddlePoint, BossStartPoint, BossReturnTime);
+                    //Boss1Manager.BossPos = Beziercurve.SecondCurve(RushEndPoint, RushMiddlePoint, BossStartPoint, BossReturnTime);
+                    if (RotateJump.z != -1)
+                    {
+                        
+                        RotateJump.z = -1f;
+                        
+                        Scale.z *= RotateJump.z;
+                    }
+
+
+                    Boss1Manager.Boss.transform.localScale = Scale;
                     }
                     //ìríÜÇ≈íeÇ©ÇÍÇƒÇ¢ÇΩÇÁ
                     if (!RushEndFlg)
@@ -281,9 +294,9 @@ public class Boss1Attack : MonoBehaviour
                 if (RefrectFlg)
                 {
                     RushRefFlg = true;
-                    RushPlayerPoint.x = GameData.PlayerPos.x + 2.0f;
-                    RushPlayerPoint.y = GameData.PlayerPos.y + 3.0f;
-                    RushPlayerPoint.z = GameData.PlayerPos.z;
+                    RushPlayerPoint = Boss1Manager.Boss.transform.position;
+                    //RushPlayerPoint.y = GameData.PlayerPos.y + 3.0f;
+                    //RushPlayerPoint.z = GameData.PlayerPos.z;
                     RushRefEndPoint = GameObject.Find("ForkRefEndPoint").transform.position;
                     BossAnim.SetBool("RushToJump", false);
                     BossAnim.SetBool("Blow", true);

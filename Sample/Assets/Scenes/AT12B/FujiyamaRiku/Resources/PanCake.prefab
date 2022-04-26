@@ -3537,6 +3537,7 @@ GameObject:
   - component: {fileID: 5827865096574767079}
   - component: {fileID: -3330591475259124122}
   - component: {fileID: 2806849460254831840}
+  - component: {fileID: -4744956653129645365}
   m_Layer: 0
   m_Name: PanCake
   m_TagString: Untagged
@@ -3629,6 +3630,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a282c45f229cf47428f2eab2c1037b70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &-4744956653129645365
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6232079251362198321}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 67.640884, y: 33.101814, z: 68.13336}
+  m_Center: {x: -0.5159168, y: -13.331886, z: 2.3722534}
 --- !u!1 &6374558938003141172
 GameObject:
   m_ObjectHideFlags: 0

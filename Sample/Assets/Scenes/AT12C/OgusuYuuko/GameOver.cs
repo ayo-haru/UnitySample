@@ -121,7 +121,6 @@ public class GameOver : MonoBehaviour {
         //    GameOverHide();
         //}
 
-        // セーブ可能になったら選択させる
         if (keyboard.leftArrowKey.wasReleasedThisFrame)
         {
             SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.IndelibleAudioList);

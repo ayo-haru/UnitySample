@@ -56,6 +56,7 @@ public static class GameData
         /*"Kitchen005", "Kitchen006","KitchenStage", "KitchenStage 1",*/"Tester" };
 
     public static string CurrentMapName;    // 現在のマップの名前
+    public static Vector3 ReSpawnPos;       // リスポーンポス
     public static Vector3 PlayerPos;        // プレイヤーの座標（現在はGameManagerで毎フレーム代入しているが本来はPlayerクラスが良い(はず)） 
     public static GameObject Player;
     public static int CurrentHP = 5 ;       // HPの保存(現在の)
@@ -105,9 +106,14 @@ public static class GameData
         Pause.isPause = false;
     }
 
+    public static void LoadData() {
+        ReSpawnPos = SaveManager.sd.LastPlayerPos;
+        CurrentMapNumber = SaveManager.sd.LastMapNumber;
+    }
+
     public static void Init() {
-        InitData();
         InitScene();
+        InitData();
         Pause.isPause = false;
     }
 }

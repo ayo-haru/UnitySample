@@ -116,7 +116,7 @@ public class Player2 : MonoBehaviour
         //---Actionイベント登録(ボタン入力)
         PlayerActionAsset.Player.Attack.started += OnAttack;
         Debug.Log(PlayerActionAsset.Player.Attack);
-        PlayerActionAsset.UI.Start.started += PauseToggle;
+        PlayerActionAsset.UI.Start.canceled += PauseToggle;
         Debug.Log(PlayerActionAsset.UI.Start);
 
         PlayerActionAsset.Player.Jump.started += OnJump;            // started    ... ボタンが押された瞬間
@@ -187,7 +187,7 @@ public class Player2 : MonoBehaviour
 
             animator.speed = 1.0f;
 
-            //rb.Resume(gameObject);
+            rb.Resume(gameObject);
             GamePadManager.onceTiltStick = false;
 
             if (isAttack)
@@ -243,7 +243,7 @@ public class Player2 : MonoBehaviour
         {
             animator.speed = 0.0f;
 
-            //rb.Pause(gameObject);
+            rb.Pause(gameObject);
         }
     }
 
@@ -565,7 +565,8 @@ public class Player2 : MonoBehaviour
 
                 Pause.isPause = true;
                 GameData.isFadeOut = true;
-                GameData.Init();
+
+                GameData.RespawnPlayer();
             }
         }
 

@@ -28,7 +28,7 @@ public class KitchenSceneManager : MonoBehaviour
             SaveManager.load();
             GameData.OldMapNumber = GameData.NextMapNumber = currentSceneNum;
             
-            GameData.ReSpawnPos = SaveManager.sd.LastPlayerPos;
+            //GameData.ReSpawnPos = SaveManager.sd.LastPlayerPos;
         }
         GameData.CurrentMapNumber =  GameData.NextMapNumber;
         //SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
@@ -84,10 +84,8 @@ public class KitchenSceneManager : MonoBehaviour
 
             //---ステージ2
             case (int)GameData.eSceneState.KitchenStage002:
-                if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage001)
-                {
-                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(470.0f, -15.0f, 0.0f);
-                }
+                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(470.0f, -5.0f, 0.0f);
+
                 break;
 
             //---ステージ3

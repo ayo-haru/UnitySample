@@ -720,6 +720,8 @@ MonoBehaviour:
   FollowCameraPos: {x: 0, y: 80, z: -50}
   RightScreenOut: 525
   LeftScreenOut: 110
+  HeightScreenOut: 0
+  UnderScreenOut: 0
   MovePoint: 0
 --- !u!1 &91713676
 GameObject:
@@ -8993,7 +8995,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FollowCameraPos: {x: 0, y: 30, z: -120}
   RightScreenOut: 525
-  LeftScreenOut: 110
+  LeftScreenOut: 120
+  HeightScreenOut: 45
+  UnderScreenOut: 45
   MovePoint: 0
 --- !u!1001 &1262403807
 PrefabInstance:

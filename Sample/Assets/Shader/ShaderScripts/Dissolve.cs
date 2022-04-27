@@ -49,7 +49,6 @@ public class Dissolve : MonoBehaviour
 
 	public void Play()
 	{
-        Debug.Log("Play関数通ったよ");
         ////---再生中であれば止める
         Stop();
 
@@ -65,8 +64,6 @@ public class Dissolve : MonoBehaviour
 
 	public void Stop()
 	{
-        Debug.Log("Stop関数通ったよ");
-
         //---コルーチンを止める
         if (_playcoroutine != null)
 		{
@@ -83,8 +80,6 @@ public class Dissolve : MonoBehaviour
 
     private void SetCutOff(float value)
 	{
-        Debug.Log("SetCutOff関数通ったよ");
-
         for (int  materialIndex = 0;materialIndex < _dynamicMaterials.Length; ++materialIndex)
 		{
             _dynamicMaterials[materialIndex].SetFloat("_Cutoff", value);
@@ -93,8 +88,6 @@ public class Dissolve : MonoBehaviour
     
     private IEnumerator Run() 
     {
-        Debug.Log("Runコルーチン通ったよ");
-
         float timer = 0.0f;
         while(timer < 2)
 		{

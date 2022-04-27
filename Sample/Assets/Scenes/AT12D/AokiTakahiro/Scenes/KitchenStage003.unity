@@ -4179,8 +4179,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
+  m_RequiresDepthTextureOption: 1
+  m_RequiresOpaqueTextureOption: 0
   m_CameraType: 0
   m_Cameras: []
   m_RendererIndex: -1
@@ -4214,6 +4214,8 @@ MonoBehaviour:
   FollowCameraPos: {x: 0, y: 30, z: -120}
   RightScreenOut: 1020
   LeftScreenOut: 100
+  HeightScreenOut: 0
+  UnderScreenOut: 0
   MovePoint: 0
 --- !u!1001 &634598196
 PrefabInstance:
@@ -4618,6 +4620,8 @@ MonoBehaviour:
   FollowCameraPos: {x: 0, y: 80, z: -50}
   RightScreenOut: 1020
   LeftScreenOut: 100
+  HeightScreenOut: 0
+  UnderScreenOut: 0
   MovePoint: 0
 --- !u!1001 &670331474
 PrefabInstance:

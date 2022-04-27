@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 479321843006706992}
   - component: {fileID: 6990666228239251013}
   - component: {fileID: 8066859575807329296}
+  - component: {fileID: 8208676133463558927}
   m_Layer: 9
   m_Name: Broccoli
   m_TagString: Enemy
@@ -496,6 +497,26 @@ MonoBehaviour:
   DropRate: 50
   EnemyNumber: 1
   isAlive: 0
+--- !u!114 &8208676133463558927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6113468668870040627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7470e51c626a6a4b9f7bc02035869a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skinnedMeshRenderers:
+  - {fileID: 3987476320550074907}
+  - {fileID: 1858711192014183045}
+  - {fileID: 6965247599179007396}
+  - {fileID: 7837337808267109515}
+  - {fileID: 5124739274967217911}
+  - {fileID: 658986682112157637}
+  _dissolveMaterial: {fileID: 2100000, guid: a4f53cca779263740b91f4d6d6e7dea4, type: 2}
 --- !u!1 &6429433393414608818
 GameObject:
   m_ObjectHideFlags: 0

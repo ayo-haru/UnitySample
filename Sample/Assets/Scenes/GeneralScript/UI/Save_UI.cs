@@ -39,14 +39,14 @@ public class Save_UI : MonoBehaviour
     private GameObject stick;
     private GameObject Stick;
 
-    private Canvas canvas;  // このシーンのキャンバスを保存
+    private Canvas canvas;                  // このシーンのキャンバスを保存
 
-    private int select; // 選択を保存
-    private bool isDecision;
+    private int select;                     // 選択を保存
+    private bool isDecision;                // 決定された
 
-    private Game_pad UIActionAssets;                // InputActionのUIを扱う
-    private InputAction LeftStickSelect;            // InputActionのselectを扱う
-    private InputAction RightStickSelect;           // InputActionのselectを扱う
+    private Game_pad UIActionAssets;        // InputActionのUIを扱う
+    private InputAction LeftStickSelect;    // InputActionのselectを扱う
+    private InputAction RightStickSelect;   // InputActionのselectを扱う
 
 
     // Start is called before the first frame update
@@ -55,10 +55,10 @@ public class Save_UI : MonoBehaviour
         UIActionAssets = new Game_pad();            // InputActionインスタンスを生成
 
         select = 0; // 選択を初期化
-        isDecision = false;
+        isDecision = false; // 決定を初期化
 
         // キャンバスを指定
-        canvas = GetComponent<Canvas>();
+        canvas = GetComponent<Canvas>();    // キャンバスを保存
 
         // 実態化
         SaveCharacter = Instantiate(savecharacter);
@@ -100,6 +100,7 @@ public class Save_UI : MonoBehaviour
 
         if (Player.HitSavePointColorisRed)
         {
+            //----- ワープ -----
             if (!Warp.canWarp)
             {
                 // セーブは非表示
@@ -163,6 +164,8 @@ public class Save_UI : MonoBehaviour
                     return;
                 }
             }
+
+            // 選択の決定
             if (select == 0)
             {
                 SusumuCharacter.GetComponent<UIBlink>().isBlink = true;
@@ -200,6 +203,7 @@ public class Save_UI : MonoBehaviour
         }
         else
         {
+            //----- セーブ -----
             if (!SaveManager.canSave)
             {
                 // セーブ可能でないときはUIを隠す
@@ -292,8 +296,8 @@ public class Save_UI : MonoBehaviour
                 if (isDecision)
                 {
                     SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList); // 決定音
-                    SaveManager.canSave = false;    // セーブ可能を下す
                     Pause.isPause = false;  // ポーズをやめる
+                    SaveManager.canSave = false;    // セーブ可能を下す
                     YesCharacter.GetComponent<UIBlink>().isHide = true; // UIを消す
                     NoCharacter.GetComponent<UIBlink>().isHide = true;
                     NoCharacter.GetComponent<UIBlink>().isBlink = false;    // UIの点滅を消す
@@ -347,8 +351,6 @@ public class Save_UI : MonoBehaviour
     private void OnLeftStick(InputAction.CallbackContext obj) {
         if (SaveManager.canSave || Warp.canWarp)
         {
-
-
             //---左ステックのステック入力を取得
             Vector2 doLeftStick = Vector2.zero;
             doLeftStick = LeftStickSelect.ReadValue<Vector2>();
@@ -368,7 +370,6 @@ public class Save_UI : MonoBehaviour
     private void OnRightStick(InputAction.CallbackContext obj) {
         if (SaveManager.canSave || Warp.canWarp)
         {
-
             //---右ステックのステック入力を取得
             Vector2 doRightStick = Vector2.zero;
             doRightStick = RightStickSelect.ReadValue<Vector2>();

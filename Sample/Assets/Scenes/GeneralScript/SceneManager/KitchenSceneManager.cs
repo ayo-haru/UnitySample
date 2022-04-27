@@ -90,10 +90,8 @@ public class KitchenSceneManager : MonoBehaviour
 
             //---ステージ3
             case (int)GameData.eSceneState.KitchenStage003:
-                if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage006)
-                {
-                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(1100.0f, 18.0f, 0.0f);
-                }
+                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(1100.0f, 18.0f, 0.0f);
+
                 break;
 
             //---ステージ4
@@ -226,6 +224,11 @@ public class KitchenSceneManager : MonoBehaviour
             //    break;
             default:
                 break;
+        }
+
+        if (GameOver.GameOverFlag)
+        {
+            GameData.PlayerPos = GameData.Player.transform.position = GameData.ReSpawnPos;
         }
 
         //---プレイヤーを空オブジェクトの子に複製する

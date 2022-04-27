@@ -95,7 +95,7 @@ public static class GameData
         {
             isAliveBoss1 = true;
         }
-        Pause.isPause = false;
+        Pause.isPause = false;  // 万が一ポーズ中だった場合ポーズ解除
     }
 
     /// <summary>
@@ -103,7 +103,7 @@ public static class GameData
     /// </summary>
     public static void InitScene() {
         SceneManager.LoadScene(MapName[CurrentMapNumber]);
-        Pause.isPause = false;
+        Pause.isPause = false;  // 万が一ポーズ中だった場合ポーズ解除
     }
 
     public static void LoadData() {
@@ -115,7 +115,7 @@ public static class GameData
     public static void Init() {
         InitScene();
         InitData();
-        Pause.isPause = false;
+        Pause.isPause = false;  // 万が一ポーズ中だった場合ポーズ解除
     }
 
     public static void RespawnPlayer() {
@@ -124,6 +124,6 @@ public static class GameData
         CurrentHP = 5;
 
 
-        Pause.isPause = false;
+        Pause.isPause = false;  // 万が一ポーズ中だった場合ポーズ解除
     }
 }

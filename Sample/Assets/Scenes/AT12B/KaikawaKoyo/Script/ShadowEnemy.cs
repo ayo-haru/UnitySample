@@ -22,7 +22,6 @@ public class ShadowEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         position = transform.position;
 
         //EffectManager.Play(EffectData.eEFFECT.EF_DARKAREA, position,false);

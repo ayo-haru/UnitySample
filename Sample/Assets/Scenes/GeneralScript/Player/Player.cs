@@ -27,12 +27,15 @@ public class Player : MonoBehaviour
     public static bool isHitSavePoint; // セーブポイントに当たったか
     [System.NonSerialized]
     public static bool HitSavePointColorisRed;
+    [System.NonSerialized]
+    public static bool shouldRespawn;
 
     // Start is called before the first frame update
     void Start()
     {
         isHitSavePoint = false; // フラグ初期化
         HitSavePointColorisRed = false;
+        shouldRespawn = false;
     }
 
     // Update is called once per frame
@@ -40,10 +43,10 @@ public class Player : MonoBehaviour
     {
         GameData.PlayerPos = this.transform.position;    // プレイヤーの位置を保存
 
-        if (this.transform.position.y < -10000) // 落下死時にリスポーン
-        {
-            this.transform.position = GameData.Player.transform.position = GameData.PlayerPos = GameData.ReSpawnPos;
-        }
+        //if (this.transform.position.y < -10000) // 落下死時にリスポーン
+        //{
+        //    this.transform.position = GameData.Player.transform.position = GameData.PlayerPos = GameData.ReSpawnPos;
+        //}
 
         if (Pause.isPause)  // ポーズフラグによってポーズするかやめるか
         {
@@ -99,10 +102,29 @@ public class Player : MonoBehaviour
             }
             Warp.shouldWarp = false;
         }
+
+        if (shouldRespawn)
+        {
+            //フェード
+            Pause.isPause = true;
+            GameData.isFadeOut = true;
+            if (!GameData.isFadeOut && !GameData.isFadeIn)
+            {
+                this.transform.position = GameData.PlayerPos = GameData.ReSpawnPos;
+                Pause.isPause = false;
+            }
+            shouldRespawn = false;
+        }
     }
 
 
     void OnTriggerEnter(Collider other) {
+        if(other.gameObject.tag == "Respawn")
+        {
+            GameData.ReSpawnPos = this.transform.position;
+            Debug.Log(GameData.ReSpawnPos);
+        }
+
         if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
         {
             

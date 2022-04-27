@@ -1826,7 +1826,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 188124791}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 150, y: 100, z: -200}
+  m_LocalPosition: {x: 150, y: 48, z: -120}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1880,6 +1880,8 @@ MonoBehaviour:
   FollowCameraPos: {x: 0, y: 30, z: -120}
   RightScreenOut: 473
   LeftScreenOut: 100
+  HeightScreenOut: 50
+  UnderScreenOut: 50
   MovePoint: 0
 --- !u!1001 &213208765
 PrefabInstance:
@@ -16528,6 +16530,8 @@ MonoBehaviour:
   FollowCameraPos: {x: 0, y: 80, z: -50}
   RightScreenOut: 473
   LeftScreenOut: 100
+  HeightScreenOut: 0
+  UnderScreenOut: 0
   MovePoint: 0
 --- !u!1001 &2047651681
 PrefabInstance:

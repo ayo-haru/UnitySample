@@ -47,6 +47,7 @@ public class OptionBGM : MonoBehaviour
             BgmSlider.value += moveSpeed;
             //âπó ê›íË
             SoundManager.bgmVolume = BgmSlider.value;
+            SoundManager.setVolume(SoundData.GameAudioList);
         }
         //ç∂ñÓàÛÉLÅ[Ç≈âπó Å|
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -54,6 +55,7 @@ public class OptionBGM : MonoBehaviour
             BgmSlider.value -= moveSpeed;
             //âπó ê›íË
             SoundManager.bgmVolume = BgmSlider.value;
+            SoundManager.setVolume(SoundData.GameAudioList);
         }
 
 

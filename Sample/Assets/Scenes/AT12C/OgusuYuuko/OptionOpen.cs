@@ -19,7 +19,7 @@ public class OptionOpen : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        //---MAP表示
+        //---設定画面表示
         GameObject canvas = GameObject.Find("Canvas");
         Option = Instantiate(Option);
         Option.transform.SetParent(canvas.transform, false);
@@ -35,14 +35,16 @@ public class OptionOpen : MonoBehaviour
     void Update()
     {
         //f3で表示
-        if (Input.GetKey(KeyCode.F3))
+        if (Input.GetKeyDown(KeyCode.F3))
         {
             Option.SetActive(true);
+            return;
         }
         //f４で非表示
-        if (Input.GetKey(KeyCode.F4))
+        if (Input.GetKeyDown(KeyCode.F4))
         {
             Option.SetActive(false);
+            return;
         }
     }
 }

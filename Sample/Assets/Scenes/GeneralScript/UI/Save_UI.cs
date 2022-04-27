@@ -136,6 +136,7 @@ public class Save_UI : MonoBehaviour
 
 
                 Pause.isPause = true;   // UI表示時はポーズ
+                Debug.Log("UI表示時ポーズ");
             }
             // ワープ可能になったら選択させる
             if (keyboard.leftArrowKey.wasReleasedThisFrame)
@@ -175,6 +176,7 @@ public class Save_UI : MonoBehaviour
                 {
                     SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);   // 決定音
                     Pause.isPause = false;  // ポーズやめる
+                    Debug.Log("ワープするの解除");
                     Warp.canWarp = false;    // ワープ可能下す
                     Warp.shouldWarp = true;  // ワープするべきなのでフラグを立てる
                     SusumuCharacter.GetComponent<UIBlink>().isHide = true; // UI表示を隠す
@@ -193,6 +195,7 @@ public class Save_UI : MonoBehaviour
                     SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList); // 決定音
                     Warp.canWarp = false;    // ワープ可能下す
                     Pause.isPause = false;  // ポーズをやめる
+                    Debug.Log("ワープしないの解除");
                     SusumuCharacter.GetComponent<UIBlink>().isHide = true; // UI表示を隠す
                     NoCharacter.GetComponent<UIBlink>().isHide = true;
                     NoCharacter.GetComponent<UIBlink>().isBlink = false;   // 点滅を消す
@@ -238,6 +241,7 @@ public class Save_UI : MonoBehaviour
 
 
                 Pause.isPause = true;   // UI表示時はポーズ
+                Debug.Log("セーブUI表示時のポーズ");
             }
 
 
@@ -280,6 +284,7 @@ public class Save_UI : MonoBehaviour
                 {
                     SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);   // 決定音
                     Pause.isPause = false;  // ポーズやめる
+                    Debug.Log("セーブするのポーズ");
                     SaveManager.canSave = false;    // セーブ可能下す
                     SaveManager.shouldSave = true;  // セーブするべきなのでフラグを立てる
                     YesCharacter.GetComponent<UIBlink>().isHide = true; // UI表示を隠す
@@ -297,6 +302,7 @@ public class Save_UI : MonoBehaviour
                 {
                     SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList); // 決定音
                     Pause.isPause = false;  // ポーズをやめる
+                    Debug.Log("セーブしないのポーズ");
                     SaveManager.canSave = false;    // セーブ可能を下す
                     YesCharacter.GetComponent<UIBlink>().isHide = true; // UIを消す
                     NoCharacter.GetComponent<UIBlink>().isHide = true;

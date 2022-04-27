@@ -93,6 +93,7 @@ public class FadeController : MonoBehaviour
             GameData.isFadeOut = false;
             GameData.isFadeIn = true;
             Pause.isPause = false;  // フェード中は恐らくポーズ中だからポーズをやめる
+            Debug.Log("フェード終わりの解除");
         }
     }
 

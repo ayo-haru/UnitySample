@@ -91,7 +91,7 @@ public class GamePause : MonoBehaviour
         }
         Keyboard keyboard = Keyboard.current;
 
-        if (!Pause.isPause || SaveManager.canSave || Warp.shouldWarp)
+        if (!Pause.isPause || SaveManager.canSave || Warp.shouldWarp || GameData.isFadeIn || GameData.isFadeOut)
         {
             PauseCharacter.GetComponent<UIBlink>().isHide = true;
             BackGame.GetComponent<UIBlink>().isHide = true;

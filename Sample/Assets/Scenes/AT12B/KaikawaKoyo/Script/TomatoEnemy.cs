@@ -94,7 +94,7 @@ public class TomatoEnemy : MonoBehaviour
                 // è„è∏ë¨ìx&óéâ∫ë¨ìxí≤êÆ
                 if (!isGround)
                 {
-                    rb.velocity += new Vector3(0.0f, -0.8f, 0.0f);
+                    rb.velocity += new Vector3(0.0f, -1.0f, 0.0f);
                 }
             }
         }

@@ -25,6 +25,10 @@ public struct SaveData {
     public Vector3 LastPlayerPos;
     public float HP;
     public bool isBoss1Alive;
+    public int CurrentPiece;
+    public int PieceGrade;
+    public float bgmVolume;
+    public float seVolume;
 }
 /*
     シリアライズとは
@@ -62,6 +66,23 @@ public static class SaveManager {
 
     public static void saveBossAlive(bool _flg) {  // HPをJsonに保存する
         sd.isBoss1Alive = _flg;
+        save();
+    }
+
+    public static void saveCurrentPiece(int _nPiece) {  // HPをJsonに保存する
+        sd.CurrentPiece = _nPiece;
+        save();
+    }
+    public static void savePieceGrade(int _PieceGrade){  // HPをJsonに保存する
+        sd.PieceGrade = _PieceGrade;
+        save();
+    }
+    public static void saveBGMVolume(float _bgmVolume){  // BGMをJsonに保存する
+        sd.bgmVolume = _bgmVolume;
+        save();
+    }
+    public static void saveSEVolume(float _seVolume){  // SEをJsonに保存する
+        sd.seVolume = _seVolume;
         save();
     }
 

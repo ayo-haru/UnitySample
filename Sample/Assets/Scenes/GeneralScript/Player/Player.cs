@@ -105,15 +105,11 @@ public class Player : MonoBehaviour
 
         if (shouldRespawn)
         {
-            //フェード
-            Pause.isPause = true;
-            GameData.isFadeOut = true;
             if (!GameData.isFadeOut && !GameData.isFadeIn)
             {
-                this.transform.position = GameData.PlayerPos = GameData.ReSpawnPos;
+                GameData.InitScene();
                 Pause.isPause = false;
             }
-            shouldRespawn = false;
         }
     }
 

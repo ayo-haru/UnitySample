@@ -562,10 +562,11 @@ public class Player2 : MonoBehaviour
                 //GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
                 //hp.GetComponent<GameOver>().GameOverShow();
 
-                Pause.isPause = true;
-                GameData.isFadeOut = true;
-
-                GameData.RespawnPlayer();
+                // フェード
+                Pause.isPause = true;   // フェード終わるまでポーズ
+                GameData.isFadeOut = true;  // フェードかける
+                // りすぽん
+                GameOver.GameOverReset();
             }
         }
 

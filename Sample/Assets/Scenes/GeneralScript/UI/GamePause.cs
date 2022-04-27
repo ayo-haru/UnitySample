@@ -99,7 +99,7 @@ public class GamePause : MonoBehaviour
 
             return;
         }
-        else if (Pause.isPause)
+        else if (Pause.isPause && !isCalledOncce)
         {
             // ポーズ中になったら表示
             PauseCharacter.GetComponent<UIBlink>().isHide = false;
@@ -151,7 +151,7 @@ public class GamePause : MonoBehaviour
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
-                Pause.isPause = false;
+                Pause.isPause = false;  // ポーズ解除
                 backgame.GetComponent<UIBlink>().isHide = true;
                 BackGame.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
                 isDecision = false;
@@ -172,6 +172,7 @@ public class GamePause : MonoBehaviour
                 GameData.OldMapNumber = GameData.CurrentMapNumber;
                 string nextSceneName = GameData.GetNextScene((int)GameData.eSceneState.TITLE_SCENE);
                 SceneManager.LoadScene(nextSceneName);
+                Pause.isPause = false;  // ポーズ解除
                 isDecision = false;
             }
         }
@@ -186,6 +187,7 @@ public class GamePause : MonoBehaviour
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
                 isDecision = false;
+                Pause.isPause = false;  //　ポーズ解除
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
 #else

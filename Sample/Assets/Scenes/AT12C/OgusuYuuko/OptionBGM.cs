@@ -60,4 +60,9 @@ public class OptionBGM : MonoBehaviour
 
 
     }
+    //İ’è‰æ–Ê•Â‚¶‚½‚Æ‚«‚É‰¹—Ê•Û‘¶
+    private void OnDisable()
+    {
+        SaveManager.saveBGMVolume(SoundManager.bgmVolume);
+    }
 }

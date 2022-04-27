@@ -24,30 +24,15 @@ public class PieceManager : MonoBehaviour
     private int PieceGrade;
     //所持枠最大値
     private int MaxPieceGrade;
+    //一回だけ実行する用のフラグ
+    private bool onceFlag;
     //回復のストックマネージャー
    // private StockManager stockManager;
     // Start is called before the first frame update
     void Start()
     {
-        //所持枠最大値設定
-        MaxPieceGrade = piece.Length;
-        //ゲームデータクラスから回復のかけらの数取得して入れる
-        nPiece = GameData.CurrentPiece;
-        //ゲームデータクラスから取得していれる
-        PieceGrade = GameData.CurrentPieceGrade;
-
-        for(int i = 0; i < nPiece; ++i)
-        {
-            //かけらの所持数分黄色にして表示
-            piece[i].GetComponent<ImageShow>().Show();
-        }
-
-        for(int i = nPiece; i < PieceGrade; ++i)
-        {
-            //かけらを黒色にして表示
-            piece[i].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
-            piece[i].GetComponent<ImageShow>().Show();
-        }
+        onceFlag = true;
+        
 
        // stockManager = GameObject.Find("StockHPManager").GetComponent<StockManager>();
     }
@@ -55,6 +40,31 @@ public class PieceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!onceFlag)
+        {
+            return;
+        }
+        // 所持枠最大値設定
+        MaxPieceGrade = piece.Length;
+        //ゲームデータクラスから回復のかけらの数取得して入れる
+        nPiece = GameData.CurrentPiece;
+        //ゲームデータクラスから取得していれる
+        PieceGrade = GameData.CurrentPieceGrade;
+
+        for (int i = 0; i < nPiece; ++i)
+        {
+            //かけらの所持数分黄色にして表示
+            piece[i].GetComponent<ImageShow>().Show();
+        }
+
+        for (int i = nPiece; i < PieceGrade; ++i)
+        {
+            //かけらを黒色にして表示
+            piece[i].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
+            piece[i].GetComponent<ImageShow>().Show();
+        }
+
+        onceFlag = false;
         //かけらが５個ある時
         //if(nPiece == piece.Length)
         //{
@@ -118,6 +128,8 @@ public class PieceManager : MonoBehaviour
             piece[nPiece - 1].GetComponent<ImageShow>().SetColor(1.0f,1.0f,1.0f);
             //ゲームデータ更新
             ++GameData.CurrentPiece;
+            //保存
+            SaveManager.saveHP(GameData.CurrentPiece);
 
     }
 
@@ -138,6 +150,8 @@ public class PieceManager : MonoBehaviour
             piece[nPiece].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
             //ゲームデータ更新
             --GameData.CurrentPiece;
+            //保存
+            SaveManager.saveHP(GameData.CurrentPiece);
 
             return true;
         }
@@ -155,6 +169,8 @@ public class PieceManager : MonoBehaviour
         ++PieceGrade;
         //ゲームデータ更新
         ++GameData.CurrentPieceGrade;
+        //保存
+        SaveManager.saveHP(GameData.CurrentPieceGrade);
         //表示
         piece[PieceGrade - 1].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
         piece[PieceGrade - 1].GetComponent<ImageShow>().Show();

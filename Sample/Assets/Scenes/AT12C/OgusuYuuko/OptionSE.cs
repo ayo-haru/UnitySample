@@ -59,4 +59,10 @@ public class OptionSE : MonoBehaviour
 
 
     }
+
+    //İ’è‰æ–Ê•Â‚¶‚½‚Æ‚«‚É‰¹—Ê•Û‘¶
+    private void OnDisable()
+    {
+        SaveManager.saveSEVolume(SoundManager.seVolume);
+    }
 }

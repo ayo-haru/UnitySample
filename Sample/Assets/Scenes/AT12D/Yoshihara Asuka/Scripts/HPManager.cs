@@ -52,10 +52,20 @@ public class HPManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      //  HP.fillAmount = (float)GameData.CurrentHP / MaxHP;
+        //  HP.fillAmount = (float)GameData.CurrentHP / MaxHP;
         //Debug.Log("HP量:"+HP.fillAmount);
         //Debug.Log("MAXHP:"+MaxHP);
         //Debug.Log("残HP:"+GameData.CurrentHP);
+
+        ////でバック表示
+        //if (Input.GetKeyDown(KeyCode.F5))
+        //{
+        //    GetItem();
+        //}
+        //if (Input.GetKeyDown(KeyCode.F6))
+        //{
+        //    GetPiece();
+        //}
     }
 
     public void GetPiece()
@@ -65,6 +75,8 @@ public class HPManager : MonoBehaviour
         {
             ++GameData.CurrentHP;
             hpTex.SetFrame(GameData.CurrentHP);
+            //保存
+            SaveManager.saveHP(GameData.CurrentHP);
         }
         else//HPが満タンだったらかけらを増やす
         {
@@ -79,6 +91,8 @@ public class HPManager : MonoBehaviour
             //かけらがなかったらHP減らす
             --GameData.CurrentHP;
             hpTex.SetFrame(GameData.CurrentHP);
+            //保存
+            SaveManager.saveHP(GameData.CurrentHP);
         }
     }
 

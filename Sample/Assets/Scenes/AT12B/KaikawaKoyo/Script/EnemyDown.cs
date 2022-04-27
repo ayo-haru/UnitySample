@@ -36,6 +36,12 @@ public class EnemyDown : MonoBehaviour
     float DeadTime = 0.0f;
 
     Rigidbody rb;
+
+    //---ディゾルブ処理のための追記(2022/04/28.吉原)
+    Dissolve _dissolve;
+    private bool isCalledOnce = false;      // Update内で一回だけ処理を行いたいのでbool型の変数を用意
+    private bool FinDissolve = false;       // Dissolveマテリアルに差し替える処理を終えたことを判定する
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +50,7 @@ public class EnemyDown : MonoBehaviour
         isAlive = true;
         rb = gameObject.GetComponent<Rigidbody>();
         Random.InitState(System.DateTime.Now.Millisecond);
+        _dissolve = this.GetComponent<Dissolve>();
     }
 
     // Update is called once per frame
@@ -60,13 +67,24 @@ public class EnemyDown : MonoBehaviour
             if (!isAlive)
             {
                 DeadTime += Time.deltaTime;
+
+                //---ディゾルマテリアルに変更
+                if (!isCalledOnce)
+                {
+                    if (EnemyNumber == 1 || EnemyNumber == 0)
+                    {
+                        _dissolve.Invoke("Play",0.2f);
+                        isCalledOnce = true;
+                        FinDissolve = true;
+                    }
+                }
             }
 
             if (DeadTime > 1.0f)
             {
                 Pos = transform.position;
-                Destroy(gameObject, 0.0f);
-                if(EnemyNumber == 2)
+                Destroy(gameObject, 0.5f);
+                if (EnemyNumber == 2)
                 {
                     EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);
                 }

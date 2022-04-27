@@ -88,7 +88,7 @@ public class GamePause : MonoBehaviour
         }
         Keyboard keyboard = Keyboard.current;
 
-        if (!Pause.isPause/* && !GameData.isFadeIn && !GameData.isFadeOut && !SaveManager.canSave && !Warp.shouldWarp*/)
+        if (!Pause.isPause || SaveManager.canSave || Warp.shouldWarp)
         {
             PauseCharacter.GetComponent<UIBlink>().isHide = true;
             BackGame.GetComponent<UIBlink>().isHide = true;
@@ -99,7 +99,7 @@ public class GamePause : MonoBehaviour
 
             return;
         }
-        else if (Pause.isPause  && !isCalledOncce)
+        else if (Pause.isPause)
         {
             // ポーズ中になったら表示
             PauseCharacter.GetComponent<UIBlink>().isHide = false;

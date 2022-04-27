@@ -549,7 +549,6 @@ public class Player2 : MonoBehaviour
     #region ポーズの入力処理
     private void PauseToggle(InputAction.CallbackContext obj) {
         Pause.isPause = !Pause.isPause; // トグル
-
     }
     #endregion
 

@@ -267,7 +267,7 @@ public class Player2 : MonoBehaviour
     private void FixedUpdate()
     {
         if (!Pause.isPause){
-            Move("Velocity");
+            Move("AddForce");
         }
         else{
         }
@@ -301,7 +301,17 @@ public class Player2 : MonoBehaviour
                 ForceDirection += move.ReadValue<Vector2>();
                 ForceDirection.Normalize();
                 rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
-            break;
+                if (Timer <= 0)
+                {
+                    rb.velocity = new Vector3(MovingVelocity.x, rb.velocity.y - MovingVelocity.y, 0);
+                }
+                else
+                {
+                    --Timer;
+                    rb.velocity = new Vector3(0, rb.velocity.y - MovingVelocity.y, 0);
+                }
+
+                break;
 
             default:
             break;
@@ -394,6 +404,7 @@ public class Player2 : MonoBehaviour
 			if (GroundNow == true){
 				rb.AddForce(transform.up * 3.0f, ForceMode.Impulse);
 			}
+            Timer = stopTime;
             UnderParryNow = true;
             GamePadManager.onceTiltStick = true;
             //GroundNow = false;
@@ -432,6 +443,7 @@ public class Player2 : MonoBehaviour
         //Debug.Log("攻撃した！(Weapon)");
         //EffectManager.Play(EffectData.eEFFECT.EF_SHEILD2,weapon.transform.position);
         SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
+
         AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする
 
         Destroy(weapon, DestroyTime);
@@ -468,6 +480,10 @@ public class Player2 : MonoBehaviour
     //===================================================================
     private void Damaged()
     {
+        //Player.shouldRespawn = true;
+        //Pause.isPause = true;
+        //GameData.isFadeOut = true;
+
         if (!hp){                        // hpのUIがない場合は処理終了
             return;
         }
@@ -573,9 +589,10 @@ public class Player2 : MonoBehaviour
     //---HPがゼロになった時の処理
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Damaged" || collision.gameObject.tag == "GroundDameged")
+        if (collision.gameObject.tag == "Damaged" || 
+            collision.gameObject.tag == "GroundDameged" ||
+            collision.gameObject.tag == "Enemy")
         {
-            Player.shouldRespawn = true;
             //---自分の位置と接触してきたオブジェクトの位置を計算し、距離と方向を算出
             Distination = (transform.position - collision.transform.position).normalized;
             // プレイヤーがダメージを食らっていないとき

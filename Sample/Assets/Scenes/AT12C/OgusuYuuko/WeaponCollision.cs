@@ -59,13 +59,14 @@ public class WeaponCollision : MonoBehaviour
         {
             if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "GroundDameged")
             {
+                BounceCheck();
                 //•ûŒü
                 // Vector3 dir = Player.transform.position - collision.transform.position;
                 Vector3 dir = Player.transform.position - gameObject.transform.position;
                 dir.Normalize();
                 player_rb.velocity = Vector3.zero;
                 //’n–ÊƒpƒŠƒC
-                player_rb.AddForce(dir * baunceGround, ForceMode.Impulse);
+                player_rb.AddForce((dir * baunceGround), ForceMode.Impulse);
                 CanCollision = false;
             }
         }
@@ -77,5 +78,17 @@ public class WeaponCollision : MonoBehaviour
         }
 
         Debug.Log(collision.gameObject.name + "‚Æ“–‚½‚Á‚½");
+    }
+    
+    // ’µ‚Ë•Ô‚é—Í’²®ŠÖ”
+    private void BounceCheck()
+    {
+        Vector3 PlayerVelocity = player_rb.velocity;
+        PlayerVelocity.z = 0;
+
+        if(PlayerVelocity.sqrMagnitude > baunceGround * baunceGround)
+        {
+            player_rb.velocity = PlayerVelocity.normalized * baunceGround;
+        }
     }
 }

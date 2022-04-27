@@ -48,6 +48,7 @@ public class KitchenSceneManager : MonoBehaviour
             case (int)GameData.eSceneState.KitchenStage001:
                 if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage002)
                 {
+
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(430.0f, 15.0f, 0.0f);
                 }
                 else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage004)

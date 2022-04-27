@@ -111,14 +111,12 @@ public class Player : MonoBehaviour
         {
             GameData.isFadeOut = true;
             Pause.isPause = true;
-            GamePadManager.onceTiltStick = false;
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001;
         }
         if (other.gameObject.tag == "toKitchen2")    // この名前のタグと衝突したら
         {
             GameData.isFadeOut = true;
             Pause.isPause = true;
-            GamePadManager.onceTiltStick = false;
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage002;
         }
         if (other.gameObject.tag == "toKitchen3")    // この名前のタグと衝突したら
@@ -132,35 +130,30 @@ public class Player : MonoBehaviour
             }
             GameData.isFadeOut = true;
             Pause.isPause = true;
-            GamePadManager.onceTiltStick = false;
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage003;
         }
         if (other.gameObject.tag == "toKitchen4")    // この名前のタグと衝突したら
         {
             GameData.isFadeOut = true;
             Pause.isPause = true;
-            GamePadManager.onceTiltStick = false;
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage004;
         }
         if (other.gameObject.tag == "toKitchen5")    // この名前のタグと衝突したら
         {
             GameData.isFadeOut = true;
             Pause.isPause = true;
-            GamePadManager.onceTiltStick = false;
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage005;
         }
         if (other.gameObject.tag == "toKitchen6")    // この名前のタグと衝突したら
         {
             GameData.isFadeOut = true;
             Pause.isPause = true;
-            GamePadManager.onceTiltStick = false;
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage006;
         }
         if (other.gameObject.tag == "toBoss1")    // この名前のタグと衝突したら
         {
             GameData.isFadeOut = true;
             Pause.isPause = true;
-            GamePadManager.onceTiltStick = false;
             GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
         }
     }

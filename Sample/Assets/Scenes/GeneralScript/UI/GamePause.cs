@@ -35,6 +35,8 @@ public class GamePause : MonoBehaviour
 
     Canvas canvas;
 
+    private bool isDecision;
+
     private Game_pad UIActionAssets;                // InputActionのUIを扱う
     private InputAction LeftStickSelect;            // InputActionのselectを扱う
     private InputAction RightStickSelect;           // InputActionのselectを扱う
@@ -93,10 +95,11 @@ public class GamePause : MonoBehaviour
             GameEnd.GetComponent<UIBlink>().isHide = true;
             BackTitle.GetComponent<UIBlink>().isHide = true;
             Panel.GetComponent<Image>().enabled = false;
+            isCalledOncce = false;
 
             return;
         }
-        if (!isCalledOncce)
+        else if (Pause.isPause  && !isCalledOncce)
         {
             // ポーズ中になったら表示
             PauseCharacter.GetComponent<UIBlink>().isHide = false;
@@ -144,25 +147,14 @@ public class GamePause : MonoBehaviour
             BackTitle.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
 
-            if (keyboard.enterKey.wasReleasedThisFrame) // 選択を確定
+            if (isDecision) // 選択を確定
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
                 Pause.isPause = false;
                 backgame.GetComponent<UIBlink>().isHide = true;
                 BackGame.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
-            }
-            else if (isSetGamePad)
-            {
-                if (GameData.gamepad.buttonEast.wasReleasedThisFrame)
-                {
-                    // 決定音
-                    SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
-                    Pause.isPause = false;
-                    backgame.GetComponent<UIBlink>().isHide = true;
-                    BackGame.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
-
-                }
+                isDecision = false;
             }
         }
         else if (select == (int)eSTATEPAUSE.RETURNTITLE)
@@ -171,7 +163,7 @@ public class GamePause : MonoBehaviour
             BackTitle.GetComponent<UIBlink>().isBlink = true; // UIを点滅
             GameEnd.GetComponent<UIBlink>().isBlink = false;  // UIの点滅を消す
 
-            if (keyboard.enterKey.wasReleasedThisFrame) // 選択を確定
+            if (isDecision) // 選択を確定
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
@@ -180,23 +172,8 @@ public class GamePause : MonoBehaviour
                 GameData.OldMapNumber = GameData.CurrentMapNumber;
                 string nextSceneName = GameData.GetNextScene((int)GameData.eSceneState.TITLE_SCENE);
                 SceneManager.LoadScene(nextSceneName);
+                isDecision = false;
             }
-            else if (isSetGamePad)
-            {
-                if (GameData.gamepad.buttonEast.wasReleasedThisFrame)
-                {
-                    // 決定音
-                    SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
-
-                    // シーン関連
-                    GameData.OldMapNumber = GameData.CurrentMapNumber;
-                    string nextSceneName = GameData.GetNextScene((int)GameData.eSceneState.TITLE_SCENE);
-                    SceneManager.LoadScene(nextSceneName);
-
-                }
-            }
-
-
         }
         else if (select == (int)eSTATEPAUSE.QUITGAME)
         {
@@ -204,33 +181,16 @@ public class GamePause : MonoBehaviour
             BackTitle.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = true;    // UIを点滅
 
-            if (keyboard.enterKey.wasReleasedThisFrame) // 選択を確定
+            if (isDecision) // 選択を確定
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
-
+                isDecision = false;
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
 #else
                 Application.Quit();
 #endif
-
-            }
-
-            else if (isSetGamePad)
-            {
-                if (GameData.gamepad.buttonEast.wasReleasedThisFrame)
-                {
-                    // 決定音
-                    SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
-
-#if UNITY_EDITOR
-                    UnityEditor.EditorApplication.isPlaying = false;
-#else
-                Application.Quit();
-#endif
-
-                }
 
             }
 
@@ -264,6 +224,7 @@ public class GamePause : MonoBehaviour
         //---Actionイベントを登録
         UIActionAssets.UI.LeftStickSelect.started += OnLeftStick;
         UIActionAssets.UI.RightStickSelect.started += OnRightStick;
+        UIActionAssets.UI.Decision.started += OnDecision;
 
 
         //---InputActionの有効化
@@ -323,5 +284,14 @@ public class GamePause : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 決定ボタン
+    /// </summary>
+    private void OnDecision(InputAction.CallbackContext obj) {
+        if (Pause.isPause)
+        {
+            isDecision = true;
+        }
+    }
 
 }

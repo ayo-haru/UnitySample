@@ -110,9 +110,10 @@ public static class GameData
     }
 
     public static void LoadData() {
-        PlayerPos = Player.transform.position = ReSpawnPos = SaveManager.sd.LastPlayerPos;
+        ReSpawnPos = SaveManager.sd.LastPlayerPos;
         CurrentMapNumber = SaveManager.sd.LastMapNumber;
         isAliveBoss1 = SaveManager.sd.isBoss1Alive;
+        CurrentPieceGrade = SaveManager.sd.PieceGrade;
     }
 
     public static void Init() {
@@ -123,9 +124,10 @@ public static class GameData
     }
 
     public static void RespawnPlayer() {
-        InitScene();
-        LoadData();
         CurrentHP = 5;
+        CurrentPiece = 0;
+        LoadData();
+        SceneManager.LoadScene(MapName[CurrentMapNumber]);
 
 
         Pause.isPause = false;  // 万が一ポーズ中だった場合ポーズ解除

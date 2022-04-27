@@ -27,11 +27,8 @@ public class KitchenSceneManager : MonoBehaviour
              */
             SaveManager.load();
             GameData.OldMapNumber = GameData.NextMapNumber = currentSceneNum;
-            
-            //GameData.ReSpawnPos = SaveManager.sd.LastPlayerPos;
         }
         GameData.CurrentMapNumber =  GameData.NextMapNumber;
-        //SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);
 
         //----- プレイヤー初期化 -----
         if (!GameData.Player)
@@ -229,6 +226,7 @@ public class KitchenSceneManager : MonoBehaviour
         if (GameOver.GameOverFlag)
         {
             GameData.PlayerPos = GameData.Player.transform.position = GameData.ReSpawnPos;
+            GameOver.GameOverFlag = false;
         }
 
         //---プレイヤーを空オブジェクトの子に複製する

@@ -241,7 +241,11 @@ public class KitchenSceneManager : MonoBehaviour
             GameData.PlayerPos = GameData.Player.transform.position = GameData.ReSpawnPos;
             GameOver.GameOverFlag = false;
         }
-
+        if (Player.shouldRespawn)
+        {
+            GameData.PlayerPos = GameData.Player.transform.position = GameData.ReSpawnPos;
+            Player.shouldRespawn = false;
+        }
         //---プレイヤーを空オブジェクトの子に複製する
         //Empty = GameObject.Find("Player");
         GameObject player = Instantiate(GameData.Player);

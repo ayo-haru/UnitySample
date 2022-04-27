@@ -30,6 +30,7 @@ public class Boss1Attack : MonoBehaviour
     bool AnimFlg;
     bool MoveFlg;
     BossMove.Boss_State BossTakeCase;
+    bool RFChange;
     //実装するかわからない左右判定用
     //突進用変数群
     //----------------------------------------------------------

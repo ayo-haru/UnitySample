@@ -30,7 +30,7 @@ public class Boss1Attack : MonoBehaviour
     bool AnimFlg;
     bool MoveFlg;
     BossMove.Boss_State BossTakeCase;
-    bool RFChange;
+    bool RFChange;                                          //左右反転
     //実装するかわからない左右判定用
     //突進用変数群
     //----------------------------------------------------------
@@ -52,8 +52,11 @@ public class Boss1Attack : MonoBehaviour
     bool RushEndFlg;
     float RushReturnSpeed;
     bool ReturnDelay;                                      //戻ろうとするまでの時間
-    Vector3 RotateJump;
     Vector3 Scale;
+    Vector3 oldScale;
+    [SerializeField] public float RotateSpeed;
+    [SerializeField] public Vector3 Rotate;
+        
     //----------------------------------------------------------
     //イチゴ爆弾変数
     //----------------------------------------------------------
@@ -146,6 +149,8 @@ public class Boss1Attack : MonoBehaviour
         HpScript = HpObject.GetComponent<HPgage>();
         BossAnim = this.gameObject.GetComponent<Animator>();
         Scale = Boss1Manager.Boss.transform.localScale;
+        oldScale = Boss1Manager.Boss.transform.localScale;
+
         for (int i= 0;i < Max_Strawberry;i++)
         {
             StrawberryRefFlg[i] = false;
@@ -245,17 +250,20 @@ public class Boss1Attack : MonoBehaviour
                     if (RushEndFlg)
                     {
                     //Boss1Manager.BossPos = Beziercurve.SecondCurve(RushEndPoint, RushMiddlePoint, BossStartPoint, BossReturnTime);
-                    if (RotateJump.z != -1)
+                    //方向が変わってたらスケールｘを反転
+                    if (Scale.x != -1)
                     {
-                        
-                        RotateJump.z = -1f;
-                        
-                        Scale.z *= RotateJump.z;
+                        Scale.x *= -1;
+                        Boss1Manager.Boss.transform.localScale = Scale;
                     }
-
-
-                    Boss1Manager.Boss.transform.localScale = Scale;
-                    }
+                    //回転の目標値
+                    Quaternion target = new Quaternion();
+                    //向きを設定
+                    target = Quaternion.LookRotation(Rotate);
+                    //ゆっくり回転させる
+                    Boss1Manager.Boss.transform.rotation = Quaternion.RotateTowards(Boss1Manager.Boss.transform.rotation, target, RotateSpeed);
+                }
+                
                     //途中で弾かれていたら
                     if (!RushEndFlg)
                     {
@@ -296,8 +304,6 @@ public class Boss1Attack : MonoBehaviour
                 {
                     RushRefFlg = true;
                     RushPlayerPoint = Boss1Manager.Boss.transform.position;
-                    //RushPlayerPoint.y = GameData.PlayerPos.y + 3.0f;
-                    //RushPlayerPoint.z = GameData.PlayerPos.z;
                     RushRefEndPoint = GameObject.Find("ForkRefEndPoint").transform.position;
                     BossAnim.SetBool("RushToJump", false);
                     BossAnim.SetBool("Blow", true);
@@ -311,8 +317,6 @@ public class Boss1Attack : MonoBehaviour
                     Boss1Manager.BossPos = Vector3.Lerp(RushStartPoint, RushEndPoint, RushTime);
                 if (RushTime >= 1.0f)
                 {
-                    //最終地点まで行った後そこから初期地点に戻るまでの硬直
-                    
                     RushReturnSpeed = 1f;
                     RushEndFlg = true;
                     BossReturnFlg = true;

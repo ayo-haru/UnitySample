@@ -15,6 +15,7 @@ public class BroccoliEnemy : MonoBehaviour
 {
     Transform Target;
     GameObject Player;
+    private Vector3 TargetPos;
     private Rigidbody rb;
     private EnemyDown ED;
 
@@ -36,8 +37,7 @@ public class BroccoliEnemy : MonoBehaviour
         Target = Player.transform;                    // プレイヤーの座標取得
         rb = gameObject.GetComponent<Rigidbody>();
         ED = GetComponent<EnemyDown>();
-        rb.centerOfMass = new Vector3(0, -1, 0);
-        //transform.Rotate(new Vector3(0, 0, 15));
+        //rb.centerOfMass = new Vector3(0, -1, 0);
         transform.Rotate(0, -90, 0);
     }
 
@@ -65,8 +65,11 @@ public class BroccoliEnemy : MonoBehaviour
                 Vector3 pos = rb.position;
 
                 // プレイヤーに向かって特攻する
+                float a = Player.transform.position.y - transform.position.y;
+                TargetPos = Target.position - new Vector3(0.0f, a, 0.0f);
+
                 float step = MoveSpeed * Time.deltaTime;
-                rb.position = Vector3.MoveTowards(pos, Target.position, step);
+                rb.position = Vector3.MoveTowards(pos, TargetPos, step);
 
                 if (Target.position.x < transform.position.x && look)   // プレイヤーのほうを向く処理
                 {

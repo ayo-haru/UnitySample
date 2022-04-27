@@ -58,8 +58,9 @@ public class TomatoEnemy : MonoBehaviour
                 if (!isGround)
                 {
                     // ÉvÉåÉCÉÑÅ[Ç…å¸Ç©Ç¡Çƒì¡çUÇ∑ÇÈ
+                    float a = Player.transform.position.y - transform.position.y;
+                    TargetPos = Target.position - new Vector3(0.0f, a, 0.0f);
                     float step = MoveSpeed * Time.deltaTime;
-                    TargetPos = Target.position - new Vector3(0.0f, 2.0f, 0.0f);
                     rb.position = Vector3.MoveTowards(pos, TargetPos, step);
                 }
 

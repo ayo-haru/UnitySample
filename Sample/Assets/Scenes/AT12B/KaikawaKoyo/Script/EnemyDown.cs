@@ -62,7 +62,7 @@ public class EnemyDown : MonoBehaviour
                 DeadTime += Time.deltaTime;
             }
 
-            if (DeadTime > 0.3f)
+            if (DeadTime > 1.0f)
             {
                 Pos = transform.position;
                 Destroy(gameObject, 0.0f);
@@ -86,28 +86,12 @@ public class EnemyDown : MonoBehaviour
         if(!Pause.isPause)
         {
             rb.Resume(gameObject);
+            // 弾かれたらベクトルを計算して関数を呼び出す
             if (collision.gameObject.name == "Weapon(Clone)" && isAlive)
             {
                 vec = (transform.position -Player.transform.position).normalized;
-
                 EnemyDead(vec , Player.transform.position.x);
             }
-
-            //if (!isAlive)
-            //{
-            //    //取得した法線ベクトルに跳ね返す速さをかけて、跳ね返す
-            //    rb.AddForce(velocity * bouncePower, ForceMode.Force);
-            //    // 回転させる
-            //    rb.AddTorque(0.0f, 0.0f, -300.0f);
-
-            //}
-
-            //if (isAlive == false && collision.gameObject.CompareTag("Ground"))
-            //{
-            //    rb.velocity = -vec * bouncePower;
-            //    // 壁、床に当たったら消える
-            //    //Destroy(gameObject, 0.0f);
-            //}
         }
         else
         {
@@ -115,6 +99,7 @@ public class EnemyDown : MonoBehaviour
         }
     }
 
+    // 死ぬ時の処理
     public void EnemyDead(Vector3 vec , float x)
     {
         if (!Pause.isPause)

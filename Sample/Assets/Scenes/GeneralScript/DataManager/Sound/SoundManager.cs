@@ -36,6 +36,19 @@ public static class SoundManager {
         return null;    // 未使用のAudioSourceはみつからなかった
     }
 
+    //使用しているAudioSource取得
+    private static AudioSource GetUsedSource(AudioSource[] audioSourceList)
+    {
+        for (int i = 0; i < audioSourceList.Length; ++i)
+        {
+            if (audioSourceList[i].isPlaying == true)
+            {
+                return audioSourceList[i];
+            }
+        }
+        return null;    // 未使用のAudioSourceはみつからなかった
+    }
+
 
     /// <summary>
     /// サウンド再生
@@ -75,6 +88,13 @@ public static class SoundManager {
         audioSource.volume = bgmVolume;
         audioSource.loop = true;
         audioSource.Play();
+    }
+
+    //BGMボリューム設定
+    public static void setVolume(AudioSource[] _audioSourceList)
+    {
+        AudioSource audioSource = GetUsedSource(_audioSourceList);
+        audioSource.volume = bgmVolume;
     }
 
     /// <summary>

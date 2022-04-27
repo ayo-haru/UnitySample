@@ -575,7 +575,7 @@ public class Player2 : MonoBehaviour
     {
         if (collision.gameObject.tag == "Damaged" || collision.gameObject.tag == "GroundDameged")
         {
-
+            Player.shouldRespawn = true;
             //---自分の位置と接触してきたオブジェクトの位置を計算し、距離と方向を算出
             Distination = (transform.position - collision.transform.position).normalized;
             // プレイヤーがダメージを食らっていないとき

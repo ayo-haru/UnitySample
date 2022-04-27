@@ -21,6 +21,8 @@ public class OptionBGM : MonoBehaviour
     public bool selectFlag = true;
     //移動量
     public float moveSpeed = 0.005f;
+    //現在のシーン保存用
+    private int currentScene;
     // Start is called before the first frame update
     void Awake()
     {
@@ -29,6 +31,8 @@ public class OptionBGM : MonoBehaviour
 
         //サウンドマネージャーからbgmの音量を取得
         BgmSlider.value = SoundManager.bgmVolume;
+
+        currentScene = GameData.CurrentMapNumber;
         
     }
 
@@ -47,7 +51,15 @@ public class OptionBGM : MonoBehaviour
             BgmSlider.value += moveSpeed;
             //音量設定
             SoundManager.bgmVolume = BgmSlider.value;
-            SoundManager.setVolume(SoundData.GameAudioList);
+            if (currentScene == (int)GameData.eSceneState.TITLE_SCENE)
+            {
+                SoundManager.setVolume(SoundData.TitleAudioList);
+            }
+            else
+            {
+                SoundManager.setVolume(SoundData.GameAudioList);
+            }
+            
         }
         //左矢印キーで音量－
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -55,8 +67,14 @@ public class OptionBGM : MonoBehaviour
             BgmSlider.value -= moveSpeed;
             //音量設定
             SoundManager.bgmVolume = BgmSlider.value;
-            SoundManager.setVolume(SoundData.GameAudioList);
-            SoundManager.setVolume(SoundData.TitleAudioList);
+            if (currentScene == (int)GameData.eSceneState.TITLE_SCENE)
+            {
+                SoundManager.setVolume(SoundData.TitleAudioList);
+            }
+            else
+            {
+                SoundManager.setVolume(SoundData.GameAudioList);
+            }
         }
 
 

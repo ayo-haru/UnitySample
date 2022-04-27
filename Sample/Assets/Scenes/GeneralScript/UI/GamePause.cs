@@ -159,6 +159,7 @@ public class GamePause : MonoBehaviour
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
                 Pause.isPause = false;  // ポーズ解除
+                Debug.Log("ポーズ解除のポーズ解除");
                 backgame.GetComponent<UIBlink>().isHide = true;
                 BackGame.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
                 isDecision = false;
@@ -180,6 +181,7 @@ public class GamePause : MonoBehaviour
                 string nextSceneName = GameData.GetNextScene((int)GameData.eSceneState.TITLE_SCENE);
                 SceneManager.LoadScene(nextSceneName);
                 Pause.isPause = false;  // ポーズ解除
+                Debug.Log("シーン遷移のポーズ解除");
                 isDecision = false;
             }
         }
@@ -195,6 +197,8 @@ public class GamePause : MonoBehaviour
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
                 isDecision = false;
                 Pause.isPause = false;  //　ポーズ解除
+                Debug.Log("ゲームやめるのポーズ");
+
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
 #else

@@ -231,6 +231,7 @@ public class Player2 : MonoBehaviour
 
                 // フェード
                 Pause.isPause = true;   // フェード終わるまでポーズ
+                Debug.Log("フェードはじめのポーズ");
                 GameData.isFadeOut = true;  // フェードかける
                 // りすぽん
                 GameOver.GameOverReset();

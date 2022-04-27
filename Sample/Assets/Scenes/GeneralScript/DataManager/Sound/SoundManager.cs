@@ -36,14 +36,22 @@ public static class SoundManager {
         return null;    // 未使用のAudioSourceはみつからなかった
     }
 
-    //使用しているAudioSource取得
+    //使用しているBGMのAudioSource取得
     private static AudioSource GetUsedSource(AudioSource[] audioSourceList)
     {
         for (int i = 0; i < audioSourceList.Length; ++i)
         {
+            //再生中かどうか
             if (audioSourceList[i].isPlaying == true)
             {
-                return audioSourceList[i];
+                for(int j = 0; j < SoundData.BGMClip.Length; ++j)
+                {
+                    //BGMかどうか
+                    if (audioSourceList[i].clip == SoundData.BGMClip[j])
+                    {
+                        return audioSourceList[i];
+                    }
+                }
             }
         }
         return null;    // 未使用のAudioSourceはみつからなかった

@@ -7,6 +7,7 @@
 //
 // <開発履歴>
 // 2022/04/26    作成
+// 2022/04/27   SE付けた
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -30,6 +31,9 @@ public class OptionManager : MonoBehaviour
     //SEスライダー
     public GameObject seSlider;
 
+    //現在のシーン保存用
+    private int currentScene;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +44,9 @@ public class OptionManager : MonoBehaviour
         //矢印位置設定
         Vector3 newPos = new Vector3(rt_selectArrow.transform.position.x, bgmSlider.transform.position.y, rt_selectArrow.transform.position.z);
         rt_selectArrow.transform.position = newPos;
+
+        //現在のシーン取得
+        currentScene = GameData.CurrentMapNumber;
     }
 
     // Update is called once per frame
@@ -48,14 +55,31 @@ public class OptionManager : MonoBehaviour
         //前フレームの選択を保存
         old_select = select;
         //上矢印でBGM選択
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             select = SELECT_MODE.BGM;
+            if(currentScene == (int)GameData.eSceneState.TITLE_SCENE)
+            {
+                SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
+            }
+            else
+            {
+                SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.GameAudioList);
+            }
+            
         }
         //下矢印でSE選択
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             select = SELECT_MODE.SE;
+            if (currentScene == (int)GameData.eSceneState.TITLE_SCENE)
+            {
+                SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
+            }
+            else
+            {
+                SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.GameAudioList);
+            }
         }
 
         if(old_select == select)

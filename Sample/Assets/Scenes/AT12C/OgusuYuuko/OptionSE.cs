@@ -48,7 +48,6 @@ public class OptionSE : MonoBehaviour
             SeSlider.value += moveSpeed;
             //âπó ê›íË
             SoundManager.seVolume = SeSlider.value;
-            SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
         }
         //ç∂ñÓàÛÉLÅ[Ç≈âπó Å|
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -56,7 +55,6 @@ public class OptionSE : MonoBehaviour
             SeSlider.value -= moveSpeed;
             //âπó ê›íË
             SoundManager.seVolume = SeSlider.value;
-            SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
         }
 
 

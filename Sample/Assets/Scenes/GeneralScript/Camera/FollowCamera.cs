@@ -22,6 +22,8 @@ public class FollowCamera : MonoBehaviour
     public Vector3 FollowCameraPos = new Vector3(0.0f,1.5f,-6.0f);     // 追従するカメラの高さ(x,y,z)
     public int RightScreenOut;          // 右の画面外設定
     public int LeftScreenOut;           // 左の画面外設定
+    public int HeightScreenOut;         // 上の画面外設定
+    public int UnderScreenOut;          // 下の画面外設定
     public float MovePoint;             // マップ遷移するための地点
     bool MoveFlg;                       // マップ遷移のフラグ
 
@@ -68,5 +70,19 @@ public class FollowCamera : MonoBehaviour
 											 PlayerPos.y + FollowCameraPos.y,
 											 FollowCameraPos.z);          // ジャンプ追従
 		}
+        //---上の画面外設定(y)
+        if(PlayerPos.y > HeightScreenOut)
+        {
+            transform.position = new Vector3(PlayerPos.x,
+                                             HeightScreenOut,
+                                             FollowCameraPos.z);
+        }
+        //---下の画面外設定(y)
+        if(PlayerPos.y < UnderScreenOut)
+        {
+            transform.position = new Vector3(PlayerPos.x,
+                                             UnderScreenOut,
+                                             FollowCameraPos.z);
+        }
 	}
 }

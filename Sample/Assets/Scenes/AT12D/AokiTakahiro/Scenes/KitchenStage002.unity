@@ -14529,6 +14529,8 @@ MonoBehaviour:
   FollowCameraPos: {x: 0, y: 80, z: -50}
   RightScreenOut: 835
   LeftScreenOut: 115
+  HeightScreenOut: 0
+  UnderScreenOut: 0
   MovePoint: 0
 --- !u!1001 &1526769561
 PrefabInstance:
@@ -17089,7 +17091,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1721734415}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 150, y: 100, z: -200}
+  m_LocalPosition: {x: 467.3, y: -54.1, z: -122.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -17140,9 +17142,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5da5bb4d3d060884496dc765de038b0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FollowCameraPos: {x: 0, y: 30, z: -120}
+  FollowCameraPos: {x: 0, y: -60, z: -120}
   RightScreenOut: 835
   LeftScreenOut: 30
+  HeightScreenOut: -50
+  UnderScreenOut: -50
   MovePoint: 0
 --- !u!1001 &1726905201
 PrefabInstance:
@@ -17835,6 +17839,8 @@ MonoBehaviour:
   FollowCameraPos: {x: 0, y: 80, z: -50}
   RightScreenOut: 0
   LeftScreenOut: 0
+  HeightScreenOut: 0
+  UnderScreenOut: 0
   MovePoint: 0
 --- !u!1001 &1807018763
 PrefabInstance:

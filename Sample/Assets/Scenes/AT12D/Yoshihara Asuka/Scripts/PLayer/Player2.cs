@@ -103,6 +103,7 @@ public class Player2 : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         shieldManager = GetComponent<ShieldManager>();
         PlayerActionAsset = new Game_pad();             // InputActionインスタンスを生成
+        rb.AddForce(GameData.PlayerVelocyty.Velocity,ForceMode.Impulse);
     }
 
 
@@ -252,6 +253,8 @@ public class Player2 : MonoBehaviour
                     UnderParryNow = false;
                 }
             }
+
+            GameData.PlayerVelocyty.Set(rb); 
         }
         else
         {

@@ -36,6 +36,7 @@ public class KitchenSceneManager : MonoBehaviour
             GameData.Player = playerPrefab;
         }
 
+
         switch(GameData.CurrentMapNumber) 
         {
             //---ステージシーン
@@ -47,14 +48,16 @@ public class KitchenSceneManager : MonoBehaviour
             case (int)GameData.eSceneState.KitchenStage001:
                 if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage002)
                 {
-                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(398.0f, 15.0f, 0.0f);
+                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(430.0f, 15.0f, 0.0f);
                 }
                 else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage004)
                 {
+                    GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(1110.0f, 18.0f, 0.0f);
                 }
                 else
                 {
+                    GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(25.0f, 20.0f, 0.0f);
                 }
                 //else // ステージ1テスト用
@@ -81,12 +84,14 @@ public class KitchenSceneManager : MonoBehaviour
 
             //---ステージ2
             case (int)GameData.eSceneState.KitchenStage002:
-                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(470.0f, -5.0f, 0.0f);
+                GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
+                GameData.PlayerPos = GameData.Player.transform.position = new Vector3(470.0f, -10.0f, 0.0f);
 
                 break;
 
             //---ステージ3
             case (int)GameData.eSceneState.KitchenStage003:
+                GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                 GameData.PlayerPos = GameData.Player.transform.position = new Vector3(1100.0f, 18.0f, 0.0f);
 
                 break;
@@ -95,14 +100,17 @@ public class KitchenSceneManager : MonoBehaviour
             case (int)GameData.eSceneState.KitchenStage004:
                 if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage001)
                 {
+                    GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(25.0f, 18.0f, 0.0f);
                 }
                 else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage005)
                 {
+                    GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(125.0f, 18.0f, 0.0f);
                 }
                 else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage006)
                 {
+                    GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(615.0f, 18.0f, 0.0f);
                 }
                 break;
@@ -111,10 +119,12 @@ public class KitchenSceneManager : MonoBehaviour
             case (int)GameData.eSceneState.KitchenStage005:
                 if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage004)
                 {
+                    GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(108.0f, 90.0f, 0.0f);
                 }
                 else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage006)
                 {
+                    GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(570.0f, 53.0f, 0.0f);
                 }
                 break;
@@ -123,14 +133,17 @@ public class KitchenSceneManager : MonoBehaviour
             case (int)GameData.eSceneState.KitchenStage006:
                 if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage003)
                 {
+                    GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(18.0f, 222.0f, 0.0f);
                 }
                 else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage004)
                 {
+                    GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(18.0f, 122.0f, 0.0f);
                 }
                 else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage005)
                 {
+                    GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(18.0f, 22.0f, 0.0f);
                 }
                 break;

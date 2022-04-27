@@ -59,6 +59,7 @@ public static class GameData
     public static Vector3 ReSpawnPos;       // リスポーンポス
     public static Vector3 PlayerPos;        // プレイヤーの座標（現在はGameManagerで毎フレーム代入しているが本来はPlayerクラスが良い(はず)） 
     public static GameObject Player;
+    public static VelocityTmp PlayerVelocyty = new VelocityTmp();
     public static int CurrentHP = 5 ;       // HPの保存(現在の)
     public static int CurrentPiece = 0;     //かけらの所持数
     public static int CurrentPieceGrade = 0;    //かけらの所持枠

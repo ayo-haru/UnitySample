@@ -13,6 +13,7 @@ public class TitleSceneManager : MonoBehaviour {
         FROMBIGINING = 0,   // 初めから
         FROMCONTINUE,       // 続きから
         QUIT,               // やめる
+        OPTION,             // オプション
 
         MAX_STATE
     }
@@ -38,6 +39,8 @@ public class TitleSceneManager : MonoBehaviour {
     private GameObject GameStart;
     private GameObject GameContinue;
     private GameObject GameEnd;
+    private GameObject Option;
+    private GameObject Optionmanager;
 
     private void Awake() {
         UIActionAssets = new Game_pad();            // InputActionインスタンスを生成
@@ -65,9 +68,13 @@ public class TitleSceneManager : MonoBehaviour {
         GameStart = GameObject.Find("GameStart");
         GameContinue = GameObject.Find("GameContinue");
         GameEnd = GameObject.Find("GameEnd");
+        Option = GameObject.Find("Option");
+        Optionmanager = GameObject.Find("OptionManager");
         GameStart.GetComponent<UIBlink>().isHide = true;        // ゲームが始まった瞬間は要らないので消す
         GameContinue.GetComponent<UIBlink>().isHide = true;
         GameEnd.GetComponent<UIBlink>().isHide = true;
+        Option.GetComponent<UIBlink>().isHide = true;
+        Optionmanager.SetActive(false);
 
     }
 
@@ -92,6 +99,7 @@ public class TitleSceneManager : MonoBehaviour {
             GameStart.GetComponent<UIBlink>().isHide = false;       // ボタンが押されたら表示する
             GameContinue.GetComponent<UIBlink>().isHide = false;
             GameEnd.GetComponent<UIBlink>().isHide = false;
+            Option.GetComponent<UIBlink>().isHide = false;
 
 
             SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
@@ -110,29 +118,34 @@ public class TitleSceneManager : MonoBehaviour {
 
         // プレスボタンされたとき＝モードの選択になるので
         // 矢印キーで選択させる
-        if (keyboard.upArrowKey.wasReleasedThisFrame)
+        //オプション開いてるときは無効にする
+        if (!Optionmanager.activeSelf)
         {
-            SelectUp();
-        }
-        else if (isSetGamePad)
-        {
-            if (GameData.gamepad.dpad.up.wasReleasedThisFrame)
+            if (keyboard.upArrowKey.wasReleasedThisFrame)
             {
                 SelectUp();
             }
-        }
+            else if (isSetGamePad)
+            {
+                if (GameData.gamepad.dpad.up.wasReleasedThisFrame)
+                {
+                    SelectUp();
+                }
+            }
 
-        if (keyboard.downArrowKey.wasReleasedThisFrame)
-        {
-            SelectDown();
-        }
-        else if (isSetGamePad)
-        {
-            if (GameData.gamepad.dpad.down.wasReleasedThisFrame)
+            if (keyboard.downArrowKey.wasReleasedThisFrame)
             {
                 SelectDown();
             }
+            else if (isSetGamePad)
+            {
+                if (GameData.gamepad.dpad.down.wasReleasedThisFrame)
+                {
+                    SelectDown();
+                }
+            }
         }
+       
 
 
 
@@ -142,6 +155,7 @@ public class TitleSceneManager : MonoBehaviour {
             GameStart.GetComponent<UIBlink>().isBlink = true; // UIを点滅
             GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+            Option.GetComponent<UIBlink>().isBlink = false;     //UIの点滅を消す
 
             if (isDecision)
             {
@@ -164,6 +178,7 @@ public class TitleSceneManager : MonoBehaviour {
             GameStart.GetComponent<UIBlink>().isBlink = false; // UIを点滅
             GameContinue.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+            Option.GetComponent<UIBlink>().isBlink = false;     //UIの点滅を消す
 
             if (isDecision)
             {
@@ -182,6 +197,7 @@ public class TitleSceneManager : MonoBehaviour {
             GameStart.GetComponent<UIBlink>().isBlink = false; // UIを点滅
             GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
+            Option.GetComponent<UIBlink>().isBlink = false;     //UIの点滅を消す
 
             if (isDecision)
             {
@@ -195,6 +211,22 @@ public class TitleSceneManager : MonoBehaviour {
 #endif
 
             }
+        }
+        else if(select == (int)eSTATETITLE.OPTION)
+        {
+            Option.GetComponent<UIBlink>().isBlink = true;     //UIを点滅
+            GameStart.GetComponent<UIBlink>().isBlink = false; // UIを点滅を消す
+            GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+            GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+            if (isDecision)
+            {
+                // 決定音
+                SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
+                //オプションマネージャーのアクティブを反転
+                Optionmanager.SetActive(!Optionmanager.activeSelf);
+                isDecision = false;
+            }
+
         }
     }
 
@@ -213,7 +245,8 @@ public class TitleSceneManager : MonoBehaviour {
         select++;
         if (select >= (int)eSTATETITLE.MAX_STATE)
         {
-            select = (int)eSTATETITLE.QUIT;
+            //select = (int)eSTATETITLE.QUIT;
+            select = (int)eSTATETITLE.OPTION;
         }
     }
 

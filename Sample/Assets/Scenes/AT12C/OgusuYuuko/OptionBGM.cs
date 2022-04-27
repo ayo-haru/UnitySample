@@ -56,6 +56,7 @@ public class OptionBGM : MonoBehaviour
             //âπó ê›íË
             SoundManager.bgmVolume = BgmSlider.value;
             SoundManager.setVolume(SoundData.GameAudioList);
+            SoundManager.setVolume(SoundData.TitleAudioList);
         }
 
 

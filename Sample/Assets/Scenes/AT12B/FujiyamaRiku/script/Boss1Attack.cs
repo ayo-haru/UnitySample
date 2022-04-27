@@ -166,6 +166,18 @@ public class Boss1Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Pause.isPause)
+        {
+            BossAnim.speed = 0.0f;  // アニメーションポーズ
+        }
+        else
+        {
+            /*
+             雑にアニメーション再開
+             */
+            BossAnim.speed = 1.0f;
+        }
+
         //ボスが死んだら処理をやめる
         if (!GameData.isAliveBoss1)
         {

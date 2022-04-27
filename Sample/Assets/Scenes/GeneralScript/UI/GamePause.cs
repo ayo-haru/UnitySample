@@ -75,6 +75,9 @@ public class GamePause : MonoBehaviour
         BackGame.GetComponent<UIBlink>().isHide = true;
         GameEnd.GetComponent<UIBlink>().isHide = true;
         BackTitle.GetComponent<UIBlink>().isHide = true;
+        BackGame.GetComponent<UIBlink>().isBlink = false;
+        GameEnd.GetComponent<UIBlink>().isBlink = false;
+        BackTitle.GetComponent<UIBlink>().isBlink = false;
         Panel.GetComponent<Image>().enabled = false;
     }
 
@@ -94,6 +97,10 @@ public class GamePause : MonoBehaviour
             BackGame.GetComponent<UIBlink>().isHide = true;
             GameEnd.GetComponent<UIBlink>().isHide = true;
             BackTitle.GetComponent<UIBlink>().isHide = true;
+            BackGame.GetComponent<UIBlink>().isBlink = false;
+            GameEnd.GetComponent<UIBlink>().isBlink = false;
+            BackTitle.GetComponent<UIBlink>().isBlink = false;
+
             Panel.GetComponent<Image>().enabled = false;
             isCalledOncce = false;
 

@@ -223,6 +223,19 @@ public class Player2 : MonoBehaviour
                 }
             }
 
+            // ゲームオーバー
+            if (GameData.CurrentHP < 1)
+            {
+                //GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
+                //hp.GetComponent<GameOver>().GameOverShow();
+
+                // フェード
+                Pause.isPause = true;   // フェード終わるまでポーズ
+                GameData.isFadeOut = true;  // フェードかける
+                // りすぽん
+                GameOver.GameOverReset();
+            }
+
             //Debug.Log("したぱりい"+UnderParryNow);
             //Debug.Log("じゃんぷなう" + JumpNow);
             //Debug.Log("じめんなう" + GroundNow);
@@ -556,20 +569,6 @@ public class Player2 : MonoBehaviour
     //---HPがゼロになった時の処理
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Damaged"){
-            //HPが0になったらゲームオーバーを表示
-            if (GameData.CurrentHP < 1){
-                //GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
-                //hp.GetComponent<GameOver>().GameOverShow();
-
-                // フェード
-                Pause.isPause = true;   // フェード終わるまでポーズ
-                GameData.isFadeOut = true;  // フェードかける
-                // りすぽん
-                GameOver.GameOverReset();
-            }
-        }
-
         if (collision.gameObject.tag == "Damaged" || collision.gameObject.tag == "GroundDameged")
         {
 

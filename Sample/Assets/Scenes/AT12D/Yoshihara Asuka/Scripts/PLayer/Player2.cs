@@ -723,9 +723,9 @@ public class Player2 : MonoBehaviour
         //GUILayout.Label($"RighetTrigger:{Gamepad.current.rightTrigger.ReadValue()}");
         //GUILayout.Label($"LeftStickUp:{Gamepad.current.leftStick.up.ReadValue()}");
         //GUILayout.Label($"Space:{Keyboard.current.spaceKey.ReadValue()}");
-        GUILayout.Label($"JumpFlg:{JumpNow}");
-        GUILayout.Label($"GroudFlg:{GroundNow}");
-        GUILayout.Label($"UnderParryFlg:{UnderParryNow}");
+        //GUILayout.Label($"JumpFlg:{JumpNow}");
+        //GUILayout.Label($"GroudFlg:{GroundNow}");
+        //GUILayout.Label($"UnderParryFlg:{UnderParryNow}");
     }
 }
 #endregion

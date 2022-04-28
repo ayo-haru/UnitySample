@@ -38,7 +38,8 @@ public class BossStageManager : MonoBehaviour
         Player.name = GameData.Player.name;                         // プレハブの名前通りにする
 
          //---プレイヤーUIを表示
-         GameObject canvas = GameObject.Find("Canvas");          // シーン上のCanvasを参照し、canvasに定義
+         //ボスシーンのキャンバスの設定が他と異なって表示できないためｈｐ専用のキャンバスの作った
+         GameObject canvas = GameObject.Find("Canvas2");          // シーン上のCanvasを参照し、canvasに定義
         GameObject HPUI = Instantiate(HPSystem);                // プレハブをクローン
         HPUI.transform.SetParent(canvas.transform,false);       // シーン上のCanvasに子オブジェクトとしてアタッチ
 

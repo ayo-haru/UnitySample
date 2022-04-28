@@ -25,6 +25,8 @@ public class DataManager : MonoBehaviour
      * 
      */
 
+    static int TargetFrame = 60;
+
     //-----------------------------------------------------
     // BGMÅESE
     //-----------------------------------------------------
@@ -110,6 +112,7 @@ public class DataManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        Application.targetFrameRate = TargetFrame;
         //-----------------------------------------------------
         // BGMÅESE
         //-----------------------------------------------------

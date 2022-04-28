@@ -25,6 +25,8 @@ public struct SaveData {
     public Vector3 LastPlayerPos;
     public float HP;
     public bool isBoss1Alive;
+    public bool fireOnOff;
+    public bool gateOnOff;
     public int CurrentPiece;
     public int PieceGrade;
     public float bgmVolume;
@@ -66,6 +68,16 @@ public static class SaveManager {
 
     public static void saveBossAlive(bool _flg) {  // HP‚ðJson‚É•Û‘¶‚·‚é
         sd.isBoss1Alive = _flg;
+        save();
+    }
+
+    public static void saveFireOnOff(bool _FireOnOff) {
+        sd.fireOnOff = _FireOnOff;
+        save();
+    }
+
+    public static void saveGateOnOff(bool _GateOnOff) {
+        sd.gateOnOff = _GateOnOff;
         save();
     }
 

@@ -151,7 +151,7 @@ public class PieceManager : MonoBehaviour
             //ゲームデータ更新
             --GameData.CurrentPiece;
             //保存
-            SaveManager.saveHP(GameData.CurrentPiece);
+            SaveManager.saveCurrentPiece(GameData.CurrentPiece);
 
             return true;
         }

@@ -31,7 +31,7 @@ public class WeaponCollision : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //Player = GameData.Player;
         Player = GameObject.Find(GameData.Player.name);

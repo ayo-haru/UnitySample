@@ -271,7 +271,7 @@ public class Player2 : MonoBehaviour
     private void FixedUpdate()
     {
         if (!Pause.isPause){
-            Move("Velocity");
+            Move("AddForce");
 
             if (isAttack)
             {

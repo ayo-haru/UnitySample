@@ -52,6 +52,7 @@ public class TitleSceneManager : MonoBehaviour {
 
         //----- ƒV[ƒ“ -----
         SaveManager.load();
+        GameData.LoadData();
         GameData.NextMapNumber = SaveManager.sd.LastMapNumber;
         GameData.CurrentMapNumber = (int)GameData.eSceneState.TITLE_SCENE;
 

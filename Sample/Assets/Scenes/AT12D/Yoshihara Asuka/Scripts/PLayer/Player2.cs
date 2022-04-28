@@ -96,16 +96,17 @@ public class Player2 : MonoBehaviour
     private bool isAttack;                              // 攻撃フラグ
     private Vector3 CurrentScale;                       // 現在のプレイヤーのスケールの値を格納 
 
-
-
+    //---カメラ
+    ShakeCamera shakeCamera;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         shieldManager = GetComponent<ShieldManager>();
         PlayerActionAsset = new Game_pad();             // InputActionインスタンスを生成
         rb.AddForce(GameData.PlayerVelocyty.Velocity,ForceMode.Impulse);
+        shakeCamera = this.GetComponent<ShakeCamera>();
     }
-
+    
 
     //---ボタンンの入力を結び付ける
     private void OnEnable() {
@@ -191,10 +192,7 @@ public class Player2 : MonoBehaviour
             rb.Resume(gameObject);
             GamePadManager.onceTiltStick = false;
 
-            if (isAttack)
-            {
-                Attack();
-            }
+
 
             //---HPオブジェクトを検索
             if (!hp)
@@ -267,7 +265,12 @@ public class Player2 : MonoBehaviour
     private void FixedUpdate()
     {
         if (!Pause.isPause){
-            Move("AddForce");
+            Move("Velocity");
+
+            if (isAttack)
+            {
+                Attack();
+            }
         }
         else{
         }
@@ -376,7 +379,7 @@ public class Player2 : MonoBehaviour
 
         //---スティック入力
         PlayerPos = transform.position;                                             // 攻撃する瞬間のプレイヤーの座標を取得
-        AttackDirection += Attacking.ReadValue<Vector2>();                          // スティックの倒した値を取得
+        AttackDirection += Attacking.ReadValue<Vector2>();           // スティックの倒した値を取得
         AttackDirection.Normalize();                                               // 取得した値を正規化(ベクトルを１にする)
 
         //---アニメーション再生
@@ -593,6 +596,7 @@ public class Player2 : MonoBehaviour
             collision.gameObject.tag == "GroundDameged" ||
             collision.gameObject.tag == "Enemy")
         {
+            shakeCamera.Do();
             //---自分の位置と接触してきたオブジェクトの位置を計算し、距離と方向を算出
             Distination = (transform.position - collision.transform.position).normalized;
             // プレイヤーがダメージを食らっていないとき

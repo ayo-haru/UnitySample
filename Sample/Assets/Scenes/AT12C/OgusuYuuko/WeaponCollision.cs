@@ -28,6 +28,8 @@ public class WeaponCollision : MonoBehaviour
     ShieldManager shield_Manager;
 
     private bool CanCollision = true;                      // 当たり判定の使用フラグ
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +37,8 @@ public class WeaponCollision : MonoBehaviour
         Player = GameObject.Find(GameData.Player.name);
         player_rb = Player.GetComponent<Rigidbody>();
         shield_Manager = Player.GetComponent<ShieldManager>();
+
+
         //盾が最大数を超えていたら
         if (!shield_Manager.AddShield())
         {
@@ -67,6 +71,7 @@ public class WeaponCollision : MonoBehaviour
                 player_rb.velocity = Vector3.zero;
                 //地面パリイ
                 player_rb.AddForce((dir * baunceGround), ForceMode.Impulse);
+                
                 CanCollision = false;
             }
         }

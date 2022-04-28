@@ -67,7 +67,7 @@ public static class GameData
     public static bool isFadeIn  = false;   //フェードイン処理の開始、完了を管理するフラグ
 
     public static bool FireOnOff = true;
-    public static bool GateOnOff = true;    //　tureが閉じてる
+    public static bool GateOnOff = false;    //　tureが閉じてる
 
     public static bool isAliveBoss1 = true;    //ボス１の討伐情報保存用
 
@@ -115,9 +115,9 @@ public static class GameData
         ReSpawnPos = SaveManager.sd.LastPlayerPos;
         CurrentMapNumber = SaveManager.sd.LastMapNumber;
         CurrentHP = SaveManager.sd.HP;
-        isAliveBoss1 = SaveManager.sd.isBoss1Alive;
-        FireOnOff = SaveManager.sd.fireOnOff;
-        GateOnOff = SaveManager.sd.gateOnOff;
+        //isAliveBoss1 = SaveManager.sd.isBoss1Alive;
+        //FireOnOff = SaveManager.sd.fireOnOff;
+        //GateOnOff = SaveManager.sd.gateOnOff;
         CurrentPiece = SaveManager.sd.CurrentPiece;
         CurrentPieceGrade = SaveManager.sd.PieceGrade;
         SoundManager.bgmVolume = SaveManager.sd.bgmVolume;

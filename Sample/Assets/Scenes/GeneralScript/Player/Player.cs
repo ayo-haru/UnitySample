@@ -84,6 +84,8 @@ public class Player : MonoBehaviour
             SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);   // 今いるマップの番号を保存
             SaveManager.saveCurrentPiece(GameData.CurrentPiece);        // 現在のかけらを保存
             SaveManager.savePieceGrade(GameData.CurrentPieceGrade);     // 現在のかけらの枠を保存
+            SaveManager.saveFireOnOff(GameData.FireOnOff);
+            SaveManager.saveGateOnOff(GameData.GateOnOff);
             SaveManager.canSave = false;                                // セーブが終わったのでフラグを下す
             SaveManager.shouldSave = false;
         }

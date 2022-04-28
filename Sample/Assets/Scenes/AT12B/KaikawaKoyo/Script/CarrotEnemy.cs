@@ -24,12 +24,12 @@ public class CarrotEnemy : MonoBehaviour
     [SerializeField]
     float MoveSpeed = 1.0f;
     private float dis;
-    private float InvincibleTime;
+    //private float InvincibleTime;
     private float AttackTime;
     bool InArea = true;
     bool Attack = false;
-    bool pause = false;
-    private bool Invincible = false;
+    //bool pause = false;
+    //private bool Invincible = false;
 
     private bool isCalledOnce = false;                             // ˆê‰ñ‚¾‚¯ˆ—‚ð‚·‚é‚½‚ß‚ÉŽg‚¤B
 
@@ -56,17 +56,17 @@ public class CarrotEnemy : MonoBehaviour
                 {
                     Destroy(gameObject, 0.0f);
                 }
-                if (Invincible)
-                {
-                    gameObject.layer = LayerMask.NameToLayer("Invincible");
-                    InvincibleTime += Time.deltaTime;
-                }
-                if (InvincibleTime > 0.3f)
-                {
-                    gameObject.layer = LayerMask.NameToLayer("Enemy");
-                    InvincibleTime = 0.0f;
-                    Invincible = false;
-                }
+                //if (Invincible)
+                //{
+                //    gameObject.layer = LayerMask.NameToLayer("Invincible");
+                //    InvincibleTime += Time.deltaTime;
+                //}
+                //if (InvincibleTime > 0.3f)
+                //{
+                //    gameObject.layer = LayerMask.NameToLayer("Enemy");
+                //    InvincibleTime = 0.0f;
+                //    Invincible = false;
+                //}
                 if (!Attack)
                 {
                     vec = (Player.transform.position - transform.position).normalized;

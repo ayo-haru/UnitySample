@@ -264,6 +264,7 @@ GameObject:
   - component: {fileID: 398251295231442823}
   - component: {fileID: -3647275996670424891}
   - component: {fileID: -6404731357097519106}
+  - component: {fileID: 3059715389997555199}
   m_Layer: 9
   m_Name: Carrot
   m_TagString: Enemy
@@ -381,6 +382,25 @@ MonoBehaviour:
   DropRate: 50
   EnemyNumber: 0
   isAlive: 0
+--- !u!114 &3059715389997555199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6368235525384426319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7470e51c626a6a4b9f7bc02035869a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skinnedMeshRenderers:
+  - {fileID: 4314940694413079911}
+  - {fileID: 6950235182654467063}
+  - {fileID: 4864604209433311967}
+  - {fileID: 2988295609818390271}
+  - {fileID: 5248404984527121884}
+  _dissolveMaterial: {fileID: 2100000, guid: 00d149459a1070746942931454bc6bb2, type: 2}
 --- !u!1 &7619879790240056796
 GameObject:
   m_ObjectHideFlags: 0

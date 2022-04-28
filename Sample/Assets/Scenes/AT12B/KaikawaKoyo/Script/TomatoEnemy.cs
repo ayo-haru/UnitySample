@@ -58,8 +58,9 @@ public class TomatoEnemy : MonoBehaviour
                 if (!isGround)
                 {
                     // プレイヤーに向かって特攻する
+                    float a = Player.transform.position.y - transform.position.y;
+                    TargetPos = Target.position - new Vector3(0.0f, a, 0.0f);
                     float step = MoveSpeed * Time.deltaTime;
-                    TargetPos = Target.position - new Vector3(0.0f, 2.0f, 0.0f);
                     rb.position = Vector3.MoveTowards(pos, TargetPos, step);
                 }
 
@@ -93,7 +94,7 @@ public class TomatoEnemy : MonoBehaviour
                 // 上昇速度&落下速度調整
                 if (!isGround)
                 {
-                    rb.velocity += new Vector3(0.0f, -0.8f, 0.0f);
+                    rb.velocity += new Vector3(0.0f, -1.0f, 0.0f);
                 }
             }
         }
@@ -119,6 +120,7 @@ public class TomatoEnemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             //SoundManager.Play(SoundData.eSE.SE_TOMATO_BOMB, SoundData.GameAudioList);
+            EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);
             Destroy(gameObject, 0.0f);
         }
     }

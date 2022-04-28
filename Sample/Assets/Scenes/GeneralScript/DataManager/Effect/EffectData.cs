@@ -21,8 +21,10 @@ public static class EffectData
     {
         EF_FIRE = 0,
         EF_DAMAGE,
+        EF_DEATH,
         EF_DARKAREA,
         EF_ENEMYDOWN,
+        EF_TOMATOBOMB,
         EF_BOSSKILL,
         EF_HEALITEM,
         EF_HEAL,
@@ -39,7 +41,7 @@ public static class EffectData
 
     public static bool isSetEffect = false;
     public static bool oncePauseEffect = true;
-    public static GameObject[] activeEffect = new GameObject[(int)eEFFECT.MAX_EF * 5];
+    public static GameObject[] activeEffect = new GameObject[300];
     //public static ParticleSystem[] activeEffect = new ParticleSystem[(int)eEFFECT.MAX_EF * 5];
 
     //---エフェクトデータを読み込む

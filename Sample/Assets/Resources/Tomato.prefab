@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2652092446721453054}
   m_Layer: 9
   m_Name: Tomato
-  m_TagString: Damaged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6e433a25d8c3c49933cb473fdfa23d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpPower: 30
+  JumpPower: 20
   MoveSpeed: 20
 --- !u!114 &2652092446721453054
 MonoBehaviour:

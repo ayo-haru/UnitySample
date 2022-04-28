@@ -56,8 +56,10 @@ public static class GameData
         /*"Kitchen005", "Kitchen006","KitchenStage", "KitchenStage 1",*/"Tester" };
 
     public static string CurrentMapName;    // 現在のマップの名前
+    public static Vector3 ReSpawnPos;       // リスポーンポス
     public static Vector3 PlayerPos;        // プレイヤーの座標（現在はGameManagerで毎フレーム代入しているが本来はPlayerクラスが良い(はず)） 
     public static GameObject Player;
+    public static VelocityTmp PlayerVelocyty = new VelocityTmp();
     public static int CurrentHP = 5 ;       // HPの保存(現在の)
     public static int CurrentPiece = 0;     //かけらの所持数
     public static int CurrentPieceGrade = 0;    //かけらの所持枠
@@ -94,7 +96,9 @@ public static class GameData
         {
             isAliveBoss1 = true;
         }
-        Pause.isPause = false;
+        Pause.isPause = false;  // 万が一ポーズ中だった場合ポーズ解除
+        Debug.Log("万が一のポーズ解除");
+
     }
 
     /// <summary>
@@ -102,12 +106,31 @@ public static class GameData
     /// </summary>
     public static void InitScene() {
         SceneManager.LoadScene(MapName[CurrentMapNumber]);
-        Pause.isPause = false;
+        Pause.isPause = false;  // 万が一ポーズ中だった場合ポーズ解除
+        Debug.Log("万が一のポーズ解除");
+    }
+
+    public static void LoadData() {
+        ReSpawnPos = SaveManager.sd.LastPlayerPos;
+        CurrentMapNumber = SaveManager.sd.LastMapNumber;
+        isAliveBoss1 = SaveManager.sd.isBoss1Alive;
+        CurrentPieceGrade = SaveManager.sd.PieceGrade;
     }
 
     public static void Init() {
-        InitData();
         InitScene();
-        Pause.isPause = false;
+        InitData();
+        Pause.isPause = false;  // 万が一ポーズ中だった場合ポーズ解除
+        Debug.Log("万が一のポーズ解除");
+    }
+
+    public static void RespawnPlayer() {
+        CurrentHP = 5;
+        CurrentPiece = 0;
+        LoadData();
+        SceneManager.LoadScene(MapName[CurrentMapNumber]);
+
+
+        Pause.isPause = false;  // 万が一ポーズ中だった場合ポーズ解除
     }
 }

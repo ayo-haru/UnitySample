@@ -15,6 +15,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public static class SoundManager {
+
+    //BGMボリューム
+    public static float bgmVolume = 0.2f;
+    //SEボリューム
+    public static float seVolume = 0.5f;
     /// <summary>
     /// 未使用のAudioSourceを探す
     /// </summary>
@@ -26,6 +31,27 @@ public static class SoundManager {
             if (audioSourceList[i].isPlaying == false)
             {
                 return audioSourceList[i];
+            }
+        }
+        return null;    // 未使用のAudioSourceはみつからなかった
+    }
+
+    //使用しているBGMのAudioSource取得
+    private static AudioSource GetUsedSource(AudioSource[] audioSourceList)
+    {
+        for (int i = 0; i < audioSourceList.Length; ++i)
+        {
+            //再生中かどうか
+            if (audioSourceList[i].isPlaying == true)
+            {
+                for(int j = 0; j < SoundData.BGMClip.Length; ++j)
+                {
+                    //BGMかどうか
+                    if (audioSourceList[i].clip == SoundData.BGMClip[j])
+                    {
+                        return audioSourceList[i];
+                    }
+                }
             }
         }
         return null;    // 未使用のAudioSourceはみつからなかった
@@ -46,7 +72,7 @@ public static class SoundManager {
             return; // 再生できませんでした
         }
         audioSource.clip = SoundData.SEClip[(int)_seDataNumber];
-        audioSource.volume = 0.5f;
+        audioSource.volume = seVolume;
         //audioSource.Play();
         audioSource.PlayOneShot(audioSource.clip);
         float endTime = audioSource.clip.length * Time.timeScale;
@@ -67,9 +93,16 @@ public static class SoundManager {
             return; // 再生できませんでした
         }
         audioSource.clip = SoundData.BGMClip[(int)_bgmDataNumber];
-        audioSource.volume = 0.2f;
+        audioSource.volume = bgmVolume;
         audioSource.loop = true;
         audioSource.Play();
+    }
+
+    //BGMボリューム設定
+    public static void setVolume(AudioSource[] _audioSourceList)
+    {
+        AudioSource audioSource = GetUsedSource(_audioSourceList);
+        audioSource.volume = bgmVolume;
     }
 
     /// <summary>
@@ -87,7 +120,7 @@ public static class SoundManager {
         }
         audioSource.ignoreListenerPause = true;
         audioSource.clip = SoundData.SEClip[(int)_seDataNumber];
-        audioSource.volume = 0.5f;
+        audioSource.volume = seVolume;
         //audioSource.Play();
         audioSource.PlayOneShot(audioSource.clip);
         float endTime = audioSource.clip.length * Time.timeScale;

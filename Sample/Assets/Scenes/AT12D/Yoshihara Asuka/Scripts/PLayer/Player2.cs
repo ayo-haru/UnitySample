@@ -96,15 +96,17 @@ public class Player2 : MonoBehaviour
     private bool isAttack;                              // 攻撃フラグ
     private Vector3 CurrentScale;                       // 現在のプレイヤーのスケールの値を格納 
 
-
-
+    //---カメラ
+    ShakeCamera shakeCamera;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         shieldManager = GetComponent<ShieldManager>();
         PlayerActionAsset = new Game_pad();             // InputActionインスタンスを生成
+        rb.AddForce(GameData.PlayerVelocyty.Velocity,ForceMode.Impulse);
+        shakeCamera = this.GetComponent<ShakeCamera>();
     }
-
+    
 
     //---ボタンンの入力を結び付ける
     private void OnEnable() {
@@ -116,7 +118,7 @@ public class Player2 : MonoBehaviour
         //---Actionイベント登録(ボタン入力)
         PlayerActionAsset.Player.Attack.started += OnAttack;
         Debug.Log(PlayerActionAsset.Player.Attack);
-        PlayerActionAsset.UI.Start.started += PauseToggle;
+        PlayerActionAsset.UI.Start.canceled += PauseToggle;
         Debug.Log(PlayerActionAsset.UI.Start);
 
         PlayerActionAsset.Player.Jump.started += OnJump;            // started    ... ボタンが押された瞬間
@@ -187,13 +189,10 @@ public class Player2 : MonoBehaviour
 
             animator.speed = 1.0f;
 
-            //rb.Resume(gameObject);
+            rb.Resume(gameObject);
             GamePadManager.onceTiltStick = false;
 
-            if (isAttack)
-            {
-                Attack();
-            }
+
 
             //---HPオブジェクトを検索
             if (!hp)
@@ -223,6 +222,20 @@ public class Player2 : MonoBehaviour
                 }
             }
 
+            // ゲームオーバー
+            if (GameData.CurrentHP < 1)
+            {
+                //GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
+                //hp.GetComponent<GameOver>().GameOverShow();
+
+                // フェード
+                Pause.isPause = true;   // フェード終わるまでポーズ
+                Debug.Log("フェードはじめのポーズ");
+                GameData.isFadeOut = true;  // フェードかける
+                // りすぽん
+                GameOver.GameOverReset();
+            }
+
             //Debug.Log("したぱりい"+UnderParryNow);
             //Debug.Log("じゃんぷなう" + JumpNow);
             //Debug.Log("じめんなう" + GroundNow);
@@ -238,12 +251,20 @@ public class Player2 : MonoBehaviour
                     UnderParryNow = false;
                 }
             }
+
+            if (Player.shouldRespawn)
+            {
+                animator.StopPlayback();
+            }
+
+            GameData.PlayerVelocyty.Set(rb); 
         }
         else
         {
             animator.speed = 0.0f;
+            
 
-            //rb.Pause(gameObject);
+            rb.Pause(gameObject);
         }
     }
 
@@ -251,6 +272,11 @@ public class Player2 : MonoBehaviour
     {
         if (!Pause.isPause){
             Move("Velocity");
+
+            if (isAttack)
+            {
+                Attack();
+            }
         }
         else{
         }
@@ -284,7 +310,17 @@ public class Player2 : MonoBehaviour
                 ForceDirection += move.ReadValue<Vector2>();
                 ForceDirection.Normalize();
                 rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
-            break;
+                if (Timer <= 0)
+                {
+                    rb.velocity = new Vector3(MovingVelocity.x, rb.velocity.y - MovingVelocity.y, 0);
+                }
+                else
+                {
+                    --Timer;
+                    rb.velocity = new Vector3(0, rb.velocity.y - MovingVelocity.y, 0);
+                }
+
+                break;
 
             default:
             break;
@@ -349,8 +385,8 @@ public class Player2 : MonoBehaviour
 
         //---スティック入力
         PlayerPos = transform.position;                                             // 攻撃する瞬間のプレイヤーの座標を取得
-        AttackDirection += Attacking.ReadValue<Vector2>();                          // スティックの倒した値を取得
-        //AttackDirection.Normalize();                                               // 取得した値を正規化(ベクトルを１にする)
+        AttackDirection += Attacking.ReadValue<Vector2>();           // スティックの倒した値を取得
+        AttackDirection.Normalize();                                               // 取得した値を正規化(ベクトルを１にする)
 
         //---アニメーション再生
         //---左右パリィ
@@ -366,6 +402,7 @@ public class Player2 : MonoBehaviour
             if (GroundNow == true){
                 rb.AddForce(transform.up * 10.0f, ForceMode.Impulse);
             }
+            Timer = stopTime;
             animator.SetTrigger("Attack_UP");
         }
 
@@ -376,6 +413,7 @@ public class Player2 : MonoBehaviour
 			if (GroundNow == true){
 				rb.AddForce(transform.up * 3.0f, ForceMode.Impulse);
 			}
+            Timer = stopTime;
             UnderParryNow = true;
             GamePadManager.onceTiltStick = true;
             //GroundNow = false;
@@ -414,7 +452,9 @@ public class Player2 : MonoBehaviour
         //Debug.Log("攻撃した！(Weapon)");
         //EffectManager.Play(EffectData.eEFFECT.EF_SHEILD2,weapon.transform.position);
         SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
+
         AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする
+
         Destroy(weapon, DestroyTime);
 
         isAttack = false;
@@ -468,6 +508,16 @@ public class Player2 : MonoBehaviour
         //SaveManager.saveHP(GameData.CurrentHP);
 
         Invicible();
+    }
+    //===================================================================
+    //  ダメージ時のリスポーン
+    // <memo>
+    //  リスポーン時のフラグ処理
+    //===================================================================
+    private void DamegeRespawn() {
+        Player.shouldRespawn = true;
+        Pause.isPause = true;
+        GameData.isFadeOut = true;
     }
 
     //===================================================================
@@ -547,26 +597,17 @@ public class Player2 : MonoBehaviour
     #region ポーズの入力処理
     private void PauseToggle(InputAction.CallbackContext obj) {
         Pause.isPause = !Pause.isPause; // トグル
-
     }
     #endregion
 
     #region 各種あたり判定処理
     //---HPがゼロになった時の処理
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == "Damaged"){
-            //HPが0になったらゲームオーバーを表示
-            if (GameData.CurrentHP <= 0){
-                //GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
-                hp.GetComponent<GameOver>().GameOverShow();
-
-            }
-        }
-
-        if (collision.gameObject.tag == "Damaged" || collision.gameObject.tag == "GroundDameged")
+    private void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.tag == "Damaged" ||
+            collision.gameObject.tag == "GroundDameged" ||
+            collision.gameObject.tag == "Enemy")
         {
-
+            shakeCamera.Do();
             //---自分の位置と接触してきたオブジェクトの位置を計算し、距離と方向を算出
             Distination = (transform.position - collision.transform.position).normalized;
             // プレイヤーがダメージを食らっていないとき
@@ -580,6 +621,11 @@ public class Player2 : MonoBehaviour
             animator.SetBool("Damage", false);
 
         }
+        if (collision.gameObject.tag == "Damaged" || collision.gameObject.tag == "GroundDameged")
+        {
+            DamegeRespawn();
+        }
+
     }
 
     private void OnCollisionStay(Collision collision)

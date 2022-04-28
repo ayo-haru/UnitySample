@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 193654378886838675}
   - component: {fileID: 193654378900995285}
   - component: {fileID: 193654378900882805}
+  - component: {fileID: 3752589041384741219}
   m_Layer: 0
   m_Name: Fire_kari
-  m_TagString: Untagged
+  m_TagString: Damaged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 193654378886342067}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -3.3, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 25, y: 30, z: 25}
   m_Children:
   - {fileID: 193654378886838677}
@@ -4713,6 +4714,19 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!65 &3752589041384741219
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193654378886342067}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0613087, y: 1.1830068, z: 1.2088064}
+  m_Center: {x: 0.08025452, y: 0.06265454, z: 0.57048386}
 --- !u!1 &193654378886342069
 GameObject:
   m_ObjectHideFlags: 0

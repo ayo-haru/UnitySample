@@ -27,17 +27,17 @@ public class SavePoint : MonoBehaviour
         Vector3 Pos = this.transform.position;  // UIの描画の基準値
         if (isRed)
         {
-            EffectManager.Play(EffectData.eEFFECT.EF_MAGICSQUARE_RED, new Vector3(Pos.x, Pos.y - 5.0f, Pos.z), false);   // 表示するUI
+            EffectManager.Play(EffectData.eEFFECT.EF_MAGICSQUARE_RED, new Vector3(Pos.x, Pos.y - 10.0f, Pos.z), false);   // 表示するUI
         }
         else
         {
-            EffectManager.Play(EffectData.eEFFECT.EF_MAGICSQUARE_BLUE, new Vector3(Pos.x, Pos.y - 5.0f, Pos.z), false);   // 表示するUI
+            EffectManager.Play(EffectData.eEFFECT.EF_MAGICSQUARE_BLUE, new Vector3(Pos.x, Pos.y - 10.0f, Pos.z), false);   // 表示するUI
         }
 
         _targetCamera = Camera.main;    // メインカメラを取得
         _parentUIobj = GameObject.Find("Canvas").GetComponent<Canvas>();    // キャンバスを取得
         _parentUI = _parentUIobj.GetComponent<RectTransform>(); // キャンバスのレクトトランスフォーム
-        _targetUIobj = _parentUIobj.transform.GetChild(3).gameObject;   // 目的のUIを取得
+        _targetUIobj = GameObject.Find("StickMask(Clone)");   // 目的のUIを取得
         _targetUI = _targetUIobj.GetComponent<RectTransform>(); // 目的のUIのレクトトランスフォーム
     }
 
@@ -72,7 +72,7 @@ public class SavePoint : MonoBehaviour
     void OnUIPositionUpdate() {
         // オブジェクトの位置
         Vector3 targetWorldPos = this.transform.position;
-        targetWorldPos.y = targetWorldPos.y + 10.0f;
+        targetWorldPos.y = targetWorldPos.y - 18.0f;
         // オブジェクトのワールド座標→スクリーン座標変換
         Vector3 targetScreenPos = _targetCamera.WorldToScreenPoint(targetWorldPos);
 

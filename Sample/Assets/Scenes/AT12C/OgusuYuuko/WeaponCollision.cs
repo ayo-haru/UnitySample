@@ -26,6 +26,10 @@ public class WeaponCollision : MonoBehaviour
     public float baunceGround = 2.0f;
     //シールドマネージャ
     ShieldManager shield_Manager;
+
+    private bool CanCollision = true;                      // 当たり判定の使用フラグ
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +37,8 @@ public class WeaponCollision : MonoBehaviour
         Player = GameObject.Find(GameData.Player.name);
         player_rb = Player.GetComponent<Rigidbody>();
         shield_Manager = Player.GetComponent<ShieldManager>();
+
+
         //盾が最大数を超えていたら
         if (!shield_Manager.AddShield())
         {
@@ -53,15 +59,21 @@ public class WeaponCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Ground" || collision.gameObject.tag == "GroundDameged")
+        if (CanCollision)
         {
-            //方向
-           // Vector3 dir = Player.transform.position - collision.transform.position;
-            Vector3 dir = Player.transform.position - gameObject.transform.position;
-            dir.Normalize();
-            player_rb.velocity = Vector3.zero;
-            //地面パリイ
-            player_rb.AddForce(dir * baunceGround,ForceMode.Impulse);
+            if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "GroundDameged")
+            {
+                BounceCheck();
+                //方向
+                // Vector3 dir = Player.transform.position - collision.transform.position;
+                Vector3 dir = Player.transform.position - gameObject.transform.position;
+                dir.Normalize();
+                player_rb.velocity = Vector3.zero;
+                //地面パリイ
+                player_rb.AddForce((dir * baunceGround), ForceMode.Impulse);
+                
+                CanCollision = false;
+            }
         }
 
         //プレイヤー以外と当たってたら盾消去
@@ -71,5 +83,17 @@ public class WeaponCollision : MonoBehaviour
         }
 
         Debug.Log(collision.gameObject.name + "と当たった");
+    }
+    
+    // 跳ね返る力調整関数
+    private void BounceCheck()
+    {
+        Vector3 PlayerVelocity = player_rb.velocity;
+        PlayerVelocity.z = 0;
+
+        if(PlayerVelocity.sqrMagnitude > baunceGround * baunceGround)
+        {
+            player_rb.velocity = PlayerVelocity.normalized * baunceGround;
+        }
     }
 }

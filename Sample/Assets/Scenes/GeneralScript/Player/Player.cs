@@ -21,18 +21,21 @@ using System;
 public class Player : MonoBehaviour
 {
     //---変数宣言
-    private Vector3 ReSpawnPos;     // リスポーン位置を保存
+    //private Vector3 ReSpawnPos;     // リスポーン位置を保存
 
     [System.NonSerialized]
     public static bool isHitSavePoint; // セーブポイントに当たったか
     [System.NonSerialized]
     public static bool HitSavePointColorisRed;
+    [System.NonSerialized]
+    public static bool shouldRespawn;
 
     // Start is called before the first frame update
     void Start()
     {
         isHitSavePoint = false; // フラグ初期化
         HitSavePointColorisRed = false;
+        shouldRespawn = false;
     }
 
     // Update is called once per frame
@@ -40,19 +43,17 @@ public class Player : MonoBehaviour
     {
         GameData.PlayerPos = this.transform.position;    // プレイヤーの位置を保存
 
-        if (this.transform.position.y < -10000) // 落下死時にリスポーン
-        {
-            this.transform.position = GameData.Player.transform.position = GameData.PlayerPos = ReSpawnPos;
-        }
+        //if (this.transform.position.y < -10000) // 落下死時にリスポーン
+        //{
+        //    this.transform.position = GameData.Player.transform.position = GameData.PlayerPos = GameData.ReSpawnPos;
+        //}
 
         if (Pause.isPause)  // ポーズフラグによってポーズするかやめるか
         {
-            this.GetComponent<Rigidbody>().Pause(gameObject);
             Pause.PauseStart();
         }
         else
         {
-            this.GetComponent<Rigidbody>().Resume(gameObject);
             Pause.PauseFin();
         }
 
@@ -76,12 +77,14 @@ public class Player : MonoBehaviour
         if (SaveManager.shouldSave) // セーブするが選択されたら
         {
             Debug.Log("セーブした");
-            ReSpawnPos = this.transform.position;    // プレイヤーの位置を保存
-            SaveManager.saveLastPlayerPos(ReSpawnPos);  // プレイヤーの位置を保存
-            SaveManager.saveBossAlive(GameData.isAliveBoss1);   // ボス１の生存フラグを保存
-            SaveManager.saveHP(GameData.CurrentHP); // 現在のHPを保存
+            GameData.ReSpawnPos = this.transform.position;              // プレイヤーの位置を保存
+            SaveManager.saveLastPlayerPos(GameData.ReSpawnPos);         // プレイヤーの位置を保存
+            SaveManager.saveBossAlive(GameData.isAliveBoss1);           // ボス１の生存フラグを保存
+            SaveManager.saveHP(GameData.CurrentHP);                     // 現在のHPを保存
             SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);   // 今いるマップの番号を保存
-            SaveManager.canSave = false;        // セーブが終わったのでフラグを下す
+            SaveManager.saveCurrentPiece(GameData.CurrentPiece);        // 現在のかけらを保存
+            SaveManager.savePieceGrade(GameData.CurrentPieceGrade);     // 現在のかけらの枠を保存
+            SaveManager.canSave = false;                                // セーブが終わったのでフラグを下す
             SaveManager.shouldSave = false;
         }
 
@@ -99,26 +102,44 @@ public class Player : MonoBehaviour
             }
             Warp.shouldWarp = false;
         }
+
+        if (shouldRespawn)
+        {
+            if (!GameData.isFadeOut)
+            {
+                GameData.InitScene();
+                Pause.isPause = false;
+            }
+        }
     }
 
 
     void OnTriggerEnter(Collider other) {
+        if(other.gameObject.tag == "Respawn")
+        {
+            GameData.ReSpawnPos = this.transform.position;
+            Debug.Log(GameData.ReSpawnPos);
+        }
+
         if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
         {
+            
             isHitSavePoint = true;  // 当たったフラグを立てる
         }
 
         //----- シーン遷移 -----
         if (other.gameObject.tag == "toKitchen1")    // この名前のタグと衝突したら
         {
-            GameData.isFadeOut = true;
-            Pause.isPause = true;
+            GameData.isFadeOut = true;  // フェードかける
+            Pause.isPause = true;   // フェード終わるまでポーズ
+            Debug.Log("フェードはじめのポーズ");
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001;
         }
         if (other.gameObject.tag == "toKitchen2")    // この名前のタグと衝突したら
         {
-            GameData.isFadeOut = true;
-            Pause.isPause = true;
+            GameData.isFadeOut = true;  // フェードかける
+            Pause.isPause = true;   // フェード終わるまでポーズ
+            Debug.Log("フェードはじめのポーズ");
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage002;
         }
         if (other.gameObject.tag == "toKitchen3")    // この名前のタグと衝突したら
@@ -130,32 +151,37 @@ public class Player : MonoBehaviour
                     return;
                 }
             }
-            GameData.isFadeOut = true;
-            Pause.isPause = true;
+            GameData.isFadeOut = true;  // フェードかける
+            Pause.isPause = true;   // 　フェード終わるまでポーズ
+            Debug.Log("フェードはじめのポーズ");
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage003;
         }
         if (other.gameObject.tag == "toKitchen4")    // この名前のタグと衝突したら
         {
-            GameData.isFadeOut = true;
-            Pause.isPause = true;
+            GameData.isFadeOut = true;  // フェードかける
+            Pause.isPause = true;   // フェード終わるまでポーズ
+            Debug.Log("フェードはじめのポーズ");
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage004;
         }
         if (other.gameObject.tag == "toKitchen5")    // この名前のタグと衝突したら
         {
-            GameData.isFadeOut = true;
-            Pause.isPause = true;
+            GameData.isFadeOut = true;  // フェードかける  
+            Pause.isPause = true;   // フェード終わるまでポーズ
+            Debug.Log("フェードはじめのポーズ");
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage005;
         }
         if (other.gameObject.tag == "toKitchen6")    // この名前のタグと衝突したら
         {
-            GameData.isFadeOut = true;
-            Pause.isPause = true;
+            GameData.isFadeOut = true;  // フェードかける
+            Pause.isPause = true;   // フェード終わるまでポーズ
+            Debug.Log("フェードはじめのポーズ");
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage006;
         }
         if (other.gameObject.tag == "toBoss1")    // この名前のタグと衝突したら
         {
-            GameData.isFadeOut = true;
-            Pause.isPause = true;
+            GameData.isFadeOut = true;  // フェードかける
+            Pause.isPause = true;   // フェード終わるまでポーズ
+            Debug.Log("フェードはじめのポーズ");
             GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
         }
     }
@@ -164,7 +190,8 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
         {
             isHitSavePoint = false; // 当たったフラグを下す
-            Pause.isPause = false;  // バグ防止
+            //Pause.isPause = false;  // バグ防止
+            //Debug.Log("バグとるポーズ解除");
             //Debug.Log("セーブ可能じゃない");
         }
     }

@@ -14,8 +14,9 @@ using UnityEngine;
 public class EnemyDown : MonoBehaviour
 {
     [SerializeField]
-    GameObject Item;
-    GameObject Player;
+    private GameObject Item;
+    private GameObject Player;
+    private ParticleSystem TomatoBom;
     private float bouncePower = 200.0f;
     private Vector3 Pos;
     private Vector3 EnemyPos;
@@ -29,12 +30,18 @@ public class EnemyDown : MonoBehaviour
     [SerializeField]
     private int EnemyNumber;        // 敵識別
     private int Drop;
-
+    private bool ItemDrop = false;
     public bool isAlive;
 
     float DeadTime = 0.0f;
 
     Rigidbody rb;
+
+    //---ディゾルブ処理のための追記(2022/04/28.吉原)
+    Dissolve _dissolve;
+    private bool isCalledOnce = false;      // Update内で一回だけ処理を行いたいのでbool型の変数を用意
+    private bool FinDissolve = false;       // Dissolveマテリアルに差し替える処理を終えたことを判定する
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +50,7 @@ public class EnemyDown : MonoBehaviour
         isAlive = true;
         rb = gameObject.GetComponent<Rigidbody>();
         Random.InitState(System.DateTime.Now.Millisecond);
+        _dissolve = this.GetComponent<Dissolve>();
     }
 
     // Update is called once per frame
@@ -59,13 +67,28 @@ public class EnemyDown : MonoBehaviour
             if (!isAlive)
             {
                 DeadTime += Time.deltaTime;
+
+                //---ディゾルマテリアルに変更
+                if (!isCalledOnce)
+                {
+                    if (EnemyNumber == 1 || EnemyNumber == 0)
+                    {
+                        _dissolve.Invoke("Play",0.2f);
+                        isCalledOnce = true;
+                        FinDissolve = true;
+                    }
+                }
             }
 
             if (DeadTime > 1.0f)
             {
                 Pos = transform.position;
-                Destroy(gameObject, 0.0f);
-                EffectManager.Play(EffectData.eEFFECT.EF_ENEMYDOWN, Pos);
+                Destroy(gameObject, 0.5f);
+                if (EnemyNumber == 2)
+                {
+                    EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);
+                }
+                EffectManager.Play(EffectData.eEFFECT.EF_ENEMYDOWN, Pos, 2.0f);
             }
         }
         else
@@ -81,86 +104,84 @@ public class EnemyDown : MonoBehaviour
         if(!Pause.isPause)
         {
             rb.Resume(gameObject);
+            // 弾かれたらベクトルを計算して関数を呼び出す
             if (collision.gameObject.name == "Weapon(Clone)" && isAlive)
             {
-                //EnemyPos = transform.position + new Vector3(0.0f, 5.0f, 0.0f);
-                //print(EnemyPos);
-                vec = (Player.transform.position - transform.position).normalized;
-                //プレイヤーを逆方向に跳ね返す
-                collision.rigidbody.AddForce(vec * 5.0f, ForceMode.Impulse);
-                // アニメーションを止める
-                animator.speed = 0;
-                // 重力を消す
-                rb.useGravity = false;
-                // 空気抵抗をゼロに
-                rb.angularDrag = 0.0f;
-
-                // 回転軸を変更
-                if (EnemyNumber == 1)
-                {
-                    rb.centerOfMass = new Vector3(0.0f, 5.0f, 2.0f);
-                }
-                else if (EnemyNumber == 2)
-                {
-                    rb.centerOfMass = new Vector3(0.0f, 0.3f, 0.0f);
-                }
-                else
-                {
-                    rb.centerOfMass = new Vector3(0.0f, 0.0f, 0.0f);
-                }
-
-                // 回復アイテムを落とす
-                Pos = transform.position;
-                Drop = Random.Range(0, 100);
-                if (Drop < DropRate)
-                {
-                    Instantiate(Item, Pos, Quaternion.identity);
-                }
-
-                //取得した法線ベクトルに跳ね返す速さをかけて、跳ね返す
-                //rb.AddForce(velocity * bouncePower, ForceMode.Force);
-                rb.constraints = RigidbodyConstraints.FreezePositionZ |
-                                 RigidbodyConstraints.FreezeRotationX |
-                                 RigidbodyConstraints.FreezeRotationY;
-                //プレイヤーと逆方向に跳ね返す
-                rb.velocity = -vec * bouncePower;
-                
-                // 回転させる
-                if(Player.transform.position.x < transform.position.x)
-                {
-                    rb.angularVelocity = new Vector3(0.0f, 0.0f, -500.0f);
-
-                }
-                if (Player.transform.position.x > transform.position.x)
-                {
-                    rb.angularVelocity = new Vector3(0.0f, 0.0f, 500.0f);
-                }
-                
-                //SoundManager.Play(SoundData.eSE.SE_REFLECTION, SoundData.GameAudioList);
-                
-                //弾いたら消す
-                isAlive = false;
-            }
-
-            //if (!isAlive)
-            //{
-            //    //取得した法線ベクトルに跳ね返す速さをかけて、跳ね返す
-            //    rb.AddForce(velocity * bouncePower, ForceMode.Force);
-            //    // 回転させる
-            //    rb.AddTorque(0.0f, 0.0f, -300.0f);
-
-            //}
-
-            if (isAlive == false && collision.gameObject.CompareTag("Ground"))
-            {
-                rb.velocity = -vec * bouncePower;
-                // 壁、床に当たったら消える
-                //Destroy(gameObject, 0.0f);
+                vec = (transform.position -Player.transform.position).normalized;
+                EnemyDead(vec , Player.transform.position.x);
             }
         }
         else
         {
             rb.Pause(gameObject);
         }
+    }
+
+    // 死ぬ時の処理
+    public void EnemyDead(Vector3 vec , float x)
+    {
+        if (!Pause.isPause)
+        {
+            rb.Resume(gameObject);
+            // アニメーションを止める
+            animator.speed = 0;
+            // 重力を消す
+            rb.useGravity = false;
+            // 空気抵抗をゼロに
+            rb.angularDrag = 0.0f;
+            // レイヤー変更
+            gameObject.layer = LayerMask.NameToLayer("DownEnemy");
+
+            // 回転軸を変更
+            if (EnemyNumber == 1)
+            {
+                rb.centerOfMass = new Vector3(0.0f, 5.0f, 2.0f);
+            }
+            else if (EnemyNumber == 2)
+            {
+                rb.centerOfMass = new Vector3(0.0f, 0.3f, 0.0f);
+            }
+            else
+            {
+                rb.centerOfMass = new Vector3(0.0f, 0.0f, 0.0f);
+            }
+
+            // 回復アイテムを落とす
+            Pos = transform.position;
+            Drop = Random.Range(0, 100);
+            if (Drop < DropRate && !ItemDrop)
+            {
+                Instantiate(Item, Pos, Quaternion.identity);
+                ItemDrop = true;
+            }
+
+            //取得した法線ベクトルに跳ね返す速さをかけて、跳ね返す
+            //rb.AddForce(velocity * bouncePower, ForceMode.Force);
+            rb.constraints = RigidbodyConstraints.FreezePositionZ |
+                             RigidbodyConstraints.FreezeRotationX |
+                             RigidbodyConstraints.FreezeRotationY;
+            //プレイヤーと逆方向に跳ね返す
+            rb.velocity = vec * bouncePower;
+
+            // 回転させる
+            if (x < transform.position.x)
+            {
+                rb.angularVelocity = new Vector3(0.0f, 0.0f, -500.0f);
+
+            }
+            if (x > transform.position.x)
+            {
+                rb.angularVelocity = new Vector3(0.0f, 0.0f, 500.0f);
+            }
+
+            SoundManager.Play(SoundData.eSE.SE_REFLECTION, SoundData.GameAudioList);
+            
+            isAlive = false;
+        }
+        else
+        {
+            rb.Pause(gameObject);
+        }
+       
     }
 }

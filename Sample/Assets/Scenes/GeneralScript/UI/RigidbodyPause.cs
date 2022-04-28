@@ -29,6 +29,9 @@ public class VelocityTmp : MonoBehaviour {
         _angularVelocity = rigidbody.angularVelocity;
         _velocity = rigidbody.velocity;
     }
+    public void SetVelocity(Vector3 setvelocity) {
+        _velocity = setvelocity;
+    }
 
 }
 
@@ -57,7 +60,7 @@ public static class RigidbodyExtension {
         {
             return;
         }
-
+        
         rigidbody.velocity = gameObject.GetComponent<VelocityTmp>().Velocity;
         rigidbody.angularVelocity = gameObject.GetComponent<VelocityTmp>().AngularVelocity;
         rigidbody.isKinematic = false;

@@ -67,6 +67,7 @@ public static class GameData
     public static bool isFadeIn  = false;   //フェードイン処理の開始、完了を管理するフラグ
 
     public static bool FireOnOff = true;
+    public static bool GateOnOff = true;    //　tureが閉じてる
 
     public static bool isAliveBoss1 = true;    //ボス１の討伐情報保存用
 

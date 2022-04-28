@@ -254,11 +254,17 @@ public class Player2 : MonoBehaviour
                 }
             }
 
+            if (Player.shouldRespawn)
+            {
+                animator.StopPlayback();
+            }
+
             GameData.PlayerVelocyty.Set(rb); 
         }
         else
         {
             animator.speed = 0.0f;
+            
 
             rb.Pause(gameObject);
         }
@@ -480,10 +486,6 @@ public class Player2 : MonoBehaviour
     //===================================================================
     private void Damaged()
     {
-        //Player.shouldRespawn = true;
-        //Pause.isPause = true;
-        //GameData.isFadeOut = true;
-
         if (!hp){                        // hpのUIがない場合は処理終了
             return;
         }
@@ -503,6 +505,16 @@ public class Player2 : MonoBehaviour
         //SaveManager.saveHP(GameData.CurrentHP);
 
         Invicible();
+    }
+    //===================================================================
+    //  ダメージ時のリスポーン
+    // <memo>
+    //  リスポーン時のフラグ処理
+    //===================================================================
+    private void DamegeRespawn() {
+        Player.shouldRespawn = true;
+        Pause.isPause = true;
+        GameData.isFadeOut = true;
     }
 
     //===================================================================
@@ -587,9 +599,8 @@ public class Player2 : MonoBehaviour
 
     #region 各種あたり判定処理
     //---HPがゼロになった時の処理
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Damaged" || 
+    private void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.tag == "Damaged" ||
             collision.gameObject.tag == "GroundDameged" ||
             collision.gameObject.tag == "Enemy")
         {
@@ -606,6 +617,11 @@ public class Player2 : MonoBehaviour
             animator.SetBool("Damage", false);
 
         }
+        if (collision.gameObject.tag == "Damaged" || collision.gameObject.tag == "GroundDameged")
+        {
+            DamegeRespawn();
+        }
+
     }
 
     private void OnCollisionStay(Collision collision)

@@ -13,11 +13,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapManager : MonoBehaviour
 {
     //プレイヤーアイコン
     public GameObject[] PlayerIcon;
+    //MapGround
+    public GameObject[] MapGround;
     //魔法陣
     public GameObject[] MagicCircle;
     //一回だけ呼び出す用のフラグ
@@ -26,9 +29,11 @@ public class MapManager : MonoBehaviour
     void OnEnable()
     {
         //プレイヤーアイコンを非表示
+        //マップの背景を白に設定
         for (int i = 0; i < PlayerIcon.Length; ++i)
         {
             PlayerIcon[i].SetActive(false);
+            MapGround[i].GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         }
 
         OnceFlag = true;
@@ -81,6 +86,7 @@ public class MapManager : MonoBehaviour
         //CurrentMapNumberを元に表示するプレイヤーアイコン設定
         //eSceneStateが変更されても、連番なら[]の中変更しなくていいようにした
         PlayerIcon[GameData.CurrentMapNumber - (int)GameData.eSceneState.KitchenStage001].SetActive(true);
+        MapGround[GameData.CurrentMapNumber - (int)GameData.eSceneState.KitchenStage001].GetComponent<Image>().color = new Color(0.1f, 1.0f, 1.0f, 1.0f);
 
 
         OnceFlag = false;

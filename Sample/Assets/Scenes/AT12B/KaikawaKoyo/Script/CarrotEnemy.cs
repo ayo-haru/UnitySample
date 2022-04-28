@@ -83,7 +83,7 @@ public class CarrotEnemy : MonoBehaviour
 
                 if (!isCalledOnce)     // ˆê‰ñ‚¾‚¯ŒÄ‚Ô
                 {
-                    //SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
+                    SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
                     isCalledOnce = true;
                 }
                 if (!InArea)

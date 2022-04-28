@@ -85,7 +85,7 @@ public class TomatoEnemy : MonoBehaviour
                                          RigidbodyConstraints.FreezeRotationX |
                                          RigidbodyConstraints.FreezeRotationY;
                         rb.velocity = new Vector3(0.0f, JumpPower, 0.0f);
-                        //SoundManager.Play(SoundData.eSE.SE_TOMATO_BOUND, SoundData.GameAudioList);
+                        SoundManager.Play(SoundData.eSE.SE_TOMATO_BOUND, SoundData.GameAudioList);
                         isGround = false;
                         delay = 0.0f;
                     }
@@ -119,7 +119,7 @@ public class TomatoEnemy : MonoBehaviour
         // ÉvÉåÉCÉÑÅ[Ç…ìñÇΩÇ¡ÇΩÇÁè¡Ç¶ÇÈ
         if (collision.gameObject.CompareTag("Player"))
         {
-            //SoundManager.Play(SoundData.eSE.SE_TOMATO_BOMB, SoundData.GameAudioList);
+            SoundManager.Play(SoundData.eSE.SE_TOMATO_BOMB, SoundData.GameAudioList);
             EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);
             Destroy(gameObject, 0.0f);
         }

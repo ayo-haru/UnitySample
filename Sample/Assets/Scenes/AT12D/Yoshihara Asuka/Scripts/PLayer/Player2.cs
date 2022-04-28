@@ -659,28 +659,36 @@ public class Player2 : MonoBehaviour
     //       }
 
     //   }
-    private void OnTriggerEnter(Collider other) {
-        //---Tag"Ground"と接触している間の処理
-        if (other.gameObject.tag == "Ground")
-        {
+    //private void OnTriggerEnter(Collider other) {
+    //    //---Tag"Ground"と接触している間の処理
+    //    if (other.gameObject.tag == "Ground")
+    //    {
+    //        GroundNow = true;
+    //    }
+
+    //}
+
+	private void OnTriggerStay(Collider other)
+	{
+		if(other.gameObject.tag == "Ground")
+		{
             GroundNow = true;
-        }
+		}
+	}
+	private void OnTriggerExit(Collider other)
+	{
+		if (other.gameObject.tag == "Ground")
+		{
+			//JumpNow = true;
+			GroundNow = false;
 
-    }
+		}
+	}
+	#endregion
 
-    private void OnTriggerExit(Collider other) {
-        if (other.gameObject.tag == "Ground")
-        {
-            //JumpNow = true;
-            GroundNow = false;
-
-        }
-    }
-        #endregion
-
-    #region コントローラー振動
-        //---コントローラー振動処理
-        private IEnumerator VibrationPlay
+	#region コントローラー振動
+	//---コントローラー振動処理
+	private IEnumerator VibrationPlay
     (
         float lowFrequency,     // 低周波(左) モーターの強さ(0.0 ~ 1.0)
         float HighFrequency     // 高周波(右) モータ-の強さ(0.0 ~ 1.0)

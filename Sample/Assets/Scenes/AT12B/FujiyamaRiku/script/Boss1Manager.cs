@@ -55,8 +55,8 @@ public class Boss1Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Warp = GameObject.Find("MovePointToKitchen6");
-        Warp.SetActive(false);
+        //Warp = GameObject.Find("MovePointToKitchen6");
+        //Warp.SetActive(false);
     }
 
     // Update is called once per frame
@@ -80,9 +80,9 @@ public class Boss1Manager : MonoBehaviour
             case Boss1State.BOSS1_END:
                 {
                     Destroy(Boss);
-                    Warp.SetActive(true);
-                    WarpEFPoint = Warp.transform.position;
-                    WarpEFPoint.y = 11.7f;
+                    //Warp.SetActive(true);
+                    //WarpEFPoint = Warp.transform.position;
+                    //WarpEFPoint.y = 11.7f;
                     //EffectManager.Play(EffectData.eEFFECT.EF_DARKAREA, WarpEFPoint);
                     break;
                 }

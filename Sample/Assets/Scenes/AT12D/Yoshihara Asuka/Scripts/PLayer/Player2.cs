@@ -227,6 +227,7 @@ public class Player2 : MonoBehaviour
             {
                 //GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
                 //hp.GetComponent<GameOver>().GameOverShow();
+                Player.shouldRespawn = false;
 
                 // フェード
                 Pause.isPause = true;   // フェード終わるまでポーズ

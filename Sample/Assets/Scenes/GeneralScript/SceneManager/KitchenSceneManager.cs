@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class KitchenSceneManager : MonoBehaviour
-{
+public class KitchenSceneManager : MonoBehaviour {
     public GameObject playerPrefab;
     private GameObject Empty;
     [SerializeField]
@@ -14,10 +13,9 @@ public class KitchenSceneManager : MonoBehaviour
     private bool isCalledOnce = false;                              // 開始演出で使用。一回だけ処理をするために使う。
 
     // Start is called before the first frame update
-    void Awake()
-    {
+    void Awake() {
         //----- マップの番号を保存 -----
-        if (GameData.NextMapNumber == (int)GameData.eSceneState.TITLE_SCENE)    
+        if (GameData.NextMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
         {
             /* 
              * このif文はエディタ上のデバッグ用。本来はNextMapNumberは値が入っているが
@@ -25,10 +23,10 @@ public class KitchenSceneManager : MonoBehaviour
              * インスペクタービューに表示させたcurrentSceneNumで初期化をする。
              * GameData.NextMapNumberは初期化してない場合はかってに0になってるから==
              */
-            SaveManager.load();
+            //SaveManager.load();
             GameData.OldMapNumber = GameData.NextMapNumber = currentSceneNum;
         }
-        GameData.CurrentMapNumber =  GameData.NextMapNumber;
+        GameData.CurrentMapNumber = GameData.NextMapNumber;
 
         //----- プレイヤー初期化 -----
         if (!GameData.Player)
@@ -37,7 +35,7 @@ public class KitchenSceneManager : MonoBehaviour
         }
 
 
-        switch(GameData.CurrentMapNumber) 
+        switch (GameData.CurrentMapNumber)
         {
             //---ステージシーン
             //case (int)GameData.eSceneState.KitchenStage_SCENE:
@@ -46,12 +44,12 @@ public class KitchenSceneManager : MonoBehaviour
 
             //---ステージ1
             case (int)GameData.eSceneState.KitchenStage001:
-                if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage002)
+                if (GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage002)
                 {
 
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(430.0f, 15.0f, 0.0f);
                 }
-                else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage004)
+                else if (GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage004)
                 {
                     GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(1110.0f, 18.0f, 0.0f);
@@ -66,6 +64,10 @@ public class KitchenSceneManager : MonoBehaviour
                 {
                     GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(25.0f, 20.0f, 0.0f);
+                    if (GameData.OldMapNumber == (int)GameData.eSceneState.TITLE_SCENE || GameData.OldMapNumber == GameData.CurrentMapNumber)
+                    {
+                        GameData.SaveAll();
+                    }
                 }
                 //else // ステージ1テスト用
                 //{
@@ -105,17 +107,17 @@ public class KitchenSceneManager : MonoBehaviour
 
             //---ステージ4
             case (int)GameData.eSceneState.KitchenStage004:
-                if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage001)
+                if (GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage001)
                 {
                     GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(25.0f, 18.0f, 0.0f);
                 }
-                else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage005)
+                else if (GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage005)
                 {
                     GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(125.0f, 18.0f, 0.0f);
                 }
-                else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage006)
+                else if (GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage006)
                 {
                     GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(615.0f, 18.0f, 0.0f);
@@ -124,12 +126,12 @@ public class KitchenSceneManager : MonoBehaviour
 
             //---ステージ5
             case (int)GameData.eSceneState.KitchenStage005:
-                if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage004)
+                if (GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage004)
                 {
                     GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(108.0f, 90.0f, 0.0f);
                 }
-                else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage006)
+                else if (GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage006)
                 {
                     GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(570.0f, 53.0f, 0.0f);
@@ -138,17 +140,17 @@ public class KitchenSceneManager : MonoBehaviour
 
             //---ステージ6
             case (int)GameData.eSceneState.KitchenStage006:
-                if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage003)
+                if (GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage003)
                 {
                     GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(18.0f, 222.0f, 0.0f);
                 }
-                else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage004)
+                else if (GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage004)
                 {
                     GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(18.0f, 122.0f, 0.0f);
                 }
-                else if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage005)
+                else if (GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage005)
                 {
                     GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(18.0f, 22.0f, 0.0f);
@@ -257,8 +259,8 @@ public class KitchenSceneManager : MonoBehaviour
         //Empty = GameObject.Find("Player");
         GameObject player = Instantiate(GameData.Player);
         player.name = GameData.Player.name;                     // 名前の後ろに(Clone)とつくのを防ぐため、
-                                                                                      // 強制的にプレハブ名にする処理
-        //player.transform.SetParent(Empty.transform, false);
+                                                                // 強制的にプレハブ名にする処理
+                                                                //player.transform.SetParent(Empty.transform, false);
 
         //----- 開始演出 -----
         //KitchenImage = GameObject.Find("Kitchen");
@@ -272,8 +274,7 @@ public class KitchenSceneManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         //if (!isCalledOnce)     // 一回だけ呼ぶ
         //{
         //    KitchenImage.GetComponent<ImageShow>().Show(2);

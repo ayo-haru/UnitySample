@@ -83,7 +83,7 @@ public class Boss1Manager : MonoBehaviour
                     Warp.SetActive(true);
                     WarpEFPoint = Warp.transform.position;
                     WarpEFPoint.y = 11.7f;
-                    EffectManager.Play(EffectData.eEFFECT.EF_DARKAREA, WarpEFPoint);
+                    //EffectManager.Play(EffectData.eEFFECT.EF_DARKAREA, WarpEFPoint);
                     break;
                 }
             case Boss1State.BOSS1_DEAD:

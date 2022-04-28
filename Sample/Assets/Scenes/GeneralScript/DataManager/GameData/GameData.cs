@@ -114,8 +114,14 @@ public static class GameData
     public static void LoadData() {
         ReSpawnPos = SaveManager.sd.LastPlayerPos;
         CurrentMapNumber = SaveManager.sd.LastMapNumber;
+        CurrentHP = SaveManager.sd.HP;
         isAliveBoss1 = SaveManager.sd.isBoss1Alive;
+        FireOnOff = SaveManager.sd.fireOnOff;
+        GateOnOff = SaveManager.sd.gateOnOff;
+        CurrentPiece = SaveManager.sd.CurrentPiece;
         CurrentPieceGrade = SaveManager.sd.PieceGrade;
+        SoundManager.bgmVolume = SaveManager.sd.bgmVolume;
+        SoundManager.seVolume = SaveManager.sd.seVolume;
     }
 
     public static void Init() {
@@ -126,9 +132,9 @@ public static class GameData
     }
 
     public static void RespawnPlayer() {
+        LoadData();
         CurrentHP = 5;
         CurrentPiece = 0;
-        LoadData();
         SceneManager.LoadScene(MapName[CurrentMapNumber]);
 
 

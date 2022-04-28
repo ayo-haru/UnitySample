@@ -9,6 +9,7 @@
 // 2022/03/15 実装
 // 2022/03/28 セーブの項目を増やした
 // 2022/04/01 FileStream
+// 2022/04/28 スイッチのオンオフを保存
 //=============================================================================
 
 using System.Collections;
@@ -23,7 +24,7 @@ public struct SaveData {
     public List<string> deck;
     public int LastMapNumber;
     public Vector3 LastPlayerPos;
-    public float HP;
+    public int HP;
     public bool isBoss1Alive;
     public bool fireOnOff;
     public bool gateOnOff;
@@ -61,7 +62,7 @@ public static class SaveManager {
         save();
     }
 
-    public static void saveHP(float _HP) {  // HPをJsonに保存する
+    public static void saveHP(int _HP) {  // HPをJsonに保存する
         sd.HP = _HP;
         save();
     }

@@ -98,9 +98,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                throw new Exception("シーン名どこに戻るかわからなかったからボスシーンから戻れなくしてある");
-                // 下のネクストに入れるのシーン番号を新しいのにしてね
-                GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
+                GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001;
             }
             Warp.shouldWarp = false;
         }

@@ -32,7 +32,6 @@ public class EnemyDown : MonoBehaviour
     private int Drop;
     private bool ItemDrop = false;
     public bool isAlive;
-
     float DeadTime = 0.0f;
 
     Rigidbody rb;
@@ -73,17 +72,17 @@ public class EnemyDown : MonoBehaviour
                 {
                     if (EnemyNumber == 1 || EnemyNumber == 0)
                     {
-                        _dissolve.Invoke("Play",0.2f);
+                        _dissolve.Invoke("Play", 0.2f);
                         isCalledOnce = true;
                         FinDissolve = true;
                     }
                 }
             }
 
-            if (DeadTime > 1.0f)
+            if (DeadTime > 1.5f)
             {
                 Pos = transform.position;
-                Destroy(gameObject, 0.5f);
+                Destroy(gameObject, 0.0f);
                 if (EnemyNumber == 2)
                 {
                     EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);

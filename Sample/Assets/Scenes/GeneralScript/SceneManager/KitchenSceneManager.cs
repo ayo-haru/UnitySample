@@ -59,7 +59,7 @@ public class KitchenSceneManager : MonoBehaviour
                 else if (GameData.OldMapNumber == (int)GameData.eSceneState.BOSS1_SCENE)
                 {
                     GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
-                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(1110.0f, 18.0f, 0.0f);
+                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(770.0f, 115.0f, 0.0f);
 
                 }
                 else

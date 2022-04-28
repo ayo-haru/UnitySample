@@ -33,6 +33,13 @@ public class Boss1Manager : MonoBehaviour
     private Vector3 WarpEFPoint;
     private void Awake()
     {
+        //ボスを倒したかどうかの判定
+        if (!GameData.isAliveBoss1)
+        {
+            //ボスの処理を何もしない処理入れる
+            BossState = Boss1State.BOSS1_DEAD;
+            return;
+        }
         Entry = GameObject.Find("BossStageManager").GetComponent<BossEntry>();
         Bossobj = (GameObject)Resources.Load("PanCake");
 
@@ -44,13 +51,6 @@ public class Boss1Manager : MonoBehaviour
             BossState = Boss1State.BOSS1_START;
         }
         Application.targetFrameRate = 60;
-        //ボスを倒したかどうかの判定
-        if (!GameData.isAliveBoss1)
-        {
-            //ボスの処理を何もしない処理入れる
-            BossState = Boss1State.BOSS1_DEAD;
-            return;
-        }
     }
     // Start is called before the first frame update
     void Start()

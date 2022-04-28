@@ -80,6 +80,7 @@ public class Boss1Attack : MonoBehaviour
     GameObject [] StrawberryAim;
     Vector3 [] StrawberryAimScale;
     bool []StrawBerryLagFlg;
+    Vector3 WeaponPos;
 
     //ÉxÉWÉGã»ê¸óp
     Vector3  []StartPoint;
@@ -142,7 +143,6 @@ public class Boss1Attack : MonoBehaviour
         StrawBerryLagFlg = new bool[Max_Strawberry];
         BossStartPoint = GameObject.Find("BossPoint").transform.position;
         PlayerRefDir = new bool[Max_Strawberry];
-        RefMiss = GameObject.Find("StrawberryMiss").transform.position;
         StrawberryRefOnlyFlg = new bool[Max_Strawberry];
         StrawberryColPlayer = new bool[Max_Strawberry];
         PreMax_Strawberry = Max_Strawberry;
@@ -451,7 +451,10 @@ public class Boss1Attack : MonoBehaviour
             }
             return;
         }
-        
+        if(GameObject.Find("Weapon(Clone)"))
+        {
+            WeaponPos = GameObject.Find("Weapon(Clone)").transform.position;
+        }
         //ñàâÒégópÇµÇƒÇ¢ÇÈÉCÉ`ÉSÇÃíTçıÇ∑ÇÈ
         for (int i = 0; i < Max_Strawberry; i++)
         {
@@ -474,39 +477,82 @@ public class Boss1Attack : MonoBehaviour
                         Vector2 Dir = Strawberry[i].transform.position - GameData.PlayerPos;
                         float rad = Mathf.Atan2(Dir.y, Dir.x);
                         float degree = rad * Mathf.Rad2Deg;
+                        Debug.Log("ÇÕÇ∂Ç¢ÇΩÇ∫Ç•Ç•Ç•Ç•Ç•Ç•Ç•Ç•Ç•" + degree);
                         //íeÇ¢ÇΩäpìxÇ™ÅZìxÇæÇ¡ÇΩéûÇ…îÚÇÒÇ≈Ç≠ï˚å¸ÇïœÇ¶ÇÈèàóùÅB
                         //----------------------------------------------------------
-                        if (degree <= RefrectRotOver && degree >= RefrectRotUnder)
+                        if (!RFChange)
                         {
-                            if (degree >= 45.0f)
+                            if (degree <= RefrectRotOver && degree >= RefrectRotUnder)
                             {
-                                PlayerPoint[i].x = GameData.PlayerPos.x;
-                                PlayerPoint[i].y = GameData.PlayerPos.y + 2.0f;
-                                PlayerPoint[i].z = GameData.PlayerPos.z;
-                                PlayerMiddlePoint[i].x = GameData.PlayerPos.x + 3.0f;
-                                PlayerMiddlePoint[i].y = GameData.PlayerPos.y + 3.0f;
-                                PlayerMiddlePoint[i].z = GameData.PlayerPos.z;
-                                RefEndPoint = Boss1Manager.BossPos;
-                                PlayerRefDir[i] = true;
+                                Debug.Log("ÇÕÇ∂Ç¢ÇΩÇ∫Ç•Ç•Ç•Ç•Ç•Ç•Ç•Ç•Ç•1");
+                                if (degree >= 45.0f)
+                                {
+                                    PlayerPoint[i].x = WeaponPos.x;
+                                    PlayerPoint[i].y = WeaponPos.y + 2.0f;
+                                    PlayerPoint[i].z = WeaponPos.z;
+                                    PlayerMiddlePoint[i].x = WeaponPos.x + 3.0f;
+                                    PlayerMiddlePoint[i].y = WeaponPos.y + 3.0f;
+                                    PlayerMiddlePoint[i].z = WeaponPos.z;
+                                    RefEndPoint = Boss1Manager.BossPos;
+                                    PlayerRefDir[i] = true;
+                                }
+                                else
+                                {
+                                    PlayerPoint[i].x = WeaponPos.x + 2.0f;
+                                    PlayerPoint[i].y = WeaponPos.y;
+                                    PlayerPoint[i].z = WeaponPos.z;
+                                    RefEndPoint = Boss1Manager.BossPos;
+                                }
                             }
-                            else
+                            else if (degree <= RefrectRotOver || degree >= RefrectRotUnder)
                             {
-                                PlayerPoint[i].x = GameData.PlayerPos.x + 2.0f;
-                                PlayerPoint[i].y = GameData.PlayerPos.y;
-                                PlayerPoint[i].z = GameData.PlayerPos.z;
-                                RefEndPoint = Boss1Manager.BossPos;
+                                Debug.Log("ÇÕÇ∂Ç¢ÇΩÇ∫Ç•Ç•Ç•Ç•Ç•Ç•Ç•Ç•Ç•2");
+                                PlayerPoint[i].x = WeaponPos.x;
+                                PlayerPoint[i].y = WeaponPos.y;
+                                PlayerPoint[i].z = WeaponPos.z;
+                                RefMiss = GameObject.Find("StrawberryMiss").transform.position;
+                                RefEndPoint = RefMiss;
+                                RefMissFlg = true;
                             }
                         }
-                        else if (degree >= RefrectRotOver || degree <= RefrectRotUnder)
+                        if (RFChange)
                         {
-                            PlayerPoint[i].x = GameData.PlayerPos.x - 2.0f;
-                            PlayerPoint[i].y = GameData.PlayerPos.y;
-                            PlayerPoint[i].z = GameData.PlayerPos.z;
-                            RefEndPoint = RefMiss;
-                            RefMissFlg = true;
+                            if (degree >= RefrectRotOver && degree >= RefrectRotUnder * -1)
+                            {
+                                Debug.Log("ÇÕÇ∂Ç¢ÇΩÇ∫Ç•Ç•Ç•Ç•Ç•Ç•Ç•Ç•Ç•3");
+                                if (degree >= 135.0f)
+                                {
+                                    PlayerPoint[i].x = WeaponPos.x;
+                                    PlayerPoint[i].y = WeaponPos.y - 2.0f;
+                                    PlayerPoint[i].z = WeaponPos.z;
+                                    PlayerMiddlePoint[i].x = WeaponPos.x - 3.0f;
+                                    PlayerMiddlePoint[i].y = WeaponPos.y - 3.0f;
+                                    PlayerMiddlePoint[i].z = WeaponPos.z;
+                                    RefEndPoint = Boss1Manager.BossPos;
+                                    PlayerRefDir[i] = true;
+                                }
+                                else
+                                {
+                                    PlayerPoint[i].x = WeaponPos.x - 2.0f;
+                                    PlayerPoint[i].y = WeaponPos.y;
+                                    PlayerPoint[i].z = WeaponPos.z;
+                                    RefEndPoint = Boss1Manager.BossPos;
+                                }
+                            }
+                            else if (degree <= RefrectRotOver || degree >= RefrectRotUnder)
+                            {
+                                Debug.Log("ÇÕÇ∂Ç¢ÇΩÇ∫Ç•Ç•Ç•Ç•Ç•Ç•Ç•Ç•Ç•4");
+                                PlayerPoint[i].x = WeaponPos.x;
+                                PlayerPoint[i].y = WeaponPos.y;
+                                PlayerPoint[i].z = WeaponPos.z;
+                                RefMiss = GameObject.Find("LeftStrawberryMiss").transform.position;
+                                RefEndPoint = RefMiss;
+                                RefMissFlg = true;
+                            }
                         }
                         //----------------------------------------------------------
                     }
+                    
                     //íeÇ©ÇÍÇΩå„ÇÃèàóù
                     if (StrawberryRefFlg[i])
                     {
@@ -607,7 +653,6 @@ public class Boss1Attack : MonoBehaviour
             }
             if(!RFChange)
             {
-                
                 MiddlePoint[StrawberryNum] = GameObject.Find("Strawberry").transform.position;
                 EndPoint[StrawberryNum] = GameObject.Find("StrawberryEnd").transform.position;
                 RFNum = -1;

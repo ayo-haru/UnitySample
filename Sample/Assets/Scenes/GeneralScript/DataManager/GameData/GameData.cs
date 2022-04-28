@@ -18,9 +18,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
-public static class GameData
-{
-   public enum eSceneState {
+public static class GameData {
+    public enum eSceneState {
         TITLE_SCENE = 0,
         KitchenStage001,
         KitchenStage002,
@@ -60,14 +59,14 @@ public static class GameData
     public static Vector3 PlayerPos;        // プレイヤーの座標（現在はGameManagerで毎フレーム代入しているが本来はPlayerクラスが良い(はず)） 
     public static GameObject Player;
     public static VelocityTmp PlayerVelocyty = new VelocityTmp();
-    public static int CurrentHP = 5 ;       // HPの保存(現在の)
+    public static int CurrentHP = 5;       // HPの保存(現在の)
     public static int CurrentPiece = 0;     //かけらの所持数
     public static int CurrentPieceGrade = 0;    //かけらの所持枠
     public static bool isFadeOut = false;   //フェードアウト処理の開始、完了を管理するフラグ
-    public static bool isFadeIn  = false;   //フェードイン処理の開始、完了を管理するフラグ
+    public static bool isFadeIn = false;   //フェードイン処理の開始、完了を管理するフラグ
 
     public static bool FireOnOff = true;
-    public static bool GateOnOff = false;    //　tureが閉じてる
+    public static bool GateOnOff = true;    //　tureが閉じてる
 
     public static bool isAliveBoss1 = true;    //ボス１の討伐情報保存用
 
@@ -93,7 +92,7 @@ public static class GameData
     public static void InitData() {
         CurrentHP = 5;
         //SaveManager.saveHP(CurrentHP);
-        if(CurrentMapName == "Tester")
+        if (CurrentMapName == "Tester")
         {
             isAliveBoss1 = true;
         }
@@ -112,8 +111,11 @@ public static class GameData
     }
 
     public static void LoadData() {
+        //SaveManager.load();
         ReSpawnPos = SaveManager.sd.LastPlayerPos;
         CurrentMapNumber = SaveManager.sd.LastMapNumber;
+        Debug.Log("ロードデータ" + ReSpawnPos);
+        Debug.Log("ロードデータ" + CurrentMapNumber);
         CurrentHP = SaveManager.sd.HP;
         //isAliveBoss1 = SaveManager.sd.isBoss1Alive;
         //FireOnOff = SaveManager.sd.fireOnOff;
@@ -122,6 +124,19 @@ public static class GameData
         CurrentPieceGrade = SaveManager.sd.PieceGrade;
         SoundManager.bgmVolume = SaveManager.sd.bgmVolume;
         SoundManager.seVolume = SaveManager.sd.seVolume;
+    }
+
+    public static void SaveAll() {
+        SaveManager.saveLastMapNumber(CurrentMapNumber);
+        SaveManager.saveLastPlayerPos(PlayerPos);
+        SaveManager.saveHP(CurrentHP);
+        SaveManager.saveBossAlive(isAliveBoss1);
+        SaveManager.saveFireOnOff(FireOnOff);
+        SaveManager.saveGateOnOff(GateOnOff);
+        SaveManager.saveCurrentPiece(CurrentPiece);
+        SaveManager.savePieceGrade(CurrentPieceGrade);
+        SaveManager.saveBGMVolume(SoundManager.bgmVolume);
+        SaveManager.saveSEVolume(SoundManager.seVolume);
     }
 
     public static void Init() {
@@ -135,6 +150,9 @@ public static class GameData
         LoadData();
         CurrentHP = 5;
         CurrentPiece = 0;
+
+        Debug.Log("リスポーンプレイヤー" + PlayerPos);
+        Debug.Log("リスポーンプレイヤー" + CurrentMapNumber);
         SceneManager.LoadScene(MapName[CurrentMapNumber]);
 
 

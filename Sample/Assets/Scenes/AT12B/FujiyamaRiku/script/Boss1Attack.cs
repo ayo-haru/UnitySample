@@ -30,7 +30,7 @@ public class Boss1Attack : MonoBehaviour
     bool AnimFlg;
     bool MoveFlg;
     BossMove.Boss_State BossTakeCase;
-    bool RFChange;                                          //左右反転
+    bool RFChange;                                          //左右反転 true = 左から攻撃 false = 右から攻撃
     //実装するかわからない左右判定用
     //突進用変数群
     //----------------------------------------------------------
@@ -55,7 +55,8 @@ public class Boss1Attack : MonoBehaviour
     Vector3 Scale;
     Vector3 oldScale;
     [SerializeField] public float RotateSpeed;
-    [SerializeField] public Vector3 Rotate;
+    Vector3 Rotate;
+    int RFNum;
         
     //----------------------------------------------------------
     //イチゴ爆弾変数
@@ -155,10 +156,8 @@ public class Boss1Attack : MonoBehaviour
         {
             StrawberryRefFlg[i] = false;
             StrawberryUseFlg[i] = false;
-            MiddlePoint[i] = GameObject.Find("Cube").transform.position; 
-            EndPoint[i] = GameObject.Find("CubeEnd").transform.position; 
-            MiddlePoint[i].x -= (11f * i);
-            EndPoint[i].x -= (22f * i);
+            MiddlePoint[i] = GameObject.Find("Strawberry").transform.position; 
+            EndPoint[i] = GameObject.Find("StrawberryEnd").transform.position; 
         }
         OnlyFlg = false;
     }
@@ -261,25 +260,23 @@ public class Boss1Attack : MonoBehaviour
                     //最後まで攻撃し終わっていたら
                     if (RushEndFlg)
                     {
-                    //Boss1Manager.BossPos = Beziercurve.SecondCurve(RushEndPoint, RushMiddlePoint, BossStartPoint, BossReturnTime);
+                    Debug.Log("あああああああああああああああああああああああ！！！");
+                    //Boss1Manager.BossPos = Vector3.Lerp(RushRefEndPoint, BossStartPoint, BossReturnTime);
                     //方向が変わってたらスケールｘを反転
-                    if (Scale.x != -1)
-                    {
-                        Scale.x *= -1;
-                        Boss1Manager.Boss.transform.localScale = Scale;
-                    }
+                    Boss1Manager.Boss.transform.localScale = Scale;
+                    
                     //回転の目標値
                     Quaternion target = new Quaternion();
                     //向きを設定
                     target = Quaternion.LookRotation(Rotate);
                     //ゆっくり回転させる
-                    Boss1Manager.Boss.transform.rotation = Quaternion.RotateTowards(Boss1Manager.Boss.transform.rotation, target, RotateSpeed);
-                }
+                        Boss1Manager.Boss.transform.rotation = Quaternion.RotateTowards(Boss1Manager.Boss.transform.rotation, target, RotateSpeed);
+                    }
                 
                     //途中で弾かれていたら
                     if (!RushEndFlg)
                     {
-                        Boss1Manager.BossPos = Vector3.Lerp(RushRefEndPoint, BossStartPoint, BossReturnTime);
+                        Boss1Manager.BossPos = Vector3.Lerp(RushRefEndPoint, RushStartPoint, BossReturnTime);
                     }
                     //開始地点まで戻ってきたときにもろもろ初期化
                     if (BossReturnTime >= 1.0f)
@@ -287,6 +284,17 @@ public class Boss1Attack : MonoBehaviour
                     if (Fork != null)
                     {
                         Destroy(Fork);
+                    }
+                    if (RushEndFlg)
+                    {
+                        if (!RFChange)
+                        {
+                            RFChange = true;
+                        }
+                        else if (RFChange)
+                        {
+                            RFChange = false;
+                        }
                     }
                         ReturnDelay = false;
                         RushEndFlg = false;
@@ -296,7 +304,7 @@ public class Boss1Attack : MonoBehaviour
                         BossAnim.SetBool("RushToJump", false);
                         AnimMoveFlgOnOff();
                         BossReturnTime = 0;
-                         BossAnim.speed = 1;
+                        BossAnim.speed = 1;
                     if (HPgage.currentHp >= 50)
                         {
                             BossMove.SetState(BossMove.Boss_State.idle);
@@ -316,10 +324,8 @@ public class Boss1Attack : MonoBehaviour
                 {
                     RushRefFlg = true;
                     RushPlayerPoint = Boss1Manager.Boss.transform.position;
-                    RushRefEndPoint = GameObject.Find("ForkRefEndPoint").transform.position;
                     BossAnim.SetBool("RushToJump", false);
                     BossAnim.SetBool("Blow", true);
-                    
                     RefrectFlg = false;
                 }
                 //弾かれていなかった場合の処理
@@ -329,6 +335,7 @@ public class Boss1Attack : MonoBehaviour
                     Boss1Manager.BossPos = Vector3.Lerp(RushStartPoint, RushEndPoint, RushTime);
                 if (RushTime >= 1.0f)
                 {
+                    Scale.x *= -1;
                     RushReturnSpeed = 1f;
                     RushEndFlg = true;
                     BossReturnFlg = true;
@@ -345,13 +352,14 @@ public class Boss1Attack : MonoBehaviour
                     if (RushRefTime >= 1.0f)
                     {
                         Destroy(Fork);
-                        BossAnim.SetBool("Blow", false);
+                    RushEndFlg = false;
+                    BossAnim.SetBool("Blow", false);
                         BossAnim.SetTrigger("WallHit");
                         BossAnim.Play("WallHit");
                         BossAnim.speed = 0.3f;
                     if (ReturnDelay)
                     {
-                        RushReturnSpeed = 1.5f;
+                        RushReturnSpeed = 3f;
                         RushRefFlg = false;
                         BossReturnFlg = true;
                         BossAnim.SetBool("IdleToTake", false);
@@ -376,18 +384,40 @@ public class Boss1Attack : MonoBehaviour
         //突進攻撃を始めるために毎回一回だけ処理する部分
         if (!OnlyFlg)
         {
-            OnlyFlg = true;
-            Debug.Log("Pos : " + Boss1Manager.BossPos);
-            RushStartPoint = Boss1Manager.BossPos;
-            RushEndPoint = GameObject.Find("ForkEndPoint").transform.position;
-            RushMiddlePoint = GameObject.Find("RushMiddle").transform.position;
-            ForkPos = GameObject.Find("ForkPos").transform.position;
-            Fork = Instantiate(Forkobj, ForkPos, Quaternion.Euler(GameObject.Find("ForkPos").transform.rotation.eulerAngles));
-            Fork.transform.parent = GameObject.Find("ForkPos").transform;
-            BossAnim.SetTrigger("TakeToRushTr");
-            BossAnim.SetBool("RushToJump",true);
-            BossAnim.SetBool("IdleToTake", false);
-            SoundManager.Play(SoundData.eSE.SE_BOOS1_DASHU, SoundData.GameAudioList);
+            
+            //右から左
+            if (!RFChange)
+            {
+                OnlyFlg = true;
+                Debug.Log("Pos : " + Boss1Manager.BossPos);
+                RushStartPoint = GameObject.Find("BossPoint").transform.position;
+                RushEndPoint = GameObject.Find("LeftBossPoint").transform.position;
+                ForkPos = GameObject.Find("ForkPos").transform.position;
+                Fork = Instantiate(Forkobj, ForkPos, Quaternion.Euler(GameObject.Find("ForkPos").transform.rotation.eulerAngles));
+                Fork.transform.parent = GameObject.Find("ForkPos").transform;
+                RushRefEndPoint = GameObject.Find("ForkRefEndPoint").transform.position;
+                Rotate.x = 1;
+                BossAnim.SetTrigger("TakeToRushTr");
+                BossAnim.SetBool("RushToJump", true);
+                BossAnim.SetBool("IdleToTake", false);
+                SoundManager.Play(SoundData.eSE.SE_BOOS1_DASHU, SoundData.GameAudioList);
+            }
+            //左から右
+            else if(RFChange)
+            {
+                OnlyFlg = true;
+                RushStartPoint = GameObject.Find("LeftBossPoint").transform.position;
+                RushEndPoint = GameObject.Find("BossPoint").transform.position;
+                ForkPos = GameObject.Find("ForkPos").transform.position;
+                Fork = Instantiate(Forkobj, ForkPos, Quaternion.Euler(GameObject.Find("ForkPos").transform.rotation.eulerAngles));
+                Fork.transform.parent = GameObject.Find("ForkPos").transform;
+                RushRefEndPoint = GameObject.Find("LeftForkRefEndPoint").transform.position;
+                Rotate.x = -1;
+                BossAnim.SetTrigger("TakeToRushTr");
+                BossAnim.SetBool("RushToJump", true);
+                BossAnim.SetBool("IdleToTake", false);
+                SoundManager.Play(SoundData.eSE.SE_BOOS1_DASHU, SoundData.GameAudioList);
+            }
         }
     }
 
@@ -569,6 +599,21 @@ public class Boss1Attack : MonoBehaviour
         {
         if (!StrawberryUseFlg[StrawberryNum] && StrawberryNum < Max_Strawberry)
         {
+            if (RFChange)
+            {
+                MiddlePoint[StrawberryNum] = GameObject.Find("LeftStrawberry").transform.position;
+                EndPoint[StrawberryNum] = GameObject.Find("LeftStrawberryEnd").transform.position;
+                RFNum = 1;
+            }
+            if(!RFChange)
+            {
+                
+                MiddlePoint[StrawberryNum] = GameObject.Find("Strawberry").transform.position;
+                EndPoint[StrawberryNum] = GameObject.Find("StrawberryEnd").transform.position;
+                RFNum = -1;
+            }
+            MiddlePoint[StrawberryNum].x += (11f * StrawberryNum) * RFNum;
+            EndPoint[StrawberryNum].x += (22f * StrawberryNum) * RFNum;
             //イチゴの座標指定
             if (StrawberryNum % 2 == 0)
             {
@@ -582,9 +627,6 @@ public class Boss1Attack : MonoBehaviour
                 StartPoint[StrawberryNum].y = GameObject.Find("middle2_L").transform.position.y;
                 StartPoint[StrawberryNum].z = GameObject.Find("middle2_L").transform.position.z;
             }
-            //StartPoint.x = Boss1Manager.BossPos.x;
-            //StartPoint.y = Boss1Manager.BossPos.y;
-            //StartPoint.z = Boss1Manager.BossPos.z;
             //イチゴの生成後それぞれの名前変更
             Strawberry[StrawberryNum] = Instantiate(obj, StartPoint[StrawberryNum], Quaternion.identity);
             if (StrawberryNum % 2 == 0)

@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
 
         if (shouldRespawn)
         {
-            if (!GameData.isFadeOut && !GameData.isFadeIn)
+            if (!GameData.isFadeOut)
             {
                 GameData.InitScene();
                 Pause.isPause = false;

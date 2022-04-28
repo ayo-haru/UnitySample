@@ -19,7 +19,7 @@ public class MapManager : MonoBehaviour
     //プレイヤーアイコン
     public GameObject[] PlayerIcon;
     //魔法陣
-    public GameObject MagicCircle;
+    public GameObject[] MagicCircle;
     //一回だけ呼び出す用のフラグ
     private bool OnceFlag = true;
     // Start is called before the first frame update
@@ -42,7 +42,11 @@ public class MapManager : MonoBehaviour
     void FixedUpdate()
     {
         //魔法陣表示
-        MagicCircle.GetComponent<ImageShow>().Show(1000);
+        for(int i = 0; i < MagicCircle.Length; ++i)
+        {
+            MagicCircle[i].GetComponent<ImageShow>().Show(1000);
+        }
+       
         if (!OnceFlag)
         {
             return;

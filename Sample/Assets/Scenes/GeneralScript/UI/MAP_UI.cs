@@ -33,15 +33,20 @@ public class MAP_UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //ｆ１押したらマップ表示
-        if (Input.GetKeyDown(KeyCode.F1))
+        ////ｆ１押したらマップ表示
+        //if (Input.GetKeyDown(KeyCode.F1))
+        //{
+        //    DisplayMAP.SetActive(true);
+        //}
+        ////ｆ２押したらマップ非表示
+        //if (Input.GetKeyDown(KeyCode.F2))
+        //{
+        //    DisplayMAP.SetActive(false);
+        //}
+        //Mキーで表示非表示切り替え
+        if (Input.GetKeyDown(KeyCode.M))
         {
-            DisplayMAP.SetActive(true);
-        }
-        //ｆ２押したらマップ非表示
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            DisplayMAP.SetActive(false);
+            DisplayMAP.SetActive(!DisplayMAP.activeSelf);
         }
 
     }

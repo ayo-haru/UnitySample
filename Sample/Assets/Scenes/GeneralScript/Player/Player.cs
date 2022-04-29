@@ -77,8 +77,11 @@ public class Player : MonoBehaviour
         if (SaveManager.shouldSave) // セーブするが選択されたら
         {
             Debug.Log("セーブした");
-            GameData.ReSpawnPos = this.transform.position;              // プレイヤーの位置を保存
-            SaveManager.saveLastPlayerPos(GameData.ReSpawnPos);         // プレイヤーの位置を保存
+            //GameData.ReSpawnPos = this.transform.position;              // プレイヤーの位置を保存
+            //SaveManager.saveLastPlayerPos(GameData.ReSpawnPos);         // プレイヤーの位置を保存
+            //GameData.ReSpawnPos = this.transform.position;              // プレイヤーの位置を保存
+            SaveManager.saveLastPlayerPos(GameData.PlayerPos);         // プレイヤーの位置を保存
+
             SaveManager.saveBossAlive(GameData.isAliveBoss1);           // ボス１の生存フラグを保存
             SaveManager.saveHP(GameData.CurrentHP);                     // 現在のHPを保存
             SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);   // 今いるマップの番号を保存
@@ -102,6 +105,22 @@ public class Player : MonoBehaviour
             }
             Warp.shouldWarp = false;
         }
+
+        // ゲームオーバー
+        if (GameData.CurrentHP < 1)
+        {
+            //GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
+            //hp.GetComponent<GameOver>().GameOverShow();
+            Player.shouldRespawn = false;
+
+            // フェード
+            Pause.isPause = true;   // フェード終わるまでポーズ
+            Debug.Log("フェードはじめのポーズ");
+            GameData.isFadeOut = true;  // フェードかける
+                                        // りすぽん
+            GameOver.GameOverReset();
+        }
+
 
         if (shouldRespawn)
         {

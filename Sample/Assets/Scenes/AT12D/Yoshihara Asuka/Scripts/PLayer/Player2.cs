@@ -220,21 +220,6 @@ public class Player2 : MonoBehaviour
                 }
             }
 
-            // ゲームオーバー
-            if (GameData.CurrentHP < 1)
-            {
-                //GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
-                //hp.GetComponent<GameOver>().GameOverShow();
-                Player.shouldRespawn = false;
-
-                // フェード
-                Pause.isPause = true;   // フェード終わるまでポーズ
-                Debug.Log("フェードはじめのポーズ");
-                GameData.isFadeOut = true;  // フェードかける
-                // りすぽん
-                GameOver.GameOverReset();
-            }
-
             //Debug.Log("したぱりい"+UnderParryNow);
             //Debug.Log("じゃんぷなう" + JumpNow);
             //Debug.Log("じめんなう" + GroundNow);

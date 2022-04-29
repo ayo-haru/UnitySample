@@ -182,17 +182,15 @@ public class Player2 : MonoBehaviour
                 return;
             }
 
-            if (/*UnderParryNow == true || */GroundNow == false)
+            if (UnderParryNow == true || GroundNow == false)
             {
                 Gravity();
             }
 
             animator.speed = 1.0f;
 
-            rb.Resume(gameObject);
+            //rb.Resume(gameObject);
             GamePadManager.onceTiltStick = false;
-
-
 
             //---HPオブジェクトを検索
             if (!hp)
@@ -441,7 +439,7 @@ public class Player2 : MonoBehaviour
         GameObject weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
                                                            PlayerPos.y + (AttackDirection.y * AttckPosHeight),
                                                            PlayerPos.z), Quaternion.identity);
-
+        Debug.Log(weapon.transform.position);
         //---コントローラーの倒したXの値が－だったらy軸に-1する(盾の角度の調整)
         if (AttackDirection.x < 0){
             AttackDirection.y *= -1;

@@ -67,10 +67,12 @@ public class WeaponCollision : MonoBehaviour
                 //方向
                 // Vector3 dir = Player.transform.position - collision.transform.position;
                 Vector3 dir = Player.transform.position - gameObject.transform.position;
+                
                 dir.Normalize();
                 player_rb.velocity = Vector3.zero;
                 //地面パリイ
-                player_rb.AddForce((dir * baunceGround), ForceMode.Impulse);
+                //player_rb.AddForce((dir * baunceGround), ForceMode.Impulse);
+                player_rb.AddForce((dir * baunceGround), ForceMode.VelocityChange);
                 
                 CanCollision = false;
             }
@@ -79,7 +81,7 @@ public class WeaponCollision : MonoBehaviour
         //プレイヤー以外と当たってたら盾消去
         if (collision.gameObject.tag != "Player")
         {
-            Destroy(gameObject);
+            Destroy(gameObject,0.1f);
         }
 
         Debug.Log(collision.gameObject.name + "と当たった");

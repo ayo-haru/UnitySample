@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 3684428489766932041}
   - component: {fileID: 6696427108604458282}
   - component: {fileID: 7591669656694572774}
+  - component: {fileID: 5890229386246420004}
   m_Layer: 0
   m_Name: knife
   m_TagString: Enemy
@@ -58,7 +59,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4065176634462000371}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 11.361177, z: 0.000000834465}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 65585365540237873}
@@ -90,6 +91,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.5190778, y: 57.162704, z: 2.6352472}
   m_Center: {x: -1.2595356, y: -2.679429, z: -4.402332}
+--- !u!114 &5890229386246420004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4065176634462000371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57469ede452658c4aaedf0a168abde62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7244311872149091386
 GameObject:
   m_ObjectHideFlags: 0

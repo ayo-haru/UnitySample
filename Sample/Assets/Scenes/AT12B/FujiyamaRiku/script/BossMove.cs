@@ -12,6 +12,7 @@ public class BossMove : MonoBehaviour
         strawberryBomb,      //イチゴ爆弾(3)
         charge,             //突進(4)
         KnifeThrower,      //ナイフ投げ(5)
+        Rain,             //武器雨(6)
     }
 
     private Animator animator;
@@ -70,6 +71,10 @@ public class BossMove : MonoBehaviour
                     //KnifeThrower();
                     this.GetComponent<Boss1Attack>().Boss1Knife();
                 }
+                else if(BossState == Boss_State.Rain)
+                {
+                    this.GetComponent<Boss1Attack>().Boss1Rain();
+                }
             }
         }
     }
@@ -127,7 +132,7 @@ public class BossMove : MonoBehaviour
             //ランダム数の生成とswitch分岐をこの中へ
             if (HPgage.currentHp >= 51)
             {
-                RandomNumbe = Random.Range(1, 3);//攻撃パターンランダム化
+                RandomNumbe = Random.Range(4, 5);//攻撃パターンランダム化
                 Debug.Log("Random" + RandomNumbe);
             }
             else
@@ -154,6 +159,11 @@ public class BossMove : MonoBehaviour
                             RandomNumbe = -1;
                         Debug.Log("ナイフ攻撃");
                         break;//break文
+                    case 4://雨攻撃
+                    SetState(Boss_State.Rain);
+                    RandomNumbe = -1;
+                    Debug.Log("雨攻撃");
+                    break;
 
                 }
             

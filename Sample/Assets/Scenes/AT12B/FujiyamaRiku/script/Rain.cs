@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fork : MonoBehaviour
+public class Rain : MonoBehaviour
 {
     Boss1Attack BossAttack;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -19,12 +19,18 @@ public class Fork : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        if (!BossAttack.WeaponAttackFlg)
+        if (BossAttack.WeaponAttackFlg)
         {
             if (collision.gameObject.name == "Weapon(Clone)")
             {
-                GetComponent<Collider>().enabled = false;
-                Boss1Attack.RefrectFlg = true;
+                for (int i = 0; i < BossAttack.MaxWeapon; i++)
+                {
+                    if (this.gameObject.name == "BossWeapon" + i)
+                    {
+                        BossAttack.g_Weapon[i].RainRefrectFlg = true;
+                        BossAttack.g_Weapon[i].RainRefOnlyFlg = true;
+                    }
+                }
             }
         }
     }

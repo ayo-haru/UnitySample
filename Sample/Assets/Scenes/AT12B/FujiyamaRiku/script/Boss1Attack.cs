@@ -13,6 +13,7 @@ public class Boss1Attack : MonoBehaviour
         Attack1 = 0,
         Attack2,
         Attack3,
+        Attack4,
         Idle,
     }
     static public bool RefrectFlg = false;                  //プレイヤーがパリィに成功したかどうかの受け取り用
@@ -31,6 +32,7 @@ public class Boss1Attack : MonoBehaviour
     bool MoveFlg;
     BossMove.Boss_State BossTakeCase;
     bool RFChange;                                          //左右反転 true = 左から攻撃 false = 右から攻撃
+    public bool WeaponAttackFlg;                            //武器使う攻撃変更 true = 雨攻撃 false = 突進orナイフ
     //実装するかわからない左右判定用
     //突進用変数群
     //----------------------------------------------------------
@@ -116,17 +118,43 @@ public class Boss1Attack : MonoBehaviour
     bool AimOnly;
     bool AimStart;
     //----------------------------------------------------------
+    //ナイフフォーク大豪雨
+    //----------------------------------------------------------
+    public struct RainWeapon
+    {
+        public GameObject UseObj;
+        public Vector3 StartPoint;
+        public Vector3 EndPoint;
+        public Vector3 ReturnPoint;
+        public float RainMoveTime;
+        public float RefMoveTime;
+        public bool UseFlg;
+        public bool RainRefrectFlg;
+        public bool RainRefOnlyFlg;
 
+    };
+    [SerializeField] public float RainTime;
+    float RainNowTime;
+    [SerializeField] public int MaxWeapon;
+    public int PreMaxWeapon;
+    Vector3 Range1;
+    Vector3 Range2;
+    Vector3 RainRand;
+    int RainNum;
+    int WeaponRand;
 
-
+    public RainWeapon []g_Weapon;
     // Start is called before the first frame update
     void Start()
     {
+        
         obj = (GameObject)Resources.Load("StrawBerry");
         Knifeobj = (GameObject)Resources.Load("Knife");
         Forkobj = (GameObject)Resources.Load("Fork");
         StrawberryAimObj = (GameObject)Resources.Load("StrawberryAim");
         KnifeAimObj = (GameObject)Resources.Load("KnifeAim");
+        Range1 = GameObject.Find("Range1").transform.position;
+        Range2 = GameObject.Find("Range2").transform.position;
         StrawberryNum = 0;
         Strawberry = new GameObject[Max_Strawberry];
         StrawberryUseFlg = new bool[Max_Strawberry];
@@ -159,12 +187,21 @@ public class Boss1Attack : MonoBehaviour
             MiddlePoint[i] = GameObject.Find("Strawberry").transform.position; 
             EndPoint[i] = GameObject.Find("StrawberryEnd").transform.position; 
         }
+        g_Weapon = new RainWeapon[MaxWeapon];
+        PreMaxWeapon = MaxWeapon;
+        for (int i = 0;i< MaxWeapon;i++)
+        {
+            g_Weapon[i].UseFlg = false;
+            g_Weapon[i].RainRefrectFlg = false;
+            g_Weapon[i].RainMoveTime = 0.0f;
+        }
         OnlyFlg = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (Pause.isPause)
         {
             BossAnim.speed = 0.0f;  // アニメーションポーズ
@@ -384,7 +421,7 @@ public class Boss1Attack : MonoBehaviour
         //突進攻撃を始めるために毎回一回だけ処理する部分
         if (!OnlyFlg)
         {
-            
+            WeaponAttackFlg = false;
             //右から左
             if (!RFChange)
             {
@@ -451,7 +488,7 @@ public class Boss1Attack : MonoBehaviour
             }
             return;
         }
-        if(GameObject.Find("Weapon(Clone)"))
+        if (GameObject.Find("Weapon(Clone)"))
         {
             WeaponPos = GameObject.Find("Weapon(Clone)").transform.position;
         }
@@ -484,7 +521,6 @@ public class Boss1Attack : MonoBehaviour
                         {
                             if (degree <= RefrectRotOver && degree >= RefrectRotUnder)
                             {
-                                Debug.Log("はじいたぜぇぇぇぇぇぇぇぇぇ1");
                                 if (degree >= 45.0f)
                                 {
                                     PlayerPoint[i].x = WeaponPos.x;
@@ -506,7 +542,6 @@ public class Boss1Attack : MonoBehaviour
                             }
                             else if (degree <= RefrectRotOver || degree >= RefrectRotUnder)
                             {
-                                Debug.Log("はじいたぜぇぇぇぇぇぇぇぇぇ2");
                                 PlayerPoint[i].x = WeaponPos.x;
                                 PlayerPoint[i].y = WeaponPos.y;
                                 PlayerPoint[i].z = WeaponPos.z;
@@ -519,7 +554,6 @@ public class Boss1Attack : MonoBehaviour
                         {
                             if (degree >= RefrectRotOver && degree >= RefrectRotUnder * -1)
                             {
-                                Debug.Log("はじいたぜぇぇぇぇぇぇぇぇぇ3");
                                 if (degree >= 135.0f)
                                 {
                                     PlayerPoint[i].x = WeaponPos.x;
@@ -541,7 +575,6 @@ public class Boss1Attack : MonoBehaviour
                             }
                             else if (degree <= RefrectRotOver || degree >= RefrectRotUnder)
                             {
-                                Debug.Log("はじいたぜぇぇぇぇぇぇぇぇぇ4");
                                 PlayerPoint[i].x = WeaponPos.x;
                                 PlayerPoint[i].y = WeaponPos.y;
                                 PlayerPoint[i].z = WeaponPos.z;
@@ -846,6 +879,7 @@ public class Boss1Attack : MonoBehaviour
     void StartShotAnim()
     {
         AimStart = true;
+        WeaponAttackFlg = false;
         KnifeStartPoint.x = Boss1Manager.BossPos.x;
         KnifeStartPoint.y = Boss1Manager.BossPos.y + 4;
         KnifeStartPoint.z = Boss1Manager.BossPos.z;
@@ -856,4 +890,89 @@ public class Boss1Attack : MonoBehaviour
         SoundManager.Play(SoundData.eSE.SE_BOOS1_KNIFE, SoundData.GameAudioList);
     }
     
+    public void Boss1Rain()
+    {
+        WeaponAttackFlg = true;
+        if (!g_Weapon[MaxWeapon - 1].UseFlg)
+        {
+            RainNowTime = RainNowTime + (1.0f / 60.0f);
+            
+            if (RainNowTime >= RainTime / MaxWeapon)
+            {
+                //生成
+                RainRand.x = Random.Range(Range1.x, Range2.y);
+                RainRand.y = Range1.y;
+                RainRand.z = Range1.z;
+                WeaponRand = Random.Range(1, 3);
+                if (WeaponRand == 1)
+                {
+                    g_Weapon[RainNum].UseObj = Instantiate(Knifeobj, RainRand, Quaternion.Euler(new Vector3(180.0f, 0.0f, 0.0f)));
+                }
+                if (WeaponRand == 2)
+                {
+                    g_Weapon[RainNum].UseObj = Instantiate(Forkobj, RainRand, Quaternion.Euler(new Vector3(180.0f, 0.0f, 0.0f)));
+                }
+                g_Weapon[RainNum].UseObj.name = "BossWeapon" + RainNum;
+                g_Weapon[RainNum].UseFlg = true;
+                g_Weapon[RainNum].StartPoint = RainRand;
+                g_Weapon[RainNum].EndPoint = RainRand;
+                g_Weapon[RainNum].EndPoint.y = EndPoint[0].y;
+                RainNum++;
+                RainNowTime = 0;
+            }
+        }
+        for (int i = 0; i < MaxWeapon;i++)
+        {
+            
+            if (g_Weapon[i].UseFlg)
+            {
+                if (g_Weapon[i].RainRefOnlyFlg)
+                {
+                    g_Weapon[i].RainMoveTime = 0;
+                    g_Weapon[i].RainRefOnlyFlg = false;
+                    g_Weapon[i].ReturnPoint = g_Weapon[i].UseObj.gameObject.transform.position;
+                }
+                g_Weapon[i].RainMoveTime += Time.deltaTime * 1.25f;
+                if (!g_Weapon[i].RainRefrectFlg)
+                {
+                    g_Weapon[i].UseObj.transform.position = Vector3.Lerp(g_Weapon[i].StartPoint, g_Weapon[i].EndPoint, g_Weapon[i].RainMoveTime);
+                }
+                if (g_Weapon[i].RainRefrectFlg)
+                {
+                    g_Weapon[i].UseObj.transform.position = Vector3.Lerp(g_Weapon[i].ReturnPoint, g_Weapon[i].StartPoint, g_Weapon[i].RainMoveTime);
+                }
+                if (g_Weapon[i].RainMoveTime >= 1.0f)
+                {
+                    if (g_Weapon[MaxWeapon - 1].RainMoveTime >= 1.0f)
+                    {
+                        Debug.Log("最終選考");
+                        g_Weapon[i].UseFlg = false;
+                        g_Weapon[i].RainRefrectFlg = false;
+                        Destroy(g_Weapon[i].UseObj);
+                        g_Weapon[i].RainMoveTime = 0;
+                        RainNum = 0;
+                        BossMove.SetState(BossMove.Boss_State.idle);
+                        return;
+                    }
+                    g_Weapon[i].UseFlg = false;
+                    g_Weapon[i].RainRefrectFlg = false;
+                    Destroy(g_Weapon[i].UseObj);
+                    g_Weapon[i].RainMoveTime = 0;
+                }
+                
+
+            }
+
+        }
+
+    }
+    //大豪雨アニメーションから用
+    public void StartRain()
+    {
+        if (!AnimFlg)
+        {
+            AnimFlagOnOff();
+            //BossAnim.SetBool("TakeToKnife", true);
+        }
+    }
 }

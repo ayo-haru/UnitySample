@@ -113,7 +113,8 @@ public static class GameData {
     public static void LoadData() {
         //SaveManager.load();
         ReSpawnPos = SaveManager.sd.LastPlayerPos;
-        CurrentMapNumber = SaveManager.sd.LastMapNumber;
+        //CurrentMapNumber = SaveManager.sd.LastMapNumber;
+        NextMapNumber = SaveManager.sd.LastMapNumber;
         Debug.Log("ロードデータ" + ReSpawnPos);
         Debug.Log("ロードデータ" + CurrentMapNumber);
         CurrentHP = SaveManager.sd.HP;
@@ -153,8 +154,8 @@ public static class GameData {
 
         Debug.Log("リスポーンプレイヤー" + PlayerPos);
         Debug.Log("リスポーンプレイヤー" + CurrentMapNumber);
-        SceneManager.LoadScene(MapName[CurrentMapNumber]);
-
+        //SceneManager.LoadScene(MapName[CurrentMapNumber]);
+        //NextMapNumber = CurrentMapNumber;
 
         Pause.isPause = false;  // 万が一ポーズ中だった場合ポーズ解除
     }

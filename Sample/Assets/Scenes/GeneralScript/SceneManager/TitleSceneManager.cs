@@ -53,7 +53,7 @@ public class TitleSceneManager : MonoBehaviour {
         //----- シーン -----
         SaveManager.load();
         GameData.LoadData();
-        GameData.NextMapNumber = SaveManager.sd.LastMapNumber;
+        //GameData.NextMapNumber = SaveManager.sd.LastMapNumber;
         GameData.CurrentMapNumber = (int)GameData.eSceneState.TITLE_SCENE;
 
         //----- サウンド -----

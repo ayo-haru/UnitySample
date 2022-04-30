@@ -903,7 +903,7 @@ public class Boss1Attack : MonoBehaviour
                 RainRand.x = Random.Range(Range1.x, Range2.y);
                 RainRand.y = Range1.y;
                 RainRand.z = Range1.z;
-                WeaponRand = Random.Range(1, 3);
+                WeaponRand = Random.Range(2, 3);
                 if (WeaponRand == 1)
                 {
                     g_Weapon[RainNum].UseObj = Instantiate(Knifeobj, RainRand, Quaternion.Euler(new Vector3(180.0f, 0.0f, 0.0f)));
@@ -935,36 +935,43 @@ public class Boss1Attack : MonoBehaviour
                 g_Weapon[i].RainMoveTime += Time.deltaTime * 1.25f;
                 if (!g_Weapon[i].RainRefrectFlg)
                 {
+                    if(g_Weapon[i].UseObj != null)
                     g_Weapon[i].UseObj.transform.position = Vector3.Lerp(g_Weapon[i].StartPoint, g_Weapon[i].EndPoint, g_Weapon[i].RainMoveTime);
                 }
                 if (g_Weapon[i].RainRefrectFlg)
                 {
-                    g_Weapon[i].UseObj.transform.position = Vector3.Lerp(g_Weapon[i].ReturnPoint, g_Weapon[i].StartPoint, g_Weapon[i].RainMoveTime);
+                    if (g_Weapon[i].UseObj != null)
+                        g_Weapon[i].UseObj.transform.position = Vector3.Lerp(g_Weapon[i].ReturnPoint, g_Weapon[i].StartPoint, g_Weapon[i].RainMoveTime);
                 }
                 if (g_Weapon[i].RainMoveTime >= 1.0f)
                 {
                     if (g_Weapon[MaxWeapon - 1].RainMoveTime >= 1.0f)
                     {
-                        Debug.Log("最終選考");
-                        g_Weapon[i].UseFlg = false;
-                        g_Weapon[i].RainRefrectFlg = false;
-                        Destroy(g_Weapon[i].UseObj);
-                        g_Weapon[i].RainMoveTime = 0;
+                        if (g_Weapon[i].UseObj != null)
+                        {
+                            Destroy(g_Weapon[i].UseObj);
+                        }
+                        for (int j = 0; j < MaxWeapon; j++)
+                        {
+                            if (g_Weapon[j].RainRefrectFlg && g_Weapon[j].RainMoveTime <= 1.0f)
+                            {
+                                return;
+                            }
+                        }
                         RainNum = 0;
                         BossMove.SetState(BossMove.Boss_State.idle);
-                        return;
                     }
                     g_Weapon[i].UseFlg = false;
                     g_Weapon[i].RainRefrectFlg = false;
-                    Destroy(g_Weapon[i].UseObj);
+                    if (g_Weapon[i].UseObj != null)
+                    {
+                        Destroy(g_Weapon[i].UseObj);
+                    }
                     g_Weapon[i].RainMoveTime = 0;
+                    
                 }
-                
-
             }
-
         }
-
     }
     //大豪雨アニメーションから用
     public void StartRain()

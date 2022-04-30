@@ -607,7 +607,10 @@ public class Player2 : MonoBehaviour
         }
         if (collision.gameObject.tag == "Damaged" || collision.gameObject.tag == "GroundDameged")
         {
-            DamegeRespawn();
+            if (!GameOver.GameOverFlag)
+            {
+                DamegeRespawn();
+            }
         }
 
     }

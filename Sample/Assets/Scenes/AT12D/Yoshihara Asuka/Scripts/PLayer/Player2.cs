@@ -541,7 +541,8 @@ public class Player2 : MonoBehaviour
     private void Gravity()
     {
         if(/*JumpNow == true || UnderParryNow == true ||*/ GroundNow == false){
-            rb.AddForce(new Vector3(0.0f,GravityForce,0.0f));
+            //rb.AddForce(new Vector3(0.0f,GravityForce,0.0f));
+            rb.AddForce((transform.up * GravityForce) * Time.deltaTime,ForceMode.Impulse);
             //rb.position += transform.up * GravityForce;
             //ForceDirection = Vector2.zero;
         }

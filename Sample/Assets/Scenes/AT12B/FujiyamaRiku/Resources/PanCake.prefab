@@ -3536,6 +3536,7 @@ GameObject:
   - component: {fileID: 853211640702383089}
   - component: {fileID: 5827865096574767079}
   - component: {fileID: -3330591475259124122}
+  - component: {fileID: 5820452542703787824}
   m_Layer: 0
   m_Name: PanCake
   m_TagString: Untagged
@@ -3591,12 +3592,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b081c5af3c2f94429f544a04fc5e6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BossRush: {fileID: 0}
   RushDamage: 15
   StrawberryDamage: 10
   KnifeDamage: 10
   RefrectRotOver: 80
   RefrectRotUnder: -90
+  RefrectFlg: 0
+  OnlyFlg: 0
+  LRSwitchFlg: 0
+  AnimFlg: 0
+  MoveFlg: 0
+  HpScript: {fileID: 0}
+  BossAnim: {fileID: 0}
   WeaponAttackFlg: 0
+  RFChange: 0
   RushSpeed: 0.7
   RotateSpeed: 5
   Max_Strawberry: 6
@@ -3621,6 +3631,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeToStayInIdle: 2.4
   MaxAttack: 2
+--- !u!114 &5820452542703787824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6232079251362198321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4a1b145945b53747ab73a9b72c07f03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RushSpeed: 0.7
+  RotateSpeed: 5
 --- !u!1 &6374558938003141172
 GameObject:
   m_ObjectHideFlags: 0

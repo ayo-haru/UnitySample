@@ -66,7 +66,10 @@ public class BossMove : MonoBehaviour
                 else if (BossState == Boss_State.charge)//もしボスの状態が突進の場合
                 {
                     //charge();
-                    this.GetComponent<Boss1Attack>().Boss1Fork();
+                    Boss1Attack BossAttack;
+                    BossAttack = this.GetComponent<Boss1Attack>();
+                    BossAttack.BossRush.Boss1Fork();
+                    //this.GetComponent<Boss1Attack>().BossRush.Boss1Fork();
                 }
                 else if (BossState == Boss_State.KnifeThrower)//もしボスの状態がナイフ投げの場合
                 {
@@ -140,7 +143,7 @@ public class BossMove : MonoBehaviour
             }
             if (HPgage.currentHp >= 51)
             {
-                RandomNumbe = Random.Range(1, 3);//攻撃パターンランダム化
+                RandomNumbe = Random.Range(2, 3);//攻撃パターンランダム化
                 Debug.Log("Random" + RandomNumbe);
             }
             else

@@ -130,25 +130,20 @@ public class Boss1Attack : MonoBehaviour
         public Vector3 ReturnPoint;
         public Vector3 ReturnMiddlePoint;
         public Vector3 ReturnEndPoint;
-        public float NowDeleteTime;
         public float RainMoveTime;
         public float RefMoveTime;
-        public float WeaponAlpha;
         public bool UseFlg;
         public bool RainRefrectFlg;
         public bool RainRefOnlyFlg;
         public Vector3 RollRand;
     };
     [SerializeField] public float RainTime;
-    [SerializeField] public float DelAlpha;
-    [SerializeField] public float DelTime;
     float RainNowTime;
     [SerializeField] public int MaxWeapon;
     public int PreMaxWeapon;
     Vector3 Range1;
     Vector3 Range2;
     Vector3 RainRand;
-    
     int RainNum;
     int WeaponRand;
 
@@ -204,7 +199,6 @@ public class Boss1Attack : MonoBehaviour
             g_Weapon[i].UseFlg = false;
             g_Weapon[i].RainRefrectFlg = false;
             g_Weapon[i].RainMoveTime = 0.0f;
-            g_Weapon[i].WeaponAlpha = 1.0f;
         }
         OnlyFlg = false;
     }
@@ -977,27 +971,29 @@ public class Boss1Attack : MonoBehaviour
                 }
                 if (g_Weapon[i].RainMoveTime >= 1.0f)
                 {
-                    g_Weapon[i].NowDeleteTime++;
+                    
                     if (g_Weapon[MaxWeapon - 1].RainMoveTime >= 1.0f)
                     {
-                        //if (g_Weapon[i].NowDeleteTime >= DelTime)
-                        //{
+                        
+                        //Ç±Ç±èëÇ´ä∑Ç¶Ç»Ç¢Ç∆
+                        
                             if (g_Weapon[MaxWeapon - 1].UseObj != null)
                             {
                                 Destroy(g_Weapon[MaxWeapon - 1].UseObj);
                             }
-                        //}
+                        
                         for (int j = 0; j < MaxWeapon; j++)
                         {
                             if(g_Weapon[j].RainRefrectFlg && g_Weapon[j].RainMoveTime >= 1.0f)
                             {
-                                if (g_Weapon[j].UseObj != null)
-                                {
-                                    Destroy(g_Weapon[j].UseObj);
-                                }
-                                g_Weapon[j].UseFlg = false;
-                                g_Weapon[j].RainRefrectFlg = false;
-                                g_Weapon[j].RainMoveTime = 0;
+                                    if (g_Weapon[j].UseObj != null)
+                                    {
+                                        Destroy(g_Weapon[j].UseObj);
+                                    }
+                                    g_Weapon[j].UseFlg = false;
+                                    g_Weapon[j].RainRefrectFlg = false;
+                                    g_Weapon[j].RainMoveTime = 0;
+                                
                             }
                             if (g_Weapon[j].RainRefrectFlg && g_Weapon[j].RainMoveTime <= 1.0f)
                             {
@@ -1010,18 +1006,14 @@ public class Boss1Attack : MonoBehaviour
                     }
                     g_Weapon[i].RainRefrectFlg = false;
 
-                    //if (g_Weapon[i].NowDeleteTime >= DelTime)
-                    //{
-                    //    g_Weapon[i].WeaponAlpha -= (1 / 60) ;
-                    //g_Weapon[i].UseObj.GetComponent<Mesh>().colors32 = new Mesh().colors32;
-                    //    return;
-                    //}
+                    
                         g_Weapon[i].UseFlg = false;
                         if (g_Weapon[i].UseObj != null)
                         {
                             Destroy(g_Weapon[i].UseObj);
                         }
                         g_Weapon[i].RainMoveTime = 0;
+                    
                     
                 }
             }

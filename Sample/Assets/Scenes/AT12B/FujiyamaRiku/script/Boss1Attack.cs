@@ -83,6 +83,7 @@ public class Boss1Attack : MonoBehaviour
     Vector3 [] StrawberryAimScale;
     bool []StrawBerryLagFlg;
     Vector3 WeaponPos;
+    
 
     //ベジエ曲線用
     Vector3  []StartPoint;
@@ -108,6 +109,7 @@ public class Boss1Attack : MonoBehaviour
     Quaternion KnifeRotForward;                             //ナイフの角度変更用
     Quaternion KnifeRotDir;                                 //ナイフの角度変更用
     [SerializeField] Vector3 KnifeForward;                  //ナイフの前変更用
+    Vector3 KnifePos;
 
     [SerializeField] public float KnifeThrowTime;
     float KnifeThrowNowTime;
@@ -126,12 +128,14 @@ public class Boss1Attack : MonoBehaviour
         public Vector3 StartPoint;
         public Vector3 EndPoint;
         public Vector3 ReturnPoint;
+        public Vector3 ReturnMiddlePoint;
+        public Vector3 ReturnEndPoint;
         public float RainMoveTime;
         public float RefMoveTime;
         public bool UseFlg;
         public bool RainRefrectFlg;
         public bool RainRefOnlyFlg;
-
+        public Vector3 RollRand;
     };
     [SerializeField] public float RainTime;
     float RainNowTime;
@@ -140,6 +144,7 @@ public class Boss1Attack : MonoBehaviour
     Vector3 Range1;
     Vector3 Range2;
     Vector3 RainRand;
+    
     int RainNum;
     int WeaponRand;
 
@@ -797,19 +802,22 @@ public class Boss1Attack : MonoBehaviour
                 KnifeRotForward = Quaternion.FromToRotation(KnifeForward, Vector3.forward);
                 Knife.transform.rotation = KnifeRotDir * KnifeRotForward;
             }
-
             if (RefrectFlg)
             {
                 KnifeRefFlg = true;
-                KnifePlayerPoint.x = GameData.PlayerPos.x + 3.0f;
-                KnifePlayerPoint.y = GameData.PlayerPos.y;
-                KnifePlayerPoint.z = GameData.PlayerPos.z;
+                KnifePlayerPoint = KnifePos;
+                Vector3 KnifeDir = Boss1Manager.Boss.gameObject.transform.position - Knife.transform.position;
+                // ターゲットの方向への回転
+                KnifeRotDir = Quaternion.LookRotation(KnifeDir , Vector3.back);
+                KnifeRotForward = Quaternion.FromToRotation(KnifeForward, Vector3.forward);
+                Knife.transform.rotation = KnifeRotDir * KnifeRotForward;
                 RefrectFlg = false;
             }
             if (OnlyFlg && !KnifeRefFlg)
             {
                 KnifeTime += Time.deltaTime * KnifeSpeed;
                 Knife.transform.position = Vector3.Lerp(KnifeStartPoint, KnifeEndPoint, KnifeTime);
+                KnifePos = GameObject.Find("knife(Clone)").transform.position;
                 if (KnifeTime >= 1.0f)
                 {
                     OnlyFlg = false;
@@ -880,16 +888,14 @@ public class Boss1Attack : MonoBehaviour
     {
         AimStart = true;
         WeaponAttackFlg = false;
-        KnifeStartPoint.x = Boss1Manager.BossPos.x;
-        KnifeStartPoint.y = Boss1Manager.BossPos.y + 4;
-        KnifeStartPoint.z = Boss1Manager.BossPos.z;
+        KnifeStartPoint = GameObject.Find("KnifePos").transform.position;
         KnifeEndPoint = GameData.PlayerPos;
-        ForkPos = GameObject.Find("KnifePos").transform.position;
-        Knife = Instantiate(Knifeobj, ForkPos, Quaternion.identity);
+        KnifePos = GameObject.Find("KnifePos").transform.position;
+        Knife = Instantiate(Knifeobj, KnifePos, Quaternion.identity);
         Knife.transform.parent = GameObject.Find("KnifePos").transform;
         SoundManager.Play(SoundData.eSE.SE_BOOS1_KNIFE, SoundData.GameAudioList);
     }
-    
+    //大豪雨
     public void Boss1Rain()
     {
         WeaponAttackFlg = true;
@@ -900,6 +906,16 @@ public class Boss1Attack : MonoBehaviour
             if (RainNowTime >= RainTime / MaxWeapon)
             {
                 //生成
+                if(RFChange)
+                {
+                    Range1 = GameObject.Find("LeftRange1").transform.position;
+                    Range2 = GameObject.Find("LeftRange2").transform.position;
+                }
+                else
+                {
+                    Range1 = GameObject.Find("Range1").transform.position;
+                    Range2 = GameObject.Find("Range2").transform.position;
+                }
                 RainRand.x = Random.Range(Range1.x, Range2.x);
                 RainRand.y = Range1.y;
                 RainRand.z = Range1.z;
@@ -930,6 +946,13 @@ public class Boss1Attack : MonoBehaviour
                     g_Weapon[i].RainMoveTime = 0;
                     g_Weapon[i].RainRefOnlyFlg = false;
                     g_Weapon[i].ReturnPoint = g_Weapon[i].UseObj.gameObject.transform.position;
+                    g_Weapon[i].ReturnMiddlePoint = GameObject.Find("RainRefMid").transform.position;
+                    g_Weapon[i].ReturnEndPoint = GameObject.Find("RainRefEnd").transform.position;
+                    g_Weapon[i].ReturnMiddlePoint.x = g_Weapon[i].StartPoint.x;
+                    g_Weapon[i].ReturnEndPoint.x = g_Weapon[i].StartPoint.x;
+                    g_Weapon[i].RollRand.x = 10 * (Random.Range(0, 2) * 2 - 1);
+                    g_Weapon[i].RollRand.y = 10 * (Random.Range(0, 2) * 2 - 1);
+                    g_Weapon[i].RollRand.z = 10 * (Random.Range(0, 2) * 2 - 1);
                 }
                 g_Weapon[i].RainMoveTime += Time.deltaTime * 1.25f;
                 if (!g_Weapon[i].RainRefrectFlg)
@@ -941,22 +964,34 @@ public class Boss1Attack : MonoBehaviour
                 {
                     if (g_Weapon[i].UseObj != null)
                     {
-                        g_Weapon[i].UseObj.transform.position = Vector3.Lerp(g_Weapon[i].ReturnPoint, g_Weapon[i].StartPoint, g_Weapon[i].RainMoveTime);
-                        g_Weapon[i].UseObj.transform.Rotate(new Vector3(0, 0, 10));
+                        g_Weapon[i].UseObj.transform.position = Beziercurve.SecondCurve(g_Weapon[i].ReturnPoint, g_Weapon[i].ReturnMiddlePoint,
+                                                                                        g_Weapon[i].ReturnEndPoint, g_Weapon[i].RainMoveTime);
+                        g_Weapon[i].UseObj.transform.Rotate(new Vector3(g_Weapon[i].RollRand.x, g_Weapon[i].RollRand.y, g_Weapon[i].RollRand.z));
                     }
                 }
                 if (g_Weapon[i].RainMoveTime >= 1.0f)
                 {
                     if (g_Weapon[MaxWeapon - 1].RainMoveTime >= 1.0f)
                     {
-                        if (g_Weapon[i].UseObj != null)
+                        if (g_Weapon[MaxWeapon - 1].UseObj != null)
                         {
-                            Destroy(g_Weapon[i].UseObj);
+                            Destroy(g_Weapon[MaxWeapon - 1].UseObj);
                         }
                         for (int j = 0; j < MaxWeapon; j++)
                         {
+                            if(g_Weapon[j].RainRefrectFlg && g_Weapon[j].RainMoveTime >= 1.0f)
+                            {
+                                if (g_Weapon[j].UseObj != null)
+                                {
+                                    Destroy(g_Weapon[j].UseObj);
+                                }
+                                g_Weapon[j].UseFlg = false;
+                                g_Weapon[j].RainRefrectFlg = false;
+                                g_Weapon[j].RainMoveTime = 0;
+                            }
                             if (g_Weapon[j].RainRefrectFlg && g_Weapon[j].RainMoveTime <= 1.0f)
                             {
+                                Debug.Log("なんだこいつぅぅぅ" + j);
                                 return;
                             }
                         }
@@ -965,6 +1000,7 @@ public class Boss1Attack : MonoBehaviour
                     }
                     g_Weapon[i].UseFlg = false;
                     g_Weapon[i].RainRefrectFlg = false;
+
                     if (g_Weapon[i].UseObj != null)
                     {
                         Destroy(g_Weapon[i].UseObj);

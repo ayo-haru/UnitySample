@@ -65,7 +65,6 @@ public class Player2 : MonoBehaviour
     private ShieldManager shieldManager;                // 盾の最大数
 
     //---移動変数
-    private Vector2 AttackDirection = Vector2.zero;
     private Vector3 PlayerPos;                          // プレイヤーの座標
     private Vector2 ForceDirection = Vector2.zero;      // 移動する方向を決める
     private Vector2 MovingVelocity = Vector3.zero;      // 移動するベクトル
@@ -90,6 +89,7 @@ public class Player2 : MonoBehaviour
     [SerializeField] private float JumpForce = 5;               // ジャンプ力
 
     //---攻撃変数
+    private Vector2 AttackDirection = Vector2.zero;
     public float AttckPosHeight = 6.0f;                 // シールド位置上下
     public float AttckPosWidth = 4.0f;                  // シールド位置左右
     public float DestroyTime = 0.5f;                    // シールドが消える時間
@@ -255,7 +255,9 @@ public class Player2 : MonoBehaviour
     private void FixedUpdate()
     {
         if (!Pause.isPause){
+
             Move("AddForce");
+
 
             if (isAttack)
             {
@@ -368,9 +370,9 @@ public class Player2 : MonoBehaviour
         //StartCoroutine(VibrationPlay(LowFrequency,HighFrequency));
 
         //---スティック入力
-        PlayerPos = transform.position;                                             // 攻撃する瞬間のプレイヤーの座標を取得
+        PlayerPos = transform.position;                              // 攻撃する瞬間のプレイヤーの座標を取得
         AttackDirection += Attacking.ReadValue<Vector2>();           // スティックの倒した値を取得
-        AttackDirection.Normalize();                                               // 取得した値を正規化(ベクトルを１にする)
+        AttackDirection.Normalize();                                 // 取得した値を正規化(ベクトルを１にする)
 
         //---アニメーション再生
         //---左右パリィ
@@ -394,10 +396,13 @@ public class Player2 : MonoBehaviour
         //---y軸が－だったら(下パリィする際)ジャンプ中にする(03/21時点)
         //---y軸が－だったら(下パリィする際)下パリィフラグにする(03/25時点)
         if (AttackDirection.y < 0){
-			if (GroundNow == true){
-				rb.AddForce(transform.up * 3.0f, ForceMode.Impulse);
-			}
+            rb.velocity = Vector3.zero;
+            if (GroundNow == true)
+            {
+                rb.AddForce(transform.up * 10.0f, ForceMode.Impulse);
+            }
             Timer = stopTime;
+
             UnderParryNow = true;
             GamePadManager.onceTiltStick = true;
             //GroundNow = false;
@@ -425,7 +430,7 @@ public class Player2 : MonoBehaviour
         GameObject weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
                                                            PlayerPos.y + (AttackDirection.y * AttckPosHeight),
                                                            PlayerPos.z), Quaternion.identity);
-        Debug.Log(weapon.transform.position);
+        Debug.Log("盾出現"+weapon.transform.position);
         //---コントローラーの倒したXの値が－だったらy軸に-1する(盾の角度の調整)
         if (AttackDirection.x < 0){
             AttackDirection.y *= -1;

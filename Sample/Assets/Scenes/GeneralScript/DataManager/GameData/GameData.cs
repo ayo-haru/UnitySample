@@ -153,7 +153,9 @@ public static class GameData {
         CurrentPiece = 0;
 
         Debug.Log("リスポーンプレイヤー" + PlayerPos);
+        Debug.Log("リスポーンプレイヤー" + ReSpawnPos);
         Debug.Log("リスポーンプレイヤー" + CurrentMapNumber);
+        Debug.Log("リスポーンプレイヤー" + NextMapNumber);
         //SceneManager.LoadScene(MapName[CurrentMapNumber]);
         //NextMapNumber = CurrentMapNumber;
 

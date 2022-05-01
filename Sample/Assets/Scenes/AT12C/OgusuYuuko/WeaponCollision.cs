@@ -65,15 +65,22 @@ public class WeaponCollision : MonoBehaviour
             {
                 BounceCheck();
                 //ï˚å¸
-                // Vector3 dir = Player.transform.position - collision.transform.position;
-                Vector3 dir = Player.transform.position - gameObject.transform.position;
-                
-                dir.Normalize();
-                player_rb.velocity = Vector3.zero;
+                //Vector3 dir = Player.transform.position - collision.transform.position;
+                ////Vector3 dir = Player.transform.position - gameObject.transform.position;
+                //Debug.Log("ãóó£ë™íË"+ dir);
+
+                //dir.Normalize();
+                //Debug.Log("ãóó£ë™íË(ê≥ãKâª)" + dir);
+
+                //player_rb.velocity = Vector3.zero;
+
                 //ínñ ÉpÉäÉC
-                //player_rb.AddForce((dir * baunceGround), ForceMode.Impulse);
-                player_rb.AddForce((dir * baunceGround), ForceMode.VelocityChange);
+                //player_rb.AddForce(dir, ForceMode.Impulse);
+               // player_rb.AddForce((dir * baunceGround), ForceMode.VelocityChange);
+
                 
+                
+
                 CanCollision = false;
             }
         }
@@ -86,7 +93,8 @@ public class WeaponCollision : MonoBehaviour
 
         Debug.Log(collision.gameObject.name + "Ç∆ìñÇΩÇ¡ÇΩ");
     }
-    
+
+
     // íµÇÀï‘ÇÈóÕí≤êÆä÷êî
     private void BounceCheck()
     {

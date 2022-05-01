@@ -27,6 +27,8 @@ public class WeaponCollision : MonoBehaviour
     //シールドマネージャ
     ShieldManager shield_Manager;
 
+    Player2 player2;
+
     private bool CanCollision = true;                      // 当たり判定の使用フラグ
 
 
@@ -37,6 +39,7 @@ public class WeaponCollision : MonoBehaviour
         Player = GameObject.Find(GameData.Player.name);
         player_rb = Player.GetComponent<Rigidbody>();
         shield_Manager = Player.GetComponent<ShieldManager>();
+        player2 = Player.GetComponent<Player2>();
 
 
         //盾が最大数を超えていたら
@@ -66,20 +69,23 @@ public class WeaponCollision : MonoBehaviour
                 BounceCheck();
                 //方向
                 //Vector3 dir = Player.transform.position - collision.transform.position;
-                ////Vector3 dir = Player.transform.position - gameObject.transform.position;
-                //Debug.Log("距離測定"+ dir);
 
-                //dir.Normalize();
+                Vector2 dir = Player.transform.position - this.gameObject.transform.position;
+                Debug.Log("距離測定" + dir);
+
+                //Vector3 dir = Player.transform.position - gameObject.transform.position;
+
+                dir.Normalize();
                 //Debug.Log("距離測定(正規化)" + dir);
 
                 //player_rb.velocity = Vector3.zero;
 
                 //地面パリイ
                 //player_rb.AddForce(dir, ForceMode.Impulse);
-               // player_rb.AddForce((dir * baunceGround), ForceMode.VelocityChange);
+                //player_rb.AddForce((dir * baunceGround), ForceMode.Impulse);
+                player2.SetJumpPower(dir * baunceGround);
 
-                
-                
+
 
                 CanCollision = false;
             }
@@ -93,6 +99,7 @@ public class WeaponCollision : MonoBehaviour
 
         Debug.Log(collision.gameObject.name + "と当たった");
     }
+
 
 
     // 跳ね返る力調整関数

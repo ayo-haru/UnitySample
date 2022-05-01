@@ -69,6 +69,7 @@ public class Player2 : MonoBehaviour
     private Vector2 ForceDirection = Vector2.zero;      // 移動する方向を決める
     private Vector2 MovingVelocity = Vector3.zero;      // 移動するベクトル
     [SerializeField] private float maxSpeed = 50.0f;    // 移動スピード(歩く早さ)
+    private Vector2 jumppower;                          // ジャンプ力を保存(盾から渡される)
 
     public int stopTime = 5;                            //盾出したときに止まる時間
     private int Timer = 0;                              //停止時間計測用
@@ -256,8 +257,7 @@ public class Player2 : MonoBehaviour
     {
         if (!Pause.isPause){
 
-            Move("AddForce");
-
+            Move("Velocity");
 
             if (isAttack)
             {
@@ -280,9 +280,11 @@ public class Player2 : MonoBehaviour
             case "Velocity":
                 ForceDirection += move.ReadValue<Vector2>();
                 ForceDirection.Normalize();
-                MovingVelocity = ForceDirection * maxSpeed;
+                MovingVelocity = ForceDirection * maxSpeed + jumppower;
+                jumppower.x *= 0.9f;
+
                 if (Timer <= 0){
-                    rb.velocity = new Vector3(MovingVelocity.x, rb.velocity.y - MovingVelocity.y, 0);
+                    rb.velocity = new Vector3(MovingVelocity.x,MovingVelocity.y, 0);
                 }
                 else{
                     --Timer;
@@ -296,15 +298,6 @@ public class Player2 : MonoBehaviour
                 ForceDirection += move.ReadValue<Vector2>();
                 ForceDirection.Normalize();
                 rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
-                if (Timer <= 0)
-                {
-                    rb.velocity = new Vector3(MovingVelocity.x, rb.velocity.y - MovingVelocity.y, 0);
-                }
-                else
-                {
-                    --Timer;
-                    rb.velocity = new Vector3(0, rb.velocity.y - MovingVelocity.y, 0);
-                }
 
                 break;
 
@@ -350,6 +343,11 @@ public class Player2 : MonoBehaviour
         ForceDirection = Vector2.zero;
     }
     #endregion
+    
+    public void SetJumpPower(Vector2 jumpDir)
+    {
+       jumppower = jumpDir;
+    }
 
     #region 攻撃処理
     //===================================================================
@@ -396,13 +394,13 @@ public class Player2 : MonoBehaviour
         //---y軸が－だったら(下パリィする際)ジャンプ中にする(03/21時点)
         //---y軸が－だったら(下パリィする際)下パリィフラグにする(03/25時点)
         if (AttackDirection.y < 0){
-            rb.velocity = Vector3.zero;
             if (GroundNow == true)
             {
                 rb.AddForce(transform.up * 10.0f, ForceMode.Impulse);
             }
-            Timer = stopTime;
-
+            Timer = 1;
+            rb.velocity = Vector3.zero;
+            
             UnderParryNow = true;
             GamePadManager.onceTiltStick = true;
             //GroundNow = false;

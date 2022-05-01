@@ -900,10 +900,10 @@ public class Boss1Attack : MonoBehaviour
             if (RainNowTime >= RainTime / MaxWeapon)
             {
                 //ê∂ê¨
-                RainRand.x = Random.Range(Range1.x, Range2.y);
+                RainRand.x = Random.Range(Range1.x, Range2.x);
                 RainRand.y = Range1.y;
                 RainRand.z = Range1.z;
-                WeaponRand = Random.Range(2, 3);
+                WeaponRand = Random.Range(1, 3);
                 if (WeaponRand == 1)
                 {
                     g_Weapon[RainNum].UseObj = Instantiate(Knifeobj, RainRand, Quaternion.Euler(new Vector3(180.0f, 0.0f, 0.0f)));
@@ -923,7 +923,6 @@ public class Boss1Attack : MonoBehaviour
         }
         for (int i = 0; i < MaxWeapon;i++)
         {
-            
             if (g_Weapon[i].UseFlg)
             {
                 if (g_Weapon[i].RainRefOnlyFlg)
@@ -941,7 +940,10 @@ public class Boss1Attack : MonoBehaviour
                 if (g_Weapon[i].RainRefrectFlg)
                 {
                     if (g_Weapon[i].UseObj != null)
+                    {
                         g_Weapon[i].UseObj.transform.position = Vector3.Lerp(g_Weapon[i].ReturnPoint, g_Weapon[i].StartPoint, g_Weapon[i].RainMoveTime);
+                        g_Weapon[i].UseObj.transform.Rotate(new Vector3(0, 0, 10));
+                    }
                 }
                 if (g_Weapon[i].RainMoveTime >= 1.0f)
                 {

@@ -33,6 +33,8 @@ public class BossMove : MonoBehaviour
     //待機モーションなしの攻撃回数（HP50％以下のみ）
     [SerializeField]
     private int MaxAttack = 2;
+    //必殺技用フラグ(〇%以下になったとき一回)
+    private bool UltFlg;
 
     // Start is called before the first frame update
     void Start()
@@ -130,9 +132,15 @@ public class BossMove : MonoBehaviour
             Debug.Log("AttackCount：" + AttackCount);
 
             //ランダム数の生成とswitch分岐をこの中へ
+            if(!UltFlg && HPgage.currentHp <= 30)
+            {
+                UltFlg = true;
+                SetState(Boss_State.Rain);
+                return;
+            }
             if (HPgage.currentHp >= 51)
             {
-                RandomNumbe = Random.Range(4, 5);//攻撃パターンランダム化
+                RandomNumbe = Random.Range(1, 3);//攻撃パターンランダム化
                 Debug.Log("Random" + RandomNumbe);
             }
             else
@@ -159,6 +167,7 @@ public class BossMove : MonoBehaviour
                             RandomNumbe = -1;
                         Debug.Log("ナイフ攻撃");
                         break;//break文
+
                     case 4://雨攻撃
                     SetState(Boss_State.Rain);
                     RandomNumbe = -1;

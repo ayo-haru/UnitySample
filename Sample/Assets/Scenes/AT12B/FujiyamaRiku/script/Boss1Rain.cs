@@ -5,6 +5,7 @@ using UnityEngine;
 public class Boss1Rain : MonoBehaviour
 {
     Boss1Attack BossAttack;
+    //BossWeapon Weapon;
     GameObject Forkobj;                                     //フォークのオブジェクト生成用
     GameObject Knifeobj;                                    //ナイフ生成用
 
@@ -24,7 +25,11 @@ public class Boss1Rain : MonoBehaviour
         public bool UseFlg;
         public bool RainRefrectFlg;
         public bool RainRefOnlyFlg;
+        public bool FadeFlg;
+        public float DelTime;
+        public bool delFlg;
         public Vector3 RollRand;
+        public BossWeapon Weapon;
     };
     [SerializeField] public float RainTime;
     float RainNowTime;
@@ -36,6 +41,8 @@ public class Boss1Rain : MonoBehaviour
     int RainNum;
     int WeaponRand;
     bool StartFlg;
+    public int LoopSave = 0;
+    public int LoopSaver = 0;
 
     public RainWeapon[] g_Weapon;
     // Start is called before the first frame update
@@ -44,15 +51,18 @@ public class Boss1Rain : MonoBehaviour
         Knifeobj = (GameObject)Resources.Load("Knife");
         Forkobj = (GameObject)Resources.Load("Fork");
         BossAttack = this.GetComponent<Boss1Attack>();
+        
         Range1 = GameObject.Find("Range1").transform.position;
         Range2 = GameObject.Find("Range2").transform.position;
         g_Weapon = new RainWeapon[MaxWeapon];
+         
         PreMaxWeapon = MaxWeapon;
         for (int i = 0; i < MaxWeapon; i++)
         {
             g_Weapon[i].UseFlg = false;
             g_Weapon[i].RainRefrectFlg = false;
             g_Weapon[i].RainMoveTime = 0.0f;
+            g_Weapon[i].DelTime = 0.0f;
         }
     }
 
@@ -100,7 +110,9 @@ public class Boss1Rain : MonoBehaviour
                     {
                         g_Weapon[RainNum].UseObj = Instantiate(Forkobj, RainRand, Quaternion.Euler(new Vector3(180.0f, 0.0f, 0.0f)));
                     }
+                    
                     g_Weapon[RainNum].UseObj.name = "BossWeapon" + RainNum;
+                    g_Weapon[RainNum].Weapon = g_Weapon[RainNum].UseObj.GetComponent<BossWeapon>();
                     g_Weapon[RainNum].UseFlg = true;
                     g_Weapon[RainNum].StartPoint = RainRand;
                     g_Weapon[RainNum].EndPoint = RainRand;
@@ -144,47 +156,82 @@ public class Boss1Rain : MonoBehaviour
                     if (g_Weapon[i].RainMoveTime >= 1.0f)
                     {
 
+                        if (!g_Weapon[i].FadeFlg)
+                        {
+                            g_Weapon[i].FadeFlg = true;
+                            g_Weapon[i].Weapon.Invoke("Play", 0.1f);
+
+                        }
+                        
+                            g_Weapon[i].DelTime += Time.deltaTime;
+                        
                         if (g_Weapon[MaxWeapon - 1].RainMoveTime >= 1.0f)
                         {
-
                             //ここ書き換えないと
-
-                            if (g_Weapon[MaxWeapon - 1].UseObj != null)
+                            if (g_Weapon[MaxWeapon - 1].DelTime >= 0.6f)
                             {
-                                Destroy(g_Weapon[MaxWeapon - 1].UseObj);
-                            }
-
-                            for (int j = 0; j < MaxWeapon; j++)
-                            {
-                                if (g_Weapon[j].RainRefrectFlg && g_Weapon[j].RainMoveTime >= 1.0f)
+                                if (g_Weapon[MaxWeapon - 1].UseObj != null)
                                 {
-                                    if (g_Weapon[j].UseObj != null)
-                                    {
-                                        Destroy(g_Weapon[j].UseObj);
-                                    }
-                                    g_Weapon[j].UseFlg = false;
-                                    g_Weapon[j].RainRefrectFlg = false;
-                                    g_Weapon[j].RainMoveTime = 0;
-
+                                    Destroy(g_Weapon[MaxWeapon - 1].UseObj);
                                 }
-                                if (g_Weapon[j].RainRefrectFlg && g_Weapon[j].RainMoveTime <= 1.0f)
+                            }
+                            
+                                if (g_Weapon[i].RainRefrectFlg && g_Weapon[i].RainMoveTime >= 1.0f)
                                 {
-                                    Debug.Log("なんだこいつぅぅぅ" + j);
+                                    
+                                        if (g_Weapon[i].UseObj != null)
+                                        {
+                                            Destroy(g_Weapon[i].UseObj);
+                                        }
+                                        g_Weapon[i].UseFlg = false;
+                                        g_Weapon[i].RainRefrectFlg = false;
+                                        g_Weapon[i].RainMoveTime = 0;
+
+                                    
+                                }
+                                if(!g_Weapon[i].delFlg && g_Weapon[i].DelTime >= 0.6f)
+                                {
+
+                                    g_Weapon[i].delFlg = true;
+                                    g_Weapon[i].RainRefrectFlg = false;
+                                    g_Weapon[i].UseFlg = false;
+                                    if (g_Weapon[i].UseObj != null)
+                                    {
+                                        Destroy(g_Weapon[i].UseObj);
+                                    }
+                                    g_Weapon[i].RainMoveTime = 0;
+                                    g_Weapon[i].DelTime = 0;
+                                }
+                                
+                                if (g_Weapon[i].RainRefrectFlg && g_Weapon[i].RainMoveTime <= 1.0f)
+                                {
+                                    Debug.Log("なんだこいつぅぅぅ" + i);
                                     return;
                                 }
-                            }
+                                if (g_Weapon[i].DelTime <= 0.6f)
+                                {
+                                Debug.Log("ああああああああああああああああああああああああああああああああああああああ" + i);
+                                return;
+                                }
+                            
                             RainNum = 0;
                             BossAttack.BossAnim.SetBool("Tired", false);
                             BossAttack.AnimFlagOnOff();
                             BossMove.SetState(BossMove.Boss_State.idle);
+                            return;
                         }
-                        g_Weapon[i].RainRefrectFlg = false;
-                        g_Weapon[i].UseFlg = false;
-                        if (g_Weapon[i].UseObj != null)
+                        if (!g_Weapon[i].delFlg && g_Weapon[i].DelTime >= 0.6f)
                         {
-                            Destroy(g_Weapon[i].UseObj);
+                            g_Weapon[i].delFlg = true;
+                            g_Weapon[i].RainRefrectFlg = false;
+                            g_Weapon[i].UseFlg = false;
+                            if (g_Weapon[i].UseObj != null)
+                            {
+                                Destroy(g_Weapon[i].UseObj);
+                            }
+                            g_Weapon[i].RainMoveTime = 0;
+                            g_Weapon[i].DelTime = 0;
                         }
-                        g_Weapon[i].RainMoveTime = 0;
 
 
                     }

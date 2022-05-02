@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BossWeapon : MonoBehaviour
 {
+    Boss1Rain BossRain;
+    float timer = 10.0f;                    // スタートの時間
 
     [SerializeField] private MeshRenderer _meshRenderer;        // 対象のメッシュレンダーを格納
     [SerializeField] private Material _alphaMaterial;           // 変更するマテリアルを格納(今回はα値を変えるマテリアル)
@@ -20,8 +22,11 @@ public class BossWeapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //---もともと持っているマテリアルを格納
-         _originalMaterials = _meshRenderer.materials;
+        
+        BossRain = GameObject.Find("PanCake(Clone)").GetComponent<Boss1Rain>();
+        
+            //---もともと持っているマテリアルを格納
+            _originalMaterials = _meshRenderer.materials;
 
         //---変更するマテリアルの初期化([_meshRenderer.materials.Length]は要素の配列になる)
         _dynamicmaterials = new Material[_meshRenderer.materials.Length];
@@ -40,12 +45,7 @@ public class BossWeapon : MonoBehaviour
 
     private void Update()
     {
-        //---一度だけコルーチンをスタートする
-        if (!isCalledOnee)
-        {
-            this.Invoke("Play",1.0f);
-            isCalledOnee = true;
-        }
+        
     }
 
     public void Play()
@@ -85,25 +85,28 @@ public class BossWeapon : MonoBehaviour
 
     private IEnumerator Run()
     {
-        float timer = 10.0f;                    // スタートの時間
-
+        
         //---0秒になるまで繰り返す
         while (timer > 0)
         {
+
             SetAlpha(timer / 10);               // アルファ値を変更
-                                                //---<memo>
-                                                //   ここでは10.0f / 10 = 1 １をSetAlpha()に渡す
-                                                //   10.0f - DestroyTime = num numを渡す
-                                                //   0秒まで繰り返す
+                                                   //---<memo>
+                                                   //   ここでは10.0f / 10 = 1 １をSetAlpha()に渡す
+                                                   //   10.0f - DestroyTime = num numを渡す
+                                                   //   0秒まで繰り返す
 
             //---1フレーム休む
             yield return null;
 
             // 時間経過
             timer -= DestoyTime;
+            
         }
-
+        
+                
         //---最終的な値を設定
         SetAlpha(0.0f);
+        
     }
 }

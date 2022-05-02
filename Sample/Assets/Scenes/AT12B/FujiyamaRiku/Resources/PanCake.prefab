@@ -3604,19 +3604,8 @@ MonoBehaviour:
   KnifeDamage: 10
   RefrectRotOver: 80
   RefrectRotUnder: -90
-  RefrectFlg: 0
-  OnlyFlg: 0
-  LRSwitchFlg: 0
-  AnimFlg: 0
-  MoveFlg: 0
   HpScript: {fileID: 0}
   BossAnim: {fileID: 0}
-  WeaponAttackFlg: 0
-  RFChange: 0
-  RFNum: 0
-  RainTime: 5
-  MaxWeapon: 75
-  PreMaxWeapon: 0
 --- !u!114 &-3330591475259124122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3691,6 +3680,8 @@ MonoBehaviour:
   RainTime: 5
   MaxWeapon: 75
   PreMaxWeapon: 0
+  LoopSave: 0
+  LoopSaver: 0
 --- !u!1 &6374558938003141172
 GameObject:
   m_ObjectHideFlags: 0

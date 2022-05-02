@@ -19,6 +19,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
+
 
 public class Player2 : MonoBehaviour
 {
@@ -53,7 +55,7 @@ public class Player2 : MonoBehaviour
     private InputAction _Pause;                         // InputActionのpauseを扱う
 
     //---アニメーション関連
-    public Animator animator;                           // アニメーターコンポーネント取得
+    [SerializeField] private Animator animator;         // アニメーターコンポーネント取得
 
     //---コンポーネント取得
     private Rigidbody rb;
@@ -69,6 +71,7 @@ public class Player2 : MonoBehaviour
     private Vector2 ForceDirection = Vector2.zero;      // 移動する方向を決める
     private Vector2 MovingVelocity = Vector3.zero;      // 移動するベクトル
     [SerializeField] private float maxSpeed = 50.0f;    // 移動スピード(歩く早さ)
+    private Vector2 jumppower;                          // ジャンプ力を保存(盾から渡される)
 
     public int stopTime = 5;                            //盾出したときに止まる時間
     private int Timer = 0;                              //停止時間計測用
@@ -98,6 +101,11 @@ public class Player2 : MonoBehaviour
 
     //---カメラ
     ShakeCamera shakeCamera;
+
+    /// <summary> ヒットストップ演出関連/// </summary>
+    public float HitStopTime = 0.23f;
+    public bool CanHitStopflg = false;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -182,12 +190,9 @@ public class Player2 : MonoBehaviour
                 return;
             }
 
-            if (UnderParryNow == true || GroundNow == false)
-            {
-                Gravity();
+            if (!CanHitStopflg){
+                animator.speed = 1.0f;
             }
-
-            animator.speed = 1.0f;
 
             //rb.Resume(gameObject);
             GamePadManager.onceTiltStick = false;
@@ -256,13 +261,18 @@ public class Player2 : MonoBehaviour
     {
         if (!Pause.isPause){
 
-            Move("AddForce");
-
-
-            if (isAttack)
+            if (UnderParryNow == true || GroundNow == false)
             {
+                Gravity();
+            }
+
+
+            Move("Velocity");
+
+            if (isAttack){
                 Attack();
             }
+
         }
         else{
         }
@@ -281,6 +291,8 @@ public class Player2 : MonoBehaviour
                 ForceDirection += move.ReadValue<Vector2>();
                 ForceDirection.Normalize();
                 MovingVelocity = ForceDirection * maxSpeed;
+                Debug.Log("MovingVelocityの値"+MovingVelocity);
+
                 if (Timer <= 0){
                     rb.velocity = new Vector3(MovingVelocity.x, rb.velocity.y - MovingVelocity.y, 0);
                 }
@@ -295,16 +307,7 @@ public class Player2 : MonoBehaviour
                 SpeedCheck();
                 ForceDirection += move.ReadValue<Vector2>();
                 ForceDirection.Normalize();
-                rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
-                if (Timer <= 0)
-                {
-                    rb.velocity = new Vector3(MovingVelocity.x, rb.velocity.y - MovingVelocity.y, 0);
-                }
-                else
-                {
-                    --Timer;
-                    rb.velocity = new Vector3(0, rb.velocity.y - MovingVelocity.y, 0);
-                }
+                rb.AddForce((ForceDirection * maxSpeed), ForceMode.Impulse);
 
                 break;
 
@@ -348,8 +351,14 @@ public class Player2 : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotationSpeed);
 
         ForceDirection = Vector2.zero;
+        //jumppower = Vector2.zero;
     }
     #endregion
+    
+    public void SetJumpPower(Vector2 jumpDir)
+    {
+       jumppower = jumpDir;
+    }
 
     #region 攻撃処理
     //===================================================================
@@ -396,13 +405,13 @@ public class Player2 : MonoBehaviour
         //---y軸が－だったら(下パリィする際)ジャンプ中にする(03/21時点)
         //---y軸が－だったら(下パリィする際)下パリィフラグにする(03/25時点)
         if (AttackDirection.y < 0){
-            rb.velocity = Vector3.zero;
             if (GroundNow == true)
             {
                 rb.AddForce(transform.up * 10.0f, ForceMode.Impulse);
             }
-            Timer = stopTime;
-
+            Timer = 1;
+            rb.velocity = Vector3.zero;
+            
             UnderParryNow = true;
             GamePadManager.onceTiltStick = true;
             //GroundNow = false;
@@ -428,8 +437,10 @@ public class Player2 : MonoBehaviour
 
         //---倒した値を基に盾の出す場所を指定
         GameObject weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                           PlayerPos.y + (AttackDirection.y * AttckPosHeight),
-                                                           PlayerPos.z), Quaternion.identity);
+                                        PlayerPos.y + (AttackDirection.y * AttckPosHeight),
+                                        PlayerPos.z), Quaternion.identity);
+
+
         Debug.Log("盾出現"+weapon.transform.position);
         //---コントローラーの倒したXの値が－だったらy軸に-1する(盾の角度の調整)
         if (AttackDirection.x < 0){
@@ -597,7 +608,7 @@ public class Player2 : MonoBehaviour
             collision.gameObject.tag == "GroundDameged" ||
             collision.gameObject.tag == "Enemy")
         {
-            shakeCamera.Do();
+            OnAttackHit();
             //---自分の位置と接触してきたオブジェクトの位置を計算し、距離と方向を算出
             Distination = (transform.position - collision.transform.position).normalized;
             // プレイヤーがダメージを食らっていないとき
@@ -696,6 +707,18 @@ public class Player2 : MonoBehaviour
     }
 	#endregion
 
+    public void OnAttackHit()
+    {
+        CanHitStopflg = true;
+        //---モーションを止める
+        animator.speed = 0.0f;
+
+        var seq = DOTween.Sequence();
+        seq.SetDelay(HitStopTime);
+
+        seq.AppendCallback(() => animator.speed = 1f);
+
+    }
 	#region GUI表示
 	private void OnGUI()
     {
@@ -716,9 +739,9 @@ public class Player2 : MonoBehaviour
         //GUILayout.Label($"RighetTrigger:{Gamepad.current.rightTrigger.ReadValue()}");
         //GUILayout.Label($"LeftStickUp:{Gamepad.current.leftStick.up.ReadValue()}");
         //GUILayout.Label($"Space:{Keyboard.current.spaceKey.ReadValue()}");
-        //GUILayout.Label($"JumpFlg:{JumpNow}");
-        //GUILayout.Label($"GroudFlg:{GroundNow}");
-        //GUILayout.Label($"UnderParryFlg:{UnderParryNow}");
+        GUILayout.Label($"JumpFlg:{JumpNow}");
+        GUILayout.Label($"GroudFlg:{GroundNow}");
+        GUILayout.Label($"UnderParryFlg:{UnderParryNow}");
     }
 }
 #endregion

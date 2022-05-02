@@ -33,6 +33,8 @@ public class BossMove : MonoBehaviour
     //待機モーションなしの攻撃回数（HP50％以下のみ）
     [SerializeField]
     private int MaxAttack = 2;
+    //必殺技用フラグ(〇%以下になったとき一回)
+    private bool UltFlg;
 
     // Start is called before the first frame update
     void Start()
@@ -59,21 +61,24 @@ public class BossMove : MonoBehaviour
                 else if (BossState == Boss_State.strawberryBomb)//もしボスの状態がイチゴ爆弾の場合
                 {
                     //strawberryBomb();
-                    this.GetComponent<Boss1Attack>().Boss1Strawberry();
+                    this.GetComponent<Boss1Attack>().BossStrawberry.Boss1Strawberry();
                 }
                 else if (BossState == Boss_State.charge)//もしボスの状態が突進の場合
                 {
                     //charge();
-                    this.GetComponent<Boss1Attack>().Boss1Fork();
+                    Boss1Attack BossAttack;
+                    BossAttack = this.GetComponent<Boss1Attack>();
+                    BossAttack.BossRush.Boss1Fork();
+                    //this.GetComponent<Boss1Attack>().BossRush.Boss1Fork();
                 }
                 else if (BossState == Boss_State.KnifeThrower)//もしボスの状態がナイフ投げの場合
                 {
                     //KnifeThrower();
-                    this.GetComponent<Boss1Attack>().Boss1Knife();
+                    this.GetComponent<Boss1Attack>().BossKnife.Boss1Knife();
                 }
                 else if(BossState == Boss_State.Rain)
                 {
-                    this.GetComponent<Boss1Attack>().Boss1Rain();
+                    this.GetComponent<Boss1Attack>().BossRain.BossRain();
                 }
             }
         }
@@ -130,14 +135,20 @@ public class BossMove : MonoBehaviour
             Debug.Log("AttackCount：" + AttackCount);
 
             //ランダム数の生成とswitch分岐をこの中へ
+            if(!UltFlg && HPgage.currentHp <= 30)
+            {
+                UltFlg = true;
+                SetState(Boss_State.Rain);
+                return;
+            }
             if (HPgage.currentHp >= 51)
             {
-                RandomNumbe = Random.Range(4, 5);//攻撃パターンランダム化
+                RandomNumbe = Random.Range(2, 3);//攻撃パターンランダム化
                 Debug.Log("Random" + RandomNumbe);
             }
             else
             {
-                RandomNumbe = Random.Range(1, 4);//攻撃パターンランダム化
+                RandomNumbe = Random.Range(3, 4);//攻撃パターンランダム化
                 Debug.Log("Random" + RandomNumbe);
             }
             switch (RandomNumbe)            //switch分岐
@@ -159,6 +170,7 @@ public class BossMove : MonoBehaviour
                             RandomNumbe = -1;
                         Debug.Log("ナイフ攻撃");
                         break;//break文
+
                     case 4://雨攻撃
                     SetState(Boss_State.Rain);
                     RandomNumbe = -1;

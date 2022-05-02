@@ -34,16 +34,10 @@ public class OptionOpen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //f3で表示
+        //f3で表示・非表示切り替え
         if (Input.GetKeyDown(KeyCode.F3))
         {
-            Option.SetActive(true);
-            return;
-        }
-        //f４で非表示
-        if (Input.GetKeyDown(KeyCode.F4))
-        {
-            Option.SetActive(false);
+            Option.SetActive(!Option.activeSelf);
             return;
         }
     }

@@ -158,6 +158,7 @@ public class Player : MonoBehaviour
         {
             Pause.isPause = true;   // フェード終わるまでポーズ
             GameData.isFadeOut = true;  // フェードかける
+            //FadeController.FadeOut();
             Debug.Log("フェードはじめのポーズ");
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage002;
         }

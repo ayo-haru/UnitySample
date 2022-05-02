@@ -3536,7 +3536,10 @@ GameObject:
   - component: {fileID: 853211640702383089}
   - component: {fileID: 5827865096574767079}
   - component: {fileID: -3330591475259124122}
-  - component: {fileID: 2806849460254831840}
+  - component: {fileID: 5820452542703787824}
+  - component: {fileID: -9130601743187082710}
+  - component: {fileID: -712047140982903845}
+  - component: {fileID: -1164592511550159492}
   m_Layer: 0
   m_Name: PanCake
   m_TagString: Untagged
@@ -3592,22 +3595,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b081c5af3c2f94429f544a04fc5e6b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BossRush: {fileID: 0}
+  BossStrawberry: {fileID: 0}
+  BossKnife: {fileID: 0}
+  BossRain: {fileID: 0}
   RushDamage: 15
   StrawberryDamage: 10
   KnifeDamage: 10
   RefrectRotOver: 80
   RefrectRotUnder: -90
-  WeaponAttackFlg: 0
-  RushSpeed: 0.7
-  RotateSpeed: 5
-  Max_Strawberry: 6
-  StrawberrySpeed: 1
-  KnifeSpeed: 2
-  KnifeForward: {x: 0, y: 1, z: 0}
-  KnifeThrowTime: 1
-  RainTime: 5
-  MaxWeapon: 50
-  PreMaxWeapon: 0
+  HpScript: {fileID: 0}
+  BossAnim: {fileID: 0}
 --- !u!114 &-3330591475259124122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3622,7 +3620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeToStayInIdle: 2.4
   MaxAttack: 2
---- !u!114 &2806849460254831840
+--- !u!114 &5820452542703787824
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3631,9 +3629,59 @@ MonoBehaviour:
   m_GameObject: {fileID: 6232079251362198321}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a282c45f229cf47428f2eab2c1037b70, type: 3}
+  m_Script: {fileID: 11500000, guid: a4a1b145945b53747ab73a9b72c07f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RushSpeed: 0.7
+  RotateSpeed: 5
+--- !u!114 &-9130601743187082710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6232079251362198321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74d76a69f0053bc4b939cc0eef049650, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Max_Strawberry: 6
+  StrawberryRefFlg: 
+  StrawberrySpeed: 1
+  StrawberryColPlayer: 
+--- !u!114 &-712047140982903845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6232079251362198321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c397235076a4a84d989b44047adad6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KnifeSpeed: 2
+  KnifeForward: {x: 0, y: 1, z: 0}
+  KnifeThrowTime: 1
+--- !u!114 &-1164592511550159492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6232079251362198321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc24e9df76acf349a78b3b78bceded4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RainTime: 5
+  MaxWeapon: 75
+  PreMaxWeapon: 0
+  LoopSave: 0
+  LoopSaver: 0
 --- !u!1 &6374558938003141172
 GameObject:
   m_ObjectHideFlags: 0

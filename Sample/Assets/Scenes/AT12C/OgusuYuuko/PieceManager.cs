@@ -13,6 +13,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PieceManager : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class PieceManager : MonoBehaviour
     private int MaxPieceGrade;
     //一回だけ実行する用のフラグ
     private bool onceFlag;
+    //エフェクト
+    public GameObject effect;
     //回復のストックマネージャー
    // private StockManager stockManager;
     // Start is called before the first frame update
@@ -126,10 +129,12 @@ public class PieceManager : MonoBehaviour
             ++nPiece;
             //表示
             piece[nPiece - 1].GetComponent<ImageShow>().SetColor(1.0f,1.0f,1.0f);
+            //エフェクト発生
+            Instantiate(effect, piece[nPiece - 1].GetComponent<RectTransform>().position, Quaternion.identity);
             //ゲームデータ更新
             ++GameData.CurrentPiece;
             //保存
-            SaveManager.saveHP(GameData.CurrentPiece);
+            SaveManager.saveCurrentPiece(GameData.CurrentPiece);
 
     }
 
@@ -146,6 +151,10 @@ public class PieceManager : MonoBehaviour
         {
             //かけら減らす
             --nPiece;
+            //エフェクト発生
+            GameObject Effect = Instantiate(effect, piece[nPiece].GetComponent<RectTransform>().position, Quaternion.identity);
+            //エフェクトの色を黒にする
+            Effect.transform.GetChild(0).gameObject.GetComponent<Image>().color = new Color(0, 0, 0, 1);
             //かけらの色を黒にする
             piece[nPiece].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
             //ゲームデータ更新
@@ -170,10 +179,11 @@ public class PieceManager : MonoBehaviour
         //ゲームデータ更新
         ++GameData.CurrentPieceGrade;
         //保存
-        SaveManager.saveHP(GameData.CurrentPieceGrade);
+        SaveManager.savePieceGrade(GameData.CurrentPieceGrade);
         //表示
         piece[PieceGrade - 1].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
         piece[PieceGrade - 1].GetComponent<ImageShow>().Show();
-
+        //エフェクト発生
+        Instantiate(effect, piece[PieceGrade - 1].GetComponent<RectTransform>().position, Quaternion.identity);
     }
 }

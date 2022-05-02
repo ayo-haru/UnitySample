@@ -19,6 +19,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
+
 
 public class Player2 : MonoBehaviour
 {
@@ -53,7 +55,7 @@ public class Player2 : MonoBehaviour
     private InputAction _Pause;                         // InputActionのpauseを扱う
 
     //---アニメーション関連
-    public Animator animator;                           // アニメーターコンポーネント取得
+    [SerializeField] public Animator animator;          // アニメーターコンポーネント取得
 
     //---コンポーネント取得
     private Rigidbody rb;
@@ -99,6 +101,10 @@ public class Player2 : MonoBehaviour
 
     //---カメラ
     ShakeCamera shakeCamera;
+
+    /// <summary> ヒットストップ演出関連/// </summary>
+    public float HitStopTIme = 0.23f;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -183,11 +189,6 @@ public class Player2 : MonoBehaviour
                 return;
             }
 
-            if (UnderParryNow == true || GroundNow == false)
-            {
-                Gravity();
-            }
-
             animator.speed = 1.0f;
 
             //rb.Resume(gameObject);
@@ -257,6 +258,12 @@ public class Player2 : MonoBehaviour
     {
         if (!Pause.isPause){
 
+            if (UnderParryNow == true || GroundNow == false)
+            {
+                Gravity();
+            }
+
+
             Move("Velocity");
 
             if (isAttack)
@@ -280,11 +287,11 @@ public class Player2 : MonoBehaviour
             case "Velocity":
                 ForceDirection += move.ReadValue<Vector2>();
                 ForceDirection.Normalize();
-                MovingVelocity = ForceDirection * maxSpeed + jumppower;
-                jumppower.x *= 0.9f;
+                MovingVelocity = ForceDirection * maxSpeed;
+                Debug.Log("MovingVelocityの値"+MovingVelocity);
 
                 if (Timer <= 0){
-                    rb.velocity = new Vector3(MovingVelocity.x,MovingVelocity.y, 0);
+                    rb.velocity = new Vector3(MovingVelocity.x, rb.velocity.y - MovingVelocity.y, 0);
                 }
                 else{
                     --Timer;
@@ -297,7 +304,7 @@ public class Player2 : MonoBehaviour
                 SpeedCheck();
                 ForceDirection += move.ReadValue<Vector2>();
                 ForceDirection.Normalize();
-                rb.AddForce(ForceDirection * maxSpeed, ForceMode.Impulse);
+                rb.AddForce((ForceDirection * maxSpeed), ForceMode.Impulse);
 
                 break;
 
@@ -341,6 +348,7 @@ public class Player2 : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotationSpeed);
 
         ForceDirection = Vector2.zero;
+        //jumppower = Vector2.zero;
     }
     #endregion
     
@@ -694,6 +702,16 @@ public class Player2 : MonoBehaviour
     }
 	#endregion
 
+    public void OnAttackHit()
+    {
+        //---モーションを止める
+        animator.speed = 0.0f;
+
+        var seq = DOTween.Sequence();
+        seq.SetDelay(HitStopTIme);
+
+        seq.AppendCallback(() => animator.speed = 1f);
+    }
 	#region GUI表示
 	private void OnGUI()
     {
@@ -714,9 +732,9 @@ public class Player2 : MonoBehaviour
         //GUILayout.Label($"RighetTrigger:{Gamepad.current.rightTrigger.ReadValue()}");
         //GUILayout.Label($"LeftStickUp:{Gamepad.current.leftStick.up.ReadValue()}");
         //GUILayout.Label($"Space:{Keyboard.current.spaceKey.ReadValue()}");
-        //GUILayout.Label($"JumpFlg:{JumpNow}");
-        //GUILayout.Label($"GroudFlg:{GroundNow}");
-        //GUILayout.Label($"UnderParryFlg:{UnderParryNow}");
+        GUILayout.Label($"JumpFlg:{JumpNow}");
+        GUILayout.Label($"GroudFlg:{GroundNow}");
+        GUILayout.Label($"UnderParryFlg:{UnderParryNow}");
     }
 }
 #endregion

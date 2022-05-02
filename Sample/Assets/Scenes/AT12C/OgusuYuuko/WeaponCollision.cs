@@ -71,9 +71,8 @@ public class WeaponCollision : MonoBehaviour
                 //Vector3 dir = Player.transform.position - collision.transform.position;
 
                 Vector2 dir = Player.transform.position - this.gameObject.transform.position;
+                //Vector2 dir = this.gameObject.transform.position - Player.transform.position;
                 Debug.Log("ãóó£ë™íË" + dir);
-
-                //Vector3 dir = Player.transform.position - gameObject.transform.position;
 
                 dir.Normalize();
                 //Debug.Log("ãóó£ë™íË(ê≥ãKâª)" + dir);
@@ -82,10 +81,8 @@ public class WeaponCollision : MonoBehaviour
 
                 //ínñ ÉpÉäÉC
                 //player_rb.AddForce(dir, ForceMode.Impulse);
-                //player_rb.AddForce((dir * baunceGround), ForceMode.Impulse);
-                player2.SetJumpPower(dir * baunceGround);
-
-
+                player_rb.AddForce((dir * baunceGround), ForceMode.Impulse);
+                //player2.SetJumpPower(dir * baunceGround);
 
                 CanCollision = false;
             }

@@ -41,6 +41,9 @@ public class EnemyDown : MonoBehaviour
     private bool isCalledOnce = false;      // Update内で一回だけ処理を行いたいのでbool型の変数を用意
     private bool FinDissolve = false;       // Dissolveマテリアルに差し替える処理を終えたことを判定する
 
+    //---ヒットストップ演出(2022/05/02.吉原)
+    Player2 player2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,6 +53,8 @@ public class EnemyDown : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         Random.InitState(System.DateTime.Now.Millisecond);
         _dissolve = this.GetComponent<Dissolve>();
+        player2 = Player.GetComponent<Player2>();
+
     }
 
     // Update is called once per frame
@@ -106,6 +111,7 @@ public class EnemyDown : MonoBehaviour
             // 弾かれたらベクトルを計算して関数を呼び出す
             if (collision.gameObject.name == "Weapon(Clone)" && isAlive)
             {
+                player2.OnAttackHit();
                 vec = (transform.position -Player.transform.position).normalized;
                 EnemyDead(vec , Player.transform.position.x);
             }

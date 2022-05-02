@@ -23,12 +23,12 @@ public class Rain : MonoBehaviour
         {
             if (collision.gameObject.name == "Weapon(Clone)")
             {
-                for (int i = 0; i < BossAttack.MaxWeapon; i++)
+                for (int i = 0; i < BossAttack.BossRain.MaxWeapon; i++)
                 {
                     if (this.gameObject.name == "BossWeapon" + i)
                     {
-                        BossAttack.g_Weapon[i].RainRefrectFlg = true;
-                        BossAttack.g_Weapon[i].RainRefOnlyFlg = true;
+                        BossAttack.BossRain.g_Weapon[i].RainRefrectFlg = true;
+                        BossAttack.BossRain.g_Weapon[i].RainRefOnlyFlg = true;
                     }
                 }
             }

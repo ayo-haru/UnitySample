@@ -61,7 +61,7 @@ public class BossMove : MonoBehaviour
                 else if (BossState == Boss_State.strawberryBomb)//もしボスの状態がイチゴ爆弾の場合
                 {
                     //strawberryBomb();
-                    this.GetComponent<Boss1Attack>().Boss1Strawberry();
+                    this.GetComponent<Boss1Attack>().BossStrawberry.Boss1Strawberry();
                 }
                 else if (BossState == Boss_State.charge)//もしボスの状態が突進の場合
                 {
@@ -74,11 +74,11 @@ public class BossMove : MonoBehaviour
                 else if (BossState == Boss_State.KnifeThrower)//もしボスの状態がナイフ投げの場合
                 {
                     //KnifeThrower();
-                    this.GetComponent<Boss1Attack>().Boss1Knife();
+                    this.GetComponent<Boss1Attack>().BossKnife.Boss1Knife();
                 }
                 else if(BossState == Boss_State.Rain)
                 {
-                    this.GetComponent<Boss1Attack>().Boss1Rain();
+                    this.GetComponent<Boss1Attack>().BossRain.BossRain();
                 }
             }
         }
@@ -143,12 +143,12 @@ public class BossMove : MonoBehaviour
             }
             if (HPgage.currentHp >= 51)
             {
-                RandomNumbe = Random.Range(2, 3);//攻撃パターンランダム化
+                RandomNumbe = Random.Range(1, 2);//攻撃パターンランダム化
                 Debug.Log("Random" + RandomNumbe);
             }
             else
             {
-                RandomNumbe = Random.Range(1, 4);//攻撃パターンランダム化
+                RandomNumbe = Random.Range(3, 4);//攻撃パターンランダム化
                 Debug.Log("Random" + RandomNumbe);
             }
             switch (RandomNumbe)            //switch分岐

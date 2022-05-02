@@ -29,7 +29,6 @@ public class Boss1Rush : MonoBehaviour
     Vector3 oldScale;
     [SerializeField] public float RotateSpeed;
     Vector3 Rotate;
-    int RFNum;
     // Start is called before the first frame update
     void Start()
     {

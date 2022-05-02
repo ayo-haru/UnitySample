@@ -3537,6 +3537,9 @@ GameObject:
   - component: {fileID: 5827865096574767079}
   - component: {fileID: -3330591475259124122}
   - component: {fileID: 5820452542703787824}
+  - component: {fileID: -9130601743187082710}
+  - component: {fileID: -712047140982903845}
+  - component: {fileID: -1164592511550159492}
   m_Layer: 0
   m_Name: PanCake
   m_TagString: Untagged
@@ -3593,6 +3596,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BossRush: {fileID: 0}
+  BossStrawberry: {fileID: 0}
+  BossKnife: {fileID: 0}
+  BossRain: {fileID: 0}
   RushDamage: 15
   StrawberryDamage: 10
   KnifeDamage: 10
@@ -3607,13 +3613,7 @@ MonoBehaviour:
   BossAnim: {fileID: 0}
   WeaponAttackFlg: 0
   RFChange: 0
-  RushSpeed: 0.7
-  RotateSpeed: 5
-  Max_Strawberry: 6
-  StrawberrySpeed: 1
-  KnifeSpeed: 2
-  KnifeForward: {x: 0, y: 1, z: 0}
-  KnifeThrowTime: 1
+  RFNum: 0
   RainTime: 5
   MaxWeapon: 75
   PreMaxWeapon: 0
@@ -3645,6 +3645,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RushSpeed: 0.7
   RotateSpeed: 5
+--- !u!114 &-9130601743187082710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6232079251362198321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74d76a69f0053bc4b939cc0eef049650, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Max_Strawberry: 6
+  StrawberryRefFlg: 
+  StrawberrySpeed: 1
+  StrawberryColPlayer: 
+--- !u!114 &-712047140982903845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6232079251362198321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c397235076a4a84d989b44047adad6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KnifeSpeed: 2
+  KnifeForward: {x: 0, y: 1, z: 0}
+  KnifeThrowTime: 1
+--- !u!114 &-1164592511550159492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6232079251362198321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efc24e9df76acf349a78b3b78bceded4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RainTime: 5
+  MaxWeapon: 75
+  PreMaxWeapon: 0
 --- !u!1 &6374558938003141172
 GameObject:
   m_ObjectHideFlags: 0

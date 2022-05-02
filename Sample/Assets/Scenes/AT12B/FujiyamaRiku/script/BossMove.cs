@@ -143,7 +143,7 @@ public class BossMove : MonoBehaviour
             }
             if (HPgage.currentHp >= 51)
             {
-                RandomNumbe = Random.Range(1, 2);//攻撃パターンランダム化
+                RandomNumbe = Random.Range(2, 3);//攻撃パターンランダム化
                 Debug.Log("Random" + RandomNumbe);
             }
             else

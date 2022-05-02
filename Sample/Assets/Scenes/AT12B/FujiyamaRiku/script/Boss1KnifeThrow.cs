@@ -92,8 +92,16 @@ public class Boss1KnifeThrow : MonoBehaviour
                 GameObject.Find("knife(Clone)").transform.parent.DetachChildren();
                 Vector3 KnifeDir = GameData.PlayerPos - Knife.transform.position;
                 // ターゲットの方向への回転
-                KnifeRotDir = Quaternion.LookRotation(KnifeDir, Vector3.back);
-                KnifeRotForward = Quaternion.FromToRotation(KnifeForward, Vector3.forward);
+                if (BossAttack.RFChange)
+                {
+                    KnifeRotDir = Quaternion.LookRotation(KnifeDir, Vector3.forward);
+                    KnifeRotForward = Quaternion.FromToRotation(KnifeForward, Vector3.forward);
+                }
+                if (!BossAttack.RFChange)
+                {
+                    KnifeRotDir = Quaternion.LookRotation(KnifeDir, Vector3.back);
+                    KnifeRotForward = Quaternion.FromToRotation(KnifeForward, Vector3.forward);
+                }
                 Knife.transform.rotation = KnifeRotDir * KnifeRotForward;
             }
             if (BossAttack.RefrectFlg)

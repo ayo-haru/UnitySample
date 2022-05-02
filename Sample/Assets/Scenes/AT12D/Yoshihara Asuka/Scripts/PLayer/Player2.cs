@@ -55,7 +55,7 @@ public class Player2 : MonoBehaviour
     private InputAction _Pause;                         // InputActionのpauseを扱う
 
     //---アニメーション関連
-    [SerializeField] public Animator animator;          // アニメーターコンポーネント取得
+    [SerializeField] private Animator animator;         // アニメーターコンポーネント取得
 
     //---コンポーネント取得
     private Rigidbody rb;
@@ -103,7 +103,8 @@ public class Player2 : MonoBehaviour
     ShakeCamera shakeCamera;
 
     /// <summary> ヒットストップ演出関連/// </summary>
-    public float HitStopTIme = 0.23f;
+    public float HitStopTime = 0.23f;
+    public bool CanHitStopflg = false;
 
     private void Awake()
     {
@@ -189,7 +190,9 @@ public class Player2 : MonoBehaviour
                 return;
             }
 
-            animator.speed = 1.0f;
+            if (!CanHitStopflg){
+                animator.speed = 1.0f;
+            }
 
             //rb.Resume(gameObject);
             GamePadManager.onceTiltStick = false;
@@ -266,10 +269,10 @@ public class Player2 : MonoBehaviour
 
             Move("Velocity");
 
-            if (isAttack)
-            {
+            if (isAttack){
                 Attack();
             }
+
         }
         else{
         }
@@ -434,8 +437,10 @@ public class Player2 : MonoBehaviour
 
         //---倒した値を基に盾の出す場所を指定
         GameObject weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                           PlayerPos.y + (AttackDirection.y * AttckPosHeight),
-                                                           PlayerPos.z), Quaternion.identity);
+                                        PlayerPos.y + (AttackDirection.y * AttckPosHeight),
+                                        PlayerPos.z), Quaternion.identity);
+
+
         Debug.Log("盾出現"+weapon.transform.position);
         //---コントローラーの倒したXの値が－だったらy軸に-1する(盾の角度の調整)
         if (AttackDirection.x < 0){
@@ -603,7 +608,7 @@ public class Player2 : MonoBehaviour
             collision.gameObject.tag == "GroundDameged" ||
             collision.gameObject.tag == "Enemy")
         {
-            shakeCamera.Do();
+            OnAttackHit();
             //---自分の位置と接触してきたオブジェクトの位置を計算し、距離と方向を算出
             Distination = (transform.position - collision.transform.position).normalized;
             // プレイヤーがダメージを食らっていないとき
@@ -704,13 +709,15 @@ public class Player2 : MonoBehaviour
 
     public void OnAttackHit()
     {
+        CanHitStopflg = true;
         //---モーションを止める
         animator.speed = 0.0f;
 
         var seq = DOTween.Sequence();
-        seq.SetDelay(HitStopTIme);
+        seq.SetDelay(HitStopTime);
 
         seq.AppendCallback(() => animator.speed = 1f);
+
     }
 	#region GUI表示
 	private void OnGUI()

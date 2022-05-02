@@ -86,6 +86,14 @@ public class WeaponCollision : MonoBehaviour
 
                 CanCollision = false;
             }
+
+            if(collision.gameObject.tag == "Enemy")
+            {
+                player2.OnAttackHit();
+            }
+            else{
+                player2.CanHitStopflg = false;
+            }
         }
 
         //プレイヤー以外と当たってたら盾消去

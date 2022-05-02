@@ -5,12 +5,12 @@
 //      
 //      <開発履歴>
 //      2022/03/20
-//
+//      2022/05/03  ヒットストップ演出追加-吉原
 //==========================================================
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
 public class EnemyDown : MonoBehaviour
 {
     [SerializeField]
@@ -54,6 +54,7 @@ public class EnemyDown : MonoBehaviour
         Random.InitState(System.DateTime.Now.Millisecond);
         _dissolve = this.GetComponent<Dissolve>();
         player2 = Player.GetComponent<Player2>();
+
 
     }
 
@@ -111,9 +112,17 @@ public class EnemyDown : MonoBehaviour
             // 弾かれたらベクトルを計算して関数を呼び出す
             if (collision.gameObject.name == "Weapon(Clone)" && isAlive)
             {
-                player2.OnAttackHit();
                 vec = (transform.position -Player.transform.position).normalized;
-                EnemyDead(vec , Player.transform.position.x);
+
+                //---ヒットストップ演出
+                var seq = DOTween.Sequence();
+                //---Enemyの振動演出
+                seq.Append(transform.DOShakePosition(player2.HitStopTime,1f,100,fadeOut:false));
+
+                //EnemyDead(vec , Player.transform.position.x);
+                seq.AppendCallback(() => EnemyDead(vec, Player.transform.position.x));
+
+
             }
             //if(!isAlive && EnemyNumber == 2)
             //{
@@ -121,6 +130,7 @@ public class EnemyDown : MonoBehaviour
             //    Destroy(gameObject, 0.0f);
             //    EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);
             //}
+
 
         }
         else
@@ -134,6 +144,8 @@ public class EnemyDown : MonoBehaviour
     {
         if (!Pause.isPause)
         {
+
+
             rb.Resume(gameObject);
             // アニメーションを止める
             animator.speed = 0;
@@ -170,6 +182,7 @@ public class EnemyDown : MonoBehaviour
                 Instantiate(Item, Pos, Quaternion.identity);
                 ItemDrop = true;
             }
+
 
             //取得した法線ベクトルに跳ね返す速さをかけて、跳ね返す
             //rb.AddForce(velocity * bouncePower, ForceMode.Force);

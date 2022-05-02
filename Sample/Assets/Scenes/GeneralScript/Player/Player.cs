@@ -157,8 +157,8 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "toKitchen2")    // この名前のタグと衝突したら
         {
             Pause.isPause = true;   // フェード終わるまでポーズ
-            //GameData.isFadeOut = true;  // フェードかける
-            FadeController.FadeOut();
+            GameData.isFadeOut = true;  // フェードかける
+            //FadeController.FadeOut();
             Debug.Log("フェードはじめのポーズ");
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage002;
         }

@@ -35,6 +35,7 @@ public class Boss1Rush : MonoBehaviour
         Forkobj = (GameObject)Resources.Load("Fork");
         Scale = Boss1Manager.Boss.transform.localScale;
         BossAttack = this.GetComponent<Boss1Attack>();
+        
     }
 
     // Update is called once per frame

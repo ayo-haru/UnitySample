@@ -25,21 +25,21 @@ public class Boss1Attack : MonoBehaviour
     [SerializeField] public int KnifeDamage;                //ナイフ攻撃のダメージ
     [SerializeField] public float RefrectRotOver;           //弾いた角度の上判定用
     [SerializeField] public float RefrectRotUnder;          //弾いた角度の上判定用
-    public bool RefrectFlg = false;                  //プレイヤーがパリィに成功したかどうかの受け取り用
-    public bool OnlyFlg;                             //それぞれの処理の一回限定の処理用
-    public bool LRSwitchFlg;
+    [System.NonSerialized] public bool RefrectFlg = false;                  //プレイヤーがパリィに成功したかどうかの受け取り用
+    [System.NonSerialized] public bool OnlyFlg;                             //それぞれの処理の一回限定の処理用
+    [System.NonSerialized]  public bool LRSwitchFlg;
     static public Vector3 BossStartPoint;                   //ボスの初期地点
-    public bool AnimFlg;
-    public bool MoveFlg;
+    [System.NonSerialized] public bool AnimFlg;
+    [System.NonSerialized] public bool MoveFlg;
     private GameObject HpObject;
     public HPgage HpScript;
     public Animator BossAnim;
-    public bool WeaponAttackFlg;                            //武器使う攻撃変更 true = 雨攻撃 false = 突進orナイフ
-    public bool RFChange;                                          //左右反転 true = 左から攻撃 false = 右から攻撃
+    [System.NonSerialized] public bool WeaponAttackFlg;                            //武器使う攻撃変更 true = 雨攻撃 false = 突進orナイフ
+    [System.NonSerialized] public bool RFChange;                                          //左右反転 true = 左から攻撃 false = 右から攻撃
     BossMove.Boss_State BossTakeCase;
 
     //実装するかわからない左右判定用
-    public int RFNum;
+    [System.NonSerialized] public int RFNum;
     GameObject Forkobj;                                     //フォークのオブジェクト生成用
     GameObject Knifeobj;                                    //ナイフ生成用
     

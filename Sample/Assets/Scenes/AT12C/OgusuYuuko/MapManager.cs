@@ -49,7 +49,7 @@ public class MapManager : MonoBehaviour
         //ñÇñ@êwï\é¶
         for(int i = 0; i < MagicCircle.Length; ++i)
         {
-            MagicCircle[i].GetComponent<ImageShow>().Show(1000);
+            MagicCircle[i].GetComponent<ImageShow>().Show(180);
         }
        
         if (!OnceFlag)

@@ -8,11 +8,12 @@ public class DebugClear : MonoBehaviour
 {
     //private GameObject MAP_UI;
     //int currenthp = 100;
-   // HPGage hpGage;
+    // HPGage hpGage;
     //int count = 0;
-  //  UVScroll Moon;
-   // PieceManager pieceManagewr;
-   GameObject hpsystem;
+    //  UVScroll Moon;
+    // PieceManager pieceManagewr;
+    GameObject hpsystem;
+   // public GameObject Effect;
     // Start is called before the first frame update
     void Awake()
     {
@@ -29,7 +30,7 @@ public class DebugClear : MonoBehaviour
     {
         //MAP_UI = GameObject.Find("MapManager(Clonet)");
         //MAP_UI.SetActive(false);
-        hpsystem = GameObject.Find("HPSystem(2)(Clone)");
+       hpsystem = GameObject.Find("HPSystem(2)(Clone)");
     }
 
     // Update is called once per frame
@@ -119,36 +120,36 @@ public class DebugClear : MonoBehaviour
         //{
         //    MAP_UI.SetActive(true);
         //}
-        if (Input.GetKeyDown(KeyCode.F3))
-        {
-            GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage001;
-            Debug.Log("シーン" + GameData.CurrentMapNumber);
-        }
-        if (Input.GetKeyDown(KeyCode.F4))
-        {
-            GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage002;
-            Debug.Log("シーン" + GameData.CurrentMapNumber);
-        }
-        if (Input.GetKeyDown(KeyCode.F5))
-        {
-            GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage003;
-            Debug.Log("シーン" + GameData.CurrentMapNumber);
-        }
-        if (Input.GetKeyDown(KeyCode.F6))
-        {
-            GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage004;
-            Debug.Log("シーン" + GameData.CurrentMapNumber);
-        }
-        if (Input.GetKeyDown(KeyCode.F7))
-        {
-            GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage005;
-            Debug.Log("シーン" + GameData.CurrentMapNumber);
-        }
-        if (Input.GetKeyDown(KeyCode.F8))
-        {
-            GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage006;
-            Debug.Log("シーン" + GameData.CurrentMapNumber);
-        }
+        //if (Input.GetKeyDown(KeyCode.F3))
+        //{
+        //    GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage001;
+        //    Debug.Log("シーン" + GameData.CurrentMapNumber);
+        //}
+        //if (Input.GetKeyDown(KeyCode.F4))
+        //{
+        //    GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage002;
+        //    Debug.Log("シーン" + GameData.CurrentMapNumber);
+        //}
+        //if (Input.GetKeyDown(KeyCode.F5))
+        //{
+        //    GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage003;
+        //    Debug.Log("シーン" + GameData.CurrentMapNumber);
+        //}
+        //if (Input.GetKeyDown(KeyCode.F6))
+        //{
+        //    GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage004;
+        //    Debug.Log("シーン" + GameData.CurrentMapNumber);
+        //}
+        //if (Input.GetKeyDown(KeyCode.F7))
+        //{
+        //    GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage005;
+        //    Debug.Log("シーン" + GameData.CurrentMapNumber);
+        //}
+        //if (Input.GetKeyDown(KeyCode.F8))
+        //{
+        //    GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage006;
+        //    Debug.Log("シーン" + GameData.CurrentMapNumber);
+        //}
 
 
 
@@ -160,6 +161,16 @@ public class DebugClear : MonoBehaviour
         //    Debug.Log(currenthp);
         //}
 
+
+
+
+        //エフェクト発生
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+
+        //   Instantiate(Effect,new Vector3(100.0f,100.0f,0.0f),Quaternion.identity);
+
+        //}
 
 
     }

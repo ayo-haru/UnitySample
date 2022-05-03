@@ -70,28 +70,30 @@ public class WeaponCollision : MonoBehaviour
                 //•ûŒü
                 //Vector3 dir = Player.transform.position - collision.transform.position;
 
-                Vector2 dir = Player.transform.position - this.gameObject.transform.position;
+                Vector2 dir = (Player.transform.position - this.gameObject.transform.position).normalized;
                 //Vector2 dir = this.gameObject.transform.position - Player.transform.position;
-                Debug.Log("‹——£‘ª’è" + dir);
+                //Debug.Log("‹——£‘ª’è" + dir);
 
-                dir.Normalize();
-                //Debug.Log("‹——£‘ª’è(³‹K‰»)" + dir);
+                //dir.Normalize();
+                Debug.Log("‹——£‘ª’è(³‹K‰»)" + dir);
 
-                //player_rb.velocity = Vector3.zero;
+
+                player2.rb.velocity = Vector3.zero;
 
                 //’n–ÊƒpƒŠƒC
                 //player_rb.AddForce(dir, ForceMode.Impulse);
-                player_rb.AddForce((dir * baunceGround), ForceMode.Impulse);
+                player_rb.AddForce(dir * baunceGround, ForceMode.Impulse);
                 //player2.SetJumpPower(dir * baunceGround);
 
                 CanCollision = false;
             }
 
-            if(collision.gameObject.tag == "Enemy")
+            if (collision.gameObject.tag == "Enemy")
             {
                 player2.OnAttackHit();
             }
-            else{
+            else
+            {
                 player2.CanHitStopflg = false;
             }
         }
@@ -104,8 +106,6 @@ public class WeaponCollision : MonoBehaviour
 
         Debug.Log(collision.gameObject.name + "‚Æ“–‚½‚Á‚½");
     }
-
-
 
     // ’µ‚Ë•Ô‚é—Í’²®ŠÖ”
     private void BounceCheck()

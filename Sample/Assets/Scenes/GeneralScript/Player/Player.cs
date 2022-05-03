@@ -109,7 +109,7 @@ public class Player : MonoBehaviour
             shouldRespawn = false;
 
             // フェード
-            Pause.isPause = true;   // フェード終わるまでポーズ
+            //Pause.isPause = true;   // フェード終わるまでポーズ
             Debug.Log("フェードはじめのポーズ");
             GameData.isFadeOut = true;  // フェードかける
                                         // りすぽん
@@ -122,7 +122,7 @@ public class Player : MonoBehaviour
             if (!GameData.isFadeOut)
             {
                 GameData.InitScene();
-                Pause.isPause = false;
+                //Pause.isPause = false;
             }
         }
     }
@@ -151,11 +151,9 @@ public class Player : MonoBehaviour
         }
         if (other.gameObject.tag == "toKitchen2")    // この名前のタグと衝突したら
         {
-            Pause.isPause = true;   // フェード終わるまでポーズ
-            //GameData.isFadeOut = true;  // フェードかける
-            //FadeController.FadeOut();
-            fadeimage.GetComponent<FadeController>().FadeOut();
-            Debug.Log("フェードはじめのポーズ");
+            //Pause.isPause = true;   // フェード終わるまでポーズ
+            GameData.isFadeOut = true;  // フェードかける
+            Debug.Log("キッチン２に行くフェード開始");
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage002;
         }
         if (other.gameObject.tag == "toKitchen3")    // この名前のタグと衝突したら
@@ -167,35 +165,35 @@ public class Player : MonoBehaviour
                     return;
                 }
             }
-            Pause.isPause = true;   // 　フェード終わるまでポーズ
+            //Pause.isPause = true;   // 　フェード終わるまでポーズ
             GameData.isFadeOut = true;  // フェードかける
             Debug.Log("フェードはじめのポーズ");
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage003;
         }
         if (other.gameObject.tag == "toKitchen4")    // この名前のタグと衝突したら
         {
-            Pause.isPause = true;   // フェード終わるまでポーズ
+            //Pause.isPause = true;   // フェード終わるまでポーズ
             GameData.isFadeOut = true;  // フェードかける
             Debug.Log("フェードはじめのポーズ");
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage004;
         }
         if (other.gameObject.tag == "toKitchen5")    // この名前のタグと衝突したら
         {
-            Pause.isPause = true;   // フェード終わるまでポーズ
+            //Pause.isPause = true;   // フェード終わるまでポーズ
             GameData.isFadeOut = true;  // フェードかける  
             Debug.Log("フェードはじめのポーズ");
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage005;
         }
         if (other.gameObject.tag == "toKitchen6")    // この名前のタグと衝突したら
         {
-            Pause.isPause = true;   // フェード終わるまでポーズ
+            //Pause.isPause = true;   // フェード終わるまでポーズ
             GameData.isFadeOut = true;  // フェードかける
             Debug.Log("フェードはじめのポーズ");
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage006;
         }
         if (other.gameObject.tag == "toBoss1")    // この名前のタグと衝突したら
         {
-            Pause.isPause = true;   // フェード終わるまでポーズ
+            //Pause.isPause = true;   // フェード終わるまでポーズ
             GameData.isFadeOut = true;  // フェードかける
             Debug.Log("フェードはじめのポーズ");
             GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;

@@ -7,21 +7,22 @@ public class FadeController : MonoBehaviour
 {
     //----- 変数初期化 -----
     //--- フェードの変数
-    float fadeOutSpeed = 0.4f;        //透明度が変わるスピードを管理
-    float fadeInSpeed = 0.4f;        //透明度が変わるスピードを管理
+    float fadeOutSpeed = 1.0f;        //透明度が変わるスピードを管理
+    float fadeInSpeed = 1.0f;        //透明度が変わるスピードを管理
     float fadeDeltaTime = 0;                //フェードに使った時間
 
-    [System.NonSerialized]
-    public static bool onceFadeOut;
-    [System.NonSerialized]
-    public static bool onceFadeIn;
+    ObservedValue<bool> onceFadeOut;
+    ObservedValue<bool> onceFadeIn;
     //float red, green, blue, alfa;   //パネルの色、不透明度を管理
 
     Image fadeImage;                //透明度を変更するパネルのイメージ
 
     void Start() {
-        onceFadeOut = true;
-        onceFadeIn = true;
+        onceFadeOut = new ObservedValue<bool>(GameData.isFadeOut);
+        onceFadeOut.OnValueChange += () => { if (GameData.isFadeOut) { FadeOut(); } };
+        onceFadeIn = new ObservedValue<bool>(GameData.isFadeIn);
+        onceFadeIn.OnValueChange += () => { if (GameData.isFadeIn) { FadeIn(); } };
+
         fadeImage = GetComponent<Image>();  // フェードの色関連
         //red = fadeImage.color.r;
         //green = fadeImage.color.g;
@@ -40,6 +41,9 @@ public class FadeController : MonoBehaviour
 
     void Update()
     {
+        onceFadeOut.Value = GameData.isFadeOut;
+        onceFadeIn.Value = GameData.isFadeIn;
+
         //if (GameData.isFadeIn)
         //{ 
         //    FadeIn();
@@ -82,27 +86,22 @@ public class FadeController : MonoBehaviour
     private IEnumerator FadeInCoroutine()
     {
         Debug.Log("フェード院");
-
-        //float alpha = 1;                            //色の不透明度
-        //Color color = new Color(0, 0, 0, alpha);    //Imageの色変更に使う
         this.fadeDeltaTime = 0;                     //初期化
-        //this.fadeImage.color = color;                   //色の初期化(黒)
+        fadeImage.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+
         while (this.fadeDeltaTime <= this.fadeInSpeed)
         {
+            fadeDeltaTime += Time.deltaTime;
+
             float fadeAlpha = Mathf.Lerp(1f, 0f, fadeDeltaTime / fadeInSpeed);
             fadeImage.color = new Color(0.0f, 0.0f, 0.0f, fadeAlpha);
-            fadeDeltaTime += Time.deltaTime;
-            //yield return null;                      //次フレームで再開
-            //this.fadeInSpeed += Time.deltaTime;       //時間の加算
-            //alpha = Mathf.Lerp(0f, 1f, fadeDeltaTime / fadeInSpeed);   //透明度の決定
-            if (fadeImage.color.a < 0)
+            Debug.Log("フェード値"+fadeAlpha);
+            if (fadeImage.color.a <= 0)
             {
-                Pause.isPause = false;
+                //Pause.isPause = false;
                 GameData.isFadeIn = false;
             }
             yield return null;
-            //color.a = alpha;                        //色の透明度の決定
-            //this.fadeImage.color = color;               //色の代入
         }
         
     }
@@ -110,26 +109,22 @@ public class FadeController : MonoBehaviour
     private IEnumerator FadeOutCoroutine()
     {
         Debug.Log("フェードアウト");
-        //float alpha = 0;                            //色の不透明度
-        //Color color = new Color(0, 0, 0, alpha);    //Imageの色変更に使う
         this.fadeDeltaTime = 0;                     //初期化
-        //this.fadeImage.color = color;                   //色の初期化
+        fadeImage.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
         while (this.fadeDeltaTime <= this.fadeOutSpeed)
         {
+            fadeDeltaTime += Time.deltaTime;
             float fadeAlpha = Mathf.Lerp(0f, 1f, fadeDeltaTime / fadeOutSpeed);
             fadeImage.color = new Color(0.0f, 0.0f, 0.0f, fadeAlpha);
-            fadeDeltaTime += Time.deltaTime;
-            //if (fadeImage.color.a >= 1)
-            if (fadeAlpha >= 1)
+            //Debug.Log("フェード値" + fadeAlpha);
+            if (fadeImage.color.a >= 1)
+            //if (fadeAlpha >= 1)
             {
-                //Pause.isPause = false;
                 GameData.isFadeOut = false;
-                Debug.Log("フェードアウト完了のポーズ解除");
-                //GameData.isFadeIn = true;
+                Debug.Log("フェードアウト完了");
+                GameData.isFadeIn = true;
             }
             yield return null; 
-            //color.a = alpha;                        //色の透明度の決定
-            //this.fadeImage.color = color;               //色の代入
         }
     }
 

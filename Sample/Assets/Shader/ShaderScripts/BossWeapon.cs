@@ -5,7 +5,7 @@ using UnityEngine;
 public class BossWeapon : MonoBehaviour
 {
     Boss1Rain BossRain;
-    float timer = 10.0f;                    // スタートの時間
+    public float timer = 10.0f;                    // スタートの時間
 
     [SerializeField] private MeshRenderer _meshRenderer;        // 対象のメッシュレンダーを格納
     [SerializeField] private Material _alphaMaterial;           // 変更するマテリアルを格納(今回はα値を変えるマテリアル)
@@ -89,7 +89,7 @@ public class BossWeapon : MonoBehaviour
         //---0秒になるまで繰り返す
         while (timer > 0)
         {
-
+            
             SetAlpha(timer / 10);               // アルファ値を変更
                                                    //---<memo>
                                                    //   ここでは10.0f / 10 = 1 １をSetAlpha()に渡す

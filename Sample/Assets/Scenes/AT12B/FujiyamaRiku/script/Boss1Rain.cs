@@ -104,11 +104,15 @@ public class Boss1Rain : MonoBehaviour
                     WeaponRand = Random.Range(1, 3);
                     if (WeaponRand == 1)
                     {
+                        Debug.Log("かず" + RainNum);
                         g_Weapon[RainNum].UseObj = Instantiate(Knifeobj, RainRand, Quaternion.Euler(new Vector3(180.0f, 0.0f, 0.0f)));
+                        
                     }
                     if (WeaponRand == 2)
                     {
+                        Debug.Log("かず" + RainNum);
                         g_Weapon[RainNum].UseObj = Instantiate(Forkobj, RainRand, Quaternion.Euler(new Vector3(180.0f, 0.0f, 0.0f)));
+                        
                     }
                     
                     g_Weapon[RainNum].UseObj.name = "BossWeapon" + RainNum;
@@ -156,71 +160,77 @@ public class Boss1Rain : MonoBehaviour
                     if (g_Weapon[i].RainMoveTime >= 1.0f)
                     {
 
-                        if (!g_Weapon[i].FadeFlg)
+                        if (!g_Weapon[i].FadeFlg && !g_Weapon[i].RainRefrectFlg)
                         {
                             g_Weapon[i].FadeFlg = true;
                             g_Weapon[i].Weapon.Invoke("Play", 0.1f);
 
                         }
-                        
-                            g_Weapon[i].DelTime += Time.deltaTime;
-                        
                         if (g_Weapon[MaxWeapon - 1].RainMoveTime >= 1.0f)
                         {
-                            //ここ書き換えないと
-                            if (g_Weapon[MaxWeapon - 1].DelTime >= 0.6f)
+                            for (int j = 0; j < MaxWeapon; j++)
                             {
-                                if (g_Weapon[MaxWeapon - 1].UseObj != null)
+                                if (g_Weapon[j].RainRefrectFlg && g_Weapon[j].RainMoveTime >= 1.0f)
                                 {
-                                    Destroy(g_Weapon[MaxWeapon - 1].UseObj);
-                                }
-                            }
-                            
-                                if (g_Weapon[i].RainRefrectFlg && g_Weapon[i].RainMoveTime >= 1.0f)
-                                {
-                                    
-                                        if (g_Weapon[i].UseObj != null)
-                                        {
-                                            Destroy(g_Weapon[i].UseObj);
-                                        }
-                                        g_Weapon[i].UseFlg = false;
-                                        g_Weapon[i].RainRefrectFlg = false;
-                                        g_Weapon[i].RainMoveTime = 0;
-
-                                    
-                                }
-                                if(!g_Weapon[i].delFlg && g_Weapon[i].DelTime >= 0.6f)
-                                {
-
-                                    g_Weapon[i].delFlg = true;
-                                    g_Weapon[i].RainRefrectFlg = false;
-                                    g_Weapon[i].UseFlg = false;
-                                    if (g_Weapon[i].UseObj != null)
+                                    g_Weapon[j].delFlg = true;
+                                    if (g_Weapon[j].UseObj != null)
                                     {
-                                        Destroy(g_Weapon[i].UseObj);
+                                        Destroy(g_Weapon[j].UseObj);
                                     }
-                                    g_Weapon[i].RainMoveTime = 0;
-                                    g_Weapon[i].DelTime = 0;
+                                    g_Weapon[j].UseFlg = false;
+                                    g_Weapon[j].RainRefrectFlg = false;
+                                    g_Weapon[j].RainMoveTime = 0;
+                                    continue;
+
                                 }
-                                
-                                if (g_Weapon[i].RainRefrectFlg && g_Weapon[i].RainMoveTime <= 1.0f)
+                                if (!g_Weapon[j].delFlg && g_Weapon[j].Weapon.timer <= 0f)
                                 {
-                                    Debug.Log("なんだこいつぅぅぅ" + i);
+                                    g_Weapon[j].delFlg = true;
+                                    g_Weapon[j].RainRefrectFlg = false;
+                                    g_Weapon[j].UseFlg = false;
+                                    if (g_Weapon[j].UseObj != null)
+                                    {
+                                        Destroy(g_Weapon[j].UseObj);
+                                    }
+                                    g_Weapon[j].RainMoveTime = 0;
+                                    g_Weapon[j].DelTime = 0;
+                                    continue;
+                                }
+                                if (!g_Weapon[j].delFlg && g_Weapon[j].Weapon.timer > 0f)
+                                {
                                     return;
                                 }
-                                if (g_Weapon[i].DelTime <= 0.6f)
+                                if (g_Weapon[j].RainRefrectFlg && g_Weapon[j].RainMoveTime <= 1.0f)
                                 {
-                                Debug.Log("ああああああああああああああああああああああああああああああああああああああ" + i);
-                                return;
+                                    return;
                                 }
-                            
-                            RainNum = 0;
-                            BossAttack.BossAnim.SetBool("Tired", false);
-                            BossAttack.AnimFlagOnOff();
-                            BossMove.SetState(BossMove.Boss_State.idle);
-                            return;
+
+
+                                if (g_Weapon[MaxWeapon - 1].Weapon.timer <= 0f || g_Weapon[MaxWeapon - 1].RainMoveTime >= 1.0f)
+                                {
+                                    Debug.Log("うごいたよーーーーーー");
+                                    RainNum = 0;
+                                    BossAttack.BossAnim.SetBool("Tired", false);
+                                    BossAttack.AnimFlagOnOff();
+                                    BossMove.SetState(BossMove.Boss_State.idle);
+                                    return;
+                                }
+                            }
                         }
-                        if (!g_Weapon[i].delFlg && g_Weapon[i].DelTime >= 0.6f)
+                        if (g_Weapon[i].RainRefrectFlg && g_Weapon[i].RainMoveTime >= 1.0f)
+                        {
+                            g_Weapon[i].delFlg = true;
+                            if (g_Weapon[i].UseObj != null)
+                            {
+                                Destroy(g_Weapon[i].UseObj);
+                            }
+                            g_Weapon[i].UseFlg = false;
+                            g_Weapon[i].RainRefrectFlg = false;
+                            g_Weapon[i].RainMoveTime = 0;
+                            
+
+                        }
+                        if (!g_Weapon[i].delFlg && g_Weapon[i].Weapon.timer <= 0f)
                         {
                             g_Weapon[i].delFlg = true;
                             g_Weapon[i].RainRefrectFlg = false;

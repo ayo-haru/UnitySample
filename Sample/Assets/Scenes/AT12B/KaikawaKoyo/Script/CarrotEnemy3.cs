@@ -11,7 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarrotEnemy : MonoBehaviour
+public class CarrotEnemy3 : MonoBehaviour
 {
     GameObject Player;
     private Rigidbody rb;
@@ -43,7 +43,7 @@ public class CarrotEnemy : MonoBehaviour
 
     private void Update()
     {
-        if(!Pause.isPause)
+        if (!Pause.isPause)
         {
             rb.Resume(gameObject);
             // プレイヤーを見つけたら攻撃開始
@@ -52,10 +52,10 @@ public class CarrotEnemy : MonoBehaviour
                 PlayerPos = Player.transform.position;
                 EnemyPos = transform.position;
                 dis = Vector3.Distance(EnemyPos, PlayerPos);
-                if(dis >= 200.0f)
-                {
-                    Destroy(gameObject, 0.0f);
-                }
+                //if (dis >= 200.0f)
+                //{
+                //    Destroy(gameObject, 0.0f);
+                //}
                 //if (Invincible)
                 //{
                 //    gameObject.layer = LayerMask.NameToLayer("Invincible");
@@ -67,42 +67,44 @@ public class CarrotEnemy : MonoBehaviour
                 //    InvincibleTime = 0.0f;
                 //    Invincible = false;
                 //}
+
+                // 出現したら上へと上昇
                 if (!Attack)
+                {
+
+                }
+
+                if (Attack)
                 {
                     vec = (Player.transform.position - transform.position).normalized;
                     look = Quaternion.LookRotation(vec);
                     transform.localRotation = look;
                     rb.velocity = vec * MoveSpeed;
-                    Attack = true;
                 }
-                //if (pause)
-                //{
-                //    rb.velocity = vec * MoveSpeed;
-                //    pause = false;
-                //}
 
                 if (!isCalledOnce)     // 一回だけ呼ぶ
                 {
                     SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
                     isCalledOnce = true;
                 }
-                if (!InArea)
-                {
-                    rb.constraints = RigidbodyConstraints.FreezePosition |
-                        RigidbodyConstraints.FreezeRotationX |
-                        RigidbodyConstraints.FreezeRotationY;
-                    AttackTime += Time.deltaTime;
-                    transform.Rotate(new Vector3(30.0f, 0.0f, 0.0f), Space.Self);
-                    if (AttackTime > 0.5f)
-                    {
-                        rb.constraints = RigidbodyConstraints.FreezePositionZ |
-                                  RigidbodyConstraints.FreezeRotationX |
-                                  RigidbodyConstraints.FreezeRotationY;
-                        Attack = false;
-                        InArea = true;
-                        AttackTime = 0.0f;
-                    }
-                }
+
+                //if (!InArea)
+                //{
+                //    rb.constraints = RigidbodyConstraints.FreezePosition |
+                //        RigidbodyConstraints.FreezeRotationX |
+                //        RigidbodyConstraints.FreezeRotationY;
+                //    AttackTime += Time.deltaTime;
+                //    transform.Rotate(new Vector3(30.0f, 0.0f, 0.0f), Space.Self);
+                //    if (AttackTime > 0.5f)
+                //    {
+                //        rb.constraints = RigidbodyConstraints.FreezePositionZ |
+                //                  RigidbodyConstraints.FreezeRotationX |
+                //                  RigidbodyConstraints.FreezeRotationY;
+                //        Attack = false;
+                //        InArea = true;
+                //        AttackTime = 0.0f;
+                //    }
+                //}
             }
         }
         else

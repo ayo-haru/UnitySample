@@ -195,7 +195,7 @@ public class Player2 : MonoBehaviour
             }
 
 
-            //rb.Resume(gameObject);
+            rb.Resume(gameObject);
             GamePadManager.onceTiltStick = false;
 
             //---HPオブジェクトを検索
@@ -537,7 +537,7 @@ public class Player2 : MonoBehaviour
     //===================================================================
     private void DamegeRespawn() {
         Player.shouldRespawn = true;
-        Pause.isPause = true;
+        //Pause.isPause = true;
         GameData.isFadeOut = true;
     }
 

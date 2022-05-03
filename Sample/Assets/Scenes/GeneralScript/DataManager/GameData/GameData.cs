@@ -96,7 +96,7 @@ public static class GameData {
         {
             isAliveBoss1 = true;
         }
-        Pause.isPause = false;  // 万が一ポーズ中だった場合ポーズ解除
+        //Pause.isPause = false;  // 万が一ポーズ中だった場合ポーズ解除
         Debug.Log("万が一のポーズ解除");
 
     }
@@ -106,7 +106,7 @@ public static class GameData {
     /// </summary>
     public static void InitScene() {
         SceneManager.LoadScene(MapName[CurrentMapNumber]);
-        Pause.isPause = false;  // 万が一ポーズ中だった場合ポーズ解除
+        //Pause.isPause = false;  // 万が一ポーズ中だった場合ポーズ解除
         Debug.Log("万が一のポーズ解除");
     }
 
@@ -159,6 +159,6 @@ public static class GameData {
         //SceneManager.LoadScene(MapName[CurrentMapNumber]);
         //NextMapNumber = CurrentMapNumber;
 
-        Pause.isPause = false;  // 万が一ポーズ中だった場合ポーズ解除
+        //Pause.isPause = false;  // 万が一ポーズ中だった場合ポーズ解除
     }
 }

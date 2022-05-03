@@ -135,7 +135,7 @@ public class Save_UI : MonoBehaviour
                 NoCharacter.GetComponent<UIBlink>().isHide = false;
 
 
-                Pause.isPause = true;   // UI表示時はポーズ
+                //Pause.isPause = true;   // UI表示時はポーズ
                 Debug.Log("UI表示時ポーズ");
             }
             // ワープ可能になったら選択させる
@@ -175,7 +175,7 @@ public class Save_UI : MonoBehaviour
                 if (isDecision)
                 {
                     SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);   // 決定音
-                    Pause.isPause = false;  // ポーズやめる
+                    //Pause.isPause = false;  // ポーズやめる
                     Debug.Log("ワープするの解除");
                     Warp.canWarp = false;    // ワープ可能下す
                     Warp.shouldWarp = true;  // ワープするべきなのでフラグを立てる
@@ -194,7 +194,7 @@ public class Save_UI : MonoBehaviour
                 {
                     SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList); // 決定音
                     Warp.canWarp = false;    // ワープ可能下す
-                    Pause.isPause = false;  // ポーズをやめる
+                    //Pause.isPause = false;  // ポーズをやめる
                     Debug.Log("ワープしないの解除");
                     SusumuCharacter.GetComponent<UIBlink>().isHide = true; // UI表示を隠す
                     NoCharacter.GetComponent<UIBlink>().isHide = true;
@@ -240,7 +240,7 @@ public class Save_UI : MonoBehaviour
                 SusumuCharacter.GetComponent<UIBlink>().isHide = true;
 
 
-                Pause.isPause = true;   // UI表示時はポーズ
+                //Pause.isPause = true;   // UI表示時はポーズ
                 Debug.Log("セーブUI表示時のポーズ");
             }
 
@@ -283,7 +283,7 @@ public class Save_UI : MonoBehaviour
                 if (isDecision)
                 {
                     SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);   // 決定音
-                    Pause.isPause = false;  // ポーズやめる
+                    //Pause.isPause = false;  // ポーズやめる
                     Debug.Log("セーブするのポーズ");
                     SaveManager.canSave = false;    // セーブ可能下す
                     SaveManager.shouldSave = true;  // セーブするべきなのでフラグを立てる
@@ -301,7 +301,7 @@ public class Save_UI : MonoBehaviour
                 if (isDecision)
                 {
                     SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList); // 決定音
-                    Pause.isPause = false;  // ポーズをやめる
+                    //Pause.isPause = false;  // ポーズをやめる
                     Debug.Log("セーブしないのポーズ");
                     SaveManager.canSave = false;    // セーブ可能を下す
                     YesCharacter.GetComponent<UIBlink>().isHide = true; // UIを消す

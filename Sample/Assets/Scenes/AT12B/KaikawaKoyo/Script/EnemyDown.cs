@@ -43,6 +43,9 @@ public class EnemyDown : MonoBehaviour
 
     //---ヒットストップ演出(2022/05/02.吉原)
     Player2 player2;
+    public float Width = 0.1f;
+    public int   RoundCnt = 4;
+    public float Duration = 0.23f;
 
     // Start is called before the first frame update
     void Start()
@@ -120,7 +123,9 @@ public class EnemyDown : MonoBehaviour
                 seq.Append(transform.DOShakePosition(player2.HitStopTime,1f,100,fadeOut:false));
 
                 //EnemyDead(vec , Player.transform.position.x);
+                //---このタイミングでプレイヤーの死亡処理を呼び出す
                 seq.AppendCallback(() => EnemyDead(vec, Player.transform.position.x));
+                Shake(0.1f,5,0.23f);
 
 
             }
@@ -212,5 +217,29 @@ public class EnemyDown : MonoBehaviour
             rb.Pause(gameObject);
         }
        
+    }
+    /// <summary>
+    /// カメラ振動演出
+    /// </summary>
+    /// <param name="width"></param>    カメラの振れ幅
+    /// <param name="cnt"></param>      往復回数
+    /// <param name="duration"></param> 時間
+    public void Shake(float width,int cnt,float duration)
+    {
+        var camera = Camera.main.transform;
+        var seq = DOTween.Sequence();
+
+        var partDuration = duration / cnt / 2f;
+
+        var widthHalf = width / 2f;
+
+        for(int i = 0; i < cnt - 1; i++)
+        {
+            seq.Append(camera.DOLocalRotate(new Vector3(-width,0f),partDuration));
+            seq.Append(camera.DOLocalRotate(new Vector3( width,0f),partDuration));
+        }
+
+        seq.Append(camera.DOLocalRotate(new Vector3(-widthHalf,0f),partDuration));
+        seq.Append(camera.DOLocalRotate(Vector3.zero,partDuration));
     }
 }

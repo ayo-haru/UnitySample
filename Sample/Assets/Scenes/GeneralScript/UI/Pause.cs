@@ -2,9 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Pause
+public class Pause :MonoBehaviour
 {
     public static bool isPause = false;
+
+    ObservedValue<bool> shouldPause;
+
+    private void Start()
+    {
+        shouldPause = new ObservedValue<bool>(isPause);
+        shouldPause.OnValueChange += () => { if (isPause) { PauseStart(); } else { PauseFin(); } };
+    }
+
+    private void Update()
+    {
+        //if (shouldPause.Value)  // ポーズフラグによってポーズするかやめるか
+        //{
+        //    PauseStart();
+        //}
+        //else
+        //{
+        //    PauseFin();
+        //}
+    }
 
     /// <summary>
     /// ポーズスタート

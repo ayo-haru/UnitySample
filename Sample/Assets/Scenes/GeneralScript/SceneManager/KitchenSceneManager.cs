@@ -271,18 +271,23 @@ public class KitchenSceneManager : MonoBehaviour {
             SoundData.GameAudioList[i] = gameObject.AddComponent<AudioSource>();
         }
         SoundManager.Play(SoundData.eBGM.BGM_KITCHEN, SoundData.GameAudioList);
+
+        
     }
 
     // Update is called once per frame
     void Update() {
-        //if (!isCalledOnce)     // 一回だけ呼ぶ
-        //{
-        //    KitchenImage.GetComponent<ImageShow>().Show(2);
-        //    isCalledOnce = true;
-        //}
+        if (!isCalledOnce)     // 一回だけ呼ぶ
+        {
+            //---フェードイン処理
+            GameData.isFadeIn = true;
+            //KitchenImage.GetComponent<ImageShow>().Show(2);
+            isCalledOnce = true;
+        }
 
         if (GameData.CurrentMapNumber != GameData.NextMapNumber)    // 保存してあるシーン番号が現在と次が異なったらシーン移動
         {
+            //---フェードアウトの終了待ち
             if (!GameData.isFadeOut)
             {
                 GameData.OldMapNumber = GameData.CurrentMapNumber;

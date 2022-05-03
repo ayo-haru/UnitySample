@@ -148,6 +148,7 @@ public static class GameData {
     }
 
     public static void RespawnPlayer() {
+        
         LoadData();
         CurrentHP = 5;
         CurrentPiece = 0;

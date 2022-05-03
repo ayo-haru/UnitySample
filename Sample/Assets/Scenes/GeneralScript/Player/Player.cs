@@ -30,9 +30,13 @@ public class Player : MonoBehaviour
     [System.NonSerialized]
     public static bool shouldRespawn;
 
+
+    GameObject fadeimage;
     // Start is called before the first frame update
     void Start()
     {
+        fadeimage = GameObject.Find("Fade");
+
         isHitSavePoint = false; // フラグ初期化
         HitSavePointColorisRed = false;
         shouldRespawn = false;
@@ -47,15 +51,6 @@ public class Player : MonoBehaviour
         //{
         //    this.transform.position = GameData.Player.transform.position = GameData.PlayerPos = GameData.ReSpawnPos;
         //}
-
-        if (Pause.isPause)  // ポーズフラグによってポーズするかやめるか
-        {
-            Pause.PauseStart();
-        }
-        else
-        {
-            Pause.PauseFin();
-        }
 
         if (isHitSavePoint) // セーブポイントに当たっていて、そのフレームの最初にスティックが傾けられたら
         {
@@ -149,16 +144,17 @@ public class Player : MonoBehaviour
         //----- シーン遷移 -----
         if (other.gameObject.tag == "toKitchen1")    // この名前のタグと衝突したら
         {
-            Pause.isPause = true;   // フェード終わるまでポーズ
+            //Pause.isPause = true;   // フェード終わるまでポーズ
             GameData.isFadeOut = true;  // フェードかける
-            Debug.Log("フェードはじめのポーズ");
+            //Debug.Log("フェードはじめのポーズ");
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001;
         }
         if (other.gameObject.tag == "toKitchen2")    // この名前のタグと衝突したら
         {
             Pause.isPause = true;   // フェード終わるまでポーズ
-            GameData.isFadeOut = true;  // フェードかける
+            //GameData.isFadeOut = true;  // フェードかける
             //FadeController.FadeOut();
+            fadeimage.GetComponent<FadeController>().FadeOut();
             Debug.Log("フェードはじめのポーズ");
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage002;
         }

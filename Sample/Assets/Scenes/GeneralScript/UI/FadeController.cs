@@ -40,15 +40,15 @@ public class FadeController : MonoBehaviour
 
     void Update()
     {
-        if (GameData.isFadeIn)
-        { 
-            FadeIn();
-        }
+        //if (GameData.isFadeIn)
+        //{ 
+        //    FadeIn();
+        //}
 
-        if (GameData.isFadeOut && onceFadeOut)
-        {
-            FadeOut();
-        }
+        //if (GameData.isFadeOut && onceFadeOut)
+        //{
+        //    FadeOut();
+        //}
     }
 
     //void StartFadeIn() {
@@ -119,10 +119,12 @@ public class FadeController : MonoBehaviour
             float fadeAlpha = Mathf.Lerp(0f, 1f, fadeDeltaTime / fadeOutSpeed);
             fadeImage.color = new Color(0.0f, 0.0f, 0.0f, fadeAlpha);
             fadeDeltaTime += Time.deltaTime;
-            if (fadeImage.color.a >= 1)
+            //if (fadeImage.color.a >= 1)
+            if (fadeAlpha >= 1)
             {
-                Pause.isPause = false;
+                //Pause.isPause = false;
                 GameData.isFadeOut = false;
+                Debug.Log("フェードアウト完了のポーズ解除");
                 //GameData.isFadeIn = true;
             }
             yield return null; 

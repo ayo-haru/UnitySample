@@ -41,6 +41,15 @@ public class ShadowEnemy : MonoBehaviour
             case 2:
                 Enemy = (GameObject)Resources.Load("Tomato");
                 break;
+            case 3:
+                Enemy = (GameObject)Resources.Load("Carrot 2");
+                break;
+            case 4:
+                Enemy = (GameObject)Resources.Load("Broccoli 2");
+                break;
+            case 5:
+                Enemy = (GameObject)Resources.Load("Tomato 2");
+                break;
         }
     }
 

@@ -1,10 +1,10 @@
 //==========================================================
-//      ブロッコリー雑魚亜種の攻撃
-//      作成日　2022/04/15
+//      ブロッコリー雑魚の攻撃
+//      作成日　2022/03/18
 //      作成者　海川晃楊
 //      
 //      <開発履歴>
-//      2022/04/15      
+//      2022/03/18      
 //
 //==========================================================
 using System.Collections;
@@ -15,20 +15,23 @@ public class BroccoliEnemy2 : MonoBehaviour
 {
     Transform Target;
     GameObject Player;
-    private Quaternion rot;
+    private Vector3 TargetPos;
     private Rigidbody rb;
     private EnemyDown ED;
-    //private bool loop = false;
 
     [SerializeField]
-    float MoveSpeed = 5.0f;
+    private float MoveSpeed = 5.0f;
+    [SerializeField]
+    private float JumpPower;
     private float PosY;
-    private float Jump = 500.0f;
     private bool jump = false;
     private float delay;
-
-    bool InArea = false;
+    private float InvincibleTime = 2.0f;
+    private float DamageTime;
+    //bool InArea = false;
     private bool look = false;
+    private bool isGround = false;
+    private bool Invincible = false;
 
     private bool isCalledOnce = false;                             // 開始演出で使用。一回だけ処理をするために使う。
 
@@ -38,8 +41,7 @@ public class BroccoliEnemy2 : MonoBehaviour
         Target = Player.transform;                    // プレイヤーの座標取得
         rb = gameObject.GetComponent<Rigidbody>();
         ED = GetComponent<EnemyDown>();
-        rb.centerOfMass = new Vector3(0, -1, 0);
-        //transform.Rotate(new Vector3(0, 0, 15));
+        //rb.centerOfMass = new Vector3(0, -1, 0);
         transform.Rotate(0, -90, 0);
     }
 
@@ -47,30 +49,44 @@ public class BroccoliEnemy2 : MonoBehaviour
     {
         if (!Pause.isPause)
         {
-            rot = transform.rotation;
+            rb.Resume(gameObject);
+            if (Invincible)
+            {
+                gameObject.layer = LayerMask.NameToLayer("Invincible");
+                transform.Rotate(0, 0, 0);
+                DamageTime += Time.deltaTime;
+                if (DamageTime > InvincibleTime)
+                {
+                    gameObject.layer = LayerMask.NameToLayer("Enemy");
+                    DamageTime = 0.0f;
+                    Invincible = false;
+                }
+            }
+            print(jump);
 
-            PosY = transform.position.y + 6.0f;
             // プレイヤーを見つけたら攻撃開始
-            if (InArea && ED.isAlive)
+            if (ED.isAlive)
             {
                 Vector3 pos = rb.position;
-                // プレイヤーに向かって特攻する
-                float step = MoveSpeed * Time.deltaTime;
-                rb.position = Vector3.MoveTowards(pos, Target.position, step);
 
-                // プレイヤーのジャンプに合わせてジャンプする
-                //transform.position = new Vector3(0.0f, Target.position.y, 0.0f);
+                // プレイヤーに向かって特攻する
+                float a = Player.transform.position.y - transform.position.y;
+                TargetPos = Target.position - new Vector3(0.0f, a, 0.0f);
+
+                float step = MoveSpeed * Time.deltaTime;
+                rb.position = Vector3.MoveTowards(pos, TargetPos, step);
+
+                PosY = transform.position.y + 10.0f;
 
                 if (Target.position.y > PosY && !jump)
                 {
                     delay += Time.deltaTime;
                     if (delay > 0.3f)
                     {
-                        rb.AddForce(transform.up * Jump, ForceMode.Force);
+                        rb.velocity = new Vector3(0.0f, JumpPower, 0.0f);
                         jump = true;
                         delay = 0.0f;
                     }
-                        
                 }
 
                 if (Target.position.x < transform.position.x && look)   // プレイヤーのほうを向く処理
@@ -85,6 +101,12 @@ public class BroccoliEnemy2 : MonoBehaviour
                     look = true;
                 }
 
+                // 落下処理
+                if (!isGround)
+                {
+                    rb.velocity += new Vector3(0.0f, -1.0f, 0.0f);
+                }
+
                 // SEの処理
                 if (!isCalledOnce)     // 一回だけ呼ぶ
                 {
@@ -93,31 +115,34 @@ public class BroccoliEnemy2 : MonoBehaviour
                 }
             }
         }
-
+        else
+        {
+            rb.Pause(gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        // 接触判定
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Invincible = true;
+        }
+
         // 接地判定
         if (collision.gameObject.CompareTag("Ground"))
         {
+            isGround = true;
             jump = false;
         }
     }
 
-    public void OnTriggerEnter(Collider other)    // コライダーでプレイヤーを索敵したい
+    private void OnCollisionExit(Collision collision)
     {
-        if (other.CompareTag("Player"))
+        // 接地判定
+        if (collision.gameObject.CompareTag("Ground"))
         {
-            InArea = true;
-        }
-    }
-
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            InArea = false;
+            isGround = false;
         }
     }
 }

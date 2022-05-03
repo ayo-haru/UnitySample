@@ -76,7 +76,7 @@ public class EnemyDown : MonoBehaviour
                 //---ディゾルマテリアルに変更
                 if (!isCalledOnce)
                 {
-                    if (EnemyNumber == 1 || EnemyNumber == 0)
+                    if (EnemyNumber == 1 || EnemyNumber == 0 || EnemyNumber == 4 || EnemyNumber == 3)
                     {
                         _dissolve.Invoke("Play", 0.2f);
                         isCalledOnce = true;
@@ -89,7 +89,7 @@ public class EnemyDown : MonoBehaviour
             {
                 Pos = transform.position;
                 Destroy(gameObject, 0.0f);
-                if (EnemyNumber == 2)
+                if (EnemyNumber == 2 || EnemyNumber == 5)
                 {
                     EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);
                 }
@@ -161,11 +161,11 @@ public class EnemyDown : MonoBehaviour
             gameObject.layer = LayerMask.NameToLayer("DownEnemy");
 
             // 回転軸を変更
-            if (EnemyNumber == 1)
+            if (EnemyNumber == 1 || EnemyNumber == 4)
             {
                 rb.centerOfMass = new Vector3(0.0f, 5.0f, 2.0f);
             }
-            else if (EnemyNumber == 2)
+            else if (EnemyNumber == 2 || EnemyNumber == 5)
             {
                 rb.centerOfMass = new Vector3(0.0f, 0.3f, 0.0f);
             }

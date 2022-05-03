@@ -58,7 +58,7 @@ public class Player2 : MonoBehaviour
     [SerializeField] private Animator animator;         // アニメーターコンポーネント取得
 
     //---コンポーネント取得
-    private Rigidbody rb;
+    public Rigidbody rb;
     public GameObject Weapon;                           // "Weapon"プレハブを格納する変数
     private GameObject hp;                              // HPのオブジェクトを格納
     private GameObject canvas;                          // キャンバスを格納
@@ -125,9 +125,9 @@ public class Player2 : MonoBehaviour
 
         //---Actionイベント登録(ボタン入力)
         PlayerActionAsset.Player.Attack.started += OnAttack;
-        Debug.Log(PlayerActionAsset.Player.Attack);
+        //Debug.Log(PlayerActionAsset.Player.Attack);
         PlayerActionAsset.UI.Start.canceled += PauseToggle;
-        Debug.Log(PlayerActionAsset.UI.Start);
+        //Debug.Log(PlayerActionAsset.UI.Start);
 
         PlayerActionAsset.Player.Jump.started += OnJump;            // started    ... ボタンが押された瞬間
         //PlayerActionAsset.Player.Jump.performed += OnJump;        // performed  ... 中間くらい
@@ -144,9 +144,9 @@ public class Player2 : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerActionAsset.Player.Attack.started -= OnAttack;        // started ...ボタンが押された瞬間
-        PlayerActionAsset.Player.Jump.started -= OnJump;            // started ... ボタンが押された瞬間
-        PlayerActionAsset.UI.Start.started -= PauseToggle;          // started ...ボタンが押された瞬間
+        PlayerActionAsset.Player.Attack.started -= OnAttack;
+        PlayerActionAsset.Player.Jump.started -= OnJump;
+        PlayerActionAsset.UI.Start.started -= PauseToggle;
 
 
         //---InputActionの無効化
@@ -193,6 +193,7 @@ public class Player2 : MonoBehaviour
             if (!CanHitStopflg){
                 animator.speed = 1.0f;
             }
+
 
             //rb.Resume(gameObject);
             GamePadManager.onceTiltStick = false;
@@ -266,8 +267,8 @@ public class Player2 : MonoBehaviour
                 Gravity();
             }
 
-
             Move("Velocity");
+
 
             if (isAttack){
                 Attack();
@@ -277,13 +278,15 @@ public class Player2 : MonoBehaviour
         else{
         }
     }
-
     #region 移動処理
+
+
     //===================================================================
     //  移動処理
     //===================================================================
     private void Move(string ModeName)
     {
+        Vector2 pos = rb.position;
         switch (ModeName)
         { 
             //---Velocityを使用した移動処理
@@ -291,7 +294,6 @@ public class Player2 : MonoBehaviour
                 ForceDirection += move.ReadValue<Vector2>();
                 ForceDirection.Normalize();
                 MovingVelocity = ForceDirection * maxSpeed;
-                Debug.Log("MovingVelocityの値"+MovingVelocity);
 
                 if (Timer <= 0){
                     rb.velocity = new Vector3(MovingVelocity.x, rb.velocity.y - MovingVelocity.y, 0);
@@ -307,9 +309,25 @@ public class Player2 : MonoBehaviour
                 SpeedCheck();
                 ForceDirection += move.ReadValue<Vector2>();
                 ForceDirection.Normalize();
-                rb.AddForce((ForceDirection * maxSpeed), ForceMode.Impulse);
-
+                rb.AddForce(ForceDirection * maxSpeed,ForceMode.Impulse);
                 break;
+            
+            case "Position":
+                ForceDirection += move.ReadValue<Vector2>();
+                ForceDirection.Normalize();
+                if (ForceDirection.x > 0)
+                {
+
+                    pos.x += maxSpeed;
+                    rb.position = pos;
+                }
+                if(ForceDirection.x < 0)
+                {
+                    pos.x -= maxSpeed;
+                    rb.position = pos;
+                }
+
+            break;
 
             default:
             break;
@@ -351,7 +369,7 @@ public class Player2 : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotationSpeed);
 
         ForceDirection = Vector2.zero;
-        //jumppower = Vector2.zero;
+        jumppower = Vector2.zero;
     }
     #endregion
     
@@ -405,10 +423,10 @@ public class Player2 : MonoBehaviour
         //---y軸が－だったら(下パリィする際)ジャンプ中にする(03/21時点)
         //---y軸が－だったら(下パリィする際)下パリィフラグにする(03/25時点)
         if (AttackDirection.y < 0){
-            if (GroundNow == true)
-            {
-                rb.AddForce(transform.up * 10.0f, ForceMode.Impulse);
-            }
+            //if (GroundNow == true)
+            //{
+            //    rb.AddForce(transform.up * 10.0f, ForceMode.Impulse);
+            //}
             Timer = 1;
             rb.velocity = Vector3.zero;
             
@@ -424,7 +442,8 @@ public class Player2 : MonoBehaviour
             //方向を保存
             beforeDir.x = AttackDirection.x;
             //回転
-            transform.rotation = Quaternion.LookRotation(AttackDirection);
+            //transform.rotation = Quaternion.LookRotation(AttackDirection);
+            transform.Rotate(new Vector3(transform.rotation.x,-transform.rotation.y, transform.rotation.z));
             //スケールxを反転
             scale.x *= -1;
             transform.localScale = scale;
@@ -432,7 +451,9 @@ public class Player2 : MonoBehaviour
 
         if (AttackDirection.x < 0 && beforeDir.x > 0){
             beforeDir = AttackDirection;
-            transform.rotation = Quaternion.LookRotation(AttackDirection);
+            //transform.rotation = Quaternion.LookRotation(AttackDirection);
+            transform.Rotate(new Vector3(transform.rotation.x, -transform.rotation.y, transform.rotation.z));
+
         }
 
         //---倒した値を基に盾の出す場所を指定

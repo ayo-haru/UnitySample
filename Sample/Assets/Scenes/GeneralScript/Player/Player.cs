@@ -21,10 +21,10 @@ using System;
 public class Player : MonoBehaviour
 {
     //---変数宣言
-    //private Vector3 ReSpawnPos;     // リスポーン位置を保存
+    //private Vector3 ReSpawnPos;                   // リスポーン位置を保存
 
     [System.NonSerialized]
-    public static bool isHitSavePoint; // セーブポイントに当たったか
+    public static bool isHitSavePoint;              // セーブポイントに当たったか
     [System.NonSerialized]
     public static bool HitSavePointColorisRed;
     [System.NonSerialized]
@@ -37,9 +37,9 @@ public class Player : MonoBehaviour
     {
         fadeimage = GameObject.Find("Fade");
 
-        isHitSavePoint = false; // フラグ初期化
-        HitSavePointColorisRed = false;
-        shouldRespawn = false;
+        isHitSavePoint = false;                     // フラグ初期化
+        HitSavePointColorisRed = false;             // 赤色のセーブポイントと当たったか
+        shouldRespawn = false;                      // リスポーンする時
     }
 
     // Update is called once per frame
@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
             //Debug.Log("セーブポイントに当たってる");
             if (GamePadManager.onceTiltStick)
             {
+                Pause.isPause = true;
                 if (HitSavePointColorisRed)
                 {
                     Warp.canWarp = true;
@@ -101,22 +102,22 @@ public class Player : MonoBehaviour
             Warp.shouldWarp = false;
         }
 
-        // ゲームオーバー
+        //---ゲームオーバー
         if (GameData.CurrentHP < 1)
         {
             //GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
             //hp.GetComponent<GameOver>().GameOverShow();
             shouldRespawn = false;
 
-            // フェード
-            //Pause.isPause = true;   // フェード終わるまでポーズ
+            //---フェード
+            //Pause.isPause = true;                 // フェード終わるまでポーズ
             Debug.Log("フェードはじめのポーズ");
-            GameData.isFadeOut = true;  // フェードかける
-                                        // りすぽん
-            GameOver.GameOverReset();
+            GameData.isFadeOut = true;              // フェードかける
+            GameOver.GameOverReset();               // りすぽん
         }
 
 
+        //---死に戻り時
         if (shouldRespawn)
         {
             if (!GameData.isFadeOut)
@@ -129,35 +130,38 @@ public class Player : MonoBehaviour
 
 
     void OnTriggerEnter(Collider other) {
+
+        //---リスポーン地点の処理
         if(other.gameObject.tag == "Respawn")
         {
             GameData.ReSpawnPos = this.transform.position;
             Debug.Log(GameData.ReSpawnPos);
         }
 
+        //---セーブポイント地点の処理
         if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
         {
             
-            isHitSavePoint = true;  // 当たったフラグを立てる
+            isHitSavePoint = true;                  // 当たったフラグを立てる
         }
 
-        //----- シーン遷移 -----
-        if (other.gameObject.tag == "toKitchen1")    // この名前のタグと衝突したら
-        {
+        //----- 各シーン遷移 -----
+
+        if (other.gameObject.tag == "toKitchen1"){
             //Pause.isPause = true;   // フェード終わるまでポーズ
             GameData.isFadeOut = true;  // フェードかける
             //Debug.Log("フェードはじめのポーズ");
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001;
         }
-        if (other.gameObject.tag == "toKitchen2")    // この名前のタグと衝突したら
-        {
-            //Pause.isPause = true;   // フェード終わるまでポーズ
-            GameData.isFadeOut = true;  // フェードかける
+
+        if (other.gameObject.tag == "toKitchen2"){
+            //Pause.isPause = true;                  // フェード終わるまでポーズ
+            GameData.isFadeOut = true;              // フェードかける
             Debug.Log("キッチン２に行くフェード開始");
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage002;
         }
-        if (other.gameObject.tag == "toKitchen3")    // この名前のタグと衝突したら
-        {
+
+        if (other.gameObject.tag == "toKitchen3"){
             if (GameData.CurrentMapNumber == (int)GameData.eSceneState.BOSS1_SCENE)  // 今いるシーンがボスシーンだった時ボスが生きてたらシーン遷移しない
             {
                 if (GameData.isAliveBoss1)

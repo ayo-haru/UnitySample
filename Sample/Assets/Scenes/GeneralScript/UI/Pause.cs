@@ -11,7 +11,7 @@ public class Pause :MonoBehaviour
     private void Start()
     {
         shouldPause = new ObservedValue<bool>(isPause);
-        shouldPause.OnValueChange += () => { if (isPause) { PauseStart(); } else { PauseFin(); } };
+        shouldPause.OnValueChange += () => { if (isPauseÅ@|| GameData.isFadeIn || GameData.isFadeOut) { PauseStart(); } else { PauseFin(); } };
     }
 
     private void Update()

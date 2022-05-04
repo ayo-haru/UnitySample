@@ -159,7 +159,7 @@ public class Boss1Rain : MonoBehaviour
                     }
                     if (g_Weapon[i].RainMoveTime >= 1.0f)
                     {
-
+                        g_Weapon[i].UseObj.GetComponent<Collider>().enabled = false;
                         if (!g_Weapon[i].FadeFlg && !g_Weapon[i].RainRefrectFlg)
                         {
                             g_Weapon[i].FadeFlg = true;
@@ -168,6 +168,7 @@ public class Boss1Rain : MonoBehaviour
                         }
                         if (g_Weapon[MaxWeapon - 1].RainMoveTime >= 1.0f)
                         {
+                            
                             for (int j = 0; j < MaxWeapon; j++)
                             {
                                 if (g_Weapon[j].RainRefrectFlg && g_Weapon[j].RainMoveTime >= 1.0f)

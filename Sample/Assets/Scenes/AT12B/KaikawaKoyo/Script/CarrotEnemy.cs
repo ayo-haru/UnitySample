@@ -14,12 +14,15 @@ using UnityEngine;
 public class CarrotEnemy : MonoBehaviour
 {
     GameObject Player;
+    private GameObject Jet;
     private Rigidbody rb;
     private Vector3 vec;
     private Vector3 PlayerPos;
     private Vector3 EnemyPos;
+    private Vector3 EffectPos;
     private EnemyDown ED;
     private Quaternion look;
+    private ParticleSystem effect;
 
     [SerializeField]
     float MoveSpeed = 1.0f;
@@ -32,13 +35,17 @@ public class CarrotEnemy : MonoBehaviour
     //private bool Invincible = false;
 
     private bool isCalledOnce = false;                             // 一回だけ処理をするために使う。
-
+    
 
     private void Start()
     {
         Player = GameObject.FindWithTag("Player");    // プレイヤーのオブジェクトを探す
+        Jet = transform.Find("JetPos").gameObject;
         rb = gameObject.GetComponent<Rigidbody>();
         ED = GetComponent<EnemyDown>();
+        effect = Instantiate(EffectData.EF[0]);
+        effect.gameObject.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
+        effect.Play();
     }
 
     private void Update()
@@ -46,6 +53,10 @@ public class CarrotEnemy : MonoBehaviour
         if(!Pause.isPause)
         {
             rb.Resume(gameObject);
+            
+            // ジェットのエフェクト出すよ
+            effect.transform.position = Jet.transform.position;
+
             // プレイヤーを見つけたら攻撃開始
             if (ED.isAlive)
             {
@@ -127,6 +138,7 @@ public class CarrotEnemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            Destroy(effect.gameObject, 0.0f);
             Destroy(gameObject, 0.0f);
         }
         if (collision.gameObject.CompareTag("Ground"))

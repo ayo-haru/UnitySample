@@ -27,7 +27,7 @@ public class CarrotEnemy3 : MonoBehaviour
     //private float InvincibleTime;
     private float AttackTime;
     bool InArea = true;
-    bool Attack = false;
+    bool Attack;
     //bool pause = false;
     //private bool Invincible = false;
 
@@ -71,7 +71,7 @@ public class CarrotEnemy3 : MonoBehaviour
                 // èoåªÇµÇΩÇÁè„Ç÷Ç∆è„è∏
                 if (!Attack)
                 {
-
+                    
                 }
 
                 if (Attack)

@@ -269,7 +269,6 @@ public class Player2 : MonoBehaviour
 
             Move("Velocity");
 
-
             if (isAttack){
                 Attack();
             }
@@ -457,9 +456,13 @@ public class Player2 : MonoBehaviour
         }
 
         //---倒した値を基に盾の出す場所を指定
+
         GameObject weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
                                         PlayerPos.y + (AttackDirection.y * AttckPosHeight),
                                         PlayerPos.z), Quaternion.identity);
+        
+        //---スティックの倒した方向に向かせる
+        //EffectManager.Play(EffectData.eEFFECT.EF_SHIELD,(weapon.transform.position) ,1.0f);
 
 
         Debug.Log("盾出現"+weapon.transform.position);
@@ -470,6 +473,7 @@ public class Player2 : MonoBehaviour
 
         //---盾の回転を設定
         weapon.transform.Rotate(new Vector3(0, 0, (90 * AttackDirection.y)));
+        
         //Debug.Log("攻撃した！(Weapon)");
         //EffectManager.Play(EffectData.eEFFECT.EF_SHEILD2,weapon.transform.position);
         SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
@@ -560,15 +564,15 @@ public class Player2 : MonoBehaviour
 
         rb.AddForce(Distination * KnockBackPower,ForceMode.VelocityChange);
 
-        StartCoroutine("InvicibleTime");
+        StartCoroutine(InvicibleTime(0.5f));
     }
 
     //===================================================================
     //  無敵時間のコルーチン
     //===================================================================
-    IEnumerator InvicibleTime()
+    IEnumerator InvicibleTime(float delay)
     {
-        yield return new WaitForSeconds(WaitTime);
+        yield return new WaitForSeconds(delay);
         state = PLAYERSTATE.NORMAL;
     }
     #endregion

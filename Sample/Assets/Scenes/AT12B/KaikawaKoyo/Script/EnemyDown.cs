@@ -102,7 +102,7 @@ public class EnemyDown : MonoBehaviour
         else
         {
             rb.Pause(gameObject);
-            animator.speed = 0;
+
         }
  
     }

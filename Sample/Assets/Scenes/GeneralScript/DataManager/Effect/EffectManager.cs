@@ -34,7 +34,7 @@ public class EffectManager : MonoBehaviour
     /// <param name="_destroyTime">消える秒数指定</param>
     public static void Play(EffectData.eEFFECT _effectDataNumber, Vector3 _pos,float _destroyTime) {
         if (!EffectData.isSetEffect)
-        {
+        {  
             return; // エフェクトデータ未設定
         }
         //エフェクトを生成する

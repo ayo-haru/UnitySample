@@ -31,9 +31,13 @@ public class OptionBGM : MonoBehaviour
 
         //サウンドマネージャーからbgmの音量を取得
         BgmSlider.value = SoundManager.bgmVolume;
+    }
 
+    private void Start()
+    {
+        //Awakeで実行するとゲームデータが更新される前に参照してしまうので、Startで参照する
         currentScene = GameData.CurrentMapNumber;
-        
+        Debug.Log("現在のシーン" + currentScene);
     }
 
     // Update is called once per frame

@@ -27,7 +27,14 @@ public class TextureAnimation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject canvas = GameObject.Find("Canvas");
+        //ボスシーンはCanvas2に表示
+        GameObject canvas = GameObject.Find("Canvas2");
+        if (!canvas)
+        {
+            //Canvas2が無かったら（ボスシーン以外は）Canvasに表示
+            canvas = GameObject.Find("Canvas");
+        }
+
         transform.parent.gameObject.transform.SetParent(canvas.transform, true);
 
         uvScroll = gameObject.GetComponent<UVScroll>();

@@ -129,6 +129,16 @@ public class Player : MonoBehaviour
     }
 
 
+    private void OnTriggerStay(Collider other) {
+        //---セーブポイント地点の処理
+        if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
+        {
+
+            isHitSavePoint = true;                  // 当たったフラグを立てる
+        }
+
+    }
+
     void OnTriggerEnter(Collider other) {
 
         //---リスポーン地点の処理
@@ -138,12 +148,6 @@ public class Player : MonoBehaviour
             Debug.Log(GameData.ReSpawnPos);
         }
 
-        //---セーブポイント地点の処理
-        if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
-        {
-            
-            isHitSavePoint = true;                  // 当たったフラグを立てる
-        }
 
         //----- 各シーン遷移 -----
 

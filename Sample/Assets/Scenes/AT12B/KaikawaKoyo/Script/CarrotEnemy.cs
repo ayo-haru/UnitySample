@@ -43,9 +43,9 @@ public class CarrotEnemy : MonoBehaviour
         Jet = transform.Find("JetPos").gameObject;
         rb = gameObject.GetComponent<Rigidbody>();
         ED = GetComponent<EnemyDown>();
-        effect = Instantiate(EffectData.EF[0]);
-        effect.gameObject.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
-        effect.Play();
+        //effect = Instantiate(EffectData.EF[0]);
+        //effect.gameObject.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
+        //effect.Play();
     }
 
     private void Update()
@@ -55,7 +55,7 @@ public class CarrotEnemy : MonoBehaviour
             rb.Resume(gameObject);
             
             // ジェットのエフェクト出すよ
-            effect.transform.position = Jet.transform.position;
+            //effect.transform.position = Jet.transform.position;
 
             // プレイヤーを見つけたら攻撃開始
             if (ED.isAlive)
@@ -138,7 +138,7 @@ public class CarrotEnemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Destroy(effect.gameObject, 0.0f);
+            //Destroy(effect.gameObject, 0.0f);
             Destroy(gameObject, 0.0f);
         }
         if (collision.gameObject.CompareTag("Ground"))

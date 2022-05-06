@@ -155,7 +155,8 @@ public class DataManager : MonoBehaviour
         EffectData.EFDataSet(ef_bossdeath,(int)EffectData.eEFFECT.EF_BOSSKILL);
         EffectData.EFDataSet(ef_healitem,(int)EffectData.eEFFECT.EF_HEALITEM);
         EffectData.EFDataSet(ef_heal,(int)EffectData.eEFFECT.EF_HEAL);
-        EffectData.EFDataSet(ef_shield,(int)EffectData.eEFFECT.EF_SHEILD2);
+        EffectData.EFDataSet(ef_shield,(int)EffectData.eEFFECT.EF_SHIELD);
+        EffectData.EFDataSet(ef_shield2,(int)EffectData.eEFFECT.EF_SHEILD2);
         EffectData.EFDataSet(ef_magicspuare_red,(int)EffectData.eEFFECT.EF_MAGICSQUARE_RED);
         EffectData.EFDataSet(ef_magicspuare_blue,(int)EffectData.eEFFECT.EF_MAGICSQUARE_BLUE);
 

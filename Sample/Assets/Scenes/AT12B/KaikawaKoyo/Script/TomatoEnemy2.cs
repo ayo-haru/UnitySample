@@ -140,10 +140,8 @@ public class TomatoEnemy2 : MonoBehaviour
                 }
             }
 
-            if(TomatoDead)
+            if(AttackEnd)
             {
-                float step = 100.0f * Time.deltaTime;
-                rb.position = Vector3.MoveTowards(pos, TargetPos, step);
                 // âÒì]Ç≥ÇπÇÈ
                 if (look)
                 {
@@ -153,6 +151,13 @@ public class TomatoEnemy2 : MonoBehaviour
                 {
                     transform.Rotate(new Vector3(20.0f, 0.0f, 0.0f), Space.Self);
                 }
+            }
+
+            if(TomatoDead)
+            {
+                float step = 100.0f * Time.deltaTime;
+                rb.position = Vector3.MoveTowards(pos, TargetPos, step);
+         
                 // è„è∏ë¨ìx&óéâ∫ë¨ìxí≤êÆ
                 if (!isGround)
                 {
@@ -181,7 +186,6 @@ public class TomatoEnemy2 : MonoBehaviour
             if (AttackEnd)
             {
                 Plunge = true;
-                Attack = false;
             }
             if(Explosion)
             {

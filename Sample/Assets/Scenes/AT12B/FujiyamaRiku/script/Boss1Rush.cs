@@ -222,6 +222,7 @@ public class Boss1Rush : MonoBehaviour
                 ForkPos = GameObject.Find("ForkPos").transform.position;
                 Fork = Instantiate(Forkobj, ForkPos, Quaternion.Euler(GameObject.Find("ForkPos").transform.rotation.eulerAngles));
                 Fork.transform.parent = GameObject.Find("ForkPos").transform;
+                
                 RushRefEndPoint = GameObject.Find("LeftForkRefEndPoint").transform.position;
                 Rotate.x = -1;
                 BossAttack.BossAnim.SetTrigger("TakeToRushTr");

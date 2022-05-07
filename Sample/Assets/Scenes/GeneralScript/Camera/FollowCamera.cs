@@ -19,20 +19,17 @@ public class FollowCamera : MonoBehaviour
 {
     //---変数宣言
     GameObject Player;
-    public Vector3 FollowCameraPos = new Vector3(0.0f,1.5f,-6.0f);     // 追従するカメラの高さ(x,y,z)
+    public Vector3 FollowCameraPos = Vector3.zero;     // 追従するカメラの高さ(x,y,z)
     public int RightScreenOut;          // 右の画面外設定
     public int LeftScreenOut;           // 左の画面外設定
     public int HeightScreenOut;         // 上の画面外設定
     public int UnderScreenOut;          // 下の画面外設定
-    public float MovePoint;             // マップ遷移するための地点
-    bool MoveFlg;                       // マップ遷移のフラグ
 
     // Start is called before the first frame update
     void Start()
     {
         //---追従するオブジェクト名を設定
         this.Player = GameObject.Find(GameData.Player.name);
-        this.MoveFlg = false;    
     }
 
     // Update is called once per frame
@@ -51,7 +48,7 @@ public class FollowCamera : MonoBehaviour
                                          FollowCameraPos.z);                       // ジャンプ追従
 
 		////---画面外設定(x = 45.0fの地点に到達したらカメラの移動を停止)
-		if (this.MoveFlg == false && PlayerPos.x > RightScreenOut)
+		if (PlayerPos.x > RightScreenOut)
 		{
 			//transform.position = new Vector3(45.0f, 0.7f, PlayerPos.z - 4.5f);
 			transform.position = new Vector3(RightScreenOut,PlayerPos.y + FollowCameraPos.y,FollowCameraPos.z);         // ジャンプ追従
@@ -77,12 +74,18 @@ public class FollowCamera : MonoBehaviour
                                              HeightScreenOut,
                                              FollowCameraPos.z);
         }
+
+       
+
+
         //---下の画面外設定(y)
-        if(PlayerPos.y < UnderScreenOut)
+        if (PlayerPos.y < UnderScreenOut)
         {
             transform.position = new Vector3(PlayerPos.x,
                                              UnderScreenOut,
                                              FollowCameraPos.z);
         }
+
+
 	}
 }

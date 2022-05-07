@@ -332,7 +332,7 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9f251b47-5c58-4f7d-9a35-097db615c3a0"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

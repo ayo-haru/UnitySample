@@ -275,9 +275,16 @@ public class KitchenSceneManager : MonoBehaviour {
         {
             SoundData.GameAudioList[i] = gameObject.AddComponent<AudioSource>();
         }
-        SoundManager.Play(SoundData.eBGM.BGM_KITCHEN, SoundData.GameAudioList);
+        //SoundManager.Play(SoundData.eBGM.BGM_KITCHEN, SoundData.GameAudioList);
+        //ｂｇｍ再生のオブジェクトが生成されてなかったら作る
+        GameObject bgmObject = GameObject.Find("BGMObject(Clone)");
+        if (!bgmObject)
+        {
+            bgmObject = (GameObject)Resources.Load("BGMObject");
+            Instantiate(bgmObject);
+        }
 
-        
+
     }
 
     // Update is called once per frame

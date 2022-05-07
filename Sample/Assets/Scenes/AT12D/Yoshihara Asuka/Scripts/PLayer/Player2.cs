@@ -90,7 +90,8 @@ public class Player2 : MonoBehaviour
 
     //---攻撃変数
     private Vector2 AttackDirection = Vector2.zero;
-    public float AttckPosHeight = 6.0f;                 // シールド位置上下
+    public float AttckPosHeightUp = 10.0f;               // シールド位置上
+    public float AttckPosHeightDown = 6.0f;             // シールド位置下
     public float AttckPosWidth = 4.0f;                  // シールド位置左右
     public float DestroyTime = 0.5f;                    // シールドが消える時間
     private bool isAttack;                              // 攻撃フラグ
@@ -485,10 +486,11 @@ public class Player2 : MonoBehaviour
         //StartCoroutine(VibrationPlay(LowFrequency,HighFrequency));
 
         PlayerPos = transform.position;                              // 攻撃する瞬間のプレイヤーの座標を再取得
+        
 
         //---アニメーション再生
         //---左右パリィ
-        if (Mathf.Abs(AttackDirection.x) >= 1)
+        if (Mathf.Abs(AttackDirection.x) >= 0)
         {
             //タイマー設定
             Timer = stopTime;
@@ -503,6 +505,7 @@ public class Player2 : MonoBehaviour
             {
                 rb.AddForce(transform.up * 10.0f, ForceMode.Impulse);
             }
+
             Timer = stopTime;
             animator.SetTrigger("Attack_UP");
         }
@@ -516,6 +519,7 @@ public class Player2 : MonoBehaviour
             {
                 rb.AddForce(transform.up * 10.0f, ForceMode.Impulse);
             }
+
             Timer = 1;
             rb.velocity = Vector3.zero;
 
@@ -549,13 +553,23 @@ public class Player2 : MonoBehaviour
 
 
         //---倒した値を基に盾の出す場所を指定
-        //GameObject weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-        //                               PlayerPos.y + (AttackDirection.y * AttckPosHeight),
-        //                                PlayerPos.z), Quaternion.identity);
+        if (AttackDirection.y > 0)          // 上パリィの時だけ上の出す位置を高めに設定
+        {
+             _weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+                                                                PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
+                                                                PlayerPos.z), Quaternion.identity);
+        }
+        else
+        {
+             _weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+                                                    PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
+                                                    PlayerPos.z), Quaternion.identity);
 
-        _weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                  PlayerPos.y + (AttackDirection.y * AttckPosHeight),
-                                                  PlayerPos.z), Quaternion.identity);
+        }
+
+        //GameObject _weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+        //                                PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
+        //                                PlayerPos.z), Quaternion.identity);
 
         //Debug.Log("盾出現"+weapon.transform.position);
 

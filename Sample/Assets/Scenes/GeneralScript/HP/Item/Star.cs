@@ -8,6 +8,8 @@ public class Star : MonoBehaviour
     GameObject hp;                                      // HPのオブジェクトを格納
     HPManager hpmanager;
 
+    //識別用ID
+    private int id;
 
     // Start is called before the first frame update
     void Start()
@@ -34,11 +36,18 @@ public class Star : MonoBehaviour
                 hpmanager.GetItem();
             }
             Destroy(gameObject);
+            //取得済みのフラグ立てる
+            GameData.isStarGet[GameData.CurrentMapNumber - 1,id] = true;
             SoundManager.Play(SoundData.eSE.SE_REFLECTION_STAR, SoundData.GameAudioList);
             Vector3 effekctPos = this.transform.position;
             //effekctPos.y -= 2.5f;
             EffectManager.Play(EffectData.eEFFECT.EF_HEALITEM, effekctPos);
             //Debug.Log("げっとあいてむ");
         }
+    }
+
+    public void SetID(int ID)
+    {
+        id = ID;
     }
 }

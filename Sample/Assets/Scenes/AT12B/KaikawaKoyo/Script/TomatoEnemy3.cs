@@ -46,7 +46,6 @@ public class TomatoEnemy3 : MonoBehaviour
         ED = GetComponent<EnemyDown>();
         transform.Rotate(0, -90, 0);
         look = false;
-        rb.velocity += new Vector3(0.0f, -0.5f, 0.0f);
     }
 
     private void Update()
@@ -60,7 +59,6 @@ public class TomatoEnemy3 : MonoBehaviour
             PlayerPosX = Player.transform.position - new Vector3(0.0f, Player.transform.position.y, Player.transform.position.z);
             TomatoPosX = transform.position - new Vector3(0.0f, transform.position.y, transform.position.z);
             dis = Vector3.Distance(PlayerPosX, TomatoPosX);
-            print(dis);
 
             // プレイヤーを見つけたら攻撃開始
             if (ED.isAlive && !TomatoDead)

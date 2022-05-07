@@ -19,7 +19,7 @@ using UnityEngine;
 public class WeaponCollision : MonoBehaviour
 {
     //プレイヤー
-    GameObject Player;
+    GameObject _Player;
     //プレイヤーのリジットボディ
     Rigidbody player_rb;
     //地面パリイした時のはね返り速度
@@ -36,10 +36,10 @@ public class WeaponCollision : MonoBehaviour
     void Awake()
     {
         //Player = GameData.Player;
-        Player = GameObject.Find(GameData.Player.name);
-        player_rb = Player.GetComponent<Rigidbody>();
-        shield_Manager = Player.GetComponent<ShieldManager>();
-        player2 = Player.GetComponent<Player2>();
+        this._Player = GameObject.Find(GameData.Player.name);
+        player_rb = this._Player.GetComponent<Rigidbody>();
+        shield_Manager = this._Player.GetComponent<ShieldManager>();
+        player2 = this._Player.GetComponent<Player2>();
 
 
         //盾が最大数を超えていたら
@@ -66,11 +66,17 @@ public class WeaponCollision : MonoBehaviour
         {
             if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "GroundDameged")
             {
+                if (Player.isHitSavePoint)
+                {
+                    Debug.Log("セーブポイントと当たった");
+                    return;
+                }
+
                 BounceCheck();
                 //方向
                 //Vector3 dir = Player.transform.position - collision.transform.position;
 
-                Vector2 dir = (Player.transform.position - this.gameObject.transform.position).normalized;
+                Vector2 dir = (this._Player.transform.position - this.gameObject.transform.position).normalized;
                 //Vector2 dir = this.gameObject.transform.position - Player.transform.position;
                 //Debug.Log("距離測定" + dir);
 

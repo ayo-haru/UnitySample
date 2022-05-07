@@ -33,6 +33,17 @@ public class Player2 : MonoBehaviour
         MAX_STATE
     }
 
+    //---プレイヤーアニメーションの列挙型
+    enum AttackAnim 
+    { 
+        SIDE = 0,           // 0:左右
+        UP,                 // 1:上攻撃
+        DOWN,               // 2:下攻撃
+
+        MAX_STATE
+    }
+
+
     //---ダメージ処理
     private PLAYERSTATE state = PLAYERSTATE.NORMAL;     // STATE型の変数
     public float WaitTime = 1.0f;                       // 無敵時間
@@ -53,6 +64,7 @@ public class Player2 : MonoBehaviour
 
     //---アニメーション関連
     [SerializeField] private Animator animator;         // アニメーターコンポーネント取得
+    private AttackAnim attackanim;                      // アニメーションの列挙型
 
     //---コンポーネント取得
     public Rigidbody rb;

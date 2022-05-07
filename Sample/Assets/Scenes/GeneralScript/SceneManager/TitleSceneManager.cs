@@ -274,7 +274,7 @@ public class TitleSceneManager : MonoBehaviour {
 
     private void OnLeftStick(InputAction.CallbackContext obj)
     {
-        if (!isPressButton)
+        if (!isPressButton || Optionmanager.activeSelf)
         {
             return;
         }
@@ -296,7 +296,7 @@ public class TitleSceneManager : MonoBehaviour {
 
     private void OnRightStick(InputAction.CallbackContext obj)
     {
-        if (!isPressButton)
+        if (!isPressButton || Optionmanager.activeSelf)
         {
             return;
         }
@@ -322,7 +322,7 @@ public class TitleSceneManager : MonoBehaviour {
     /// </summary>
     private void OnDecision(InputAction.CallbackContext obj)
     {
-        if (!isPressButton)
+        if (!isPressButton || Optionmanager.activeSelf)
         {
             return;
         }

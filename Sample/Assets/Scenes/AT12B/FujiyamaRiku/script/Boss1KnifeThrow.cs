@@ -21,6 +21,8 @@ public class Boss1KnifeThrow : MonoBehaviour
     Quaternion KnifeRotDir;                                 //ナイフの角度変更用
     [SerializeField] Vector3 KnifeForward;                  //ナイフの前変更用
     Vector3 KnifePos;
+    [SerializeField] float DelayTime;                  //ナイフの前変更用
+    float DelayNowTime;
 
     [SerializeField] public float KnifeThrowTime;
     float KnifeThrowNowTime;
@@ -60,8 +62,9 @@ public class Boss1KnifeThrow : MonoBehaviour
         }
         //ナイフ遠距離
 
-        if (!AimFlg)
+        if (AimStart)
         {
+            Debug.Log("とおってましゅ" + BossAttack.BossAnim.speed);
             if (!AimOnly)
             {
                 KnifeAim = Instantiate(KnifeAimObj, GameData.PlayerPos, Quaternion.Euler(90f, 0f, 0f));
@@ -73,19 +76,23 @@ public class Boss1KnifeThrow : MonoBehaviour
 
             if (KnifeThrowTime >= KnifeThrowNowTime)
             {
+                BossAttack.BossAnim.speed = 0;
                 KnifeAim.transform.position = KnifeAimPos;
                 KnifeThrowNowTime += Time.deltaTime;
             }
             else
             {
+                //BossAttack.BossAnim.speed = 1.0f;
                 AimFlg = true;
                 AimOnly = false;
+                AimStart = false;
                 KnifeThrowNowTime = 0;
             }
         }
 
-        if (AimStart)
+        if (AimFlg)
         {
+            
             if (!BossAttack.OnlyFlg)
             {
                 BossAttack.OnlyFlg = true;
@@ -193,8 +200,15 @@ public class Boss1KnifeThrow : MonoBehaviour
         KnifeStartPoint = GameObject.Find("KnifePos").transform.position;
         KnifeEndPoint = GameData.PlayerPos;
         KnifePos = GameObject.Find("KnifePos").transform.position;
-        Knife = Instantiate(Knifeobj, KnifePos, Quaternion.identity);
-        Knife.transform.parent = GameObject.Find("KnifePos").transform;
+        if (!BossAttack.RFChange)
+        {
+            Knife = Instantiate(Knifeobj, KnifePos, Quaternion.Euler(0, 0, 90));
+        }
+        if (BossAttack.RFChange)
+        {
+            Knife = Instantiate(Knifeobj, KnifePos, Quaternion.Euler(180, 0, -90));
+        }
+            Knife.transform.parent = GameObject.Find("KnifePos").transform;
         SoundManager.Play(SoundData.eSE.SE_BOOS1_KNIFE, SoundData.GameAudioList);
     }
 }

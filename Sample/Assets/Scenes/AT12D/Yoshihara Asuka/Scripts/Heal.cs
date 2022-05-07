@@ -7,6 +7,7 @@
 //
 // <開発履歴>
 // 2022/04/16   作成
+// 2022/05/07   無限回復直した
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ public class Heal : MonoBehaviour
     private Vector3 vec;                                // 弾くベクトル
     [System.NonSerialized]bool isGroundFlg = false;     // 地面との接地フラグ
     private float aTime;
+    private bool isBaunceFlg;                           //弾かれたかの判定
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +42,8 @@ public class Heal : MonoBehaviour
 
         HP = GameObject.Find("HPSystem(2)(Clone)");
         hpmanager = HP.GetComponent<HPManager>();
+
+        isBaunceFlg = false;    //まだ弾かれてない
     }
 
     // Update is called once per frame
@@ -77,6 +81,7 @@ public class Heal : MonoBehaviour
 
         if (collision.gameObject.name == "Weapon(Clone)")
         {
+
             //// 衝突した面の接地点のベクトルを取得
             //Vector3 normal = collision.contacts[0].normal; 
             
@@ -98,9 +103,17 @@ public class Heal : MonoBehaviour
             //プレイヤーと逆方向に跳ね返す
             rb.AddForce(-vec * BouncePower, ForceMode.Force);
 
+
+            //既に弾かれてたら処理しない
+            if (isBaunceFlg)
+            {
+                return;
+            }
             Destroy(prefab, 1.5f);
             hpmanager.GetPiece();
 
+            //弾かれた
+            isBaunceFlg = true;
         }
 
 

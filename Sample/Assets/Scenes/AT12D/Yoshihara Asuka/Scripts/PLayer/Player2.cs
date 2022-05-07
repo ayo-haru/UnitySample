@@ -18,6 +18,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
+using Cysharp.Threading.Tasks;
 
 public class Player2 : MonoBehaviour
 {
@@ -53,6 +54,7 @@ public class Player2 : MonoBehaviour
 
     //---アニメーション関連
     [SerializeField] private Animator animator;         // アニメーターコンポーネント取得
+    private AnimatorStateInfo stateInfo;
 
     //---コンポーネント取得
     public Rigidbody rb;
@@ -180,6 +182,11 @@ public class Player2 : MonoBehaviour
         //{
         //    Gravity();
         //}
+
+        if (animator)
+        {
+            stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        }
 
         if (!Pause.isPause)
         {
@@ -381,6 +388,7 @@ public class Player2 : MonoBehaviour
        jumppower = jumpDir;
     }
 
+
     #region 攻撃処理
     //===================================================================
     //
@@ -396,83 +404,128 @@ public class Player2 : MonoBehaviour
     } 
     private void Attack() {
 
-  //      //---振動させる
-  //      //StartCoroutine(VibrationPlay(LowFrequency,HighFrequency));
+        //---振動させる
+        //StartCoroutine(VibrationPlay(LowFrequency,HighFrequency));
 
-  //      //---スティック入力
-  //      PlayerPos = transform.position;                              // 攻撃する瞬間のプレイヤーの座標を取得
-  //      AttackDirection += Attacking.ReadValue<Vector2>();           // スティックの倒した値を取得
-  //      AttackDirection.Normalize();                                 // 取得した値を正規化(ベクトルを１にする)
+        //---スティック入力
+        PlayerPos = transform.position;                              // 攻撃する瞬間のプレイヤーの座標を取得
+        AttackDirection += Attacking.ReadValue<Vector2>();           // スティックの倒した値を取得
+        AttackDirection.Normalize();                                 // 取得した値を正規化(ベクトルを１にする)
 
-  //      //---アニメーション再生
-  //      //---左右パリィ
-  //      if (Mathf.Abs(AttackDirection.x) >= 1){
-  //          //タイマー設定
-  //          Timer = stopTime;
-  //          animator.SetTrigger("Attack");
-  //          //Debug.Log("左右攻撃");
-  //      }
+        Debug.Log(AttackDirection);
 
-  //      //---上パリィ
-  //      if (AttackDirection.y > 0){
-  //          if (GroundNow == true){
-  //              rb.AddForce(transform.up * 10.0f, ForceMode.Impulse);
-  //          }
-  //          Timer = stopTime;
-  //          animator.SetTrigger("Attack_UP");
-  //      }
+        //---アニメーション再生
+        //---左右パリィ
+        if (Mathf.Abs(AttackDirection.x) >= 0.1)
+        {
+            //タイマー設定
+            Timer = stopTime;
+            animator.SetTrigger("Attack");
+            //Debug.Log("左右攻撃");
+        }
 
-  //      //---下パリィ
-  //      //---y軸が－だったら(下パリィする際)ジャンプ中にする(03/21時点)
-  //      //---y軸が－だったら(下パリィする際)下パリィフラグにする(03/25時点)
-  //      if (AttackDirection.y < 0){
-  //          //if (GroundNow == true)
-  //          //{
-  //          //    rb.AddForce(transform.up * 10.0f, ForceMode.Impulse);
-  //          //}
-  //          Timer = 1;
-  //          rb.velocity = Vector3.zero;
-            
-  //          UnderParryNow = true;
-  //          GamePadManager.onceTiltStick = true;
-  //          //GroundNow = false;
-  //          animator.SetTrigger("Attack_DOWN");
-  //          Debug.Log("したはじきした");
-		//}
+        //---上パリィ
+        else if (AttackDirection.y >= 1)
+        {
+            if (GroundNow == true)
+            {
+                rb.AddForce(transform.up * 10.0f, ForceMode.Impulse);
+            }
+            Timer = stopTime;
+            animator.SetTrigger("Attack_UP");
+        }
 
-		////モデルの向きと反対方向に盾出したらモデル回転
-		//if ((AttackDirection.x > 0 && beforeDir.x < 0) || (AttackDirection.x < 0 && beforeDir.x > 0)){
-  //          //方向を保存
-  //          beforeDir.x = AttackDirection.x;
-  //          //回転
-  //          //transform.rotation = Quaternion.LookRotation(AttackDirection);
-  //          transform.Rotate(new Vector3(transform.rotation.x,-transform.rotation.y, transform.rotation.z));
-  //          //スケールxを反転
-  //          scale.x *= -1;
-  //          transform.localScale = scale;
-  //      }
+        //---下パリィ
+        //---y軸が－だったら(下パリィする際)ジャンプ中にする(03/21時点)
+        //---y軸が－だったら(下パリィする際)下パリィフラグにする(03/25時点)
+        else if (AttackDirection.y < 0)
+        {
+            //if (GroundNow == true)
+            //{
+            //    rb.AddForce(transform.up * 10.0f, ForceMode.Impulse);
+            //}
+            Timer = 1;
+            rb.velocity = Vector3.zero;
 
-  //      if (AttackDirection.x < 0 && beforeDir.x > 0){
-  //          beforeDir = AttackDirection;
-  //          //transform.rotation = Quaternion.LookRotation(AttackDirection);
-  //          transform.Rotate(new Vector3(transform.rotation.x, -transform.rotation.y, transform.rotation.z));
+            UnderParryNow = true;
+            GamePadManager.onceTiltStick = true;
+            //GroundNow = false;
+            animator.SetTrigger("Attack_DOWN");
+            Debug.Log("したはじきした");
+        }
 
-  //      }
+        //モデルの向きと反対方向に盾出したらモデル回転
+        if ((AttackDirection.x > 0 && beforeDir.x < 0) || (AttackDirection.x < 0 && beforeDir.x > 0))
+        {
+            //方向を保存
+            beforeDir.x = AttackDirection.x;
+            //回転
+            //transform.rotation = Quaternion.LookRotation(AttackDirection);
+            transform.Rotate(new Vector3(transform.rotation.x, -transform.rotation.y, transform.rotation.z));
+            //スケールxを反転
+            scale.x *= -1;
+            transform.localScale = scale;
+        }
+
+        if (AttackDirection.x < 0 && beforeDir.x > 0)
+        {
+            beforeDir = AttackDirection;
+            //transform.rotation = Quaternion.LookRotation(AttackDirection);
+            transform.Rotate(new Vector3(transform.rotation.x, -transform.rotation.y, transform.rotation.z));
+
+        }
 
 
-  //      //---倒した値を基に盾の出す場所を指定
-  //      //GameObject weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-  //      //                               PlayerPos.y + (AttackDirection.y * AttckPosHeight),
-  //      //                                PlayerPos.z), Quaternion.identity);
+
+        //---倒した値を基に盾の出す場所を指定
+        if (AttackDirection.y > 0)          // 上パリィの時だけ上の出す位置を高めに設定
+        {
+
+             _weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+                                                                PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
+                                                                PlayerPos.z), Quaternion.identity);
+        }
+        else
+        {
+             _weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+                                                    PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
+                                                    PlayerPos.z), Quaternion.identity);
+
+        }
         
-        StartCoroutine(CreateShiledCoroutine(0.17f));
+
+        //GameObject _weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+        //                                PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
+        //                                PlayerPos.z), Quaternion.identity);
+
+        //Debug.Log("盾出現"+weapon.transform.position);
+
+        //---コントローラーの倒したXの値が－だったらy軸に-1する(盾の角度の調整)
+        if (AttackDirection.x < 0)
+        {
+            AttackDirection.y *= -1;
+        }
+
+        _weapon.transform.Rotate(new Vector3(0, 0, (90 * AttackDirection.y)));
+
+        //Debug.Log("攻撃した！(Weapon)");
+        //EffectManager.Play(EffectData.eEFFECT.EF_SHEILD2,weapon.transform.position);
+        SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
+
+        Destroy(_weapon, DestroyTime);
+
+        AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする
+
+        //StartCoroutine(CreateShiledCoroutine(0.17f));
         isAttack = false;
+
         //---スティックの倒した方向に向かせる
         //EffectManager.Play(EffectData.eEFFECT.EF_SHIELD,(weapon.transform.position) ,1.0f);
 
     }
     #endregion
 
+    #region 盾出現コルーチン
     private IEnumerator CreateShiledCoroutine(float delaytime)
     {
         //---スティック入力
@@ -591,7 +644,12 @@ public class Player2 : MonoBehaviour
 
         yield break;
     }
+    #endregion
 
+    private GameObject CreateShiled(GameObject gameObject,Vector3 pos,Quaternion quaternion)
+    {
+        return Instantiate(gameObject,pos,quaternion);
+    }
 
     #region ジャンプ処理
     //---ジャンプ処理

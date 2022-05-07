@@ -155,6 +155,11 @@ public class KitchenSceneManager : MonoBehaviour {
                     GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(18.0f, 22.0f, 0.0f);
                 }
+                else
+                {
+                    GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
+                    GameData.PlayerPos = GameData.Player.transform.position = new Vector3(30.0f, 16.0f, 0.0f);
+                }
                 break;
 
 

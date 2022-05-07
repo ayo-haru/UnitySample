@@ -20974,9 +20974,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3889550697795081160, guid: 52bebd425d59dff46bfa94516754d775, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5180483787907817137, guid: 52bebd425d59dff46bfa94516754d775, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6400022436775090263, guid: 52bebd425d59dff46bfa94516754d775, type: 3}
       propertyPath: m_Name
       value: GateSwitch
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400022436775090263, guid: 52bebd425d59dff46bfa94516754d775, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52bebd425d59dff46bfa94516754d775, type: 3}
@@ -22953,9 +22965,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1360846275}
     m_Modifications:
+    - target: {fileID: 541873031682825328, guid: 4ead65e1ef8a39948829b2ca76f58e3a, type: 3}
+      propertyPath: m_TagString
+      value: toBoss1
+      objectReference: {fileID: 0}
     - target: {fileID: 4643079662252715999, guid: 4ead65e1ef8a39948829b2ca76f58e3a, type: 3}
       propertyPath: m_Name
       value: GoalObj
+      objectReference: {fileID: 0}
+    - target: {fileID: 4643079662252715999, guid: 4ead65e1ef8a39948829b2ca76f58e3a, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 8257114657039762149, guid: 4ead65e1ef8a39948829b2ca76f58e3a, type: 3}
       propertyPath: m_RootOrder

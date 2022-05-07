@@ -70,6 +70,8 @@ public static class GameData {
 
     public static bool isAliveBoss1 = true;    //ボス１の討伐情報保存用
 
+    public static bool[,] isStarGet = new bool[10, 10];   //スターの取得状況　trueが取得済み
+
 
     public static void SetPlayerPos(Vector3 playerpos) {
         PlayerPos = playerpos;

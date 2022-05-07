@@ -295,6 +295,7 @@ public class Player2 : MonoBehaviour
                 ForceDirection += move.ReadValue<Vector2>();
                 ForceDirection.Normalize();
                 MovingVelocity = ForceDirection * maxSpeed;
+                //rb.constraints = RigidbodyConstraints.FreezePositionY;
 
                 if (Timer <= 0){
                     rb.velocity = new Vector3(MovingVelocity.x, rb.velocity.y - MovingVelocity.y, 0);
@@ -477,6 +478,7 @@ public class Player2 : MonoBehaviour
         PlayerPos = transform.position;                              // 攻撃する瞬間のプレイヤーの座標を取得
         AttackDirection += Attacking.ReadValue<Vector2>();           // スティックの倒した値を取得
         AttackDirection.Normalize();                                 // 取得した値を正規化(ベクトルを１にする)
+        Debug.Log(AttackDirection);
 
         yield return new WaitForSeconds(delaytime);
         //---振動させる
@@ -615,6 +617,10 @@ public class Player2 : MonoBehaviour
         if(animator.GetBool("Damagae") == false)
         {
             animator.SetBool("Damage",true);
+        }
+        else if (animator.GetBool("Damagae") == true)
+        {
+            animator.SetBool("Damagae",false);
         }
         EffectManager.Play(EffectData.eEFFECT.EF_DAMAGE, this.transform.position);
         SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);

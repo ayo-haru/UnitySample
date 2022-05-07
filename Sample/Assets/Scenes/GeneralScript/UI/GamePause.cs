@@ -158,7 +158,7 @@ public class GamePause : MonoBehaviour
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
-                //Pause.isPause = false;  // ポーズ解除
+                Pause.isPause = false;  // ポーズ解除
                 Debug.Log("ポーズ解除のポーズ解除");
                 backgame.GetComponent<UIBlink>().isHide = true;
                 BackGame.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す

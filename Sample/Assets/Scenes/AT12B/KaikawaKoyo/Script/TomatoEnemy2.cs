@@ -18,7 +18,8 @@ public class TomatoEnemy2 : MonoBehaviour
     private Rigidbody rb;
     private EnemyDown ED;
     private Vector3 TargetPos;
-    private Vector3 vec;
+    private Vector3 PlayerPosX;
+    private Vector3 TomatoPosX;
     private bool look = true;       // プレイヤーのほうを見るフラグ
     private bool isGround;          // 接地フラグ
     private bool TomatoDead;
@@ -27,15 +28,15 @@ public class TomatoEnemy2 : MonoBehaviour
     private bool AttackEnd;
     private bool Explosion;
     private float delay;            // ジャンプのディレイ
+    private float dis;
+    private float Distance = 80.0f;
 
     [SerializeField]
     private float JumpPower;        // ジャンプ力
 
     [SerializeField]
     float MoveSpeed = 2.0f;          // 移動速度
-    float AttackSpeed;
-    //int DetecDist = 8;
-    //bool InArea = false;                
+    float AttackSpeed;            
 
     private void Start()
     {
@@ -46,7 +47,6 @@ public class TomatoEnemy2 : MonoBehaviour
         ED = GetComponent<EnemyDown>();
         AttackSpeed = MoveSpeed + 10.0f;
         transform.Rotate(0, -90, 0);
-        rb.velocity += new Vector3(0.0f, -0.5f, 0.0f);
     }
 
     private void Update()
@@ -56,6 +56,10 @@ public class TomatoEnemy2 : MonoBehaviour
             rb.Resume(gameObject);
 
             Vector3 pos = rb.position;
+            // プレイヤーとのX軸間の距離を求める
+            PlayerPosX = Player.transform.position - new Vector3(0.0f, Player.transform.position.y, Player.transform.position.z);
+            TomatoPosX = transform.position - new Vector3(0.0f, transform.position.y, transform.position.z);
+            dis = Vector3.Distance(PlayerPosX, TomatoPosX);
             // プレイヤーを見つけたら攻撃開始
             if (ED.isAlive && !TomatoDead)
             {

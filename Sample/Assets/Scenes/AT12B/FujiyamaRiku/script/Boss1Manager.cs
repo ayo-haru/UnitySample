@@ -31,6 +31,7 @@ public class Boss1Manager : MonoBehaviour
     private GameObject Warp;
     BossEntry Entry;
     private Vector3 WarpEFPoint;
+    private bool PlayEffect = false;
     private void Awake()
     {
         //ƒ{ƒX‚ð“|‚µ‚½‚©‚Ç‚¤‚©‚Ì”»’è
@@ -79,7 +80,14 @@ public class Boss1Manager : MonoBehaviour
                 }
             case Boss1State.BOSS1_END:
                 {
-                    Destroy(Boss);
+                    if (!PlayEffect)
+                    {
+                        EffectManager.Play(EffectData.eEFFECT.EF_BOSSKILL,new Vector3(Boss.transform.position.x, Boss.transform.position.y, Boss.transform.position.z),8f);
+                        PlayEffect = true;
+                    }
+
+                     Destroy(Boss,7.9f);
+
                     //Warp.SetActive(true);
                     //WarpEFPoint = Warp.transform.position;
                     //WarpEFPoint.y = 11.7f;

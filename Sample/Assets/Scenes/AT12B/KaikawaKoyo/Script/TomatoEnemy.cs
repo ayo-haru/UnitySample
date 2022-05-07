@@ -41,7 +41,6 @@ public class TomatoEnemy : MonoBehaviour
         ED = GetComponent<EnemyDown>();
         transform.Rotate(0, -90, 0);
         look = false;
-        rb.velocity += new Vector3(0.0f, -0.5f, 0.0f);
     }
 
     private void Update()
@@ -117,7 +116,7 @@ public class TomatoEnemy : MonoBehaviour
         }
 
         // ÉvÉåÉCÉÑÅ[Ç…ìñÇΩÇ¡ÇΩÇÁè¡Ç¶ÇÈ
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && ED.isAlive)
         {
             SoundManager.Play(SoundData.eSE.SE_TOMATO_BOMB, SoundData.GameAudioList);
             EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);

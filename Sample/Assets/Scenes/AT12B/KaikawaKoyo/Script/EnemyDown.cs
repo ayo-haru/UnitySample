@@ -117,6 +117,13 @@ public class EnemyDown : MonoBehaviour
             {
                 vec = (transform.position -Player.transform.position).normalized;
 
+                // レイヤー変更
+                //if(EnemyNumber == 2)
+                //{
+                //    gameObject.layer = LayerMask.NameToLayer("TomatoDown");
+                //}
+                gameObject.layer = LayerMask.NameToLayer("DownEnemy");
+
                 //---ヒットストップ演出
                 var seq = DOTween.Sequence();
                 //---Enemyの振動演出
@@ -149,8 +156,6 @@ public class EnemyDown : MonoBehaviour
     {
         if (!Pause.isPause)
         {
-
-
             rb.Resume(gameObject);
             // アニメーションを止める
             animator.speed = 0;
@@ -158,12 +163,6 @@ public class EnemyDown : MonoBehaviour
             rb.useGravity = false;
             // 空気抵抗をゼロに
             rb.angularDrag = 0.0f;
-            // レイヤー変更
-            //if(EnemyNumber == 2)
-            //{
-            //    gameObject.layer = LayerMask.NameToLayer("TomatoDown");
-            //}
-            gameObject.layer = LayerMask.NameToLayer("DownEnemy");
 
             // 回転軸を変更
             if (EnemyNumber == 1 || EnemyNumber == 4)

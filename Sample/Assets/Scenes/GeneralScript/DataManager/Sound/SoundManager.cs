@@ -37,7 +37,7 @@ public static class SoundManager {
     }
 
     //Žg—p‚µ‚Ä‚¢‚éBGM‚ÌAudioSourceŽæ“¾
-    private static AudioSource GetUsedSource(AudioSource[] audioSourceList)
+    public static AudioSource GetUsedSource(AudioSource[] audioSourceList)
     {
         for (int i = 0; i < audioSourceList.Length; ++i)
         {
@@ -141,6 +141,14 @@ public static class SoundManager {
             }
             _audioSourceList[i].Pause();
         }
+        if(GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE && GameData.CurrentMapNumber != (int)GameData.eSceneState.TITLE_SCENE)
+        {
+            GameObject kitchenBgmObject = GameObject.Find("BGMObject(Clone)");
+            if (kitchenBgmObject)
+            {
+                kitchenBgmObject.GetComponent<AudioSource>().Pause();
+            }
+        }
     }
 
     /// <summary>
@@ -153,6 +161,14 @@ public static class SoundManager {
             if (_audioSourceList[i].isPlaying == false && _audioSourceList[i].clip)
             {
                 _audioSourceList[i].UnPause();
+            }
+        }
+        if (GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE && GameData.CurrentMapNumber != (int)GameData.eSceneState.TITLE_SCENE)
+        {
+            GameObject kitchenBgmObject = GameObject.Find("BGMObject(Clone)");
+            if (kitchenBgmObject)
+            {
+                kitchenBgmObject.GetComponent<AudioSource>().UnPause();
             }
         }
     }

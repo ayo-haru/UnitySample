@@ -28,8 +28,7 @@ public class GateSwitch : MonoBehaviour
         else
         {
             Mesh_Close.enabled = false;
-            Mesh_Open.enabled = true;
-        }
+            Mesh_Open.enabled = true;        }
 
     }
 
@@ -45,6 +44,7 @@ public class GateSwitch : MonoBehaviour
         {
             Mesh_Close.enabled = true;
             Mesh_Open.enabled = false;
+            SoundManager.Play(SoundData.eSE.SE_SWITCH, SoundData.GameAudioList);
             if (gate)
             {
                 gate.GetComponent<Gate>().Close();
@@ -54,6 +54,7 @@ public class GateSwitch : MonoBehaviour
         {
             Mesh_Close.enabled = false;
             Mesh_Open.enabled = true;
+            SoundManager.Play(SoundData.eSE.SE_GATEOPEN, SoundData.GameAudioList);
             if (gate)
             {
                 gate.GetComponent<Gate>().Open();

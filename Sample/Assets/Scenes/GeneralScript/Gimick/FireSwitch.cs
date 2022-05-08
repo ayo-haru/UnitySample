@@ -49,13 +49,13 @@ public class FireSwitch : MonoBehaviour
         {
             Mesh_On.enabled = true;
             Mesh_Off.enabled = false;
-            //stove.GetComponent<Stove>().Ignition();
+            SoundManager.Play(SoundData.eSE.SE_SWITCH, SoundData.GameAudioList);
         }
         else
         {
             Mesh_On.enabled = false;
             Mesh_Off.enabled = true;
-            //stove.GetComponent<Stove>().Extinguish();
+            SoundManager.Play(SoundData.eSE.SE_EXTINGUISH,SoundData.GameAudioList);
         }
     }
 

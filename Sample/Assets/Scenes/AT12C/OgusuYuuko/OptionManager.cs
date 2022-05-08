@@ -17,20 +17,19 @@ using UnityEngine.InputSystem;
 public class OptionManager : MonoBehaviour
 {
     //選択モード
-    private enum SELECT_MODE { BGM, SE };
-    private SELECT_MODE select;     //現在の選択
-    private SELECT_MODE old_select; //前フレームの選択
+    private enum SELECT_MODE { BGM, SE,BACK,MAX_MODE };
+    private int select;     //現在の選択
+    private int old_select; //前フレームの選択
     //選択用矢印のRectTransform
     public GameObject selectArrow;
     private RectTransform rt_selectArrow;
-    //選択用矢印位置
-    public Vector3 posBGM;
-    public Vector3 posSE;
 
     //BGMスライダー
     public GameObject bgmSlider;
     //SEスライダー
     public GameObject seSlider;
+    //戻る画像
+    public GameObject BackImage;
 
     // InputActionのUIを扱う
     private Game_pad UIActionAssets;
@@ -49,7 +48,7 @@ public class OptionManager : MonoBehaviour
     void Start()
     {
         //初めはbgmを選択
-        select = SELECT_MODE.BGM;
+        select = (int)SELECT_MODE.BGM;
         //コンポーネント取得
         rt_selectArrow = selectArrow.GetComponent<RectTransform>();
         //矢印位置設定
@@ -62,18 +61,42 @@ public class OptionManager : MonoBehaviour
     {
         //前フレームの選択を保存
         old_select = select;
-        //上矢印でBGM選択
+
+        //上矢印
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            SelectBGM();
+            //SelectBGM();
+            SelectUp();
         }
-        //下矢印でSE選択
+        //下矢印
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            SelectSE();
+            //SelectSE();
+            SelectDown();
         }
         OnLeftStick();
         OnRightStick();
+
+        //戻るが選択された状態でエンターキー押されたらオプションを閉じる
+        if(select == (int)SELECT_MODE.BACK)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                //決定音
+                if (GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
+                {
+                    SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
+                }
+                else
+                {
+                    SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.GameAudioList);
+                }
+                //音量保存
+                SaveManager.saveSEVolume(SoundManager.seVolume);
+                SaveManager.saveBGMVolume(SoundManager.bgmVolume);
+                gameObject.SetActive(false);
+            }
+        }
 
         if (old_select == select)
         {
@@ -84,7 +107,7 @@ public class OptionManager : MonoBehaviour
         Vector3 newPos;
         switch (select)
         {
-            case SELECT_MODE.BGM:
+            case (int)SELECT_MODE.BGM:
                 //se選択解除
                 seSlider.GetComponent<OptionSE>().selectFlag = false;
                 //bgm選択
@@ -93,13 +116,22 @@ public class OptionManager : MonoBehaviour
                 newPos = new Vector3(rt_selectArrow.transform.position.x, bgmSlider.transform.position.y, rt_selectArrow.transform.position.z);
                 rt_selectArrow.transform.position = newPos;
                 break;
-            case SELECT_MODE.SE:
+            case (int)SELECT_MODE.SE:
                 //bgm選択解除
                 bgmSlider.GetComponent<OptionBGM>().selectFlag = false;
                 //se選択
                 seSlider.GetComponent<OptionSE>().selectFlag = true;
                 //矢印移動
                 newPos = new Vector3(rt_selectArrow.transform.position.x, seSlider.transform.position.y, rt_selectArrow.transform.position.z);
+                rt_selectArrow.transform.position = newPos;
+                break;
+            case (int)SELECT_MODE.BACK:
+                //bgm選択解除
+                bgmSlider.GetComponent<OptionBGM>().selectFlag = false;
+                //se選択解除
+                seSlider.GetComponent<OptionSE>().selectFlag = false;
+                //矢印移動
+                newPos = new Vector3(rt_selectArrow.transform.position.x, BackImage.transform.position.y, rt_selectArrow.transform.position.z);
                 rt_selectArrow.transform.position = newPos;
                 break;
         }
@@ -128,28 +160,28 @@ public class OptionManager : MonoBehaviour
 
     private void SelectBGM()
     {
-        select = SELECT_MODE.BGM;
-        if (GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
-        {
-            SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
-        }
-        else
-        {
-            SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.GameAudioList);
-        }
+        //select = SELECT_MODE.BGM;
+        //if (GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
+        //{
+        //    SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
+        //}
+        //else
+        //{
+        //    SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.GameAudioList);
+        //}
     }
 
     private void SelectSE()
     {
-        select = SELECT_MODE.SE;
-        if (GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
-        {
-            SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
-        }
-        else
-        {
-            SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.GameAudioList);
-        }
+        //select = SELECT_MODE.SE;
+        //if (GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
+        //{
+        //    SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
+        //}
+        //else
+        //{
+        //    SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.GameAudioList);
+        //}
     }
 
     private void OnLeftStick()
@@ -161,11 +193,13 @@ public class OptionManager : MonoBehaviour
         //---少しでも倒されたら処理に入る
         if (doLeftStick.y > 0.7f)
         {
-            SelectBGM();
+            //SelectBGM();
+            SelectUp();
         }
         else if (doLeftStick.y < -0.7f)
         {
-            SelectSE();
+            //SelectSE();
+            SelectDown();
         }
     }
 
@@ -178,13 +212,54 @@ public class OptionManager : MonoBehaviour
         //---少しでも倒されたら処理に入る
         if (doRightStick.y > 0.7f)
         {
-            SelectBGM();
+            //SelectBGM();
+            SelectUp();
         }
         else if (doRightStick.y < -0.7f)
         {
-            SelectSE();
+            //SelectSE();
+            SelectDown();
         }
 
+    }
+
+    private void SelectUp()
+    {
+        //SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
+        //矢印移動した時の音鳴らす
+        if (GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
+        {
+            SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
+        }
+        else
+        {
+            SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.GameAudioList);
+        }
+        select--;
+        if (select < 0)
+        {
+            select = 0;
+        }
+    }
+
+    private void SelectDown()
+    {
+        //SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
+        //矢印移動した時の音鳴らす
+        if (GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
+        {
+            SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
+        }
+        else
+        {
+            SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.GameAudioList);
+        }
+
+        select++;
+        if (select >= (int)SELECT_MODE.MAX_MODE)
+        {
+            select = (int)SELECT_MODE.BACK;
+        }
     }
 
 }

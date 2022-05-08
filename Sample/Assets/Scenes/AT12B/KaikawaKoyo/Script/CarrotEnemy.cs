@@ -60,7 +60,6 @@ public class CarrotEnemy : MonoBehaviour
 
             // ジェットのエフェクト出すよ
             //effect.transform.position = Jet.transform.position;
-            print(rb.velocity);
 
             // プレイヤーを見つけたら攻撃開始
             if (ED.isAlive)

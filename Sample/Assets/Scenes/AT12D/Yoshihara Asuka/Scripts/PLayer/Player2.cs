@@ -416,7 +416,7 @@ public class Player2 : MonoBehaviour
 
         //---アニメーション再生
         //---左右パリィ
-        if (Mathf.Abs(AttackDirection.x) >= 0.1)
+        if (Mathf.Abs(AttackDirection.x) >= 0.9)
         {
             //タイマー設定
             Timer = stopTime;
@@ -425,7 +425,7 @@ public class Player2 : MonoBehaviour
         }
 
         //---上パリィ
-        else if (AttackDirection.y >= 1)
+        else if (AttackDirection.y > 0)
         {
             if (GroundNow == true)
             {

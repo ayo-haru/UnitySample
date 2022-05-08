@@ -77,7 +77,13 @@ public class DataManager : MonoBehaviour
     [SerializeField]
     private AudioClip se_gameover;
 
-    
+    [SerializeField]
+    private AudioClip se_gateopen;
+    [SerializeField]
+    private AudioClip se_extinguish;
+    [SerializeField]
+    private AudioClip se_switch;
+
 
     //-----------------------------------------------------
     // Efect
@@ -117,7 +123,6 @@ public class DataManager : MonoBehaviour
         //-----------------------------------------------------
         // BGMÅESE
         //-----------------------------------------------------
-
         SoundData.BGMDataSet(bgm_title, (int)SoundData.eBGM.BGM_TITLE);
         SoundData.BGMDataSet(bgm_kitchen, (int)SoundData.eBGM.BGM_KITCHEN);
         SoundData.BGMDataSet(bgm_kitchenBoss, (int)SoundData.eBGM.BGM_BOSS1);
@@ -143,6 +148,10 @@ public class DataManager : MonoBehaviour
         SoundData.SEDataSet(se_kettei, (int)SoundData.eSE.SE_KETTEI);
         SoundData.SEDataSet(se_select, (int)SoundData.eSE.SE_SELECT);
         SoundData.SEDataSet(se_gameover, (int)SoundData.eSE.SE_GAMEOVER);
+
+        SoundData.SEDataSet(se_gateopen, (int)SoundData.eSE.SE_GATEOPEN);
+        SoundData.SEDataSet(se_extinguish, (int)SoundData.eSE.SE_EXTINGUISH);
+        SoundData.SEDataSet(se_switch, (int)SoundData.eSE.SE_SWITCH);
 
         //-----------------------------------------------------
         // Efect

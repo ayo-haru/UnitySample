@@ -44,6 +44,9 @@ public static class SoundData
         SE_KETTEI,
         SE_SELECT,
         SE_GAMEOVER,
+        SE_GATEOPEN,
+        SE_EXTINGUISH,
+        SE_SWITCH,
 
         MAX_SE
     }

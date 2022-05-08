@@ -112,8 +112,12 @@ public class Player : MonoBehaviour
             //---フェード
             //Pause.isPause = true;                 // フェード終わるまでポーズ
             Debug.Log("フェードはじめのポーズ");
-            GameData.isFadeOut = true;              // フェードかける
-            GameOver.GameOverReset();               // りすぽん
+            EffectManager.Play(EffectData.eEFFECT.EF_DEATH, GameData.PlayerPos);
+            //if (!GameObject.Find("Player_deth(Clone)"))
+            //{
+                GameData.isFadeOut = true;              // フェードかける
+                GameOver.GameOverReset();               // りすぽん
+            //}
         }
 
 

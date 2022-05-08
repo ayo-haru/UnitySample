@@ -175,7 +175,7 @@ public class TomatoEnemy3 : MonoBehaviour
                 RigidbodyConstraints.FreezePositionZ |
                 RigidbodyConstraints.FreezeRotationX |
                 RigidbodyConstraints.FreezeRotationY;
-            if (dis < Distance)
+            if (dis <= Distance)
             {
                 Attack = true;
             }

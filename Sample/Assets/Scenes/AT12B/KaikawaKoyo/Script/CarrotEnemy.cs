@@ -25,17 +25,18 @@ public class CarrotEnemy : MonoBehaviour
     private ParticleSystem effect;
 
     [SerializeField]
-    float MoveSpeed = 1.0f;
+    float MoveSpeed;
+    float MovingSpeed;
+    private float Timer;
+    private float idlingTime = 0.5f;
+    private float AttackTime = 0.5f;
     private float dis;
-    //private float InvincibleTime;
-    private float AttackTime;
+    private bool Idling = true;
     bool InArea = true;
-    bool Attack = false;
+    bool Attack;
     //bool pause = false;
-    //private bool Invincible = false;
 
     private bool isCalledOnce = false;                             // 一回だけ処理をするために使う。
-    
 
     private void Start()
     {
@@ -43,6 +44,7 @@ public class CarrotEnemy : MonoBehaviour
         Jet = transform.Find("JetPos").gameObject;
         rb = gameObject.GetComponent<Rigidbody>();
         ED = GetComponent<EnemyDown>();
+        MovingSpeed = MoveSpeed / 2;
         //effect = Instantiate(EffectData.EF[0]);
         //effect.gameObject.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
         //effect.Play();
@@ -53,9 +55,10 @@ public class CarrotEnemy : MonoBehaviour
         if(!Pause.isPause)
         {
             rb.Resume(gameObject);
-            
+
             // ジェットのエフェクト出すよ
             //effect.transform.position = Jet.transform.position;
+            print(rb.velocity);
 
             // プレイヤーを見つけたら攻撃開始
             if (ED.isAlive)
@@ -67,24 +70,49 @@ public class CarrotEnemy : MonoBehaviour
                 {
                     Destroy(gameObject, 0.0f);
                 }
-                //if (Invincible)
-                //{
-                //    gameObject.layer = LayerMask.NameToLayer("Invincible");
-                //    InvincibleTime += Time.deltaTime;
-                //}
-                //if (InvincibleTime > 0.3f)
-                //{
-                //    gameObject.layer = LayerMask.NameToLayer("Enemy");
-                //    InvincibleTime = 0.0f;
-                //    Invincible = false;
-                //}
-                if (!Attack)
+
+                if(Idling)
                 {
+                    // プレイヤーのほうを向くよ
                     vec = (Player.transform.position - transform.position).normalized;
                     look = Quaternion.LookRotation(vec);
                     transform.localRotation = look;
-                    rb.velocity = vec * MoveSpeed;
-                    Attack = true;
+
+                    // プルプル震える
+
+                    // ディレイかけてから攻撃する
+                    Timer += Time.deltaTime;
+                    if(Timer >= idlingTime)
+                    {
+                        // プレイヤーの座標の取得
+                        vec = (Player.transform.position - transform.position).normalized;
+                        // アイドリング終了
+                        Idling = false;
+                        // 攻撃開始
+                        Attack = true;
+                        // タイマーのリセット
+                        Timer = 0.0f;
+                    }
+                }
+
+                // 攻撃処理
+                if (Attack)
+                {
+                    // プレイヤーのほうを向く
+                    look = Quaternion.LookRotation(vec);
+                    transform.localRotation = look;
+
+                    // 加速
+                    rb.velocity = vec * MovingSpeed;
+                    if(MoveSpeed >= MovingSpeed)
+                    {
+                        MovingSpeed += 3.0f;
+                    }
+                    else
+                    {
+                        Attack = false;
+
+                    }
                 }
                 //if (pause)
                 //{
@@ -102,16 +130,21 @@ public class CarrotEnemy : MonoBehaviour
                     rb.constraints = RigidbodyConstraints.FreezePosition |
                         RigidbodyConstraints.FreezeRotationX |
                         RigidbodyConstraints.FreezeRotationY;
-                    AttackTime += Time.deltaTime;
+                    Timer += Time.deltaTime;
                     transform.Rotate(new Vector3(30.0f, 0.0f, 0.0f), Space.Self);
-                    if (AttackTime > 0.5f)
+                    if (Timer > 0.5f)
                     {
+                        // プレイヤーの座標の取得
+                        vec = (Player.transform.position - transform.position).normalized;
+                        // 座標の固定
                         rb.constraints = RigidbodyConstraints.FreezePositionZ |
                                   RigidbodyConstraints.FreezeRotationX |
                                   RigidbodyConstraints.FreezeRotationY;
-                        Attack = false;
+                        // 攻撃開始
+                        Attack = true;
                         InArea = true;
-                        AttackTime = 0.0f;
+                        // タイマーのリセット
+                        Timer = 0.0f;
                     }
                 }
             }
@@ -143,7 +176,10 @@ public class CarrotEnemy : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Ground"))
         {
-            Attack = false;
+            // プレイヤーの座標の取得
+            vec = (Player.transform.position - transform.position).normalized;
+            // 攻撃開始
+            Attack = true;
         }
     }
 

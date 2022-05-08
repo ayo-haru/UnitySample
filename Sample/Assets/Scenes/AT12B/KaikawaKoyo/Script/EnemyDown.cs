@@ -16,12 +16,10 @@ public class EnemyDown : MonoBehaviour
     [SerializeField]
     private GameObject Item;
     private GameObject Player;
-    private ParticleSystem TomatoBom;
     private float bouncePower = 200.0f;
     private Vector3 Pos;
-    private Vector3 EnemyPos;
-    private Vector3 velocity;
     private Vector3 vec;
+    private float speed;
     private Animator animator;
 
     [SerializeField]
@@ -32,7 +30,8 @@ public class EnemyDown : MonoBehaviour
     private int Drop;
     private bool ItemDrop = false;
     public bool isAlive;
-    float DeadTime = 0.0f;
+    float Timer;
+    float DeadTime = 1.5f;
 
     Rigidbody rb;
 
@@ -57,8 +56,6 @@ public class EnemyDown : MonoBehaviour
         Random.InitState(System.DateTime.Now.Millisecond);
         _dissolve = this.GetComponent<Dissolve>();
         player2 = Player.GetComponent<Player2>();
-
-
     }
 
     // Update is called once per frame
@@ -67,14 +64,18 @@ public class EnemyDown : MonoBehaviour
         if(!Pause.isPause)
         {
             rb.Resume(gameObject);
-            if(isAlive)
+    
+            if (isAlive)
             {
                 animator.speed = 1;
             }
             // 時間で消える処理
             if (!isAlive)
             {
-                DeadTime += Time.deltaTime;
+                // タイマー起動
+                Timer += Time.deltaTime;
+                // 敵の速度を取得
+                speed = rb.velocity.magnitude;
 
                 //---ディゾルマテリアルに変更
                 if (!isCalledOnce)
@@ -86,25 +87,23 @@ public class EnemyDown : MonoBehaviour
                         FinDissolve = true;
                     }
                 }
-            }
-
-            if (DeadTime > 1.5f)
-            {
-                Pos = transform.position;
-                Destroy(gameObject, 0.0f);
-                if (EnemyNumber == 2 || EnemyNumber == 5)
+                // 時間が経ったら消す。トマトはスピード無くなった時点で消しちゃいたい
+                if (Timer > DeadTime || (EnemyNumber == 2 && speed == 0))
                 {
-                    EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);
+                    Pos = transform.position;
+                    Destroy(gameObject, 0.0f);
+                    if (EnemyNumber == 2 || EnemyNumber == 5)
+                    {
+                        EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);
+                    }
+                    EffectManager.Play(EffectData.eEFFECT.EF_ENEMYDOWN, Pos, 2.0f);
                 }
-                EffectManager.Play(EffectData.eEFFECT.EF_ENEMYDOWN, Pos, 2.0f);
             }
         }
         else
         {
             rb.Pause(gameObject);
-
         }
- 
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -133,8 +132,6 @@ public class EnemyDown : MonoBehaviour
                 //---このタイミングでプレイヤーの死亡処理を呼び出す
                 seq.AppendCallback(() => EnemyDead(vec, Player.transform.position.x));
                 Shake(0.1f,5,0.23f);
-
-
             }
 
             // トマトがほかの敵に当たったら爆発する
@@ -144,8 +141,6 @@ public class EnemyDown : MonoBehaviour
                 Destroy(gameObject, 0.0f);
                 EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);
             }
-
-
         }
         else
         {
@@ -188,8 +183,7 @@ public class EnemyDown : MonoBehaviour
                 Instantiate(Item, Pos, Quaternion.identity);
                 ItemDrop = true;
             }
-
-
+            
             //取得した法線ベクトルに跳ね返す速さをかけて、跳ね返す
             //rb.AddForce(velocity * bouncePower, ForceMode.Force);
             rb.constraints = RigidbodyConstraints.FreezePositionZ |

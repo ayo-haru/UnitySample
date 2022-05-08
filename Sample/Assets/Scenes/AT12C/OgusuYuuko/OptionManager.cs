@@ -90,6 +90,14 @@ public class OptionManager : MonoBehaviour
                 else
                 {
                     SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.GameAudioList);
+                    if(GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE)
+                    {
+                        GameObject bgmObject = GameObject.Find("BGMObject(Clone)");
+                        if (bgmObject)
+                        {
+                            bgmObject.GetComponent<AudioSource>().volume = SoundManager.bgmVolume;
+                        }
+                    }
                 }
                 //‰¹—Ê•Û‘¶
                 SaveManager.saveSEVolume(SoundManager.seVolume);

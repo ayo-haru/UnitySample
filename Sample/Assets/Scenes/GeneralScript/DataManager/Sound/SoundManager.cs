@@ -102,6 +102,10 @@ public static class SoundManager {
     public static void setVolume(AudioSource[] _audioSourceList)
     {
         AudioSource audioSource = GetUsedSource(_audioSourceList);
+        if (audioSource == null)
+        {
+            return;
+        }
         audioSource.volume = bgmVolume;
     }
 

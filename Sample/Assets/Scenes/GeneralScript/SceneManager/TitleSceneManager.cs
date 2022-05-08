@@ -225,6 +225,12 @@ public class TitleSceneManager : MonoBehaviour {
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
                 //オプションマネージャーのアクティブを反転
                 Optionmanager.SetActive(!Optionmanager.activeSelf);
+                //オプション閉じたときに音量保存
+                if (!Optionmanager.activeSelf)
+                {
+                    SaveManager.saveSEVolume(SoundManager.seVolume);
+                    SaveManager.saveBGMVolume(SoundManager.bgmVolume);
+                }
                 isDecision = false;
             }
 
@@ -274,7 +280,7 @@ public class TitleSceneManager : MonoBehaviour {
 
     private void OnLeftStick(InputAction.CallbackContext obj)
     {
-        if (!isPressButton)
+        if (!isPressButton || Optionmanager.activeSelf)
         {
             return;
         }
@@ -296,7 +302,7 @@ public class TitleSceneManager : MonoBehaviour {
 
     private void OnRightStick(InputAction.CallbackContext obj)
     {
-        if (!isPressButton)
+        if (!isPressButton || Optionmanager.activeSelf)
         {
             return;
         }
@@ -322,7 +328,7 @@ public class TitleSceneManager : MonoBehaviour {
     /// </summary>
     private void OnDecision(InputAction.CallbackContext obj)
     {
-        if (!isPressButton)
+        if (!isPressButton /*|| Optionmanager.activeSelf*/)
         {
             return;
         }

@@ -40,10 +40,13 @@ public class OptionSE : MonoBehaviour
 
         //コンポーネント取得
         SeSlider = gameObject.GetComponent<Slider>();
+    }
 
+    private void Start()
+    {
+        //Awakeだとまだデータがロードされてないためstartで実行
         //サウンドマネージャーからSEの音量を取得
         SeSlider.value = SoundManager.seVolume;
-
     }
 
     // Update is called once per frame

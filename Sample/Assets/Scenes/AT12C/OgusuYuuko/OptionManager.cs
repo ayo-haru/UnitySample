@@ -32,9 +32,6 @@ public class OptionManager : MonoBehaviour
     //SEスライダー
     public GameObject seSlider;
 
-    //現在のシーン保存用
-    private int currentScene;
-
     // InputActionのUIを扱う
     private Game_pad UIActionAssets;
     // InputActionのselectを扱う
@@ -58,9 +55,6 @@ public class OptionManager : MonoBehaviour
         //矢印位置設定
         Vector3 newPos = new Vector3(rt_selectArrow.transform.position.x, bgmSlider.transform.position.y, rt_selectArrow.transform.position.z);
         rt_selectArrow.transform.position = newPos;
-
-        //現在のシーン取得
-        currentScene = GameData.CurrentMapNumber;
     }
 
     // Update is called once per frame
@@ -135,7 +129,7 @@ public class OptionManager : MonoBehaviour
     private void SelectBGM()
     {
         select = SELECT_MODE.BGM;
-        if (currentScene == (int)GameData.eSceneState.TITLE_SCENE)
+        if (GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
         {
             SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
         }
@@ -148,7 +142,7 @@ public class OptionManager : MonoBehaviour
     private void SelectSE()
     {
         select = SELECT_MODE.SE;
-        if (currentScene == (int)GameData.eSceneState.TITLE_SCENE)
+        if (GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
         {
             SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
         }

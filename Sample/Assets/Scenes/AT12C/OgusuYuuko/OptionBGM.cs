@@ -37,7 +37,11 @@ public class OptionBGM : MonoBehaviour
 
         //コンポーネント取得
         BgmSlider = gameObject.GetComponent<Slider>();
+    }
 
+    private void Start()
+    {
+        //Awakeだとまだデータがロードされてないためstartで実行
         //サウンドマネージャーからbgmの音量を取得
         BgmSlider.value = SoundManager.bgmVolume;
     }

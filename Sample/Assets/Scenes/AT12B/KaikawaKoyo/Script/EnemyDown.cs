@@ -19,7 +19,6 @@ public class EnemyDown : MonoBehaviour
     private float bouncePower = 200.0f;
     private Vector3 Pos;
     private Vector3 vec;
-    private float speed;
     private Animator animator;
 
     [SerializeField]
@@ -32,6 +31,8 @@ public class EnemyDown : MonoBehaviour
     public bool isAlive;
     float Timer;
     float DeadTime = 1.5f;
+    private float speed;
+    private float dis;
 
     Rigidbody rb;
 
@@ -68,6 +69,12 @@ public class EnemyDown : MonoBehaviour
             if (isAlive)
             {
                 animator.speed = 1;
+            }
+            // ‰æ–ÊŠO‚Ì“G‚ÍÁ‚µ‚½‚¢
+            dis = Vector3.Distance(transform.position, Player.transform.position);
+            if (dis >= 200.0f)
+            {
+                Destroy(gameObject, 0.0f);
             }
             // ŠÔ‚ÅÁ‚¦‚éˆ—
             if (!isAlive)

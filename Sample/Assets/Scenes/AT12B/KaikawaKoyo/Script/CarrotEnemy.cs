@@ -46,7 +46,7 @@ public class CarrotEnemy : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         ED = GetComponent<EnemyDown>();
         MovingSpeed = MoveSpeed / 2;
-        transform.DOShakePosition(duration: idlingTime, strength: 2.5f);    // èoåªéûÇ‘ÇÈÇ‘ÇÈêkÇÌÇπÇÈ
+        transform.DOShakePosition(duration: idlingTime, strength: 3.5f);    // èoåªéûÇ‘ÇÈÇ‘ÇÈêkÇÌÇπÇÈ
         //effect = Instantiate(EffectData.EF[0]);
         //effect.gameObject.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
         //effect.Play();

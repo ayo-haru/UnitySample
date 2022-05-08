@@ -19,6 +19,7 @@ public class FollowCamera : MonoBehaviour
 {
     //---変数宣言
     GameObject Player;
+    Vector3 Offset;             // 相対距離取得用
     public Vector3 FollowCameraPos = Vector3.zero;     // 追従するカメラの高さ(x,y,z)
     public int RightScreenOut;          // 右の画面外設定
     public int LeftScreenOut;           // 左の画面外設定
@@ -30,13 +31,20 @@ public class FollowCamera : MonoBehaviour
     {
         //---追従するオブジェクト名を設定
         this.Player = GameObject.Find(GameData.Player.name);
+
+        // カメラとPlayerの相対距離を求める
+        Offset = transform.position - Player.transform.position;
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
         //---プレイヤーに追従する
+
         Vector3 PlayerPos = GameData.PlayerPos;
+
+        //transform.position = Vector3.Lerp(transform.position, Player.transform.position + Offset, 6.0f * Time.deltaTime);
+
 
         // *****座標*****
         //transform.position = new Vector3(PlayerPos.x,

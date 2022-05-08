@@ -118,10 +118,10 @@ public class EnemyDown : MonoBehaviour
                 vec = (transform.position -Player.transform.position).normalized;
 
                 // レイヤー変更
-                //if(EnemyNumber == 2)
-                //{
-                //    gameObject.layer = LayerMask.NameToLayer("TomatoDown");
-                //}
+                if (EnemyNumber == 2)
+                {
+                    gameObject.layer = LayerMask.NameToLayer("TomatoDown");
+                }
                 gameObject.layer = LayerMask.NameToLayer("DownEnemy");
 
                 //---ヒットストップ演出
@@ -136,12 +136,14 @@ public class EnemyDown : MonoBehaviour
 
 
             }
-            //if(!isAlive && EnemyNumber == 2)
-            //{
-            //    Pos = transform.position;
-            //    Destroy(gameObject, 0.0f);
-            //    EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);
-            //}
+
+            // トマトがほかの敵に当たったら爆発する
+            if (collision.gameObject.CompareTag("Enemy") && !isAlive && EnemyNumber == 2)
+            {
+                Pos = transform.position;
+                Destroy(gameObject, 0.0f);
+                EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);
+            }
 
 
         }

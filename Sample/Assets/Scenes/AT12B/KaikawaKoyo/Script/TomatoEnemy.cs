@@ -20,24 +20,19 @@ public class TomatoEnemy : MonoBehaviour
     private Vector3 TargetPos;
     private bool look;              // プレイヤーのほうを見るフラグ
     private bool isGround;          // 接地フラグ
-    private bool Invincible = false;
     private float delay;            // ジャンプのディレイ
-    private float InvincibleTime;
 
     [SerializeField]
     private float JumpPower;        // ジャンプ力
 
     [SerializeField]
-    float MoveSpeed = 2.0f;          // 移動速度
-    //int DetecDist = 8;
-    //bool InArea = false;                
+    float MoveSpeed = 2.0f;          // 移動速度          
 
     private void Start()
     {
         Player = GameObject.FindWithTag("Player");    // プレイヤーのオブジェクトを探す
         Target = Player.transform;                    // プレイヤーの座標取得
         rb = gameObject.GetComponent<Rigidbody>();
-        //distance = 1.0f;
         ED = GetComponent<EnemyDown>();
         transform.Rotate(0, -90, 0);
         look = false;
@@ -48,7 +43,6 @@ public class TomatoEnemy : MonoBehaviour
         if(!Pause.isPause)
         {
             rb.Resume(gameObject);
-            //print(rb.velocity);
 
             // プレイヤーを見つけたら攻撃開始
             if (ED.isAlive)

@@ -62,8 +62,10 @@ public class GamePause : MonoBehaviour
 
         // キャンバスを指定
         canvas = GetComponent<Canvas>();
-        canvas2 = GameObject.Find("Canvas2").GetComponent<Canvas>();
-
+        if(GameData.CurrentMapNumber == (int)GameData.eSceneState.BOSS1_SCENE)
+        {
+            canvas2 = GameObject.Find("Canvas2").GetComponent<Canvas>();
+        }
         // 実態化
         PauseCharacter = Instantiate(pausecharacter);
         BackGame = Instantiate(backgame);

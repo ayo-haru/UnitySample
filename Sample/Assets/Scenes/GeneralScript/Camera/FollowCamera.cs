@@ -34,6 +34,8 @@ public class FollowCamera : MonoBehaviour
 
         // カメラとPlayerの相対距離を求める
         Offset = transform.position - Player.transform.position;
+
+        Debug.Log("Offset"+Offset); 
     }
 
     // Update is called once per frame
@@ -43,21 +45,22 @@ public class FollowCamera : MonoBehaviour
 
         Vector3 PlayerPos = GameData.PlayerPos;
 
-        //transform.position = Vector3.Lerp(transform.position, Player.transform.position + Offset, 6.0f * Time.deltaTime);
+        //transform.position = Vector3.Lerp(transform.position, (Player.transform.position + Offset), 0.1f);
+        //transform.position = Vector3.Lerp(Player.transform.position + Offset, transform.position, 0.1f);
 
 
         // *****座標*****
         //transform.position = new Vector3(PlayerPos.x,
         //                         FollowCameraPos.y,
-        //                         FollowCameraPos.z);                       // ジャンプ追従
+        //                         FollowCameraPos.z);                               // ジャンプ追従
 
         transform.position = new Vector3(PlayerPos.x,
                                          PlayerPos.y + FollowCameraPos.y,
                                          FollowCameraPos.z);                       // ジャンプ追従
 
-		////---画面外設定(x = 45.0fの地点に到達したらカメラの移動を停止)
-		if (PlayerPos.x > RightScreenOut)
-		{
+
+        ////---画面外設定(x = 45.0fの地点に到達したらカメラの移動を停止)
+        if (PlayerPos.x > RightScreenOut){
 			//transform.position = new Vector3(45.0f, 0.7f, PlayerPos.z - 4.5f);
 			transform.position = new Vector3(RightScreenOut,PlayerPos.y + FollowCameraPos.y,FollowCameraPos.z);         // ジャンプ追従
 		    //if (PlayerPos.x >= MovePoint){
@@ -68,27 +71,22 @@ public class FollowCamera : MonoBehaviour
 		    //}
 		}
 		//---画面外設定(x = 15.0fの地点に到達したらカメラの移動を停止)
-		if (PlayerPos.x < LeftScreenOut)
-		{
+		if (PlayerPos.x < LeftScreenOut){
 			//transform.position = new Vector3(15.0f, 0.7f, PlayerPos.z - 4.5f);
 			transform.position = new Vector3(LeftScreenOut,
 											 PlayerPos.y + FollowCameraPos.y,
 											 FollowCameraPos.z);          // ジャンプ追従
 		}
+
         //---上の画面外設定(y)
-        if(PlayerPos.y > HeightScreenOut)
-        {
+        if(PlayerPos.y > HeightScreenOut){
             transform.position = new Vector3(PlayerPos.x,
                                              HeightScreenOut,
                                              FollowCameraPos.z);
         }
 
-       
-
-
         //---下の画面外設定(y)
-        if (PlayerPos.y < UnderScreenOut)
-        {
+        if (PlayerPos.y < UnderScreenOut){
             transform.position = new Vector3(PlayerPos.x,
                                              UnderScreenOut,
                                              FollowCameraPos.z);

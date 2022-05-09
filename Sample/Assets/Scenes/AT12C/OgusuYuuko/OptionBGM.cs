@@ -7,7 +7,7 @@
 //
 // <開発履歴>
 // 2022/04/26    作成
-
+// 2022/05/10    パッド完全対応
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -55,16 +55,39 @@ public class OptionBGM : MonoBehaviour
             return;
         }
 
+        // コントローラー初期化
+        bool isSetGamePad = false;
+        if (Gamepad.current != null)
+        {
+            GameData.gamepad = Gamepad.current;
+            isSetGamePad = true;
+        }
+
         //右矢印キーで音量プラス
         if (Input.GetKey(KeyCode.RightArrow))
         {
             VolUp();
         }
+        else if (isSetGamePad)
+        {
+            if (GameData.gamepad.dpad.right.isPressed)
+            {
+                VolUp();
+            }
+        }
         OnRightStick();
+        
         //左矢印キーで音量－
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             VolDown();
+        }
+        else if (isSetGamePad)
+        {
+            if (GameData.gamepad.dpad.left.isPressed)
+            {
+                VolDown();
+            }
         }
         OnLeftStick();
 

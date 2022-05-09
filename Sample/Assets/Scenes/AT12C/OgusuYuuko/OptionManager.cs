@@ -8,6 +8,7 @@
 // <開発履歴>
 // 2022/04/26    作成
 // 2022/04/27   SE付けた
+// 2022/05/10    パッド完全対応
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -37,6 +38,8 @@ public class OptionManager : MonoBehaviour
     private InputAction LeftStickSelect;
     // InputActionのselectを扱う
     private InputAction RightStickSelect;
+    // 決定されたフラグ
+    private bool isDecision;
 
     void Awake()
     {
@@ -54,33 +57,56 @@ public class OptionManager : MonoBehaviour
         //矢印位置設定
         Vector3 newPos = new Vector3(rt_selectArrow.transform.position.x, bgmSlider.transform.position.y, rt_selectArrow.transform.position.z);
         rt_selectArrow.transform.position = newPos;
+        // 初期化最初は決定じゃない
+        isDecision = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // コントローラー初期化
+        bool isSetGamePad = false;
+        if (Gamepad.current != null)
+        {
+            GameData.gamepad = Gamepad.current;
+            isSetGamePad = true;
+        }
+
         //前フレームの選択を保存
         old_select = select;
+        Debug.Log(select);
 
         //上矢印
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            //SelectBGM();
             SelectUp();
         }
+        else if (isSetGamePad)
+        {
+            if (GameData.gamepad.dpad.up.wasReleasedThisFrame)
+            {
+                SelectUp();
+            }
+        }
+
         //下矢印
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            //SelectSE();
             SelectDown();
         }
-        OnLeftStick();
-        OnRightStick();
+        else if (isSetGamePad)
+        {
+            if (GameData.gamepad.dpad.down.wasReleasedThisFrame)
+            {
+                SelectDown();
+            }
+        }
+
 
         //戻るが選択された状態でエンターキー押されたらオプションを閉じる
-        if(select == (int)SELECT_MODE.BACK)
+        if (select == (int)SELECT_MODE.BACK)
         {
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (isDecision)
             {
                 //決定音
                 if (GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
@@ -103,8 +129,14 @@ public class OptionManager : MonoBehaviour
                 SaveManager.saveSEVolume(SoundManager.seVolume);
                 SaveManager.saveBGMVolume(SoundManager.bgmVolume);
                 gameObject.SetActive(false);
+                isDecision = false;
             }
         }
+
+        /*
+         アップデート内でSelectUp、Downを呼ばれたときは下のリターンはスルーするが、
+         スティックで選択した場合は下のいふぶんでひっかかる
+         */
 
         if (old_select == select)
         {
@@ -152,8 +184,9 @@ public class OptionManager : MonoBehaviour
         RightStickSelect = UIActionAssets.UI.RightStickSelect;
 
         ////---Actionイベントを登録
-        //UIActionAssets.UI.LeftStickSelect.started += OnLeftStick;
-        //UIActionAssets.UI.RightStickSelect.started += OnRightStick;
+        UIActionAssets.UI.LeftStickSelect.started += OnLeftStick;
+        UIActionAssets.UI.RightStickSelect.started += OnRightStick;
+        UIActionAssets.UI.Decision.canceled += OnDecision;
 
 
         //---InputActionの有効化
@@ -166,69 +199,48 @@ public class OptionManager : MonoBehaviour
         UIActionAssets.UI.Disable();
     }
 
-    private void SelectBGM()
-    {
-        //select = SELECT_MODE.BGM;
-        //if (GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
-        //{
-        //    SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
-        //}
-        //else
-        //{
-        //    SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.GameAudioList);
-        //}
-    }
-
-    private void SelectSE()
-    {
-        //select = SELECT_MODE.SE;
-        //if (GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
-        //{
-        //    SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.TitleAudioList);
-        //}
-        //else
-        //{
-        //    SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.GameAudioList);
-        //}
-    }
-
-    private void OnLeftStick()
+    private void OnLeftStick(InputAction.CallbackContext obj)
     {
         //---左ステックのステック入力を取得
         Vector2 doLeftStick = Vector2.zero;
         doLeftStick = LeftStickSelect.ReadValue<Vector2>();
 
         //---少しでも倒されたら処理に入る
-        if (doLeftStick.y > 0.7f)
+        if (doLeftStick.y > 0.0f)
         {
-            //SelectBGM();
             SelectUp();
         }
-        else if (doLeftStick.y < -0.7f)
+        else if (doLeftStick.y < -0.0f)
         {
-            //SelectSE();
             SelectDown();
         }
     }
 
-    private void OnRightStick()
+    private void OnRightStick(InputAction.CallbackContext obj)
     {
         //---右ステックのステック入力を取得
         Vector2 doRightStick = Vector2.zero;
         doRightStick = RightStickSelect.ReadValue<Vector2>();
 
         //---少しでも倒されたら処理に入る
-        if (doRightStick.y > 0.7f)
+        if (doRightStick.y > 0.0f)
         {
             //SelectBGM();
             SelectUp();
         }
-        else if (doRightStick.y < -0.7f)
+        else if (doRightStick.y < -0.0f)
         {
             //SelectSE();
             SelectDown();
         }
 
+    }
+    private void OnDecision(InputAction.CallbackContext obj) {
+        if (select != (int)SELECT_MODE.BACK)
+        {
+            return;
+        }
+        isDecision = true;
     }
 
     private void SelectUp()

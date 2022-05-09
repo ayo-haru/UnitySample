@@ -14,6 +14,8 @@ public class KitchenSceneManager : MonoBehaviour {
 
     // Start is called before the first frame update
     void Awake() {
+        Time.timeScale = 1.0f;   // ゲーム開始時は絶対にゲームのスピードは１
+
         //----- マップの番号を保存 -----
         if (GameData.NextMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
         {

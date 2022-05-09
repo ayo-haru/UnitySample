@@ -36,11 +36,13 @@ public class Gate : MonoBehaviour
     public void Open() {
         Mesh_Close.enabled = false;
         Mesh_Open.enabled = true;
+        gate_Open.transform.parent.GetComponent<BoxCollider>().enabled = true;
         gate_Open.transform.parent.GetComponent<BoxCollider>().isTrigger = true;
     }
     public void Close() {
         Mesh_Close.enabled = true;
         Mesh_Open.enabled = false;
+        gate_Open.transform.parent.GetComponent<BoxCollider>().enabled = false;
         gate_Open.transform.parent.GetComponent<BoxCollider>().isTrigger = false;
 
     }

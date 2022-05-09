@@ -316,7 +316,6 @@ public class GameOver : MonoBehaviour {
 
     public static void GameOverReset() {
         GameOverFlag = true;
-
         GameData.RespawnPlayer();
         if(GameData.CurrentMapNumber == GameData.NextMapNumber)
         {

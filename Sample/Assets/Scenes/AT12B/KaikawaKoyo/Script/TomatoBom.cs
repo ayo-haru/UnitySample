@@ -25,7 +25,7 @@ public class TomatoBom : MonoBehaviour
             ED = other.gameObject.GetComponent<EnemyDown>();
             EnemyPos = other.gameObject.GetComponent<Transform>();
             vec = (EnemyPos.position - transform.position).normalized;
-            ED.EnemyDead(vec, transform.position.x);
+            ED.EnemyDead(vec);
         }
     }
 }

@@ -18,8 +18,6 @@ public class CarrotEnemy : MonoBehaviour
     private GameObject Jet;
     private Rigidbody rb;
     private Vector3 vec;
-    private Vector3 PlayerPos;
-    private Vector3 EnemyPos;
     private Vector3 EffectPos;
     private EnemyDown ED;
     private Quaternion look;
@@ -31,8 +29,8 @@ public class CarrotEnemy : MonoBehaviour
     private float Timer;
     private float idlingTime = 0.5f;
     private float AttackTime = 0.5f;
-    private float dis;
-    private bool Idling = true;
+    bool start = true;
+    bool IdringFlg = true;
     bool InArea = true;
     bool Attack;
     //bool pause = false;
@@ -46,7 +44,7 @@ public class CarrotEnemy : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         ED = GetComponent<EnemyDown>();
         MovingSpeed = MoveSpeed / 2;
-        transform.DOShakePosition(duration: idlingTime, strength: 3.5f);    // 出現時ぶるぶる震わせる
+        transform.DOShakePosition(duration: idlingTime, strength: 5.0f);    // ぶるぶる震わせる
         //effect = Instantiate(EffectData.EF[0]);
         //effect.gameObject.transform.localScale = new Vector3(5.0f, 5.0f, 5.0f);
         //effect.Play();
@@ -60,47 +58,29 @@ public class CarrotEnemy : MonoBehaviour
 
             // ジェットのエフェクト出すよ
             //effect.transform.position = Jet.transform.position;
-            print(rb.velocity);
 
             // プレイヤーを見つけたら攻撃開始
             if (ED.isAlive)
             {
-                PlayerPos = Player.transform.position;
-                EnemyPos = transform.position;
-                dis = Vector3.Distance(EnemyPos, PlayerPos);
-                if(dis >= 200.0f)
+                // アイドリングするよ
+                if(IdringFlg)
                 {
-                    Destroy(gameObject, 0.0f);
+                    Idling();
                 }
-
-                if(Idling)
-                {
-                    // プレイヤーのほうを向くよ
-                    vec = (Player.transform.position - transform.position).normalized;
-                    look = Quaternion.LookRotation(vec);
-                    transform.localRotation = look;
-
-                    // ディレイかけてから攻撃する
-                    Timer += Time.deltaTime;
-                    if(Timer >= idlingTime)
-                    {
-                        // プレイヤーの座標の取得
-                        vec = (Player.transform.position - transform.position).normalized;
-                        // アイドリング終了
-                        Idling = false;
-                        // 攻撃開始
-                        Attack = true;
-                        // タイマーのリセット
-                        Timer = 0.0f;
-                    }
-                }
-
                 // 攻撃処理
                 if (Attack)
                 {
+                    start = false;
                     // プレイヤーのほうを向く
                     look = Quaternion.LookRotation(vec);
                     transform.localRotation = look;
+
+                    // サウンド処理
+                    if (!isCalledOnce)     // 一回だけ呼ぶ
+                    {
+                        SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
+                        isCalledOnce = true;
+                    }
 
                     // 加速
                     rb.velocity = vec * MovingSpeed;
@@ -120,13 +100,10 @@ public class CarrotEnemy : MonoBehaviour
                 //    pause = false;
                 //}
 
-                if (!isCalledOnce)     // 一回だけ呼ぶ
-                {
-                    SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
-                    isCalledOnce = true;
-                }
+                // 一定以上離れたら回転してから再度攻撃する
                 if (!InArea)
                 {
+                    // くるくる回転させる
                     rb.constraints = RigidbodyConstraints.FreezePosition |
                         RigidbodyConstraints.FreezeRotationX |
                         RigidbodyConstraints.FreezeRotationY;
@@ -156,6 +133,45 @@ public class CarrotEnemy : MonoBehaviour
         }
     }
 
+    // アイドリング処理
+    private void Idling()
+    {
+        if(start)
+        {
+            // プレイヤーのほうを向くよ
+            vec = (Player.transform.position - transform.position).normalized;
+            look = Quaternion.LookRotation(vec);
+            transform.localRotation = look;
+        }
+        else
+        {
+            // くるくる回転させる
+            rb.constraints = RigidbodyConstraints.FreezePosition |
+                           RigidbodyConstraints.FreezeRotationX |
+                           RigidbodyConstraints.FreezeRotationY;
+            transform.Rotate(new Vector3(30.0f, 0.0f, 0.0f), Space.Self);
+        }
+        // ディレイかけてから攻撃する
+        Timer += Time.deltaTime;
+        if (Timer >= idlingTime)
+        {
+            // プレイヤーの座標の取得
+            vec = (Player.transform.position - transform.position).normalized;
+            // 座標の固定
+            rb.constraints = RigidbodyConstraints.FreezePositionZ |
+                      RigidbodyConstraints.FreezeRotationX |
+                      RigidbodyConstraints.FreezeRotationY;
+            // 攻撃開始
+            Attack = true;
+            // サウンドフラグ切替
+            isCalledOnce = false;
+            // アイドリング終了
+            IdringFlg = false;
+            // タイマーのリセット
+            Timer = 0.0f;
+        }
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (!Pause.isPause)
@@ -178,8 +194,8 @@ public class CarrotEnemy : MonoBehaviour
         {
             // プレイヤーの座標の取得
             vec = (Player.transform.position - transform.position).normalized;
-            // 攻撃開始
-            Attack = true;
+            // アイドリング開始
+            IdringFlg = true;
         }
     }
 

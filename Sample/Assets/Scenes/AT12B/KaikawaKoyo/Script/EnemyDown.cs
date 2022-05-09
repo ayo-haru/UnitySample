@@ -19,7 +19,6 @@ public class EnemyDown : MonoBehaviour
     private float bouncePower = 200.0f;
     private Vector3 Pos;
     private Vector3 vec;
-    private float speed;
     private Animator animator;
 
     [SerializeField]
@@ -32,6 +31,8 @@ public class EnemyDown : MonoBehaviour
     public bool isAlive;
     float Timer;
     float DeadTime = 1.5f;
+    private float speed;
+    private float dis;
 
     Rigidbody rb;
 
@@ -69,6 +70,12 @@ public class EnemyDown : MonoBehaviour
             {
                 animator.speed = 1;
             }
+            // 画面外の敵は消したい
+            dis = Vector3.Distance(transform.position, Player.transform.position);
+            if (dis >= 200.0f)
+            {
+                Destroy(gameObject, 0.0f);
+            }
             // 時間で消える処理
             if (!isAlive)
             {
@@ -76,6 +83,16 @@ public class EnemyDown : MonoBehaviour
                 Timer += Time.deltaTime;
                 // 敵の速度を取得
                 speed = rb.velocity.magnitude;
+                // 回転させる
+                if (Player.transform.position.x < transform.position.x)
+                {
+                    rb.angularVelocity = new Vector3(0.0f, 0.0f, -500.0f);
+
+                }
+                if (Player.transform.position.x > transform.position.x)
+                {
+                    rb.angularVelocity = new Vector3(0.0f, 0.0f, 500.0f);
+                }
 
                 //---ディゾルマテリアルに変更
                 if (!isCalledOnce)
@@ -88,7 +105,7 @@ public class EnemyDown : MonoBehaviour
                     }
                 }
                 // 時間が経ったら消す。トマトはスピード無くなった時点で消しちゃいたい
-                if (Timer > DeadTime || (EnemyNumber == 2 && speed == 0))
+                if (Timer > DeadTime || (EnemyNumber == 2 && speed <= 0.5f))
                 {
                     Pos = transform.position;
                     Destroy(gameObject, 0.0f);
@@ -130,7 +147,7 @@ public class EnemyDown : MonoBehaviour
 
                 //EnemyDead(vec , Player.transform.position.x);
                 //---このタイミングでプレイヤーの死亡処理を呼び出す
-                seq.AppendCallback(() => EnemyDead(vec, Player.transform.position.x));
+                seq.AppendCallback(() => EnemyDead(vec));
                 Shake(0.1f,5,0.23f);
             }
 
@@ -149,7 +166,7 @@ public class EnemyDown : MonoBehaviour
     }
 
     // 死ぬ時の処理
-    public void EnemyDead(Vector3 vec , float x)
+    public void EnemyDead(Vector3 vec)
     {
         if (!Pause.isPause)
         {
@@ -191,17 +208,6 @@ public class EnemyDown : MonoBehaviour
                              RigidbodyConstraints.FreezeRotationY;
             //プレイヤーと逆方向に跳ね返す
             rb.velocity = vec * bouncePower;
-
-            // 回転させる
-            if (x < transform.position.x)
-            {
-                rb.angularVelocity = new Vector3(0.0f, 0.0f, -500.0f);
-
-            }
-            if (x > transform.position.x)
-            {
-                rb.angularVelocity = new Vector3(0.0f, 0.0f, 500.0f);
-            }
 
             SoundManager.Play(SoundData.eSE.SE_REFLECTION, SoundData.GameAudioList);
             

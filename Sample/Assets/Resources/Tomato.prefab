@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c6e433a25d8c3c49933cb473fdfa23d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpPower: 20
+  JumpPower: 25
   MoveSpeed: 20
 --- !u!114 &2652092446721453054
 MonoBehaviour:
@@ -116,6 +116,9 @@ MonoBehaviour:
   DropRate: 50
   EnemyNumber: 2
   isAlive: 0
+  Width: 0.1
+  RoundCnt: 4
+  Duration: 0.23
 --- !u!1 &6652913516741593985
 GameObject:
   m_ObjectHideFlags: 0

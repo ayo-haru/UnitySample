@@ -259,7 +259,7 @@ public class TitleSceneManager : MonoBehaviour {
         //---ActionƒCƒxƒ“ƒg‚ð“o˜^
         UIActionAssets.UI.LeftStickSelect.started += OnLeftStick;
         UIActionAssets.UI.RightStickSelect.started += OnRightStick;
-        UIActionAssets.UI.Decision.started += OnDecision;
+        UIActionAssets.UI.Decision.canceled += OnDecision;
 
 
         //---InputAction‚Ì—LŒø‰»

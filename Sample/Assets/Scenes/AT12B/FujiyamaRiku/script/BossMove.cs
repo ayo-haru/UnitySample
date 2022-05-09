@@ -11,8 +11,10 @@ public class BossMove : MonoBehaviour
         damage,               //ダメージ(1)
         strawberryBomb,      //イチゴ爆弾(3)
         charge,             //突進(4)
-        KnifeThrower,      //ナイフ投げ(5)
-        Rain,             //武器雨(6)
+        Jump,              //ジャンプ
+        KnifeThrower,     //ナイフ投げ(5)
+        Rain,            //武器雨(6)
+        
     }
 
     private Animator animator;
@@ -69,7 +71,10 @@ public class BossMove : MonoBehaviour
                     Boss1Attack BossAttack;
                     BossAttack = this.GetComponent<Boss1Attack>();
                     BossAttack.BossRush.Boss1Fork();
-                    //this.GetComponent<Boss1Attack>().BossRush.Boss1Fork();
+                }
+                else if (BossState == Boss_State.Jump)
+                {
+                    this.GetComponent<Boss1Attack>().BossJump.BossJamp();
                 }
                 else if (BossState == Boss_State.KnifeThrower)//もしボスの状態がナイフ投げの場合
                 {
@@ -137,18 +142,19 @@ public class BossMove : MonoBehaviour
             //ランダム数の生成とswitch分岐をこの中へ
             if(!UltFlg && HPgage.currentHp <= 30)
             {
+                Debug.Log("うるとだよ");
                 UltFlg = true;
                 SetState(Boss_State.Rain);
                 return;
             }
             if (HPgage.currentHp >= 51)
             {
-                RandomNumbe = Random.Range(1, 3);//攻撃パターンランダム化
+                RandomNumbe = Random.Range(3, 4);//攻撃パターンランダム化
                 Debug.Log("Random" + RandomNumbe);
             }
             else
             {
-                RandomNumbe = Random.Range(1, 4);//攻撃パターンランダム化
+                RandomNumbe = Random.Range(1, 5);//攻撃パターンランダム化
                 Debug.Log("Random" + RandomNumbe);
             }
             switch (RandomNumbe)            //switch分岐
@@ -165,19 +171,25 @@ public class BossMove : MonoBehaviour
                         Debug.Log("突進攻撃");
                         break;//break文
 
-                    case 3://ナイフ攻撃
-                            SetState(Boss_State.KnifeThrower);
+                    case 3://ジャンプ
+                            SetState(Boss_State.Jump);
                             RandomNumbe = -1;
-                        Debug.Log("ナイフ攻撃");
+                        Debug.Log("ジャンプ");
                         break;//break文
 
-                    case 4://雨攻撃
+                    case 4://ナイフ攻撃
+                    SetState(Boss_State.KnifeThrower);
+                    RandomNumbe = -1;
+                    Debug.Log("ナイフ攻撃");
+                    break;
+
+                    case 5://雨攻撃
                     SetState(Boss_State.Rain);
                     RandomNumbe = -1;
                     Debug.Log("雨攻撃");
                     break;
 
-                }
+            }
             
             
         }

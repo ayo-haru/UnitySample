@@ -11,6 +11,7 @@ public class Boss1Attack : MonoBehaviour
     public Boss1StrawBerry BossStrawberry;
     public Boss1KnifeThrow BossKnife;
     public Boss1Rain BossRain;
+    public Boss1Jamp BossJump;
     //É{ÉXÇÃçUåÇÇÃéÌóﬁ
     public enum BossAttack
     {
@@ -50,7 +51,8 @@ public class Boss1Attack : MonoBehaviour
         BossStrawberry = this.GetComponent<Boss1StrawBerry>();
         BossKnife = this.GetComponent<Boss1KnifeThrow>();
         BossRain = this.GetComponent<Boss1Rain>();
-        
+        BossJump = this.GetComponent<Boss1Jamp>();
+
         HpObject = GameObject.Find("HPGage");
         HpScript = HpObject.GetComponent<HPgage>();
         BossAnim = this.gameObject.GetComponent<Animator>();

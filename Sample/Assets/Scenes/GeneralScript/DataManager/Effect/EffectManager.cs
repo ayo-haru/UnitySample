@@ -47,6 +47,24 @@ public class EffectManager : MonoBehaviour
         Destroy(effect.gameObject, _destroyTime);
     }
 
+    public static ParticleSystem Play(EffectData.eEFFECT _effectDataNumber,Vector3 _pos ,Quaternion quaternion)
+    {
+        if (!EffectData.isSetEffect)
+        {
+            return　null; // エフェクトデータ未設定
+        }
+
+        //エフェクトを生成する
+        ParticleSystem effect = Instantiate(EffectData.EF[(int)_effectDataNumber]);
+        //エフェクトが発生する場所を決定する(敵オブジェクトの場所)
+        effect.transform.position = new Vector3(_pos.x, _pos.y, -5);
+        effect.transform.rotation = quaternion;
+
+        effect.Play();
+
+        return effect;
+
+    }
     /// <summary>
     /// エフェクトポーズ
     /// </summary>

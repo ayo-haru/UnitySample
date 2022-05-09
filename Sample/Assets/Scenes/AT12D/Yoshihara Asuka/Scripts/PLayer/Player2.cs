@@ -59,6 +59,7 @@ public class Player2 : MonoBehaviour
     //---コンポーネント取得
     public Rigidbody rb;
     public GameObject Weapon;                           // "Weapon"プレハブを格納する変数
+    private ParticleSystem ShiledEffect;                // エフェクト格納
     private GameObject hp;                              // HPのオブジェクトを格納
     private GameObject canvas;                          // キャンバスを格納
     private HPManager hpmanager;                        // HPManagerのコンポーネントを取得する変数
@@ -484,19 +485,30 @@ public class Player2 : MonoBehaviour
              _weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
                                                                 PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
                                                                 PlayerPos.z), Quaternion.identity);
+            ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+                                                                PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
+                                                                PlayerPos.z), Quaternion.identity);
+            
         }
         else
         {
              _weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
                                                     PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
                                                     PlayerPos.z), Quaternion.identity);
+            ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+                                                    PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
+                                                    PlayerPos.z), Quaternion.identity);
 
         }
-        
+
 
         //GameObject _weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
         //                                PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
         //                                PlayerPos.z), Quaternion.identity);
+
+        //---スティックの倒した方向に向かせる
+        //EffectManager.Play(EffectData.eEFFECT.EF_SHIELD,(weapon.transform.position) ,1.0f);
+
 
         //Debug.Log("盾出現"+weapon.transform.position);
 
@@ -507,20 +519,20 @@ public class Player2 : MonoBehaviour
         }
 
         _weapon.transform.Rotate(new Vector3(0, 0, (90 * AttackDirection.y)));
+        ShiledEffect.transform.Rotate(new Vector3(0, 0, (90 * AttackDirection.y)));
 
         //Debug.Log("攻撃した！(Weapon)");
         //EffectManager.Play(EffectData.eEFFECT.EF_SHEILD2,weapon.transform.position);
         SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
 
         Destroy(_weapon, DestroyTime);
+        Destroy(ShiledEffect, DestroyTime);
 
         AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする
 
         //StartCoroutine(CreateShiledCoroutine(0.17f));
         isAttack = false;
 
-        //---スティックの倒した方向に向かせる
-        //EffectManager.Play(EffectData.eEFFECT.EF_SHIELD,(weapon.transform.position) ,1.0f);
 
     }
     #endregion

@@ -136,6 +136,9 @@ public static class SaveManager {
         catch (Exception e)  //  —áŠOˆ—
         {
             sd = new SaveData();
+            //bgm‚Æse‚Ì‰Šú’lİ’è
+            sd.bgmVolume = SoundManager.bgmVolume;
+            sd.seVolume = SoundManager.seVolume;
         }
     }
 }

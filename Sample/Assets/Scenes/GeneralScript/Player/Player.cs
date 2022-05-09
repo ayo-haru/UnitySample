@@ -34,14 +34,11 @@ public class Player : MonoBehaviour
 
     private GameObject fadeimage;   // フェードのパネル
 
-    private float gameoverTime;
 
     // Start is called before the first frame update
     void Start()
     {
         fadeimage = GameObject.Find("Fade");
-
-        gameoverTime = 0.0f;
 
         isHitSavePoint = false;                     // フラグ初期化
         HitSavePointColorisRed = false;             // 赤色のセーブポイントと当たったか
@@ -67,7 +64,6 @@ public class Player : MonoBehaviour
             //Debug.Log("セーブポイントに当たってる");
             if (GamePadManager.onceTiltStick)
             {
-                Pause.isPause = true;
                 if (HitSavePointColorisRed)
                 {
                     Warp.canWarp = true;
@@ -144,12 +140,6 @@ public class Player : MonoBehaviour
     private void PlayerDeath() {
         GameOver.GameOverFlag = true;
         Pause.isPause = true;
-
-        gameoverTime += Time.deltaTime;
-        if(0.16f < gameoverTime)
-        {
-            //this.GetComponent<Player2>.
-        }
 
         //Vector3 effectPos;
         //effectPos = new Vector3(GameData.PlayerPos.x, GameData.PlayerPos.y + 10.0f, GameData.PlayerPos.z);

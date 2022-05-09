@@ -40,7 +40,7 @@ public static class EffectData
     public static ParticleSystem[] EF = new ParticleSystem[(int)eEFFECT.MAX_EF];
 
     public static bool isSetEffect = false;
-    public static bool oncePauseEffect = true;
+    public static bool onceSearchEffect = true;
     public static GameObject[] activeEffect = new GameObject[300];
     //public static ParticleSystem[] activeEffect = new ParticleSystem[(int)eEFFECT.MAX_EF * 5];
 

@@ -74,17 +74,19 @@ public class EffectManager : MonoBehaviour
             return;
         }
 
-        if (EffectData.oncePauseEffect) // ポーズに入ったら一回だけ実行（オブジェクトを探す処理が重いため））
+        if (EffectData.onceSearchEffect) // ポーズに入ったら一回だけ実行（オブジェクトを探す処理が重いため））
         {
             SetAllActiveEffect();   // 重たいから絶対に毎フレームやらない
-            EffectData.oncePauseEffect = false; // 一度だけやるためにフラグを下す
+            EffectData.onceSearchEffect = false; // 一度だけやるためにフラグを下す
         }
 
         for (int i = 0; i < EffectData.activeEffect.Length; i++) {  
             if (EffectData.activeEffect[i] != null)// エフェクトの数だけポーズする
             {
-                EffectData.activeEffect[i].GetComponent<ParticleSystem>().playbackSpeed = 0.0f;
+                //EffectData.activeEffect[i].GetComponent<ParticleSystem>().playbackSpeed = 0.0f;
                 //EffectData.activeEffect[i].playbackSpeed = 0.0f;
+                var main = EffectData.activeEffect[i].GetComponent<ParticleSystem>().main;
+                main.simulationSpeed = 0.0f;
             }
         }
     }
@@ -102,14 +104,92 @@ public class EffectManager : MonoBehaviour
         {
             if (EffectData.activeEffect[i] != null)// エフェクトの数だけポーズ解除
             {
-                EffectData.activeEffect[i].GetComponent<ParticleSystem>().playbackSpeed = 1.0f;
+                //EffectData.activeEffect[i].GetComponent<ParticleSystem>().playbackSpeed = 1.0f;
+                var main = EffectData.activeEffect[i].GetComponent<ParticleSystem>().main;
+                main.simulationSpeed = 1.0f;
+
                 //EffectData.activeEffect[i].playbackSpeed = 1.0f;
                 EffectData.activeEffect[i] = null;
             }
         }
 
-        EffectData.oncePauseEffect = true;
+        EffectData.onceSearchEffect = true;
     }
+
+    /// <summary>
+    /// エフェクトのスロー
+    /// </summary>
+    public static void EffectSlowStart() {
+        if (!EffectData.isSetEffect)    // エフェクトデータ未設定ならやらない
+        {
+            return;
+        }
+
+        if (EffectData.onceSearchEffect) // ポーズに入ったら一回だけ実行（オブジェクトを探す処理が重いため））
+        {
+            SetAllActiveEffect();   // 重たいから絶対に毎フレームやらない
+            EffectData.onceSearchEffect = false; // 一度だけやるためにフラグを下す
+        }
+
+        for (int i = 0; i < EffectData.activeEffect.Length; i++)
+        {
+            if (EffectData.activeEffect[i] != null)// エフェクトの数だけポーズする
+            {
+                if (EffectData.activeEffect[i].name == "Player_deth(Clone)")
+                {
+                    continue;
+                }
+                if (EffectData.activeEffect[i].name == "2_effect")
+                {
+                    continue;
+                }
+                if (EffectData.activeEffect[i].name == "sibou_kirakira")
+                {
+                    continue;
+                }
+
+
+                //EffectData.activeEffect[i].GetComponent<ParticleSystem>().playbackSpeed = 1.0f;
+                var main = EffectData.activeEffect[i].GetComponent<ParticleSystem>().main;
+                main.simulationSpeed = 0.3f;
+
+            }
+        }
+        EffectData.onceSearchEffect = true;
+    }
+
+    public static void EffectSlowFin() {
+        if (!EffectData.isSetEffect)    // エフェクトデータ未設定ならやらない
+        {
+            return;
+        }
+
+        for (int i = 0; i < EffectData.activeEffect.Length; i++)
+        {
+            if (EffectData.activeEffect[i] != null)// エフェクトの数だけポーズする
+            {
+                if (EffectData.activeEffect[i].name == "Player_deth(Clone)")
+                {
+                    continue;
+                }
+                if (EffectData.activeEffect[i].name == "2_effect")
+                {
+                    continue;
+                }
+                if (EffectData.activeEffect[i].name == "sibou_kirakira")
+                {
+                    continue;
+                }
+
+
+                //EffectData.activeEffect[i].GetComponent<ParticleSystem>().playbackSpeed = 0.3f;
+                var main = EffectData.activeEffect[i].GetComponent<ParticleSystem>().main;
+                main.simulationSpeed = 1.0f;
+
+            }
+        }
+    }
+
 
     /// <summary>
     /// 現在使われているエフェクトをすべて探す

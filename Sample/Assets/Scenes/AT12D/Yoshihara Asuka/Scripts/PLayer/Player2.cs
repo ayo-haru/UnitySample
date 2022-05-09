@@ -53,7 +53,7 @@ public class Player2 : MonoBehaviour
     private InputAction _Pause;                         // InputActionのpauseを扱う
 
     //---アニメーション関連
-    [SerializeField] private Animator animator;         // アニメーターコンポーネント取得
+    public Animator animator;         // アニメーターコンポーネント取得
     private AnimatorStateInfo stateInfo;
 
     //---コンポーネント取得
@@ -256,11 +256,14 @@ public class Player2 : MonoBehaviour
 
             GameData.PlayerVelocyty.Set(rb); 
         }
+        else if (GameOver.GameOverFlag)
+        {
+            //animator.speed = 1.0f;
+            rb.Pause(gameObject);
+        }
         else
         {
             animator.speed = 0.0f;
-            
-
             rb.Pause(gameObject);
         }
     }

@@ -25,9 +25,12 @@ public class Pause :MonoBehaviour
     public static void PauseStart() {
         //Time.timeScale = 0;
         //isPause = true;
-        Debug.Log("ポーズスタート");
         if (EffectData.isSetEffect && !GameOver.GameOverFlag){
             EffectManager.EffectPause();
+        }
+        else if (EffectData.isSetEffect && GameOver.GameOverFlag)
+        {
+            EffectManager.EffectSlowStart();
         }
 
         if (SoundData.isSetSound)  // サウンド未使用のシーンなら以下の処理をスキップ
@@ -49,10 +52,13 @@ public class Pause :MonoBehaviour
     public static void PauseFin() {
         //Time.timeScale = 1.0f;
         //isPause = false;
-        Debug.Log("ポーズフィン");
         if (EffectData.isSetEffect && !GameOver.GameOverFlag)
         {
             EffectManager.EffectUnPause();
+        }
+        else if (EffectData.isSetEffect && GameOver.GameOverFlag)
+        {
+            EffectManager.EffectSlowFin();
         }
 
 

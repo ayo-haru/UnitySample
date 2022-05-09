@@ -119,6 +119,16 @@ public class GamePause : MonoBehaviour
 
         if (!Pause.isPause || SaveManager.canSave || Warp.shouldWarp || GameData.isFadeIn || GameData.isFadeOut)
         {
+            //âπäyçƒê∂
+            if (GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE && GameData.CurrentMapNumber != (int)GameData.eSceneState.TITLE_SCENE)
+            {
+                GameObject kitchenBgmObject = GameObject.Find("BGMObject(Clone)");
+                if (kitchenBgmObject)
+                {
+                    kitchenBgmObject.GetComponent<AudioSource>().UnPause();
+                }
+            }
+
             PauseCharacter.GetComponent<UIBlink>().isHide = true;
             BackGame.GetComponent<UIBlink>().isHide = true;
             GameEnd.GetComponent<UIBlink>().isHide = true;
@@ -143,6 +153,16 @@ public class GamePause : MonoBehaviour
             BackTitle.GetComponent<UIBlink>().isHide = false;
             Option.GetComponent<UIBlink>().isHide = false;
             Panel.GetComponent<Image>().enabled = true;
+
+            //âπäyí‚é~
+            if (GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE && GameData.CurrentMapNumber != (int)GameData.eSceneState.TITLE_SCENE)
+            {
+                GameObject kitchenBgmObject = GameObject.Find("BGMObject(Clone)");
+                if (kitchenBgmObject)
+                {
+                    kitchenBgmObject.GetComponent<AudioSource>().Pause();
+                }
+            }
 
             isCalledOncce = true;
         }

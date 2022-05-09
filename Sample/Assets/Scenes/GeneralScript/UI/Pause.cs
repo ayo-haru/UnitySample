@@ -17,15 +17,6 @@ public class Pause :MonoBehaviour
     private void Update()
     {
         shouldPause.Value = isPause;
-
-        //if (shouldPause.Value)  // ポーズフラグによってポーズするかやめるか
-        //{
-        //    PauseStart();
-        //}
-        //else
-        //{
-        //    PauseFin();
-        //}
     }
 
     /// <summary>
@@ -35,7 +26,7 @@ public class Pause :MonoBehaviour
         //Time.timeScale = 0;
         //isPause = true;
         Debug.Log("ポーズスタート");
-        if (EffectData.isSetEffect){
+        if (EffectData.isSetEffect && !GameOver.GameOverFlag){
             EffectManager.EffectPause();
         }
 
@@ -59,7 +50,7 @@ public class Pause :MonoBehaviour
         //Time.timeScale = 1.0f;
         //isPause = false;
         Debug.Log("ポーズフィン");
-        if (EffectData.isSetEffect)
+        if (EffectData.isSetEffect && !GameOver.GameOverFlag)
         {
             EffectManager.EffectUnPause();
         }

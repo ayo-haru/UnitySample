@@ -30,22 +30,32 @@ public class Player : MonoBehaviour
     [System.NonSerialized]
     public static bool shouldRespawn;
 
+    private ObservedValue<int> checkHP; // HPの値を監視する
 
-    GameObject fadeimage;
+    private GameObject fadeimage;   // フェードのパネル
+
+    private float gameoverTime;
+
     // Start is called before the first frame update
     void Start()
     {
         fadeimage = GameObject.Find("Fade");
 
+        gameoverTime = 0.0f;
+
         isHitSavePoint = false;                     // フラグ初期化
         HitSavePointColorisRed = false;             // 赤色のセーブポイントと当たったか
         shouldRespawn = false;                      // リスポーンする時
+
+        checkHP = new ObservedValue<int>(GameData.CurrentHP);
+        checkHP.OnValueChange += () => { if (checkHP.Value < 1) PlayerDeath(); };
     }
 
     // Update is called once per frame
     void Update()
     {
         GameData.PlayerPos = this.transform.position;    // プレイヤーの位置を保存
+        checkHP.Value = GameData.CurrentHP;
 
         //if (this.transform.position.y < -10000) // 落下死時にリスポーン
         //{
@@ -112,12 +122,11 @@ public class Player : MonoBehaviour
             //---フェード
             //Pause.isPause = true;                 // フェード終わるまでポーズ
             Debug.Log("フェードはじめのポーズ");
-            EffectManager.Play(EffectData.eEFFECT.EF_DEATH, GameData.PlayerPos);
-            //if (!GameObject.Find("Player_deth(Clone)"))
-            //{
+            if (!GameObject.Find("Player_deth(Clone)"))
+            {
                 GameData.isFadeOut = true;              // フェードかける
                 GameOver.GameOverReset();               // りすぽん
-            //}
+            }
         }
 
 
@@ -130,6 +139,21 @@ public class Player : MonoBehaviour
                 //Pause.isPause = false;
             }
         }
+    }
+
+    private void PlayerDeath() {
+        GameOver.GameOverFlag = true;
+        Pause.isPause = true;
+
+        gameoverTime += Time.deltaTime;
+        if(0.16f < gameoverTime)
+        {
+            //this.GetComponent<Player2>.
+        }
+
+        //Vector3 effectPos;
+        //effectPos = new Vector3(GameData.PlayerPos.x, GameData.PlayerPos.y + 10.0f, GameData.PlayerPos.z);
+        EffectManager.Play(EffectData.eEFFECT.EF_DEATH, GameData.PlayerPos, 7.0f);
     }
 
 

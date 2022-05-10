@@ -67,7 +67,8 @@ public class Player2 : MonoBehaviour
     private ShieldManager shieldManager;                // 盾の最大数
 
     //---移動変数
-    private Vector3 PlayerPos;                          // プレイヤーの座標
+    private Vector3 PlayerPos;                                          // プレイヤーの座標
+    public Vector3[] OldPlayerPos = new Vector3[10];     // 数フレーム前の座標
     private Vector2 ForceDirection = Vector2.zero;      // 移動する方向を決める
     private Vector2 MovingVelocity = Vector3.zero;      // 移動するベクトル
     [SerializeField] private float maxSpeed = 50.0f;    // 移動スピード(歩く早さ)
@@ -174,6 +175,15 @@ public class Player2 : MonoBehaviour
 
         scale = transform.localScale;
         box_collider = gameObject.GetComponent<BoxCollider>();
+
+        PlayerPos = GameData.PlayerPos;
+
+        //---前フレームを格納する変数に現在の座標を格納
+        for(int i = 0; i <  10;i++)
+		{
+            OldPlayerPos[i] = PlayerPos;
+        }
+
     }
 
     // Update is called once per frame
@@ -199,6 +209,13 @@ public class Player2 : MonoBehaviour
 
             if (!CanHitStopflg){
                 animator.speed = 1.0f;
+            }
+
+            //---配列の更新
+            for (int i = 9; 1 < i; i--)
+            {
+                OldPlayerPos[i] = OldPlayerPos[i - 1];
+            Debug.Log("プレイヤー内ｵｰﾙﾄﾞﾎﾟｽ" + OldPlayerPos[i].x);
             }
 
 
@@ -254,7 +271,10 @@ public class Player2 : MonoBehaviour
                 animator.StopPlayback();
             }
 
-            GameData.PlayerVelocyty.Set(rb); 
+            GameData.PlayerVelocyty.Set(rb);
+            
+            //---0番目に現在の座標を格納
+            OldPlayerPos[0] = PlayerPos;
         }
         else if (GameOver.GameOverFlag)
         {
@@ -266,11 +286,19 @@ public class Player2 : MonoBehaviour
             animator.speed = 0.0f;
             rb.Pause(gameObject);
         }
+
     }
 
     private void FixedUpdate()
     {
         if (!Pause.isPause){
+
+            //OldPlayerPos[0] = PlayerPos;
+
+            //for (int i = 9; 1 < i ; i--){
+            //    OldPlayerPos[i] = OldPlayerPos[i - 1];
+            //}
+
 
             if (UnderParryNow == true || GroundNow == false)
             {
@@ -281,6 +309,8 @@ public class Player2 : MonoBehaviour
             {
                 Move("Velocity");
 
+                //OldPlayerPos[0] = PlayerPos;
+
             }
 
             if (isAttack && shieldManager.max_Quantity > shieldManager.now_Quantity){
@@ -290,6 +320,8 @@ public class Player2 : MonoBehaviour
         }
         else{
         }
+
+       // OldPlayerPos[0] = PlayerPos;
     }
     #region 移動処理
 

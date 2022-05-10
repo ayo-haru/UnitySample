@@ -25,7 +25,9 @@ public class WeaponCollision : MonoBehaviour
     //地面パリイした時のはね返り速度
     public float baunceGround = 2.0f;
     //壁キックした時のはね返り強さ
-    public float baunceWall = 2.0f;
+    public Vector2 baunceWall = new Vector2(10.0f, 1.0f);
+    //壁キックできる左右パリイの範囲
+    public float baunceWallArea = 0.1f;
     //シールドマネージャ
     ShieldManager shield_Manager;
 
@@ -88,20 +90,29 @@ public class WeaponCollision : MonoBehaviour
 
                 player2.rb.velocity = Vector3.zero;
 
-                if(player2.UnderParryNow && !player2.GroundNow && (dir.x >= 0.1f || dir.x <= -0.1f))
+                //ジャンプ中で、左右に盾が出されていた場合は壁キックする
+                if(!player2.GroundNow && (dir.x > baunceWallArea || dir.x < -baunceWallArea))
                 {
                     Debug.Log("壁キック");
-                    player_rb.AddForce(dir * baunceGround * baunceWall, ForceMode.Impulse);
+                    if(dir.x > 0)//右上
+                    {
+                        dir.x = baunceWall.x;
+                        dir.y = baunceWall.y;
+                        
+                    }
+                    else if(dir.x < 0)//左上
+                    {
+                        dir.x = -baunceWall.x;
+                        dir.y = baunceWall.y;
+                       
+                    }
                 }
-                else
-                {
-                    //地面パリイ
-                    //player_rb.AddForce(dir, ForceMode.Impulse);
-                    player_rb.AddForce(dir * baunceGround, ForceMode.Impulse);
-                    //player2.SetJumpPower(dir * baunceGround);
-                }
+                //地面パリイ
+                //player_rb.AddForce(dir, ForceMode.Impulse);
+                player_rb.AddForce(dir * baunceGround, ForceMode.Impulse);
+               //player2.SetJumpPower(dir * baunceGround);
 
-                    CanCollision = false;
+                CanCollision = false;
                 
             }
 

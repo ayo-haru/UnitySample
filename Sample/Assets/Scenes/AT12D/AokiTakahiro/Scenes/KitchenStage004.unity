@@ -4468,7 +4468,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 316906141117661478, guid: 14c0ba2fafc3d924ba9b093448ac4147, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -201
+      value: -276.9
       objectReference: {fileID: 0}
     - target: {fileID: 316906141117661478, guid: 14c0ba2fafc3d924ba9b093448ac4147, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11728,14 +11728,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1260918717}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5da5bb4d3d060884496dc765de038b0a, type: 3}
+  m_Script: {fileID: 11500000, guid: 6aa3974746f7d9b41bc6312cc0342a0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   FollowCameraPos: {x: 0, y: 30, z: -120}
-  RightScreenOut: 450
-  LeftScreenOut: 30
-  HeightScreenOut: 45
-  UnderScreenOut: 45
+  RightScreenOut: 540
+  LeftScreenOut: 110
+  OverScreenOut: 80
+  UnderScreenOut: 0
 --- !u!1001 &1262403807
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -116,6 +116,12 @@ public class KitchenSceneManager : MonoBehaviour {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                         GameData.PlayerPos = GameData.Player.transform.position = new Vector3(615.0f, 18.0f, 0.0f);
                     }
+                    else
+                    {
+                        GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
+                        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(50.0f, 16.5f, 0.0f);
+
+                    }
                     break;
 
                 //---ステージ5

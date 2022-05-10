@@ -324,8 +324,6 @@ public class Player2 : MonoBehaviour
        // OldPlayerPos[0] = PlayerPos;
     }
     #region 移動処理
-
-
     //===================================================================
     //  移動処理
     //===================================================================
@@ -436,9 +434,10 @@ public class Player2 : MonoBehaviour
     private void OnAttack(InputAction.CallbackContext obj)
     {
         isAttack = true;
-        
-    } 
-    private void Attack() {
+    }
+
+    public void Attack() {
+        Debug.Log("Player2のほう");
 
         //---振動させる
         //StartCoroutine(VibrationPlay(LowFrequency,HighFrequency));
@@ -490,6 +489,7 @@ public class Player2 : MonoBehaviour
             Debug.Log("したはじきした");
         }
 
+
         //モデルの向きと反対方向に盾出したらモデル回転
         if ((AttackDirection.x > 0 && beforeDir.x < 0) || (AttackDirection.x < 0 && beforeDir.x > 0))
         {
@@ -510,9 +510,6 @@ public class Player2 : MonoBehaviour
             transform.Rotate(new Vector3(transform.rotation.x, -transform.rotation.y, transform.rotation.z));
 
         }
-
-
-
         //---倒した値を基に盾の出す場所を指定
         if (AttackDirection.y > 0)          // 上パリィの時だけ上の出す位置を高めに設定
         {
@@ -520,9 +517,10 @@ public class Player2 : MonoBehaviour
              _weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
                                                                 PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
                                                                 PlayerPos.z), Quaternion.identity);
-            ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                                PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
-                                                                PlayerPos.z), Quaternion.identity);
+
+            //ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+            //                                                    PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
+            //                                                    PlayerPos.z), Quaternion.identity);
             
         }
         else
@@ -530,9 +528,9 @@ public class Player2 : MonoBehaviour
              _weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
                                                     PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
                                                     PlayerPos.z), Quaternion.identity);
-            ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                    PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
-                                                    PlayerPos.z), Quaternion.identity);
+            //ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+            //                                        PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
+            //                                        PlayerPos.z), Quaternion.identity);
 
         }
 
@@ -554,23 +552,27 @@ public class Player2 : MonoBehaviour
         }
 
         _weapon.transform.Rotate(new Vector3(0, 0, (90 * AttackDirection.y)));
-        ShiledEffect.transform.Rotate(new Vector3(0, 0, (90 * AttackDirection.y)));
+        //ShiledEffect.transform.Rotate(new Vector3(0, 0, (90 * AttackDirection.y)));
 
         //Debug.Log("攻撃した！(Weapon)");
         //EffectManager.Play(EffectData.eEFFECT.EF_SHEILD2,weapon.transform.position);
         SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
 
         Destroy(_weapon, DestroyTime);
-        Destroy(ShiledEffect, DestroyTime);
+        //Destroy(ShiledEffect, DestroyTime);
 
         AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする
 
         //StartCoroutine(CreateShiledCoroutine(0.17f));
         isAttack = false;
-
-
     }
     #endregion
+
+    public void SetAttackFlg(bool flg)
+	{
+        isAttack = flg;
+	}
+
 
     #region 盾出現コルーチン
     private IEnumerator CreateShiledCoroutine(float delaytime)

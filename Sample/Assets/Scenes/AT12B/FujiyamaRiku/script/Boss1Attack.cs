@@ -81,7 +81,7 @@ public class Boss1Attack : MonoBehaviour
         if (!GameData.isAliveBoss1)
         {
             //‚»‚ê‚¼‚ê‚Ì‰Šú‰»‚ğ‚©‚¯‚é
-
+            BossAnim.speed = 0f;
             //ƒ{ƒX‚ğ“|‚µ‚½‰½‚©‚ª‹N‚±‚éê–Ê‚ÉˆÚ“®
             Boss1Manager.BossState = Boss1Manager.Boss1State.BOSS1_END;
         }

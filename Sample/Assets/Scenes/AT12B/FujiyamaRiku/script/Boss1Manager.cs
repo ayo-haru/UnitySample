@@ -32,6 +32,7 @@ public class Boss1Manager : MonoBehaviour
     BossEntry Entry;
     private Vector3 WarpEFPoint;
     private bool PlayEffect = false;
+    
     private void Awake()
     {
         //ƒ{ƒX‚ð“|‚µ‚½‚©‚Ç‚¤‚©‚Ì”»’è

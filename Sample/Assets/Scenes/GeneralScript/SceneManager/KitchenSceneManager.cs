@@ -50,7 +50,9 @@ public class KitchenSceneManager : MonoBehaviour {
             GameData.PlayerPos = GameData.Player.transform.position = GameData.ReSpawnPos;
         }
         else
-        { 
+        {
+            Debug.Log("<color=red>続きから初期化失敗</color>");
+
             //---ゲームシーンをシーン遷移してきた場合やはじめからやる場合
             switch (GameData.CurrentMapNumber)
             {
@@ -118,7 +120,6 @@ public class KitchenSceneManager : MonoBehaviour {
 
                 //---ステージ5
                 case (int)GameData.eSceneState.KitchenStage005:
-                    Debug.Log("<color=red>続きから初期化失敗</color>");
                     if (GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage004)
                     {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);

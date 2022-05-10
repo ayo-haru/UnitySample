@@ -53,8 +53,6 @@ public class TitleSceneManager : MonoBehaviour {
         //----- シーン -----
         SaveManager.load();
         GameData.LoadData();
-        GameData.ReSpawnPos = SaveManager.sd.LastPlayerPos;
-        GameData.NextMapNumber = SaveManager.sd.LastMapNumber;
         GameData.CurrentMapNumber = (int)GameData.eSceneState.TITLE_SCENE;
 
         //----- サウンド -----

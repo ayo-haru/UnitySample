@@ -28,25 +28,25 @@ public class CallAnimEvent : MonoBehaviour
     /// <summary>
     /// 登録したOnCreateShiled()で行う処理を記載
     /// </summary>
- //   public void OnCreateShiled()
-	//{
- //       player2.Attack();
- //       Debug.Log("アニメーションイベントのほう");
-	//}
+    //   public void OnCreateShiled()
+    //{
+    //       player2.Attack();
+    //       Debug.Log("アニメーションイベントのほう");
+    //}
 
- //   /// <summary>
- //   /// アニメーション開始時にアタックフラグを立てる
- //   /// </summary>
- //   public void StartAnim()
-	//{
- //       player2.SetAttackFlg(true);
-	//}
+    //   /// <summary>
+    //   /// アニメーション開始時にアタックフラグを立てる
+    //   /// </summary>
+    //   public void StartAnim()
+    //{
+    //       player2.SetAttackFlg(true);
+    //}
 
- //   /// <summary>
- //   /// アニメーション終了時にアタック許可フラグおろす
- //   /// </summary>
- //   public void EndAnim()
-	//{
- //       player2.SetAttackFlg(false);
-	//}
+    /// <summary>
+    /// アニメーション終了時にアタック許可フラグおろす
+    /// </summary>
+    public void EndAnim()
+    {
+        player2.SetAttackFlg(false);
+    }
 }

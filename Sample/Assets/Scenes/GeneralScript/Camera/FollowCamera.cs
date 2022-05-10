@@ -47,20 +47,11 @@ public class FollowCamera : MonoBehaviour
 
         Vector3 PlayerPos = GameData.PlayerPos;
 
-		//transform.position = Vector3.Lerp(transform.position, (Player.transform.position + Offset), 0.1f);
-		//transform.position = Vector3.Lerp(Player.transform.position, transform.position, 2f * Time.deltaTime);
-
-
 		// *****座標*****
 		//transform.position = new Vector3(PlayerPos.x,
 		//                         FollowCameraPos.y,
 		//                         FollowCameraPos.z);                               // ジャンプ追従
 
-		//if(Offset.x > 20.0f) {
-		//    transform.position = new Vector3(Offset.x,
-		//                         Offset.y + FollowCameraPos.y,
-		//                         FollowCameraPos.z);                       // ジャンプ追従
-		//}
 		//transform.position = new Vector3(PlayerPos.x,
 		//								 PlayerPos.y + FollowCameraPos.y,
 		//								 FollowCameraPos.z);                       // ジャンプ追従

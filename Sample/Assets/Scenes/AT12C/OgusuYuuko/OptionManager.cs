@@ -138,11 +138,11 @@ public class OptionManager : MonoBehaviour
          スティックで選択した場合は下のいふぶんでひっかかる
          */
 
-        if (old_select == select)
-        {
-            //選択が変わってなかったらリターン
-            return;
-        }
+        //if (old_select == select)
+        //{
+        //    //選択が変わってなかったらリターン
+        //    return;
+        //}
 
         Vector3 newPos;
         switch (select)
@@ -206,11 +206,11 @@ public class OptionManager : MonoBehaviour
         doLeftStick = LeftStickSelect.ReadValue<Vector2>();
 
         //---少しでも倒されたら処理に入る
-        if (doLeftStick.y > 0.0f)
+        if (doLeftStick.y > 0.05f)
         {
             SelectUp();
         }
-        else if (doLeftStick.y < -0.0f)
+        else if (doLeftStick.y < -0.05f)
         {
             SelectDown();
         }
@@ -223,12 +223,12 @@ public class OptionManager : MonoBehaviour
         doRightStick = RightStickSelect.ReadValue<Vector2>();
 
         //---少しでも倒されたら処理に入る
-        if (doRightStick.y > 0.0f)
+        if (doRightStick.y > 0.05f)
         {
             //SelectBGM();
             SelectUp();
         }
-        else if (doRightStick.y < -0.0f)
+        else if (doRightStick.y < -0.05f)
         {
             //SelectSE();
             SelectDown();

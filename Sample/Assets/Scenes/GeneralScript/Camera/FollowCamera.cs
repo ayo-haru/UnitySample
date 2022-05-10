@@ -61,15 +61,25 @@ public class FollowCamera : MonoBehaviour
 		//                         Offset.y + FollowCameraPos.y,
 		//                         FollowCameraPos.z);                       // ジャンプ追従
 		//}
-		transform.position = new Vector3(PlayerPos.x,
-										 PlayerPos.y + FollowCameraPos.y,
-										 FollowCameraPos.z);                       // ジャンプ追従
+		//transform.position = new Vector3(PlayerPos.x,
+		//								 PlayerPos.y + FollowCameraPos.y,
+		//								 FollowCameraPos.z);                       // ジャンプ追従
 
 		//---前フレームの座標で追従
-		//transform.position = new Vector3(player2.OldPlayerPos[2].x,
-		//                                                       player2.OldPlayerPos[2].y + FollowCameraPos.y,
-		//                                                       FollowCameraPos.z);
-		//Debug.Log("カメラ内ｵｰﾙﾄﾞﾎﾟｽ"+player2.OldPlayerPos[2].x);
+		//---佐々木先生プログラム
+		Vector3 move = (player2.OldPlayerPos[0] - transform.position) * 0.01f;
+		move.z = 0;
+		transform.position += move;
+		new Vector3(player2.OldPlayerPos[1].x,
+							player2.OldPlayerPos[1].y + FollowCameraPos.y,
+							FollowCameraPos.z);
+
+		//Debug.Log("カメラ内ｵｰﾙﾄﾞﾎﾟｽ" + player2.OldPlayerPos[9].x);
+		
+		//---もとのやつ
+		//transform.position = new Vector3(PlayerPos.x,
+		//												player2.OldPlayerPos[5].y + FollowCameraPos.y,
+		//												FollowCameraPos.z);
 
 		////---画面外設定(x = 45.0fの地点に到達したらカメラの移動を停止)
 		if (PlayerPos.x > RightScreenOut){

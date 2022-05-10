@@ -47,32 +47,32 @@ public class FollowCamera : MonoBehaviour
 
         Vector3 PlayerPos = GameData.PlayerPos;
 
-        //transform.position = Vector3.Lerp(transform.position, (Player.transform.position + Offset), 0.1f);
-        //transform.position = Vector3.Lerp(Player.transform.position, transform.position, 2f * Time.deltaTime);
+		//transform.position = Vector3.Lerp(transform.position, (Player.transform.position + Offset), 0.1f);
+		//transform.position = Vector3.Lerp(Player.transform.position, transform.position, 2f * Time.deltaTime);
 
 
-        // *****座標*****
-        //transform.position = new Vector3(PlayerPos.x,
-        //                         FollowCameraPos.y,
-        //                         FollowCameraPos.z);                               // ジャンプ追従
+		// *****座標*****
+		//transform.position = new Vector3(PlayerPos.x,
+		//                         FollowCameraPos.y,
+		//                         FollowCameraPos.z);                               // ジャンプ追従
 
-        //if(Offset.x > 20.0f) {
-        //    transform.position = new Vector3(Offset.x,
-        //                         Offset.y + FollowCameraPos.y,
-        //                         FollowCameraPos.z);                       // ジャンプ追従
-        //}
-        //transform.position = new Vector3(PlayerPos.x,
-        //                                 PlayerPos.y + FollowCameraPos.y,
-        //                                 FollowCameraPos.z);                       // ジャンプ追従
+		//if(Offset.x > 20.0f) {
+		//    transform.position = new Vector3(Offset.x,
+		//                         Offset.y + FollowCameraPos.y,
+		//                         FollowCameraPos.z);                       // ジャンプ追従
+		//}
+		transform.position = new Vector3(PlayerPos.x,
+										 PlayerPos.y + FollowCameraPos.y,
+										 FollowCameraPos.z);                       // ジャンプ追従
 
-        //---前フレームの座標で追従
-        transform.position = new Vector3(player2.OldPlayerPos[2].x,
-                                                               player2.OldPlayerPos[2].y + FollowCameraPos.y,
-                                                               FollowCameraPos.z);
-        Debug.Log("カメラ内ｵｰﾙﾄﾞﾎﾟｽ"+player2.OldPlayerPos[2].x);
+		//---前フレームの座標で追従
+		//transform.position = new Vector3(player2.OldPlayerPos[2].x,
+		//                                                       player2.OldPlayerPos[2].y + FollowCameraPos.y,
+		//                                                       FollowCameraPos.z);
+		//Debug.Log("カメラ内ｵｰﾙﾄﾞﾎﾟｽ"+player2.OldPlayerPos[2].x);
 
-        ////---画面外設定(x = 45.0fの地点に到達したらカメラの移動を停止)
-        if (PlayerPos.x > RightScreenOut){
+		////---画面外設定(x = 45.0fの地点に到達したらカメラの移動を停止)
+		if (PlayerPos.x > RightScreenOut){
 			//transform.position = new Vector3(45.0f, 0.7f, PlayerPos.z - 4.5f);
 			transform.position = new Vector3(RightScreenOut,PlayerPos.y + FollowCameraPos.y,FollowCameraPos.z);         // ジャンプ追従
 		    //if (PlayerPos.x >= MovePoint){

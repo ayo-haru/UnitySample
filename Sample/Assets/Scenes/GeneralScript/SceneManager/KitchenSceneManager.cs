@@ -16,7 +16,7 @@ public class KitchenSceneManager : MonoBehaviour {
 
 
     void Awake() {
-        Time.timeScale = 1.0f;   // ゲーム開始時は絶対にゲームのスピードは１
+        //Time.timeScale = 1.0f;   // ゲーム開始時は絶対にゲームのスピードは１
 
 
 

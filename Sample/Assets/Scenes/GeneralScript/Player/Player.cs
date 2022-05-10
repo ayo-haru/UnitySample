@@ -107,13 +107,9 @@ public class Player : MonoBehaviour
         //---ゲームオーバー
         if (GameData.CurrentHP < 1)
         {
-            //GameObject.Find("Canvas").GetComponent<GameOver>().GameOverShow();
-            //hp.GetComponent<GameOver>().GameOverShow();
             shouldRespawn = false;
 
             //---フェード
-            //Pause.isPause = true;                 // フェード終わるまでポーズ
-            Debug.Log("フェードはじめのポーズ");
             if (!GameObject.Find("Player_deth(Clone)"))
             {
                 GameData.isFadeOut = true;              // フェードかける

@@ -211,12 +211,12 @@ public class Player2 : MonoBehaviour
                 animator.speed = 1.0f;
             }
 
-            //---配列の更新
-            for (int i = 9; 1 < i; i--)
-            {
-                OldPlayerPos[i] = OldPlayerPos[i - 1];
-            Debug.Log("プレイヤー内ｵｰﾙﾄﾞﾎﾟｽ" + OldPlayerPos[i].x);
-            }
+            ////---配列の更新
+            //for (int i = 9; 1 < i; i--)
+            //{
+            //    OldPlayerPos[i] = OldPlayerPos[i - 1];
+            //Debug.Log("プレイヤー内ｵｰﾙﾄﾞﾎﾟｽ" + OldPlayerPos[i].x);
+            //}
 
 
             rb.Resume(gameObject);
@@ -274,7 +274,7 @@ public class Player2 : MonoBehaviour
             GameData.PlayerVelocyty.Set(rb);
             
             //---0番目に現在の座標を格納
-            OldPlayerPos[0] = PlayerPos;
+            //OldPlayerPos[0] = PlayerPos;
         }
         else if (GameOver.GameOverFlag)
         {
@@ -291,14 +291,25 @@ public class Player2 : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!Pause.isPause){
+        if (!Pause.isPause) {
+             for (int i = 9; 1 <= i; i--)
+             {
+                 OldPlayerPos[i] = OldPlayerPos[i - 1];
+                 //.Log("プレイヤー内ｵｰﾙﾄﾞﾎﾟｽ" + OldPlayerPos[i].x);
 
-            //OldPlayerPos[0] = PlayerPos;
+             }
+             OldPlayerPos[0] = this.transform.position;
+             //OldPlayerPos[0] = PlayerPos;
+             // Debug.Log("プレイヤー内ｵｰﾙﾄﾞﾎﾟｽ" + OldPlayerPos[9].x);
 
-            //for (int i = 9; 1 < i ; i--){
-            //    OldPlayerPos[i] = OldPlayerPos[i - 1];
-            //}
 
+            if (Input.GetKey(KeyCode.Return))
+            {
+                for (int i = 9; 1 <= i; i--)
+                {
+                    Debug.Log("プレイヤー内座標配列" + OldPlayerPos[i].x);
+                }
+            }
 
             if (UnderParryNow == true || GroundNow == false)
             {

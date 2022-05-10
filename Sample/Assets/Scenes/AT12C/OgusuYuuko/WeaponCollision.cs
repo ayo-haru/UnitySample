@@ -24,6 +24,8 @@ public class WeaponCollision : MonoBehaviour
     Rigidbody player_rb;
     //地面パリイした時のはね返り速度
     public float baunceGround = 2.0f;
+    //壁キックした時のはね返り強さ
+    public float baunceWall = 2.0f;
     //シールドマネージャ
     ShieldManager shield_Manager;
 
@@ -86,12 +88,21 @@ public class WeaponCollision : MonoBehaviour
 
                 player2.rb.velocity = Vector3.zero;
 
-                //地面パリイ
-                //player_rb.AddForce(dir, ForceMode.Impulse);
-                player_rb.AddForce(dir * baunceGround, ForceMode.Impulse);
-                //player2.SetJumpPower(dir * baunceGround);
+                if(player2.UnderParryNow && !player2.GroundNow && (dir.x >= 0.1f || dir.x <= -0.1f))
+                {
+                    Debug.Log("壁キック");
+                    player_rb.AddForce(dir * baunceGround * baunceWall, ForceMode.Impulse);
+                }
+                else
+                {
+                    //地面パリイ
+                    //player_rb.AddForce(dir, ForceMode.Impulse);
+                    player_rb.AddForce(dir * baunceGround, ForceMode.Impulse);
+                    //player2.SetJumpPower(dir * baunceGround);
+                }
 
-                CanCollision = false;
+                    CanCollision = false;
+                
             }
 
             if (collision.gameObject.tag == "Enemy")

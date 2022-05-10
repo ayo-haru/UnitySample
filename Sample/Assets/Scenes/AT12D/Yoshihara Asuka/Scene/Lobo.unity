@@ -508,6 +508,23 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   priority: 0
+--- !u!114 &434885787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434885785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa3974746f7d9b41bc6312cc0342a0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FollowCameraPos: {x: 0, y: 30, z: -100}
+  RightScreenOut: 150
+  LeftScreenOut: -180
+  OverScreenOut: 200
+  UnderScreenOut: -100
 --- !u!4 &447696812 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2982211362082745533, guid: 9f4c7ddd83ecf7f4a8f62e2096430e05, type: 3}
@@ -2352,6 +2369,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1626826598389013088, guid: 66484a56e0a98ac47ab1faf7c46a53bd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1626826598389013088, guid: 66484a56e0a98ac47ab1faf7c46a53bd, type: 3}
       propertyPath: FollowCameraPos.y
       value: 10

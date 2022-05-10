@@ -120,36 +120,36 @@ public class DebugClear : MonoBehaviour
         //{
         //    MAP_UI.SetActive(true);
         //}
-        //if (Input.GetKeyDown(KeyCode.F3))
-        //{
-        //    GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage001;
-        //    Debug.Log("シーン" + GameData.CurrentMapNumber);
-        //}
-        //if (Input.GetKeyDown(KeyCode.F4))
-        //{
-        //    GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage002;
-        //    Debug.Log("シーン" + GameData.CurrentMapNumber);
-        //}
-        //if (Input.GetKeyDown(KeyCode.F5))
-        //{
-        //    GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage003;
-        //    Debug.Log("シーン" + GameData.CurrentMapNumber);
-        //}
-        //if (Input.GetKeyDown(KeyCode.F6))
-        //{
-        //    GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage004;
-        //    Debug.Log("シーン" + GameData.CurrentMapNumber);
-        //}
-        //if (Input.GetKeyDown(KeyCode.F7))
-        //{
-        //    GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage005;
-        //    Debug.Log("シーン" + GameData.CurrentMapNumber);
-        //}
-        //if (Input.GetKeyDown(KeyCode.F8))
-        //{
-        //    GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage006;
-        //    Debug.Log("シーン" + GameData.CurrentMapNumber);
-        //}
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage001;
+            Debug.Log("シーン" + GameData.CurrentMapNumber);
+        }
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage002;
+            Debug.Log("シーン" + GameData.CurrentMapNumber);
+        }
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage003;
+            Debug.Log("シーン" + GameData.CurrentMapNumber);
+        }
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage004;
+            Debug.Log("シーン" + GameData.CurrentMapNumber);
+        }
+        if (Input.GetKeyDown(KeyCode.F7))
+        {
+            GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage005;
+            Debug.Log("シーン" + GameData.CurrentMapNumber);
+        }
+        if (Input.GetKeyDown(KeyCode.F8))
+        {
+            GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage006;
+            Debug.Log("シーン" + GameData.CurrentMapNumber);
+        }
 
 
 

@@ -605,6 +605,7 @@ GameObject:
   - component: {fileID: -5299233853024975166}
   - component: {fileID: 5176105881544950201}
   - component: {fileID: 6899721702006964343}
+  - component: {fileID: -6294767752424989994}
   m_Layer: 3
   m_Name: Rulaby
   m_TagString: Player
@@ -620,7 +621,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1774375754255055915}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 30, y: 16, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 829700439875639173}
@@ -777,6 +778,18 @@ MonoBehaviour:
   ShakePower: 0.02
   ShakeDecay: 0.002
   ShakeAmount: 0.2
+--- !u!114 &-6294767752424989994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774375754255055915}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9561508a2332284f9b6072f92e209b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1816612466206909431
 GameObject:
   m_ObjectHideFlags: 0

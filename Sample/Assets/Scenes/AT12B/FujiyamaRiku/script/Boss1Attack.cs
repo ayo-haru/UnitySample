@@ -35,10 +35,11 @@ public class Boss1Attack : MonoBehaviour
     private GameObject HpObject;
     public HPgage HpScript;
     public Animator BossAnim;
+    [System.NonSerialized]  public Vector3 Scale;
     [System.NonSerialized] public bool WeaponAttackFlg;                            //武器使う攻撃変更 true = 雨攻撃 false = 突進orナイフ
     [System.NonSerialized] public bool RFChange;                                          //左右反転 true = 左から攻撃 false = 右から攻撃
     BossMove.Boss_State BossTakeCase;
-
+    [System.NonSerialized] public bool JampFlg;
     //実装するかわからない左右判定用
     [System.NonSerialized] public int RFNum;
     GameObject Forkobj;                                     //フォークのオブジェクト生成用
@@ -52,7 +53,7 @@ public class Boss1Attack : MonoBehaviour
         BossKnife = this.GetComponent<Boss1KnifeThrow>();
         BossRain = this.GetComponent<Boss1Rain>();
         BossJump = this.GetComponent<Boss1Jamp>();
-
+        Scale = Boss1Manager.Boss.transform.localScale;
         HpObject = GameObject.Find("HPGage");
         HpScript = HpObject.GetComponent<HPgage>();
         BossAnim = this.gameObject.GetComponent<Animator>();

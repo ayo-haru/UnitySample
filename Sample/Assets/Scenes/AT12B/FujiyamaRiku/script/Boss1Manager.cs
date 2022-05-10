@@ -41,6 +41,7 @@ public class Boss1Manager : MonoBehaviour
             BossState = Boss1State.BOSS1_DEAD;
             return;
         }
+        
         Entry = GameObject.Find("BossStageManager").GetComponent<BossEntry>();
         Bossobj = (GameObject)Resources.Load("PanCake");
 

@@ -17,11 +17,13 @@ public class BossMove : MonoBehaviour
         
     }
 
+    private Boss1Attack BossAttack;
+
     private Animator animator;
     //ボスが登場した最初の位置
     private Vector3 defaultPos;
     //ボスの状態
-    static private Boss_State BossState = Boss_State.idle;
+    static private Boss_State BossState;
     //idle状態の経過時間
     private float elapsedTimeOfIdleState = 0f;
     //idle状態で留まる時間
@@ -36,13 +38,17 @@ public class BossMove : MonoBehaviour
     [SerializeField]
     private int MaxAttack = 2;
     //必殺技用フラグ(〇%以下になったとき一回)
-    private bool UltFlg;
+    bool UltFlg;
+
 
     // Start is called before the first frame update
     void Start()
     {
         //animator = GetComponent<Animator>();アニメーション追加した場合
         defaultPos = transform.position;//デフォルトの出現位置をtransform.positionから取得
+        BossAttack = this.GetComponent<Boss1Attack>();
+        UltFlg = false;
+        BossState = Boss_State.idle;
     }
 
     // Update is called once per frame
@@ -63,13 +69,12 @@ public class BossMove : MonoBehaviour
                 else if (BossState == Boss_State.strawberryBomb)//もしボスの状態がイチゴ爆弾の場合
                 {
                     //strawberryBomb();
-                    this.GetComponent<Boss1Attack>().BossStrawberry.Boss1Strawberry();
+                    BossAttack.BossStrawberry.Boss1Strawberry();
                 }
                 else if (BossState == Boss_State.charge)//もしボスの状態が突進の場合
                 {
                     //charge();
-                    Boss1Attack BossAttack;
-                    BossAttack = this.GetComponent<Boss1Attack>();
+                    
                     BossAttack.BossRush.Boss1Fork();
                 }
                 else if (BossState == Boss_State.Jump)
@@ -79,11 +84,11 @@ public class BossMove : MonoBehaviour
                 else if (BossState == Boss_State.KnifeThrower)//もしボスの状態がナイフ投げの場合
                 {
                     //KnifeThrower();
-                    this.GetComponent<Boss1Attack>().BossKnife.Boss1Knife();
+                    BossAttack.BossKnife.Boss1Knife();
                 }
                 else if(BossState == Boss_State.Rain)
                 {
-                    this.GetComponent<Boss1Attack>().BossRain.BossRain();
+                    BossAttack.BossRain.BossRain();
                 }
             }
         }
@@ -149,13 +154,26 @@ public class BossMove : MonoBehaviour
             }
             if (HPgage.currentHp >= 51)
             {
-                RandomNumbe = Random.Range(3, 4);//攻撃パターンランダム化
-                Debug.Log("Random" + RandomNumbe);
+                
+                    RandomNumbe = Random.Range(1, 4);//攻撃パターンランダム化
+                    Debug.Log("Random" + RandomNumbe);
+                if(BossAttack.JampFlg)
+                {
+                    RandomNumbe = Random.Range(1, 3);//攻撃パターンランダム化
+                    BossAttack.JampFlg = false;
+                }
             }
             else
             {
-                RandomNumbe = Random.Range(1, 5);//攻撃パターンランダム化
-                Debug.Log("Random" + RandomNumbe);
+               RandomNumbe = Random.Range(1, 5);//攻撃パターンランダム化
+               if(BossAttack.JampFlg)
+               {
+                    if(RandomNumbe == 3)
+                    {
+                        RandomNumbe = 4;
+                        BossAttack.JampFlg = false;
+                    }
+                }
             }
             switch (RandomNumbe)            //switch分岐
                 {

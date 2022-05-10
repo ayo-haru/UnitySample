@@ -32,6 +32,7 @@ public struct SaveData {
     public int PieceGrade;
     public float bgmVolume;
     public float seVolume;
+    public bool[,] isStarGet; 
 }
 /*
     シリアライズとは
@@ -98,7 +99,14 @@ public static class SaveManager {
         sd.seVolume = _seVolume;
         save();
     }
-
+    public static void saveIsStarGet(bool[,] _flag) {
+        for(int i = 0;i < 10; i++){
+            for(int j = 0;j < 10; j++)
+            {
+                sd.isStarGet[i,j] = _flag[i,j];
+            }
+        }
+    }
 
 
 

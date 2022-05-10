@@ -10,14 +10,12 @@ public class Boss1Jamp : MonoBehaviour
     Vector3 JumpStartPoint;
     Vector3 JumpMiddlePoint;
     Vector3 JumpEndPoint;
-    Vector3 Scale;
     Vector3 Rotate;
 
     // Start is called before the first frame update
     void Start()
     {
         BossAttack = this.GetComponent<Boss1Attack>();
-        Scale = Boss1Manager.Boss.transform.localScale;
     }
 
     // Update is called once per frame
@@ -35,7 +33,9 @@ public class Boss1Jamp : MonoBehaviour
         }
         if (!BossAttack.OnlyFlg)
         {
-            Scale.x *= -1;
+            BossAttack.JampFlg = true;
+            Debug.Log("ç¢Ç¡ÇƒÇ‹Ç∑");
+            BossAttack.Scale.x *= -1;
             if (!BossAttack.RFChange)
             {
                 BossAttack.OnlyFlg = true;
@@ -54,8 +54,7 @@ public class Boss1Jamp : MonoBehaviour
             }
 
         }
-        Debug.Log("ÇíÅ|ÇƒÅ[ÇµÇÂÇÒ" + Scale);
-        Boss1Manager.Boss.transform.localScale = Scale;
+        Boss1Manager.Boss.transform.localScale = BossAttack.Scale;
         //âÒì]ÇÃñ⁄ïWíl
         Quaternion target = new Quaternion();
         //å¸Ç´Çê›íË

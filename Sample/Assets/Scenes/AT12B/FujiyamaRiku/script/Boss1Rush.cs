@@ -25,7 +25,6 @@ public class Boss1Rush : MonoBehaviour
     bool RushEndFlg;
     float RushReturnSpeed;
     bool ReturnDelay;                                      //戻ろうとするまでの時間
-    Vector3 Scale;
     Vector3 oldScale;
     [SerializeField] public float RotateSpeed;
     Vector3 Rotate;
@@ -33,7 +32,6 @@ public class Boss1Rush : MonoBehaviour
     void Start()
     {
         Forkobj = (GameObject)Resources.Load("Fork");
-        Scale = Boss1Manager.Boss.transform.localScale;
         BossAttack = this.GetComponent<Boss1Attack>();
         
     }
@@ -75,7 +73,7 @@ public class Boss1Rush : MonoBehaviour
                 {
                     Debug.Log("あああああああああああああああああああああああ！！！");
                     //方向が変わってたらスケールｘを反転
-                    Boss1Manager.Boss.transform.localScale = Scale;
+                    Boss1Manager.Boss.transform.localScale = BossAttack.Scale;
                     //回転の目標値
                     Quaternion target = new Quaternion();
                     //向きを設定
@@ -146,7 +144,7 @@ public class Boss1Rush : MonoBehaviour
                 Boss1Manager.BossPos = Vector3.Lerp(RushStartPoint, RushEndPoint, RushTime);
                 if (RushTime >= 1.0f)
                 {
-                    Scale.x *= -1;
+                    BossAttack.Scale.x *= -1;
                     RushReturnSpeed = 1f;
                     RushEndFlg = true;
                     BossReturnFlg = true;

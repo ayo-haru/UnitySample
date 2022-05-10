@@ -78,10 +78,6 @@ public class Player : MonoBehaviour
 
         if (SaveManager.shouldSave) // セーブするが選択されたら
         {
-            Debug.Log("セーブした");
-            //GameData.ReSpawnPos = this.transform.position;              // プレイヤーの位置を保存
-            //SaveManager.saveLastPlayerPos(GameData.ReSpawnPos);         // プレイヤーの位置を保存
-            //GameData.ReSpawnPos = this.transform.position;              // プレイヤーの位置を保存
             SaveManager.saveLastPlayerPos(GameData.PlayerPos);         // プレイヤーの位置を保存
 
             SaveManager.saveBossAlive(GameData.isAliveBoss1);           // ボス１の生存フラグを保存
@@ -89,8 +85,8 @@ public class Player : MonoBehaviour
             SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);   // 今いるマップの番号を保存
             SaveManager.saveCurrentPiece(GameData.CurrentPiece);        // 現在のかけらを保存
             SaveManager.savePieceGrade(GameData.CurrentPieceGrade);     // 現在のかけらの枠を保存
-            //SaveManager.saveFireOnOff(GameData.FireOnOff);
-            //SaveManager.saveGateOnOff(GameData.GateOnOff);
+            SaveManager.saveFireOnOff(GameData.FireOnOff);
+            SaveManager.saveGateOnOff(GameData.GateOnOff);
             SaveManager.canSave = false;                                // セーブが終わったのでフラグを下す
             SaveManager.shouldSave = false;
         }

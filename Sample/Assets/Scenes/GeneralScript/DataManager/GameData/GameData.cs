@@ -94,14 +94,12 @@ public static class GameData {
     }
 
     public static void LoadData() {
-        //SaveManager.load();
         ReSpawnPos = SaveManager.sd.LastPlayerPos;
         NextMapNumber = SaveManager.sd.LastMapNumber;
-        Debug.Log("ロードデータ" + ReSpawnPos);
         CurrentHP = SaveManager.sd.HP;
-        //isAliveBoss1 = SaveManager.sd.isBoss1Alive;
-        //FireOnOff = SaveManager.sd.fireOnOff;
-        //GateOnOff = SaveManager.sd.gateOnOff;
+        isAliveBoss1 = SaveManager.sd.isBoss1Alive;
+        FireOnOff = SaveManager.sd.fireOnOff;
+        GateOnOff = SaveManager.sd.gateOnOff;
         CurrentPiece = SaveManager.sd.CurrentPiece;
         CurrentPieceGrade = SaveManager.sd.PieceGrade;
         SoundManager.bgmVolume = SaveManager.sd.bgmVolume;
@@ -127,18 +125,8 @@ public static class GameData {
     //}
 
     public static void RespawnPlayer() {
-        
         LoadData();
         CurrentHP = 5;
         CurrentPiece = 0;
-
-        //Debug.Log("リスポーンプレイヤー" + PlayerPos);
-        //Debug.Log("リスポーンプレイヤー" + ReSpawnPos);
-        //Debug.Log("リスポーンプレイヤー" + CurrentMapNumber);
-        //Debug.Log("リスポーンプレイヤー" + NextMapNumber);
-        //SceneManager.LoadScene(MapName[CurrentMapNumber]);
-        //NextMapNumber = CurrentMapNumber;
-
-        //Pause.isPause = false;  // 万が一ポーズ中だった場合ポーズ解除
     }
 }

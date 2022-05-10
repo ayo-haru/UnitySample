@@ -65,7 +65,41 @@ public class CarrotEnemy : MonoBehaviour
                 // アイドリングするよ
                 if(IdringFlg)
                 {
-                    Idling();
+                    // 最初だけプレイヤーのほうを向いてプルプルする
+                    if (start)
+                    {
+                        // プレイヤーのほうを向くよ
+                        vec = (Player.transform.position - transform.position).normalized;
+                        look = Quaternion.LookRotation(vec);
+                        transform.localRotation = look;
+                    }
+                    else
+                    {
+                        // くるくる回転させる
+                        rb.constraints = RigidbodyConstraints.FreezePosition |
+                                       RigidbodyConstraints.FreezeRotationX |
+                                       RigidbodyConstraints.FreezeRotationY;
+                        transform.Rotate(new Vector3(30.0f, 0.0f, 0.0f), Space.Self);
+                    }
+                    // ディレイかけてから攻撃する
+                    Timer += Time.deltaTime;
+                    if (Timer >= idlingTime)
+                    {
+                        // プレイヤーの座標の取得
+                        vec = (Player.transform.position - transform.position).normalized;
+                        // 座標の固定
+                        rb.constraints = RigidbodyConstraints.FreezePositionZ |
+                                  RigidbodyConstraints.FreezeRotationX |
+                                  RigidbodyConstraints.FreezeRotationY;
+                        // 攻撃開始
+                        Attack = true;
+                        // サウンドフラグ切替
+                        isCalledOnce = false;
+                        // アイドリング終了
+                        IdringFlg = false;
+                        // タイマーのリセット
+                        Timer = 0.0f;
+                    }
                 }
                 // 攻撃処理
                 if (Attack)
@@ -133,50 +167,11 @@ public class CarrotEnemy : MonoBehaviour
         }
     }
 
-    // アイドリング処理
-    private void Idling()
-    {
-        if(start)
-        {
-            // プレイヤーのほうを向くよ
-            vec = (Player.transform.position - transform.position).normalized;
-            look = Quaternion.LookRotation(vec);
-            transform.localRotation = look;
-        }
-        else
-        {
-            // くるくる回転させる
-            rb.constraints = RigidbodyConstraints.FreezePosition |
-                           RigidbodyConstraints.FreezeRotationX |
-                           RigidbodyConstraints.FreezeRotationY;
-            transform.Rotate(new Vector3(30.0f, 0.0f, 0.0f), Space.Self);
-        }
-        // ディレイかけてから攻撃する
-        Timer += Time.deltaTime;
-        if (Timer >= idlingTime)
-        {
-            // プレイヤーの座標の取得
-            vec = (Player.transform.position - transform.position).normalized;
-            // 座標の固定
-            rb.constraints = RigidbodyConstraints.FreezePositionZ |
-                      RigidbodyConstraints.FreezeRotationX |
-                      RigidbodyConstraints.FreezeRotationY;
-            // 攻撃開始
-            Attack = true;
-            // サウンドフラグ切替
-            isCalledOnce = false;
-            // アイドリング終了
-            IdringFlg = false;
-            // タイマーのリセット
-            Timer = 0.0f;
-        }
-    }
-
     private void OnTriggerExit(Collider other)
     {
         if (!Pause.isPause)
         {
-            if (other.CompareTag("Player"))
+            if (other.CompareTag("Player") && !IdringFlg)
             {
                 InArea = false;
             }
@@ -190,7 +185,7 @@ public class CarrotEnemy : MonoBehaviour
             //Destroy(effect.gameObject, 0.0f);
             Destroy(gameObject, 0.0f);
         }
-        if (collision.gameObject.CompareTag("Ground"))
+        if (!collision.gameObject.CompareTag("Player") && InArea)
         {
             // プレイヤーの座標の取得
             vec = (Player.transform.position - transform.position).normalized;

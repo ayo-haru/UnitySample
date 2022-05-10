@@ -26,6 +26,7 @@ public static class EffectData
         EF_ENEMYDOWN,
         EF_TOMATOBOMB,
         EF_BOSSKILL,
+        EF_BOSSSTRAWBERRY,
         EF_HEALITEM,
         EF_HEAL,
         EF_SHIELD,

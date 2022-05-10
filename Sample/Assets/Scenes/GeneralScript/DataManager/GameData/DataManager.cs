@@ -103,6 +103,8 @@ public class DataManager : MonoBehaviour
     [SerializeField]
     private ParticleSystem ef_bossdeath;
     [SerializeField]
+    private ParticleSystem ef_bossstrawberry;
+    [SerializeField]
     private ParticleSystem ef_healitem;
     [SerializeField]
     private ParticleSystem ef_heal;
@@ -163,6 +165,7 @@ public class DataManager : MonoBehaviour
         EffectData.EFDataSet(ef_enemydeath,(int)EffectData.eEFFECT.EF_ENEMYDOWN);
         EffectData.EFDataSet(ef_tomatobomb,(int)EffectData.eEFFECT.EF_TOMATOBOMB);
         EffectData.EFDataSet(ef_bossdeath,(int)EffectData.eEFFECT.EF_BOSSKILL);
+        EffectData.EFDataSet(ef_bossdeath,(int)EffectData.eEFFECT.EF_BOSSSTRAWBERRY);
         EffectData.EFDataSet(ef_healitem,(int)EffectData.eEFFECT.EF_HEALITEM);
         EffectData.EFDataSet(ef_heal,(int)EffectData.eEFFECT.EF_HEAL);
         EffectData.EFDataSet(ef_shield,(int)EffectData.eEFFECT.EF_SHIELD);

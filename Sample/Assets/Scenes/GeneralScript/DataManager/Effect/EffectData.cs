@@ -33,6 +33,7 @@ public static class EffectData
         EF_SHEILD2,
         EF_MAGICSQUARE_RED,
         EF_MAGICSQUARE_BLUE,
+        EF_BOSS_RAINZONE,
 
         MAX_EF
     }

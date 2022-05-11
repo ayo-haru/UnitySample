@@ -116,6 +116,8 @@ public class DataManager : MonoBehaviour
     private ParticleSystem ef_magicspuare_red;
     [SerializeField]
     private ParticleSystem ef_magicspuare_blue;
+    [SerializeField]
+    private ParticleSystem ef_boss_rainzone;
 
 
     // Start is called before the first frame update
@@ -172,6 +174,7 @@ public class DataManager : MonoBehaviour
         EffectData.EFDataSet(ef_shield2,(int)EffectData.eEFFECT.EF_SHEILD2);
         EffectData.EFDataSet(ef_magicspuare_red,(int)EffectData.eEFFECT.EF_MAGICSQUARE_RED);
         EffectData.EFDataSet(ef_magicspuare_blue,(int)EffectData.eEFFECT.EF_MAGICSQUARE_BLUE);
+        EffectData.EFDataSet(ef_boss_rainzone, (int)EffectData.eEFFECT.EF_BOSS_RAINZONE);
 
         SoundData.isSetSound = true;    // デバッグ時サウンド初期化してない場合にエラーが出るからけす
         EffectData.isSetEffect = true;  // デバッグ時エフェクト初期化していない場合にエラーを出さない

@@ -2555,14 +2555,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 861757047}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5da5bb4d3d060884496dc765de038b0a, type: 3}
+  m_Script: {fileID: 11500000, guid: 6aa3974746f7d9b41bc6312cc0342a0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FollowCameraPos: {x: 0, y: 10, z: -100}
+  FollowCameraPos: {x: 0, y: 30, z: -100}
   RightScreenOut: 0
-  LeftScreenOut: 0
-  HeightScreenOut: 0
-  UnderScreenOut: 0
+  LeftScreenOut: -210
+  OverScreenOut: 30
+  UnderScreenOut: 30
 --- !u!82 &861757053
 AudioSource:
   m_ObjectHideFlags: 0

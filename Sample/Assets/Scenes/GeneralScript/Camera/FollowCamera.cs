@@ -84,15 +84,16 @@ public class FollowCamera : MonoBehaviour
 		    //}
 		}
 		//---画面外設定(x = 15.0fの地点に到達したらカメラの移動を停止)
-		if (PlayerPos.x < LeftScreenOut){
+		if (PlayerPos.x < LeftScreenOut)
+		{
 			//transform.position = new Vector3(15.0f, 0.7f, PlayerPos.z - 4.5f);
 			transform.position = new Vector3(LeftScreenOut,
 											 PlayerPos.y + FollowCameraPos.y,
 											 FollowCameraPos.z);          // ジャンプ追従
 		}
 
-        //---上の画面外設定(y)
-        if(PlayerPos.y > HeightScreenOut){
+			//---上の画面外設定(y)
+			if (PlayerPos.y > HeightScreenOut){
             transform.position = new Vector3(PlayerPos.x,
                                              HeightScreenOut,
                                              FollowCameraPos.z);

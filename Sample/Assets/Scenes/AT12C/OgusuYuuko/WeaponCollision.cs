@@ -66,6 +66,7 @@ public class WeaponCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Vector2 dir = (this._Player.transform.position - this.gameObject.transform.position).normalized;
         if (CanCollision)
         {
             if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "GroundDameged")
@@ -80,7 +81,7 @@ public class WeaponCollision : MonoBehaviour
                 //方向
                 //Vector3 dir = Player.transform.position - collision.transform.position;
 
-                Vector2 dir = (this._Player.transform.position - this.gameObject.transform.position).normalized;
+                
                 //Vector2 dir = this.gameObject.transform.position - Player.transform.position;
                 //Debug.Log("距離測定" + dir);
 
@@ -90,23 +91,7 @@ public class WeaponCollision : MonoBehaviour
 
                 player2.rb.velocity = Vector3.zero;
 
-                //ジャンプ中で、左右に盾が出されていた場合は壁キックする
-                if(!player2.GroundNow && (dir.x > baunceWallArea || dir.x < -baunceWallArea))
-                {
-                    Debug.Log("壁キック");
-                    if(dir.x > 0)//右上
-                    {
-                        dir.x = baunceWall.x;
-                        dir.y = baunceWall.y;
-                        
-                    }
-                    else if(dir.x < 0)//左上
-                    {
-                        dir.x = -baunceWall.x;
-                        dir.y = baunceWall.y;
-                       
-                    }
-                }
+                
                 //地面パリイ
                 //player_rb.AddForce(dir, ForceMode.Impulse);
                 player_rb.AddForce(dir * baunceGround, ForceMode.Impulse);
@@ -114,6 +99,29 @@ public class WeaponCollision : MonoBehaviour
 
                 CanCollision = false;
                 
+            }
+
+            //壁キック用の壁と当たってて、左右に盾が出されていた場合は壁キックする
+            if (collision.gameObject.tag == "WallBlock" && (dir.x > baunceWallArea || dir.x < -baunceWallArea))
+            {
+
+                Debug.Log("壁キック");
+                if (dir.x > 0)//右上
+                {
+                    dir.x = baunceWall.x;
+                    dir.y = baunceWall.y;
+
+                }
+                else if (dir.x < 0)//左上
+                {
+                    dir.x = -baunceWall.x;
+                    dir.y = baunceWall.y;
+
+                }
+                BounceCheck();
+                player2.rb.velocity = Vector3.zero;
+                player_rb.AddForce(dir * baunceGround, ForceMode.Impulse);
+                CanCollision = false;
             }
 
             if (collision.gameObject.tag == "Enemy")

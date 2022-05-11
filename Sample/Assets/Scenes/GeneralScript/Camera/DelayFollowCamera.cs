@@ -53,7 +53,7 @@ public class DelayFollowCamera : MonoBehaviour
 
         //---画面外処理
 
-        if (PlayerPos.x < LeftScreenOut){                                        //　左端
+        if (PlayerPos.x < LeftScreenOut){                                       //　左端
             transform.position = new Vector3(LeftScreenOut,
                                              PlayerPos.y + FollowCameraPos.y,
                                              FollowCameraPos.z);
@@ -65,13 +65,13 @@ public class DelayFollowCamera : MonoBehaviour
                                              FollowCameraPos.z);
         }
 
-        if (PlayerPos.y > OverScreenOut){                                      // 上端 
+        if (PlayerPos.y > OverScreenOut){                                       // 上端 
             transform.position = new Vector3(PlayerPos.x,
                                              OverScreenOut,
                                              FollowCameraPos.z);
         }
 
-        if (PlayerPos.y <  UnderScreenOut){                                      // 下端
+        if (PlayerPos.y <  UnderScreenOut){                                     // 下端
             transform.position = new Vector3(PlayerPos.x,
                                              UnderScreenOut,
                                              FollowCameraPos.z);

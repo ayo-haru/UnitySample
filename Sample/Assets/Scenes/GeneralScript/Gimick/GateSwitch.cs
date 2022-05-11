@@ -18,7 +18,11 @@ public class GateSwitch : MonoBehaviour
         switch_Open = GameObject.Find("switch_open");
         Mesh_Open = switch_Open.GetComponent<MeshRenderer>();
 
-        gate = GameObject.Find("GoalObj");
+        gate = GameObject.Find("GateToStage1");
+        if (!gate)
+        {
+            gate = GameObject.Find("GateToBoss1");
+        }
 
         if (GameData.GateOnOff)
         {

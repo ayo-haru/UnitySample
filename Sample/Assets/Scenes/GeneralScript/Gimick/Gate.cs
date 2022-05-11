@@ -12,9 +12,9 @@ public class Gate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gate_Close = GameObject.Find("goal_close");
+        gate_Close = GameObject.Find("Gate_Close");
         Mesh_Close = gate_Close.GetComponent<MeshRenderer>();
-        gate_Open = GameObject.Find("goal_open");
+        gate_Open = GameObject.Find("Gate_Open");
         Mesh_Open = gate_Open.GetComponent<MeshRenderer>();
 
         if (GameData.GateOnOff)
@@ -36,14 +36,14 @@ public class Gate : MonoBehaviour
     public void Open() {
         Mesh_Close.enabled = false;
         Mesh_Open.enabled = true;
-        gate_Open.transform.parent.GetComponent<BoxCollider>().enabled = true;
-        gate_Open.transform.parent.GetComponent<BoxCollider>().isTrigger = true;
+        gate_Open.GetComponent<BoxCollider>().enabled = true;
+        gate_Open.GetComponent<BoxCollider>().isTrigger = true;
     }
     public void Close() {
         Mesh_Close.enabled = true;
         Mesh_Open.enabled = false;
-        gate_Open.transform.parent.GetComponent<BoxCollider>().enabled = false;
-        gate_Open.transform.parent.GetComponent<BoxCollider>().isTrigger = false;
+        gate_Open.GetComponent<BoxCollider>().enabled = false;
+        gate_Open.GetComponent<BoxCollider>().isTrigger = false;
 
     }
 }

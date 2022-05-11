@@ -12,7 +12,7 @@ public class Tutorial03Manager : MonoBehaviour
     private bool isCalledOnce = false;  // 開始演出で使用。一回だけ処理をするために使う。
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //----- マップの番号を保存 -----
         if (GameData.NextMapNumber == (int)GameData.eSceneState.TITLE_SCENE)

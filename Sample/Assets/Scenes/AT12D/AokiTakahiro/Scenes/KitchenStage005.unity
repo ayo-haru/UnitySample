@@ -264,7 +264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1400121091726405847, guid: 26708210ec3564946993d06d60b4af66, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 575
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 1400121091726405847, guid: 26708210ec3564946993d06d60b4af66, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1803,11 +1803,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa3974746f7d9b41bc6312cc0342a0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FollowCameraPos: {x: 0, y: 30, z: -120}
+  FollowCameraPos: {x: 60, y: 30, z: -120}
   RightScreenOut: 470
-  LeftScreenOut: 40
-  OverScreenOut: 50
-  UnderScreenOut: 50
+  LeftScreenOut: 100
+  OverScreenOut: 47
+  UnderScreenOut: 47
 --- !u!4 &198599356 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7425737250339531987, guid: 72be83a20e534e84fa779694666e76f7, type: 3}

@@ -37,7 +37,7 @@ public class SavePoint : MonoBehaviour
         _targetCamera = Camera.main;    // メインカメラを取得
         _parentUIobj = GameObject.Find("Canvas").GetComponent<Canvas>();    // キャンバスを取得
         _parentUI = _parentUIobj.GetComponent<RectTransform>(); // キャンバスのレクトトランスフォーム
-        _targetUIobj = GameObject.Find("StickMask(Clone)");   // 目的のUIを取得
+        _targetUIobj = GameObject.Find("StickMask1(Clone)");   // 目的のUIを取得
         _targetUI = _targetUIobj.GetComponent<RectTransform>(); // 目的のUIのレクトトランスフォーム
     }
 

@@ -8,12 +8,12 @@ public class Tutorial01Manager : MonoBehaviour
     //---- 変数定義 -----
     [SerializeField]
     private GameObject playerPrefab;     // プレイヤーを格納
-    private int currentSceneNum;        // デバッグ用現在のシーンを格納
+    private int currentSceneNum = (int)GameData.eSceneState.Tutorial1;        // デバッグ用現在のシーンを格納
     private bool isCalledOnce = false;  // 開始演出で使用。一回だけ処理をするために使う。
 
+
     // Start is called before the first frame update
-    void Start()
-    {
+    void Awake() {
         //----- マップの番号を保存 -----
         if (GameData.NextMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
         {
@@ -54,6 +54,7 @@ public class Tutorial01Manager : MonoBehaviour
             Instantiate(bgmObject);
         }
 
+
     }
 
     // Update is called once per frame
@@ -65,6 +66,10 @@ public class Tutorial01Manager : MonoBehaviour
             GameData.isFadeIn = true;
             isCalledOnce = true;    // 二回以上はいらないように反転
         }
+
+
+
+
 
         //----- シーン遷移 -----
         if (GameData.CurrentMapNumber != GameData.NextMapNumber)    // 保存してあるシーン番号が現在と次が異なったらシーン移動

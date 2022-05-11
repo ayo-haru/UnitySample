@@ -21,7 +21,7 @@ using UnityEngine.UI;
 
 public class ImageShow : MonoBehaviour
 {
-    enum ImageMode {NONE,SHOW,HIDE,TIMER };   //更新なし、表示中、隠し中,タイマー更新
+    enum ImageMode {NONE,SHOW,HIDE,TIMER,CLEAR };   //更新なし、表示中、隠し中,タイマー更新
     //使用しているモード
     ImageMode mode;
     //画像
@@ -111,7 +111,12 @@ public class ImageShow : MonoBehaviour
             }
         }
         
-       
+       if(mode == ImageMode.CLEAR)
+        {
+            alpha = 0.0f;
+            Image.color = new Color(red, green, blue, alpha);
+            mode = ImageMode.NONE;
+        }
 
 
     }
@@ -141,6 +146,14 @@ public class ImageShow : MonoBehaviour
         alpha = 0.0f;
         //透明に設定
         Image.color = new Color(red, green, blue, alpha);
+    }
+
+    public void FadeOut() {
+        mode = ImageMode.HIDE;
+    }
+
+    public void Clear() {
+        mode = ImageMode.CLEAR;
     }
 
     public void SetColor(float r ,float g,float b)

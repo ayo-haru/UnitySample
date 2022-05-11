@@ -18,7 +18,6 @@ public class CarrotEnemy : MonoBehaviour
     private GameObject Jet;
     private Rigidbody rb;
     private Vector3 vec;
-    private Vector3 EffectPos;
     private EnemyDown ED;
     private Quaternion look;
     private ParticleSystem effect;
@@ -93,6 +92,7 @@ public class CarrotEnemy : MonoBehaviour
                                   RigidbodyConstraints.FreezeRotationY;
                         // 攻撃開始
                         Attack = true;
+                        InArea = true;
                         // サウンドフラグ切替
                         isCalledOnce = false;
                         // アイドリング終了
@@ -133,31 +133,6 @@ public class CarrotEnemy : MonoBehaviour
                 //    rb.velocity = vec * MoveSpeed;
                 //    pause = false;
                 //}
-
-                // 一定以上離れたら回転してから再度攻撃する
-                if (!InArea)
-                {
-                    // くるくる回転させる
-                    rb.constraints = RigidbodyConstraints.FreezePosition |
-                        RigidbodyConstraints.FreezeRotationX |
-                        RigidbodyConstraints.FreezeRotationY;
-                    Timer += Time.deltaTime;
-                    transform.Rotate(new Vector3(30.0f, 0.0f, 0.0f), Space.Self);
-                    if (Timer > 0.5f)
-                    {
-                        // プレイヤーの座標の取得
-                        vec = (Player.transform.position - transform.position).normalized;
-                        // 座標の固定
-                        rb.constraints = RigidbodyConstraints.FreezePositionZ |
-                                  RigidbodyConstraints.FreezeRotationX |
-                                  RigidbodyConstraints.FreezeRotationY;
-                        // 攻撃開始
-                        Attack = true;
-                        InArea = true;
-                        // タイマーのリセット
-                        Timer = 0.0f;
-                    }
-                }
             }
         }
         else
@@ -171,9 +146,11 @@ public class CarrotEnemy : MonoBehaviour
     {
         if (!Pause.isPause)
         {
+            // 一定距離離れたら再度アイドリング→攻撃
             if (other.CompareTag("Player") && !IdringFlg)
             {
-                InArea = false;
+                // アイドリングする
+                IdringFlg = true;
             }
         }
     }
@@ -185,10 +162,8 @@ public class CarrotEnemy : MonoBehaviour
             //Destroy(effect.gameObject, 0.0f);
             Destroy(gameObject, 0.0f);
         }
-        if (!collision.gameObject.CompareTag("Player") && InArea)
+        if (!collision.gameObject.CompareTag("Player") && !IdringFlg)
         {
-            // プレイヤーの座標の取得
-            vec = (Player.transform.position - transform.position).normalized;
             // アイドリング開始
             IdringFlg = true;
         }

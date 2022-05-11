@@ -269,13 +269,6 @@ public class Player2 : MonoBehaviour
     {
         if (!Pause.isPause) {
 
-            // プレイヤーがダメージ中は以降の処理はしない
-            if (state != PLAYERSTATE.NORMAL)
-            {
-                Debug.Log("ダメージ中");
-                return;
-            }
-
             //---前フレームを格納
             for (int i = 29; 1 <= i; i--)
             {
@@ -300,6 +293,8 @@ public class Player2 : MonoBehaviour
                 Attack();
                 isAttack = false;
                 canMoveflg = true;
+                StartCoroutine(StartAttackEvent(0.5f));
+
             }
 
         }
@@ -481,9 +476,12 @@ public class Player2 : MonoBehaviour
             if (AttackDirection.y > 0)          // 上パリィの時だけ上の出す位置を高めに設定
             {
 
-                 _weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                                    PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
-                                                                    PlayerPos.z), Quaternion.identity);
+                //_weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+                //                                                   PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
+                //                                                   PlayerPos.z), Quaternion.identity);
+                StartCoroutine(CreateShield(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+                                                                                          PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
+                                                                                          PlayerPos.z), Quaternion.identity, 0.16f));
 
                 //ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
                 //                                                    PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
@@ -530,7 +528,8 @@ public class Player2 : MonoBehaviour
 
             AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする
 
-                //StartCoroutine(CreateShiledCoroutine(0.17f));
+            PlayerActionAsset.Player.Attack.started -= OnAttack;
+            //StartCoroutine(CreateShiledCoroutine(0.17f));
         }
     }
     #endregion
@@ -661,6 +660,19 @@ public class Player2 : MonoBehaviour
         yield break;
     }
     #endregion
+
+    private IEnumerator StartAttackEvent(float waittime)
+	{
+        yield return new WaitForSeconds(waittime);
+        PlayerActionAsset.Player.Attack.started += OnAttack;
+	}
+    private IEnumerator CreateShield(GameObject gameObject, Vector3 pos, Quaternion quaternion,float waittime)
+	{
+        yield return new WaitForSeconds(waittime);
+        _weapon = Instantiate(gameObject, pos, quaternion);
+
+
+    }
 
     private GameObject CreateShiled(GameObject gameObject,Vector3 pos,Quaternion quaternion)
     {

@@ -57,17 +57,15 @@ public class TomatoEnemy : MonoBehaviour
                     rb.position = Vector3.MoveTowards(pos, TargetPos, step);
                 }
 
-                if (Target.position.x < transform.position.x && look)   // プレイヤーのほうを向く処理
+                if (Target.position.x < transform.position.x)   // プレイヤーのほうを向く処理
                 {
-                    transform.Rotate(0, -180, 0);
-                    look = false;
+                    transform.rotation = Quaternion.LookRotation(new Vector3(-180, 0, 0));
                 }
-                if (Target.position.x > transform.position.x && !look)  // プレイヤーのほうを向く処理
+                if (Target.position.x > transform.position.x)  // プレイヤーのほうを向く処理
                 {
-                    transform.Rotate(0, 180, 0);
-                    look = true;
+                    transform.rotation = Quaternion.LookRotation(new Vector3(180, 0, 0));
                 }
-                
+
                 // 跳ねる処理
                 if (isGround)
                 {

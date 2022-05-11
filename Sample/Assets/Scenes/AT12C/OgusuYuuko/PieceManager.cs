@@ -174,16 +174,38 @@ public class PieceManager : MonoBehaviour
             return;
         }
 
-        //かけら所持枠を増やす
-        ++PieceGrade;
-        //ゲームデータ更新
-        ++GameData.CurrentPieceGrade;
-        //保存
-        SaveManager.savePieceGrade(GameData.CurrentPieceGrade);
-        //表示
-        piece[PieceGrade - 1].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
-        piece[PieceGrade - 1].GetComponent<ImageShow>().Show();
-        //エフェクト発生
-        Instantiate(effect, piece[PieceGrade - 1].GetComponent<RectTransform>().position, Quaternion.identity);
+        //かけら枠増やせるアイテム数
+        int PieceUpGradeNum = 0;
+        for(int i = 0; i <= PieceGrade; ++i)
+        {
+            PieceUpGradeNum += i;
+        }
+        //累計アイテム数
+        int TotalItem = 0;
+        for(int i = 0; i < 10; ++i)
+        {
+         for(int j = 0; j < 10; ++j)
+            {
+                if (GameData.isStarGet[j, i])
+                {
+                    ++TotalItem;
+                }
+            }   
+        }
+        Debug.Log(TotalItem);
+        if(TotalItem >= PieceUpGradeNum + PieceGrade)   //今ゲットしたアイテムの情報がまだ配列に入ってないためイコール付けてる
+        {
+            //かけら所持枠を増やす
+            ++PieceGrade;
+            //ゲームデータ更新
+            ++GameData.CurrentPieceGrade;
+            //保存
+            SaveManager.savePieceGrade(GameData.CurrentPieceGrade);
+            //表示
+            piece[PieceGrade - 1].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
+            piece[PieceGrade - 1].GetComponent<ImageShow>().Show();
+            //エフェクト発生
+            Instantiate(effect, piece[PieceGrade - 1].GetComponent<RectTransform>().position, Quaternion.identity);
+        }
     }
 }

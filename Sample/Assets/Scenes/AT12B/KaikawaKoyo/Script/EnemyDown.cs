@@ -19,6 +19,8 @@ public class EnemyDown : MonoBehaviour
     private float bouncePower = 200.0f;
     private Vector3 Pos;
     private Vector3 vec;
+    private Vector3 CamRightTop;    // カメラの右上座標
+    private Vector3 CamLeftBot;     // カメラの左下座標
     private Animator animator;
 
     [SerializeField]
@@ -33,6 +35,7 @@ public class EnemyDown : MonoBehaviour
     float DeadTime = 1.5f;
     private float speed;
     private float dis;
+    private float CamZ = -120.0f;
 
     Rigidbody rb;
 
@@ -57,6 +60,7 @@ public class EnemyDown : MonoBehaviour
         Random.InitState(System.DateTime.Now.Millisecond);
         _dissolve = this.GetComponent<Dissolve>();
         player2 = Player.GetComponent<Player2>();
+      
     }
 
     // Update is called once per frame
@@ -65,7 +69,11 @@ public class EnemyDown : MonoBehaviour
         if(!Pause.isPause)
         {
             rb.Resume(gameObject);
-    
+
+            // カメラの端の座標取得
+            CamRightTop = Camera.main.ScreenToWorldPoint(new Vector3(0.0f, 0.0f, CamZ));
+            CamLeftBot = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, CamZ));
+
             if (isAlive)
             {
                 animator.speed = 1;

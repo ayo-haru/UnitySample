@@ -47,29 +47,30 @@ public class FollowCamera : MonoBehaviour
 
         Vector3 PlayerPos = GameData.PlayerPos;
 
-		//transform.position = Vector3.Lerp(transform.position, (Player.transform.position + Offset), 0.1f);
-		//transform.position = Vector3.Lerp(Player.transform.position, transform.position, 2f * Time.deltaTime);
-
-
 		// *****座標*****
 		//transform.position = new Vector3(PlayerPos.x,
 		//                         FollowCameraPos.y,
 		//                         FollowCameraPos.z);                               // ジャンプ追従
 
-		//if(Offset.x > 20.0f) {
-		//    transform.position = new Vector3(Offset.x,
-		//                         Offset.y + FollowCameraPos.y,
-		//                         FollowCameraPos.z);                       // ジャンプ追従
-		//}
-		transform.position = new Vector3(PlayerPos.x,
-										 PlayerPos.y + FollowCameraPos.y,
-										 FollowCameraPos.z);                       // ジャンプ追従
+		//transform.position = new Vector3(PlayerPos.x,
+		//								 PlayerPos.y + FollowCameraPos.y,
+		//								 FollowCameraPos.z);                       // ジャンプ追従
 
 		//---前フレームの座標で追従
-		//transform.position = new Vector3(player2.OldPlayerPos[2].x,
-		//                                                       player2.OldPlayerPos[2].y + FollowCameraPos.y,
-		//                                                       FollowCameraPos.z);
-		//Debug.Log("カメラ内ｵｰﾙﾄﾞﾎﾟｽ"+player2.OldPlayerPos[2].x);
+		//---佐々木先生プログラム
+		Vector3 move = (player2.OldPlayerPos[0] - transform.position) * 0.01f;
+		move.z = 0;
+		transform.position += move;
+		new Vector3(player2.OldPlayerPos[1].x,
+							player2.OldPlayerPos[1].y + FollowCameraPos.y,
+							FollowCameraPos.z);
+
+		//Debug.Log("カメラ内ｵｰﾙﾄﾞﾎﾟｽ" + player2.OldPlayerPos[9].x);
+		
+		//---もとのやつ
+		//transform.position = new Vector3(PlayerPos.x,
+		//												player2.OldPlayerPos[5].y + FollowCameraPos.y,
+		//												FollowCameraPos.z);
 
 		////---画面外設定(x = 45.0fの地点に到達したらカメラの移動を停止)
 		if (PlayerPos.x > RightScreenOut){
@@ -83,15 +84,16 @@ public class FollowCamera : MonoBehaviour
 		    //}
 		}
 		//---画面外設定(x = 15.0fの地点に到達したらカメラの移動を停止)
-		if (PlayerPos.x < LeftScreenOut){
+		if (PlayerPos.x < LeftScreenOut)
+		{
 			//transform.position = new Vector3(15.0f, 0.7f, PlayerPos.z - 4.5f);
 			transform.position = new Vector3(LeftScreenOut,
 											 PlayerPos.y + FollowCameraPos.y,
 											 FollowCameraPos.z);          // ジャンプ追従
 		}
 
-        //---上の画面外設定(y)
-        if(PlayerPos.y > HeightScreenOut){
+			//---上の画面外設定(y)
+			if (PlayerPos.y > HeightScreenOut){
             transform.position = new Vector3(PlayerPos.x,
                                              HeightScreenOut,
                                              FollowCameraPos.z);

@@ -76,6 +76,7 @@ public class Boss1Rain : MonoBehaviour
         BossAttack.WeaponAttackFlg = true;
         if (!BossAttack.AnimFlg)
         {
+            EffectManager.Play(EffectData.eEFFECT.EF_BOSS_RAINZONE, Boss1Manager.BossPos);
             BossAttack.AnimFlagOnOff();
             BossAttack.BossAnim.SetTrigger("RainThrow");
         }

@@ -15,30 +15,35 @@ using UnityEngine;
 public class BalloonMove : MonoBehaviour
 {
     //初期位置
-    private Vector3 startPos;
+    //private Vector3 startPos;
     //移動速度
-    public float moveSpeed = 0.1f;
+    public float moveSpeed = 0.01f;
     //上限位置
-    public float finPos = 100.0f;
-    //移動方向
-    private float moveDir;  //１が上昇－１が下降
+    public float finPos = 10.0f;
+    //角度
+    private float theta;
     // Start is called before the first frame update
     void Start()
     {
-        startPos = gameObject.transform.position;
-        moveDir = 1.0f;
+        //startPos = gameObject.transform.position;
+        theta = 0.0f;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        theta += moveSpeed;
+        if (theta >= 180.0f)
+        {
+            theta -= 360.0f;
+        }
         //風船上下
-        gameObject.transform.position += gameObject.transform.up * moveSpeed * moveDir;
+        gameObject.transform.position += gameObject.transform.up * finPos * Mathf.Sin(theta) * 0.01f;
 
         //上昇、下降切り替え
-        if(transform.position.y >= finPos　||　transform.position.y <= startPos.y)
-        {
-            moveDir *= -1;
-        }
+        //if(transform.position.y >= finPos　||　transform.position.y <= startPos.y)
+        //{
+        //    moveDir *= -1;
+        //}
     }
 }

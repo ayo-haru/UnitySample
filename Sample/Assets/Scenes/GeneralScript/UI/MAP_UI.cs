@@ -20,7 +20,13 @@ public class MAP_UI : MonoBehaviour
     void Awake()
     {
         //---MAP表示
-        GameObject canvas = GameObject.Find("Canvas");
+        GameObject canvas;
+        canvas = GameObject.Find("Canvas2");
+        if (!canvas)
+        {
+            canvas = GameObject.Find("Canvas");
+        }
+        
         DisplayMAP = Instantiate(DisplayMAP);
         DisplayMAP.transform.SetParent(canvas.transform, false);
     }
@@ -28,6 +34,14 @@ public class MAP_UI : MonoBehaviour
     private void Start()
     {
         DisplayMAP.SetActive(false);
+        //HPが表示されていたら
+        //HPの手前に表示する
+        GameObject hpUI = GameObject.Find("HPSystem(2)(Clone)");
+        if (hpUI)
+        {
+            int hpUIIndex = hpUI.transform.GetSiblingIndex();
+            DisplayMAP.transform.SetSiblingIndex(hpUIIndex + 1);
+        }
     }
 
     // Update is called once per frame

@@ -20,7 +20,13 @@ public class MAP_UI : MonoBehaviour
     void Awake()
     {
         //---MAP•\Ž¦
-        GameObject canvas = GameObject.Find("Canvas");
+        GameObject canvas;
+        canvas = GameObject.Find("Canvas2");
+        if (!canvas)
+        {
+            canvas = GameObject.Find("Canvas");
+        }
+        
         DisplayMAP = Instantiate(DisplayMAP);
         DisplayMAP.transform.SetParent(canvas.transform, false);
     }

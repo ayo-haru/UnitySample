@@ -21,9 +21,9 @@ using UnityEngine.UI;
 
 public class ImageShow : MonoBehaviour
 {
-    enum ImageMode {NONE,SHOW,HIDE,TIMER,CLEAR };   //更新なし、表示中、隠し中,タイマー更新
+    public enum ImageMode {NONE,SHOW,HIDE,TIMER,CLEAR };   //更新なし、表示中、隠し中,タイマー更新
     //使用しているモード
-    ImageMode mode;
+    public ImageMode mode;
     //画像
     Image Image;
     //画像透明度

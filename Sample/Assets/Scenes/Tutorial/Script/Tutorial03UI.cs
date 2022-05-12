@@ -46,13 +46,16 @@ public class Tutorial03UI : MonoBehaviour
     [SerializeField]
     private GameObject chara3_13;
     private GameObject Chara3_13;
-    [SerializeField]
-    private GameObject chara3_14;
-    private GameObject Chara3_14;
 
-    Canvas canvas;
+    private Canvas canvas;  // 表示するキャンバス
 
-    private int UIcnt;
+    private int UIcnt;  // UI表示順
+
+    private GameObject StarObj; // 星格納
+
+    private GameObject[] FragmentObj = new GameObject[3];   // かけら格納
+
+    private bool onceMapOpen;
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +65,7 @@ public class Tutorial03UI : MonoBehaviour
         // キャンバスを指定
         canvas = GetComponent<Canvas>();
 
+        //----- UI初期化 -----
         // 実態化
         CharacterBack = Instantiate(characterback);
         Chara3_1 = Instantiate(chara3_1);
@@ -77,8 +81,8 @@ public class Tutorial03UI : MonoBehaviour
         Chara3_11 = Instantiate(chara3_11);
         Chara3_12 = Instantiate(chara3_12);
         Chara3_13 = Instantiate(chara3_13);
-        Chara3_14 = Instantiate(chara3_14);
 
+        // キャンバスの子に指定
         CharacterBack.transform.SetParent(this.canvas.transform, false);
         Chara3_1.transform.SetParent(this.canvas.transform, false);
         Chara3_2.transform.SetParent(this.canvas.transform, false);
@@ -93,8 +97,8 @@ public class Tutorial03UI : MonoBehaviour
         Chara3_11.transform.SetParent(this.canvas.transform, false);
         Chara3_12.transform.SetParent(this.canvas.transform, false);
         Chara3_13.transform.SetParent(this.canvas.transform, false);
-        Chara3_14.transform.SetParent(this.canvas.transform, false);
 
+        // 何も表示しない
         CharacterBack.GetComponent<ImageShow>().Hide();
         Chara3_1.GetComponent<ImageShow>().Hide();
         Chara3_2.GetComponent<ImageShow>().Hide();
@@ -109,18 +113,123 @@ public class Tutorial03UI : MonoBehaviour
         Chara3_11.GetComponent<ImageShow>().Hide();
         Chara3_12.GetComponent<ImageShow>().Hide();
         Chara3_13.GetComponent<ImageShow>().Hide();
-        Chara3_14.GetComponent<ImageShow>().Hide();
+
+        //----- UI表示条件にかかわるオブジェクトの初期化 -----
+        StarObj = GameObject.Find("ItemStar");
+        FragmentObj[0] = GameObject.Find("Star_Fragment000");
+        FragmentObj[1] = GameObject.Find("Star_Fragment001");
+        FragmentObj[2] = GameObject.Find("Star_Fragment002");
+
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (GameData.PlayerPos.x >= -200.0f && UIcnt == 0)
+        if (GameData.PlayerPos.x >= -80.0f && UIcnt < 3)
         {
-            CharacterBack.GetComponent<ImageShow>().Show();
-            Chara3_1.GetComponent<ImageShow>().Show(120);
+            //---星説明
+            if (UIcnt == 0)
+            {
+                //---あいてむをはじいてみよう
+                CharacterBack.GetComponent<ImageShow>().Show();
+                Chara3_1.GetComponent<ImageShow>().Show();
+                UIcnt++;
+            }
+            else if(UIcnt == 1 && !(StarObj))
+            {
+                //---HP上限が増えました
+                Chara3_1.GetComponent<ImageShow>().Clear();
+                Chara3_2.GetComponent<ImageShow>().Show(5);
+                UIcnt++;
+            }
+            else if(UIcnt == 2 && Chara3_2.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
+            {
+                //---星をはじくとHP上限を増やすことができます
+                Chara3_3.GetComponent<ImageShow>().Show(30);
+                UIcnt++;
+            }
+        }
+        else if(GameData.PlayerPos.x >= -5.0f && UIcnt < 6)
+        {
+            //---かけら説明
+            if (UIcnt == 3 && Chara3_3.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
+            {
+                //---かけらをはじいてみましょう
+                Chara3_4.GetComponent<ImageShow>().Show();
+                UIcnt++;
+            }
+            else if (UIcnt == 4 && (!FragmentObj[0] || !FragmentObj[1] || !FragmentObj[2]))
+            {
+                //---HPが回復しました
+                Chara3_4.GetComponent<ImageShow>().Clear();
+                Chara3_5.GetComponent<ImageShow>().Show(10);
+                UIcnt++;
+            }
+            else if (UIcnt == 5 && Chara3_5.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
+            {
+                //---かけらをはじくとHPを回復することができます
+                Chara3_6.GetComponent<ImageShow>().Show(30);
+                UIcnt++;
+            }
+
+        }
+        else if (GameData.PlayerPos.x >= 125.0f && UIcnt < 10)
+        {
+            //---マップ説明
+            if (UIcnt == 6 && Chara3_6.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
+            {
+                //---扉がありますが閉じていて通れません
+                Chara3_7.GetComponent<ImageShow>().Show(30);
+                UIcnt++;
+            }
+            else if (UIcnt == 7 && Chara3_7.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
+            {
+                //---どこかに仕掛けがありそうです
+                Chara3_8.GetComponent<ImageShow>().Show(30);
+                UIcnt++;
+            }
+            else if (UIcnt == 8 && Chara3_8.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
+            {
+                //---マップで確認してみましょう
+                Chara3_9.GetComponent<ImageShow>().Show(30);
+                UIcnt++;
+            }
+            else if (UIcnt == 9 && Chara3_9.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
+            {
+                //---ビューボタンでマップを開く
+
+                Chara3_10.GetComponent<ImageShow>().Show();
+                UIcnt++;
+            }
+        }
+        else if (GameData.PlayerPos.x >= 370.0f && GameData.PlayerPos.y >= 90.0f && UIcnt < 14)
+        {
+            //---ギミック説明
+            if (UIcnt == 10)
+            {
+                Chara3_10.GetComponent<ImageShow>().Clear();
+                Chara3_11.GetComponent<ImageShow>().Show();
+                UIcnt++;
+            }
+            else if (UIcnt == 11 && GameData.GateOnOff == false)
+            {
+                Chara3_11.GetComponent<ImageShow>().Clear();
+                Chara3_12.GetComponent<ImageShow>().Show(30);
+                UIcnt++;
+            }
+        }
+        else if(GameData.PlayerPos.x <= 275.0f && UIcnt == 12)
+        {
+            //---とおれるよ
+            Chara3_12.GetComponent<ImageShow>().Clear();
+            Chara3_13.GetComponent<ImageShow>().Show(30);
+
             UIcnt++;
+        }
+        else if(UIcnt == 13 && Chara3_13.GetComponent<ImageShow>().mode == ImageShow.ImageMode.HIDE)
+        {
+            CharacterBack.GetComponent<ImageShow>().FadeOut();
         }
 
     }

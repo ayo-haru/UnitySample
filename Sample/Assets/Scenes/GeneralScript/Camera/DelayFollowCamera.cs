@@ -38,31 +38,32 @@ public class DelayFollowCamera : MonoBehaviour
     {
         Vector3 PlayerPos = GameData.PlayerPos;
 
-        //---遅延処理
-        //Vector3 move = (playerInfo.OldPlayerPos[0] - transform.position) * 0.01f;
-        //move.z = 0;
-        //transform.position += move;
-        //new Vector3(playerInfo.OldPlayerPos[1].x,
-        //            playerInfo.OldPlayerPos[1].y + FollowCameraPos.y,
-        //            FollowCameraPos.z);
+		//---遅延処理
+		//Vector3 move = (playerInfo.OldPlayerPos[0] - transform.position) * 0.01f;
+		//move.z = 0;
+		//transform.position += move;
+		//new Vector3(playerInfo.OldPlayerPos[1].x,
+		//			playerInfo.OldPlayerPos[1].y + FollowCameraPos.y,
+		//			FollowCameraPos.z);
 
-        transform.position = new Vector3(PlayerPos.x,
-                                         playerInfo.OldPlayerPos[1].y + FollowCameraPos.y,
-                                         FollowCameraPos.z);;
+		transform.position = new Vector3(PlayerPos.x,
+										 playerInfo.OldPlayerPos[1].y + FollowCameraPos.y,
+										 FollowCameraPos.z); ;
 
 
-        //---画面外処理
+		//---画面外処理
 
-        if (PlayerPos.x < LeftScreenOut){                                        //　左端
-            transform.position = new Vector3(LeftScreenOut,
-                                             PlayerPos.y + FollowCameraPos.y,
-                                             FollowCameraPos.z);
+		if (PlayerPos.x < LeftScreenOut){                                        //　左端
+            //transform.position = new Vector3(LeftScreenOut,
+            //                                 PlayerPos.y + FollowCameraPos.y,
+            //                                 FollowCameraPos.z);
         }
 
         if (PlayerPos.x > RightScreenOut){                                      // 右端 
-            transform.position = new Vector3(RightScreenOut,
-                                             PlayerPos.y + FollowCameraPos.y,
-                                             FollowCameraPos.z);
+            //transform.position = new Vector3(RightScreenOut,
+            //                                 PlayerPos.y + FollowCameraPos.y,
+            //                                 FollowCameraPos.z);
+            
         }
 
         if (PlayerPos.y > OverScreenOut){                                      // 上端 

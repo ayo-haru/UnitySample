@@ -476,18 +476,17 @@ public class Player2 : MonoBehaviour
             if (AttackDirection.y > 0)          // 上パリィの時だけ上の出す位置を高めに設定
             {
 
-                //_weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                //                                                   PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
-                //                                                   PlayerPos.z), Quaternion.identity);
-                StartCoroutine(CreateShield(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                                                          PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
-                                                                                          PlayerPos.z), Quaternion.identity, 0.16f));
+				//_weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+				//                                                   PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
+				//                                                   PlayerPos.z), Quaternion.identity);
 
-                //ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                //                                                    PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
-                //                                                    PlayerPos.z), Quaternion.identity);
-                
-            }
+				ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+																	PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
+																	PlayerPos.z), Quaternion.identity);
+
+				//_weapon = CreateShield();
+
+			}
             else
             {
                  _weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
@@ -502,7 +501,7 @@ public class Player2 : MonoBehaviour
 
             //GameObject _weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
             //                                PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
-            //                                PlayerPos.z), Quaternion.identity);
+
 
             //---スティックの倒した方向に向かせる
             //EffectManager.Play(EffectData.eEFFECT.EF_SHIELD,(weapon.transform.position) ,1.0f);
@@ -666,14 +665,18 @@ public class Player2 : MonoBehaviour
         yield return new WaitForSeconds(waittime);
         PlayerActionAsset.Player.Attack.started += OnAttack;
 	}
-    private IEnumerator CreateShield(GameObject gameObject, Vector3 pos, Quaternion quaternion,float waittime)
+    private GameObject CreateShield()
 	{
-        yield return new WaitForSeconds(waittime);
-        _weapon = Instantiate(gameObject, pos, quaternion);
+        PlayerPos = transform.position;                                            // 攻撃する瞬間のプレイヤーの座標を取得
+        AttackDirection += Attacking.ReadValue<Vector2>();           // スティックの倒した値を取得
+        AttackDirection.Normalize();                                                // 取得した値を正規化(ベクトルを１にする)
 
-
+        return Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+                                                                    PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
+                                                                    PlayerPos.z), Quaternion.identity);
     }
 
+    
     private GameObject CreateShiled(GameObject gameObject,Vector3 pos,Quaternion quaternion)
     {
         return Instantiate(gameObject,pos,quaternion);

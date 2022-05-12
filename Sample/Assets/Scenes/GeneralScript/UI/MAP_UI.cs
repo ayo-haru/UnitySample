@@ -34,6 +34,14 @@ public class MAP_UI : MonoBehaviour
     private void Start()
     {
         DisplayMAP.SetActive(false);
+        //HP‚ª•\Ž¦‚³‚ê‚Ä‚¢‚½‚ç
+        //HP‚ÌŽè‘O‚É•\Ž¦‚·‚é
+        GameObject hpUI = GameObject.Find("HPSystem(2)(Clone)");
+        if (hpUI)
+        {
+            int hpUIIndex = hpUI.transform.GetSiblingIndex();
+            DisplayMAP.transform.SetSiblingIndex(hpUIIndex + 1);
+        }
     }
 
     // Update is called once per frame

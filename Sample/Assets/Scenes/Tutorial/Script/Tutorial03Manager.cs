@@ -57,6 +57,10 @@ public class Tutorial03Manager : MonoBehaviour
 
     }
 
+    private void Start() {
+        GameData.CurrentHP = 3;
+    }
+
     // Update is called once per frame
     void Update()
     {

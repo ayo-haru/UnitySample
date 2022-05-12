@@ -1,22 +1,32 @@
 fileFormatVersion: 2
-guid: 2db609a4f67afa940aab47ee3f326ae2
+guid: 4f83f79f005f3474cae014fc6f52d7e5
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
-      74: -3646330977206186948
-    second: raby_anime_damage
+      74: -8931412312094314045
+    second: raby_anime_death
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: body_tex
-    second: {fileID: 2100000, guid: 9115494c6d7fb4148985d40b41aa3c84, type: 2}
+    second: {fileID: 2100000, guid: 649272bbf1bf70c439ae7cda413d96d3, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: eye_tex
     second: {fileID: 2100000, guid: e72fafb1803aedf42a4659c76d35f530, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: body_tex
+    second: {fileID: 2800000, guid: ef88a121d457ed24fae82fcf269bfa1e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: face_tex
+    second: {fileID: 2800000, guid: de75c68251b88394c83f4f33de5d6564, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -45,11 +55,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: raby_anime_damage
-      takeName: raby_anime_damage
+      name: raby_anime_death
+      takeName: raby_anime_death
       internalID: 0
       firstFrame: 1
-      lastFrame: 33
+      lastFrame: 360
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -130,11 +140,15 @@ ModelImporter:
         weight: 1
       - path: hip/spine1/neck/head/ear1_L/ear2_L/ear3_L
         weight: 1
+      - path: hip/spine1/neck/head/ear1_L/ear2_L/ear3_L/eartop_L
+        weight: 1
       - path: hip/spine1/neck/head/ear1_R
         weight: 1
       - path: hip/spine1/neck/head/ear1_R/ear2_R
         weight: 1
       - path: hip/spine1/neck/head/ear1_R/ear2_R/ear3_R
+        weight: 1
+      - path: hip/spine1/neck/head/ear1_R/ear2_R/ear3_R/eartop_R
         weight: 1
       - path: hip/spine1/upperarm_L
         weight: 1
@@ -238,33 +252,49 @@ ModelImporter:
         weight: 1
       - path: all_base/all_ctrl/hand_L_base/hand_L_ctrl
         weight: 1
+      - path: all_base/all_ctrl/hand_L_base/hand_L_ctrl/ikHandle3
+        weight: 1
       - path: all_base/all_ctrl/hand_R_base1
         weight: 1
       - path: all_base/all_ctrl/hand_R_base1/hand_R_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/hand_R_base1/hand_R_ctrl/ikHandle4
         weight: 1
       - path: all_base/all_ctrl/elbow_L_base
         weight: 1
       - path: all_base/all_ctrl/elbow_L_base/elbow_L_ctrl
         weight: 1
+      - path: all_base/all_ctrl/elbow_L_base/elbow_L_ctrl/locator2
+        weight: 1
       - path: all_base/all_ctrl/elbow_R_base
         weight: 1
       - path: all_base/all_ctrl/elbow_R_base/elbow_R_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/elbow_R_base/elbow_R_ctrl/locator1
         weight: 1
       - path: all_base/all_ctrl/foot_L_base
         weight: 1
       - path: all_base/all_ctrl/foot_L_base/foot_L_ctrl
         weight: 1
+      - path: all_base/all_ctrl/foot_L_base/foot_L_ctrl/ikHandle1
+        weight: 1
       - path: all_base/all_ctrl/foot_R_base
         weight: 1
       - path: all_base/all_ctrl/foot_R_base/foot_R_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/foot_R_base/foot_R_ctrl/ikHandle2
         weight: 1
       - path: all_base/all_ctrl/knee_L_base
         weight: 1
       - path: all_base/all_ctrl/knee_L_base/knee_L_ctrl
         weight: 1
+      - path: all_base/all_ctrl/knee_L_base/knee_L_ctrl/locator4
+        weight: 1
       - path: all_base/all_ctrl/knee_R_base
         weight: 1
       - path: all_base/all_ctrl/knee_R_base/knee_R_ctrl
+        weight: 1
+      - path: all_base/all_ctrl/knee_R_base/knee_R_ctrl/locator3
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}

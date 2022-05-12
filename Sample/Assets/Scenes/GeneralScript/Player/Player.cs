@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
 
     private GameObject fadeimage;   // フェードのパネル
 
-
+    private Animator _animator;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +46,7 @@ public class Player : MonoBehaviour
 
         checkHP = new ObservedValue<int>(GameData.CurrentHP);
         checkHP.OnValueChange += () => { if (checkHP.Value < 1) PlayerDeath(); };
+        _animator = GetComponent<Player2>().animator;
     }
 
     // Update is called once per frame
@@ -135,6 +136,7 @@ public class Player : MonoBehaviour
 
         //Vector3 effectPos;
         //effectPos = new Vector3(GameData.PlayerPos.x, GameData.PlayerPos.y + 10.0f, GameData.PlayerPos.z);
+        _animator.Play("Death");
         EffectManager.Play(EffectData.eEFFECT.EF_DEATH, GameData.PlayerPos, 7.0f);
     }
 

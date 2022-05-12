@@ -1,12 +1,12 @@
 //=============================================================================
 //
-// ƒvƒŒƒCƒ„[‚Ì’x‰„’Ç]ƒJƒƒ‰[DelayFollowCamera]
+// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®é…å»¶è¿½å¾“ã‚«ãƒ¡ãƒ©[DelayFollowCamera]
 //
-// ì¬“ú:2022/03/08
-// ì¬Ò:‹gŒ´”ò’¹
+// ä½œæˆæ—¥:2022/03/08
+// ä½œæˆè€…:å‰åŸé£›é³¥
 //
-// <ŠJ”­—š—ğ>
-//  2022/05/11 ì¬
+// <é–‹ç™ºå±¥æ­´>
+//  2022/05/11 ä½œæˆ
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -14,21 +14,21 @@ using UnityEngine;
 
 public class DelayFollowCamera : MonoBehaviour
 {
-    //---•Ï”éŒ¾
+    //---å¤‰æ•°å®£è¨€
     private GameObject player;
     private Player2 playerInfo;
 
-    public Vector3 FollowCameraPos = Vector3.zero;      // ’Ç]‚·‚éƒJƒƒ‰
+    public Vector3 FollowCameraPos = Vector3.zero;      // è¿½å¾“ã™ã‚‹ã‚«ãƒ¡ãƒ©
 
-    public int RightScreenOut;                          // ‰E’[
-    public int LeftScreenOut;                           // ¶’[
-    public int OverScreenOut;                           // ã’[
-    public int UnderScreenOut;                          // ‰º’[
+    public int RightScreenOut;                          // å³ç«¯
+    public int LeftScreenOut;                           // å·¦ç«¯
+    public int OverScreenOut;                           // ä¸Šç«¯
+    public int UnderScreenOut;                          // ä¸‹ç«¯
 
     // Start is called before the first frame update
     void Start()
     {
-        //---’Ç]‚·‚éƒIƒuƒWƒFƒNƒg
+        //---è¿½å¾“ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
         player = GameObject.Find(GameData.Player.name);
         playerInfo = player.GetComponent<Player2>();
         
@@ -38,40 +38,42 @@ public class DelayFollowCamera : MonoBehaviour
     {
         Vector3 PlayerPos = GameData.PlayerPos;
 
-        //---’x‰„ˆ—
-        //Vector3 move = (playerInfo.OldPlayerPos[0] - transform.position) * 0.01f;
-        //move.z = 0;
-        //transform.position += move;
-        //new Vector3(playerInfo.OldPlayerPos[1].x,
-        //            playerInfo.OldPlayerPos[1].y + FollowCameraPos.y,
-        //            FollowCameraPos.z);
+		//---é…å»¶å‡¦ç†
+		//Vector3 move = (playerInfo.OldPlayerPos[0] - transform.position) * 0.01f;
+		//move.z = 0;
+		//transform.position += move;
+		//new Vector3(playerInfo.OldPlayerPos[1].x,
+		//			playerInfo.OldPlayerPos[1].y + FollowCameraPos.y,
+		//			FollowCameraPos.z);
 
-        transform.position = new Vector3(PlayerPos.x,
-                                         playerInfo.OldPlayerPos[1].y + FollowCameraPos.y,
-                                         FollowCameraPos.z);;
+		transform.position = new Vector3(PlayerPos.x,
+										 playerInfo.OldPlayerPos[1].y + FollowCameraPos.y,
+										 FollowCameraPos.z); ;
 
 
-        //---‰æ–ÊŠOˆ—
-
-        if (PlayerPos.x < LeftScreenOut){                                       //@¶’[
+		//---ç”»é¢å¤–å‡¦ç†
+    
+        if (PlayerPos.x < LeftScreenOut){                                       //ã€€å·¦ç«¯
             transform.position = new Vector3(LeftScreenOut,
                                              PlayerPos.y + FollowCameraPos.y,
                                              FollowCameraPos.z);
+
         }
 
-        if (PlayerPos.x > RightScreenOut){                                      // ‰E’[ 
-            transform.position = new Vector3(RightScreenOut,
-                                             PlayerPos.y + FollowCameraPos.y,
-                                             FollowCameraPos.z);
+        if (PlayerPos.x > RightScreenOut){                                      // å³ç«¯ 
+            //transform.position = new Vector3(RightScreenOut,
+            //                                 PlayerPos.y + FollowCameraPos.y,
+            //                                 FollowCameraPos.z);
+            
         }
 
-        if (PlayerPos.y > OverScreenOut){                                       // ã’[ 
+        if (PlayerPos.y > OverScreenOut){                                       // ä¸Šç«¯ 
             transform.position = new Vector3(PlayerPos.x,
                                              OverScreenOut,
                                              FollowCameraPos.z);
         }
 
-        if (PlayerPos.y <  UnderScreenOut){                                     // ‰º’[
+        if (PlayerPos.y <  UnderScreenOut){                                     // ä¸‹ç«¯
             transform.position = new Vector3(PlayerPos.x,
                                              UnderScreenOut,
                                              FollowCameraPos.z);

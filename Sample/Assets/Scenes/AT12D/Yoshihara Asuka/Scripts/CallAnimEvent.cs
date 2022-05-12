@@ -45,8 +45,20 @@ public class CallAnimEvent : MonoBehaviour
     /// <summary>
     /// アニメーション終了時にアタック許可フラグおろす
     /// </summary>
-    public void EndAnim()
+    public void SideShield()
     {
-        player2.SetAttackFlg(false);
+        player2.CreateShiled();
     }
+
+    public void UnderShiled()
+    {
+        player2.CreateShiled();
+    }
+
+    public void OverShield()
+    {
+        player2.CreateShiled();
+    }
+
+
 }

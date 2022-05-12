@@ -103,6 +103,8 @@ public class Heal : MonoBehaviour
             //プレイヤーと逆方向に跳ね返す
             rb.AddForce(-vec * BouncePower, ForceMode.Force);
 
+            // 回復エフェクトだす
+            EffectManager.Play(EffectData.eEFFECT.EF_HEAL, GameData.PlayerPos);
 
             //既に弾かれてたら処理しない
             if (isBaunceFlg)

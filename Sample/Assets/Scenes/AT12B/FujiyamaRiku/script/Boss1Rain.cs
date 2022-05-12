@@ -76,6 +76,7 @@ public class Boss1Rain : MonoBehaviour
         BossAttack.WeaponAttackFlg = true;
         if (!BossAttack.AnimFlg)
         {
+            EffectManager.Play(EffectData.eEFFECT.EF_BOSS_RAINZONE, GameObject.Find("Emargens").transform.position);
             BossAttack.AnimFlagOnOff();
             BossAttack.BossAnim.SetTrigger("RainThrow");
         }
@@ -173,7 +174,6 @@ public class Boss1Rain : MonoBehaviour
                                 Debug.Log("うごいたよー" + j);
                                 if (g_Weapon[j].RainRefrectFlg && g_Weapon[j].RainMoveTime >= 1.0f)
                                 {
-                                    Debug.Log("うごいたよーーーーーー1");
                                     g_Weapon[j].delFlg = true;
                                     if (g_Weapon[j].UseObj != null)
                                     {
@@ -187,7 +187,6 @@ public class Boss1Rain : MonoBehaviour
                                 }
                                 if (!g_Weapon[j].delFlg && g_Weapon[j].Weapon.timer <= 0f)
                                 {
-                                    Debug.Log("うごいたよーーーーーー2");
                                     g_Weapon[j].delFlg = true;
                                     g_Weapon[j].RainRefrectFlg = false;
                                     g_Weapon[j].UseFlg = false;
@@ -201,17 +200,14 @@ public class Boss1Rain : MonoBehaviour
                                 }
                                 if (!g_Weapon[j].delFlg && g_Weapon[j].Weapon.timer > 0f)
                                 {
-                                    Debug.Log("うごいたよーーーーーー3");
                                     return;
                                 }
                                 if (g_Weapon[j].RainRefrectFlg && g_Weapon[j].RainMoveTime <= 1.0f)
                                 {
-                                    Debug.Log("うごいたよーーーーーー4");
                                     return;
                                 }
                                 if (g_Weapon[MaxWeapon - 1].Weapon.timer <= 0f && g_Weapon[MaxWeapon - 1].RainMoveTime >= 1.0f)
                                 {
-                                    Debug.Log("うごいたよーーーーーー5");
                                     g_Weapon[MaxWeapon - 1].delFlg = true;
                                     g_Weapon[MaxWeapon - 1].RainRefrectFlg = false;
                                     g_Weapon[MaxWeapon - 1].UseFlg = false;

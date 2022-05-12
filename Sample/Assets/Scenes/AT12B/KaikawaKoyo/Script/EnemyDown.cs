@@ -21,6 +21,12 @@ public class EnemyDown : MonoBehaviour
     private Vector3 vec;
     private Vector3 CamRightTop;    // カメラの右上座標
     private Vector3 CamLeftBot;     // カメラの左下座標
+    private Vector3 InAngle;        // 入射角
+    private Vector3 ReAngle;        // 反射角
+    private Vector3 inNormalU;      // 法線ベクトル上
+    private Vector3 inNormalD;      // 法線ベクトル下
+    private Vector3 inNormalR;      // 法線ベクトル右
+    private Vector3 inNormalL;      // 法線ベクトル左
     private Animator animator;
 
     [SerializeField]
@@ -31,6 +37,7 @@ public class EnemyDown : MonoBehaviour
     private int Drop;
     private bool ItemDrop = false;
     public bool isAlive;
+    private bool Reflect;
     float Timer;
     float DeadTime = 1.5f;
     private float speed;
@@ -60,7 +67,11 @@ public class EnemyDown : MonoBehaviour
         Random.InitState(System.DateTime.Now.Millisecond);
         _dissolve = this.GetComponent<Dissolve>();
         player2 = Player.GetComponent<Player2>();
-      
+        // 法線ベクトル定義
+        inNormalU = transform.up;
+        inNormalD = -transform.up;
+        inNormalR = -transform.forward;
+        inNormalL = transform.forward;
     }
 
     // Update is called once per frame
@@ -76,8 +87,9 @@ public class EnemyDown : MonoBehaviour
 
             if (isAlive)
             {
-                animator.speed = 1;
+                animator.speed = 1.0f;
             }
+            
             // 画面外の敵は消したい
             dis = Vector3.Distance(transform.position, Player.transform.position);
             if (dis >= 200.0f)
@@ -100,6 +112,53 @@ public class EnemyDown : MonoBehaviour
                 if (Player.transform.position.x > transform.position.x)
                 {
                     rb.angularVelocity = new Vector3(0.0f, 0.0f, 500.0f);
+                }
+
+                // 画面端で跳ね返したい
+                // 右端
+                if (transform.position.x >= CamRightTop.x && !Reflect)
+                {
+                    InAngle = rb.velocity;
+                    ReAngle = Vector3.Reflect(InAngle, inNormalL);
+                    rb.velocity = ReAngle;
+                    Reflect = true;
+                }
+                else
+                {
+                    Reflect = false;
+                }
+                // 左端
+                if (transform.position.x <= CamLeftBot.x && !Reflect)
+                {
+                    InAngle = rb.velocity;
+                    rb.velocity = Vector3.Reflect(InAngle, inNormalR);
+                    Reflect = true;
+                }
+                else
+                {
+                    Reflect = false;
+                }
+                // 上端
+                if (transform.position.y >= CamRightTop.y && !Reflect)
+                {
+                    InAngle = rb.velocity;
+                    rb.velocity = Vector3.Reflect(InAngle, inNormalD);
+                    Reflect = true;
+                }
+                else
+                {
+                    Reflect = false;
+                }
+                // 下端
+                if (transform.position.y <= CamLeftBot.y && !Reflect)
+                {
+                    InAngle = rb.velocity;
+                    rb.velocity = Vector3.Reflect(InAngle, inNormalU);
+                    Reflect = true;
+                }
+                else
+                {
+                    Reflect = false;
                 }
 
                 //---ディゾルマテリアルに変更
@@ -128,6 +187,7 @@ public class EnemyDown : MonoBehaviour
         else
         {
             rb.Pause(gameObject);
+            animator.speed = 0.0f;
         }
     }
 
@@ -154,7 +214,7 @@ public class EnemyDown : MonoBehaviour
                 seq.Append(transform.DOShakePosition(player2.HitStopTime,1f,100,fadeOut:false));
 
                 //EnemyDead(vec , Player.transform.position.x);
-                //---このタイミングでプレイヤーの死亡処理を呼び出す
+                //---このタイミングでエネミーの死亡処理を呼び出す
                 seq.AppendCallback(() => EnemyDead(vec));
                 Shake(0.1f,5,0.23f);
             }

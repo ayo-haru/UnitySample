@@ -38,7 +38,6 @@ public class BroccoliEnemy : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         ED = GetComponent<EnemyDown>();
         //rb.centerOfMass = new Vector3(0, -1, 0);
-        transform.Rotate(0, -90, 0);
     }
 
     private void Update()
@@ -71,20 +70,17 @@ public class BroccoliEnemy : MonoBehaviour
                 float step = MoveSpeed * Time.deltaTime;
                 rb.position = Vector3.MoveTowards(pos, TargetPos, step);
 
-                if (Target.position.x < transform.position.x && look)   // プレイヤーのほうを向く処理
+                if (Target.position.x < transform.position.x)   // プレイヤーのほうを向く処理
                 {
-                    transform.Rotate(0, -180, 0);
-                    look = false;
+                    transform.rotation = Quaternion.LookRotation(new Vector3(-180, 0, 0));
                 }
-
-                if (Target.position.x > transform.position.x && !look)  // プレイヤーのほうを向く処理
+                if (Target.position.x > transform.position.x)  // プレイヤーのほうを向く処理
                 {
-                    transform.Rotate(0, 180, 0);
-                    look = true;
+                    transform.rotation = Quaternion.LookRotation(new Vector3(180, 0, 0));
                 }
-
+                
                 // 落下処理
-                if(!isGround)
+                if (!isGround)
                 {
                     rb.velocity += new Vector3(0.0f, -1.0f, 0.0f);
                 }

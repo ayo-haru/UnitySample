@@ -73,7 +73,6 @@ public class WeaponCollision : MonoBehaviour
             {
                 if (Player.isHitSavePoint)
                 {
-                    Debug.Log("セーブポイントと当たった");
                     return;
                 }
 
@@ -131,6 +130,11 @@ public class WeaponCollision : MonoBehaviour
             else
             {
                 player2.CanHitStopflg = false;
+            }
+
+            if(collision.gameObject.name == "TutorialFork(Clone)")
+            {
+                TutorialPanCake.RefrectFlg = true;
             }
         }
 

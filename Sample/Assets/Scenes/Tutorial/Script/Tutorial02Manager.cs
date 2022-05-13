@@ -36,7 +36,7 @@ public class Tutorial02Manager : MonoBehaviour
         {
             GameData.Player = playerPrefab;
         }
-        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-165.0f, 17.0f, 0.0f);
+        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-80.0f, 17.0f, 0.0f);
         GameObject player = Instantiate(GameData.Player);
         player.name = GameData.Player.name;                     // –¼‘O‚ÌŒã‚ë‚É(Clone)‚Æ‚Â‚­‚Ì‚ğ–h‚®‚½‚ßA
 

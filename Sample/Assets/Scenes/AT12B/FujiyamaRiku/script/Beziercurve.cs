@@ -34,7 +34,7 @@ public class Beziercurve : MonoBehaviour
         Vector3 SS = Vector3.Lerp(FS, FM, Time);
         Vector3 SE = Vector3.Lerp(FM, FE, Time);
 
-        Vector3 End = Vector3.Lerp(SS, SE, Time);
+        CurvePos = Vector3.Lerp(SS, SE, Time);
 
         return CurvePos;
     }

@@ -7,17 +7,19 @@ public class BossEntry : MonoBehaviour
 {
     Vector3 StartCameraPos;
     Vector3 CamEndPos;
+    CameraMove MoveCam;
     [SerializeField] public Image BossName;
     [SerializeField] public Image BossBarName;
     [SerializeField] public Image BossHPFrame;
     [SerializeField] public Image BossHPBar;
-    [SerializeField] float DelSpeed;
-    float FocusTime;
-    float FocusDelTime;
+    [SerializeField] float DelTime;
+    [SerializeField] float FocusTime;
+    [SerializeField] float FocusDelTime;
     bool ReturnCamera;
     // Start is called before the first frame update
     void Start()
     {
+        MoveCam = GetComponent<CameraMove>();
         StartCameraPos = Camera.main.transform.position;
         CamEndPos = Boss1Manager.BossPos;
         CamEndPos.z = StartCameraPos.z;
@@ -33,37 +35,21 @@ public class BossEntry : MonoBehaviour
     }
     public void Entry()
     {
-        Camera camera = Camera.main;
-        if (!ReturnCamera)
+        MoveCam.SetCamera(Camera.main);
+        switch (MoveCam.MoveCameraTime(StartCameraPos, CamEndPos, FocusTime, FocusDelTime, DelTime))
         {
-            FocusTime += Time.deltaTime;
-            camera.transform.position = Vector3.Lerp(StartCameraPos, CamEndPos, FocusTime);
-            if (FocusTime >= 1.0f)
-            {
+            case 1:
                 BossName.gameObject.SetActive(true);
-                FocusDelTime += Time.deltaTime * DelSpeed;
-                if (FocusDelTime >= 1.0f)
+                break;
+            case 2:
                 {
-                    FocusTime = 0.0f;
-                    FocusDelTime = 0.0f;
-                    ReturnCamera = true;
+                    BossBarName.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                    BossHPBar.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                    BossHPFrame.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                    BossName.gameObject.SetActive(false);
+                    Boss1Manager.BossState = Boss1Manager.Boss1State.BOSS1_BATTLE;
                 }
-            }
-        }
-        if(ReturnCamera)
-        {
-            FocusTime += Time.deltaTime;
-            camera.transform.position = Vector3.Lerp(CamEndPos, StartCameraPos, FocusTime);
-            if (FocusTime >= 1.0f)
-            {
-                BossBarName.color = new Color(1.0f,1.0f,1.0f,1.0f);
-                BossHPBar.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-                BossHPFrame.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-                BossName.gameObject.SetActive(false);
-                FocusTime = 0.0f;
-                ReturnCamera = false;
-                Boss1Manager.BossState = Boss1Manager.Boss1State.BOSS1_BATTLE;
-            }
+                break;
         }
     }
 }

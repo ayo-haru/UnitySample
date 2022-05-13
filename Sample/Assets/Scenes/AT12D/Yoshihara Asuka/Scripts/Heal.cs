@@ -30,6 +30,17 @@ public class Heal : MonoBehaviour
     private float aTime;
     private bool isBaunceFlg;                           //弾かれたかの判定
 
+    private Vector3 CamRightTop;    // カメラの右上座標
+    private Vector3 CamLeftBot;     // カメラの左下座標
+    private Vector3 InAngle;        // 入射角
+    private Vector3 ReAngle;        // 反射角
+    private Vector3 inNormalU;      // 法線ベクトル上
+    private Vector3 inNormalD;      // 法線ベクトル下
+    private Vector3 inNormalR;      // 法線ベクトル右
+    private Vector3 inNormalL;      // 法線ベクトル左
+    private float CamZ = -120.0f;
+    private bool Reflect;                               //画面端で弾かれたかの判定
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,11 +55,77 @@ public class Heal : MonoBehaviour
         hpmanager = HP.GetComponent<HPManager>();
 
         isBaunceFlg = false;    //まだ弾かれてない
+
+        // 法線ベクトル定義
+        inNormalU = new Vector3(0.0f, 1.0f, 0.0f);
+        inNormalD = new Vector3(0.0f, -1.0f, 0.0f);
+        inNormalR = new Vector3(1.0f, 0.0f, 0.0f);
+        inNormalL = new Vector3(-1.0f, 0.0f, 0.0f);
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+        //-----弾かれていた時にやる処理
+        if (isBaunceFlg)
+        {
+            rb.Resume(gameObject);
+            // カメラの端の座標取得
+            CamRightTop = Camera.main.ScreenToWorldPoint(new Vector3(0.0f, 0.0f, CamZ));
+            CamLeftBot = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, CamZ));
+
+            // 画面端で跳ね返したい
+            // 右端
+            if (transform.position.x >= CamRightTop.x && !Reflect)
+            {
+                InAngle = rb.velocity;
+                ReAngle = Vector3.Reflect(InAngle, inNormalL);
+                rb.velocity = ReAngle;
+                Reflect = true;
+            }
+            else
+            {
+                Reflect = false;
+            }
+            // 左端
+            if (transform.position.x <= CamLeftBot.x && !Reflect)
+            {
+                InAngle = rb.velocity;
+                rb.velocity = Vector3.Reflect(InAngle, inNormalR);
+                Reflect = true;
+            }
+            else
+            {
+                Reflect = false;
+            }
+            // 上端
+            if (transform.position.y >= CamRightTop.y && !Reflect)
+            {
+                InAngle = rb.velocity;
+                rb.velocity = Vector3.Reflect(InAngle, inNormalD);
+                Reflect = true;
+            }
+            else
+            {
+                Reflect = false;
+            }
+            // 下端
+            if (transform.position.y <= CamLeftBot.y && !Reflect)
+            {
+                InAngle = rb.velocity;
+                rb.velocity = Vector3.Reflect(InAngle, inNormalU);
+                Reflect = true;
+            }
+            else
+            {
+                Reflect = false;
+            }
+
+            return;
+        }
+        
+        //-----弾かれてなかったときの処理
         // プレイヤーとオブジェクトの二点間のベクトルを求める
         vec = (Player.transform.position - transform.position).normalized;
         

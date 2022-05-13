@@ -499,6 +499,41 @@ public class Player2 : MonoBehaviour
 
     public void CreateShiled()
     {
+        //エフェクト生成
+        if (AttackDirection.y > 0)          // 上パリィの時だけ上の出す位置を高めに設定
+        {
+
+            ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+                                            PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
+                                            PlayerPos.z), Quaternion.identity);
+        }
+        else
+        {
+            ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+                                                    PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
+                                                    PlayerPos.z), Quaternion.identity);
+        }
+  
+        //エフェクト回転
+        if (AttackDirection.x < -0.2f)
+        {
+            ShiledEffect.transform.Rotate(new Vector3(ShiledEffect.transform.rotation.x, 60.0f, ShiledEffect.transform.rotation.z));
+        }
+        if (AttackDirection.x > 0.2f)
+        {
+            ShiledEffect.transform.Rotate(new Vector3(ShiledEffect.transform.rotation.x, -60.0f, ShiledEffect.transform.rotation.z));
+        }
+        if (AttackDirection.y < -0.2f)
+        {
+            ShiledEffect.transform.Rotate(new Vector3(-45.0f, ShiledEffect.transform.rotation.y, ShiledEffect.transform.rotation.z));
+        }
+        if (AttackDirection.y > 0.2f)
+        {
+            ShiledEffect.transform.Rotate(new Vector3(60.0f, ShiledEffect.transform.rotation.y, ShiledEffect.transform.rotation.z));
+        }
+        //エフェクト消去
+        Destroy(ShiledEffect.transform.gameObject, DestroyTime);
+
         //モデルの向きと反対方向に盾出したらモデル回転
         if ((AttackDirection.x > 0 && beforeDir.x < 0) || (AttackDirection.x < 0 && beforeDir.x > 0))
         {

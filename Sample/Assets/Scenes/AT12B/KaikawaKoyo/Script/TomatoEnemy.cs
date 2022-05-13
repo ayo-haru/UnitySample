@@ -34,7 +34,6 @@ public class TomatoEnemy : MonoBehaviour
         Target = Player.transform;                    // プレイヤーの座標取得
         rb = gameObject.GetComponent<Rigidbody>();
         ED = GetComponent<EnemyDown>();
-        transform.Rotate(0, -90, 0);
         look = false;
     }
 

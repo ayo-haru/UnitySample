@@ -16,7 +16,7 @@ public class EnemyDown : MonoBehaviour
     [SerializeField]
     private GameObject Item;
     private GameObject Player;
-    private float bouncePower = 200.0f;
+    private Camera maincam;
     private Vector3 Pos;
     private Vector3 vec;
     private Vector3 CamRightTop;    // カメラの右上座標
@@ -35,11 +35,13 @@ public class EnemyDown : MonoBehaviour
     [SerializeField]
     private int EnemyNumber;        // 敵識別
     private int Drop;
+    private int reflect;
     private bool ItemDrop = false;
     public bool isAlive;
     private bool Reflect;
     float Timer;
     float DeadTime = 1.5f;
+    private float bouncePower = 200.0f;
     private float speed;
     private float dis;
     private float CamZ = -120.0f;
@@ -70,8 +72,8 @@ public class EnemyDown : MonoBehaviour
         // 法線ベクトル定義
         inNormalU = transform.up;
         inNormalD = -transform.up;
-        inNormalR = -transform.forward;
-        inNormalL = transform.forward;
+        inNormalR = -transform.right;
+        inNormalL = transform.right;
     }
 
     // Update is called once per frame
@@ -81,28 +83,31 @@ public class EnemyDown : MonoBehaviour
         {
             rb.Resume(gameObject);
 
-            // カメラの端の座標取得
-            CamRightTop = Camera.main.ScreenToWorldPoint(new Vector3(0.0f, 0.0f, CamZ));
-            CamLeftBot = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, CamZ));
-
             if (isAlive)
             {
                 animator.speed = 1.0f;
+
+                // 画面外の敵は消したい
+                dis = Vector3.Distance(transform.position, Player.transform.position);
+                if (dis >= 200.0f)
+                {
+                    Destroy(gameObject, 0.0f);
+                }
             }
-            
-            // 画面外の敵は消したい
-            dis = Vector3.Distance(transform.position, Player.transform.position);
-            if (dis >= 200.0f)
-            {
-                Destroy(gameObject, 0.0f);
-            }
+
             // 時間で消える処理
             if (!isAlive)
             {
+               
                 // タイマー起動
                 Timer += Time.deltaTime;
                 // 敵の速度を取得
                 speed = rb.velocity.magnitude;
+
+                // カメラの端の座標取得
+                CamRightTop = Camera.main.ScreenToWorldPoint(new Vector3(0.0f, 0.0f, CamZ));
+                CamLeftBot = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, CamZ));
+
                 // 回転させる
                 if (Player.transform.position.x < transform.position.x)
                 {
@@ -118,20 +123,43 @@ public class EnemyDown : MonoBehaviour
                 // 右端
                 if (transform.position.x >= CamRightTop.x && !Reflect)
                 {
-                    InAngle = rb.velocity;
-                    ReAngle = Vector3.Reflect(InAngle, inNormalL);
-                    rb.velocity = ReAngle;
+                    reflect = Random.Range(0, 2);
+                    if (reflect == 0)
+                    {
+                        InAngle = rb.velocity;
+                        ReAngle = Vector3.Reflect(InAngle, inNormalL);
+                        rb.velocity = ReAngle;
+                    }
+                    else if(reflect == 1)
+                    {
+                        maincam = Camera.main;
+                        vec = (maincam.transform.position - transform.position).normalized;
+                        rb.constraints = RigidbodyConstraints.FreezeRotationX |
+                                         RigidbodyConstraints.FreezeRotationY;
+                        //rb.velocity = vec * bouncePower;
+                        rb.velocity = ReAngle - new Vector3(0.0f, 0.0f, 100.0f);
+                    }
                     Reflect = true;
-                }
-                else
-                {
-                    Reflect = false;
                 }
                 // 左端
                 if (transform.position.x <= CamLeftBot.x && !Reflect)
                 {
-                    InAngle = rb.velocity;
-                    rb.velocity = Vector3.Reflect(InAngle, inNormalR);
+                    reflect = Random.Range(0, 2);
+                    if (reflect == 0)
+                    {
+                        InAngle = rb.velocity;
+                        ReAngle = Vector3.Reflect(InAngle, inNormalR);
+                        rb.velocity = ReAngle;
+                    }
+                    else if (reflect == 1)
+                    {
+                        maincam = Camera.main;
+                        vec = (maincam.transform.position - transform.position).normalized;
+                        rb.constraints = RigidbodyConstraints.FreezeRotationX |
+                                         RigidbodyConstraints.FreezeRotationY;
+                        //rb.velocity = vec * bouncePower;
+                        rb.velocity = ReAngle - new Vector3(0.0f, 0.0f, 100.0f);
+                    }
                     Reflect = true;
                 }
                 else
@@ -141,8 +169,22 @@ public class EnemyDown : MonoBehaviour
                 // 上端
                 if (transform.position.y >= CamRightTop.y && !Reflect)
                 {
-                    InAngle = rb.velocity;
-                    rb.velocity = Vector3.Reflect(InAngle, inNormalD);
+                    reflect = Random.Range(0, 2);
+                    if (reflect == 0)
+                    {
+                        InAngle = rb.velocity;
+                        ReAngle = Vector3.Reflect(InAngle, inNormalD);
+                        rb.velocity = ReAngle;
+                    }
+                    else if (reflect == 1)
+                    {
+                        maincam = Camera.main;
+                        vec = (maincam.transform.position - transform.position).normalized;
+                        rb.constraints = RigidbodyConstraints.FreezeRotationX |
+                                         RigidbodyConstraints.FreezeRotationY;
+                        //rb.velocity = vec * bouncePower;
+                        rb.velocity = ReAngle - new Vector3(0.0f, 0.0f, 100.0f);
+                    }
                     Reflect = true;
                 }
                 else
@@ -152,8 +194,22 @@ public class EnemyDown : MonoBehaviour
                 // 下端
                 if (transform.position.y <= CamLeftBot.y && !Reflect)
                 {
-                    InAngle = rb.velocity;
-                    rb.velocity = Vector3.Reflect(InAngle, inNormalU);
+                    reflect = Random.Range(0, 2);
+                    if (reflect == 0)
+                    {
+                        InAngle = rb.velocity;
+                        ReAngle = Vector3.Reflect(InAngle, inNormalU);
+                        rb.velocity = ReAngle;
+                    }
+                    else if (reflect == 1)
+                    {
+                        maincam = Camera.main;
+                        vec = (maincam.transform.position - transform.position).normalized;
+                        rb.constraints = RigidbodyConstraints.FreezeRotationX |
+                                         RigidbodyConstraints.FreezeRotationY;
+                        //rb.velocity = vec * bouncePower;
+                        rb.velocity = ReAngle - new Vector3(0.0f, 0.0f, 100.0f);
+                    }
                     Reflect = true;
                 }
                 else
@@ -199,7 +255,7 @@ public class EnemyDown : MonoBehaviour
             // 弾かれたらベクトルを計算して関数を呼び出す
             if (collision.gameObject.name == "Weapon(Clone)" && isAlive)
             {
-                vec = (transform.position -Player.transform.position).normalized;
+                vec = (transform.position - Player.transform.position).normalized;
 
                 // レイヤー変更
                 if (EnemyNumber == 2)
@@ -216,7 +272,7 @@ public class EnemyDown : MonoBehaviour
                 //EnemyDead(vec , Player.transform.position.x);
                 //---このタイミングでエネミーの死亡処理を呼び出す
                 seq.AppendCallback(() => EnemyDead(vec));
-                Shake(0.1f,5,0.23f);
+                Shake(0.1f, 5, 0.23f);
             }
 
             // トマトがほかの敵に当たったら爆発する

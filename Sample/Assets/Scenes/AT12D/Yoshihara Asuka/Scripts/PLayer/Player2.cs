@@ -497,7 +497,6 @@ public class Player2 : MonoBehaviour
     }
     #endregion
 
-
     public void CreateShiled()
     {
         //モデルの向きと反対方向に盾出したらモデル回転
@@ -525,17 +524,22 @@ public class Player2 : MonoBehaviour
         if (AttackDirection.y > 0)          // 上パリィの時だけ上の出す位置を高めに設定
         {
             _weapon = Instantiate(Weapon, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                      GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
-                                                      GameData.PlayerPos.z), Quaternion.identity);
-            Debug.Log("盾座標"+transform.position);
+                                                                               GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
+                                                                               GameData.PlayerPos.z), Quaternion.identity);
 
+            //EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+            //                                                                                               GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
+            //                                                                                               GameData.PlayerPos.z), false);
         }
         else
         {
             _weapon = Instantiate(Weapon, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                      GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
-                                                      GameData.PlayerPos.z), Quaternion.identity);
-            Debug.Log("盾座標" + transform.position);
+                                                                               GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
+                                                                               GameData.PlayerPos.z),Quaternion.identity);
+
+            //EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+            //                                                                                               GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
+            //                                                                                               GameData.PlayerPos.z), false);
 
         }
 

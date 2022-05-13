@@ -79,7 +79,7 @@ public class BossMove : MonoBehaviour
                 }
                 else if (BossState == Boss_State.Jump)
                 {
-                    this.GetComponent<Boss1Attack>().BossJump.BossJamp();
+                    BossAttack.BossJump.BossJamp();
                 }
                 else if (BossState == Boss_State.KnifeThrower)//もしボスの状態がナイフ投げの場合
                 {
@@ -133,7 +133,6 @@ public class BossMove : MonoBehaviour
         //Debug.Log("Time" + elapsedTimeOfIdleState);
         if (AttackCount == MaxAttack)
         {
-            //SetState(Boss_State.idle);//待機モーション
             elapsedTimeOfIdleState = timeToStayInIdle;
             AttackCount = 0;          //攻撃数カウントをゼロに
             Debug.Log("アイドル??");

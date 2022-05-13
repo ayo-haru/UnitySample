@@ -21,6 +21,7 @@ public class Boss1Attack : MonoBehaviour
         Attack4,
         Idle,
     }
+    [Header("突進攻撃のダメージ")]
     [SerializeField] public int RushDamage;                 //突進攻撃のダメージ
     [SerializeField] public int StrawberryDamage;           //イチゴ攻撃のダメージ
     [SerializeField] public int KnifeDamage;                //ナイフ攻撃のダメージ

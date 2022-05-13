@@ -275,7 +275,7 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Select"",
+                    ""name"": ""Map"",
                     ""type"": ""Value"",
                     ""id"": ""b15abb3a-e67f-455d-a926-339e8f9490b5"",
                     ""expectedControlType"": """",
@@ -358,7 +358,7 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Select"",
+                    ""action"": ""Map"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -369,7 +369,7 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Select"",
+                    ""action"": ""Map"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -389,7 +389,7 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
         m_UI_RightStickSelect = m_UI.FindAction("RightStickSelect", throwIfNotFound: true);
         m_UI_Start = m_UI.FindAction("Start", throwIfNotFound: true);
         m_UI_Decision = m_UI.FindAction("Decision", throwIfNotFound: true);
-        m_UI_Select = m_UI.FindAction("Select", throwIfNotFound: true);
+        m_UI_Map = m_UI.FindAction("Map", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -502,7 +502,7 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_RightStickSelect;
     private readonly InputAction m_UI_Start;
     private readonly InputAction m_UI_Decision;
-    private readonly InputAction m_UI_Select;
+    private readonly InputAction m_UI_Map;
     public struct UIActions
     {
         private @Game_pad m_Wrapper;
@@ -511,7 +511,7 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
         public InputAction @RightStickSelect => m_Wrapper.m_UI_RightStickSelect;
         public InputAction @Start => m_Wrapper.m_UI_Start;
         public InputAction @Decision => m_Wrapper.m_UI_Decision;
-        public InputAction @Select => m_Wrapper.m_UI_Select;
+        public InputAction @Map => m_Wrapper.m_UI_Map;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -533,9 +533,9 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
                 @Decision.started -= m_Wrapper.m_UIActionsCallbackInterface.OnDecision;
                 @Decision.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnDecision;
                 @Decision.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnDecision;
-                @Select.started -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect;
-                @Select.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect;
-                @Select.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnSelect;
+                @Map.started -= m_Wrapper.m_UIActionsCallbackInterface.OnMap;
+                @Map.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnMap;
+                @Map.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnMap;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -552,9 +552,9 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
                 @Decision.started += instance.OnDecision;
                 @Decision.performed += instance.OnDecision;
                 @Decision.canceled += instance.OnDecision;
-                @Select.started += instance.OnSelect;
-                @Select.performed += instance.OnSelect;
-                @Select.canceled += instance.OnSelect;
+                @Map.started += instance.OnMap;
+                @Map.performed += instance.OnMap;
+                @Map.canceled += instance.OnMap;
             }
         }
     }
@@ -571,6 +571,6 @@ public partial class @Game_pad : IInputActionCollection2, IDisposable
         void OnRightStickSelect(InputAction.CallbackContext context);
         void OnStart(InputAction.CallbackContext context);
         void OnDecision(InputAction.CallbackContext context);
-        void OnSelect(InputAction.CallbackContext context);
+        void OnMap(InputAction.CallbackContext context);
     }
 }

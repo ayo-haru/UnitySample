@@ -12,13 +12,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class MAP_UI : MonoBehaviour
-{
+public class MAP_UI : MonoBehaviour {
     public GameObject DisplayMAP;
+    private Game_pad UIActionAssets;        // InputActionのUIを扱う
+    private bool isMapButton;
     // Start is called before the first frame update
-    void Awake()
-    {
+    void Awake() {
+        UIActionAssets = new Game_pad();            // InputActionインスタンスを生成
+        isMapButton = false;
+
         //---MAP表示
         GameObject canvas;
         canvas = GameObject.Find("Canvas2");
@@ -26,13 +30,12 @@ public class MAP_UI : MonoBehaviour
         {
             canvas = GameObject.Find("Canvas");
         }
-        
+
         DisplayMAP = Instantiate(DisplayMAP);
         DisplayMAP.transform.SetParent(canvas.transform, false);
     }
 
-    private void Start()
-    {
+    private void Start() {
         DisplayMAP.SetActive(false);
         //HPが表示されていたら
         //HPの手前に表示する
@@ -45,8 +48,7 @@ public class MAP_UI : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         ////ｆ１押したらマップ表示
         //if (Input.GetKeyDown(KeyCode.F1))
         //{
@@ -58,10 +60,28 @@ public class MAP_UI : MonoBehaviour
         //    DisplayMAP.SetActive(false);
         //}
         //Mキーで表示非表示切り替え
-        if (Input.GetKeyDown(KeyCode.M))
+        //if (Input.GetKeyDown(KeyCode.M))
+        if (isMapButton)
         {
             DisplayMAP.SetActive(!DisplayMAP.activeSelf);
         }
+        isMapButton = false;
+    }
+    private void OnEnable() {
+        UIActionAssets.UI.Map.canceled += OnMap;
 
+        //---InputActionの有効化
+        UIActionAssets.UI.Enable();
+
+    }
+
+    private void OnDisable() {
+        //---InputActionの無効化
+        UIActionAssets.UI.Disable();
+    }
+
+
+    private void OnMap(InputAction.CallbackContext obj) {
+        isMapButton = true;
     }
 }

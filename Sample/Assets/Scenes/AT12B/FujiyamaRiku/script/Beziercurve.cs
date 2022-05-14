@@ -16,6 +16,15 @@ public class Beziercurve : MonoBehaviour
     {
 
     }
+    /// <summary>
+    /// 二次ベジエ曲線
+    /// <para>戻り値：今現在いる座標</para>
+    /// </summary>
+    /// <param name="StartPoint"></param>
+    /// <param name="MiddlePoint"></param>
+    /// <param name="EndPoint"></param>
+    /// <param name="Time"></param>
+    /// <returns></returns>
     static public Vector3 SecondCurve(Vector3 StartPoint, Vector3 MiddlePoint, Vector3 EndPoint, float Time)
     {
         Vector3 S = Vector3.Lerp(StartPoint, MiddlePoint, Time);

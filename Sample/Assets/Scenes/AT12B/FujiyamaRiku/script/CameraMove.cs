@@ -25,21 +25,15 @@ public class CameraMove : MonoBehaviour
         DelayFlg = false;
         g_MoveNowTime = 0.0f;
         
-}
+    }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
-    //これを呼ぶと使うカメラを指定できる
-    /// <summary>
-    /// 引数に移動させたいカメラをセット
-    /// </summary>
-    /// <param name="UseCamera"></param>
-    public void SetCamera(Camera UseCamera)
+    public void SetCamera(Camera Usecamera)
     {
-        camera = UseCamera;
+        camera = Usecamera;
     }
 
     //今現在の座標から指定した座標まで行く処理

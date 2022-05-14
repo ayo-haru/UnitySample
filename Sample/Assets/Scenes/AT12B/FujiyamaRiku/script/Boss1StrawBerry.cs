@@ -233,7 +233,7 @@ public class Boss1StrawBerry : MonoBehaviour
                         //弾き終わったら弾いたイチゴを初期化
                         if (Ref_FinishTime[i] >= 1.0f)
                         {
-                            //EffectManager.Play(EffectData.eEFFECT.EF_BOSSSTRAWBERRY, Strawberry[i].transform.position);
+                            EffectManager.Play(EffectData.eEFFECT.EF_BOSSSTRAWBERRY, Strawberry[i].transform.position);
                             PlayerRefDir[i] = false;
                             //弾い方がしっかりボスの方向だった時にだけダメージの処理する
                             if (!RefMissFlg)

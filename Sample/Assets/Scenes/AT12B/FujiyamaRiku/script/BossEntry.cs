@@ -36,7 +36,7 @@ public class BossEntry : MonoBehaviour
     public void Entry()
     {
         MoveCam.SetCamera(Camera.main);
-        switch (MoveCam.MoveCameraTime(StartCameraPos, CamEndPos, FocusTime, FocusDelTime, DelTime))
+        switch (MoveCam.MoveCameraSpeed(StartCameraPos, CamEndPos, FocusTime, FocusDelTime, DelTime))
         {
             case 1:
                 BossName.gameObject.SetActive(true);

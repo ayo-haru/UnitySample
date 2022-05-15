@@ -47,7 +47,7 @@ public class DelayFollowCamera : MonoBehaviour
 		//			FollowCameraPos.z);
 
 		transform.position = new Vector3(PlayerPos.x,
-										 playerInfo.OldPlayerPos[20].y + FollowCameraPos.y,
+										 playerInfo.OldPlayerPos[5].y + FollowCameraPos.y,
 										 FollowCameraPos.z); ;
 
 

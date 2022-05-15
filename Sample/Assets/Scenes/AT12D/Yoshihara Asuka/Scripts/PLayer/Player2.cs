@@ -403,8 +403,6 @@ public class Player2 : MonoBehaviour
     }
 
     public void Attack() {
-        Debug.Log("Player2のほう");
-
         if (isAttack) { 
         
             //---振動させる
@@ -531,6 +529,7 @@ public class Player2 : MonoBehaviour
         {
             ShiledEffect.transform.Rotate(new Vector3(60.0f, ShiledEffect.transform.rotation.y, ShiledEffect.transform.rotation.z));
         }
+
         //エフェクト消去
         Destroy(ShiledEffect.transform.gameObject, DestroyTime);
 
@@ -646,16 +645,22 @@ public class Player2 : MonoBehaviour
         //{
         //    animator.SetBool("Damagae",false);
         //}
+
+        //---アニメーションの再生
+        if (state == PLAYERSTATE.DAMAGED)
+        {
+            animator.SetTrigger("Damage2");
+        }
+        hpmanager.Damaged();
+
         EffectManager.Play(EffectData.eEFFECT.EF_DAMAGE, this.transform.position);
         SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
 
-        hpmanager.Damaged();
 
         // ノックバック処理
         rb.velocity = Vector3.zero;
         ForceDirection = Vector2.zero;
 
-        Debug.Log(_distance);
         rb.AddForce(_distance * KnockBackPower, ForceMode.VelocityChange);
         //rb.AddForce(-transform.forward * 800f, ForceMode.VelocityChange);
 

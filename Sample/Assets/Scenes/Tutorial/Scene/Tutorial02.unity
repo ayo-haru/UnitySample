@@ -2892,6 +2892,7 @@ Transform:
   m_Children:
   - {fileID: 583753037}
   - {fileID: 1380511147}
+  - {fileID: 686773546}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3108,6 +3109,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 982a6e3ade12f9946a49539fb7ed5b19, type: 3}
+--- !u!1 &686773545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 686773546}
+  - component: {fileID: 686773547}
+  m_Layer: 0
+  m_Name: wallleft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &686773546
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686773545}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -64.2, y: 24.688723, z: -7.2502127}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 657649440}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &686773547
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686773545}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 12.473816, y: 156.8611, z: 21.175339}
+  m_Center: {x: -68.94171, y: 57.16784, z: 8.087671}
 --- !u!1001 &699379187
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4152,7 +4197,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 5000
-  field of view: 45
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -4178,7 +4223,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 861757047}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 123.3, y: 39, z: -434.5}
+  m_LocalPosition: {x: 123.3, y: 35, z: -40}
   m_LocalScale: {x: 1, y: 0.886, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4230,10 +4275,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FollowCameraPos: {x: 0, y: 20, z: -100}
-  RightScreenOut: 0
-  LeftScreenOut: 0
-  OverScreenOut: 30
-  UnderScreenOut: 30
+  RightScreenOut: 380
+  LeftScreenOut: -80
+  OverScreenOut: 150
+  UnderScreenOut: 0
 --- !u!82 &861757053
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6225,7 +6270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1597634846355154769, guid: f673af3482c4af746a1351284f51c00c, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1597634846355154769, guid: f673af3482c4af746a1351284f51c00c, type: 3}
       propertyPath: m_AnchorMax.x

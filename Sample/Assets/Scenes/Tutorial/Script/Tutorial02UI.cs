@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Tutorial02UI : MonoBehaviour {
     [SerializeField]
@@ -23,9 +24,18 @@ public class Tutorial02UI : MonoBehaviour {
 
     private int UIcnt;  // UI表示順
 
+    private Game_pad UIActionAssets;        // InputActionのUIを扱う
+    private bool isDecision;                // 決定された
+
+
+    private void Awake() {
+        UIActionAssets = new Game_pad();            // InputActionインスタンスを生成
+    }
 
     // Start is called before the first frame update
     void Start() {
+        isDecision = false; // 決定を初期化
+
         UIcnt = 0;
 
         // キャンバスを指定
@@ -57,9 +67,57 @@ public class Tutorial02UI : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (GameData.PlayerPos.x >= -80.0f && UIcnt < 3)
+        if (UIcnt == 0)
         {
+            //Debug.Log("<color=blue></color>"+UIcnt);
+            Time.timeScale = 0.0f;
+            CharacterBack.GetComponent<ImageShow>().Show();
+            Chara2_1.GetComponent<ImageShow>().Show();
+            if (isDecision)
+            {
+                //Debug.Log("<color=blue>決定</color>");
+
+                UIcnt++;
+                isDecision = false;
+                return;
+            }
+        }
+        else if(UIcnt == 1)
+        {
+            Chara2_1.GetComponent<ImageShow>().Clear();
+            Chara2_2.GetComponent<ImageShow>().Show();
+            if (isDecision)
+            {
+                UIcnt++;
+                isDecision = false;
+                Time.timeScale = 1.0f;
+                return;
+            }
 
         }
     }
+
+    private void OnEnable() {
+        //---Actionイベントを登録
+        UIActionAssets.UI.Decision.started += OnDecision;
+
+        //---InputActionの有効化
+        UIActionAssets.UI.Enable();
+    }
+
+
+    private void OnDisable() {
+        //---InputActionの無効化
+        UIActionAssets.UI.Disable();
+    }
+
+
+
+    /// <summary>
+    /// 決定ボタン
+    /// </summary>
+    private void OnDecision(InputAction.CallbackContext obj) {
+        isDecision = true;
+    }
+
 }

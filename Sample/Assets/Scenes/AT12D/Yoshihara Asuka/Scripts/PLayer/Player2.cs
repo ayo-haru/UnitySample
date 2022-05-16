@@ -501,15 +501,15 @@ public class Player2 : MonoBehaviour
         if (AttackDirection.y > 0)          // 上パリィの時だけ上の出す位置を高めに設定
         {
 
-            ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                            PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
-                                            PlayerPos.z), Quaternion.identity);
+            ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+                                                                                        GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
+                                                                                        GameData.PlayerPos.x), Quaternion.identity);
         }
         else
         {
-            ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                    PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
-                                                    PlayerPos.z), Quaternion.identity);
+            ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+                                                                                        GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
+                                                                                        GameData.PlayerPos.z), Quaternion.identity);
         }
   
         //エフェクト回転
@@ -558,8 +558,8 @@ public class Player2 : MonoBehaviour
         if (AttackDirection.y > 0)          // 上パリィの時だけ上の出す位置を高めに設定
         {
             _weapon = Instantiate(Weapon, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                                               GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
-                                                                               GameData.PlayerPos.z), Quaternion.identity);
+                                                      GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
+                                                      GameData.PlayerPos.z), Quaternion.identity);
 
             //EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
             //                                                                                               GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
@@ -568,8 +568,8 @@ public class Player2 : MonoBehaviour
         else
         {
             _weapon = Instantiate(Weapon, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                                               GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
-                                                                               GameData.PlayerPos.z),Quaternion.identity);
+                                                      GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
+                                                      GameData.PlayerPos.z),Quaternion.identity);
 
             //EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
             //                                                                                               GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),

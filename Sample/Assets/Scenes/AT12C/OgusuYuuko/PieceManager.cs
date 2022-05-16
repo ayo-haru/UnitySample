@@ -18,7 +18,7 @@ using UnityEngine.UI;
 public class PieceManager : MonoBehaviour
 {
     //子オブジェクト
-    public GameObject[] piece;
+    //public GameObject[] piece;
     //現在のかけらの数
     private int nPiece;
     //かけら所持枠
@@ -28,14 +28,20 @@ public class PieceManager : MonoBehaviour
     //一回だけ実行する用のフラグ
     private bool onceFlag;
     //エフェクト
-    public GameObject effect;
+    //public GameObject effect;
+    //ランタン画像
+    public GameObject PieceImage;
+    //UVScrollコンポーネント
+    private UVScroll pieceUV;
     //回復のストックマネージャー
    // private StockManager stockManager;
     // Start is called before the first frame update
     void Start()
     {
         onceFlag = true;
-        
+
+        //コンポーネント取得
+        pieceUV = PieceImage.GetComponent<UVScroll>();
 
        // stockManager = GameObject.Find("StockHPManager").GetComponent<StockManager>();
     }
@@ -48,24 +54,27 @@ public class PieceManager : MonoBehaviour
             return;
         }
         // 所持枠最大値設定
-        MaxPieceGrade = piece.Length;
+        MaxPieceGrade = 4;
         //ゲームデータクラスから回復のかけらの数取得して入れる
         nPiece = GameData.CurrentPiece;
         //ゲームデータクラスから取得していれる
         PieceGrade = GameData.CurrentPieceGrade;
 
-        for (int i = 0; i < nPiece; ++i)
-        {
-            //かけらの所持数分黄色にして表示
-            piece[i].GetComponent<ImageShow>().Show();
-        }
+        //現在のかけらの数に応じてＵＶ座標決定
+        pieceUV.SetFrame(nPiece);
 
-        for (int i = nPiece; i < PieceGrade; ++i)
-        {
-            //かけらを黒色にして表示
-            piece[i].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
-            piece[i].GetComponent<ImageShow>().Show();
-        }
+        //for (int i = 0; i < nPiece; ++i)
+        //{
+        //    //かけらの所持数分黄色にして表示
+        //    piece[i].GetComponent<ImageShow>().Show();
+        //}
+
+        //for (int i = nPiece; i < PieceGrade; ++i)
+        //{
+        //    //かけらを黒色にして表示
+        //    piece[i].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
+        //    piece[i].GetComponent<ImageShow>().Show();
+        //}
 
         onceFlag = false;
         //かけらが５個ある時
@@ -127,10 +136,12 @@ public class PieceManager : MonoBehaviour
 
             //かけら増やす
             ++nPiece;
-            //表示
-            piece[nPiece - 1].GetComponent<ImageShow>().SetColor(1.0f,1.0f,1.0f);
-            //エフェクト発生
-            Instantiate(effect, piece[nPiece - 1].GetComponent<RectTransform>().position, Quaternion.identity);
+        pieceUV.SetFrame(nPiece);
+        Debug.Log("nPiece" + nPiece);
+        //表示
+        //piece[nPiece - 1].GetComponent<ImageShow>().SetColor(1.0f,1.0f,1.0f);
+        //    //エフェクト発生
+        //    Instantiate(effect, piece[nPiece - 1].GetComponent<RectTransform>().position, Quaternion.identity);
             //ゲームデータ更新
             ++GameData.CurrentPiece;
             //保存
@@ -151,12 +162,13 @@ public class PieceManager : MonoBehaviour
         {
             //かけら減らす
             --nPiece;
-            //エフェクト発生
-            GameObject Effect = Instantiate(effect, piece[nPiece].GetComponent<RectTransform>().position, Quaternion.identity);
-            //エフェクトの色を黒にする
-            Effect.transform.GetChild(0).gameObject.GetComponent<Image>().color = new Color(0, 0, 0, 1);
-            //かけらの色を黒にする
-            piece[nPiece].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
+            pieceUV.SetFrame(nPiece);
+            ////エフェクト発生
+            //GameObject Effect = Instantiate(effect, piece[nPiece].GetComponent<RectTransform>().position, Quaternion.identity);
+            ////エフェクトの色を黒にする
+            //Effect.transform.GetChild(0).gameObject.GetComponent<Image>().color = new Color(0, 0, 0, 1);
+            ////かけらの色を黒にする
+            //piece[nPiece].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
             //ゲームデータ更新
             --GameData.CurrentPiece;
             //保存
@@ -201,11 +213,11 @@ public class PieceManager : MonoBehaviour
             ++GameData.CurrentPieceGrade;
             //保存
             SaveManager.savePieceGrade(GameData.CurrentPieceGrade);
-            //表示
-            piece[PieceGrade - 1].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
-            piece[PieceGrade - 1].GetComponent<ImageShow>().Show();
-            //エフェクト発生
-            Instantiate(effect, piece[PieceGrade - 1].GetComponent<RectTransform>().position, Quaternion.identity);
+            ////表示
+            //piece[PieceGrade - 1].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
+            //piece[PieceGrade - 1].GetComponent<ImageShow>().Show();
+            ////エフェクト発生
+            //Instantiate(effect, piece[PieceGrade - 1].GetComponent<RectTransform>().position, Quaternion.identity);
         }
     }
 }

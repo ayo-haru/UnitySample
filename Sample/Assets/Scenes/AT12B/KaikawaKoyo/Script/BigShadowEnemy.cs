@@ -17,7 +17,6 @@ public class BigShadowEnemy : MonoBehaviour
     private Vector3 position;
     public int EnemyNumber;
     private bool spawn = false;
-    private bool look = false;
     private float spawnTime;
     [SerializeField]
     private float SpawnTime;

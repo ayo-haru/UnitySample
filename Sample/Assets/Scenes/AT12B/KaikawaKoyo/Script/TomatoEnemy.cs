@@ -18,7 +18,6 @@ public class TomatoEnemy : MonoBehaviour
     private Rigidbody rb;
     private EnemyDown ED;
     private Vector3 TargetPos;
-    private bool look;              // プレイヤーのほうを見るフラグ
     private bool isGround;          // 接地フラグ
     private float delay;            // ジャンプのディレイ
 
@@ -34,15 +33,12 @@ public class TomatoEnemy : MonoBehaviour
         Target = Player.transform;                    // プレイヤーの座標取得
         rb = gameObject.GetComponent<Rigidbody>();
         ED = GetComponent<EnemyDown>();
-        look = false;
     }
 
     private void Update()
     {
         if(!Pause.isPause)
         {
-            rb.Resume(gameObject);
-
             // プレイヤーを見つけたら攻撃開始
             if (ED.isAlive)
             {
@@ -87,10 +83,6 @@ public class TomatoEnemy : MonoBehaviour
                     rb.velocity += new Vector3(0.0f, -1.0f, 0.0f);
                 }
             }
-        }
-        else
-        {
-            rb.Pause(gameObject);
         }
     }
 

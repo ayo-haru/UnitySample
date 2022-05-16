@@ -24,8 +24,6 @@ public class BroccoliEnemy : MonoBehaviour
 
     private float InvincibleTime = 2.0f;
     private float DamageTime;
-    //bool InArea = false;
-    private bool look = false;
     private bool isGround = false;
     private bool Invincible = false;
 
@@ -44,7 +42,6 @@ public class BroccoliEnemy : MonoBehaviour
     {
         if(!Pause.isPause)
         {
-            rb.Resume(gameObject);
             if (Invincible)
             {
                 gameObject.layer = LayerMask.NameToLayer("Invincible");
@@ -92,10 +89,6 @@ public class BroccoliEnemy : MonoBehaviour
                     isCalledOnce = true;
                 }
             }
-        }
-        else
-        {
-            rb.Pause(gameObject);
         }
     }
 

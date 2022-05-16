@@ -19,6 +19,7 @@ public class EnemyDown : MonoBehaviour
     private Camera maincam;
     private Vector3 Pos;
     private Vector3 vec;
+    private Vector3 Pvec;           // ポーズ時の速度格納用
     private Vector3 CamRightTop;    // カメラの右上座標
     private Vector3 CamLeftBot;     // カメラの左下座標
     private Vector3 InAngle;        // 入射角
@@ -39,6 +40,7 @@ public class EnemyDown : MonoBehaviour
     private bool ItemDrop = false;
     public bool isAlive;
     private bool Reflect;
+    private bool pause;
     float Timer;
     float DeadTime = 1.5f;
     private float bouncePower = 200.0f;
@@ -81,10 +83,18 @@ public class EnemyDown : MonoBehaviour
     {
         if(!Pause.isPause)
         {
-            rb.Resume(gameObject);
+            // ポーズ解除されたとき
+            if(pause)
+            {
+                rb.Resume(gameObject);
+                rb.velocity = Pvec;
+                pause = false;
+            }
 
+            // 生きてる時の処理
             if (isAlive)
             {
+                // アニメーションは常に再生
                 animator.speed = 1.0f;
 
                 // 画面外の敵は消したい
@@ -98,7 +108,6 @@ public class EnemyDown : MonoBehaviour
             // 時間で消える処理
             if (!isAlive)
             {
-               
                 // タイマー起動
                 Timer += Time.deltaTime;
                 // 敵の速度を取得
@@ -136,7 +145,6 @@ public class EnemyDown : MonoBehaviour
                         vec = (maincam.transform.position - transform.position).normalized;
                         rb.constraints = RigidbodyConstraints.FreezeRotationX |
                                          RigidbodyConstraints.FreezeRotationY;
-                        //rb.velocity = vec * bouncePower;
                         rb.velocity = ReAngle - new Vector3(0.0f, 0.0f, 100.0f);
                     }
                     Reflect = true;
@@ -157,14 +165,9 @@ public class EnemyDown : MonoBehaviour
                         vec = (maincam.transform.position - transform.position).normalized;
                         rb.constraints = RigidbodyConstraints.FreezeRotationX |
                                          RigidbodyConstraints.FreezeRotationY;
-                        //rb.velocity = vec * bouncePower;
                         rb.velocity = ReAngle - new Vector3(0.0f, 0.0f, 100.0f);
                     }
                     Reflect = true;
-                }
-                else
-                {
-                    Reflect = false;
                 }
                 // 上端
                 if (transform.position.y >= CamRightTop.y && !Reflect)
@@ -182,14 +185,9 @@ public class EnemyDown : MonoBehaviour
                         vec = (maincam.transform.position - transform.position).normalized;
                         rb.constraints = RigidbodyConstraints.FreezeRotationX |
                                          RigidbodyConstraints.FreezeRotationY;
-                        //rb.velocity = vec * bouncePower;
                         rb.velocity = ReAngle - new Vector3(0.0f, 0.0f, 100.0f);
                     }
                     Reflect = true;
-                }
-                else
-                {
-                    Reflect = false;
                 }
                 // 下端
                 if (transform.position.y <= CamLeftBot.y && !Reflect)
@@ -207,14 +205,9 @@ public class EnemyDown : MonoBehaviour
                         vec = (maincam.transform.position - transform.position).normalized;
                         rb.constraints = RigidbodyConstraints.FreezeRotationX |
                                          RigidbodyConstraints.FreezeRotationY;
-                        //rb.velocity = vec * bouncePower;
                         rb.velocity = ReAngle - new Vector3(0.0f, 0.0f, 100.0f);
                     }
                     Reflect = true;
-                }
-                else
-                {
-                    Reflect = false;
                 }
 
                 //---ディゾルマテリアルに変更
@@ -239,11 +232,13 @@ public class EnemyDown : MonoBehaviour
                     EffectManager.Play(EffectData.eEFFECT.EF_ENEMYDOWN, Pos, 2.0f);
                 }
             }
+            Pvec = rb.velocity;
         }
         else
         {
             rb.Pause(gameObject);
             animator.speed = 0.0f;
+            pause = true;
         }
     }
 
@@ -251,7 +246,6 @@ public class EnemyDown : MonoBehaviour
     {
         if(!Pause.isPause)
         {
-            rb.Resume(gameObject);
             // 弾かれたらベクトルを計算して関数を呼び出す
             if (collision.gameObject.name == "Weapon(Clone)" && isAlive)
             {
@@ -283,65 +277,52 @@ public class EnemyDown : MonoBehaviour
                 EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);
             }
         }
-        else
-        {
-            rb.Pause(gameObject);
-        }
     }
 
     // 死ぬ時の処理
     public void EnemyDead(Vector3 vec)
     {
-        if (!Pause.isPause)
+        // アニメーションを止める
+        animator.speed = 0;
+        // 重力を消す
+        rb.useGravity = false;
+        // 空気抵抗をゼロに
+        rb.angularDrag = 0.0f;
+
+        // 回転軸を変更
+        if (EnemyNumber == 1 || EnemyNumber == 4)
         {
-            rb.Resume(gameObject);
-            // アニメーションを止める
-            animator.speed = 0;
-            // 重力を消す
-            rb.useGravity = false;
-            // 空気抵抗をゼロに
-            rb.angularDrag = 0.0f;
-
-            // 回転軸を変更
-            if (EnemyNumber == 1 || EnemyNumber == 4)
-            {
-                rb.centerOfMass = new Vector3(0.0f, 5.0f, 2.0f);
-            }
-            else if (EnemyNumber == 2 || EnemyNumber == 5)
-            {
-                rb.centerOfMass = new Vector3(0.0f, 0.3f, 0.0f);
-            }
-            else
-            {
-                rb.centerOfMass = new Vector3(0.0f, 0.0f, 0.0f);
-            }
-
-            // 回復アイテムを落とす
-            Pos = transform.position;
-            Drop = Random.Range(0, 100);
-            if (Drop < DropRate && !ItemDrop)
-            {
-                Instantiate(Item, Pos, Quaternion.identity);
-                ItemDrop = true;
-            }
-            
-            //取得した法線ベクトルに跳ね返す速さをかけて、跳ね返す
-            //rb.AddForce(velocity * bouncePower, ForceMode.Force);
-            rb.constraints = RigidbodyConstraints.FreezePositionZ |
-                             RigidbodyConstraints.FreezeRotationX |
-                             RigidbodyConstraints.FreezeRotationY;
-            //プレイヤーと逆方向に跳ね返す
-            rb.velocity = vec * bouncePower;
-
-            SoundManager.Play(SoundData.eSE.SE_REFLECTION, SoundData.GameAudioList);
-            
-            isAlive = false;
+            rb.centerOfMass = new Vector3(0.0f, 5.0f, 2.0f);
+        }
+        else if (EnemyNumber == 2 || EnemyNumber == 5)
+        {
+            rb.centerOfMass = new Vector3(0.0f, 0.3f, 0.0f);
         }
         else
         {
-            rb.Pause(gameObject);
+            rb.centerOfMass = new Vector3(0.0f, 0.0f, 0.0f);
         }
-       
+
+        // 回復アイテムを落とす
+        Pos = transform.position;
+        Drop = Random.Range(0, 100);
+        if (Drop < DropRate && !ItemDrop)
+        {
+            Instantiate(Item, Pos, Quaternion.identity);
+            ItemDrop = true;
+        }
+
+        //取得した法線ベクトルに跳ね返す速さをかけて、跳ね返す
+        //rb.AddForce(velocity * bouncePower, ForceMode.Force);
+        rb.constraints = RigidbodyConstraints.FreezePositionZ |
+                         RigidbodyConstraints.FreezeRotationX |
+                         RigidbodyConstraints.FreezeRotationY;
+        //プレイヤーと逆方向に跳ね返す
+        rb.velocity = vec * bouncePower;
+
+        SoundManager.Play(SoundData.eSE.SE_REFLECTION, SoundData.GameAudioList);
+
+        isAlive = false;
     }
     /// <summary>
     /// カメラ振動演出

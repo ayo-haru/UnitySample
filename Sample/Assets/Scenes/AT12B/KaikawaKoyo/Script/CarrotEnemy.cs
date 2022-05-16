@@ -18,6 +18,7 @@ public class CarrotEnemy : MonoBehaviour
     private GameObject Jet;
     private Rigidbody rb;
     private Vector3 vec;
+    private Vector3 Pvec;
     private EnemyDown ED;
     private Quaternion look;
     private ParticleSystem effect;
@@ -25,14 +26,15 @@ public class CarrotEnemy : MonoBehaviour
     [SerializeField]
     float MoveSpeed;
     float MovingSpeed;
+    private float dis;
     private float Timer;
     private float idlingTime = 0.5f;
-    private float AttackTime = 0.5f;
     bool start = true;
     bool IdringFlg = true;
     bool InArea = true;
     bool Attack;
-    //bool pause = false;
+    bool disFlg;
+    bool pause;
 
     private bool isCalledOnce = false;                             // 一回だけ処理をするために使う。
 
@@ -53,8 +55,6 @@ public class CarrotEnemy : MonoBehaviour
     {
         if(!Pause.isPause)
         {
-            rb.Resume(gameObject);
-
             // ジェットのエフェクト出すよ
             //effect.transform.position = Jet.transform.position;
 
@@ -62,7 +62,7 @@ public class CarrotEnemy : MonoBehaviour
             if (ED.isAlive)
             {
                 // アイドリングするよ
-                if(IdringFlg)
+                if (IdringFlg)
                 {
                     // 最初だけプレイヤーのほうを向いてプルプルする
                     if (start)
@@ -125,33 +125,32 @@ public class CarrotEnemy : MonoBehaviour
                     else
                     {
                         Attack = false;
-
                     }
                 }
-                //if (pause)
-                //{
-                //    rb.velocity = vec * MoveSpeed;
-                //    pause = false;
-                //}
+
+                // プレイヤーとの距離を計算
+                dis = Vector3.Distance(transform.position, Player.transform.position);
+                // 一定距離離れたら再度アイドリング→攻撃
+                if (dis >= 70.0f && !disFlg)
+                {
+                    IdringFlg = true;
+                    disFlg = true;
+                }
+                else if (dis < 60.0f && disFlg)
+                {
+                    disFlg = false;
+                }
             }
-        }
-        else
-        {
-            rb.Pause(gameObject);
-            //pause = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (!Pause.isPause)
+        // 一定距離離れたら再度アイドリング→攻撃
+        if (other.CompareTag("Player") && !IdringFlg)
         {
-            // 一定距離離れたら再度アイドリング→攻撃
-            if (other.CompareTag("Player") && !IdringFlg)
-            {
-                // アイドリングする
-                IdringFlg = true;
-            }
+            // アイドリングする
+            //IdringFlg = true;
         }
     }
 
@@ -162,7 +161,7 @@ public class CarrotEnemy : MonoBehaviour
             //Destroy(effect.gameObject, 0.0f);
             Destroy(gameObject, 0.0f);
         }
-        if (!collision.gameObject.CompareTag("Player") && !IdringFlg)
+        if ((collision.gameObject.CompareTag("Default") || collision.gameObject.CompareTag("Ground")) && !IdringFlg)
         {
             // アイドリング開始
             IdringFlg = true;

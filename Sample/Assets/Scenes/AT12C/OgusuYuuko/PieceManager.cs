@@ -62,6 +62,16 @@ public class PieceManager : MonoBehaviour
 
         //現在のかけらの数に応じてＵＶ座標決定
         pieceUV.SetFrame(nPiece);
+        //PieceGradeの数だけランタンを出す
+        for(int i = 0; i < PieceGrade; ++i)
+        {
+            //piece[i].GetComponent<pieceMove>().startFlag = true;
+        }
+        //nPieceの数だけランタンを光らせる
+        for(int i = 0; i < nPiece; ++i)
+        {
+            //piece[i].GetComponent<UVScroll>().SetFrame(1);
+        }
 
         //for (int i = 0; i < nPiece; ++i)
         //{
@@ -138,6 +148,9 @@ public class PieceManager : MonoBehaviour
             ++nPiece;
         pieceUV.SetFrame(nPiece);
         Debug.Log("nPiece" + nPiece);
+        //ランタンを光らせる
+        //piece[nPiece - 1].GetComponent<UVScroll>().SetFrame(1)
+
         //表示
         //piece[nPiece - 1].GetComponent<ImageShow>().SetColor(1.0f,1.0f,1.0f);
         //    //エフェクト発生
@@ -163,6 +176,9 @@ public class PieceManager : MonoBehaviour
             //かけら減らす
             --nPiece;
             pieceUV.SetFrame(nPiece);
+            //ランタンの光を消す
+            //piece[nPiece].GetComponent<UVScroll>().SetFrame(0);
+
             ////エフェクト発生
             //GameObject Effect = Instantiate(effect, piece[nPiece].GetComponent<RectTransform>().position, Quaternion.identity);
             ////エフェクトの色を黒にする
@@ -209,6 +225,8 @@ public class PieceManager : MonoBehaviour
         {
             //かけら所持枠を増やす
             ++PieceGrade;
+            //ランタンを一つ増やす
+            //piece[PieceGrade - 1].GetComponent<pieceMove>().startFlag = true;
             //ゲームデータ更新
             ++GameData.CurrentPieceGrade;
             //保存

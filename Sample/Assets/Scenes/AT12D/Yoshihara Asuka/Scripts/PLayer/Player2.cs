@@ -452,44 +452,6 @@ public class Player2 : MonoBehaviour
                 //GroundNow = false;
                 animator.SetTrigger("Attack_DOWN");
             }
-
-
-
-            //---倒した値を基に盾の出す場所を指定
-            //if (AttackDirection.y > 0)          // 上パリィの時だけ上の出す位置を高めに設定
-            //{
-
-            //ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-            //	                            PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
-            //	                            PlayerPos.z), Quaternion.identity);
-
-            //_weapon = CreateShield();
-
-            //}
-            //else
-            //{
-            //_weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-            //PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
-            //PlayerPos.z), Quaternion.identity);
-            //ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-            //                                        PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
-            //                                        PlayerPos.z), Quaternion.identity);
-
-            //}
-
-
-            //GameObject _weapon = Instantiate(Weapon, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-            //                                PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
-
-
-            //---スティックの倒した方向に向かせる
-            //EffectManager.Play(EffectData.eEFFECT.EF_SHIELD,(weapon.transform.position) ,1.0f);
-
-
-
-            //Destroy(ShiledEffect, DestroyTime);
-
-
             PlayerActionAsset.Player.Attack.started -= OnAttack;
         }
     }
@@ -520,22 +482,24 @@ public class Player2 : MonoBehaviour
         if (AttackDirection.y > 0){        
             //---上パリィの時だけ上の出す位置を高めに設定
             _weapon = Instantiate(Weapon, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                                                    GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
-                                                                                    GameData.PlayerPos.z), Quaternion.identity);
+                                                      GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
+                                                      GameData.PlayerPos.z), Quaternion.identity);
 
-            ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                                                                                                          GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
-                                                                                                                                          GameData.PlayerPos.x), Quaternion.identity);
+            //ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+                                                                                         //GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
+                                                                                         //GameData.PlayerPos.x), Quaternion.identity);
+
+            
 
         }
         else{
             _weapon = Instantiate(Weapon, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                                                    GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
-                                                                                    GameData.PlayerPos.z),Quaternion.identity);
+                                                      GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
+                                                      GameData.PlayerPos.z),Quaternion.identity);
 
-            ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                                                                                                           GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
-                                                                                                                                           GameData.PlayerPos.z), Quaternion.identity);
+            //ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+                                                                                         //GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
+                                                                                         //GameData.PlayerPos.z), Quaternion.identity);
 
         }
 
@@ -546,28 +510,28 @@ public class Player2 : MonoBehaviour
 
         //---武器回転
         _weapon.transform.Rotate(new Vector3(0, 0, (90 * AttackDirection.y)));
-        //エフェクト回転
-        if (AttackDirection.x < -0.2f){
-            ShiledEffect.transform.Rotate(new Vector3(ShiledEffect.transform.rotation.x, 60.0f, ShiledEffect.transform.rotation.z));
-        }
-        if (AttackDirection.x > 0.2f){
-            ShiledEffect.transform.Rotate(new Vector3(ShiledEffect.transform.rotation.x, -60.0f, ShiledEffect.transform.rotation.z));
-        }
-        if (AttackDirection.y < -0.2f){
-            ShiledEffect.transform.Rotate(new Vector3(-45.0f, ShiledEffect.transform.rotation.y, ShiledEffect.transform.rotation.z));
-        }
-        if (AttackDirection.y > 0.2f){
-            ShiledEffect.transform.Rotate(new Vector3(60.0f, ShiledEffect.transform.rotation.y, ShiledEffect.transform.rotation.z));
-        }
+
+        ////エフェクト回転
+        //if (AttackDirection.x < -0.2f){
+        //    ShiledEffect.transform.Rotate(new Vector3(ShiledEffect.transform.rotation.x, 60.0f, ShiledEffect.transform.rotation.z));
+        //}
+        //if (AttackDirection.x > 0.2f){
+        //    ShiledEffect.transform.Rotate(new Vector3(ShiledEffect.transform.rotation.x, -60.0f, ShiledEffect.transform.rotation.z));
+        //}
+        //if (AttackDirection.y < -0.2f){
+        //    ShiledEffect.transform.Rotate(new Vector3(-45.0f, ShiledEffect.transform.rotation.y, ShiledEffect.transform.rotation.z));
+        //}
+        //if (AttackDirection.y > 0.2f){
+        //    ShiledEffect.transform.Rotate(new Vector3(60.0f, ShiledEffect.transform.rotation.y, ShiledEffect.transform.rotation.z));
+        //}
 
         //---SE・EF再生
         SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
-        //EffectManager.Play(EffectData.eEFFECT.EF_SHEILD2,weapon.transform.position);
 
 
         //シールド・エフェクト消去
         Destroy(_weapon, DestroyTime);
-        Destroy(ShiledEffect.transform.gameObject, DestroyTime);
+        //Destroy(ShiledEffect.transform.gameObject, DestroyTime);
 
         AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする
 
@@ -613,10 +577,10 @@ public class Player2 : MonoBehaviour
         
         // ステートを被弾時に変更
         state = PLAYERSTATE.DAMAGED;
-        if(animator.GetBool("Damagae") == false)
-        {
-            animator.SetBool("Damage",true);
-        }
+        //if(animator.GetBool("Damagae") == false)
+        //{
+        //    animator.SetBool("Damage",true);
+        //}
 
         //else if (animator.GetBool("Damagae") == true)
         //{
@@ -739,10 +703,7 @@ public class Player2 : MonoBehaviour
                 Damaged(Distination);
             }
         }
-        else{
-            animator.SetBool("Damage", false);
 
-        }
 
         //---"Damaged"&"GroundDameged"との処理
         if (collision.gameObject.tag == "Damaged" || collision.gameObject.tag == "GroundDameged"){

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Tutorial02UI : MonoBehaviour {
     [SerializeField]
@@ -19,6 +20,9 @@ public class Tutorial02UI : MonoBehaviour {
     [SerializeField]
     private GameObject chara2_4;
     private GameObject Chara2_4;
+    [SerializeField]
+    private GameObject panel;
+    private GameObject Panel;
 
     private Canvas canvas;  // 表示するキャンバス
 
@@ -26,6 +30,9 @@ public class Tutorial02UI : MonoBehaviour {
 
     private Game_pad UIActionAssets;        // InputActionのUIを扱う
     private bool isDecision;                // 決定された
+
+    private Tutorial02Manager scenemanager;
+    private DelayFollowCamera _delayfollowcamera;
 
 
     private void Awake() {
@@ -41,6 +48,10 @@ public class Tutorial02UI : MonoBehaviour {
         // キャンバスを指定
         canvas = GetComponent<Canvas>();
 
+        scenemanager = GameObject.Find("SceneManager").GetComponent<Tutorial02Manager>();
+
+        _delayfollowcamera = Camera.main.GetComponent<DelayFollowCamera>();
+
         //----- UI初期化 -----
         // 実態化
         CharacterBack = Instantiate(characterback);
@@ -48,8 +59,10 @@ public class Tutorial02UI : MonoBehaviour {
         Chara2_2 = Instantiate(chara2_2);
         Chara2_3 = Instantiate(chara2_3);
         Chara2_4 = Instantiate(chara2_4);
+        Panel = Instantiate(panel);
 
         // キャンバスの子に指定
+        Panel.transform.SetParent(this.canvas.transform, false);
         CharacterBack.transform.SetParent(this.canvas.transform, false);
         Chara2_1.transform.SetParent(this.canvas.transform, false);
         Chara2_2.transform.SetParent(this.canvas.transform, false);
@@ -62,6 +75,8 @@ public class Tutorial02UI : MonoBehaviour {
         Chara2_2.GetComponent<ImageShow>().Hide();
         Chara2_3.GetComponent<ImageShow>().Hide();
         Chara2_4.GetComponent<ImageShow>().Hide();
+        Panel.GetComponent<Image>().color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
+        Panel.GetComponent<Image>().enabled = false;
 
     }
 
@@ -69,13 +84,12 @@ public class Tutorial02UI : MonoBehaviour {
     void Update() {
         if (UIcnt == 0)
         {
-            //Debug.Log("<color=blue></color>"+UIcnt);
+            Panel.GetComponent<Image>().enabled = true;
             Time.timeScale = 0.0f;
             CharacterBack.GetComponent<ImageShow>().Show();
             Chara2_1.GetComponent<ImageShow>().Show();
             if (isDecision)
             {
-                //Debug.Log("<color=blue>決定</color>");
 
                 UIcnt++;
                 isDecision = false;
@@ -88,12 +102,43 @@ public class Tutorial02UI : MonoBehaviour {
             Chara2_2.GetComponent<ImageShow>().Show();
             if (isDecision)
             {
+                Panel.GetComponent<Image>().enabled = false;
                 UIcnt++;
                 isDecision = false;
                 Time.timeScale = 1.0f;
                 return;
             }
 
+        }
+        else if (UIcnt == 2)
+        {
+            if (!TutorialPanCake.isAlive)
+            {
+                StartCoroutine("DelayDestroyPancake");
+                Chara2_2.GetComponent<ImageShow>().Clear();
+                Chara2_3.GetComponent<ImageShow>().Show(3);
+                UIcnt++;
+            }
+
+            if (GameData.PlayerPos.x > TutorialPanCake.pancakePos.x)
+            {
+                UIcnt = 1;  // UIを一個前のやつに戻す
+                Time.timeScale = 0.0f;  // タイムは止める
+                scenemanager.PancakeDestroy();  // パンケーキ消す  
+                scenemanager.PancakeAppearance();   // パンケーき出現
+                scenemanager.PlayerDestroy();   // プレイヤー消す
+                scenemanager.PlayerAppearance();    // プレイヤー出現
+            }
+        }
+        else if(UIcnt == 3 && Chara2_3.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
+        {
+            Chara2_4.GetComponent<ImageShow>().Show(3);
+            UIcnt++;
+        }
+        else if(UIcnt == 4 && Chara2_4.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
+        {
+            CharacterBack.GetComponent<ImageShow>().FadeOut();
+            _delayfollowcamera.enabled = true;
         }
     }
 
@@ -118,6 +163,11 @@ public class Tutorial02UI : MonoBehaviour {
     /// </summary>
     private void OnDecision(InputAction.CallbackContext obj) {
         isDecision = true;
+    }
+
+    private IEnumerator DelayDestroyPancake() {
+        yield return new WaitForSeconds(0.5f);
+        scenemanager.PancakeDestroy();
     }
 
 }

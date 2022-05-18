@@ -14,7 +14,6 @@ public class TutorialPanCake : MonoBehaviour {
     Vector3 RushRefEndPoint;                                //突進をはじいた後の敵の最終地点
     Vector3 RushMiddlePoint;                                //突進攻撃後戻ってくるための中間座標
     Vector3 ForkPos;
-    bool OnlyRushFlg;                                       //一回限定
     private float RushSpeed = 0.3f;                //突進のスピード
     bool RushRefFlg = false;                                //突進をはじいた判定
     float RushTime;                                         //突進の経過時間
@@ -41,6 +40,9 @@ public class TutorialPanCake : MonoBehaviour {
 
     private bool onceUpdate = false;
 
+    public static Vector3 pancakePos;
+    public static bool isAlive;
+
     // Start is called before the first frame update
     void Start() {
         RushStartPoint = new Vector3(50.0f, 23.0f, 0.0f);
@@ -50,14 +52,16 @@ public class TutorialPanCake : MonoBehaviour {
         this.Scale = this.transform.localScale;
 
         this.BossAnim = this.gameObject.GetComponent<Animator>();
+        pancakePos = this.transform.position;
 
+        isAlive = true;
     }
 
     // Update is called once per frame
     void Update() {
+        pancakePos = this.transform.position;
         if (!onceUpdate)
         {
-            TutorialPanCakeMove.SetState(TutorialPanCakeMove.Boss_State.charge);
             MoveFlg = true;
             onceUpdate = true;
         }
@@ -122,20 +126,11 @@ public class TutorialPanCake : MonoBehaviour {
                     this.AnimFlagOnOff();
                     this.BossAnim.SetBool("IdleToTake", false);
                     this.BossAnim.SetBool("RushToJump", false);
-                    //this.AnimMoveFlgOnOff();
                     MoveFlg = false;
                     BossReturnTime = 0;
                     this.BossAnim.speed = 1;
-                    if (HPgage.currentHp >= 50)
-                    {
-                        BossMove.SetState(BossMove.Boss_State.idle);
-                    }
-                    if (HPgage.currentHp < 50)
-                    {
-                        BossMove.AttackCount += 1;
-                        BossMove.SetState(BossMove.Boss_State.idle);
-                    }
-                    //BossAttack.OnlyFlg = false;
+                    isAlive = false;
+                    //Destroy(gameObject,0.5f);
                 }
                 return;
             }

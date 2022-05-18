@@ -8,12 +8,17 @@ public class Tutorial02Manager : MonoBehaviour
     //---- 変数定義 -----
     [SerializeField]
     private GameObject playerPrefab;     // プレイヤーを格納
+    private GameObject player;
     private int currentSceneNum = (int)GameData.eSceneState.Tutorial2;        // デバッグ用現在のシーンを格納
     private bool isCalledOnce = false;  // 開始演出で使用。一回だけ処理をするために使う。
+    [SerializeField]
+    private GameObject pancakeobj;
+    private GameObject PancakeObj;
 
     // Start is called before the first frame update
     void Awake()
     {
+
         //----- マップの番号を保存 -----
         if (GameData.NextMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
         {
@@ -36,10 +41,10 @@ public class Tutorial02Manager : MonoBehaviour
         {
             GameData.Player = playerPrefab;
         }
-        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-80.0f, 17.0f, 0.0f);
-        GameObject player = Instantiate(GameData.Player);
-        player.name = GameData.Player.name;                     // 名前の後ろに(Clone)とつくのを防ぐため、
-
+        PlayerAppearance();
+    
+        //----- パンケーキ初期化 -----
+        PancakeAppearance();
 
 
         //----- 音鳴らす準備 -----                                                       //----- 音鳴らす準備 -----
@@ -80,5 +85,38 @@ public class Tutorial02Manager : MonoBehaviour
             }
         }
 
+    }
+
+    /// <summary>
+    /// パンケーキ出現
+    /// </summary>
+    public void PancakeAppearance() {
+        PancakeObj = Instantiate(pancakeobj);
+        PancakeObj.transform.position = new Vector3(50.0f, 23.0f, 0.0f);
+        PancakeObj.name = pancakeobj.name;
+    }
+
+    /// <summary>
+    /// パンケーキ消す
+    /// </summary>
+    public void PancakeDestroy() {
+        Destroy(PancakeObj);
+    }
+
+
+    /// <summary>
+    /// プレイヤー出現
+    /// </summary>
+    public void PlayerAppearance() {
+        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-80.0f, 17.0f, 0.0f);
+        this.player = Instantiate(GameData.Player);
+        player.name = GameData.Player.name;                     // 名前の後ろに(Clone)とつくのを防ぐため、
+    }
+
+    /// <summary>
+    /// プレイヤー消す
+    /// </summary>
+    public void PlayerDestroy() {
+        Destroy(GameObject.Find(player.name));
     }
 }

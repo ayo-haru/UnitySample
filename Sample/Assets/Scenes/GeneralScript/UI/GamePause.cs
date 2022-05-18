@@ -103,6 +103,7 @@ public class GamePause : MonoBehaviour
         GameEnd.GetComponent<UIBlink>().isBlink = false;
         BackTitle.GetComponent<UIBlink>().isBlink = false;
         Option.GetComponent<UIBlink>().isBlink = false;
+        Panel.GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
         Panel.GetComponent<Image>().enabled = false;
         Optionmanager.SetActive(false);
     }

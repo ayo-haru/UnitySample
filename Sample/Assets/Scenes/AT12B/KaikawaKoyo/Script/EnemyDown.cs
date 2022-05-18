@@ -6,6 +6,7 @@
 //      <開発履歴>
 //      2022/03/20
 //      2022/05/03  ヒットストップ演出追加-吉原
+//      2022/05/18  画面で跳ね返った時の、UI振動の振動追加
 //==========================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -61,6 +62,9 @@ public class EnemyDown : MonoBehaviour
     public int   RoundCnt = 4;
     public float Duration = 0.23f;
 
+    //---UI振動用
+    private HPManager ui;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -76,6 +80,9 @@ public class EnemyDown : MonoBehaviour
         inNormalD = -transform.up;
         inNormalR = -transform.right;
         inNormalL = transform.right;
+
+        //ui取得
+        ui = GameObject.Find("HPSystem(2)(Clone)").GetComponent<HPManager>();
     }
 
     // Update is called once per frame
@@ -150,6 +157,8 @@ public class EnemyDown : MonoBehaviour
                         rb.velocity = ReAngle - new Vector3(0.0f, 0.0f, 100.0f);
                     }
                     Reflect = true;
+                    //ui振動
+                    ui.Vibration();
                 }
                 // 左端
                 if (transform.position.x <= CamLeftBot.x && !Reflect)
@@ -172,6 +181,8 @@ public class EnemyDown : MonoBehaviour
                         rb.velocity = ReAngle - new Vector3(0.0f, 0.0f, 100.0f);
                     }
                     Reflect = true;
+                    //ui振動
+                    ui.Vibration();
                 }
                 // 上端
                 if (transform.position.y >= CamRightTop.y && !Reflect)
@@ -194,6 +205,8 @@ public class EnemyDown : MonoBehaviour
                         rb.velocity = ReAngle - new Vector3(0.0f, 0.0f, 100.0f);
                     }
                     Reflect = true;
+                    //ui振動
+                    ui.Vibration();
                 }
                 // 下端
                 if (transform.position.y <= CamLeftBot.y && !Reflect)
@@ -216,6 +229,8 @@ public class EnemyDown : MonoBehaviour
                         rb.velocity = ReAngle - new Vector3(0.0f, 0.0f, 100.0f);
                     }
                     Reflect = true;
+                    //ui振動
+                    ui.Vibration();
                 }
 
                 //---ディゾルマテリアルに変更

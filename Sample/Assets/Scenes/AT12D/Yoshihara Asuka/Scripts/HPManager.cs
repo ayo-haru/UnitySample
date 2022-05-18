@@ -23,6 +23,7 @@ public class HPManager : MonoBehaviour
 
     public GameObject PieceManager;                 //かけらマネージャー
     public GameObject HPImage;                      //ｈｐ画像
+    private GameObject HPMask;                      //hpマスク画像
 
     private PieceManager pieceManager;          //かけらマネージャーコンポーネント
     private UVScroll hpTex;                     //ｈｐのUVScrollコンポーネント
@@ -36,6 +37,7 @@ public class HPManager : MonoBehaviour
         //GameObject.Find("Harf Moon3").SetActive(false);
         //GameObject.Find("New Moon").SetActive(false);
 
+        HPMask = HPImage.transform.parent.gameObject;
         pieceManager = PieceManager.GetComponent<PieceManager>();
         hpTex = HPImage.GetComponent<UVScroll>();
 
@@ -99,5 +101,12 @@ public class HPManager : MonoBehaviour
     public void GetItem()
     {
         pieceManager.GetItem();
+    }
+
+    public void Vibration()
+    {
+        //UI振動させる
+        HPMask.GetComponent<pieceMove>().vibration();
+        pieceManager.Vibration();
     }
 }

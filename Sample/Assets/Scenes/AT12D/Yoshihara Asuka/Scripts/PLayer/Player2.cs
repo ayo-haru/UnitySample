@@ -403,8 +403,6 @@ public class Player2 : MonoBehaviour
     }
 
     public void Attack() {
-        Debug.Log("Player2のほう");
-
         if (isAttack) { 
         
             //---振動させる
@@ -499,44 +497,8 @@ public class Player2 : MonoBehaviour
 
     public void CreateShiled()
     {
-        //エフェクト生成
-        if (AttackDirection.y > 0)          // 上パリィの時だけ上の出す位置を高めに設定
-        {
-
-            ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                            PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
-                                            PlayerPos.z), Quaternion.identity);
-        }
-        else
-        {
-            ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                    PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
-                                                    PlayerPos.z), Quaternion.identity);
-        }
-  
-        //エフェクト回転
-        if (AttackDirection.x < -0.2f)
-        {
-            ShiledEffect.transform.Rotate(new Vector3(ShiledEffect.transform.rotation.x, 60.0f, ShiledEffect.transform.rotation.z));
-        }
-        if (AttackDirection.x > 0.2f)
-        {
-            ShiledEffect.transform.Rotate(new Vector3(ShiledEffect.transform.rotation.x, -60.0f, ShiledEffect.transform.rotation.z));
-        }
-        if (AttackDirection.y < -0.2f)
-        {
-            ShiledEffect.transform.Rotate(new Vector3(-45.0f, ShiledEffect.transform.rotation.y, ShiledEffect.transform.rotation.z));
-        }
-        if (AttackDirection.y > 0.2f)
-        {
-            ShiledEffect.transform.Rotate(new Vector3(60.0f, ShiledEffect.transform.rotation.y, ShiledEffect.transform.rotation.z));
-        }
-        //エフェクト消去
-        Destroy(ShiledEffect.transform.gameObject, DestroyTime);
-
         //モデルの向きと反対方向に盾出したらモデル回転
-        if ((AttackDirection.x > 0 && beforeDir.x < 0) || (AttackDirection.x < 0 && beforeDir.x > 0))
-        {
+        if ((AttackDirection.x > 0 && beforeDir.x < 0) || (AttackDirection.x < 0 && beforeDir.x > 0)){
             //方向を保存
             beforeDir.x = AttackDirection.x;
             //回転
@@ -547,8 +509,7 @@ public class Player2 : MonoBehaviour
             transform.localScale = scale;
         }
 
-        if (AttackDirection.x < 0 && beforeDir.x > 0)
-        {
+        if (AttackDirection.x < 0 && beforeDir.x > 0){
             beforeDir = AttackDirection;
             //transform.rotation = Quaternion.LookRotation(AttackDirection);
             transform.Rotate(new Vector3(transform.rotation.x, -transform.rotation.y, transform.rotation.z));
@@ -556,44 +517,59 @@ public class Player2 : MonoBehaviour
         }
 
         //---倒した値を基に盾の出す場所を指定
-        if (AttackDirection.y > 0)          // 上パリィの時だけ上の出す位置を高めに設定
-        {
+        if (AttackDirection.y > 0){        
+            //---上パリィの時だけ上の出す位置を高めに設定
             _weapon = Instantiate(Weapon, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                                               GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
-                                                                               GameData.PlayerPos.z), Quaternion.identity);
+                                                                                    GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
+                                                                                    GameData.PlayerPos.z), Quaternion.identity);
 
-            //EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-            //                                                                                               GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
-            //                                                                                               GameData.PlayerPos.z), false);
+            ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+                                                                                                                                          GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
+                                                                                                                                          GameData.PlayerPos.x), Quaternion.identity);
+
         }
-        else
-        {
+        else{
             _weapon = Instantiate(Weapon, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-                                                                               GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
-                                                                               GameData.PlayerPos.z),Quaternion.identity);
+                                                                                    GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
+                                                                                    GameData.PlayerPos.z),Quaternion.identity);
 
-            //EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
-            //                                                                                               GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
-            //                                                                                               GameData.PlayerPos.z), false);
+            ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
+                                                                                                                                           GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightDown),
+                                                                                                                                           GameData.PlayerPos.z), Quaternion.identity);
 
         }
 
         //---コントローラーの倒したXの値が－だったらy軸に-1する(盾の角度の調整)
-        if (AttackDirection.x < 0)
-        {
+        if (AttackDirection.x < 0){
             AttackDirection.y *= -1;
         }
 
+        //---武器回転
         _weapon.transform.Rotate(new Vector3(0, 0, (90 * AttackDirection.y)));
-        //ShiledEffect.transform.Rotate(new Vector3(0, 0, (90 * AttackDirection.y)));
+        //エフェクト回転
+        if (AttackDirection.x < -0.2f){
+            ShiledEffect.transform.Rotate(new Vector3(ShiledEffect.transform.rotation.x, 60.0f, ShiledEffect.transform.rotation.z));
+        }
+        if (AttackDirection.x > 0.2f){
+            ShiledEffect.transform.Rotate(new Vector3(ShiledEffect.transform.rotation.x, -60.0f, ShiledEffect.transform.rotation.z));
+        }
+        if (AttackDirection.y < -0.2f){
+            ShiledEffect.transform.Rotate(new Vector3(-45.0f, ShiledEffect.transform.rotation.y, ShiledEffect.transform.rotation.z));
+        }
+        if (AttackDirection.y > 0.2f){
+            ShiledEffect.transform.Rotate(new Vector3(60.0f, ShiledEffect.transform.rotation.y, ShiledEffect.transform.rotation.z));
+        }
 
+        //---SE・EF再生
         SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
-
         //EffectManager.Play(EffectData.eEFFECT.EF_SHEILD2,weapon.transform.position);
 
-        AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする
-        Destroy(_weapon, DestroyTime);
 
+        //シールド・エフェクト消去
+        Destroy(_weapon, DestroyTime);
+        Destroy(ShiledEffect.transform.gameObject, DestroyTime);
+
+        AttackDirection = Vector2.zero;                           // 入力を取る度、新しい値が欲しいため一度０にする
 
     }
 
@@ -646,16 +622,22 @@ public class Player2 : MonoBehaviour
         //{
         //    animator.SetBool("Damagae",false);
         //}
+
+        //---アニメーションの再生
+        if (state == PLAYERSTATE.DAMAGED)
+        {
+            animator.SetTrigger("Damage2");
+        }
+        hpmanager.Damaged();
+
         EffectManager.Play(EffectData.eEFFECT.EF_DAMAGE, this.transform.position);
         SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
 
-        hpmanager.Damaged();
 
         // ノックバック処理
         rb.velocity = Vector3.zero;
         ForceDirection = Vector2.zero;
 
-        Debug.Log(_distance);
         rb.AddForce(_distance * KnockBackPower, ForceMode.VelocityChange);
         //rb.AddForce(-transform.forward * 800f, ForceMode.VelocityChange);
 

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8633866426994174105}
   - component: {fileID: -3638532649959365399}
   - component: {fileID: 5432281596179017926}
+  - component: {fileID: 2048272551909217763}
   m_Layer: 7
   m_Name: Weapon
   m_TagString: Weapon
@@ -142,3 +143,15 @@ MonoBehaviour:
   baunceGround: 75
   baunceWall: {x: 10, y: 1.5}
   baunceWallArea: 0.1
+--- !u!114 &2048272551909217763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4654677824866976037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62d1b42aa428cd34e9eb752f31121b34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

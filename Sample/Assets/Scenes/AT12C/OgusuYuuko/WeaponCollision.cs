@@ -32,7 +32,7 @@ public class WeaponCollision : MonoBehaviour
     ShieldManager shield_Manager;
 
     Player2 player2;
-
+    
     private bool CanCollision = true;                      // 当たり判定の使用フラグ
 
 

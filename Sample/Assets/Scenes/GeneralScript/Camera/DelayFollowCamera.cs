@@ -47,16 +47,17 @@ public class DelayFollowCamera : MonoBehaviour
 		//			FollowCameraPos.z);
 
 		transform.position = new Vector3(PlayerPos.x,
-										 playerInfo.OldPlayerPos[5].y + FollowCameraPos.y,
-										 FollowCameraPos.z); ;
+															  playerInfo.OldPlayerPos[5].y + FollowCameraPos.y,
+															  FollowCameraPos.z); ;
 
 
 		//---画面外処理
-    
-        if (PlayerPos.x < LeftScreenOut){                                       //　左端
-            transform.position = new Vector3(LeftScreenOut,
-                                             PlayerPos.y + FollowCameraPos.y,
-                                             FollowCameraPos.z);
+
+		if (PlayerPos.x < LeftScreenOut){                                       //　左端
+            //transform.position = new Vector3(LeftScreenOut,
+            //                                                       PlayerPos.y + FollowCameraPos.y,
+            //                                                       FollowCameraPos.z);
+            
 
         }
 
@@ -69,14 +70,14 @@ public class DelayFollowCamera : MonoBehaviour
 
         if (PlayerPos.y > OverScreenOut){                                       // 上端 
             transform.position = new Vector3(PlayerPos.x,
-                                             OverScreenOut,
-                                             FollowCameraPos.z);
+                                                                   OverScreenOut,
+                                                                   FollowCameraPos.z);
         }
 
         if (PlayerPos.y <  UnderScreenOut){                                     // 下端
             transform.position = new Vector3(PlayerPos.x,
-                                             UnderScreenOut,
-                                             FollowCameraPos.z);
+                                                                   UnderScreenOut,
+                                                                   FollowCameraPos.z);
         }
 
 

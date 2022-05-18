@@ -139,7 +139,7 @@ public class Heal : MonoBehaviour
             }
             else
             {
-                rb.constraints = RigidbodyConstraints.FreezePositionY;
+                rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ;
             }
         }
     }
@@ -150,7 +150,7 @@ public class Heal : MonoBehaviour
         // ê⁄ínîªíË
         if (collision.gameObject.CompareTag("Ground"))
         {
-            rb.constraints = RigidbodyConstraints.FreezePositionX;
+            rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ;
             rb.useGravity = false;
             isGroundFlg = true;
             

@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialPanCake : MonoBehaviour
-{
+public class TutorialPanCake : MonoBehaviour {
     //Boss1Attack BossAttack;
     //突進用変数群
     //----------------------------------------------------------
@@ -15,8 +14,7 @@ public class TutorialPanCake : MonoBehaviour
     Vector3 RushRefEndPoint;                                //突進をはじいた後の敵の最終地点
     Vector3 RushMiddlePoint;                                //突進攻撃後戻ってくるための中間座標
     Vector3 ForkPos;
-    bool OnlyRushFlg;                                       //一回限定
-    private float RushSpeed = 0.7f;                //突進のスピード
+    private float RushSpeed = 0.3f;                //突進のスピード
     bool RushRefFlg = false;                                //突進をはじいた判定
     float RushTime;                                         //突進の経過時間
     float RushRefTime;                                      //弾いた後の時間経過
@@ -42,30 +40,32 @@ public class TutorialPanCake : MonoBehaviour
 
     private bool onceUpdate = false;
 
+    public static Vector3 pancakePos;
+    public static bool isAlive;
+
     // Start is called before the first frame update
-    void Start()
-    {
-        RushStartPoint = new Vector3(45.2f, 23.0f, 0.0f);
-        RushEndPoint = new Vector3(-81.2f, 23.0f, 0.0f);
+    void Start() {
+        RushStartPoint = new Vector3(50.0f, 23.0f, 0.0f);
+        RushEndPoint = new Vector3(-120.0f, 23.0f, 0.0f);
 
         this.Forkobj = (GameObject)Resources.Load("TutorialFork");
-        //BossAttack = this.GetComponent<Boss1Attack>();
         this.Scale = this.transform.localScale;
 
         this.BossAnim = this.gameObject.GetComponent<Animator>();
+        pancakePos = this.transform.position;
 
+        isAlive = true;
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
+        pancakePos = this.transform.position;
         if (!onceUpdate)
         {
-            TutorialPanCakeMove.SetState(TutorialPanCakeMove.Boss_State.charge);
             MoveFlg = true;
             onceUpdate = true;
         }
-            ForkAction();
+        ForkAction();
     }
 
     private void ForkAction() {
@@ -74,7 +74,6 @@ public class TutorialPanCake : MonoBehaviour
         {
             AnimFlagOnOff();
             BossAnim.SetBool("IdleToTake", true);
-            //BossTakeCase = BossMove.Boss_State.charge;
         }
         //一回の処理が終わっていたら開始
 
@@ -114,7 +113,7 @@ public class TutorialPanCake : MonoBehaviour
                     {
                         if (!this.RFChange)
                         {
-                           this.RFChange = true;
+                            this.RFChange = true;
                         }
                         else if (this.RFChange)
                         {
@@ -127,20 +126,11 @@ public class TutorialPanCake : MonoBehaviour
                     this.AnimFlagOnOff();
                     this.BossAnim.SetBool("IdleToTake", false);
                     this.BossAnim.SetBool("RushToJump", false);
-                    //this.AnimMoveFlgOnOff();
                     MoveFlg = false;
                     BossReturnTime = 0;
                     this.BossAnim.speed = 1;
-                    if (HPgage.currentHp >= 50)
-                    {
-                        BossMove.SetState(BossMove.Boss_State.idle);
-                    }
-                    if (HPgage.currentHp < 50)
-                    {
-                        BossMove.AttackCount += 1;
-                        BossMove.SetState(BossMove.Boss_State.idle);
-                    }
-                    //BossAttack.OnlyFlg = false;
+                    isAlive = false;
+                    //Destroy(gameObject,0.5f);
                 }
                 return;
             }
@@ -216,41 +206,26 @@ public class TutorialPanCake : MonoBehaviour
     }
 
     public void AnimMoveFlgOnOff() {
-        //if (!MoveFlg)
-        //{
-        //    MoveFlg = true;
-        //    return;
-        //}
-        //if (MoveFlg)
-        //{
-        //    MoveFlg = false;
-        //    return;
-        //}
     }
 
     void ReturnGround() {
         ReturnDelay = true;
     }
     void BossRushAnim() {
-        //突進攻撃を始めるために毎回一回だけ処理する部分
-        //if (!BossAttack.OnlyFlg)
-        //{
-            this.WeaponAttackFlg = false;
-            //右から左
-            if (!this.RFChange)
-            {
-                //BossAttack.OnlyFlg = true;
-                ForkPos = GameObject.Find("ForkPos").transform.position;
-                Fork = Instantiate(Forkobj, ForkPos, Quaternion.Euler(GameObject.Find("ForkPos").transform.rotation.eulerAngles));
-                Fork.transform.parent = GameObject.Find("ForkPos").transform;
-                RushRefEndPoint = new Vector3(45.2f, 60.0f, 0.0f);
+        this.WeaponAttackFlg = false;
+        //右から左
+        if (!this.RFChange)
+        {
+            //BossAttack.OnlyFlg = true;
+            ForkPos = GameObject.Find("ForkPos").transform.position;
+            Fork = Instantiate(Forkobj, ForkPos, Quaternion.Euler(GameObject.Find("ForkPos").transform.rotation.eulerAngles));
+            Fork.transform.parent = GameObject.Find("ForkPos").transform;
+            RushRefEndPoint = new Vector3(45.2f, 60.0f, 0.0f);
             Rotate.x = 1;
-                this.BossAnim.SetTrigger("TakeToRushTr");
-                this.BossAnim.SetBool("RushToJump", true);
-                this.BossAnim.SetBool("IdleToTake", false);
-                SoundManager.Play(SoundData.eSE.SE_BOOS1_DASHU, SoundData.GameAudioList);
-            }
+            this.BossAnim.SetTrigger("TakeToRushTr");
+            this.BossAnim.SetBool("RushToJump", true);
+            this.BossAnim.SetBool("IdleToTake", false);
+            SoundManager.Play(SoundData.eSE.SE_BOOS1_DASHU, SoundData.GameAudioList);
         }
-    //}
-
+    }
 }

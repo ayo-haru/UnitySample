@@ -26,7 +26,7 @@ public class TitleSceneManager : MonoBehaviour {
     private InputAction RightStickSelect;           // InputActionのselectを扱う
 
 
-    private int select;                             // 選択されているモードの番号 
+    public int select;                             // 選択されているモードの番号 
     private bool isDecision;
 
 
@@ -41,6 +41,10 @@ public class TitleSceneManager : MonoBehaviour {
     private GameObject GameEnd;
     private GameObject Option;
     private GameObject Optionmanager;
+
+    private TitlePlayer titlePlayer;
+    private bool weight = false;    //演出待ちかどうか
+    private int timer = 0;
 
     private void Awake() {
         UIActionAssets = new Game_pad();            // InputActionインスタンスを生成
@@ -71,10 +75,17 @@ public class TitleSceneManager : MonoBehaviour {
         Option = GameObject.Find("Option");
         Optionmanager = GameObject.Find("OptionManager");
         GameStart.GetComponent<UIBlink>().isHide = true;        // ゲームが始まった瞬間は要らないので消す
+        GameStart.GetComponent<Move2DTheta>().enabled = false;
         GameContinue.GetComponent<UIBlink>().isHide = true;
+        GameContinue.GetComponent<Move2DTheta>().enabled = false;
         GameEnd.GetComponent<UIBlink>().isHide = true;
+        GameEnd.GetComponent<Move2DTheta>().enabled = false;
         Option.GetComponent<UIBlink>().isHide = true;
+        Option.GetComponent<Move2DTheta>().enabled = false;
         Optionmanager.SetActive(false);
+
+        //---タイトル用プレイヤー取得
+        titlePlayer = GameObject.Find("Rulaby").GetComponent<TitlePlayer>();
 
     }
 
@@ -92,6 +103,7 @@ public class TitleSceneManager : MonoBehaviour {
         // 何かボタンが押されたら
         if ((keyboard.anyKey.wasReleasedThisFrame || GamePadManager.ReleaseAnyButton(GamePadManager.eGamePadType.ALLTYPE)) && !isPressButton)
         {
+            Camera.main.GetComponent<TitleCamera>().startFlag = true;
             isPressButton = true;
             PressAnyButton.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
             PressAnyButton.GetComponent<UIBlink>().isHide = true;   // ボタンが押されたら消す
@@ -100,9 +112,12 @@ public class TitleSceneManager : MonoBehaviour {
             GameContinue.GetComponent<UIBlink>().isHide = false;
             GameEnd.GetComponent<UIBlink>().isHide = false;
             Option.GetComponent<UIBlink>().isHide = false;
+            GameStart.GetComponent<Move2DTheta>().enabled = true;
 
 
             SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
+
+            titlePlayer.pressAnyButtonFlag = true;
 
             return;
         }
@@ -157,11 +172,24 @@ public class TitleSceneManager : MonoBehaviour {
             GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
             Option.GetComponent<UIBlink>().isBlink = false;     //UIの点滅を消す
 
+            GameStart.GetComponent<Move2DTheta>().enabled = true;  //上下移動有効
+            GameContinue.GetComponent<Move2DTheta>().enabled = false;  //上下移動無効
+            GameEnd.GetComponent<Move2DTheta>().enabled = false;  //上下移動無効
+            Option.GetComponent<Move2DTheta>().enabled = false;  //上下移動無効
+
             if (isDecision)
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
 
+                
+                weight = true;
+                titlePlayer.decisionFlag = true;
+                isDecision = false;
+
+            }else if (weight && !titlePlayer.decisionFlag)
+            {
+                weight = false;
                 // すべてのデータの初期化
                 GameData.InitData();
 
@@ -170,9 +198,8 @@ public class TitleSceneManager : MonoBehaviour {
                 GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001;
                 string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
                 SceneManager.LoadScene(nextSceneName);
-                isDecision = false;
-
             }
+
         }
         else if (select == (int)eSTATETITLE.FROMCONTINUE)
         {
@@ -181,16 +208,27 @@ public class TitleSceneManager : MonoBehaviour {
             GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
             Option.GetComponent<UIBlink>().isBlink = false;     //UIの点滅を消す
 
+            GameStart.GetComponent<Move2DTheta>().enabled = false;  //上下移動無効
+            GameContinue.GetComponent<Move2DTheta>().enabled = true;  //上下移動有効
+            GameEnd.GetComponent<Move2DTheta>().enabled = false;  //上下移動無効
+            Option.GetComponent<Move2DTheta>().enabled = false;  //上下移動無効
+
             if (isDecision)
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
 
+                titlePlayer.decisionFlag = true;
+                isDecision = false;
+                weight = true;
+            }
+            else if (weight && !titlePlayer.decisionFlag)
+            {
+                weight = false;
                 // シーン関連
                 GameData.OldMapNumber = GameData.CurrentMapNumber;
                 string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
                 SceneManager.LoadScene(nextSceneName);
-                isDecision = false;
             }
         }
         else if (select == (int)eSTATETITLE.QUIT)
@@ -199,6 +237,11 @@ public class TitleSceneManager : MonoBehaviour {
             GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
             Option.GetComponent<UIBlink>().isBlink = false;     //UIの点滅を消す
+
+            GameStart.GetComponent<Move2DTheta>().enabled = false;  //上下移動無効
+            GameContinue.GetComponent<Move2DTheta>().enabled = false;  //上下移動無効
+            GameEnd.GetComponent<Move2DTheta>().enabled = true;  //上下移動有効
+            Option.GetComponent<Move2DTheta>().enabled = false;  //上下移動無効
 
             if (isDecision)
             {
@@ -219,14 +262,30 @@ public class TitleSceneManager : MonoBehaviour {
             GameStart.GetComponent<UIBlink>().isBlink = false; // UIを点滅を消す
             GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
             GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+
+            GameStart.GetComponent<Move2DTheta>().enabled = false;  //上下移動無効
+            GameContinue.GetComponent<Move2DTheta>().enabled = false;  //上下移動無効
+            GameEnd.GetComponent<Move2DTheta>().enabled = false;  //上下移動無効
+            Option.GetComponent<Move2DTheta>().enabled = true;  //上下移動有効
+
             if (isDecision)
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
+                titlePlayer.decisionFlag = true;
+                isDecision = false;
+                //演出待ち
+                weight = true;
+                
+            }
+            else if(weight && !titlePlayer.decisionFlag)
+            {
+                weight = false;
                 //オプションマネージャーをアクティブにする
                 Optionmanager.SetActive(true);
-                isDecision = false;
             }
+
+
 
         }
     }

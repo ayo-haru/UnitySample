@@ -25,11 +25,19 @@ public class Move2DTheta : MonoBehaviour
     public float moveWidth = 0.5f;
     //äpìx
     private float theta;
+    //èâä˙à íu
+    private Vector3 startPos;
     // Start is called before the first frame update
     void Start()
     {
         image = gameObject.GetComponent<RectTransform>();
+        startPos = image.position;
         theta = 0.0f;
+    }
+
+    private void OnDisable()
+    {
+        image.position = startPos;
     }
 
     // Update is called once per frame

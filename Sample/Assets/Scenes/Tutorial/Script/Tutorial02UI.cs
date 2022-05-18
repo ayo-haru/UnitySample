@@ -23,6 +23,10 @@ public class Tutorial02UI : MonoBehaviour {
     [SerializeField]
     private GameObject panel;
     private GameObject Panel;
+    [SerializeField]
+    private GameObject nexticon;
+    private GameObject NextIcon;
+
 
     private Canvas canvas;  // 表示するキャンバス
 
@@ -60,6 +64,7 @@ public class Tutorial02UI : MonoBehaviour {
         Chara2_3 = Instantiate(chara2_3);
         Chara2_4 = Instantiate(chara2_4);
         Panel = Instantiate(panel);
+        NextIcon = Instantiate(nexticon);
 
         // キャンバスの子に指定
         Panel.transform.SetParent(this.canvas.transform, false);
@@ -68,13 +73,16 @@ public class Tutorial02UI : MonoBehaviour {
         Chara2_2.transform.SetParent(this.canvas.transform, false);
         Chara2_3.transform.SetParent(this.canvas.transform, false);
         Chara2_4.transform.SetParent(this.canvas.transform, false);
+        NextIcon.transform.SetParent(this.canvas.transform, false);
 
-        // 何も表示しない
+        // 初期表示調整
         CharacterBack.GetComponent<ImageShow>().Hide();
         Chara2_1.GetComponent<ImageShow>().Hide();
         Chara2_2.GetComponent<ImageShow>().Hide();
         Chara2_3.GetComponent<ImageShow>().Hide();
         Chara2_4.GetComponent<ImageShow>().Hide();
+        NextIcon.transform.localPosition = new Vector3(500.0f, -380.0f, 0.0f);
+        NextIcon.GetComponent<ImageShow>().Hide();
         Panel.GetComponent<Image>().color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
         Panel.GetComponent<Image>().enabled = false;
 
@@ -85,9 +93,11 @@ public class Tutorial02UI : MonoBehaviour {
         if (UIcnt == 0)
         {
             Panel.GetComponent<Image>().enabled = true;
+
             Time.timeScale = 0.0f;
             CharacterBack.GetComponent<ImageShow>().Show();
             Chara2_1.GetComponent<ImageShow>().Show();
+            NextIcon.GetComponent<ImageShow>().Show();
             if (isDecision)
             {
 
@@ -100,8 +110,12 @@ public class Tutorial02UI : MonoBehaviour {
         {
             Chara2_1.GetComponent<ImageShow>().Clear();
             Chara2_2.GetComponent<ImageShow>().Show();
+            NextIcon.transform.localPosition = new Vector3(850.0f, -380.0f, 0.0f);
+            NextIcon.GetComponent<Image>().enabled = true;
+
             if (isDecision)
             {
+                NextIcon.GetComponent<ImageShow>().Hide();
                 Panel.GetComponent<Image>().enabled = false;
                 UIcnt++;
                 isDecision = false;

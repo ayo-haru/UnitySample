@@ -47,12 +47,14 @@ public class TomatoEnemy2 : MonoBehaviour
         ED = GetComponent<EnemyDown>();
         Random.InitState(System.DateTime.Now.Millisecond);
         AttackSpeed = MoveSpeed + 10.0f;
+        AttackPattern = Random.Range(0, 2);
     }
 
     private void Update()
     {
         if (!Pause.isPause)
         {
+            print(AttackPattern);
             Vector3 pos = rb.position;
             // プレイヤーとのX軸間の距離を求める
             PlayerPosX = Player.transform.position - new Vector3(0.0f, Player.transform.position.y, Player.transform.position.z);
@@ -63,46 +65,92 @@ public class TomatoEnemy2 : MonoBehaviour
             {
                 if (!isGround)
                 {
-                    // プレイヤーに向かって特攻する
-                    if(!Attack && !Plunge)
+                    if(AttackPattern == 0)
                     {
+                        // プレイヤーに向かって特攻する
+                        if (!Attack && !Plunge)
+                        {
+                            float a = Player.transform.position.y - transform.position.y;
+                            TargetPos = Target.position - new Vector3(0.0f, a, 0.0f);
+                            float step = MoveSpeed * Time.deltaTime;
+                            rb.position = Vector3.MoveTowards(pos, TargetPos, step);
+                        }
+                        if (Attack && !Plunge)
+                        {
+                            float step = AttackSpeed * Time.deltaTime;
+                            rb.position = Vector3.MoveTowards(pos, TargetPos, step);
+                            AttackEnd = true;
+                        }
+                    }
+                    if(AttackPattern == 1)
+                    {
+                        // プレイヤーに向かって特攻する
                         float a = Player.transform.position.y - transform.position.y;
                         TargetPos = Target.position - new Vector3(0.0f, a, 0.0f);
                         float step = MoveSpeed * Time.deltaTime;
                         rb.position = Vector3.MoveTowards(pos, TargetPos, step);
+                        if (Attack)
+                        {
+                            // 回転させる
+                            if (look)
+                            {
+                                transform.Rotate(new Vector3(-8.2f, 0.0f, 0.0f), Space.Self);
+                            }
+                            if (!look)
+                            {
+                                transform.Rotate(new Vector3(8.2f, 0.0f, 0.0f), Space.Self);
+                            }
+                            AttackEnd = true;
+                        }
                     }
-                    if(Attack && !Plunge)
-                    {
-                        float step = AttackSpeed * Time.deltaTime;
-                        rb.position = Vector3.MoveTowards(pos, TargetPos, step);
-                        AttackEnd = true;
-                    }
+                  
                 }
 
                 // 派生攻撃
                 if(Plunge)
                 {
-                    delay += Time.deltaTime;
-                    if(delay > 0.3f)
+                    if(AttackPattern == 0)
                     {
-                        // ジャンプする
-                        rb.constraints = RigidbodyConstraints.FreezePositionZ |
-                                         RigidbodyConstraints.FreezeRotationX |
-                                         RigidbodyConstraints.FreezeRotationY;
-                        rb.velocity = new Vector3(0.0f, 100.0f, 0.0f);
-                        // 座標計算
-                        TargetPos = Target.position - new Vector3(0.0f, 15.0f, 0.0f);
-                        
-                        isGround = false;
-                        TomatoDead = true;
+                        delay += Time.deltaTime;
+                        if (delay > 0.3f)
+                        {
+                            // ジャンプする
+                            rb.constraints = RigidbodyConstraints.FreezePositionZ |
+                                             RigidbodyConstraints.FreezeRotationX |
+                                             RigidbodyConstraints.FreezeRotationY;
+                            rb.velocity = new Vector3(0.0f, 100.0f, 0.0f);
+                            // 座標計算
+                            TargetPos = Target.position - new Vector3(0.0f, 15.0f, 0.0f);
+
+                            isGround = false;
+                            TomatoDead = true;
+                        }
                     }
+                    if(AttackPattern == 1)
+                    {
+                        delay += Time.deltaTime;
+                        if (delay > 0.7f)
+                        {
+                            // ジャンプする
+                            rb.constraints = RigidbodyConstraints.FreezePositionZ |
+                                             RigidbodyConstraints.FreezeRotationX |
+                                             RigidbodyConstraints.FreezeRotationY;
+                            rb.velocity = new Vector3(0.0f, 100.0f, 0.0f);
+                            // 座標計算
+                            TargetPos = Target.position - new Vector3(0.0f, 15.0f, 0.0f);
+
+                            isGround = false;
+                            TomatoDead = true;
+                        }
+                    }
+               
                 }
 
                 // 跳ねる処理
                 if (isGround && !Plunge)
                 {
                     delay += Time.deltaTime;
-                    if (delay > 0.3f && !Attack)
+                    if ((delay > 0.3f && !Attack) || (delay > 0.3f && AttackPattern == 1))
                     {
                         rb.constraints = RigidbodyConstraints.FreezePositionZ |
                                          RigidbodyConstraints.FreezeRotationX |
@@ -112,27 +160,27 @@ public class TomatoEnemy2 : MonoBehaviour
                         isGround = false;
                         delay = 0.0f;
                     }
-                    if(delay > 0.5f && Attack)
+                    if(delay > 0.5f && Attack && AttackPattern == 0)
                     {
                         rb.constraints = RigidbodyConstraints.FreezePositionZ |
                                          RigidbodyConstraints.FreezeRotationX |
                                          RigidbodyConstraints.FreezeRotationY;
-                        rb.velocity = new Vector3(0.0f, 3.0f * JumpPower, 0.0f);
+                        rb.velocity = new Vector3(0.0f, 2.0f * JumpPower, 0.0f);
                         SoundManager.Play(SoundData.eSE.SE_TOMATO_BOUND, SoundData.GameAudioList);
                         isGround = false;
                         delay = 0.0f;
                     }
                 }
                 
-                if (Target.position.x < transform.position.x && !look && !Attack)   // プレイヤーのほうを向く処理
+                if (Target.position.x < transform.position.x && look && !Attack)   // プレイヤーのほうを向く処理
                 {
                     transform.rotation = Quaternion.LookRotation(new Vector3(-180, 0, 0));
-                    look = true;
+                    look = false;
                 }
-                if (Target.position.x > transform.position.x && look && !Attack)  // プレイヤーのほうを向く処理
+                if (Target.position.x > transform.position.x && !look && !Attack)  // プレイヤーのほうを向く処理
                 {
                     transform.rotation = Quaternion.LookRotation(new Vector3(180, 0, 0));
-                    look = false;
+                    look = true;
                 }
 
                 // 上昇速度&落下速度調整
@@ -142,7 +190,7 @@ public class TomatoEnemy2 : MonoBehaviour
                 }
             }
 
-            if(AttackEnd)
+            if(AttackEnd && AttackPattern == 0)
             {
                 // 回転させる
                 if (look)
@@ -159,7 +207,19 @@ public class TomatoEnemy2 : MonoBehaviour
             {
                 float step = 100.0f * Time.deltaTime;
                 rb.position = Vector3.MoveTowards(pos, TargetPos, step);
-         
+                
+                if(AttackPattern == 1)
+                {
+                    // 回転させる
+                    if (look)
+                    {
+                        transform.Rotate(new Vector3(-20.0f, 0.0f, 0.0f), Space.Self);
+                    }
+                    if (!look)
+                    {
+                        transform.Rotate(new Vector3(20.0f, 0.0f, 0.0f), Space.Self);
+                    }
+                }
                 // 上昇速度&落下速度調整
                 if (!isGround)
                 {
@@ -182,15 +242,18 @@ public class TomatoEnemy2 : MonoBehaviour
                 RigidbodyConstraints.FreezeRotationY;
             if (dis <= Distance && !Attack)
             {
-                if (look)
+                if(AttackPattern == 0)
                 {
-                    float a = Player.transform.position.y - transform.position.y;
-                    TargetPos = Target.position - new Vector3(20.0f, a, 0.0f);
-                }
-                if (!look)
-                {
-                    float a = Player.transform.position.y - transform.position.y;
-                    TargetPos = Target.position - new Vector3(-20.0f, a, 0.0f);
+                    if (look)
+                    {
+                        float a = Player.transform.position.y - transform.position.y;
+                        TargetPos = Target.position - new Vector3(-20.0f, a, 0.0f);
+                    }
+                    if (!look)
+                    {
+                        float a = Player.transform.position.y - transform.position.y;
+                        TargetPos = Target.position - new Vector3(20.0f, a, 0.0f);
+                    }
                 }
                 Attack = true;
             }

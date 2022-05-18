@@ -18,7 +18,6 @@ public class CarrotEnemy : MonoBehaviour
     private GameObject Jet;
     private Rigidbody rb;
     private Vector3 vec;
-    private Vector3 Pvec;
     private EnemyDown ED;
     private Quaternion look;
     private ParticleSystem effect;
@@ -31,10 +30,8 @@ public class CarrotEnemy : MonoBehaviour
     private float idlingTime = 0.5f;
     bool start = true;
     bool IdringFlg = true;
-    bool InArea = true;
     bool Attack;
     bool disFlg;
-    bool pause;
 
     private bool isCalledOnce = false;                             // 一回だけ処理をするために使う。
 
@@ -92,7 +89,6 @@ public class CarrotEnemy : MonoBehaviour
                                   RigidbodyConstraints.FreezeRotationY;
                         // 攻撃開始
                         Attack = true;
-                        InArea = true;
                         // サウンドフラグ切替
                         isCalledOnce = false;
                         // アイドリング終了
@@ -141,16 +137,6 @@ public class CarrotEnemy : MonoBehaviour
                     disFlg = false;
                 }
             }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        // 一定距離離れたら再度アイドリング→攻撃
-        if (other.CompareTag("Player") && !IdringFlg)
-        {
-            // アイドリングする
-            //IdringFlg = true;
         }
     }
 

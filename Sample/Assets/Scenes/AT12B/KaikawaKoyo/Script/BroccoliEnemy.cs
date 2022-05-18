@@ -35,7 +35,6 @@ public class BroccoliEnemy : MonoBehaviour
         Target = Player.transform;                    // プレイヤーの座標取得
         rb = gameObject.GetComponent<Rigidbody>();
         ED = GetComponent<EnemyDown>();
-        //rb.centerOfMass = new Vector3(0, -1, 0);
     }
 
     private void Update()

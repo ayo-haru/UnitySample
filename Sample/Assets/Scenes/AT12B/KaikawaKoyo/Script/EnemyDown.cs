@@ -141,10 +141,12 @@ public class EnemyDown : MonoBehaviour
                     }
                     else if(reflect == 1)
                     {
-                        maincam = Camera.main;
-                        vec = (maincam.transform.position - transform.position).normalized;
+                        //maincam = Camera.main;
+                        //vec = (maincam.transform.position - transform.position).normalized;
                         rb.constraints = RigidbodyConstraints.FreezeRotationX |
                                          RigidbodyConstraints.FreezeRotationY;
+                        InAngle = rb.velocity;
+                        ReAngle = Vector3.Reflect(InAngle, inNormalL);
                         rb.velocity = ReAngle - new Vector3(0.0f, 0.0f, 100.0f);
                     }
                     Reflect = true;
@@ -161,10 +163,12 @@ public class EnemyDown : MonoBehaviour
                     }
                     else if (reflect == 1)
                     {
-                        maincam = Camera.main;
-                        vec = (maincam.transform.position - transform.position).normalized;
+                        //maincam = Camera.main;
+                        //vec = (maincam.transform.position - transform.position).normalized;
                         rb.constraints = RigidbodyConstraints.FreezeRotationX |
                                          RigidbodyConstraints.FreezeRotationY;
+                        InAngle = rb.velocity;
+                        ReAngle = Vector3.Reflect(InAngle, inNormalR);
                         rb.velocity = ReAngle - new Vector3(0.0f, 0.0f, 100.0f);
                     }
                     Reflect = true;
@@ -181,10 +185,12 @@ public class EnemyDown : MonoBehaviour
                     }
                     else if (reflect == 1)
                     {
-                        maincam = Camera.main;
-                        vec = (maincam.transform.position - transform.position).normalized;
+                        //maincam = Camera.main;
+                        //vec = (maincam.transform.position - transform.position).normalized;
                         rb.constraints = RigidbodyConstraints.FreezeRotationX |
                                          RigidbodyConstraints.FreezeRotationY;
+                        InAngle = rb.velocity;
+                        ReAngle = Vector3.Reflect(InAngle, inNormalD);
                         rb.velocity = ReAngle - new Vector3(0.0f, 0.0f, 100.0f);
                     }
                     Reflect = true;
@@ -201,10 +207,12 @@ public class EnemyDown : MonoBehaviour
                     }
                     else if (reflect == 1)
                     {
-                        maincam = Camera.main;
-                        vec = (maincam.transform.position - transform.position).normalized;
+                        //maincam = Camera.main;
+                        //vec = (maincam.transform.position - transform.position).normalized;
                         rb.constraints = RigidbodyConstraints.FreezeRotationX |
                                          RigidbodyConstraints.FreezeRotationY;
+                        InAngle = rb.velocity;
+                        ReAngle = Vector3.Reflect(InAngle, inNormalU);
                         rb.velocity = ReAngle - new Vector3(0.0f, 0.0f, 100.0f);
                     }
                     Reflect = true;
@@ -221,7 +229,7 @@ public class EnemyDown : MonoBehaviour
                     }
                 }
                 // 時間が経ったら消す。トマトはスピード無くなった時点で消しちゃいたい
-                if (Timer > DeadTime || (EnemyNumber == 2 && speed <= 0.5f))
+                if (Timer > DeadTime || (EnemyNumber == 2 || EnemyNumber == 5) && speed <= 0.5f)
                 {
                     Pos = transform.position;
                     Destroy(gameObject, 0.0f);
@@ -270,7 +278,7 @@ public class EnemyDown : MonoBehaviour
             }
 
             // トマトがほかの敵に当たったら爆発する
-            if (collision.gameObject.CompareTag("Enemy") && !isAlive && EnemyNumber == 2)
+            if (collision.gameObject.CompareTag("Enemy") && !isAlive && (EnemyNumber == 2 || EnemyNumber == 5))
             {
                 Pos = transform.position;
                 Destroy(gameObject, 0.0f);

@@ -10,29 +10,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class CarrotEnemy2 : MonoBehaviour
 {
     GameObject Player;
     private Rigidbody rb;
     private Vector3 vec;
-    private Vector3 PlayerPos;
-    private Vector3 EnemyPos;
     private Vector3 PP;
     private EnemyDown ED;
     private Quaternion look;
 
     [SerializeField]
-    float MoveSpeed = 1.0f;
+    float MoveSpeed;
+    float MovingSpeed;
     private int AttackPattern = 1;
     private float dis;
-    private float AttackTime;
+    private float Timer;
     private float RandomTime;
     private float rotTime;
-    private bool InArea;
-    private bool Look;
-    private bool Attack = false;
-    private bool Attack2 = false;
+    private float idlingTime = 0.5f;
+    bool start = true;
+    bool IdringFlg = true;
+    private bool Attack;
+    private bool Attack2;
+    bool disFlg;
+
     private bool isCalledOnce = false;                             // 一回だけ処理をするために使う。
 
 
@@ -40,10 +43,10 @@ public class CarrotEnemy2 : MonoBehaviour
     {
         Player = GameObject.FindWithTag("Player");    // プレイヤーのオブジェクトを探す
         rb = gameObject.GetComponent<Rigidbody>();
-        InArea = false;
-        Look = false;
         ED = GetComponent<EnemyDown>();
         Random.InitState(System.DateTime.Now.Millisecond);
+        MovingSpeed = MoveSpeed / 2;
+        transform.DOShakePosition(duration: idlingTime, strength: 5.0f);    // ぶるぶる震わせる
     }
 
     private void Update()
@@ -53,23 +56,73 @@ public class CarrotEnemy2 : MonoBehaviour
             // プレイヤーを見つけたら攻撃開始
             if (ED.isAlive)
             {
-                PlayerPos = Player.transform.position;
-                EnemyPos = transform.position;
-                dis = Vector3.Distance(EnemyPos, PlayerPos);
-                if (dis >= 200.0f)
+                // アイドリングするよ
+                if (IdringFlg)
                 {
-                    Destroy(gameObject, 0.0f);
+                    // 最初だけプレイヤーのほうを向いてプルプルする
+                    if (start)
+                    {
+                        // プレイヤーのほうを向くよ
+                        vec = (Player.transform.position - transform.position).normalized;
+                        look = Quaternion.LookRotation(vec);
+                        transform.localRotation = look;
+                    }
+                    else
+                    {
+                        // くるくる回転させる
+                        rb.constraints = RigidbodyConstraints.FreezePosition |
+                                       RigidbodyConstraints.FreezeRotationX |
+                                       RigidbodyConstraints.FreezeRotationY;
+                        transform.Rotate(new Vector3(30.0f, 0.0f, 0.0f), Space.Self);
+                    }
+                    // ディレイかけてから攻撃する
+                    Timer += Time.deltaTime;
+                    if (Timer >= idlingTime)
+                    {
+                        // プレイヤーの座標の取得
+                        vec = (Player.transform.position - transform.position).normalized;
+                        // 座標の固定
+                        rb.constraints = RigidbodyConstraints.FreezePositionZ |
+                                  RigidbodyConstraints.FreezeRotationX |
+                                  RigidbodyConstraints.FreezeRotationY;
+                        // 攻撃開始
+                        Attack = true;
+                        AttackPattern = Random.Range(0, 2);
+                        // サウンドフラグ切替
+                        isCalledOnce = false;
+                        // アイドリング終了
+                        IdringFlg = false;
+                        // タイマーのリセット
+                        Timer = 0.0f;
+                    }
                 }
-                if (!Attack)
+                if (Attack)
                 {
+                    start = false;
                     switch (AttackPattern)
                     {
                         case 0:
-                            vec = (Player.transform.position - transform.position).normalized;
+                            // プレイヤーのほうを向く
                             look = Quaternion.LookRotation(vec);
                             transform.localRotation = look;
-                            rb.velocity = vec * MoveSpeed;
-                            Attack = true;
+
+                            // サウンド処理
+                            if (!isCalledOnce)     // 一回だけ呼ぶ
+                            {
+                                SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
+                                isCalledOnce = true;
+                            }
+
+                            // 加速
+                            rb.velocity = vec * MovingSpeed;
+                            if (MoveSpeed >= MovingSpeed)
+                            {
+                                MovingSpeed += 3.0f;
+                            }
+                            else
+                            {
+                                Attack = false;
+                            }
                             break;
                         case 1:
                             PP = Player.transform.position + new Vector3(0.0f, 30.0f, 0.0f);
@@ -78,7 +131,7 @@ public class CarrotEnemy2 : MonoBehaviour
                             transform.localRotation = look;
                             rb.velocity = vec * MoveSpeed;
                             RandomTime = Random.Range(0.5f, 1.5f);
-                            Attack = true;
+                            Attack = false;
                             break;
                         //case 2:
                         //    rb.velocity = new Vector3(0.0f, -MoveSpeed, 0.0f);
@@ -92,10 +145,10 @@ public class CarrotEnemy2 : MonoBehaviour
 
                 if (AttackPattern == 1)
                 {
-                    AttackTime += Time.deltaTime;
+                    Timer += Time.deltaTime;
                 }
 
-                if (AttackTime > RandomTime && AttackPattern == 1)
+                if (Timer > RandomTime && AttackPattern == 1)
                 {
                     rb.constraints = RigidbodyConstraints.FreezePosition |
                                          RigidbodyConstraints.FreezeRotationX |
@@ -147,55 +200,19 @@ public class CarrotEnemy2 : MonoBehaviour
                 //        }
                 //    }
                 //}
-
-                if (!isCalledOnce)     // 一回だけ呼ぶ
+                
+                // プレイヤーとの距離を計算
+                dis = Vector3.Distance(transform.position, Player.transform.position);
+                // 一定距離離れたら再度アイドリング→攻撃
+                if (dis >= 70.0f && !disFlg)
                 {
-                    SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
-                    isCalledOnce = true;
+                    IdringFlg = true;
+                    disFlg = true;
                 }
-                if (!InArea)
+                else if (dis < 60.0f && disFlg)
                 {
-                    rb.constraints = RigidbodyConstraints.FreezePosition |
-                                 RigidbodyConstraints.FreezeRotationX |
-                                 RigidbodyConstraints.FreezeRotationY;
-                    AttackTime += Time.deltaTime;
-                    transform.Rotate(new Vector3(30.0f, 0.0f, 0.0f), Space.Self);
-                    if (AttackTime > 0.5f)
-                    {
-                        rb.constraints = RigidbodyConstraints.FreezePositionZ |
-                                 RigidbodyConstraints.FreezeRotationX |
-                                 RigidbodyConstraints.FreezeRotationY;
-                        Attack = false;
-                        InArea = true;
-                        AttackTime = 0.0f;
-                    }
+                    disFlg = false;
                 }
-            }
-        }
-        else
-        {
-            rb.Pause(gameObject);
-            //pause = true;
-        }
-    }
-
-    public void OnTriggerEnter(Collider other)    // コライダーでプレイヤーを索敵したい
-    {
-        if (other.CompareTag("Player") && Look == false)
-        {
-            InArea = true;
-            Look = true;
-            //AttackPattern = Random.Range(0, 4);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (!Pause.isPause)
-        {
-            if (other.CompareTag("Player"))
-            {
-                InArea = false;
             }
         }
     }
@@ -206,10 +223,10 @@ public class CarrotEnemy2 : MonoBehaviour
         {
             Destroy(gameObject, 0.0f);
         }
-        if (collision.gameObject.CompareTag("Ground"))
+        if ((collision.gameObject.CompareTag("Default") || collision.gameObject.CompareTag("Ground")) && !IdringFlg)
         {
-            Attack = false;
-            //AttackPattern = Random.Range(0, 4);
+            // アイドリング開始
+            IdringFlg = true;
         }
     }
 }

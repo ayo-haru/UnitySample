@@ -30,6 +30,7 @@ public class TomatoEnemy2 : MonoBehaviour
     private float delay;            // ジャンプのディレイ
     private float dis;
     private float Distance = 80.0f;
+    private int AttackPattern;
 
     [SerializeField]
     private float JumpPower;        // ジャンプ力
@@ -43,18 +44,15 @@ public class TomatoEnemy2 : MonoBehaviour
         Player = GameObject.FindWithTag("Player");    // プレイヤーのオブジェクトを探す
         Target = Player.transform;                    // プレイヤーの座標取得
         rb = gameObject.GetComponent<Rigidbody>();
-        //distance = 1.0f;
         ED = GetComponent<EnemyDown>();
+        Random.InitState(System.DateTime.Now.Millisecond);
         AttackSpeed = MoveSpeed + 10.0f;
-        transform.Rotate(0, -90, 0);
     }
 
     private void Update()
     {
         if (!Pause.isPause)
         {
-            rb.Resume(gameObject);
-
             Vector3 pos = rb.position;
             // プレイヤーとのX軸間の距離を求める
             PlayerPosX = Player.transform.position - new Vector3(0.0f, Player.transform.position.y, Player.transform.position.z);
@@ -128,12 +126,12 @@ public class TomatoEnemy2 : MonoBehaviour
                 
                 if (Target.position.x < transform.position.x && !look && !Attack)   // プレイヤーのほうを向く処理
                 {
-                    transform.Rotate(0, -180, 0);
+                    transform.rotation = Quaternion.LookRotation(new Vector3(-180, 0, 0));
                     look = true;
                 }
                 if (Target.position.x > transform.position.x && look && !Attack)  // プレイヤーのほうを向く処理
                 {
-                    transform.Rotate(0, 180, 0);
+                    transform.rotation = Quaternion.LookRotation(new Vector3(180, 0, 0));
                     look = false;
                 }
 
@@ -169,11 +167,6 @@ public class TomatoEnemy2 : MonoBehaviour
                 }
                 Explosion = true;
             }
-
-        }
-        else
-        {
-            rb.Pause(gameObject);
         }
     }
 
@@ -187,6 +180,20 @@ public class TomatoEnemy2 : MonoBehaviour
                 RigidbodyConstraints.FreezePositionZ |
                 RigidbodyConstraints.FreezeRotationX |
                 RigidbodyConstraints.FreezeRotationY;
+            if (dis <= Distance && !Attack)
+            {
+                if (look)
+                {
+                    float a = Player.transform.position.y - transform.position.y;
+                    TargetPos = Target.position - new Vector3(20.0f, a, 0.0f);
+                }
+                if (!look)
+                {
+                    float a = Player.transform.position.y - transform.position.y;
+                    TargetPos = Target.position - new Vector3(-20.0f, a, 0.0f);
+                }
+                Attack = true;
+            }
             if (AttackEnd)
             {
                 Plunge = true;
@@ -205,27 +212,6 @@ public class TomatoEnemy2 : MonoBehaviour
             SoundManager.Play(SoundData.eSE.SE_TOMATO_BOMB, SoundData.GameAudioList);
             EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);
             Destroy(gameObject, 0.0f);
-        }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if(other.gameObject.CompareTag("Player"))
-        {
-            if(!Attack && isGround)
-            {
-                if (look)
-                {
-                    float a = Player.transform.position.y - transform.position.y;
-                    TargetPos = Target.position - new Vector3(20.0f, a, 0.0f);
-                }
-                if (!look)
-                {
-                    float a = Player.transform.position.y - transform.position.y;
-                    TargetPos = Target.position - new Vector3(-20.0f, a, 0.0f);
-                }
-                Attack = true;
-            }
         }
     }
 }

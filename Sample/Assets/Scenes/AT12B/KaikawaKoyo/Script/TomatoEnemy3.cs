@@ -42,10 +42,7 @@ public class TomatoEnemy3 : MonoBehaviour
         Player = GameObject.FindWithTag("Player");    // プレイヤーのオブジェクトを探す
         Target = Player.transform;                    // プレイヤーの座標取得
         rb = gameObject.GetComponent<Rigidbody>();
-        //distance = 1.0f;
         ED = GetComponent<EnemyDown>();
-        transform.Rotate(0, -90, 0);
-        look = false;
     }
 
     private void Update()
@@ -75,11 +72,11 @@ public class TomatoEnemy3 : MonoBehaviour
                         // 回転させる
                         if (look)
                         {
-                            transform.Rotate(new Vector3(-9.2f, 0.0f, 0.0f), Space.Self);
+                            transform.Rotate(new Vector3(-8.2f, 0.0f, 0.0f), Space.Self);
                         }
                         if (!look)
                         {
-                            transform.Rotate(new Vector3(9.2f, 0.0f, 0.0f), Space.Self);
+                            transform.Rotate(new Vector3(8.2f, 0.0f, 0.0f), Space.Self);
                         }
                         AttackEnd = true;
                     }

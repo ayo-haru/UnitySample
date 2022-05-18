@@ -1,10 +1,10 @@
 //==========================================================
-//      ブロッコリー雑魚の攻撃
-//      作成日　2022/03/18
+//      ブロッコリー雑魚亜種の攻撃
+//      作成日　2022/04/15
 //      作成者　海川晃楊
 //      
 //      <開発履歴>
-//      2022/03/18      
+//      2022/04/15      
 //
 //==========================================================
 using System.Collections;
@@ -28,8 +28,6 @@ public class BroccoliEnemy2 : MonoBehaviour
     private float delay;
     private float InvincibleTime = 2.0f;
     private float DamageTime;
-    //bool InArea = false;
-    private bool look = false;
     private bool isGround = false;
     private bool Invincible = false;
 
@@ -41,15 +39,12 @@ public class BroccoliEnemy2 : MonoBehaviour
         Target = Player.transform;                    // プレイヤーの座標取得
         rb = gameObject.GetComponent<Rigidbody>();
         ED = GetComponent<EnemyDown>();
-        //rb.centerOfMass = new Vector3(0, -1, 0);
-        transform.Rotate(0, -90, 0);
     }
 
     private void Update()
     {
         if (!Pause.isPause)
         {
-            rb.Resume(gameObject);
             if (Invincible)
             {
                 gameObject.layer = LayerMask.NameToLayer("Invincible");
@@ -62,7 +57,6 @@ public class BroccoliEnemy2 : MonoBehaviour
                     Invincible = false;
                 }
             }
-            print(jump);
 
             // プレイヤーを見つけたら攻撃開始
             if (ED.isAlive)
@@ -76,8 +70,8 @@ public class BroccoliEnemy2 : MonoBehaviour
                 float step = MoveSpeed * Time.deltaTime;
                 rb.position = Vector3.MoveTowards(pos, TargetPos, step);
 
+                // プレイヤーがジャンプしたらジャンプする
                 PosY = transform.position.y + 10.0f;
-
                 if (Target.position.y > PosY && !jump)
                 {
                     delay += Time.deltaTime;
@@ -89,16 +83,13 @@ public class BroccoliEnemy2 : MonoBehaviour
                     }
                 }
 
-                if (Target.position.x < transform.position.x && look)   // プレイヤーのほうを向く処理
+                if (Target.position.x < transform.position.x)   // プレイヤーのほうを向く処理
                 {
-                    transform.Rotate(0, -180, 0);
-                    look = false;
+                    transform.rotation = Quaternion.LookRotation(new Vector3(-180, 0, 0));
                 }
-
-                if (Target.position.x > transform.position.x && !look)  // プレイヤーのほうを向く処理
+                if (Target.position.x > transform.position.x)  // プレイヤーのほうを向く処理
                 {
-                    transform.Rotate(0, 180, 0);
-                    look = true;
+                    transform.rotation = Quaternion.LookRotation(new Vector3(180, 0, 0));
                 }
 
                 // 落下処理
@@ -114,10 +105,6 @@ public class BroccoliEnemy2 : MonoBehaviour
                     isCalledOnce = true;
                 }
             }
-        }
-        else
-        {
-            rb.Pause(gameObject);
         }
     }
 

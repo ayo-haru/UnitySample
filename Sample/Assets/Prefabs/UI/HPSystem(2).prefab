@@ -104,7 +104,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
+  vibrationSpeed: 10
   moveWidth: 300
+  vibrationWidth: 10
+  startFlag: 1
 --- !u!1 &2135024085982433929
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,6 +265,7 @@ GameObject:
   - component: {fileID: 2135024087305212777}
   - component: {fileID: 2135024087305212694}
   - component: {fileID: 2135024087305212695}
+  - component: {fileID: 422159456187161674}
   m_Layer: 5
   m_Name: HPBarMask (1)
   m_TagString: Untagged
@@ -286,7 +290,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -825, y: 418}
+  m_AnchoredPosition: {x: -825, y: 718}
   m_SizeDelta: {x: 250, y: 294}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2135024087305212777
@@ -340,6 +344,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
+--- !u!114 &422159456187161674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135024087305212693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1503e29cdaf6144f8be2d53ccd652e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 2
+  vibrationSpeed: 10
+  moveWidth: 300
+  vibrationWidth: 10
+  startFlag: 1
 --- !u!1 &4287463249610405389
 GameObject:
   m_ObjectHideFlags: 0

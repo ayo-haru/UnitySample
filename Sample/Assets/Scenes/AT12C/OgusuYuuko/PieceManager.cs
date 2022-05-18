@@ -238,4 +238,14 @@ public class PieceManager : MonoBehaviour
             //Instantiate(effect, piece[PieceGrade - 1].GetComponent<RectTransform>().position, Quaternion.identity);
         }
     }
+
+    public void Vibration()
+    {
+        PieceImage.transform.parent.gameObject.GetComponent<pieceMove>().vibration();
+        
+        //for(int i = 0; i < nPiece; ++i)
+        //{
+        //    piece[i].GetComponent<pieceMove>().vibration();
+        //}
+    }
 }

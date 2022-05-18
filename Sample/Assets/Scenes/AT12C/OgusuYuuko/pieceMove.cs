@@ -1,4 +1,13 @@
-//ランタン移動用
+//=============================================================================
+//
+// UI移動用
+//
+// 作成日:2022/05/17
+// 作成者:小楠裕子
+//
+// <開発履歴>
+// 2022/05/17 作成
+//=============================================================================
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,9 +19,13 @@ public class pieceMove : MonoBehaviour
     private Vector3 startPos;           //初期位置
     private bool ReturnFlag;            //折り返し用フラグ
     private bool FinishFlag;            //終了フラグ
+    private bool VibrationFlag;         //振動用フラグ
     public float moveSpeed = 0.5f;     //移動速度
+    public float vibrationSpeed = 10.0f;        //振動速度
     public float moveWidth = 10.0f;     //移動幅
-    public bool startFlag;                 //移動開始用フラグ
+    public float vibrationWidth = 10.0f;        //振動幅
+    public bool startFlag = true;                 //移動開始用フラグ
+    
 
     // Start is called before the first frame update
     void Start()
@@ -22,13 +35,30 @@ public class pieceMove : MonoBehaviour
         startPos = rt.position;
         ReturnFlag = false;
         FinishFlag = false;
-        //startFlag = false;
-        startFlag = true;
+        VibrationFlag = false;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        //振動処理
+        if (VibrationFlag)
+        {
+
+            //theta更新
+            theta += vibrationSpeed;
+
+            rt.position += rt.transform.right * Mathf.Sin(theta) * vibrationWidth;
+
+            if(theta >= 90 || theta <= -90)
+            {
+                VibrationFlag = false;
+            }
+
+            //終わったらリターン
+            return;
+
+        }
         if (FinishFlag||!startFlag)
         {
             //終わってたら何もせずにリターン
@@ -48,5 +78,19 @@ public class pieceMove : MonoBehaviour
         }
         rt.position = new Vector3(rt.position.x,startPos.y - (Mathf.Sin(Mathf.Deg2Rad * theta) * moveWidth),rt.position.z);
         Debug.Log("サイン"+Mathf.Sin(Mathf.Deg2Rad * theta));
+    }
+
+    public void vibration()
+    {
+        //移動中だったらリターン
+        if (!FinishFlag)
+        {
+            return;
+        }
+
+
+        VibrationFlag = true;
+        theta = 0.0f;
+
     }
 }

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e816e00d76ac8cd42ab24cb967413832
+guid: 836aa0ead7597fd42b4510a490d2c7ce
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -14,6 +14,16 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: eye_tex
     second: {fileID: 2100000, guid: 85cbd912e25122349beb8dab038d6ab7, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: body_tex
+    second: {fileID: 2800000, guid: 2c981791c8bba0a4f85788b9563c42b5, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: face_tex
+    second: {fileID: 2800000, guid: 2d2f00b9a46e3664da4d1573c2961055, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -33,7 +43,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -83,7 +93,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 0
+  importAnimation: 1
   humanDescription:
     serializedVersion: 3
     human: []
@@ -98,7 +108,7 @@ ModelImporter:
     globalScale: 100
     rootMotionBoneName: hip
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1

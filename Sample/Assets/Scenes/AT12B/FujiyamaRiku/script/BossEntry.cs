@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class BossEntry : MonoBehaviour
 {
     Vector3 StartCameraPos;
+    Vector3 CameraPos;
     Vector3 CamEndPos;
     CameraMove MoveCam;
     [SerializeField] public Image BossName;
@@ -15,14 +16,17 @@ public class BossEntry : MonoBehaviour
     [SerializeField] float DelTime;
     [SerializeField] float FocusTime;
     [SerializeField] float FocusDelTime;
-    bool ReturnCamera;
+    bool StartCamera;
     // Start is called before the first frame update
     void Start()
     {
+        StartCamera = false;
+        CameraPos = Camera.main.transform.position;
         MoveCam = GetComponent<CameraMove>();
-        StartCameraPos = Camera.main.transform.position;
+        StartCameraPos = GameData.PlayerPos;
+        StartCameraPos.z = CameraPos.z;
         CamEndPos = Boss1Manager.BossPos;
-        CamEndPos.z = StartCameraPos.z;
+        CamEndPos.z = CameraPos.z;
         BossBarName.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         BossHPBar.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         BossHPFrame.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
@@ -35,21 +39,36 @@ public class BossEntry : MonoBehaviour
     }
     public void Entry()
     {
-        MoveCam.SetCamera(Camera.main);
-        switch (MoveCam.MoveCameraSpeed(StartCameraPos, CamEndPos, FocusTime, FocusDelTime, DelTime))
+        
+            if (GameData.PlayerPos.x >= GameObject.Find("CameraOn").transform.position.x)
+            {
+                StartCameraPos = GameData.PlayerPos;
+            StartCameraPos.z = CameraPos.z;
+            StartCamera = true;
+                Debug.Log("‚È‚º“®‚­" + GameObject.Find("CameraOn").transform.position);
+            }
+
+        if (StartCamera)
         {
-            case 1:
-                BossName.gameObject.SetActive(true);
-                break;
-            case 2:
-                {
-                    BossBarName.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-                    BossHPBar.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-                    BossHPFrame.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-                    BossName.gameObject.SetActive(false);
-                    Boss1Manager.BossState = Boss1Manager.Boss1State.BOSS1_BATTLE;
-                }
-                break;
+            MoveCam.SetCamera(Camera.main);
+
+
+            switch (MoveCam.MoveCameraSpeed(StartCameraPos, CamEndPos, FocusTime, FocusDelTime, DelTime))
+            {
+                case 1:
+                    BossName.gameObject.SetActive(true);
+                    break;
+                case 2:
+                    {
+                        BossBarName.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                        BossHPBar.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                        BossHPFrame.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                        BossName.gameObject.SetActive(false);
+                        StartCamera = false;
+                        Boss1Manager.BossState = Boss1Manager.Boss1State.BOSS1_BATTLE;
+                    }
+                    break;
+            }
         }
     }
 }

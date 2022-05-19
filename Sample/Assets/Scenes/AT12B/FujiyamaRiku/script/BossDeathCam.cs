@@ -29,7 +29,6 @@ public class BossDeathCam : MonoBehaviour
     }
     public void DeathCamera()
     {
-        
         if (MoveCamera.MoveCameraTime(StartPos, EndPos, Time))
         {
             BossImage.BossBarName.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);

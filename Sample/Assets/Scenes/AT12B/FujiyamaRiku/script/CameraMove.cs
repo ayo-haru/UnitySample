@@ -45,10 +45,7 @@ public class CameraMove : MonoBehaviour
     //最後のを使わずに二度宣言して速度を変えても良い
     /// <summary>
     /// 時間を指定して、指定した座標に移動する処理(直線)
-    /// <para>戻り値：処理してる間はtrue、処理の終了時にfalse</para>
-    /// <para>CameraStartPos：開始地点の座標</para>
-    /// <para>CameraEndPos：終了地点の座標</para>
-    /// <para>MoveTime：到着までの時間</para>
+    ///<para>戻り値：処理してる間はtrue、処理の終了時にfalse</para>
     /// </summary>
     /// <param name="CameraStartPos">開始地点の座標</param>
     /// <param name="CameraEndPos">終了地点の座標</param>
@@ -74,18 +71,13 @@ public class CameraMove : MonoBehaviour
     /// <summary>
     /// 時間指定で指定した座標へ移動し、その後元に戻ってくる処理(直線)
     /// <para>戻り値：処理してる間は０、目的の座標についた瞬間１、元の位置に戻ってきたとき２</para>
-    /// <para>CameraStartPos：開始地点の座標</para>
-    /// <para>CameraEndPos：終了地点の座標</para>
-    /// <para>MoveTime：到着までの時間</para>
-    /// <para>ReturnMoveTIme：戻ってくるまでの時間</para>
-    /// <para>ReturnDelayTime：ディレイの時間</para>
     /// </summary>
     /// <param name="CameraStartPos">開始地点の座標</param>
     /// <param name="CameraEndPos">終了地点の座標</param>
     /// <param name="MoveTime">到着までの時間</param>
     /// <param name="ReturnMoveTime">戻ってくるまでの時間</param>
     /// <param name="ReturnDelayTime">ディレイの時間</param>
-    /// <returns></returns>
+    /// <returns>戻り値：処理してる間は０、目的の座標についた瞬間１、元の位置に戻ってきたとき２</returns>
     //戻ってくる時間を指定した場合元の座標に指定した速度で戻ってくる
     public int MoveCameraTime(Vector3 CameraStartPos, Vector3 CameraEndPos, 
                               float MoveTime, float ReturnMoveTime , float ReturnDelayTime) //処理してる間は0 一度目的の座標についた瞬間１ 戻ってきた瞬間２
@@ -151,9 +143,6 @@ public class CameraMove : MonoBehaviour
     /// <summary>
     /// 速度を指定して、指定した座標に移動する処理(直線)
     /// <para>戻り値：処理してる間はtrue、処理の終了時にfalse</para>
-    /// <para>CameraStartPos：開始地点の座標</para>
-    /// <para>CameraEndPos：終了地点の座標</para>
-    /// <para>MoveSpeed：動く速度</para>
     /// </summary>
     /// <param name="CameraStartPos">開始地点の座標</param>
     /// <param name="CameraEndPos">終了地点の座標</param>
@@ -182,11 +171,6 @@ public class CameraMove : MonoBehaviour
     /// <summary>
     /// 速度指定で指定した座標へ移動し、その後元の位置に戻ってくる処理(直線)
     /// <para>戻り値：処理してる間は０、目的の座標についた瞬間１、元の位置に戻ってきたとき２</para>
-    /// <para>CameraStartPos：開始地点の座標</para>
-    /// <para>CameraEndPos：終了地点の座標</para>
-    /// <para>MoveSpeed：動く速度</para>
-    /// <para>ReturnMoveSpeed：戻ってくるときの速度</para>
-    /// <para>ReturnDelayTime：ディレイの時間</para>
     /// </summary>
     /// <param name="CameraStartPos">開始地点の座標</param> 
     /// <param name="CameraEndPos">終了地点の座標</param>

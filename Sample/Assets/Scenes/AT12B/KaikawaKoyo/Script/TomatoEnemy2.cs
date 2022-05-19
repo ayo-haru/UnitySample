@@ -89,21 +89,20 @@ public class TomatoEnemy2 : MonoBehaviour
                         TargetPos = Target.position - new Vector3(0.0f, a, 0.0f);
                         float step = MoveSpeed * Time.deltaTime;
                         rb.position = Vector3.MoveTowards(pos, TargetPos, step);
-                        if (Attack)
-                        {
-                            // âÒì]Ç≥ÇπÇÈ
-                            if (look)
-                            {
-                                transform.Rotate(new Vector3(-8.2f, 0.0f, 0.0f), Space.Self);
-                            }
-                            if (!look)
-                            {
-                                transform.Rotate(new Vector3(8.2f, 0.0f, 0.0f), Space.Self);
-                            }
-                            AttackEnd = true;
-                        }
+                        //if (Attack)
+                        //{
+                        //    // âÒì]Ç≥ÇπÇÈ
+                        //    if (look)
+                        //    {
+                        //        transform.Rotate(new Vector3(-8.2f, 0.0f, 0.0f), Space.Self);
+                        //    }
+                        //    if (!look)
+                        //    {
+                        //        transform.Rotate(new Vector3(8.2f, 0.0f, 0.0f), Space.Self);
+                        //    }
+                        //    AttackEnd = true;
+                        //}
                     }
-                  
                 }
 
                 // îhê∂çUåÇ
@@ -165,7 +164,7 @@ public class TomatoEnemy2 : MonoBehaviour
                         rb.constraints = RigidbodyConstraints.FreezePositionZ |
                                          RigidbodyConstraints.FreezeRotationX |
                                          RigidbodyConstraints.FreezeRotationY;
-                        rb.velocity = new Vector3(0.0f, 2.0f * JumpPower, 0.0f);
+                        rb.velocity = new Vector3(0.0f, 3.0f * JumpPower, 0.0f);
                         SoundManager.Play(SoundData.eSE.SE_TOMATO_BOUND, SoundData.GameAudioList);
                         isGround = false;
                         delay = 0.0f;
@@ -192,15 +191,15 @@ public class TomatoEnemy2 : MonoBehaviour
 
             if(AttackEnd && AttackPattern == 0)
             {
-                // âÒì]Ç≥ÇπÇÈ
-                if (look)
-                {
-                    transform.Rotate(new Vector3(-20.0f, 0.0f, 0.0f), Space.Self);
-                }
-                if (!look)
-                {
-                    transform.Rotate(new Vector3(20.0f, 0.0f, 0.0f), Space.Self);
-                }
+                //// âÒì]Ç≥ÇπÇÈ
+                //if (look)
+                //{
+                //    transform.Rotate(new Vector3(20.0f, 0.0f, 0.0f), Space.Self);
+                //}
+                //if (!look)
+                //{
+                //    transform.Rotate(new Vector3(-20.0f, 0.0f, 0.0f), Space.Self);
+                //}
             }
 
             if(TomatoDead)
@@ -208,18 +207,9 @@ public class TomatoEnemy2 : MonoBehaviour
                 float step = 100.0f * Time.deltaTime;
                 rb.position = Vector3.MoveTowards(pos, TargetPos, step);
                 
-                if(AttackPattern == 1)
-                {
-                    // âÒì]Ç≥ÇπÇÈ
-                    if (look)
-                    {
-                        transform.Rotate(new Vector3(-20.0f, 0.0f, 0.0f), Space.Self);
-                    }
-                    if (!look)
-                    {
-                        transform.Rotate(new Vector3(20.0f, 0.0f, 0.0f), Space.Self);
-                    }
-                }
+                // âÒì]Ç≥ÇπÇÈ
+                transform.Rotate(new Vector3(20.0f, 0.0f, 0.0f), Space.Self);
+              
                 // è„è∏ë¨ìx&óéâ∫ë¨ìxí≤êÆ
                 if (!isGround)
                 {
@@ -254,11 +244,25 @@ public class TomatoEnemy2 : MonoBehaviour
                         float a = Player.transform.position.y - transform.position.y;
                         TargetPos = Target.position - new Vector3(20.0f, a, 0.0f);
                     }
+                    Attack = true;
                 }
-                Attack = true;
+                if(AttackPattern == 1)
+                {
+                    AttackEnd = true;
+                }
             }
             if (AttackEnd)
             {
+                if (Target.position.x < transform.position.x && look)   // ÉvÉåÉCÉÑÅ[ÇÃÇŸÇ§Çå¸Ç≠èàóù
+                {
+                    transform.rotation = Quaternion.LookRotation(new Vector3(-180, 0, 0));
+                    look = false;
+                }
+                if (Target.position.x > transform.position.x && !look)  // ÉvÉåÉCÉÑÅ[ÇÃÇŸÇ§Çå¸Ç≠èàóù
+                {
+                    transform.rotation = Quaternion.LookRotation(new Vector3(180, 0, 0));
+                    look = true;
+                }
                 Plunge = true;
             }
             if(Explosion)

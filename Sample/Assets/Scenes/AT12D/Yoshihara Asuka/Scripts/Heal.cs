@@ -181,7 +181,7 @@ public class Heal : MonoBehaviour
             rb.AddForce(-vec * BouncePower, ForceMode.Force);
 
             // 回復エフェクトだす
-            EffectManager.Play(EffectData.eEFFECT.EF_HEAL, GameData.PlayerPos);
+            EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_HEAL, GameData.PlayerPos);
 
             //既に弾かれてたら処理しない
             if (isBaunceFlg)

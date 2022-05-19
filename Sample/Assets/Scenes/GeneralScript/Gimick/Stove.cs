@@ -28,7 +28,7 @@ public class Stove : MonoBehaviour
     public void Ignition() {
         Vector3 effectPos = this.transform.position;
         effectPos.y += 6.0f;
-        EffectManager.Play(EffectData.eEFFECT.EF_FIRE, effectPos, false);
+        EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_FIRE, effectPos, false);
     }
 
     /// <summary>

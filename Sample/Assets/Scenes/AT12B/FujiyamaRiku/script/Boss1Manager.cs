@@ -84,7 +84,7 @@ public class Boss1Manager : MonoBehaviour
                 {
                     if (!PlayEffect)
                     {
-                        EffectManager.Play(EffectData.eEFFECT.EF_BOSSKILL,new Vector3(Boss.transform.position.x, Boss.transform.position.y, Boss.transform.position.z),8f);
+                        EffectManager.Play(EffectData.eEFFECT.EF_BOSS_DEATH,new Vector3(Boss.transform.position.x, Boss.transform.position.y, Boss.transform.position.z),8f);
                         PlayEffect = true;
                     }
                     GetComponent<BossDeathCam>().DeathCamera();

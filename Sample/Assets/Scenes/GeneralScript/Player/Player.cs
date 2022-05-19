@@ -137,7 +137,7 @@ public class Player : MonoBehaviour
         //Vector3 effectPos;
         //effectPos = new Vector3(GameData.PlayerPos.x, GameData.PlayerPos.y + 10.0f, GameData.PlayerPos.z);
         _animator.Play("Death");
-        EffectManager.Play(EffectData.eEFFECT.EF_DEATH, GameData.PlayerPos, 7.0f);
+        EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_DEATH, GameData.PlayerPos, 7.0f);
     }
 
 

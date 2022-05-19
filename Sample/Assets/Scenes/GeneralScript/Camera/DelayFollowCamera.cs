@@ -20,6 +20,15 @@ public class DelayFollowCamera : MonoBehaviour
 
     public Vector3 FollowCameraPos = Vector3.zero;      // 追従するカメラ
 
+    //画面真ん中から端までのワールド座標での距離
+    private float edgetocenter;
+    //画面端のオブジェ
+    [SerializeField] private GameObject leftObje;
+    [SerializeField] private GameObject rightObje;
+    //画面端オブジェのポジション
+    private Vector3 leftPos;
+    private Vector3 rightPos;
+
     public int RightScreenOut;                          // 右端
     public int LeftScreenOut;                           // 左端
     public int OverScreenOut;                           // 上端
@@ -38,15 +47,15 @@ public class DelayFollowCamera : MonoBehaviour
     {
         Vector3 PlayerPos = GameData.PlayerPos;
 
-		//---遅延処理
-		//Vector3 move = (playerInfo.OldPlayerPos[0] - transform.position) * 0.01f;
-		//move.z = 0;
-		//transform.position += move;
-		//new Vector3(playerInfo.OldPlayerPos[1].x,
-		//			playerInfo.OldPlayerPos[1].y + FollowCameraPos.y,
-		//			FollowCameraPos.z);
+        //---遅延処理
+        Vector3 move = (playerInfo.OldPlayerPos[0] - transform.position) * 0.01f;
+        move.z = 0;
+        transform.position += move;
+        //new Vector3(playerInfo.OldPlayerPos[1].x,
+        //            playerInfo.OldPlayerPos[1].y + FollowCameraPos.y,
+        //            FollowCameraPos.z);
 
-		transform.position = new Vector3(PlayerPos.x,
+        transform.position = new Vector3(PlayerPos.x,
 															  playerInfo.OldPlayerPos[2].y + FollowCameraPos.y,
 															  FollowCameraPos.z); ;
 
@@ -57,8 +66,7 @@ public class DelayFollowCamera : MonoBehaviour
             //transform.position = new Vector3(LeftScreenOut,
             //                                                       PlayerPos.y + FollowCameraPos.y,
             //                                                       FollowCameraPos.z);
-            
-
+           
         }
 
         if (PlayerPos.x > RightScreenOut){                                      // 右端 

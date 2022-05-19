@@ -27,11 +27,11 @@ public class SavePoint : MonoBehaviour
         Vector3 Pos = this.transform.position;  // UIの描画の基準値
         if (isRed)
         {
-            EffectManager.Play(EffectData.eEFFECT.EF_MAGICSQUARE_RED, new Vector3(Pos.x, Pos.y - 10.0f, Pos.z), false);   // 表示するUI
+            EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_MAGICCIRCLE_RED, new Vector3(Pos.x, Pos.y - 10.0f, Pos.z), false);   // 表示するUI
         }
         else
         {
-            EffectManager.Play(EffectData.eEFFECT.EF_MAGICSQUARE_BLUE, new Vector3(Pos.x, Pos.y - 10.0f, Pos.z), false);   // 表示するUI
+            EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_MAGICCIRCLE_BLUE, new Vector3(Pos.x, Pos.y - 10.0f, Pos.z), false);   // 表示するUI
         }
 
         _targetCamera = Camera.main;    // メインカメラを取得

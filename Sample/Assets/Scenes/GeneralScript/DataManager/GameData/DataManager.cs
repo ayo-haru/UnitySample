@@ -90,6 +90,15 @@ public class DataManager : MonoBehaviour
     //-----------------------------------------------------
     [SerializeField] private ParticleSystem ef_gimick_fire;
     [SerializeField] private ParticleSystem ef_gimick_healitem;
+    [SerializeField] private ParticleSystem ef_gimick_magiccircle_red;
+    [SerializeField] private ParticleSystem ef_gimick_magiccircle_blue;
+    [SerializeField] private ParticleSystem ef_gimick_guide_left;
+    [SerializeField] private ParticleSystem ef_gimick_guide_left_up;
+    [SerializeField] private ParticleSystem ef_gimick_guide_left_down;
+    [SerializeField] private ParticleSystem ef_gimick_guide_right;
+    [SerializeField] private ParticleSystem ef_gimick_guide_right_up;
+    [SerializeField] private ParticleSystem ef_gimick_guide_right_down;
+
 
     [SerializeField] private ParticleSystem ef_player_shield;
     [SerializeField] private ParticleSystem ef_player_heal;
@@ -106,8 +115,7 @@ public class DataManager : MonoBehaviour
     [SerializeField] private ParticleSystem ef_boss_fork;
     [SerializeField] private ParticleSystem ef_boss_rainzone;
 
-    [SerializeField] private ParticleSystem ef_gimick_magicspuare_red;
-    [SerializeField] private ParticleSystem ef_gimick_magicspuare_blue;
+
 
     [SerializeField] private ParticleSystem ef_shield2;
 
@@ -154,8 +162,14 @@ public class DataManager : MonoBehaviour
         //---ギミック関連
         EffectData.EFDataSet(ef_gimick_fire,(int)EffectData.eEFFECT.EF_GIMICK_FIRE);
         EffectData.EFDataSet(ef_gimick_healitem,(int)EffectData.eEFFECT.EF_GIMICK_HEALITEM);
-        EffectData.EFDataSet(ef_gimick_magicspuare_red,(int)EffectData.eEFFECT.EF_GIMICK_MAGICSQUARE_RED);
-        EffectData.EFDataSet(ef_gimick_magicspuare_blue,(int)EffectData.eEFFECT.EF_GIMICK_MAGICSQUARE_BLUE);
+        EffectData.EFDataSet(ef_gimick_magiccircle_red,(int)EffectData.eEFFECT.EF_GIMICK_MAGICCIRCLE_RED);
+        EffectData.EFDataSet(ef_gimick_magiccircle_blue,(int)EffectData.eEFFECT.EF_GIMICK_MAGICCIRCLE_BLUE);
+        EffectData.EFDataSet(ef_gimick_guide_left,(int)EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT);
+        EffectData.EFDataSet(ef_gimick_guide_left_up,(int)EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT_UP);
+        EffectData.EFDataSet(ef_gimick_guide_left_down,(int)EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT_DOWN);
+        EffectData.EFDataSet(ef_gimick_guide_right,(int)EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT);
+        EffectData.EFDataSet(ef_gimick_guide_right_up,(int)EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT_UP);
+        EffectData.EFDataSet(ef_gimick_guide_right_down,(int)EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT_DOWN);
 
         //---プレイヤー関連
         EffectData.EFDataSet(ef_player_shield,(int)EffectData.eEFFECT.EF_PLAYER_SHIELD);

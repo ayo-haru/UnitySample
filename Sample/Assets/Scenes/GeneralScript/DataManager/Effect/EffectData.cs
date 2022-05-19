@@ -27,8 +27,14 @@ public static class EffectData
         //---ギミック関連
         EF_GIMICK_FIRE = 0,
         EF_GIMICK_HEALITEM,
-        EF_GIMICK_MAGICSQUARE_RED,
-        EF_GIMICK_MAGICSQUARE_BLUE,
+        EF_GIMICK_MAGICCIRCLE_RED,
+        EF_GIMICK_MAGICCIRCLE_BLUE,
+        EF_GIMICK_GUIDE_LEFT,
+        EF_GIMICK_GUIDE_LEFT_UP,
+        EF_GIMICK_GUIDE_LEFT_DOWN,
+        EF_GIMICK_GUIDE_RIGHT,
+        EF_GIMICK_GUIDE_RIGHT_UP,
+        EF_GIMICK_GUIDE_RIGHT_DOWN,
 
         //---プレイヤー関連
         EF_PLAYER_SHIELD,

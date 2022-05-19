@@ -41,7 +41,7 @@ public class Star : MonoBehaviour
             SoundManager.Play(SoundData.eSE.SE_REFLECTION_STAR, SoundData.GameAudioList);
             Vector3 effekctPos = this.transform.position;
             //effekctPos.y -= 2.5f;
-            EffectManager.Play(EffectData.eEFFECT.EF_HEALITEM, effekctPos);
+            EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_HEALITEM, effekctPos);
             //Debug.Log("‚°‚Á‚Æ‚ ‚¢‚Ä‚Þ");
         }
     }

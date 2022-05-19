@@ -250,9 +250,9 @@ public class EnemyDown : MonoBehaviour
                     Destroy(gameObject, 0.0f);
                     if (EnemyNumber == 2 || EnemyNumber == 5)
                     {
-                        EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);
+                        EffectManager.Play(EffectData.eEFFECT.EF_ENEMY_TOMATOBOMB, transform.position, 0.9f);
                     }
-                    EffectManager.Play(EffectData.eEFFECT.EF_ENEMYDOWN, Pos, 2.0f);
+                    EffectManager.Play(EffectData.eEFFECT.EF_ENEMY_DEATH, Pos, 2.0f);
                 }
             }
             Pvec = rb.velocity;
@@ -297,7 +297,7 @@ public class EnemyDown : MonoBehaviour
             {
                 Pos = transform.position;
                 Destroy(gameObject, 0.0f);
-                EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);
+                EffectManager.Play(EffectData.eEFFECT.EF_ENEMY_TOMATOBOMB, transform.position, 0.9f);
             }
         }
     }

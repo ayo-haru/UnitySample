@@ -71,7 +71,7 @@ public class BeeEnemy : MonoBehaviour
             {
                 Enemypos = transform.position;
                 Destroy(gameObject, 0.0f);
-                EffectManager.Play(EffectData.eEFFECT.EF_ENEMYDOWN, Enemypos);
+                EffectManager.Play(EffectData.eEFFECT.EF_ENEMY_DEATH, Enemypos);
             }
 
             // ¶‚«‚Ä‚¢‚éŠÔs‚¤ˆ—

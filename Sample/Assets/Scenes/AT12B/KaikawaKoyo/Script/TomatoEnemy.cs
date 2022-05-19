@@ -102,7 +102,7 @@ public class TomatoEnemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && ED.isAlive)
         {
             SoundManager.Play(SoundData.eSE.SE_TOMATO_BOMB, SoundData.GameAudioList);
-            EffectManager.Play(EffectData.eEFFECT.EF_TOMATOBOMB, transform.position, 0.9f);
+            EffectManager.Play(EffectData.eEFFECT.EF_ENEMY_TOMATOBOMB, transform.position, 0.9f);
             Destroy(gameObject, 0.0f);
         }
     }

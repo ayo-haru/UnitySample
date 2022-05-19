@@ -19,12 +19,16 @@ public class TitlePlayer : MonoBehaviour
     public bool pressAnyButtonFlag;                     //PressAnyButtonが押されたか
     private bool selectFlag;                            //選択画面かどうか
     public GameObject[] selectPosObject;                //選択肢の位置
+    public GameObject[] selectUI;                       //選択肢のUI
     public float moveSpeed = 0.1f;                      //プレイヤー移動速度
     private bool rightFlag;                             //右向いてるか
     private Vector3 scale;                              //プレイヤー回転時のスケール変更用
     public int max_timer = 60;                          //演出待ち時間
+    public int first_timer = 45;                        //pressanybuttonの時の演出待ち時間
     private int timer;                                  //演出時間計測用
     public bool decisionFlag;                           //決定ボタンが押されたか
+
+    AnimatorStateInfo animeStateInfo;                   //アニメーションの状態
 
     // Start is called before the first frame update
     void Start()
@@ -48,11 +52,25 @@ public class TitlePlayer : MonoBehaviour
         //-----PressAnyButtonが押された時の処理
         if (pressAnyButtonFlag)
         {
-            animator.SetTrigger("Attack");
-            transform.Rotate(new Vector3(0.0f, -90.0f, 0.0f));
-            pressAnyButtonFlag = false;
-            //選択画面に移動
-            selectFlag = true;
+            if(timer <= 0)
+            {
+                animator.SetTrigger("Attack");
+                transform.Rotate(new Vector3(0.0f, -90.0f, 0.0f));
+
+                timer = first_timer;
+            }
+            else
+            {
+                --timer;
+                if(timer <= 0)
+                {
+                    pressAnyButtonFlag = false;
+                    selectFlag = true;
+                    Camera.main.GetComponent<TitleCamera>().startFlag = true;
+                }
+            }
+
+
         }
 
         if (!selectFlag)
@@ -119,12 +137,23 @@ public class TitlePlayer : MonoBehaviour
             //決定ボタンが押されてたら
             if (decisionFlag)
             {
-                if(timer == 0)
+                //アニメーションの状態取得
+                animeStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+                if (timer == 0)
                 {
-                    //アニメーション再生「
+                    //アニメーション再生
                     animator.SetTrigger("Attack_DOWN");
                     // 弾く音
                     SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.TitleAudioList);
+                    
+                }
+
+                //下パリイのモーションでアニメーションが半分を過ぎてたら
+                if (animeStateInfo.normalizedTime > 0.5f && animeStateInfo.IsName("Attack_DOWN"))
+                {
+                    //UI弾く
+                    selectUI[titleSceneManager.select].GetComponent<Move2DTheta>().UnderParry();
                 }
 
                 //タイマーが終了してたら

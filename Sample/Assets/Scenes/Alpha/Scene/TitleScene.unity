@@ -221,7 +221,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -730, y: -450}
+  m_AnchoredPosition: {x: -730, y: -400}
   m_SizeDelta: {x: 450, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &41957391
@@ -290,6 +290,7 @@ MonoBehaviour:
   dir: {x: 0, y: 1}
   moveSpeed: 0.1
   moveWidth: 0.5
+  ParrySpeed: 50
 --- !u!1001 &47595632
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -796,6 +797,7 @@ MonoBehaviour:
   dir: {x: 0, y: -1}
   moveSpeed: 0.1
   moveWidth: 1
+  ParrySpeed: 10
 --- !u!1001 &248948981
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -959,8 +961,14 @@ MonoBehaviour:
   - {fileID: 1607817210}
   - {fileID: 1222814396}
   - {fileID: 1863157272}
+  selectUI:
+  - {fileID: 41957389}
+  - {fileID: 1928870021}
+  - {fileID: 1317972249}
+  - {fileID: 623748443}
   moveSpeed: 0.5
   max_timer: 60
+  first_timer: 10
   decisionFlag: 0
 --- !u!4 &413418834 stripped
 Transform:
@@ -1219,7 +1227,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 710, y: -450}
+  m_AnchoredPosition: {x: 710, y: -400}
   m_SizeDelta: {x: 450, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &623748445
@@ -1288,6 +1296,7 @@ MonoBehaviour:
   dir: {x: 0, y: 1}
   moveSpeed: 0.1
   moveWidth: 0.5
+  ParrySpeed: 50
 --- !u!1001 &649669889
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1612,6 +1621,7 @@ MonoBehaviour:
   dir: {x: 0, y: -1}
   moveSpeed: 0.05
   moveWidth: 1
+  ParrySpeed: 10
 --- !u!1001 &969961274
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2344,7 +2354,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 230, y: -450}
+  m_AnchoredPosition: {x: 230, y: -400}
   m_SizeDelta: {x: 450, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1317972251
@@ -2413,6 +2423,7 @@ MonoBehaviour:
   dir: {x: 0, y: 1}
   moveSpeed: 0.1
   moveWidth: 0.5
+  ParrySpeed: 50
 --- !u!4 &1351619861 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8193529992696335474, guid: ee09b0d87f6366a469e0a5038b2458f5, type: 3}
@@ -3960,7 +3971,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -250, y: -450}
+  m_AnchoredPosition: {x: -250, y: -400}
   m_SizeDelta: {x: 450, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1928870023
@@ -4029,6 +4040,7 @@ MonoBehaviour:
   dir: {x: 0, y: 1}
   moveSpeed: 0.1
   moveWidth: 0.5
+  ParrySpeed: 50
 --- !u!4 &1967532281 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8193529992696335474, guid: ee09b0d87f6366a469e0a5038b2458f5, type: 3}

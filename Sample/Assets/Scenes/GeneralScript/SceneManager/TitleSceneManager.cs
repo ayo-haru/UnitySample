@@ -103,7 +103,6 @@ public class TitleSceneManager : MonoBehaviour {
         // 何かボタンが押されたら
         if ((keyboard.anyKey.wasReleasedThisFrame || GamePadManager.ReleaseAnyButton(GamePadManager.eGamePadType.ALLTYPE)) && !isPressButton)
         {
-            Camera.main.GetComponent<TitleCamera>().startFlag = true;
             isPressButton = true;
             PressAnyButton.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
             PressAnyButton.GetComponent<UIBlink>().isHide = true;   // ボタンが押されたら消す
@@ -283,6 +282,7 @@ public class TitleSceneManager : MonoBehaviour {
                 weight = false;
                 //オプションマネージャーをアクティブにする
                 Optionmanager.SetActive(true);
+                Option.GetComponent<Move2DTheta>().enabled = false;  //上下移動有効
             }
 
 

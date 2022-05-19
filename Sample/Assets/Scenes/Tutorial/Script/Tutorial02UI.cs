@@ -37,7 +37,7 @@ public class Tutorial02UI : MonoBehaviour {
 
     private Tutorial02Manager scenemanager;
     private DelayFollowCamera _delayfollowcamera;
-
+    private BoxCollider wallcollider;
 
     private void Awake() {
         UIActionAssets = new Game_pad();            // InputActionインスタンスを生成
@@ -56,6 +56,7 @@ public class Tutorial02UI : MonoBehaviour {
 
         _delayfollowcamera = Camera.main.GetComponent<DelayFollowCamera>();
 
+        wallcollider = GameObject.Find("wallcollider004").GetComponent<BoxCollider>();
         //----- UI初期化 -----
         // 実態化
         CharacterBack = Instantiate(characterback);
@@ -126,6 +127,7 @@ public class Tutorial02UI : MonoBehaviour {
         }
         else if (UIcnt == 2)
         {
+            NextIcon.GetComponent<ImageShow>().Clear();
             if (!TutorialPanCake.isAlive)
             {
                 StartCoroutine("DelayDestroyPancake");
@@ -153,6 +155,7 @@ public class Tutorial02UI : MonoBehaviour {
         {
             CharacterBack.GetComponent<ImageShow>().FadeOut();
             _delayfollowcamera.enabled = true;
+            wallcollider.enabled = false;
         }
     }
 

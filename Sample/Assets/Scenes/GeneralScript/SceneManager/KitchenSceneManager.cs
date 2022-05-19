@@ -78,8 +78,9 @@ public class KitchenSceneManager : MonoBehaviour {
                     {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                         GameData.PlayerPos = GameData.Player.transform.position = new Vector3(25.0f, 20.0f, 0.0f);
-                        if (GameData.OldMapNumber == (int)GameData.eSceneState.TITLE_SCENE || (GameData.OldMapNumber == GameData.CurrentMapNumber && !GameOver.GameOverFlag))
+                        if (GameData.OldMapNumber == (int)GameData.eSceneState.Tutorial3 || (GameData.OldMapNumber == GameData.CurrentMapNumber && !GameOver.GameOverFlag))
                         {
+                            GameData.InitData();
                             GameData.SaveAll();
                         }
                     }

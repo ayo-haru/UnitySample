@@ -218,7 +218,7 @@ public class Player2 : MonoBehaviour
             {
                 GameData.CurrentHP--;
                 //SaveManager.saveHP(GameData.CurrentHP);
-                EffectManager.Play(EffectData.eEFFECT.EF_DAMAGE, this.transform.position);
+                EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_DAMAGE, this.transform.position);
                 SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
                 hpmanager.Damaged();
             }
@@ -228,7 +228,7 @@ public class Player2 : MonoBehaviour
             {
                 if (GameData.CurrentHP < hpmanager.MaxHP)
                 {
-                    EffectManager.Play(EffectData.eEFFECT.EF_HEAL, this.transform.position);
+                    EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_HEAL, this.transform.position);
                     //GameData.CurrentHP++;
                     //SaveManager.saveHP(GameData.CurrentHP);
                     hpmanager.GetItem();
@@ -594,7 +594,7 @@ public class Player2 : MonoBehaviour
         }
         hpmanager.Damaged();
 
-        EffectManager.Play(EffectData.eEFFECT.EF_DAMAGE, this.transform.position);
+        EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_DAMAGE, this.transform.position);
         SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
 
 

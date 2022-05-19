@@ -86,39 +86,30 @@ public class DataManager : MonoBehaviour
 
 
     //-----------------------------------------------------
-    // Efect
+    // Efect(原則としてEffectData.csのenumの定義名と同じにし小文字で命名すること)
     //-----------------------------------------------------
-    [SerializeField]
-    private ParticleSystem ef_fire;
-    [SerializeField]
-    private ParticleSystem ef_damage;
-    [SerializeField]
-    private ParticleSystem ef_death;
-    [SerializeField]
-    private ParticleSystem ef_dark;
-    [SerializeField]
-    private ParticleSystem ef_enemydeath;
-    [SerializeField]
-    private ParticleSystem ef_tomatobomb;
-    [SerializeField]
-    private ParticleSystem ef_bossdeath;
-    [SerializeField]
-    private ParticleSystem ef_bossstrawberry;
-    [SerializeField]
-    private ParticleSystem ef_healitem;
-    [SerializeField]
-    private ParticleSystem ef_heal;
-    [SerializeField]
-    private ParticleSystem ef_shield;
-    [SerializeField]
-    private ParticleSystem ef_shield2;
-    [SerializeField]
-    private ParticleSystem ef_magicspuare_red;
-    [SerializeField]
-    private ParticleSystem ef_magicspuare_blue;
-    [SerializeField]
-    private ParticleSystem ef_boss_rainzone;
+    [SerializeField] private ParticleSystem ef_gimick_fire;
+    [SerializeField] private ParticleSystem ef_gimick_healitem;
 
+    [SerializeField] private ParticleSystem ef_player_shield;
+    [SerializeField] private ParticleSystem ef_player_heal;
+    [SerializeField] private ParticleSystem ef_player_damage;
+    [SerializeField] private ParticleSystem ef_player_death;
+
+    [SerializeField] private ParticleSystem ef_enemy_darkarea;
+    [SerializeField] private ParticleSystem ef_enemy_death;
+    [SerializeField] private ParticleSystem ef_enemy_tomatobomb;
+
+    [SerializeField] private ParticleSystem ef_boss_death;
+    [SerializeField] private ParticleSystem ef_boss_knifedamage;
+    [SerializeField] private ParticleSystem ef_boss_strawberry;
+    [SerializeField] private ParticleSystem ef_boss_fork;
+    [SerializeField] private ParticleSystem ef_boss_rainzone;
+
+    [SerializeField] private ParticleSystem ef_gimick_magicspuare_red;
+    [SerializeField] private ParticleSystem ef_gimick_magicspuare_blue;
+
+    [SerializeField] private ParticleSystem ef_shield2;
 
     // Start is called before the first frame update
     void Awake()
@@ -160,24 +151,35 @@ public class DataManager : MonoBehaviour
         //-----------------------------------------------------
         // Efect
         //-----------------------------------------------------
-        EffectData.EFDataSet(ef_fire,(int)EffectData.eEFFECT.EF_FIRE);
-        EffectData.EFDataSet(ef_damage,(int)EffectData.eEFFECT.EF_DAMAGE);
-        EffectData.EFDataSet(ef_death,(int)EffectData.eEFFECT.EF_DEATH);
-        EffectData.EFDataSet(ef_dark,(int)EffectData.eEFFECT.EF_DARKAREA);
-        EffectData.EFDataSet(ef_enemydeath,(int)EffectData.eEFFECT.EF_ENEMYDOWN);
-        EffectData.EFDataSet(ef_tomatobomb,(int)EffectData.eEFFECT.EF_TOMATOBOMB);
-        EffectData.EFDataSet(ef_bossdeath,(int)EffectData.eEFFECT.EF_BOSSKILL);
-        EffectData.EFDataSet(ef_bossdeath,(int)EffectData.eEFFECT.EF_BOSSSTRAWBERRY);
-        EffectData.EFDataSet(ef_healitem,(int)EffectData.eEFFECT.EF_HEALITEM);
-        EffectData.EFDataSet(ef_heal,(int)EffectData.eEFFECT.EF_HEAL);
-        EffectData.EFDataSet(ef_shield,(int)EffectData.eEFFECT.EF_SHIELD);
-        EffectData.EFDataSet(ef_shield2,(int)EffectData.eEFFECT.EF_SHEILD2);
-        EffectData.EFDataSet(ef_magicspuare_red,(int)EffectData.eEFFECT.EF_MAGICSQUARE_RED);
-        EffectData.EFDataSet(ef_magicspuare_blue,(int)EffectData.eEFFECT.EF_MAGICSQUARE_BLUE);
+        //---ギミック関連
+        EffectData.EFDataSet(ef_gimick_fire,(int)EffectData.eEFFECT.EF_GIMICK_FIRE);
+        EffectData.EFDataSet(ef_gimick_healitem,(int)EffectData.eEFFECT.EF_GIMICK_HEALITEM);
+        EffectData.EFDataSet(ef_gimick_magicspuare_red,(int)EffectData.eEFFECT.EF_GIMICK_MAGICSQUARE_RED);
+        EffectData.EFDataSet(ef_gimick_magicspuare_blue,(int)EffectData.eEFFECT.EF_GIMICK_MAGICSQUARE_BLUE);
+
+        //---プレイヤー関連
+        EffectData.EFDataSet(ef_player_shield,(int)EffectData.eEFFECT.EF_PLAYER_SHIELD);
+        EffectData.EFDataSet(ef_player_heal,(int)EffectData.eEFFECT.EF_PLAYER_HEAL);
+        EffectData.EFDataSet(ef_player_damage,(int)EffectData.eEFFECT.EF_PLAYER_DAMAGE);
+        EffectData.EFDataSet(ef_player_death,(int)EffectData.eEFFECT.EF_PLAYER_DEATH);
+
+        //---雑魚的関連
+        EffectData.EFDataSet(ef_enemy_darkarea,(int)EffectData.eEFFECT.EF_ENEMY_DARKAREA);
+        EffectData.EFDataSet(ef_enemy_death,(int)EffectData.eEFFECT.EF_ENEMY_DEATH);
+        EffectData.EFDataSet(ef_enemy_tomatobomb,(int)EffectData.eEFFECT.EF_ENEMY_TOMATOBOMB);
+
+        //---ボス関連
+        EffectData.EFDataSet(ef_boss_death,(int)EffectData.eEFFECT.EF_BOSS_DEATH);
+        EffectData.EFDataSet(ef_boss_knifedamage,(int)EffectData.eEFFECT.EF_BOSS_KNIFEDAMAGE);
+        EffectData.EFDataSet(ef_boss_strawberry,(int)EffectData.eEFFECT.EF_BOSS_STRAWBERRY);
+        EffectData.EFDataSet(ef_boss_fork,(int)EffectData.eEFFECT.EF_BOSS_FORK);
         EffectData.EFDataSet(ef_boss_rainzone, (int)EffectData.eEFFECT.EF_BOSS_RAINZONE);
 
-        SoundData.isSetSound = true;    // デバッグ時サウンド初期化してない場合にエラーが出るからけす
-        EffectData.isSetEffect = true;  // デバッグ時エフェクト初期化していない場合にエラーを出さない
+
+        EffectData.EFDataSet(ef_shield2,(int)EffectData.eEFFECT.EF_SHEILD2);
+
+        SoundData.isSetSound = false;    // デバッグ時サウンド初期化してない場合にエラーが出るからけす
+        EffectData.isSetEffect = false;  // デバッグ時エフェクト初期化していない場合にエラーを出さない
 
         // 絶対に消されない音のいれる場所
         for (int i = 0; i < 3; i++) {

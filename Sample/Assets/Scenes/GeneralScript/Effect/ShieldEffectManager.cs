@@ -17,7 +17,7 @@ public class ShieldEffectManager : MonoBehaviour
         player2 = Player.GetComponent<Player2>();
 
         //---盾エフェクト再生(盾の座標と同じ場所にセット)
-        ShileEffect = Instantiate(EffectData.EF[(int)EffectData.eEFFECT.EF_SHIELD],
+        ShileEffect = Instantiate(EffectData.EF[(int)EffectData.eEFFECT.EF_PLAYER_SHIELD],
                                   this.transform.position,
                                   Quaternion.identity);
 

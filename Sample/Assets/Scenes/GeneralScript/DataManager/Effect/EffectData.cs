@@ -16,24 +16,39 @@ using UnityEngine;
 
 public static class EffectData
 {
-    //---エフェクト番号割り当て
+    /// <summary>
+    /// エフェクトの割り当て
+    /// 追加する場合は命名規則として
+    /// EF_オブジェクト名_内容　とします。
+    /// 例) EF_PLAYER_SHIELD
+    /// </summary>
     public enum eEFFECT
     {
-        EF_FIRE = 0,
-        EF_DAMAGE,
-        EF_DEATH,
-        EF_DARKAREA,
-        EF_ENEMYDOWN,
-        EF_TOMATOBOMB,
-        EF_BOSSKILL,
-        EF_BOSSSTRAWBERRY,
-        EF_HEALITEM,
-        EF_HEAL,
-        EF_SHIELD,
-        EF_SHEILD2,
-        EF_MAGICSQUARE_RED,
-        EF_MAGICSQUARE_BLUE,
+        //---ギミック関連
+        EF_GIMICK_FIRE = 0,
+        EF_GIMICK_HEALITEM,
+        EF_GIMICK_MAGICSQUARE_RED,
+        EF_GIMICK_MAGICSQUARE_BLUE,
+
+        //---プレイヤー関連
+        EF_PLAYER_SHIELD,
+        EF_PLAYER_HEAL,
+        EF_PLAYER_DAMAGE,
+        EF_PLAYER_DEATH,
+
+        //---雑魚的関連
+        EF_ENEMY_DARKAREA,
+        EF_ENEMY_DEATH,
+        EF_ENEMY_TOMATOBOMB,
+
+        //---ボス関連
+        EF_BOSS_DEATH,
+        EF_BOSS_KNIFEDAMAGE,
+        EF_BOSS_STRAWBERRY,
+        EF_BOSS_FORK,
         EF_BOSS_RAINZONE,
+
+        EF_SHEILD2,
 
         MAX_EF
     }

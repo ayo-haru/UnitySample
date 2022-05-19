@@ -110,6 +110,7 @@ public class Tutorial02Manager : MonoBehaviour
     public void PlayerAppearance() {
         GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-80.0f, 17.0f, 0.0f);
         this.player = Instantiate(GameData.Player);
+        GameData.Player.transform.rotation = Quaternion.identity;
         player.name = GameData.Player.name;                     // –¼‘O‚ÌŒã‚ë‚É(Clone)‚Æ‚Â‚­‚Ì‚ğ–h‚®‚½‚ßA
     }
 

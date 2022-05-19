@@ -9510,6 +9510,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2869896121403762774, guid: de2e63855e03e06408455df7c8a4d4aa, type: 3}
   m_PrefabInstance: {fileID: 760723887}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &762993547 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 215075370774218266, guid: 06af251dba956cf4782708332adc56f0, type: 3}
+  m_PrefabInstance: {fileID: 498866862}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &768446039
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22530,6 +22535,7 @@ GameObject:
   - component: {fileID: 1816711529}
   - component: {fileID: 1816711530}
   - component: {fileID: 1816711531}
+  - component: {fileID: 1816711532}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -22665,10 +22671,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FollowCameraPos: {x: 70, y: 37.5, z: -100}
+  leftObje: {fileID: 0}
+  rightObje: {fileID: 0}
   RightScreenOut: 1025
   LeftScreenOut: 70
   OverScreenOut: 500
   UnderScreenOut: 0
+--- !u!114 &1816711532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816711525}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13793e248a2796d45a797957b1d5af7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerObject: {fileID: 2989549751805859224, guid: 7378e7d4d318386408ba41cf399d7748, type: 3}
+  cameraDistanse: {x: 0, y: 0, z: 0}
+  cameraY: 0
+  cameraZ: -100
+  leftObje: {fileID: 762993547}
+  rightObje: {fileID: 2063314007}
 --- !u!1001 &1831956023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25183,6 +25209,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 990466896304727156, guid: f71e8d25b687b7e41bd13647aeb0875d, type: 3}
   m_PrefabInstance: {fileID: 2044238694}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2063314007 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 713831621928030834, guid: ff17d06f2e4806d4c893bde89e4a0b73, type: 3}
+  m_PrefabInstance: {fileID: 263456324}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2071485041
 PrefabInstance:

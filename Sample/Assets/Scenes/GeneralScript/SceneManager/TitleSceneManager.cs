@@ -247,13 +247,21 @@ public class TitleSceneManager : MonoBehaviour {
                 // Œˆ’è‰¹
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
                 isDecision = false;
+                weight = true;
+                titlePlayer.decisionFlag = true;
+            }
+            else if (weight && !titlePlayer.decisionFlag)
+            {
+                weight = false;
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
 #else
                 Application.Quit();
 #endif
-
             }
+
+
+
         }
         else if(select == (int)eSTATETITLE.OPTION)
         {

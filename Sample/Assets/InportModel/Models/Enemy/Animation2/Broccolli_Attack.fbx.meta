@@ -21,7 +21,7 @@ ModelImporter:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
-    optimizeGameObjects: 1
+    optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -51,14 +51,14 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 1
-      keepOriginalOrientation: 1
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 1
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 0
+      keepOriginalPositionXZ: 0
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
@@ -66,30 +66,6 @@ ModelImporter:
       events: []
       transformMask:
       - path: 
-        weight: 1
-      - path: broccoli
-        weight: 1
-      - path: broccoli/eye
-        weight: 1
-      - path: broccoli/body
-        weight: 1
-      - path: broccoli/lip
-        weight: 1
-      - path: broccoli/head
-        weight: 1
-      - path: broccoli/dot1
-        weight: 1
-      - path: broccoli/dots
-        weight: 1
-      - path: spine
-        weight: 1
-      - path: spine/spine2
-        weight: 1
-      - path: spine/spine2/spine3
-        weight: 1
-      - path: spine/spine2/spine3/head 1
-        weight: 1
-      - path: spine/spine2/spine3/head 1/headtop
         weight: 1
       - path: all
         weight: 1
@@ -110,6 +86,30 @@ ModelImporter:
       - path: all/polyToCurve5/group1/polyToCurve1/group2/polyToCurve2/group3/polyToCurve3/group4
         weight: 1
       - path: all/polyToCurve5/group1/polyToCurve1/group2/polyToCurve2/group3/polyToCurve3/group4/polyToCurve4
+        weight: 1
+      - path: broccoli
+        weight: 1
+      - path: broccoli/body
+        weight: 1
+      - path: broccoli/dot1
+        weight: 1
+      - path: broccoli/dots
+        weight: 1
+      - path: broccoli/eye
+        weight: 1
+      - path: broccoli/head
+        weight: 1
+      - path: broccoli/lip
+        weight: 1
+      - path: spine
+        weight: 1
+      - path: spine/spine2
+        weight: 1
+      - path: spine/spine2/spine3
+        weight: 1
+      - path: spine/spine2/spine3/head 1
+        weight: 1
+      - path: spine/spine2/spine3/head 1/headtop
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}

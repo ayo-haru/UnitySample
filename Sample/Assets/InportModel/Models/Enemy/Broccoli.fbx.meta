@@ -7,13 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: broccoli_tex
+      name: lambert2
     second: {fileID: 2100000, guid: 49e7e3935f8ab4544a369e66b462c3c0, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: broccoli_color
-    second: {fileID: 2800000, guid: 727f423e7655d2448bec6bc82fa44abb, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -83,7 +78,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 1
+  importAnimation: 0
   humanDescription:
     serializedVersion: 3
     human: []
@@ -96,7 +91,7 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 100
-    rootMotionBoneName: 
+    rootMotionBoneName: spine
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
@@ -104,7 +99,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   additionalBone: 0
   userData: 

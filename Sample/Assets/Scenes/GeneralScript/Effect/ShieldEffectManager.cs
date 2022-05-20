@@ -80,7 +80,7 @@ public class ShieldEffectManager : MonoBehaviour
 		{
             //---当たった瞬間の座標
             Vector3 HitPos = collision.transform.position;
-            HitPos.z = -5f;
+            HitPos.z = -10f;
             
             //---ヒットエフェクトの再生
             EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_HIT, HitPos);

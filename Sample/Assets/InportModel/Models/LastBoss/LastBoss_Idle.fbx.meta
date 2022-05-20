@@ -1,17 +1,22 @@
 fileFormatVersion: 2
-guid: a1a97316cad34c744bad71a58e4ff4c0
+guid: 298f693fccf8b6940a06ba51f226c515
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
-      74: -1764244408820419649
-    second: tomato_anime
+      74: 8278467470666332729
+    second: boss_anime_idling
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: lambert2
-    second: {fileID: 2100000, guid: 5c639b98316a8b74d8ed73174b272e3b, type: 2}
+      name: lastbass
+    second: {fileID: 2100000, guid: 4bdba8731e409b6468a0ec22f3edece0, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: lastbos2_lambert1_BaseColor
+    second: {fileID: 2800000, guid: 4ae07b5c7c6c86e42856b84ad73b5893, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -21,7 +26,7 @@ ModelImporter:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
-    optimizeGameObjects: 1
+    optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -31,7 +36,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -40,11 +45,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: tomato_anime
-      takeName: tomato_anime
+      name: boss_anime_idling
+      takeName: boss_anime_idling
       internalID: 0
-      firstFrame: 1
-      lastFrame: 30
+      firstFrame: 2
+      lastFrame: 120
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -56,7 +61,7 @@ ModelImporter:
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 1
-      keepOriginalOrientation: 1
+      keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 1
       heightFromFeet: 0
@@ -64,62 +69,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
-      transformMask:
-      - path: 
-        weight: 1
-      - path: tomato
-        weight: 1
-      - path: tomato/body1
-        weight: 1
-      - path: tomato/mask
-        weight: 1
-      - path: tomato/doukasen
-        weight: 1
-      - path: body
-        weight: 1
-      - path: body/spine
-        weight: 1
-      - path: body/spine/spine1
-        weight: 1
-      - path: body/spine/spine1/spine2
-        weight: 1
-      - path: body/spine/spine1/spine2/spine3
-        weight: 1
-      - path: body/spine/spine1/spine2/spine3/spine4
-        weight: 1
-      - path: body/spine/spine1/spine2/spine3/spine4/spine5
-        weight: 1
-      - path: group6
-        weight: 1
-      - path: group6/polyToCurve6
-        weight: 1
-      - path: group6/polyToCurve6/group1
-        weight: 1
-      - path: group6/polyToCurve6/group1/polyToCurve1
-        weight: 1
-      - path: group6/polyToCurve6/group1/polyToCurve1/group2
-        weight: 1
-      - path: group6/polyToCurve6/group1/polyToCurve1/group2/polyToCurve2
-        weight: 1
-      - path: group6/polyToCurve6/group1/polyToCurve1/group2/polyToCurve2/group3
-        weight: 1
-      - path: group6/polyToCurve6/group1/polyToCurve1/group2/polyToCurve2/group3/polyToCurve3
-        weight: 1
-      - path: group6/polyToCurve6/group1/polyToCurve1/group2/polyToCurve2/group3/polyToCurve3/group4
-        weight: 1
-      - path: group6/polyToCurve6/group1/polyToCurve1/group2/polyToCurve2/group3/polyToCurve3/group4/polyToCurve4
-        weight: 1
-      - path: group6/polyToCurve6/group1/polyToCurve1/group2/polyToCurve2/group3/polyToCurve3/group4/polyToCurve4/group5
-        weight: 1
-      - path: group6/polyToCurve6/group1/polyToCurve1/group2/polyToCurve2/group3/polyToCurve3/group4/polyToCurve4/group5/polyToCurve5
-        weight: 1
-      maskType: 0
+      transformMask: []
+      maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 1
+      additiveReferencePoseFrame: 1.8
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 100
+    globalScale: 750
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -155,7 +112,7 @@ ModelImporter:
     tangentImportMode: 3
     normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
-    blendShapeNormalImportMode: 1
+    blendShapeNormalImportMode: 2
     normalSmoothingSource: 0
   referencedClips: []
   importAnimation: 1
@@ -170,8 +127,8 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 100
-    rootMotionBoneName: body
+    globalScale: 7.5
+    rootMotionBoneName: Hips
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1

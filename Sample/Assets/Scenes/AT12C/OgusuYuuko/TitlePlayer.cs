@@ -164,12 +164,14 @@ public class TitlePlayer : MonoBehaviour
                 //下パリイのモーションでアニメーションが半分を過ぎてたら
                 if (animeStateInfo.normalizedTime > 0.5f && animeStateInfo.IsName("Attack_DOWN"))
                 {
-                    if (!selectUI[titleSceneManager.select].GetComponent<Move2DTheta>().underParryFlag)
+                    if (!selectUI[titleSceneManager.select].GetComponent<UI_Parry>().underParryFlag)
                     {
                         // 弾く音
                         SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.TitleAudioList);
                         //UI弾く
-                        selectUI[titleSceneManager.select].GetComponent<Move2DTheta>().underParryFlag = true;
+                        selectUI[titleSceneManager.select].GetComponent<UI_Parry>().underParryFlag = true;
+                        //選択枠隠す
+                        selectUI[4].GetComponent<UIBlink>().isHide = true;
                     }
                 }
 

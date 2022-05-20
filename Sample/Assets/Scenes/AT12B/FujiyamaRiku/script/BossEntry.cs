@@ -42,9 +42,10 @@ public class BossEntry : MonoBehaviour
         
             if (GameData.PlayerPos.x >= GameObject.Find("CameraOn").transform.position.x)
             {
+            GameObject.Find("Main Camera").GetComponent<DelayFollowCamera>().enabled = false;
                 StartCameraPos = GameData.PlayerPos;
-            StartCameraPos.z = CameraPos.z;
-            StartCamera = true;
+                StartCameraPos.z = CameraPos.z;
+                StartCamera = true;
                 Debug.Log("‚È‚º“®‚­" + GameObject.Find("CameraOn").transform.position);
             }
 
@@ -53,7 +54,7 @@ public class BossEntry : MonoBehaviour
             MoveCam.SetCamera(Camera.main);
 
 
-            switch (MoveCam.MoveCameraSpeed(StartCameraPos, CamEndPos, FocusTime, FocusDelTime, DelTime))
+            switch (MoveCam.MoveCameraSpeed(StartCameraPos, CamEndPos,CameraPos, FocusTime, FocusDelTime, DelTime))
             {
                 case 1:
                     BossName.gameObject.SetActive(true);

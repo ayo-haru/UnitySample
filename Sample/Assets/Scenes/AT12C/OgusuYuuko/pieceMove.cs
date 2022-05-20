@@ -48,7 +48,7 @@ public class pieceMove : MonoBehaviour
             //thetaXV
             theta += vibrationSpeed;
 
-            rt.position += rt.transform.right * Mathf.Sin(theta) * vibrationWidth;
+            rt.position += rt.right * Mathf.Sin(theta) * vibrationWidth;
 
             if(theta >= 90 || theta <= -90)
             {

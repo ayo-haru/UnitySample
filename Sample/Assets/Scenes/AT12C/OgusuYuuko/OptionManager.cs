@@ -21,9 +21,9 @@ public class OptionManager : MonoBehaviour
     private enum SELECT_MODE { BGM, SE,BACK,MAX_MODE };
     private int select;     //現在の選択
     private int old_select; //前フレームの選択
-    //選択用矢印のRectTransform
-    public GameObject selectArrow;
-    private RectTransform rt_selectArrow;
+    //選択用枠のRectTransform
+    public GameObject selectFrame;
+    private RectTransform rt_selectFrame;
 
     //BGMスライダー
     public GameObject bgmSlider;
@@ -53,10 +53,10 @@ public class OptionManager : MonoBehaviour
         //初めはbgmを選択
         select = (int)SELECT_MODE.BGM;
         //コンポーネント取得
-        rt_selectArrow = selectArrow.GetComponent<RectTransform>();
+        rt_selectFrame = selectFrame.GetComponent<RectTransform>();
         //矢印位置設定
-        Vector3 newPos = new Vector3(rt_selectArrow.transform.position.x, bgmSlider.transform.position.y, rt_selectArrow.transform.position.z);
-        rt_selectArrow.transform.position = newPos;
+        Vector3 newPos = new Vector3(rt_selectFrame.position.x, bgmSlider.GetComponent<RectTransform>().position.y, rt_selectFrame.position.z);
+        rt_selectFrame.position = newPos;
         // 初期化最初は決定じゃない
         isDecision = false;
     }
@@ -152,27 +152,27 @@ public class OptionManager : MonoBehaviour
                 seSlider.GetComponent<OptionSE>().selectFlag = false;
                 //bgm選択
                 bgmSlider.GetComponent<OptionBGM>().selectFlag = true;
-                //矢印移動
-                newPos = new Vector3(rt_selectArrow.transform.position.x, bgmSlider.transform.position.y, rt_selectArrow.transform.position.z);
-                rt_selectArrow.transform.position = newPos;
+                //選択フレーム移動
+                newPos = new Vector3(rt_selectFrame.position.x, bgmSlider.GetComponent<RectTransform>().position.y, rt_selectFrame.position.z);
+                rt_selectFrame.position = newPos;
                 break;
             case (int)SELECT_MODE.SE:
                 //bgm選択解除
                 bgmSlider.GetComponent<OptionBGM>().selectFlag = false;
                 //se選択
                 seSlider.GetComponent<OptionSE>().selectFlag = true;
-                //矢印移動
-                newPos = new Vector3(rt_selectArrow.transform.position.x, seSlider.transform.position.y, rt_selectArrow.transform.position.z);
-                rt_selectArrow.transform.position = newPos;
+                //選択フレーム移動
+                newPos = new Vector3(rt_selectFrame.position.x, seSlider.GetComponent<RectTransform>().position.y, rt_selectFrame.position.z);
+                rt_selectFrame.position = newPos;
                 break;
             case (int)SELECT_MODE.BACK:
                 //bgm選択解除
                 bgmSlider.GetComponent<OptionBGM>().selectFlag = false;
                 //se選択解除
                 seSlider.GetComponent<OptionSE>().selectFlag = false;
-                //矢印移動
-                newPos = new Vector3(rt_selectArrow.transform.position.x, BackImage.transform.position.y, rt_selectArrow.transform.position.z);
-                rt_selectArrow.transform.position = newPos;
+                //選択フレーム移動
+                newPos = new Vector3(rt_selectFrame.position.x, BackImage.GetComponent<RectTransform>().position.y, rt_selectFrame.position.z);
+                rt_selectFrame.position = newPos;
                 break;
         }
     }

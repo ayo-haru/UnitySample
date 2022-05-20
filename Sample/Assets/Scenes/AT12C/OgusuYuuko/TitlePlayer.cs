@@ -21,13 +21,13 @@ public class TitlePlayer : MonoBehaviour
     public GameObject[] selectPosObject;                //選択肢の位置
     public GameObject[] selectUI;                       //選択肢のUI
     public float moveSpeed = 0.1f;                      //プレイヤー移動速度
-    private bool rightFlag;                             //右向いてるか
-    private Vector3 scale;                              //プレイヤー回転時のスケール変更用
     public int max_timer = 60;                          //演出待ち時間
     public int first_timer = 45;                        //pressanybuttonの時の演出待ち時間
     private int timer;                                  //演出時間計測用
     public bool decisionFlag;                           //決定ボタンが押されたか
-
+    private Vector3 dir;                                //現在向いている方向
+    private float rotTimer;                             //回転用タイマー
+    public float rotSpeed = 30.0f;                              //プレイヤー回転速度
     AnimatorStateInfo animeStateInfo;                   //アニメーションの状態
 
     // Start is called before the first frame update
@@ -40,10 +40,11 @@ public class TitlePlayer : MonoBehaviour
         //変数初期化
         pressAnyButtonFlag = false;
         selectFlag = false;
-        rightFlag = true;
-        scale = transform.localScale;
+        //scale = transform.localScale;
         timer = 0;
         decisionFlag = false;
+        dir = new Vector3(0.0f, 0.0f, 0.0f);
+        rotTimer = 0.0f;
     }
 
     // Update is called once per frame
@@ -55,7 +56,7 @@ public class TitlePlayer : MonoBehaviour
             if(timer <= 0)
             {
                 animator.SetTrigger("Attack");
-                transform.Rotate(new Vector3(0.0f, -90.0f, 0.0f));
+                transform.Rotate(new Vector3(0.0f, 90.0f, 0.0f));
 
                 timer = first_timer;
             }
@@ -78,17 +79,20 @@ public class TitlePlayer : MonoBehaviour
             return;
         }
         //-----メニュー選択中の処理
+        //回転の目標値
+        Quaternion target = new Quaternion();
         //選択肢の右にいる場合
         if (transform.position.z > selectPosObject[titleSceneManager.select].transform.position.z)
         {
-            if (rightFlag)
+            //前回と方向が変わってるか
+            if(dir != new Vector3(1.0f, 0.0f, 0.0f))
             {
-                //方向転換
-                transform.Rotate(new Vector3(0.0f, 180.0f, 0.0f));
-                scale.x *= -1;
-                transform.localScale = scale;
-                rightFlag = false;
+                rotTimer = 0.0f;
             }
+            //向きを設定
+            target = Quaternion.LookRotation(new Vector3(1.0f, 0.0f, 0.0f));
+            dir = new Vector3(1.0f, 0.0f, 0.0f);
+
             //アニメーション再生
             if (!animator.GetBool("Walk"))
             {
@@ -106,13 +110,14 @@ public class TitlePlayer : MonoBehaviour
         //選択肢の左にいる場合
         else if (transform.position.z < selectPosObject[titleSceneManager.select].transform.position.z)
         {
-            if (!rightFlag)
+            //前回と方向が変わっているか
+            if(dir != new Vector3(0.0f, 0.0f, 0.0f))
             {
-                //方向転換
-                transform.Rotate(new Vector3(0.0f, 180.0f, 0.0f));
-                transform.localScale = scale;
-                rightFlag = true;
+                rotTimer = 0.0f;
             }
+            //向きを設定
+            target = Quaternion.LookRotation(new Vector3(0.0f, 0.0f, 0.0f));
+            dir = new Vector3(0.0f, 0.0f, 0.0f);
             //アニメーション再生
             if (!animator.GetBool("Walk"))
             {
@@ -128,6 +133,14 @@ public class TitlePlayer : MonoBehaviour
         }
         else//左右移動しなかったとき
         {
+            if (dir.x > 0)
+            {
+                target = Quaternion.LookRotation(new Vector3(1.0f, 0.0f, 0.0f));
+            }
+            else
+            {
+                target = Quaternion.LookRotation(new Vector3(0.0f, 0.0f, 0.0f));
+            }
             //アニメーション再生
             if (animator.GetBool("Walk"))
             {
@@ -144,16 +157,20 @@ public class TitlePlayer : MonoBehaviour
                 {
                     //アニメーション再生
                     animator.SetTrigger("Attack_DOWN");
-                    // 弾く音
-                    SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.TitleAudioList);
+                    
                     
                 }
 
                 //下パリイのモーションでアニメーションが半分を過ぎてたら
                 if (animeStateInfo.normalizedTime > 0.5f && animeStateInfo.IsName("Attack_DOWN"))
                 {
-                    //UI弾く
-                    selectUI[titleSceneManager.select].GetComponent<Move2DTheta>().UnderParry();
+                    if (!selectUI[titleSceneManager.select].GetComponent<Move2DTheta>().underParryFlag)
+                    {
+                        // 弾く音
+                        SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.TitleAudioList);
+                        //UI弾く
+                        selectUI[titleSceneManager.select].GetComponent<Move2DTheta>().underParryFlag = true;
+                    }
                 }
 
                 //タイマーが終了してたら
@@ -172,6 +189,9 @@ public class TitlePlayer : MonoBehaviour
             }
 
         }
+        //回転させる
+        rotTimer += rotSpeed;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotTimer);
     }
 
 }

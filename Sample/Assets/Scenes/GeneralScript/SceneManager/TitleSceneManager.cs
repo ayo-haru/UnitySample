@@ -135,7 +135,7 @@ public class TitleSceneManager : MonoBehaviour {
         //ƒIƒvƒVƒ‡ƒ“ŠJ‚¢‚Ä‚é‚Æ‚«‚Í–³Œø‚É‚·‚é
         if (!Optionmanager.activeSelf)
         {
-            if (keyboard.upArrowKey.wasReleasedThisFrame)
+            if (keyboard.leftArrowKey.wasReleasedThisFrame)
             {
                 SelectUp();
             }
@@ -147,7 +147,7 @@ public class TitleSceneManager : MonoBehaviour {
                 }
             }
 
-            if (keyboard.downArrowKey.wasReleasedThisFrame)
+            if (keyboard.rightArrowKey.wasReleasedThisFrame)
             {
                 SelectDown();
             }
@@ -351,11 +351,11 @@ public class TitleSceneManager : MonoBehaviour {
         doLeftStick = LeftStickSelect.ReadValue<Vector2>();
 
         //---­‚µ‚Å‚à“|‚³‚ê‚½‚çˆ—‚É“ü‚é
-        if (doLeftStick.y > 0.0f)
+        if (doLeftStick.x < 0.0f)
         {
             SelectUp();
         }
-        else if (doLeftStick.y < 0.0f)
+        else if (doLeftStick.x > 0.0f)
         {
             SelectDown();
         }
@@ -373,11 +373,11 @@ public class TitleSceneManager : MonoBehaviour {
         doRightStick = RightStickSelect.ReadValue<Vector2>();
 
         //---­‚µ‚Å‚à“|‚³‚ê‚½‚çˆ—‚É“ü‚é
-        if (doRightStick.y > 0.0f)
+        if (doRightStick.x < 0.0f)
         {
             SelectUp();
         }
-        else if (doRightStick.y < 0.0f)
+        else if (doRightStick.x > 0.0f)
         {
             SelectDown();
         }

@@ -29,7 +29,7 @@ public class Move2DTheta : MonoBehaviour
     //初期位置
     private Vector3 startPos;
     //弾かれたか
-    private bool underParryFlag;
+    public bool underParryFlag;
     //弾かれた時の速さ
     public float ParrySpeed = 10.0f;
     // Start is called before the first frame update
@@ -73,10 +73,5 @@ public class Move2DTheta : MonoBehaviour
         //画像位置更新
         image.transform.position += image.transform.up * dir.y * moveWidth * (Mathf.Sin(theta));
         image.transform.position += image.transform.right * dir.x * moveWidth * (Mathf.Sin(theta));
-    }
-
-    public void UnderParry()
-    {
-        underParryFlag = true;
     }
 }

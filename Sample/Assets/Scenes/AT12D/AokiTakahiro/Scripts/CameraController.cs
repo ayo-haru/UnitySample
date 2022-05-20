@@ -18,11 +18,16 @@ public class CameraController: MonoBehaviour
     private float edgetocenter;
 
     //画面端のオブジェ
-    [SerializeField] private GameObject leftObje;
-    [SerializeField] private GameObject rightObje;
+    [SerializeField] private GameObject leftObje;      // 左端
+    [SerializeField] private GameObject rightObje;     // 右端
+    [SerializeField] private GameObject heightObje;    // 上端
+    [SerializeField] private GameObject underObje;     // 下端
+
     //画面端オブジェのポジション
     private Vector3 leftPos;
     private Vector3 rightPos;
+    private Vector3 heightPos;
+    private Vector3 underPos;
 
     // Start is called before the first frame update
     void Awake()
@@ -44,6 +49,8 @@ public class CameraController: MonoBehaviour
 
         leftPos = leftObje.transform.position;
         rightPos = rightObje.transform.position;
+        heightPos = heightObje.transform.position;
+        underPos = underObje.transform.position;
     }
 
     private void LateUpdate()
@@ -62,29 +69,29 @@ public class CameraController: MonoBehaviour
 
     private void ScreenEdge()
     {
-       //更にワールド座標上での画面真ん中から端までの距離より現在のプレイヤーから端までの距離が近ければ追従を止める
+       // 更にワールド座標上での画面真ん中から端までの距離より現在のプレイヤーから端までの距離が近ければ追従を止める
        if (edgetocenter > Mathf.Abs(leftPos.x + 2 - playerObject.transform.position.x))
-       {
+        {
 
-           tracking = false;
-           //追従を止めたときはカメラを固定
-           this.gameObject.transform.position = new Vector3(leftPos.x + edgetocenter, playerObject.transform.position.y + cameraPosY, cameraZ);
-       }
+            tracking = false;
+            // 追従を止めたときはカメラを固定
+            this.gameObject.transform.position = new Vector3(leftPos.x + edgetocenter, playerObject.transform.position.y + cameraPosY, cameraZ);
+        }
        else
-       {
-           tracking = true;
-       }
+        {
+            tracking = true;
+        }
 
-       //こっちは右端の時処理
-       if (edgetocenter > Mathf.Abs(rightPos.x - 2 - playerObject.transform.position.x/* - cameraToplayer*/))
-       {
-           tracking = false;
-           this.gameObject.transform.position = new Vector3(rightPos.x - edgetocenter, playerObject.transform.position.y + cameraPosY, cameraZ);
-       }
+       // 右端
+       if (edgetocenter > Mathf.Abs(rightPos.x - 2 - playerObject.transform.position.x))
+        {
+            tracking = false;
+            this.gameObject.transform.position = new Vector3(rightPos.x - edgetocenter, playerObject.transform.position.y + cameraPosY, cameraZ);
+        }
        else
-       {
-           tracking = true;
-       }
+        {
+            tracking = true;
+        }
     }
 
     // Update is called once per frame

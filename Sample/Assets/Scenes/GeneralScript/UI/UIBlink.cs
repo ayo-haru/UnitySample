@@ -47,8 +47,10 @@ public class UIBlink : MonoBehaviour
 
     void Blink()
     {
+        float alfaCorrection = 0.3f;
         time += Time.deltaTime * 5.0f * speed;
         alfa = Mathf.Sin(time) * 0.5f + 0.5f;
+        alfa += alfaCorrection;
         UI.color = new Color(red, green, blue, alfa);
     }
 

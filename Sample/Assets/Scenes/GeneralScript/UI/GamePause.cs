@@ -38,6 +38,9 @@ public class GamePause : MonoBehaviour
     [SerializeField]
     private GameObject panel;
     private GameObject Panel;
+    [SerializeField]
+    private GameObject selestbox;
+    private GameObject SelectBox;
 
 
     Canvas canvas;
@@ -94,15 +97,15 @@ public class GamePause : MonoBehaviour
         
 
         // ゲームスタート時は非表示
-        PauseCharacter.GetComponent<UIBlink>().isHide = true;
-        BackGame.GetComponent<UIBlink>().isHide = true;
-        GameEnd.GetComponent<UIBlink>().isHide = true;
-        BackTitle.GetComponent<UIBlink>().isHide = true;
-        Option.GetComponent<UIBlink>().isHide = true;
-        BackGame.GetComponent<UIBlink>().isBlink = false;
-        GameEnd.GetComponent<UIBlink>().isBlink = false;
-        BackTitle.GetComponent<UIBlink>().isBlink = false;
-        Option.GetComponent<UIBlink>().isBlink = false;
+        PauseCharacter.GetComponent<Image>().enabled = false;
+        BackGame.GetComponent<Image>().enabled = false;
+        GameEnd.GetComponent<Image>().enabled = false;
+        BackTitle.GetComponent<Image>().enabled = false;
+        Option.GetComponent<Image>().enabled = false;
+        BackGame.GetComponent<Image>().enabled = false;
+        GameEnd.GetComponent<Image>().enabled = false;
+        BackTitle.GetComponent<Image>().enabled = false;
+        Option.GetComponent<Image>().enabled = false;
         Panel.GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
         Panel.GetComponent<Image>().enabled = false;
         Optionmanager.SetActive(false);
@@ -130,16 +133,11 @@ public class GamePause : MonoBehaviour
                 }
             }
 
-            PauseCharacter.GetComponent<UIBlink>().isHide = true;
-            BackGame.GetComponent<UIBlink>().isHide = true;
-            GameEnd.GetComponent<UIBlink>().isHide = true;
-            BackTitle.GetComponent<UIBlink>().isHide = true;
-            Option.GetComponent<UIBlink>().isHide = true;
-            BackGame.GetComponent<UIBlink>().isBlink = false;
-            GameEnd.GetComponent<UIBlink>().isBlink = false;
-            BackTitle.GetComponent<UIBlink>().isBlink = false;
-            Option.GetComponent<UIBlink>().isBlink = false;
-
+            PauseCharacter.GetComponent<Image>().enabled = false;
+            BackGame.GetComponent<Image>().enabled = false;
+            GameEnd.GetComponent<Image>().enabled = false;
+            BackTitle.GetComponent<Image>().enabled = false;
+            Option.GetComponent<Image>().enabled = false;
             Panel.GetComponent<Image>().enabled = false;
             isCalledOncce = false;
 
@@ -148,11 +146,11 @@ public class GamePause : MonoBehaviour
         else if (Pause.isPause && !isCalledOncce)
         {
             // ポーズ中になったら表示
-            PauseCharacter.GetComponent<UIBlink>().isHide = false;
-            BackGame.GetComponent<UIBlink>().isHide = false;
-            GameEnd.GetComponent<UIBlink>().isHide = false;
-            BackTitle.GetComponent<UIBlink>().isHide = false;
-            Option.GetComponent<UIBlink>().isHide = false;
+            PauseCharacter.GetComponent<Image>().enabled = true;
+            BackGame.GetComponent<Image>().enabled = true;
+            GameEnd.GetComponent<Image>().enabled = true;
+            BackTitle.GetComponent<Image>().enabled = true;
+            Option.GetComponent<Image>().enabled = true;
             Panel.GetComponent<Image>().enabled = true;
 
             //音楽停止
@@ -205,29 +203,18 @@ public class GamePause : MonoBehaviour
         // 選択しているものが何かで分岐
         if (select == (int)eSTATEPAUSE.RETURNGAME)
         {
-            BackGame.GetComponent<UIBlink>().isBlink = true; // UIを点滅
-            BackTitle.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
-            GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
-            Option.GetComponent<UIBlink>().isBlink = false; //UIの点滅を消す
-
             if (isDecision) // 選択を確定
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
                 Pause.isPause = false;  // ポーズ解除
                 Debug.Log("ポーズ解除のポーズ解除");
-                backgame.GetComponent<UIBlink>().isHide = true;
-                BackGame.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+                backgame.GetComponent<Image>().enabled = true;
                 isDecision = false;
             }
         }
         else if (select == (int)eSTATEPAUSE.RETURNTITLE)
         {
-            BackGame.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
-            BackTitle.GetComponent<UIBlink>().isBlink = true; // UIを点滅
-            GameEnd.GetComponent<UIBlink>().isBlink = false;  // UIの点滅を消す
-            Option.GetComponent<UIBlink>().isBlink = false; //UIの点滅を消す
-
             if (isDecision) // 選択を確定
             {
                 // 決定音
@@ -244,10 +231,6 @@ public class GamePause : MonoBehaviour
         }
         else if (select == (int)eSTATEPAUSE.QUITGAME)
         {
-            BackGame.GetComponent<UIBlink>().isBlink = false;  // UIの点滅を消す
-            BackTitle.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
-            GameEnd.GetComponent<UIBlink>().isBlink = true;    // UIを点滅
-            Option.GetComponent<UIBlink>().isBlink = false; //UIの点滅を消す
 
             if (isDecision) // 選択を確定
             {
@@ -267,11 +250,6 @@ public class GamePause : MonoBehaviour
 
         }else if(select == (int)eSTATEPAUSE.OPTION)
         {
-            BackGame.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
-            BackTitle.GetComponent<UIBlink>().isBlink = false; // UIを点滅を消す
-            GameEnd.GetComponent<UIBlink>().isBlink = false;  // UIの点滅を消す
-            Option.GetComponent<UIBlink>().isBlink = true; //UIの点滅
-
             if (isDecision) // 選択を確定
             {
                 // 決定音

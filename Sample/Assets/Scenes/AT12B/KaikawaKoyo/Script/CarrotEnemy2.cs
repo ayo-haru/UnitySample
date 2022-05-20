@@ -24,7 +24,7 @@ public class CarrotEnemy2 : MonoBehaviour
     [SerializeField]
     float MoveSpeed;
     float MovingSpeed;
-    private int AttackPattern = 1;
+    private int AttackPattern;
     private float dis;
     private float Timer;
     private float RandomTime;
@@ -87,7 +87,7 @@ public class CarrotEnemy2 : MonoBehaviour
                                   RigidbodyConstraints.FreezeRotationY;
                         // 攻撃開始
                         Attack = true;
-                        AttackPattern = Random.Range(0, 2);
+                        //AttackPattern = Random.Range(0, 2);
                         // サウンドフラグ切替
                         isCalledOnce = false;
                         // アイドリング終了
@@ -99,48 +99,22 @@ public class CarrotEnemy2 : MonoBehaviour
                 if (Attack)
                 {
                     start = false;
-                    switch (AttackPattern)
-                    {
-                        case 0:
-                            // プレイヤーのほうを向く
-                            look = Quaternion.LookRotation(vec);
-                            transform.localRotation = look;
+                    PP = Player.transform.position + new Vector3(0.0f, 30.0f, 0.0f);
+                    vec = (PP - transform.position).normalized;
+                    look = Quaternion.LookRotation(vec);
+                    transform.localRotation = look;
+                    rb.velocity = vec * MoveSpeed;
+                    RandomTime = Random.Range(0.5f, 1.5f);
+                    AttackPattern = 1;
+                    Attack = false;
+                    //case 2:
+                    //    rb.velocity = new Vector3(0.0f, -MoveSpeed, 0.0f);
+                    //    vec = ((transform.position -= new Vector3(0.0f, 15.0f, 0.0f)) - transform.position).normalized;
+                    //    look = Quaternion.LookRotation(vec);
+                    //    transform.localRotation = look;
+                    //    Attack = true;
+                    //    break;
 
-                            // サウンド処理
-                            if (!isCalledOnce)     // 一回だけ呼ぶ
-                            {
-                                SoundManager.Play(SoundData.eSE.SE_NINJIN, SoundData.GameAudioList);
-                                isCalledOnce = true;
-                            }
-
-                            // 加速
-                            rb.velocity = vec * MovingSpeed;
-                            if (MoveSpeed >= MovingSpeed)
-                            {
-                                MovingSpeed += 3.0f;
-                            }
-                            else
-                            {
-                                Attack = false;
-                            }
-                            break;
-                        case 1:
-                            PP = Player.transform.position + new Vector3(0.0f, 30.0f, 0.0f);
-                            vec = (PP - transform.position).normalized;
-                            look = Quaternion.LookRotation(vec);
-                            transform.localRotation = look;
-                            rb.velocity = vec * MoveSpeed;
-                            RandomTime = Random.Range(0.5f, 1.5f);
-                            Attack = false;
-                            break;
-                        //case 2:
-                        //    rb.velocity = new Vector3(0.0f, -MoveSpeed, 0.0f);
-                        //    vec = ((transform.position -= new Vector3(0.0f, 15.0f, 0.0f)) - transform.position).normalized;
-                        //    look = Quaternion.LookRotation(vec);
-                        //    transform.localRotation = look;
-                        //    Attack = true;
-                        //    break;
-                    }
                 }
 
                 if (AttackPattern == 1)
@@ -201,18 +175,18 @@ public class CarrotEnemy2 : MonoBehaviour
                 //    }
                 //}
                 
-                // プレイヤーとの距離を計算
-                dis = Vector3.Distance(transform.position, Player.transform.position);
-                // 一定距離離れたら再度アイドリング→攻撃
-                if (dis >= 70.0f && !disFlg)
-                {
-                    IdringFlg = true;
-                    disFlg = true;
-                }
-                else if (dis < 60.0f && disFlg)
-                {
-                    disFlg = false;
-                }
+                //// プレイヤーとの距離を計算
+                //dis = Vector3.Distance(transform.position, Player.transform.position);
+                //// 一定距離離れたら再度アイドリング→攻撃
+                //if (dis >= 70.0f && !disFlg)
+                //{
+                //    IdringFlg = true;
+                //    disFlg = true;
+                //}
+                //else if (dis < 60.0f && disFlg)
+                //{
+                //    disFlg = false;
+                //}
             }
         }
     }

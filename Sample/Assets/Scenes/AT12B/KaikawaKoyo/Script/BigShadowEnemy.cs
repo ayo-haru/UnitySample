@@ -30,7 +30,7 @@ public class BigShadowEnemy : MonoBehaviour
     {
         position = transform.position;
 
-        effect = Instantiate(EffectData.EF[14]);
+        effect = Instantiate(EffectData.EF[15]);
         effect.transform.position = position;
         effect.transform.localScale = new Vector3(SpawnNumber, SpawnNumber, SpawnNumber);
         effect.Play();

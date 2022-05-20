@@ -38,6 +38,7 @@ public static class EffectData
 
         //---プレイヤー関連
         EF_PLAYER_SHIELD,
+        EF_PLAYER_HIT,
         EF_PLAYER_HEAL,
         EF_PLAYER_DAMAGE,
         EF_PLAYER_DEATH,
@@ -54,6 +55,7 @@ public static class EffectData
         EF_BOSS_FORK,
         EF_BOSS_RAINZONE,
 
+        //---その他
         EF_SHEILD2,
 
         MAX_EF

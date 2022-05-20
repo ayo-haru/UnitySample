@@ -88,6 +88,7 @@ public class DataManager : MonoBehaviour
     //-----------------------------------------------------
     // Efect(原則としてEffectData.csのenumの定義名と同じにし小文字で命名すること)
     //-----------------------------------------------------
+    //---ギミック
     [SerializeField] private ParticleSystem ef_gimick_fire;
     [SerializeField] private ParticleSystem ef_gimick_healitem;
     [SerializeField] private ParticleSystem ef_gimick_magiccircle_red;
@@ -99,16 +100,19 @@ public class DataManager : MonoBehaviour
     [SerializeField] private ParticleSystem ef_gimick_guide_right_up;
     [SerializeField] private ParticleSystem ef_gimick_guide_right_down;
 
-
+    //---プレイヤー
     [SerializeField] private ParticleSystem ef_player_shield;
+    [SerializeField] private ParticleSystem ef_player_hit;
     [SerializeField] private ParticleSystem ef_player_heal;
     [SerializeField] private ParticleSystem ef_player_damage;
     [SerializeField] private ParticleSystem ef_player_death;
 
+    //---雑魚的
     [SerializeField] private ParticleSystem ef_enemy_darkarea;
     [SerializeField] private ParticleSystem ef_enemy_death;
     [SerializeField] private ParticleSystem ef_enemy_tomatobomb;
 
+    //---ボス
     [SerializeField] private ParticleSystem ef_boss_death;
     [SerializeField] private ParticleSystem ef_boss_knifedamage;
     [SerializeField] private ParticleSystem ef_boss_strawberry;
@@ -116,7 +120,7 @@ public class DataManager : MonoBehaviour
     [SerializeField] private ParticleSystem ef_boss_rainzone;
 
 
-
+    //---その他(今のところ未使用)
     [SerializeField] private ParticleSystem ef_shield2;
 
     // Start is called before the first frame update
@@ -173,6 +177,7 @@ public class DataManager : MonoBehaviour
 
         //---プレイヤー関連
         EffectData.EFDataSet(ef_player_shield,(int)EffectData.eEFFECT.EF_PLAYER_SHIELD);
+        EffectData.EFDataSet(ef_player_hit,(int)EffectData.eEFFECT.EF_PLAYER_HIT);
         EffectData.EFDataSet(ef_player_heal,(int)EffectData.eEFFECT.EF_PLAYER_HEAL);
         EffectData.EFDataSet(ef_player_damage,(int)EffectData.eEFFECT.EF_PLAYER_DAMAGE);
         EffectData.EFDataSet(ef_player_death,(int)EffectData.eEFFECT.EF_PLAYER_DEATH);
@@ -192,8 +197,8 @@ public class DataManager : MonoBehaviour
 
         EffectData.EFDataSet(ef_shield2,(int)EffectData.eEFFECT.EF_SHEILD2);
 
-        SoundData.isSetSound = false;    // デバッグ時サウンド初期化してない場合にエラーが出るからけす
-        EffectData.isSetEffect = false;  // デバッグ時エフェクト初期化していない場合にエラーを出さない
+        SoundData.isSetSound = true;                 // デバッグ時サウンド初期化してない場合にエラーが出るからけす
+        EffectData.isSetEffect = true;                  // デバッグ時エフェクト初期化していない場合にエラーを出さない
 
         // 絶対に消されない音のいれる場所
         for (int i = 0; i < 3; i++) {

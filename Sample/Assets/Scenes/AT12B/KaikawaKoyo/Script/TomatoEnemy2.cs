@@ -46,7 +46,7 @@ public class TomatoEnemy2 : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         ED = GetComponent<EnemyDown>();
         Random.InitState(System.DateTime.Now.Millisecond);
-        AttackSpeed = MoveSpeed + 10.0f;
+        AttackSpeed = MoveSpeed + 20.0f;
         AttackPattern = Random.Range(0, 2);
     }
 

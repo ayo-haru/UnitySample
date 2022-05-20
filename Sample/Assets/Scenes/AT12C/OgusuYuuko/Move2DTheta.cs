@@ -9,6 +9,7 @@
 // <開発履歴>
 // 2022/04/24 作成
 // 2022/05/19 下に弾かれる処理を追加
+// 2022/05/20 弾かれた時の処理を別スクリプトに移動
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -28,36 +29,32 @@ public class Move2DTheta : MonoBehaviour
     private float theta;
     //初期位置
     private Vector3 startPos;
-    //弾かれたか
-    public bool underParryFlag;
-    //弾かれた時の速さ
-    public float ParrySpeed = 10.0f;
+    //一回だけ処理するよう
+    private bool onceFlag;
     // Start is called before the first frame update
     void Start()
     {
         image = gameObject.GetComponent<RectTransform>();
         startPos = image.position;
         theta = 0.0f;
-        underParryFlag = false;
+        onceFlag = true;
     }
 
     private void OnDisable()
     {
-        image.position = startPos;
-        underParryFlag = false;
         theta = 0.0f;
+        onceFlag = true;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (underParryFlag)
+        if (onceFlag)
         {
-            image.transform.position += image.transform.up * -ParrySpeed;
-
-
-            return;
+            image.position = startPos;
+            onceFlag = false;
         }
+
         //角度更新
         theta += moveSpeed;
         //角度補正

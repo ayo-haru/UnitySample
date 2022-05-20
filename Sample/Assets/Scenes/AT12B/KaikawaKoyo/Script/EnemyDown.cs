@@ -44,7 +44,7 @@ public class EnemyDown : MonoBehaviour
     private bool pause;
     float Timer;
     float DeadTime = 1.5f;
-    private float bouncePower = 200.0f;
+    private float bouncePower = 300.0f;
     private float speed;
     private float dis;
     private float CamZ;
@@ -92,7 +92,7 @@ public class EnemyDown : MonoBehaviour
         if(!Pause.isPause)
         {
             // ポーズ解除されたとき
-            if(pause)
+            if (pause)
             {
                 if(isCalledOnce)
                 {
@@ -143,7 +143,7 @@ public class EnemyDown : MonoBehaviour
                 // 右端
                 if (transform.position.x >= CamRightTop.x && !Reflect)
                 {
-                    reflect = Random.Range(0, 2);
+                    reflect = 1;//Random.Range(0, 2);
                     if (reflect == 0)
                     {
                         InAngle = rb.velocity;

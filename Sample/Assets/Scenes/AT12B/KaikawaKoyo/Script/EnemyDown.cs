@@ -47,7 +47,7 @@ public class EnemyDown : MonoBehaviour
     private float bouncePower = 200.0f;
     private float speed;
     private float dis;
-    private float CamZ = -120.0f;
+    private float CamZ;
 
     Rigidbody rb;
 
@@ -75,6 +75,7 @@ public class EnemyDown : MonoBehaviour
         Random.InitState(System.DateTime.Now.Millisecond);
         _dissolve = this.GetComponent<Dissolve>();
         player2 = Player.GetComponent<Player2>();
+        CamZ = Camera.main.transform.position.z;
         // 法線ベクトル定義
         inNormalU = transform.up;
         inNormalD = -transform.up;
@@ -93,6 +94,10 @@ public class EnemyDown : MonoBehaviour
             // ポーズ解除されたとき
             if(pause)
             {
+                if(isCalledOnce)
+                {
+                    _dissolve.Invoke("Play", 0.0f);
+                }
                 rb.Resume(gameObject);
                 rb.velocity = Pvec;
                 pause = false;
@@ -128,7 +133,6 @@ public class EnemyDown : MonoBehaviour
                 if (Player.transform.position.x < transform.position.x)
                 {
                     rb.angularVelocity = new Vector3(0.0f, 0.0f, -500.0f);
-
                 }
                 if (Player.transform.position.x > transform.position.x)
                 {
@@ -160,6 +164,10 @@ public class EnemyDown : MonoBehaviour
                     //ui振動
                     ui.Vibration();
                 }
+                else if(transform.position.x < CamRightTop.x && Reflect)
+                {
+                    Reflect = false;
+                }
                 // 左端
                 if (transform.position.x <= CamLeftBot.x && !Reflect)
                 {
@@ -183,6 +191,10 @@ public class EnemyDown : MonoBehaviour
                     Reflect = true;
                     //ui振動
                     ui.Vibration();
+                }
+                else if (transform.position.x > CamLeftBot.x && Reflect)
+                {
+                    Reflect = false;
                 }
                 // 上端
                 if (transform.position.y >= CamRightTop.y && !Reflect)
@@ -208,6 +220,10 @@ public class EnemyDown : MonoBehaviour
                     //ui振動
                     ui.Vibration();
                 }
+                else if (transform.position.y < CamRightTop.y && Reflect)
+                {
+                    Reflect = false;
+                }
                 // 下端
                 if (transform.position.y <= CamLeftBot.y && !Reflect)
                 {
@@ -231,6 +247,10 @@ public class EnemyDown : MonoBehaviour
                     Reflect = true;
                     //ui振動
                     ui.Vibration();
+                }
+                else if (transform.position.y > CamLeftBot.y && Reflect)
+                {
+                    Reflect = false;
                 }
 
                 //---ディゾルマテリアルに変更
@@ -259,6 +279,10 @@ public class EnemyDown : MonoBehaviour
         }
         else
         {
+            if (isCalledOnce)
+            {
+                _dissolve.Invoke("Stop", 0.0f);
+            }
             rb.Pause(gameObject);
             animator.speed = 0.0f;
             pause = true;

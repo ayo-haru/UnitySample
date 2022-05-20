@@ -18,7 +18,7 @@ using UnityEngine.UI;
 public class PieceManager : MonoBehaviour
 {
     //子オブジェクト
-    //public GameObject[] piece;
+    public GameObject[] piece;
     //現在のかけらの数
     private int nPiece;
     //かけら所持枠
@@ -30,9 +30,9 @@ public class PieceManager : MonoBehaviour
     //エフェクト
     //public GameObject effect;
     //ランタン画像
-    public GameObject PieceImage;
+    //public GameObject PieceImage;
     //UVScrollコンポーネント
-    private UVScroll pieceUV;
+    //private UVScroll pieceUV;
     //回復のストックマネージャー
    // private StockManager stockManager;
     // Start is called before the first frame update
@@ -41,7 +41,7 @@ public class PieceManager : MonoBehaviour
         onceFlag = true;
 
         //コンポーネント取得
-        pieceUV = PieceImage.GetComponent<UVScroll>();
+        //pieceUV = PieceImage.GetComponent<UVScroll>();
 
        // stockManager = GameObject.Find("StockHPManager").GetComponent<StockManager>();
     }
@@ -54,23 +54,23 @@ public class PieceManager : MonoBehaviour
             return;
         }
         // 所持枠最大値設定
-        MaxPieceGrade = 4;
+        MaxPieceGrade = piece.Length;
         //ゲームデータクラスから回復のかけらの数取得して入れる
         nPiece = GameData.CurrentPiece;
         //ゲームデータクラスから取得していれる
         PieceGrade = GameData.CurrentPieceGrade;
 
         //現在のかけらの数に応じてＵＶ座標決定
-        pieceUV.SetFrame(nPiece);
+        //pieceUV.SetFrame(nPiece);
         //PieceGradeの数だけランタンを出す
         for(int i = 0; i < PieceGrade; ++i)
         {
-            //piece[i].GetComponent<pieceMove>().startFlag = true;
+            piece[i].transform.parent.gameObject.GetComponent<pieceMove>().startFlag = true;
         }
         //nPieceの数だけランタンを光らせる
         for(int i = 0; i < nPiece; ++i)
         {
-            //piece[i].GetComponent<UVScroll>().SetFrame(1);
+            piece[i].GetComponent<UVScroll>().SetFrame(1);
         }
 
         //for (int i = 0; i < nPiece; ++i)
@@ -146,10 +146,10 @@ public class PieceManager : MonoBehaviour
 
             //かけら増やす
             ++nPiece;
-        pieceUV.SetFrame(nPiece);
+        //pieceUV.SetFrame(nPiece);
         Debug.Log("nPiece" + nPiece);
         //ランタンを光らせる
-        //piece[nPiece - 1].GetComponent<UVScroll>().SetFrame(1)
+        piece[nPiece - 1].GetComponent<UVScroll>().SetFrame(1);
 
         //表示
         //piece[nPiece - 1].GetComponent<ImageShow>().SetColor(1.0f,1.0f,1.0f);
@@ -175,9 +175,9 @@ public class PieceManager : MonoBehaviour
         {
             //かけら減らす
             --nPiece;
-            pieceUV.SetFrame(nPiece);
+            //pieceUV.SetFrame(nPiece);
             //ランタンの光を消す
-            //piece[nPiece].GetComponent<UVScroll>().SetFrame(0);
+            piece[nPiece].GetComponent<UVScroll>().SetFrame(0);
 
             ////エフェクト発生
             //GameObject Effect = Instantiate(effect, piece[nPiece].GetComponent<RectTransform>().position, Quaternion.identity);
@@ -226,7 +226,7 @@ public class PieceManager : MonoBehaviour
             //かけら所持枠を増やす
             ++PieceGrade;
             //ランタンを一つ増やす
-            //piece[PieceGrade - 1].GetComponent<pieceMove>().startFlag = true;
+            piece[PieceGrade - 1].transform.parent.gameObject.GetComponent<pieceMove>().startFlag = true;
             //ゲームデータ更新
             ++GameData.CurrentPieceGrade;
             //保存
@@ -241,11 +241,11 @@ public class PieceManager : MonoBehaviour
 
     public void Vibration()
     {
-        PieceImage.transform.parent.gameObject.GetComponent<pieceMove>().vibration();
-        
-        //for(int i = 0; i < nPiece; ++i)
-        //{
-        //    piece[i].GetComponent<pieceMove>().vibration();
-        //}
+        //PieceImage.transform.parent.gameObject.GetComponent<pieceMove>().vibration();
+
+        for (int i = 0; i < PieceGrade; ++i)
+        {
+            piece[i].transform.parent.gameObject.GetComponent<pieceMove>().vibration();
+        }
     }
 }

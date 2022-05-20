@@ -33,6 +33,7 @@ public static class SoundData
         SE_REFLECTION_STAR,
         SE_DAMEGE,
         SE_HEAL,
+        SE_PLAYER_DEATH,
         SE_BOOS1_DASHU,
         SE_BOOS1_STRAWBERRY,
         SE_BOOS1_KNIFE,

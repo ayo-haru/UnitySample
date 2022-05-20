@@ -51,6 +51,8 @@ public class DataManager : MonoBehaviour
     private AudioClip se_damege;
     [SerializeField]
     private AudioClip se_heal;
+    [SerializeField]
+    private AudioClip se_player_death;
 
     [SerializeField]
     private AudioClip se_boss1Dashu;
@@ -141,6 +143,7 @@ public class DataManager : MonoBehaviour
         SoundData.SEDataSet(se_reflectionstar, (int)SoundData.eSE.SE_REFLECTION_STAR);
         SoundData.SEDataSet(se_damege, (int)SoundData.eSE.SE_DAMEGE);
         SoundData.SEDataSet(se_heal, (int)SoundData.eSE.SE_HEAL);
+        SoundData.SEDataSet(se_player_death, (int)SoundData.eSE.SE_PLAYER_DEATH);
 
         SoundData.SEDataSet(se_boss1Dashu, (int)SoundData.eSE.SE_BOOS1_DASHU);
         SoundData.SEDataSet(se_boss1Strawberry, (int)SoundData.eSE.SE_BOOS1_STRAWBERRY);

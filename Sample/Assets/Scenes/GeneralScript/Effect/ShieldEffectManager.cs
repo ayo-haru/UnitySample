@@ -73,4 +73,18 @@ public class ShieldEffectManager : MonoBehaviour
             Debug.Log("ShieldEffectManager:盾消すよー");
         }
     }
+
+	private void OnCollisionEnter(Collision collision)
+	{
+		if(collision.gameObject.tag == "Enemy")
+		{
+            //---当たった瞬間の座標
+            Vector3 HitPos = collision.transform.position;
+            HitPos.z = -5f;
+            
+            //---ヒットエフェクトの再生
+            EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_HIT, HitPos);
+
+		}
+	}
 }

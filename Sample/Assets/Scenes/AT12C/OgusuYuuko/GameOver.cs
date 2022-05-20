@@ -14,6 +14,7 @@
 // 2022/03/28 prefabから読み込んで表示するようにした
 // 2022/03/30 リトライとタイトルに戻るを追加
 // 2022/04/20 コントローラー対応させる
+// 2022/05/?? UI表示けした
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -315,6 +316,7 @@ public class GameOver : MonoBehaviour {
     //}
 
     public static void GameOverReset() {
+        SoundManager.Play(SoundData.eSE.SE_PLAYER_DEATH, SoundData.IndelibleAudioList);
         GameOverFlag = true;
         GameData.RespawnPlayer();
         if(GameData.CurrentMapNumber == GameData.NextMapNumber)

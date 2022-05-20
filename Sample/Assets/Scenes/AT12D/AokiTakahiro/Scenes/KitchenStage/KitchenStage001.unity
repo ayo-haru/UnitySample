@@ -8610,11 +8610,15 @@ PrefabInstance:
     - target: {fileID: 4911571500333310828, guid: c7b0931274b01444aa3bac57b93a4c28, type: 3}
       propertyPath: ef_boss_fork
       value: 
-      objectReference: {fileID: 2749677950982385860, guid: ced04d91dd086854a9581a03706568cb, type: 3}
+      objectReference: {fileID: 3587271095583409871, guid: c86ac630336841142b554509664f9033, type: 3}
     - target: {fileID: 4911571500333310828, guid: c7b0931274b01444aa3bac57b93a4c28, type: 3}
       propertyPath: ef_boss_death
       value: 
       objectReference: {fileID: 8345929851072436877, guid: 39ae1c3619dfdb14e80eb29c57ef3b0a, type: 3}
+    - target: {fileID: 4911571500333310828, guid: c7b0931274b01444aa3bac57b93a4c28, type: 3}
+      propertyPath: ef_player_hit
+      value: 
+      objectReference: {fileID: 2768181025936440276, guid: e94b563201a91524a828da1ccf831168, type: 3}
     - target: {fileID: 4911571500333310828, guid: c7b0931274b01444aa3bac57b93a4c28, type: 3}
       propertyPath: se_tomatobomb
       value: 
@@ -15097,6 +15101,7 @@ MonoBehaviour:
   option: {fileID: 8041143875500922608, guid: 23c8838f8b6faec42b10831253c18b37, type: 3}
   optionmanager: {fileID: 7567749413586506968, guid: e3aefa133e5541445b6087b29fdfdc27, type: 3}
   panel: {fileID: 2127309190153196343, guid: 2873e858a6a337048b42c72c52bc2047, type: 3}
+  selestbox: {fileID: 0}
 --- !u!1 &1158470456
 GameObject:
   m_ObjectHideFlags: 0

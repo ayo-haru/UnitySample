@@ -11438,6 +11438,7 @@ MonoBehaviour:
   option: {fileID: 8041143875500922608, guid: 23c8838f8b6faec42b10831253c18b37, type: 3}
   optionmanager: {fileID: 7567749413586506968, guid: e3aefa133e5541445b6087b29fdfdc27, type: 3}
   panel: {fileID: 2127309190153196343, guid: 2873e858a6a337048b42c72c52bc2047, type: 3}
+  selestbox: {fileID: 0}
 --- !u!114 &1156390223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15738,7 +15739,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8560796169345879312, guid: bac80bdafcfbdde4f927e2d2b99d5df9, type: 3}
       propertyPath: m_Name
-      value: KitchenSceneManager (1)
+      value: KitchenSceneManager
       objectReference: {fileID: 0}
     - target: {fileID: 8560796169345879313, guid: bac80bdafcfbdde4f927e2d2b99d5df9, type: 3}
       propertyPath: m_RootOrder
@@ -15746,15 +15747,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8560796169345879313, guid: bac80bdafcfbdde4f927e2d2b99d5df9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 588.2083
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8560796169345879313, guid: bac80bdafcfbdde4f927e2d2b99d5df9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -57
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8560796169345879313, guid: bac80bdafcfbdde4f927e2d2b99d5df9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -97.55347
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8560796169345879313, guid: bac80bdafcfbdde4f927e2d2b99d5df9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -15762,15 +15763,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8560796169345879313, guid: bac80bdafcfbdde4f927e2d2b99d5df9, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8560796169345879313, guid: bac80bdafcfbdde4f927e2d2b99d5df9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8560796169345879313, guid: bac80bdafcfbdde4f927e2d2b99d5df9, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8560796169345879313, guid: bac80bdafcfbdde4f927e2d2b99d5df9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -15787,7 +15788,7 @@ PrefabInstance:
     - target: {fileID: 8560796169345879318, guid: bac80bdafcfbdde4f927e2d2b99d5df9, type: 3}
       propertyPath: playerPrefab
       value: 
-      objectReference: {fileID: 1774375754255055915, guid: 7566f4ae74d7d194f91f027b47f5a24e, type: 3}
+      objectReference: {fileID: 2989549751805859224, guid: 7378e7d4d318386408ba41cf399d7748, type: 3}
     - target: {fileID: 8560796169345879318, guid: bac80bdafcfbdde4f927e2d2b99d5df9, type: 3}
       propertyPath: currentSceneNum
       value: 2
@@ -17462,7 +17463,7 @@ PrefabInstance:
     - target: {fileID: 4911571500333310828, guid: c7b0931274b01444aa3bac57b93a4c28, type: 3}
       propertyPath: ef_boss_fork
       value: 
-      objectReference: {fileID: 2749677950982385860, guid: ced04d91dd086854a9581a03706568cb, type: 3}
+      objectReference: {fileID: 3587271095583409871, guid: c86ac630336841142b554509664f9033, type: 3}
     - target: {fileID: 4911571500333310828, guid: c7b0931274b01444aa3bac57b93a4c28, type: 3}
       propertyPath: ef_bossdeath
       value: 
@@ -17471,6 +17472,10 @@ PrefabInstance:
       propertyPath: ef_boss_death
       value: 
       objectReference: {fileID: 8345929851072436877, guid: 39ae1c3619dfdb14e80eb29c57ef3b0a, type: 3}
+    - target: {fileID: 4911571500333310828, guid: c7b0931274b01444aa3bac57b93a4c28, type: 3}
+      propertyPath: ef_player_hit
+      value: 
+      objectReference: {fileID: 2768181025936440276, guid: e94b563201a91524a828da1ccf831168, type: 3}
     - target: {fileID: 4911571500333310828, guid: c7b0931274b01444aa3bac57b93a4c28, type: 3}
       propertyPath: se_tomatobomb
       value: 
@@ -17549,7 +17554,7 @@ PrefabInstance:
       objectReference: {fileID: 5504921937148362927, guid: c293b861942c21c4d9470909d87ad00d, type: 3}
     - target: {fileID: 4911571500333310829, guid: c7b0931274b01444aa3bac57b93a4c28, type: 3}
       propertyPath: m_Name
-      value: datamanager (1)
+      value: datamanager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7b0931274b01444aa3bac57b93a4c28, type: 3}

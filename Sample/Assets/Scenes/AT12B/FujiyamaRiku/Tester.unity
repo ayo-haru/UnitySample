@@ -1824,6 +1824,7 @@ GameObject:
   - component: {fileID: 602515334}
   - component: {fileID: 602515335}
   - component: {fileID: 602515336}
+  - component: {fileID: 602515337}
   m_Layer: 0
   m_Name: BossStageManager
   m_TagString: Untagged
@@ -1918,6 +1919,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Time: 7.9
+--- !u!114 &602515337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602515330}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a4c75f451fb720429cc08255468a45e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TracCamera: {fileID: 861757049}
+  MaxLength: 30
 --- !u!1 &626108334
 GameObject:
   m_ObjectHideFlags: 0
@@ -3039,6 +3054,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FollowCameraPos: {x: 50, y: 14.5, z: -80}
+  leftObje: {fileID: 0}
+  rightObje: {fileID: 0}
   RightScreenOut: 0
   LeftScreenOut: 0
   OverScreenOut: 500

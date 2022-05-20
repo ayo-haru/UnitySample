@@ -30,6 +30,7 @@ public class Boss1Manager : MonoBehaviour
     public static Vector3 BossPos;
     private GameObject Warp;
     BossEntry Entry;
+    BossTrac Track;
     private Vector3 WarpEFPoint;
     private bool PlayEffect = false;
     
@@ -44,6 +45,7 @@ public class Boss1Manager : MonoBehaviour
         }
         
         Entry = GameObject.Find("BossStageManager").GetComponent<BossEntry>();
+        Track = GameObject.Find("BossStageManager").GetComponent<BossTrac>();
         Bossobj = (GameObject)Resources.Load("PanCake");
 
         BossPos = GameObject.Find("BossPoint").transform.position;
@@ -77,6 +79,7 @@ public class Boss1Manager : MonoBehaviour
                 }
             case Boss1State.BOSS1_BATTLE:
                 {
+                    Track.enabled = true;
                     Boss.gameObject.transform.position = BossPos;
                     break;
                 }

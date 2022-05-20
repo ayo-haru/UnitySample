@@ -70,7 +70,7 @@ public class Boss1Manager : MonoBehaviour
         {
             case Boss1State.BOSS1_START:
                 {
-
+                    
                     Entry.Entry();
                    
                     break;

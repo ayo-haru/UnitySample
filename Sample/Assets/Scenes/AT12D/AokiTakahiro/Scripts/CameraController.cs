@@ -8,7 +8,9 @@ public class CameraController: MonoBehaviour
     [SerializeField] private Vector3 cameraDistanse;
 
     [SerializeField] private float cameraY = 0.0f;
-    [SerializeField] private float cameraZ = -100.0f;
+    [SerializeField] private float cameraZ = -120.0f;
+    
+    private float cameraPosY = 35.0f;
 
     private bool tracking = false;
 
@@ -32,16 +34,19 @@ public class CameraController: MonoBehaviour
     {
         playerObject = GameObject.Find(GameData.Player.name);
 
-        cameraDistanse = new Vector3(playerObject.transform.position.x, playerObject.transform.position.y, cameraZ);
+        cameraDistanse = new Vector3(playerObject.transform.position.x, playerObject.transform.position.y + cameraPosY, cameraZ);
         this.transform.position = cameraDistanse;
 
 
-        edgetocenter = Mathf.Abs(Camera.main.ScreenToWorldPoint(new Vector3(0, playerObject.transform.position.y, -(cameraZ - playerObject.transform.position.z))).x - Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, playerObject.transform.position.y, -(cameraZ - playerObject.transform.position.z))).x);
+        edgetocenter = Mathf.Abs(Camera.main.ScreenToWorldPoint(new Vector3(0, playerObject.transform.position.y + cameraPosY, 
+            -(cameraZ - playerObject.transform.position.z))).x - Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, 
+            playerObject.transform.position.y + cameraPosY, -(cameraZ - playerObject.transform.position.z))).x);
+
         leftPos = leftObje.transform.position;
         rightPos = rightObje.transform.position;
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         TrackingPlayer(playerObject);
 
@@ -52,18 +57,18 @@ public class CameraController: MonoBehaviour
 
     void TrackingPlayer(GameObject playerObj)
     {
-        this.transform.position = new Vector3(playerObj.transform.position.x, playerObj.transform.position.y, cameraZ);
+        this.transform.position = new Vector3(playerObj.transform.position.x, playerObj.transform.position.y + cameraPosY, cameraZ);
     }
 
     private void ScreenEdge()
     {
        //更にワールド座標上での画面真ん中から端までの距離より現在のプレイヤーから端までの距離が近ければ追従を止める
-       if (edgetocenter > Mathf.Abs(leftPos.x + 2 - playerObject.transform.position.x/* - cameraToplayer*/))
+       if (edgetocenter > Mathf.Abs(leftPos.x + 2 - playerObject.transform.position.x))
        {
 
            tracking = false;
            //追従を止めたときはカメラを固定
-           this.gameObject.transform.position = new Vector3(leftPos.x + 15 + edgetocenter, playerObject.transform.position.y, cameraZ);
+           this.gameObject.transform.position = new Vector3(leftPos.x + edgetocenter, playerObject.transform.position.y + cameraPosY, cameraZ);
        }
        else
        {
@@ -74,7 +79,7 @@ public class CameraController: MonoBehaviour
        if (edgetocenter > Mathf.Abs(rightPos.x - 2 - playerObject.transform.position.x/* - cameraToplayer*/))
        {
            tracking = false;
-           this.gameObject.transform.position = new Vector3(rightPos.x - 15 - edgetocenter, playerObject.transform.position.y, cameraZ);
+           this.gameObject.transform.position = new Vector3(rightPos.x - edgetocenter, playerObject.transform.position.y + cameraPosY, cameraZ);
        }
        else
        {

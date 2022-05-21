@@ -24,7 +24,6 @@ public class GimickGuide : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -67,66 +66,6 @@ public class GimickGuide : MonoBehaviour
                 }
                 Timer = 0.0f;
             }
-            //// ‰E
-            //if (Guide_Right)
-            //{
-            //    Timer += Time.deltaTime;
-            //    if(EffectTime < Timer)
-            //    {
-            //        EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT, transform.position, EffectTime);
-            //        Timer = 0.0f;
-            //    }
-            //}
-            //// ‰Eã
-            //if (Guide_RightUp)
-            //{
-            //    Timer += Time.deltaTime;
-            //    if (EffectTime < Timer)
-            //    {
-            //        EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT_UP, transform.position, EffectTime);
-            //        Timer = 0.0f;
-            //    }   
-            //}
-            //// ‰E‰º
-            //if (Guide_RightDown)
-            //{
-            //    Timer += Time.deltaTime;
-            //    if (EffectTime < Timer)
-            //    {
-            //        EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT_DOWN, transform.position, EffectTime);
-            //        Timer = 0.0f;
-            //    }
-            //}
-            //// ¶
-            //if (Guide_Left)
-            //{
-            //    Timer += Time.deltaTime;
-            //    if (EffectTime < Timer)
-            //    {
-            //        EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT, transform.position, EffectTime);
-            //        Timer = 0.0f;
-            //    }
-            //}
-            //// ¶ã
-            //if (Guide_LeftUp)
-            //{
-            //    Timer += Time.deltaTime;
-            //    if (EffectTime < Timer)
-            //    {
-            //        EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT_UP, transform.position, EffectTime);
-            //        Timer = 0.0f;
-            //    }
-            //}
-            //// ¶‰º
-            //if (Guide_LeftDown)
-            //{
-            //    Timer += Time.deltaTime;
-            //    if (EffectTime < Timer)
-            //    {
-            //        EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT_DOWN, transform.position, EffectTime);
-            //        Timer = 0.0f;
-            //    }
-            //}
         }
     }
 

@@ -119,7 +119,6 @@ public class Boss1StrawBerry : MonoBehaviour
         //毎回使用しているイチゴの探索する
         for (int i = 0; i < Max_Strawberry; i++)
         {
-            Debug.Log("つくたよ" + Strawberry[i]);
             if (StrawBerryLagFlg[i])
             {
                 

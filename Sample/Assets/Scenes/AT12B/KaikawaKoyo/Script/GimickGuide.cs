@@ -17,6 +17,7 @@ public class GimickGuide : MonoBehaviour
     [SerializeField]
     private bool Guide_LeftDown;
 
+    private ParticleSystem effect;
     private bool Play;      // エフェクト再生フラグ
     private float EffectTime = 4.0f;
     private float Timer;
@@ -24,46 +25,19 @@ public class GimickGuide : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        // 範囲内にいる間は繰り返し再生する
         if(Play)
         {
             Timer += Time.deltaTime;
             if (EffectTime < Timer)
             {
-                // 右
-                if (Guide_Right)
-                {
-                    EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT, transform.position, EffectTime);
-                }
-                // 右上
-                if (Guide_RightUp)
-                {
-                    EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT_UP, transform.position, EffectTime);
-                }
-                // 右下
-                if (Guide_RightDown)
-                {
-                    EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT_DOWN, transform.position, EffectTime);
-                }
-                // 左
-                if (Guide_Left)
-                {
-                    EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT, transform.position, EffectTime);
-                }
-                // 左上
-                if (Guide_LeftUp)
-                {
-                    EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT_UP, transform.position, EffectTime);
-                }
-                // 左下
-                if (Guide_LeftDown)
-                {
-                    EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT_DOWN, transform.position, EffectTime);
-                }
+                effect.Play();
                 Timer = 0.0f;
             }
         }
@@ -77,33 +51,34 @@ public class GimickGuide : MonoBehaviour
             // 右
             if (Guide_Right)
             {
-                EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT, transform.position, EffectTime);
+                effect = Instantiate(EffectData.EF[(int)EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT]);
             }
             // 右上
             if (Guide_RightUp)
             {
-                EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT_UP, transform.position, EffectTime);
+                effect = Instantiate(EffectData.EF[(int)EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT_UP]);
             }
             // 右下
             if (Guide_RightDown)
             {
-                EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT_DOWN, transform.position, EffectTime);
+                effect = Instantiate(EffectData.EF[(int)EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT_DOWN]);
             }
             // 左
             if (Guide_Left)
             {
-                EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT, transform.position, EffectTime);
+                effect = Instantiate(EffectData.EF[(int)EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT]);
             }
             // 左上
             if (Guide_LeftUp)
             {
-                EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT_UP, transform.position, EffectTime);
+                effect = Instantiate(EffectData.EF[(int)EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT_UP]);
             }
             // 左下
             if (Guide_LeftDown)
             {
-                EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT_DOWN, transform.position, EffectTime);
+                effect = Instantiate(EffectData.EF[(int)EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT_DOWN]);
             }
+            effect.transform.position = transform.position;
             Play = true;
         }
     }
@@ -113,6 +88,8 @@ public class GimickGuide : MonoBehaviour
         // プレイヤーが離れたらエフェクトを停止する
         if (other.CompareTag("Player"))
         {
+            Destroy(effect.gameObject, 0.0f);   // エフェクト削除
+            Timer = 0.0f;                       // タイマーのリセット
             Play = false;
         }
     }

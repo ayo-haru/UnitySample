@@ -100,6 +100,7 @@ public class Player2 : MonoBehaviour
     private Vector3 CurrentScale;                       // 現在のプレイヤーのスケールの値を格納 
     private GameObject _weapon;
 
+
     //---カメラ
     ShakeCamera shakeCamera;
 
@@ -479,6 +480,8 @@ public class Player2 : MonoBehaviour
 
         }
 
+
+
         //---倒した値を基に盾の出す場所を指定
         if (AttackDirection.y > 0){        
             //---上パリィの時だけ上の出す位置を高めに設定
@@ -510,6 +513,9 @@ public class Player2 : MonoBehaviour
         }
 
         //---武器回転
+        // 初期化処理をかける前にシールドのエフェクトのマネージャーに値を渡す
+        _weapon.GetComponent<ShieldEffectManager>().SetPlayerAttackDire(AttackDirection);
+
         _weapon.transform.Rotate(new Vector3(0, 0, (90 * AttackDirection.y)));
 
         ////エフェクト回転

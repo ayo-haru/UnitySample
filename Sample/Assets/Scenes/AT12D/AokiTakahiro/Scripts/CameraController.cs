@@ -7,12 +7,9 @@ public class CameraController: MonoBehaviour
     [SerializeField] private GameObject playerObject;
     [SerializeField] private Vector3 cameraDistanse;
 
-    [SerializeField] private float cameraY = 0.0f;
-    [SerializeField] private float cameraZ = -120.0f;
+    [SerializeField] private float cameraZ = -100.0f;
     
-    private float cameraPosY = 35.0f;
-
-    private bool tracking = false;
+    private float cameraPosY = 37.5f;
 
     //画面真ん中から端までのワールド座標での距離
     private float edgetocenter;
@@ -69,28 +66,55 @@ public class CameraController: MonoBehaviour
 
     private void ScreenEdge()
     {
-       // 更にワールド座標上での画面真ん中から端までの距離より現在のプレイヤーから端までの距離が近ければ追従を止める
-       if (edgetocenter > Mathf.Abs(leftPos.x + 2 - playerObject.transform.position.x))
+        // 左端
+        if (edgetocenter > Mathf.Abs(leftPos.x + 2 - playerObject.transform.position.x))
         {
-
-            tracking = false;
             // 追従を止めたときはカメラを固定
             this.gameObject.transform.position = new Vector3(leftPos.x + edgetocenter, playerObject.transform.position.y + cameraPosY, cameraZ);
         }
-       else
-        {
-            tracking = true;
-        }
 
-       // 右端
-       if (edgetocenter > Mathf.Abs(rightPos.x - 2 - playerObject.transform.position.x))
+        // 右端
+        if (edgetocenter > Mathf.Abs(rightPos.x - 2 - playerObject.transform.position.x))
         {
-            tracking = false;
             this.gameObject.transform.position = new Vector3(rightPos.x - edgetocenter, playerObject.transform.position.y + cameraPosY, cameraZ);
         }
-       else
+
+        // 上端
+        if (edgetocenter > Mathf.Abs(heightPos.y + 2 - playerObject.transform.position.y))
         {
-            tracking = true;
+            this.gameObject.transform.position = new Vector3(playerObject.transform.position.x, heightPos.y - edgetocenter + cameraPosY, cameraZ);
+        }
+
+        // 下端
+        if (edgetocenter > Mathf.Abs(underPos.y + 2 - playerObject.transform.position.y))
+        {
+            this.gameObject.transform.position = new Vector3(playerObject.transform.position.x, underPos.y + edgetocenter + cameraPosY, cameraZ);
+        }
+
+        // 左下
+        if (edgetocenter > Mathf.Abs(leftPos.x + 2 - playerObject.transform.position.x) && edgetocenter > Mathf.Abs(underPos.y + 2 - playerObject.transform.position.y))
+        {
+            // 追従を止めたときはカメラを固定
+            this.gameObject.transform.position = new Vector3(leftPos.x + edgetocenter, underPos.y + edgetocenter + cameraPosY, cameraZ);
+        }
+
+        // 右下
+        if (edgetocenter > Mathf.Abs(rightPos.x - 2 - playerObject.transform.position.x) && edgetocenter > Mathf.Abs(underPos.y + 2 - playerObject.transform.position.y))
+        {
+            this.gameObject.transform.position = new Vector3(rightPos.x - edgetocenter, underPos.y + edgetocenter + cameraPosY, cameraZ);
+        }
+
+        // 左上
+        if (edgetocenter > Mathf.Abs(leftPos.x + 2 - playerObject.transform.position.x) && edgetocenter > Mathf.Abs(heightPos.y + 2 - playerObject.transform.position.y))
+        {
+            // 追従を止めたときはカメラを固定
+            this.gameObject.transform.position = new Vector3(leftPos.x + edgetocenter, heightPos.y - edgetocenter + cameraPosY, cameraZ);
+        }
+
+        // 右上
+        if (edgetocenter > Mathf.Abs(rightPos.x - 2 - playerObject.transform.position.x) && edgetocenter > Mathf.Abs(heightPos.y + 2 - playerObject.transform.position.y))
+        {
+            this.gameObject.transform.position = new Vector3(rightPos.x - edgetocenter, heightPos.y - edgetocenter + cameraPosY, cameraZ);
         }
     }
 

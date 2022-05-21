@@ -5,9 +5,11 @@ using UnityEngine;
 public class BossTrac : MonoBehaviour
 {
     [SerializeField] Camera TracCamera;
+    [SerializeField] float DelFlame;
     [SerializeField] float MaxLength;
     [SerializeField] float UpMax;
     float LimitLength;
+    float DelFlameNum;
     float LimitUp;
     float Length;
     float UpLength;
@@ -18,6 +20,7 @@ public class BossTrac : MonoBehaviour
     float UpDif;
     float UpCurrentDif;
     bool ChangeFlg;
+    float CurrentFlame;
     Vector3 A_Pos;
     Vector3 B_Pos;
     Vector3 CamPos;
@@ -31,14 +34,14 @@ public class BossTrac : MonoBehaviour
     {
         TracCamera = Camera.main;
         BegCamPos = GameObject.Find("CameraPos").transform.position;
-        LimitLength = MaxLength + 25;
+        LimitLength = MaxLength + 105;
+        DelFlameNum = DelFlame / 60.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("‚Ü‚Á‚½‚­‚Ü‚Á‚½‚­" + CurrentDif);
-        Debug.Log("ŒF‚Á‚ÄŒF‚Á‚Ä" + UpLength);
+        Debug.Log("‚Ü‚Á‚½‚­‚Ü‚Á‚½‚­" + DelFlame);
         Difference();
         if(UpLength <= UpMax)
         {
@@ -48,7 +51,7 @@ public class BossTrac : MonoBehaviour
                 if (CamPos.y > BegCamPos.y)
                 {
                     CamPos.x = TracCamera.transform.position.x;
-                    CamPos.y = TracCamera.transform.position.y - 1.0f;
+                    CamPos.y = TracCamera.transform.position.y - 1f;
                     CamPos.z = TracCamera.transform.position.z;
 
                     TracCamera.transform.position = CamPos;
@@ -76,21 +79,26 @@ public class BossTrac : MonoBehaviour
         if (Length >= MaxLength && Length <= LimitLength)
         {
             Debug.Log("‚Í‚¢‚Á‚Ä‚é‚º");
-                if (B_Pos.x >= A_Pos.x)
+                if (B_Pos.x <= A_Pos.x)
                 {
                 if(ChangeFlg)
                 {
                     CurrentDif = 0;
+                    
                     ChangeFlg = false;
                 }
                     Dif = HalfLength - (MaxLength / 2);
                     if (CurrentDif == Dif)
                     {
-                        return;
+                    CurrentFlame = 0;
+                    return;
                     }
                     if (CurrentDif <= Dif)
                     {
-                        //·•ª‚ÌÀ•W
+                    //·•ª‚ÌÀ•W
+                        CurrentFlame += Time.deltaTime;
+                    if (DelFlameNum <= CurrentFlame)
+                    {
                         CamPos.x = TracCamera.transform.position.x + CurrentDif / Dif;
                         CamPos.y = TracCamera.transform.position.y;
                         CamPos.z = TracCamera.transform.position.z;
@@ -99,20 +107,26 @@ public class BossTrac : MonoBehaviour
                         CurrentDif++;
                         return;
                     }
+                    }
                 }
-                if(B_Pos.x <= A_Pos.x)
+                if(B_Pos.x >= A_Pos.x)
                 {
                 if (!ChangeFlg)
                 {
                     CurrentDif = 0;
+                    
                     ChangeFlg = true;
                 }
                 Dif = HalfLength - (MaxLength / 2);
                 if (CurrentDif == Dif)
                 {
+                    CurrentFlame = 0;
                     return;
                 }
                 if (CurrentDif <= Dif)
+                {
+                    CurrentFlame += Time.deltaTime;
+                    if (DelFlameNum <= CurrentFlame)
                     {
                         //·•ª‚ÌÀ•W
                         CamPos.x = TracCamera.transform.position.x - CurrentDif / Dif;
@@ -121,8 +135,11 @@ public class BossTrac : MonoBehaviour
 
                         TracCamera.transform.position = CamPos;
                         CurrentDif++;
+                        
                         return;
+                        
                     }
+                }
             }
         }
         

@@ -17,7 +17,6 @@ public class BossDeathCam : MonoBehaviour
         BossImage = GetComponent<BossEntry>();
         EndPos = Camera.main.transform.position;
         MoveCamera.SetCamera(Camera.main);
-        Debug.Log("" + StartPos);
 
     }
 

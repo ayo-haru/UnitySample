@@ -21,14 +21,14 @@ public class ShieldEffectManager : MonoBehaviour
                                   this.transform.position,
                                   Quaternion.identity);
 
-        //エフェクト回転
+        //---エフェクト回転
         if (GameData.PlayerPos.x > this.transform.position.x)
         {
             ShileEffect.transform.Rotate(new Vector3(ShileEffect.transform.rotation.x, 60.0f, ShileEffect.transform.rotation.z));
         }
         if (GameData.PlayerPos.x < this.transform.position.x)
         {
-            ShileEffect.transform.Rotate(new Vector3(ShileEffect.transform.rotation.x, -60.0f, ShileEffect.transform.rotation.z));
+            ShileEffect.transform.Rotate(new Vector3(ShileEffect.transform.rotation.x,  60.0f, ShileEffect.transform.rotation.z));
         }
         if (GameData.PlayerPos.y > this.transform.position.y)
         {
@@ -38,6 +38,24 @@ public class ShieldEffectManager : MonoBehaviour
         {
             ShileEffect.transform.Rotate(new Vector3(-60.0f, ShileEffect.transform.rotation.y, ShileEffect.transform.rotation.z));
         }
+
+        //if (player2.GetAttackDirection().x < -0.2f)
+        //{
+        //    ShileEffect.transform.Rotate(new Vector3(ShileEffect.transform.rotation.x, 60.0f, ShileEffect.transform.rotation.z));
+        //}
+        //if (player2.GetAttackDirection().x > 0.2f)
+        //{
+        //    ShileEffect.transform.Rotate(new Vector3(ShileEffect.transform.rotation.x, -60.0f, ShileEffect.transform.rotation.z));
+        //}
+        //if (player2.GetAttackDirection().y < -0.2f)
+        //{
+        //    ShileEffect.transform.Rotate(new Vector3(-45.0f, ShileEffect.transform.rotation.y, ShileEffect.transform.rotation.z));
+        //}
+        //if (player2.GetAttackDirection().y >  0.2f)
+        //{
+        //    ShileEffect.transform.Rotate(new Vector3(60.0f, ShileEffect.transform.rotation.y, ShileEffect.transform.rotation.z));
+        //}
+
 
         //---エフェクト再生
         ShileEffect.Play();

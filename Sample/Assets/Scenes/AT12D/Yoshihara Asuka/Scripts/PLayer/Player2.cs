@@ -412,6 +412,7 @@ public class Player2 : MonoBehaviour
             PlayerPos = transform.position;                              // 攻撃する瞬間のプレイヤーの座標を取得
             AttackDirection += Attacking.ReadValue<Vector2>();           // スティックの倒した値を取得
             AttackDirection.Normalize();                                 // 取得した値を正規化(ベクトルを１にする)
+            SetAttackDirection(AttackDirection);
 
             Debug.Log(AttackDirection);
 
@@ -543,6 +544,16 @@ public class Player2 : MonoBehaviour
         PlayerActionAsset.Player.Attack.started += OnAttack;
 	}
 
+    public void SetAttackDirection(Vector2 attackdirection)
+    {
+        AttackDirection = attackdirection;
+    }
+
+    public Vector2 GetAttackDirection()
+    {
+        return AttackDirection;
+    }
+
     #region ジャンプ処理
     //---ジャンプ処理
     private void OnJump(InputAction.CallbackContext obj)
@@ -590,6 +601,7 @@ public class Player2 : MonoBehaviour
         //---アニメーションの再生
         if (state == PLAYERSTATE.DAMAGED)
         {
+            shakeCamera.Shake(0.5f, 5, 0.23f);
             animator.SetTrigger("Damage2");
         }
         hpmanager.Damaged();

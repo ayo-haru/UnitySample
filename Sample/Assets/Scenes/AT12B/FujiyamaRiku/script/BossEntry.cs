@@ -42,7 +42,7 @@ public class BossEntry : MonoBehaviour
         
             if (GameData.PlayerPos.x >= GameObject.Find("CameraOn").transform.position.x)
             {
-            GameObject.Find("Main Camera").GetComponent<DelayFollowCamera>().enabled = false;
+                GameObject.Find("Main Camera").GetComponent<DelayFollowCamera>().enabled = false;
                 StartCameraPos = GameData.PlayerPos;
                 StartCameraPos.z = CameraPos.z;
                 StartCamera = true;
@@ -66,6 +66,7 @@ public class BossEntry : MonoBehaviour
                         BossHPFrame.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
                         BossName.gameObject.SetActive(false);
                         StartCamera = false;
+                        GameObject.Find("LeftTree").transform.position = new Vector3(-155.0f,0.0f,0.0f);
                         Boss1Manager.BossState = Boss1Manager.Boss1State.BOSS1_BATTLE;
                     }
                     break;

@@ -38,7 +38,7 @@ public class CarrotEnemy : MonoBehaviour
     private void Start()
     {
         Player = GameObject.FindWithTag("Player");    // プレイヤーのオブジェクトを探す
-        Jet = transform.Find("JetPos").gameObject;
+        //Jet = transform.Find("JetPos").gameObject;
         rb = gameObject.GetComponent<Rigidbody>();
         ED = GetComponent<EnemyDown>();
         MovingSpeed = MoveSpeed / 2;

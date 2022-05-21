@@ -337,11 +337,11 @@ public class EnemyDown : MonoBehaviour
         rb.angularDrag = 0.0f;
 
         // ‰ñ“]²‚ğ•ÏX
-        if (EnemyNumber == 1 || EnemyNumber == 4)
-        {
-            rb.centerOfMass = new Vector3(0.0f, 5.0f, 2.0f);
-        }
-        else if (EnemyNumber == 2 || EnemyNumber == 5)
+        //if (EnemyNumber == 1 || EnemyNumber == 4)
+        //{
+        //    rb.centerOfMass = new Vector3(0.0f, 5.0f, 2.0f);
+        //}
+        if (EnemyNumber == 2 || EnemyNumber == 5)
         {
             rb.centerOfMass = new Vector3(0.0f, 0.3f, 0.0f);
         }

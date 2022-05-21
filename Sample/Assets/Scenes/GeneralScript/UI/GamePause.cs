@@ -39,7 +39,7 @@ public class GamePause : MonoBehaviour
     private GameObject panel;
     private GameObject Panel;
     [SerializeField]
-    private GameObject selestbox;
+    private GameObject selectbox;
     private GameObject SelectBox;
 
 
@@ -77,10 +77,12 @@ public class GamePause : MonoBehaviour
         Option = Instantiate(option);
         Optionmanager = Instantiate(optionmanager);
         Panel = Instantiate(panel);
-        
+        SelectBox = Instantiate(selectbox);
+
 
         // キャンバスの子にする
         Panel.transform.SetParent(this.canvas.transform, false);
+        SelectBox.transform.SetParent(this.canvas.transform, false);
         PauseCharacter.transform.SetParent(this.canvas.transform, false);
         BackGame.transform.SetParent(this.canvas.transform, false);
         GameEnd.transform.SetParent(this.canvas.transform, false);
@@ -94,9 +96,12 @@ public class GamePause : MonoBehaviour
         {
             Optionmanager.transform.SetParent(this.canvas.transform, false);
         }
-        
+
 
         // ゲームスタート時は非表示
+        SelectBox.GetComponent<UIBlink>().isBlink = true;
+        SelectBox.GetComponent<UIBlink>().isHide = true;
+        SelectBox.GetComponent<Image>().enabled = false;
         PauseCharacter.GetComponent<Image>().enabled = false;
         BackGame.GetComponent<Image>().enabled = false;
         GameEnd.GetComponent<Image>().enabled = false;
@@ -109,6 +114,13 @@ public class GamePause : MonoBehaviour
         Panel.GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
         Panel.GetComponent<Image>().enabled = false;
         Optionmanager.SetActive(false);
+
+        /*
+         ↓これでいい感じの大きさそ
+         */
+        //Camera camera;
+        //camera = Camera.main;
+        //camera.rect = new Rect(0.3125f, 0.0f, 0.6875f, 1.0f);
     }
 
     // Update is called once per frame
@@ -133,6 +145,7 @@ public class GamePause : MonoBehaviour
                 }
             }
 
+            SelectBox.GetComponent<Image>().enabled = false;
             PauseCharacter.GetComponent<Image>().enabled = false;
             BackGame.GetComponent<Image>().enabled = false;
             GameEnd.GetComponent<Image>().enabled = false;
@@ -146,12 +159,15 @@ public class GamePause : MonoBehaviour
         else if (Pause.isPause && !isCalledOncce)
         {
             // ポーズ中になったら表示
+            SelectBox.GetComponent<Image>().enabled = true;
             PauseCharacter.GetComponent<Image>().enabled = true;
             BackGame.GetComponent<Image>().enabled = true;
             GameEnd.GetComponent<Image>().enabled = true;
             BackTitle.GetComponent<Image>().enabled = true;
             Option.GetComponent<Image>().enabled = true;
             Panel.GetComponent<Image>().enabled = true;
+
+            SelectBoxPosUpdete();
 
             //音楽停止
             if (GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE && GameData.CurrentMapNumber != (int)GameData.eSceneState.TITLE_SCENE)
@@ -208,8 +224,6 @@ public class GamePause : MonoBehaviour
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
                 Pause.isPause = false;  // ポーズ解除
-                Debug.Log("ポーズ解除のポーズ解除");
-                backgame.GetComponent<Image>().enabled = true;
                 isDecision = false;
             }
         }
@@ -224,8 +238,6 @@ public class GamePause : MonoBehaviour
                 GameData.OldMapNumber = GameData.CurrentMapNumber;
                 string nextSceneName = GameData.GetNextScene((int)GameData.eSceneState.TITLE_SCENE);
                 SceneManager.LoadScene(nextSceneName);
-                //Pause.isPause = false;  // ポーズ解除
-                Debug.Log("シーン遷移のポーズ解除");
                 isDecision = false;
             }
         }
@@ -236,9 +248,8 @@ public class GamePause : MonoBehaviour
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
+
                 isDecision = false;
-                //Pause.isPause = false;  //　ポーズ解除
-                Debug.Log("ゲームやめるのポーズ");
 
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
@@ -248,16 +259,37 @@ public class GamePause : MonoBehaviour
 
             }
 
-        }else if(select == (int)eSTATEPAUSE.OPTION)
+        }
+        else if(select == (int)eSTATEPAUSE.OPTION)
         {
             if (isDecision) // 選択を確定
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
+
                 //オプションマネージャーをアクティブにする
                 Optionmanager.SetActive(true);
                 isDecision = false;
             }
+        }
+    }
+
+    private void SelectBoxPosUpdete() {
+        if(select == (int)eSTATEPAUSE.RETURNGAME)
+        {
+            SelectBox.GetComponent<RectTransform>().localPosition = BackGame.GetComponent<RectTransform>().localPosition;
+        }
+        else if(select == (int)eSTATEPAUSE.RETURNTITLE)
+        {
+            SelectBox.GetComponent<RectTransform>().localPosition = BackTitle.GetComponent<RectTransform>().localPosition;
+        }
+        else if(select == (int)eSTATEPAUSE.QUITGAME)
+        {
+            SelectBox.GetComponent<RectTransform>().localPosition = GameEnd.GetComponent<RectTransform>().localPosition;
+        }
+        else if (select == (int)eSTATEPAUSE.OPTION)
+        {
+            SelectBox.GetComponent<RectTransform>().localPosition = Option.GetComponent<RectTransform>().localPosition;
         }
     }
 
@@ -268,6 +300,7 @@ public class GamePause : MonoBehaviour
         {
             select = 0;
         }
+        SelectBoxPosUpdete();
     }
 
     private void SelectDown() {
@@ -278,6 +311,7 @@ public class GamePause : MonoBehaviour
         {
             select = (int)eSTATEPAUSE.OPTION;
         }
+        SelectBoxPosUpdete();
     }
 
     private void OnEnable() {
@@ -306,7 +340,7 @@ public class GamePause : MonoBehaviour
     /// </summary>
     /// <param name="obj"></param>
     private void OnLeftStick(InputAction.CallbackContext obj) {
-        if (!Pause.isPause || Optionmanager.activeSelf)
+        if (!Pause.isPause || SaveManager.canSave || Warp.shouldWarp || GameData.isFadeIn || GameData.isFadeOut || GameOver.GameOverFlag || Optionmanager.activeSelf)
         {
             return;
         }
@@ -327,7 +361,7 @@ public class GamePause : MonoBehaviour
     }
 
     private void OnRightStick(InputAction.CallbackContext obj) {
-        if (!Pause.isPause || Optionmanager.activeSelf)
+        if (!Pause.isPause || SaveManager.canSave || Warp.shouldWarp || GameData.isFadeIn || GameData.isFadeOut || GameOver.GameOverFlag || Optionmanager.activeSelf)
         {
             return;
         }
@@ -352,7 +386,7 @@ public class GamePause : MonoBehaviour
     /// 決定ボタン
     /// </summary>
     private void OnDecision(InputAction.CallbackContext obj) {
-        if (Pause.isPause)
+        if (Pause.isPause || !SaveManager.canSave || !Warp.shouldWarp || !GameData.isFadeIn || !GameData.isFadeOut || !GameOver.GameOverFlag)
         {
             isDecision = true;
         }

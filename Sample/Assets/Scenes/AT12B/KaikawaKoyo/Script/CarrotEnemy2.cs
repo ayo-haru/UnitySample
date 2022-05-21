@@ -29,19 +29,30 @@ public class CarrotEnemy2 : MonoBehaviour
     private float idlingTime = 0.5f;
     private bool IdringFlg = true;
     private bool Attack;
+    private bool R;
 
     private bool isCalledOnce = false;                             // 一回だけ処理をするために使う。
-
 
     private void Start()
     {
         Player = GameObject.FindWithTag("Player");    // プレイヤーのオブジェクトを探す
-        position = transform.position + new Vector3(0.0f, 15.0f, 0.0f);     // 回転の中心点
         rb = gameObject.GetComponent<Rigidbody>();
         ED = GetComponent<EnemyDown>();
         Random.InitState(System.DateTime.Now.Millisecond);
         transform.DOShakePosition(duration: idlingTime, strength: 5.0f);    // ぶるぶる震わせる
-        transform.localRotation = Quaternion.LookRotation(new Vector3(-180.0f, 0.0f, 0.0f));
+        if(transform.position.x > Player.transform.position.x)
+        {
+            transform.localRotation = Quaternion.LookRotation(new Vector3(-180.0f, 0.0f, 0.0f));    // 向きを変える
+            position = transform.position + new Vector3(Player.transform.position.x  + -20.0f, 15.0f, 0.0f);     // 回転の中心点を決める
+            R = false;
+        }
+        if (transform.position.x < Player.transform.position.x)
+        {
+            transform.localRotation = Quaternion.LookRotation(new Vector3(180.0f, 0.0f, 0.0f));     // 向きを変える
+            position = transform.position + new Vector3(Player.transform.position.x + 20.0f, 15.0f, 0.0f);     // 回転の中心点を決める
+            R = true;
+        }
+
     }
 
     private void Update()
@@ -58,16 +69,21 @@ public class CarrotEnemy2 : MonoBehaviour
                     Timer += Time.deltaTime;
                     if (Timer >= idlingTime)
                     {
-                        // 角度調整
-                        transform.localRotation = Quaternion.LookRotation(new Vector3(-180.0f, 20.0f, 0.0f));
-                        // 攻撃開始
-                        Attack = true;
-                        // サウンドフラグ切替
-                        isCalledOnce = false;
-                        // アイドリング終了
-                        IdringFlg = false;
-                        // タイマーのリセット
-                        Timer = 0.0f;
+                        if(R)
+                        {
+                            rb.velocity = new Vector3(80.0f, 0.0f, 0.0f);
+                            if (transform.position.x < position.x)
+                            {
+                                // 攻撃開始
+                                Attack = true;
+                                // サウンドフラグ切替
+                                isCalledOnce = false;
+                                // アイドリング終了
+                                IdringFlg = false;
+                                // タイマーのリセット
+                                Timer = 0.0f;
+                            }
+                        }
                     }
                 }
                 if (Attack)

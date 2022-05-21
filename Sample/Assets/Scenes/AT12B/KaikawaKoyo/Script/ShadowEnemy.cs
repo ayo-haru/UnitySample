@@ -23,10 +23,8 @@ public class ShadowEnemy : MonoBehaviour
     void Start()
     {
         position = transform.position;
-
-        //EffectManager.Play(EffectData.eEFFECT.EF_DARKAREA, position,false);
-
-        effect = Instantiate(EffectData.EF[15]);
+        
+        effect = Instantiate(EffectData.EF[(int)EffectData.eEFFECT.EF_ENEMY_DARKAREA]);
         effect.transform.position = position;
         effect.Play();
         // ’N‚É•Ïg‚·‚é‚©‚Ìˆ—

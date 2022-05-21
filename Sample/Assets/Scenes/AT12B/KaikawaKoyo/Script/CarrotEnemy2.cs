@@ -18,15 +18,19 @@ public class CarrotEnemy2 : MonoBehaviour
     private Rigidbody rb;
     private Vector3 vec;
     private Vector3 position;
+    private Vector3 RayPos;
+    private Ray ray;
+    private RaycastHit hit;
     private EnemyDown ED;
     private Quaternion look;
 
     [SerializeField]
     float MoveSpeed;
     private int AttackPattern;
-    private float angle = 5;
+    private float angle = 7;
     private float Timer;
     private float idlingTime = 0.5f;
+    private float dis = 150.0f;
     private bool IdringFlg = true;
     private bool Attack;
     private bool R;
@@ -43,16 +47,15 @@ public class CarrotEnemy2 : MonoBehaviour
         if(transform.position.x > Player.transform.position.x)
         {
             transform.localRotation = Quaternion.LookRotation(new Vector3(-180.0f, 0.0f, 0.0f));    // 向きを変える
-            position = transform.position + new Vector3(Player.transform.position.x  + -20.0f, 15.0f, 0.0f);     // 回転の中心点を決める
-            R = false;
+            position = new Vector3(Player.transform.position.x  + -10.0f, transform.position.y + 5.0f, 0.0f);     // 回転の中心点を決める
+            R = true;
         }
         if (transform.position.x < Player.transform.position.x)
         {
             transform.localRotation = Quaternion.LookRotation(new Vector3(180.0f, 0.0f, 0.0f));     // 向きを変える
-            position = transform.position + new Vector3(Player.transform.position.x + 20.0f, 15.0f, 0.0f);     // 回転の中心点を決める
-            R = true;
+            position = new Vector3(Player.transform.position.x + 20.0f, transform.position.y + 5.0f, 0.0f);     // 回転の中心点を決める
+            R = false;
         }
-
     }
 
     private void Update()
@@ -71,8 +74,8 @@ public class CarrotEnemy2 : MonoBehaviour
                     {
                         if(R)
                         {
-                            rb.velocity = new Vector3(80.0f, 0.0f, 0.0f);
-                            if (transform.position.x < position.x)
+                            rb.velocity = new Vector3(-80.0f, 0.0f, 0.0f);
+                            if (transform.position.x <= position.x)
                             {
                                 // 角度調整
                                 transform.localRotation = Quaternion.LookRotation(new Vector3(-180.0f, 20.0f, 0.0f));
@@ -88,11 +91,11 @@ public class CarrotEnemy2 : MonoBehaviour
                         }
                         if (!R)
                         {
-                            rb.velocity = new Vector3(-80.0f, 0.0f, 0.0f);
-                            if (transform.position.x < position.x)
+                            rb.velocity = new Vector3(80.0f, 0.0f, 0.0f);
+                            if (transform.position.x >= position.x)
                             {
                                 // 角度調整
-                                transform.localRotation = Quaternion.LookRotation(new Vector3(-180.0f, 20.0f, 0.0f));
+                                transform.localRotation = Quaternion.LookRotation(new Vector3(180.0f, 20.0f, 0.0f));
                                 // 攻撃開始
                                 Attack = true;
                                 // サウンドフラグ切替
@@ -114,10 +117,16 @@ public class CarrotEnemy2 : MonoBehaviour
                             position,
                             Vector3.back,
                             angle);
-                        if (transform.position.x > position.x && transform.position.y > position.y)
+                        // プレイヤーのほうを向いたら攻撃開始
+                        RayPos = transform.position;
+                        ray = new Ray(RayPos, transform.forward * dis);
+                        if (Physics.Raycast(ray, out hit, dis))
                         {
-                            AttackPattern = 1;
-                            Attack = false;
+                            if (hit.collider.CompareTag("Player"))
+                            {
+                                AttackPattern = 1;
+                                Attack = false;
+                            }
                         }
                     }
                     if (!R)
@@ -127,13 +136,19 @@ public class CarrotEnemy2 : MonoBehaviour
                             position,
                             Vector3.forward,
                             angle);
-                        if (transform.position.x < position.x && transform.position.y > position.y)
+
+                        // プレイヤーのほうを向いたら攻撃開始
+                        RayPos = transform.position;
+                        ray = new Ray(RayPos, transform.forward * dis);
+                        if (Physics.Raycast(ray, out hit, dis))
                         {
-                            AttackPattern = 1;
-                            Attack = false;
+                            if (hit.collider.CompareTag("Player"))
+                            {
+                                AttackPattern = 1;
+                                Attack = false;
+                            }
                         }
                     }
-
                 }
 
                 // 追尾開始

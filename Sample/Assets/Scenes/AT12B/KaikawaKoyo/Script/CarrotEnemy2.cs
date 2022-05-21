@@ -74,6 +74,25 @@ public class CarrotEnemy2 : MonoBehaviour
                             rb.velocity = new Vector3(80.0f, 0.0f, 0.0f);
                             if (transform.position.x < position.x)
                             {
+                                // 角度調整
+                                transform.localRotation = Quaternion.LookRotation(new Vector3(-180.0f, 20.0f, 0.0f));
+                                // 攻撃開始
+                                Attack = true;
+                                // サウンドフラグ切替
+                                isCalledOnce = false;
+                                // アイドリング終了
+                                IdringFlg = false;
+                                // タイマーのリセット
+                                Timer = 0.0f;
+                            }
+                        }
+                        if (!R)
+                        {
+                            rb.velocity = new Vector3(-80.0f, 0.0f, 0.0f);
+                            if (transform.position.x < position.x)
+                            {
+                                // 角度調整
+                                transform.localRotation = Quaternion.LookRotation(new Vector3(-180.0f, 20.0f, 0.0f));
                                 // 攻撃開始
                                 Attack = true;
                                 // サウンドフラグ切替
@@ -88,17 +107,33 @@ public class CarrotEnemy2 : MonoBehaviour
                 }
                 if (Attack)
                 {
-                    // くるっと回る
-                    transform.RotateAround(
-                        position,
-                        Vector3.back,
-                        angle);
-                    
-                    if (transform.position.x > position.x && transform.position.y < position.y)
+                    if(R)
                     {
-                        AttackPattern = 1;
-                        Attack = false;
+                        // くるっと回る
+                        transform.RotateAround(
+                            position,
+                            Vector3.back,
+                            angle);
+                        if (transform.position.x > position.x && transform.position.y > position.y)
+                        {
+                            AttackPattern = 1;
+                            Attack = false;
+                        }
                     }
+                    if (!R)
+                    {
+                        // くるっと回る
+                        transform.RotateAround(
+                            position,
+                            Vector3.forward,
+                            angle);
+                        if (transform.position.x < position.x && transform.position.y > position.y)
+                        {
+                            AttackPattern = 1;
+                            Attack = false;
+                        }
+                    }
+
                 }
 
                 // 追尾開始

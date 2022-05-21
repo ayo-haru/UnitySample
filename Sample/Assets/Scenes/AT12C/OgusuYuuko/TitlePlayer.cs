@@ -170,8 +170,8 @@ public class TitlePlayer : MonoBehaviour
                         SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.TitleAudioList);
                         //UI’e‚­
                         selectUI[titleSceneManager.select].GetComponent<UI_Parry>().underParryFlag = true;
-                        //‘I‘ð˜g‰B‚·
-                        selectUI[4].GetComponent<UIBlink>().isHide = true;
+                        //‘I‘ð˜g‚à’e‚­
+                        selectUI[4].GetComponent<UI_Parry>().underParryFlag = true;
                     }
                 }
 

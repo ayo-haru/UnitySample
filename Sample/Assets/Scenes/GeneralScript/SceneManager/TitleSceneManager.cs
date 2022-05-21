@@ -117,6 +117,7 @@ public class TitleSceneManager : MonoBehaviour {
             Option.GetComponent<UIBlink>().isHide = false;
             SelectFrame.GetComponent<UIBlink>().isHide = false;
             SelectFrame.GetComponent<RectTransform>().position = GameStart.GetComponent<RectTransform>().position;
+            SelectFrame.GetComponent<UI_Parry>().enabled = true;
             GameStart.GetComponent<UI_Parry>().enabled = true;
             
 
@@ -147,7 +148,7 @@ public class TitleSceneManager : MonoBehaviour {
             }
             else if (isSetGamePad)
             {
-                if (GameData.gamepad.dpad.up.wasReleasedThisFrame)
+                if (GameData.gamepad.dpad.left.wasReleasedThisFrame)
                 {
                     SelectUp();
                 }
@@ -159,7 +160,7 @@ public class TitleSceneManager : MonoBehaviour {
             }
             else if (isSetGamePad)
             {
-                if (GameData.gamepad.dpad.down.wasReleasedThisFrame)
+                if (GameData.gamepad.dpad.right.wasReleasedThisFrame)
                 {
                     SelectDown();
                 }
@@ -190,7 +191,7 @@ public class TitleSceneManager : MonoBehaviour {
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
 
                 // ëIëògÇâBÇ∑
-                SelectFrame.GetComponent<UIBlink>().isHide = true;
+                //SelectFrame.GetComponent<UIBlink>().isHide = true;
 
                 weight = true;
                 titlePlayer.decisionFlag = true;
@@ -310,6 +311,7 @@ public class TitleSceneManager : MonoBehaviour {
                 Optionmanager.SetActive(true);
                 Option.GetComponent<UI_Parry>().enabled = false;  //è„â∫à⁄ìÆóLå¯
                 SelectFrame.GetComponent<UIBlink>().isHide = false;
+                SelectFrame.GetComponent<UIParry>().enabled = true;
             }
 
 

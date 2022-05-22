@@ -15,34 +15,38 @@ public class ShadowEnemy : MonoBehaviour
 {
     GameObject Enemy;
     private Vector3 position;
-    public int EnemyNomber;
+    public int EnemyNumber;
     private bool spawn = false;
-    private float EFTime = 999.0f;
     private ParticleSystem effect;
-
-    //[SerializeField] private ParticleSystem particle;
-
+    
     // Start is called before the first frame update
     void Start()
     {
-        //particle.Play();
-
         position = transform.position;
         
-        effect = Instantiate(EffectData.EF[2]);
+        effect = Instantiate(EffectData.EF[(int)EffectData.eEFFECT.EF_ENEMY_DARKAREA]);
         effect.transform.position = position;
         effect.Play();
         // íNÇ…ïœêgÇ∑ÇÈÇ©ÇÃèàóù
-        switch (EnemyNomber)
+        switch (EnemyNumber)
         {
             case 0:
-                Enemy = (GameObject)Resources.Load("Carrot");
+                Enemy = (GameObject)Resources.Load("Carrot 1");
                 break;
             case 1:
-                Enemy = (GameObject)Resources.Load("BroccoliEnemy");
+                Enemy = (GameObject)Resources.Load("Broccoli 1");
                 break;
             case 2:
-                Enemy = (GameObject)Resources.Load("tomato");
+                Enemy = (GameObject)Resources.Load("Tomato 1");
+                break;
+            case 3:
+                Enemy = (GameObject)Resources.Load("Carrot 2");
+                break;
+            case 4:
+                Enemy = (GameObject)Resources.Load("Broccoli 2");
+                break;
+            case 5:
+                Enemy = (GameObject)Resources.Load("Tomato 2");
                 break;
         }
     }
@@ -52,7 +56,7 @@ public class ShadowEnemy : MonoBehaviour
     {
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if(!Pause.isPause)
         {
@@ -61,7 +65,6 @@ public class ShadowEnemy : MonoBehaviour
             {
                 Destroy(effect.gameObject, 0.0f);
                 Destroy(gameObject, 0.0f);
-                //particle.Stop();
                 if (!spawn)
                 {
                     Instantiate(Enemy, position, Quaternion.identity);

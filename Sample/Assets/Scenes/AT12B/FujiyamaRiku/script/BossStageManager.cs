@@ -25,7 +25,6 @@ public class BossStageManager : MonoBehaviour
     public GameObject PlayerPrefab;                             // プレハブ内のプレイヤーを扱う
     public GameObject HPSystem;                                 // プレハブ内のHPUIをクローンする
 
-
     private void Awake()
     {
         //---プレイヤープレハブの取得
@@ -34,11 +33,13 @@ public class BossStageManager : MonoBehaviour
             GameData.Player = PlayerPrefab;                     // プレイヤーの情報がなかったら
                                                                 // GameDataにプレイヤーを定義する
         }
-        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(3.4f,14.8f,24.5f); // プレイヤーの初期位置を設定
+        GameData.PlayerPos = GameData.Player.transform.position = GameObject.Find("PlayerStart").transform.position; // プレイヤーの初期位置を設定
         GameObject Player = Instantiate(GameData.Player);       // プレハブをクローン
+        Player.name = GameData.Player.name;                         // プレハブの名前通りにする
 
-        //---プレイヤーUIを表示
-        GameObject canvas = GameObject.Find("Canvas");          // シーン上のCanvasを参照し、canvasに定義
+         //---プレイヤーUIを表示
+         //ボスシーンのキャンバスの設定が他と異なって表示できないためｈｐ専用のキャンバスの作った
+         GameObject canvas = GameObject.Find("Canvas2");          // シーン上のCanvasを参照し、canvasに定義
         GameObject HPUI = Instantiate(HPSystem);                // プレハブをクローン
         HPUI.transform.SetParent(canvas.transform,false);       // シーン上のCanvasに子オブジェクトとしてアタッチ
 
@@ -50,8 +51,18 @@ public class BossStageManager : MonoBehaviour
         SoundManager.Play(SoundData.eBGM.BGM_BOSS1, SoundData.GameAudioList);
 
         //---マップの番号(現在のシーン)を保存
+        if (GameData.NextMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
+        {
+            /* 
+             * このif文はエディタ上のデバッグ用。本来はNextMapNumberは値が入っているが
+             * unityのエディタ上でこのシーンだけ動かした場合は値が入らないためシリアライズフィールドで
+             * インスペクタービューに表示させたcurrentSceneNumで初期化をする。
+             * GameData.NextMapNumberは初期化してない場合はかってに0になってるから==
+             */
+            GameData.OldMapNumber = GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
+        }
         GameData.CurrentMapNumber = GameData.NextMapNumber;         // ボスシーンに到達している判定
-        SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);   // 現在のシーンをセーブ
+        //SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);   // 現在のシーンをセーブ
 
 
     }

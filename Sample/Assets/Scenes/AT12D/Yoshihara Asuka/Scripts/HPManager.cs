@@ -8,6 +8,7 @@
 // <開発履歴>
 // 2022/03/25 作成
 // 2022/03/28 仮実装
+// 2022/04/19 アイテム取得時の処理追加
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -16,9 +17,16 @@ using UnityEngine.UI;
 
 public class HPManager : MonoBehaviour
 {
-    public　Image HP;
+   // public　Image HP;
 
-    public int MaxHP = 6;                          // HPの最大値
+   public int MaxHP = 5;                          // HPの最大値
+
+    public GameObject PieceManager;                 //かけらマネージャー
+    public GameObject HPImage;                      //ｈｐ画像
+    private GameObject HPMask;                      //hpマスク画像
+
+    private PieceManager pieceManager;          //かけらマネージャーコンポーネント
+    private UVScroll hpTex;                     //ｈｐのUVScrollコンポーネント
 
     private void Awake()
     {
@@ -28,19 +36,77 @@ public class HPManager : MonoBehaviour
         //GameObject.Find("Harf Moon2").SetActive(false);
         //GameObject.Find("Harf Moon3").SetActive(false);
         //GameObject.Find("New Moon").SetActive(false);
+
+        HPMask = HPImage.transform.parent.gameObject;
+        pieceManager = PieceManager.GetComponent<PieceManager>();
+        hpTex = HPImage.GetComponent<UVScroll>();
+
+
     }
     // Start is called before the first frame update
     void Start()
     {
-        HP.fillAmount = (float)GameData.CurrentHP / MaxHP;
+        //現在のｈｐをもとにテクスチャ座標設定
+        hpTex.SetFrame(GameData.CurrentHP);
+       // HP.fillAmount = (float)GameData.CurrentHP / MaxHP;
     }
 
     // Update is called once per frame
     void Update()
     {
-        HP.fillAmount = (float)GameData.CurrentHP / MaxHP;
+        //  HP.fillAmount = (float)GameData.CurrentHP / MaxHP;
         //Debug.Log("HP量:"+HP.fillAmount);
         //Debug.Log("MAXHP:"+MaxHP);
         //Debug.Log("残HP:"+GameData.CurrentHP);
+
+        ////でバック表示
+        //if (Input.GetKeyDown(KeyCode.F5))
+        //{
+        //    GetItem();
+        //}
+        //if (Input.GetKeyDown(KeyCode.F6))
+        //{
+        //    GetPiece();
+        //}
+    }
+
+    public void GetPiece()
+    {
+        //HPが減っていたらHPを1回復
+        if(GameData.CurrentHP < MaxHP)
+        {
+            ++GameData.CurrentHP;
+            hpTex.SetFrame(GameData.CurrentHP);
+            //保存
+            //SaveManager.saveHP(GameData.CurrentHP);
+        }
+        else//HPが満タンだったらかけらを増やす
+        {
+            pieceManager.GetPiece();
+        }
+    }
+
+    public void Damaged()
+    {
+        if (!pieceManager.DelPiece())
+        {
+            //かけらがなかったらHP減らす
+            --GameData.CurrentHP;
+            hpTex.SetFrame(GameData.CurrentHP);
+            //保存
+            //SaveManager.saveHP(GameData.CurrentHP);
+        }
+    }
+
+    public void GetItem()
+    {
+        pieceManager.GetItem();
+    }
+
+    public void Vibration()
+    {
+        //UI振動させる
+        HPMask.GetComponent<pieceMove>().vibration();
+        pieceManager.Vibration();
     }
 }

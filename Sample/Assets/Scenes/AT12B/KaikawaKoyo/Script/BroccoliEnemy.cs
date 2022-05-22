@@ -15,17 +15,17 @@ public class BroccoliEnemy : MonoBehaviour
 {
     Transform Target;
     GameObject Player;
-    private Quaternion rot;
+    private Vector3 TargetPos;
     private Rigidbody rb;
     private EnemyDown ED;
-    //private bool loop = false;
 
     [SerializeField]
-    float MoveSpeed = 5.0f;
-    //[SerializeField]
-    //float SwingSpeed;
-    
-    bool InArea = false;
+    private float MoveSpeed = 5.0f;
+
+    private float InvincibleTime = 2.0f;
+    private float DamageTime;
+    private bool isGround = false;
+    private bool Invincible = false;
 
     private bool isCalledOnce = false;                             // 開始演出で使用。一回だけ処理をするために使う。
 
@@ -35,70 +35,84 @@ public class BroccoliEnemy : MonoBehaviour
         Target = Player.transform;                    // プレイヤーの座標取得
         rb = gameObject.GetComponent<Rigidbody>();
         ED = GetComponent<EnemyDown>();
-        rb.centerOfMass = new Vector3(0, -1, 0);
-        transform.Rotate(new Vector3(0, 0, 15));
     }
 
     private void Update()
     {
-        rot = transform.rotation;
-        print(rot.z);
-        // プレイヤーを見つけたら攻撃開始
-        if (InArea && ED.isAlive)
+        if(!Pause.isPause)
         {
-            Vector3 pos = rb.position;
-            // プレイヤーに向かって特攻する
-            float step = MoveSpeed * Time.deltaTime;
-            rb.position = Vector3.MoveTowards(pos, Target.position, step);
-
-            //if (rot.z < 0.20f && loop)
-            //{
-            //    rb.AddTorque(0.0f, 0.0f, -SwingSpeed);
-            //    if (rot.z > 0.20f)
-            //    {
-            //        loop = false;
-            //    }
-            //}
-            //if (rot.z > -0.20f && !loop)
-            //{
-            //    rb.AddTorque(0.0f, 0.0f, SwingSpeed);
-            //    if (rot.z < -0.20f)
-            //    {
-            //        loop = true;
-            //    }
-            //}
-
-            // SEの処理
-            if (!isCalledOnce)     // 一回だけ呼ぶ
+            if (Invincible)
             {
-                SoundManager.Play(SoundData.eSE.SE_BUROKORI,SoundData.GameAudioList);
-                isCalledOnce = true;
+                gameObject.layer = LayerMask.NameToLayer("Invincible");
+                transform.Rotate(0, 0, 0);
+                DamageTime += Time.deltaTime;
+                if (DamageTime > InvincibleTime)
+                {
+                    gameObject.layer = LayerMask.NameToLayer("Enemy");
+                    DamageTime = 0.0f;
+                    Invincible = false;
+                }
+            }
+
+            // プレイヤーを見つけたら攻撃開始
+            if (ED.isAlive)
+            {
+                Vector3 pos = rb.position;
+
+                // プレイヤーに向かって特攻する
+                float a = Player.transform.position.y - transform.position.y;
+                TargetPos = Target.position - new Vector3(0.0f, a, 0.0f);
+
+                float step = MoveSpeed * Time.deltaTime;
+                rb.position = Vector3.MoveTowards(pos, TargetPos, step);
+
+                if (Target.position.x < transform.position.x)   // プレイヤーのほうを向く処理
+                {
+                    transform.rotation = Quaternion.LookRotation(new Vector3(-180, 0, 0));
+                }
+                if (Target.position.x > transform.position.x)  // プレイヤーのほうを向く処理
+                {
+                    transform.rotation = Quaternion.LookRotation(new Vector3(180, 0, 0));
+                }
+                
+                // 落下処理
+                if (!isGround)
+                {
+                    rb.velocity += new Vector3(0.0f, -1.0f, 0.0f);
+                }
+
+                // SEの処理
+                if (!isCalledOnce)     // 一回だけ呼ぶ
+                {
+                    SoundManager.Play(SoundData.eSE.SE_BUROKORI, SoundData.GameAudioList);
+                    isCalledOnce = true;
+                }
             }
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        // 接触判定
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Invincible = true;
+        }
+    }
+    private void OnCollisionStay(Collision collision)
+    {
         // 接地判定
         if (collision.gameObject.CompareTag("Ground"))
         {
-            rb.constraints = RigidbodyConstraints.FreezePositionY;
+            isGround = true;
         }
     }
-
-    public void OnTriggerEnter(Collider other)    // コライダーでプレイヤーを索敵したい
+    private void OnCollisionExit(Collision collision)
     {
-        if (other.CompareTag("Player"))
+        // 接地判定
+        if (collision.gameObject.CompareTag("Ground"))
         {
-            InArea = true;
-        }
-    }
-
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            InArea = false;
+            isGround = false;
         }
     }
 }

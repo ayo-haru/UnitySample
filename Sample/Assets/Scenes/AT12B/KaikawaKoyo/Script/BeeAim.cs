@@ -15,26 +15,31 @@ public class BeeAim : MonoBehaviour
 {
     Transform Target;
     GameObject Player;
-    private BeeEnemy BE;
+    //GameObject BeeEnemy;
+    //private BeeEnemy BE;
     private Vector3 aim;
     private Quaternion look;
     private Vector3 targetPosition;
     private float FiringTime;
 
-    [SerializeField]
-    private GameObject FiringPoint;
+    //[SerializeField]
+    //private GameObject FiringPoint;
 
-    [SerializeField]
-    private GameObject BeeBullet;
+    //[SerializeField]
+    //private GameObject BeeBullet;
 
-    [SerializeField]
-    private float speed = 30.0f;
+    //[SerializeField]
+    //private float speed = 30.0f;
+
+    //[SerializeField]
+    //private float TimeOut = 3.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         Player = GameObject.FindWithTag("Player");    // プレイヤーのオブジェクトを探す
-        BE = GetComponent<BeeEnemy>();
+        //BeeEnemy = GameObject.Find("Bee");
+        //BE = BeeEnemy.GetComponent<BeeEnemy>();
         
     }
 
@@ -44,23 +49,10 @@ public class BeeAim : MonoBehaviour
         Target = Player.transform;          // プレイヤーの座標取得
         targetPosition = Target.position;
 
+        // プレイヤーを狙い続ける
         aim = targetPosition - transform.position;
         look = Quaternion.LookRotation(aim);
         transform.localRotation = look;
-
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            PoisonShot();
-        }
-
     }
-
-    private void PoisonShot()
-    {
-        GameObject newBall = Instantiate(BeeBullet, transform.position, transform.rotation);
-        Vector3 direction = newBall.transform.forward;
-        newBall.GetComponent<Rigidbody>().AddForce(direction * speed, ForceMode.Impulse);
-
-    }
-
+    
 }

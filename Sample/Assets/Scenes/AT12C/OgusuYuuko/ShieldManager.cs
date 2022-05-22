@@ -14,7 +14,7 @@ using UnityEngine;
 
 public class ShieldManager : MonoBehaviour
 {
-    private int now_Quantity = 0;   //Œ»İ‚Ì‚‚ÌŒÂ”
+    public int now_Quantity = 0;   //Œ»İ‚Ì‚‚ÌŒÂ”
     public int max_Quantity = 1;   //‚‚ÌÅ‘å”
 
     // Start is called before the first frame update
@@ -49,7 +49,5 @@ public class ShieldManager : MonoBehaviour
         --now_Quantity;
         Debug.Log("‚Á‚µ‚½" + now_Quantity);
     }
-
-
 
 }

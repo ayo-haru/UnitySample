@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 8560796169345879313}
   - component: {fileID: 8560796169345879318}
   - component: {fileID: 7553379192002922078}
+  - component: {fileID: 541903254105971817}
+  - component: {fileID: -7738778207851830287}
+  - component: {fileID: 5532429432209312885}
   m_Layer: 0
   m_Name: KitchenSceneManager
   m_TagString: Untagged
@@ -44,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bdbf00a16ded3f42bd9c5d3d075154f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 8439819305424355747, guid: 790e1b1f33d8d5f47aed42f83b19f068, type: 3}
+  playerPrefab: {fileID: 2989549751805859224, guid: 7378e7d4d318386408ba41cf399d7748, type: 3}
   currentSceneNum: 1
 --- !u!114 &7553379192002922078
 MonoBehaviour:
@@ -58,4 +61,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f400ce149ad4e364692be7903148b000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DisplayHP: {fileID: 7502291967901619318, guid: 9091ff210e0d54c40b450e308e1d6fd9, type: 3}
+  DisplayHP: {fileID: 6413319841227103692, guid: 080ffa4e3f1665d4d8e93b38dd9c82d2, type: 3}
+--- !u!114 &541903254105971817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8560796169345879312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12fe0d5ffad9b4742a3becfc5587a476, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DisplayMAP: {fileID: 845793969205575950, guid: c459803c0cd398048a52ef109081dd9a, type: 3}
+--- !u!114 &-7738778207851830287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8560796169345879312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3479e38bd6c12304ebee994cc5957124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5532429432209312885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8560796169345879312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34bf1d6354c44984f93b760093cba862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

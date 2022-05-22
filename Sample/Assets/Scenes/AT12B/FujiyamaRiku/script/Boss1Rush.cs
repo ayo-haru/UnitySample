@@ -25,6 +25,7 @@ public class Boss1Rush : MonoBehaviour
     bool RushEndFlg;
     float RushReturnSpeed;
     bool ReturnDelay;                                      //戻ろうとするまでの時間
+    bool EFFlg;
     Vector3 oldScale;
     [SerializeField] public float RotateSpeed;
     Vector3 Rotate;
@@ -63,6 +64,11 @@ public class Boss1Rush : MonoBehaviour
 
         if (BossAttack.OnlyFlg && BossAttack.MoveFlg)
         {
+            if (!EFFlg)
+            {
+                EffectManager.Play(EffectData.eEFFECT.EF_BOSS_FORK, GameObject.Find("ForkEF").transform.position);
+                EFFlg = true;
+            }
             //ボスが突進終了後に変える処理
             if (BossReturnFlg)
             {
@@ -87,9 +93,11 @@ public class Boss1Rush : MonoBehaviour
                 {
                     Boss1Manager.BossPos = Vector3.Lerp(RushRefEndPoint, RushStartPoint, BossReturnTime);
                 }
+               
                 //開始地点まで戻ってきたときにもろもろ初期化
                 if (BossReturnTime >= 1.0f)
                 {
+                    GameObject.Find("BossStageManager").GetComponent<ShakeCamera>().Shake(0.2f, 10, 1);
                     if (Fork != null)
                     {
                         Destroy(Fork);
@@ -108,6 +116,8 @@ public class Boss1Rush : MonoBehaviour
                     ReturnDelay = false;
                     RushEndFlg = false;
                     BossReturnFlg = false;
+                    RushRefFlg = false;
+                    EFFlg = false; 
                     BossAttack.AnimFlagOnOff();
                     BossAttack.BossAnim.SetBool("IdleToTake", false);
                     BossAttack.BossAnim.SetBool("RushToJump", false);
@@ -131,6 +141,7 @@ public class Boss1Rush : MonoBehaviour
             //弾かれたら一回だけ処理する部分
             if (BossAttack.RefrectFlg)
             {
+                
                 RushRefFlg = true;
                 RushPlayerPoint = Boss1Manager.Boss.transform.position;
                 BossAttack.BossAnim.SetBool("RushToJump", false);
@@ -141,6 +152,7 @@ public class Boss1Rush : MonoBehaviour
             if (!RushRefFlg)
             {
                 RushTime += Time.deltaTime * RushSpeed;
+                
                 Boss1Manager.BossPos = Vector3.Lerp(RushStartPoint, RushEndPoint, RushTime);
                 if (RushTime >= 1.0f)
                 {
@@ -155,11 +167,18 @@ public class Boss1Rush : MonoBehaviour
             //弾かれていた場合の処理
             if (RushRefFlg)
             {
+                
                 RushRefTime += Time.deltaTime * 2f;
                 //壁にぶつけているように見せる
                 Boss1Manager.BossPos = Vector3.Lerp(RushPlayerPoint, RushRefEndPoint, RushRefTime);
                 if (RushRefTime >= 1.0f)
                 {
+                    
+                    if (RushRefTime <= 1.1f)
+                    {
+                        GameObject.Find("BossStageManager").GetComponent<ShakeCamera>().Shake(0.3f, 5, 1);
+                    }
+
                     Destroy(Fork);
                     RushEndFlg = false;
                     BossAttack.BossAnim.SetBool("Blow", false);

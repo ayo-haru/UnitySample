@@ -1913,6 +1913,7 @@ GameObject:
   - component: {fileID: 602515335}
   - component: {fileID: 602515336}
   - component: {fileID: 602515337}
+  - component: {fileID: 602515338}
   m_Layer: 0
   m_Name: BossStageManager
   m_TagString: Untagged
@@ -2023,6 +2024,18 @@ MonoBehaviour:
   DelFlame: 60
   MaxLength: 100
   UpMax: 30
+--- !u!114 &602515338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602515330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f7ce8b74b327c345a9f586dac98c074, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &626108334
 GameObject:
   m_ObjectHideFlags: 0
@@ -5530,8 +5543,8 @@ Transform:
   - {fileID: 184959720}
   - {fileID: 342167179}
   - {fileID: 865413995}
-  - {fileID: 1301931359}
   - {fileID: 994264964}
+  - {fileID: 1301931359}
   - {fileID: 172996665}
   m_Father: {fileID: 0}
   m_RootOrder: 23
@@ -6852,7 +6865,7 @@ MonoBehaviour:
   option: {fileID: 3909750771960288317, guid: aea92117378a4f649ab9cf6b82ea8e4f, type: 3}
   optionmanager: {fileID: 7567749413586506968, guid: e3aefa133e5541445b6087b29fdfdc27, type: 3}
   panel: {fileID: 2127309190153196343, guid: 2873e858a6a337048b42c72c52bc2047, type: 3}
-  selestbox: {fileID: 0}
+  selectbox: {fileID: 0}
 --- !u!114 &1886181989
 MonoBehaviour:
   m_ObjectHideFlags: 0

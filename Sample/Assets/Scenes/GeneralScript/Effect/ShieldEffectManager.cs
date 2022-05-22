@@ -41,22 +41,40 @@ public class ShieldEffectManager : MonoBehaviour
         //    ShileEffect.transform.Rotate(new Vector3(60.0f, ShileEffect.transform.rotation.y, ShileEffect.transform.rotation.z));
         //}
 
-        if (this.AttackDirection.x > 0.2f)  //âE
+        //if (this.AttackDirection.x > 0.2f)  //âE
+        //{
+        //    ShileEffect.transform.Rotate(new Vector3(ShileEffect.transform.rotation.x, 60.0f, ShileEffect.transform.rotation.z));
+        //}
+        //if (this.AttackDirection.x < -0.2f) // ç∂
+        //{
+        //    ShileEffect.transform.Rotate(new Vector3(ShileEffect.transform.rotation.x, 60.0f, ShileEffect.transform.rotation.z));
+        //}
+        //if (this.AttackDirection.y < -0.2f) // â∫
+        //{
+        //    ShileEffect.transform.Rotate(new Vector3(-60.0f, ShileEffect.transform.rotation.y, ShileEffect.transform.rotation.z));
+        //}
+        //if (this.AttackDirection.y > 0.2f)  // è„
+        //{
+        //    ShileEffect.transform.Rotate(new Vector3(45.0f, ShileEffect.transform.rotation.y, ShileEffect.transform.rotation.z));
+        //}
+
+        if (AttackDirection.x < -0.2f)
         {
-            ShileEffect.transform.Rotate(new Vector3(ShileEffect.transform.rotation.x, 60.0f, ShileEffect.transform.rotation.z));
+            ShileEffect.transform.Rotate(new Vector3(ShileEffect.transform.rotation.x, 45.0f, ShileEffect.transform.rotation.z));
         }
-        if (this.AttackDirection.x < -0.2f) // ç∂
+        if (AttackDirection.x > 0.2f)
         {
-            ShileEffect.transform.Rotate(new Vector3(ShileEffect.transform.rotation.x, 60.0f, ShileEffect.transform.rotation.z));
+            ShileEffect.transform.Rotate(new Vector3(ShileEffect.transform.rotation.x, -45.0f, ShileEffect.transform.rotation.z));
         }
-        if (this.AttackDirection.y < -0.2f) // â∫
+        if (AttackDirection.y < -0.2f)
         {
-            ShileEffect.transform.Rotate(new Vector3(-60.0f, ShileEffect.transform.rotation.y, ShileEffect.transform.rotation.z));
+            ShileEffect.transform.Rotate(new Vector3(-45.0f, ShileEffect.transform.rotation.y, ShileEffect.transform.rotation.z));
         }
-        if (this.AttackDirection.y > 0.2f)  // è„
+        if (AttackDirection.y > 0.2f)
         {
             ShileEffect.transform.Rotate(new Vector3(45.0f, ShileEffect.transform.rotation.y, ShileEffect.transform.rotation.z));
         }
+
 
         //ShileEffect.transform.Rotate(new Vector3(0, 0, 90));
 

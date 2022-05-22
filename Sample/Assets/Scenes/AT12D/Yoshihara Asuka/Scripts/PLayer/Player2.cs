@@ -517,7 +517,7 @@ public class Player2 : MonoBehaviour
         _weapon.GetComponent<ShieldEffectManager>().SetPlayerAttackDire(AttackDirection);
 
         _weapon.transform.Rotate(new Vector3(0, 0, (90 * AttackDirection.y)));
-
+            
         ////エフェクト回転
         //if (AttackDirection.x < -0.2f){
         //    ShiledEffect.transform.Rotate(new Vector3(ShiledEffect.transform.rotation.x, 60.0f, ShiledEffect.transform.rotation.z));

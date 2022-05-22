@@ -10,29 +10,37 @@ public class FireSwitch : MonoBehaviour
     private GameObject switch_OFF;
     private MeshRenderer Mesh_Off;
     private GameObject stove;
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
-        switch_ON = GameObject.Find("switch_on");
-        Mesh_On = switch_ON.GetComponent<MeshRenderer>();
-        switch_OFF = GameObject.Find("switch_off");
-        Mesh_Off = switch_OFF.GetComponent<MeshRenderer>();
+        //switch_ON = GameObject.Find("switch_on");
+        //Mesh_On = switch_ON.GetComponent<MeshRenderer>();
+        //switch_OFF = GameObject.Find("switch_off");
+        //Mesh_Off = switch_OFF.GetComponent<MeshRenderer>();
 
         stove = GameObject.Find("Stove");
 
-        if (GameData.FireOnOff)
-        {
-            Mesh_On.enabled = true;
-            Mesh_Off.enabled = false;
-            //stove.GetComponent<Stove>().Ignition();
-        }
-        else
-        {
-            Mesh_On.enabled = false;
-            Mesh_Off.enabled = true;
-            //stove.GetComponent<Stove>().Extinguish();
-        }
+        //if (GameData.FireOnOff)                             
+        //{
+        //    //---On‚ÌŽž
+        //    //Mesh_On.enabled = true;
+        //    //Mesh_Off.enabled = false;
+        //    //stove.GetComponent<Stove>().Ignition();
+        //    animator.Play("On");
+
+
+        //}
+        //else
+        //{
+        //    //---Off‚ÌŽž
+        //    //Mesh_On.enabled = false;
+        //    //Mesh_Off.enabled = true;
+        //    //stove.GetComponent<Stove>().Extinguish();
+        //    animator.Play("Off");
+
+        //}
 
     }
 
@@ -47,15 +55,19 @@ public class FireSwitch : MonoBehaviour
 
         if (GameData.FireOnOff)
         {
-            Mesh_On.enabled = true;
-            Mesh_Off.enabled = false;
+            //Mesh_On.enabled = true;
+            //Mesh_Off.enabled = false;
             SoundManager.Play(SoundData.eSE.SE_SWITCH, SoundData.GameAudioList);
+            animator.Play("On");
+
         }
         else
         {
-            Mesh_On.enabled = false;
-            Mesh_Off.enabled = true;
+            //Mesh_On.enabled = false;
+            //Mesh_Off.enabled = true;
             SoundManager.Play(SoundData.eSE.SE_EXTINGUISH,SoundData.GameAudioList);
+            animator.Play("Off");
+
         }
     }
 

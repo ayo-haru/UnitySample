@@ -158,7 +158,7 @@ public class PieceManager : MonoBehaviour
             //ゲームデータ更新
             ++GameData.CurrentPiece;
             //保存
-            SaveManager.saveCurrentPiece(GameData.CurrentPiece);
+            //SaveManager.saveCurrentPiece(GameData.CurrentPiece);
 
     }
 
@@ -188,7 +188,7 @@ public class PieceManager : MonoBehaviour
             //ゲームデータ更新
             --GameData.CurrentPiece;
             //保存
-            SaveManager.saveCurrentPiece(GameData.CurrentPiece);
+            //SaveManager.saveCurrentPiece(GameData.CurrentPiece);
 
             return true;
         }
@@ -230,7 +230,7 @@ public class PieceManager : MonoBehaviour
             //ゲームデータ更新
             ++GameData.CurrentPieceGrade;
             //保存
-            SaveManager.savePieceGrade(GameData.CurrentPieceGrade);
+            //SaveManager.savePieceGrade(GameData.CurrentPieceGrade);
             ////表示
             //piece[PieceGrade - 1].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
             //piece[PieceGrade - 1].GetComponent<ImageShow>().Show();

@@ -78,7 +78,7 @@ public class HPManager : MonoBehaviour
             ++GameData.CurrentHP;
             hpTex.SetFrame(GameData.CurrentHP);
             //•Û‘¶
-            SaveManager.saveHP(GameData.CurrentHP);
+            //SaveManager.saveHP(GameData.CurrentHP);
         }
         else//HP‚ª–ƒ^ƒ“‚¾‚Á‚½‚ç‚©‚¯‚ç‚ğ‘‚â‚·
         {
@@ -94,7 +94,7 @@ public class HPManager : MonoBehaviour
             --GameData.CurrentHP;
             hpTex.SetFrame(GameData.CurrentHP);
             //•Û‘¶
-            SaveManager.saveHP(GameData.CurrentHP);
+            //SaveManager.saveHP(GameData.CurrentHP);
         }
     }
 

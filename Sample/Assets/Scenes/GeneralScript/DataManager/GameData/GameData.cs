@@ -105,7 +105,10 @@ public static class GameData {
         FireOnOff = SaveManager.sd.fireOnOff;
         GateOnOff = SaveManager.sd.gateOnOff;
         CurrentPiece = SaveManager.sd.CurrentPiece;
-        CurrentPieceGrade = SaveManager.sd.PieceGrade;
+        if (!GameOver.GameOverFlag)
+        {
+            CurrentPieceGrade = SaveManager.sd.PieceGrade;
+        }
         SoundManager.bgmVolume = SaveManager.sd.bgmVolume;
         SoundManager.seVolume = SaveManager.sd.seVolume;
     }

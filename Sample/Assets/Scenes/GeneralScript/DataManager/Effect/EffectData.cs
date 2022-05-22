@@ -56,7 +56,7 @@ public static class EffectData
         EF_BOSS_RAINZONE,
 
         //---‚»‚Ì‘¼
-        EF_SHEILD2,
+        //EF_SHEILD2,
 
         MAX_EF
     }

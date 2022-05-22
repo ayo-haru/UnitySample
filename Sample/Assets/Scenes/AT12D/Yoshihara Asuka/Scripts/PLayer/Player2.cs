@@ -214,6 +214,7 @@ public class Player2 : MonoBehaviour
                 return;
             }
 
+#if UNITY_EDITOR
             //---バックスペースキーでHPを減らす(デバッグ)
             if (Input.GetKeyDown(KeyCode.Backspace))
             {
@@ -241,6 +242,7 @@ public class Player2 : MonoBehaviour
 
                 animator.Play("Death");
             }
+#endif
 
             //---地面と当たった時にジャンプフラグ・下パリイフラグを下す
             if (GroundNow)
@@ -836,9 +838,9 @@ public class Player2 : MonoBehaviour
         //GUILayout.Label($"RighetTrigger:{Gamepad.current.rightTrigger.ReadValue()}");
         //GUILayout.Label($"LeftStickUp:{Gamepad.current.leftStick.up.ReadValue()}");
         //GUILayout.Label($"Space:{Keyboard.current.spaceKey.ReadValue()}");
-        GUILayout.Label($"JumpFlg:{JumpNow}");
-        GUILayout.Label($"GroudFlg:{GroundNow}");
-        GUILayout.Label($"UnderParryFlg:{UnderParryNow}");
+        //GUILayout.Label($"JumpFlg:{JumpNow}");
+        //GUILayout.Label($"GroudFlg:{GroundNow}");
+        //GUILayout.Label($"UnderParryFlg:{UnderParryNow}");
     }
 }
 #endregion

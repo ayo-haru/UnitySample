@@ -119,7 +119,7 @@ public class TitleSceneManager : MonoBehaviour {
             SelectFrame.GetComponent<RectTransform>().position = GameStart.GetComponent<RectTransform>().position;
             SelectFrame.GetComponent<UI_Parry>().enabled = true;
             GameStart.GetComponent<UI_Parry>().enabled = true;
-            
+
 
             SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
 
@@ -166,7 +166,7 @@ public class TitleSceneManager : MonoBehaviour {
                 }
             }
         }
-       
+
 
 
 
@@ -197,7 +197,8 @@ public class TitleSceneManager : MonoBehaviour {
                 titlePlayer.decisionFlag = true;
                 isDecision = false;
 
-            }else if (weight && !titlePlayer.decisionFlag)
+            }
+            else if (weight && !titlePlayer.decisionFlag)
             {
                 weight = false;
                 // すべてのデータの初期化
@@ -205,7 +206,7 @@ public class TitleSceneManager : MonoBehaviour {
 
                 // シーン関連
                 GameData.OldMapNumber = GameData.CurrentMapNumber;
-                GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001;
+                GameData.NextMapNumber = (int)GameData.eSceneState.Tutorial1;
                 string nextSceneName = GameData.GetNextScene(GameData.NextMapNumber);
                 SceneManager.LoadScene(nextSceneName);
             }
@@ -279,7 +280,7 @@ public class TitleSceneManager : MonoBehaviour {
 
 
         }
-        else if(select == (int)eSTATETITLE.OPTION)
+        else if (select == (int)eSTATETITLE.OPTION)
         {
             Option.GetComponent<UIBlink>().isBlink = true;     //UIを点滅
             GameStart.GetComponent<UIBlink>().isBlink = false; // UIを点滅を消す
@@ -302,9 +303,9 @@ public class TitleSceneManager : MonoBehaviour {
                 isDecision = false;
                 //演出待ち
                 weight = true;
-                
+
             }
-            else if(weight && !titlePlayer.decisionFlag)
+            else if (weight && !titlePlayer.decisionFlag)
             {
                 weight = false;
                 //オプションマネージャーをアクティブにする
@@ -360,8 +361,7 @@ public class TitleSceneManager : MonoBehaviour {
         UIActionAssets.UI.Disable();
     }
 
-    private void OnLeftStick(InputAction.CallbackContext obj)
-    {
+    private void OnLeftStick(InputAction.CallbackContext obj) {
         if (!isPressButton || Optionmanager.activeSelf)
         {
             return;
@@ -382,8 +382,7 @@ public class TitleSceneManager : MonoBehaviour {
         }
     }
 
-    private void OnRightStick(InputAction.CallbackContext obj)
-    {
+    private void OnRightStick(InputAction.CallbackContext obj) {
         if (!isPressButton || Optionmanager.activeSelf)
         {
             return;
@@ -402,14 +401,13 @@ public class TitleSceneManager : MonoBehaviour {
         {
             SelectDown();
         }
-        
+
     }
-    
+
     /// <summary>
     /// 決定ボタン
     /// </summary>
-    private void OnDecision(InputAction.CallbackContext obj)
-    {
+    private void OnDecision(InputAction.CallbackContext obj) {
         if (!isPressButton || Optionmanager.activeSelf)
         {
             return;
@@ -417,29 +415,6 @@ public class TitleSceneManager : MonoBehaviour {
         isDecision = true;
     }
 
-    private void OnGUI()
-    {
-        if (Gamepad.current == null)
-        {
-            return;
-        }
-
-        //---ゲームパッドとつながっている時に表示される。
-        GUILayout.Label($"LeftStick:{Gamepad.current.leftStick.ReadValue()}");
-        GUILayout.Label($"RightStick:{Gamepad.current.rightStick.ReadValue()}");
-        GUILayout.Label($"ButtonNorth:{Gamepad.current.buttonNorth.isPressed}");
-        GUILayout.Label($"ButtonSouth:{Gamepad.current.buttonSouth.isPressed}");
-        GUILayout.Label($"ButtonEast:{Gamepad.current.buttonEast.isPressed}");
-        GUILayout.Label($"ButtonWast:{Gamepad.current.buttonWest.isPressed}");
-        GUILayout.Label($"LeftShoulder:{Gamepad.current.leftShoulder.ReadValue()}");
-        GUILayout.Label($"LeftTrigger:{Gamepad.current.leftTrigger.ReadValue()}");
-        GUILayout.Label($"RightShoulder:{Gamepad.current.rightShoulder.ReadValue()}");
-        GUILayout.Label($"RighetTrigger:{Gamepad.current.rightTrigger.ReadValue()}");
-        GUILayout.Label($"LeftStickUp:{Gamepad.current.leftStick.up.ReadValue()}");
-        GUILayout.Label($"Space:{Keyboard.current.spaceKey.ReadValue()}");
-
-    }
 }
-
 
 

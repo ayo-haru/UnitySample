@@ -197,9 +197,9 @@ public class GamePause : MonoBehaviour
         }
 
 
-            //----- ポーズ中の処理 -----
-            //オプションが開いてる間は無効にする
-            if (!Optionmanager.activeSelf)
+        //----- ポーズ中の処理 -----
+        //オプションが開いてる間は無効にする
+        if (!Optionmanager.activeSelf)
         {
             // ポーズになったら選択させる
             if (keyboard.upArrowKey.wasReleasedThisFrame)

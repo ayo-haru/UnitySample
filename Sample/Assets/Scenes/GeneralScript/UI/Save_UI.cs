@@ -39,6 +39,10 @@ public class Save_UI : MonoBehaviour
     private GameObject stick;
     private GameObject Stick;
 
+    [SerializeField]
+    private GameObject selectbox;
+    private GameObject SelectBox;
+
     private Canvas canvas;                  // このシーンのキャンバスを保存
 
     private int select;                     // 選択を保存
@@ -67,9 +71,11 @@ public class Save_UI : MonoBehaviour
         Stick = Instantiate(stick);
         WarpCharacter = Instantiate(warpcharacter);
         SusumuCharacter = Instantiate(susumucharacter);
+        SelectBox = Instantiate(selectbox);
 
         // キャンバスの子にする
         SaveCharacter.transform.SetParent(this.canvas.transform, false);
+        SelectBox.transform.SetParent(this.canvas.transform, false);
         YesCharacter.transform.SetParent(this.canvas.transform, false);
         NoCharacter.transform.SetParent(this.canvas.transform, false);
         Stick.transform.SetParent(this.canvas.transform,false);
@@ -77,12 +83,15 @@ public class Save_UI : MonoBehaviour
         SusumuCharacter.transform.SetParent(this.canvas.transform, false);
 
         // 通常は非表示
-        SaveCharacter.GetComponent<UIBlink>().isHide = true;
-        YesCharacter.GetComponent<UIBlink>().isHide = true;
-        NoCharacter.GetComponent<UIBlink>().isHide = true;
+        SelectBox.GetComponent<UIBlink>().isBlink = true;
+        SelectBox.GetComponent<UIBlink>().isHide = true;
+        SelectBox.GetComponent<Image>().enabled = false;
+        SaveCharacter.GetComponent<Image>().enabled = false;
+        YesCharacter.GetComponent<Image>().enabled = false;
+        NoCharacter.GetComponent<Image>().enabled = false;
         Stick.GetComponent<UIBlink>().isHide = true;
-        WarpCharacter.GetComponent<UIBlink>().isHide = true;
-        SusumuCharacter.GetComponent<UIBlink>().isHide = true;
+        WarpCharacter.GetComponent<Image>().enabled = false;
+        SusumuCharacter.GetComponent<Image>().enabled = false;
 
     }
 
@@ -103,17 +112,16 @@ public class Save_UI : MonoBehaviour
             //----- ワープ -----
             if (!Warp.canWarp)
             {
-                // セーブは非表示
-                SaveCharacter.GetComponent<UIBlink>().isHide = true;
-                YesCharacter.GetComponent<UIBlink>().isHide = true;
-                NoCharacter.GetComponent<UIBlink>().isHide = true;
-                YesCharacter.GetComponent<UIBlink>().isBlink = false;
-                NoCharacter.GetComponent<UIBlink>().isBlink = false;
-                Stick.GetComponent<UIBlink>().isHide = true;
-                // ワープは隠す
-                WarpCharacter.GetComponent<UIBlink>().isHide = true;
-                SusumuCharacter.GetComponent<UIBlink>().isHide = true;
-                SusumuCharacter.GetComponent<UIBlink>().isBlink = false;
+                // すべて非表示
+                SelectBox.GetComponent<UIBlink>().isBlink = true;
+                SelectBox.GetComponent<UIBlink>().isHide = true;
+                SelectBox.GetComponent<Image>().enabled = false;
+                SaveCharacter.GetComponent<Image>().enabled = false;
+                YesCharacter.GetComponent<Image>().enabled = false;
+                NoCharacter.GetComponent<Image>().enabled = false;
+                Stick.GetComponent<Image>().enabled = false;
+                WarpCharacter.GetComponent<Image>().enabled = false;
+                SusumuCharacter.GetComponent<Image>().enabled = false;
 
                 if (Player.isHitSavePoint)  // セーブポイントに当たったら操作方法を表示
                 {
@@ -126,18 +134,16 @@ public class Save_UI : MonoBehaviour
             {
                 GamePadManager.onceTiltStick = false;
                 // セーブは非表示
-                SaveCharacter.GetComponent<UIBlink>().isHide = true;
-                YesCharacter.GetComponent<UIBlink>().isHide = true;
+                SaveCharacter.GetComponent<Image>().enabled = false;
+                YesCharacter.GetComponent<Image>().enabled = false;
                 Stick.GetComponent<UIBlink>().isHide = true;
                 // ワープは表示
-                WarpCharacter.GetComponent<UIBlink>().isHide = false;
-                SusumuCharacter.GetComponent<UIBlink>().isHide = false;
+                WarpCharacter.GetComponent<Image>().enabled = true;
+                SusumuCharacter.GetComponent<Image>().enabled = true;
                 NoCharacter.GetComponent<RectTransform>().localPosition = new Vector3(327.0f,115.0f,0.0f);
-                NoCharacter.GetComponent<UIBlink>().isHide = false;
+                NoCharacter.GetComponent<Image>().enabled = true;
 
-
-                //Pause.isPause = true;   // UI表示時はポーズ
-                Debug.Log("UI表示時ポーズ");
+                SelectBoxPosUpdete();   // 選択枠の更新
             }
             // ワープ可能になったら選択させる
             if (keyboard.leftArrowKey.wasReleasedThisFrame)
@@ -168,39 +174,25 @@ public class Save_UI : MonoBehaviour
             }
 
             // 選択の決定
-            if (select == 0)
+            if (select == 0)    // ワープはい
             {
-                SusumuCharacter.GetComponent<UIBlink>().isBlink = true;
-                NoCharacter.GetComponent<UIBlink>().isBlink = false;
-
                 if (isDecision)
                 {
                     SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);   // 決定音
                     Pause.isPause = false;  // ポーズやめる
-                    Debug.Log("ワープするの解除");
                     Warp.canWarp = false;    // ワープ可能下す
                     Warp.shouldWarp = true;  // ワープするべきなのでフラグを立てる
-                    SusumuCharacter.GetComponent<UIBlink>().isHide = true; // UI表示を隠す
-                    NoCharacter.GetComponent<UIBlink>().isHide = true;
-                    SusumuCharacter.GetComponent<UIBlink>().isBlink = false;   // 点滅を消す
                     isDecision = false;
                     
                 }
             }
             else
             {
-                SusumuCharacter.GetComponent<UIBlink>().isBlink = false;
-                NoCharacter.GetComponent<UIBlink>().isBlink = true;
-
-                if (isDecision)
+                if (isDecision) // ワープいいえ
                 {
                     SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList); // 決定音
                     Warp.canWarp = false;    // ワープ可能下す
                     Pause.isPause = false;  // ポーズをやめる
-                    Debug.Log("ワープしないの解除");
-                    SusumuCharacter.GetComponent<UIBlink>().isHide = true; // UI表示を隠す
-                    NoCharacter.GetComponent<UIBlink>().isHide = true;
-                    NoCharacter.GetComponent<UIBlink>().isBlink = false;   // 点滅を消す
                     isDecision = false;
                 }
             }
@@ -211,16 +203,16 @@ public class Save_UI : MonoBehaviour
             //----- セーブ -----
             if (!SaveManager.canSave)
             {
-                // セーブ可能でないときはUIを隠す
-                SaveCharacter.GetComponent<UIBlink>().isHide = true;
-                YesCharacter.GetComponent<UIBlink>().isHide = true;
-                NoCharacter.GetComponent<UIBlink>().isHide = true;
-                YesCharacter.GetComponent<UIBlink>().isBlink = false;
-                NoCharacter.GetComponent<UIBlink>().isBlink = false;
+                // すべて非表示
+                SelectBox.GetComponent<UIBlink>().isBlink = true;
+                SelectBox.GetComponent<UIBlink>().isHide = true;
+                SelectBox.GetComponent<Image>().enabled = false;
+                SaveCharacter.GetComponent<Image>().enabled = false;
+                YesCharacter.GetComponent<Image>().enabled = false;
+                NoCharacter.GetComponent<Image>().enabled = false;
                 Stick.GetComponent<UIBlink>().isHide = true;
-                // ワープは隠す
-                WarpCharacter.GetComponent<UIBlink>().isHide = true;
-                SusumuCharacter.GetComponent<UIBlink>().isHide = true;
+                WarpCharacter.GetComponent<Image>().enabled = false;
+                SusumuCharacter.GetComponent<Image>().enabled = false;
 
                 if (Player.isHitSavePoint)  // セーブポイントに当たったら操作方法を表示
                 {
@@ -235,18 +227,16 @@ public class Save_UI : MonoBehaviour
                 Pause.isPause = true;
 
                 // セーブ可能になったらUIを表示
-                SaveCharacter.GetComponent<UIBlink>().isHide = false;
-                YesCharacter.GetComponent<UIBlink>().isHide = false;
+                SaveCharacter.GetComponent<Image>().enabled = true;
+                YesCharacter.GetComponent<Image>().enabled = true;
                 NoCharacter.GetComponent<RectTransform>().localPosition = new Vector3(146.0f, 115.0f, 0.0f);
-                NoCharacter.GetComponent<UIBlink>().isHide = false;
+                NoCharacter.GetComponent<Image>().enabled = true;
                 Stick.GetComponent<UIBlink>().isHide = true;
                 // ワープは非表示
-                WarpCharacter.GetComponent<UIBlink>().isHide = true;
-                SusumuCharacter.GetComponent<UIBlink>().isHide = true;
+                WarpCharacter.GetComponent<Image>().enabled = false;
+                SusumuCharacter.GetComponent<Image>().enabled = false;
 
-
-                //Pause.isPause = true;   // UI表示時はポーズ
-                Debug.Log("セーブUI表示時のポーズ");
+                SelectBoxPosUpdete();   // 選択枠の更新
             }
 
 
@@ -282,56 +272,25 @@ public class Save_UI : MonoBehaviour
             // 選択しているものが何かで分岐
             if (select == 0)
             {
-                YesCharacter.GetComponent<UIBlink>().isBlink = true;    // UIを点滅
-                NoCharacter.GetComponent<UIBlink>().isBlink = false;    // 点滅を消す
-
                 if (isDecision)
                 {
                     SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);   // 決定音
                     SaveManager.canSave = false;    // セーブ可能下す
                     SaveManager.shouldSave = true;  // セーブするべきなのでフラグを立てる
                     Pause.isPause = false;
-                    YesCharacter.GetComponent<UIBlink>().isHide = true; // UI表示を隠す
-                    NoCharacter.GetComponent<UIBlink>().isHide = true;
-                    YesCharacter.GetComponent<UIBlink>().isBlink = false;   // 点滅を消す
                     isDecision = false;
                 }
             }
             else
             {
-                YesCharacter.GetComponent<UIBlink>().isBlink = false;   // 点滅を消す
-                NoCharacter.GetComponent<UIBlink>().isBlink = true;     // UIを点滅
-
                 if (isDecision)
                 {
                     SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList); // 決定音
                     SaveManager.canSave = false;    // セーブ可能を下す
                     Pause.isPause = false;
-                    YesCharacter.GetComponent<UIBlink>().isHide = true; // UIを消す
-                    NoCharacter.GetComponent<UIBlink>().isHide = true;
-                    NoCharacter.GetComponent<UIBlink>().isBlink = false;    // UIの点滅を消す
                     isDecision = false;
                 }
             }
-        }
-    }
-
-    private void SelectUp() {
-        SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.IndelibleAudioList);
-        select--;
-        if (select < 0)
-        {
-            select = 0;
-        }
-    }
-
-    private void SelectDown() {
-        SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.IndelibleAudioList);
-
-        select++;
-        if (select > 1)
-        {
-            select = 0;
         }
     }
 
@@ -404,4 +363,46 @@ public class Save_UI : MonoBehaviour
             isDecision = true;
         }
     }
+
+    private void SelectUp() {
+        // 音
+        SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.IndelibleAudioList);
+        select--;
+        if (select < 0)
+        {
+            select = 0;
+        }
+        SelectBoxPosUpdete();   // 選択枠の更新
+    }
+
+    private void SelectDown() {
+        // 音
+        SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.IndelibleAudioList);
+
+        select++;
+        if (select > 1)
+        {
+            select = 0;
+        }
+        SelectBoxPosUpdete();   // 選択枠の更新
+    }
+
+    /// <summary>
+    /// 選択枠の座標更新
+    /// </summary>
+    private void SelectBoxPosUpdete() {
+        /*
+         * 選択枠の位置の更新
+         * それぞれの文字のRectTransformと合わせることで同じ位置に表示ができる
+         */
+        if (select == 0)
+        {
+            SelectBox.GetComponent<RectTransform>().localPosition = YesCharacter.GetComponent<RectTransform>().localPosition;
+        }
+        else if (select == 1)
+        {
+            SelectBox.GetComponent<RectTransform>().localPosition = NoCharacter.GetComponent<RectTransform>().localPosition;
+        }
+    }
+
 }

@@ -25,6 +25,7 @@ public class pieceMove : MonoBehaviour
     public float moveWidth = 10.0f;     //移動幅
     public float vibrationWidth = 10.0f;        //振動幅
     public bool startFlag = true;                 //移動開始用フラグ
+    private Vector3 defaultPos;             //規定位置
     
 
     // Start is called before the first frame update
@@ -33,6 +34,7 @@ public class pieceMove : MonoBehaviour
         theta = 0.0f;
         rt = GetComponent<RectTransform>();
         startPos = rt.position;
+        defaultPos = new Vector3(0.0f, 0.0f, 0.0f);
         ReturnFlag = false;
         FinishFlag = false;
         VibrationFlag = false;
@@ -52,6 +54,7 @@ public class pieceMove : MonoBehaviour
 
             if(theta >= 90 || theta <= -90)
             {
+                rt.position = defaultPos;
                 VibrationFlag = false;
             }
 
@@ -72,18 +75,18 @@ public class pieceMove : MonoBehaviour
             moveSpeed *= -1;
             ReturnFlag = true;
         }
+        rt.position = new Vector3(rt.position.x,startPos.y - (Mathf.Sin(Mathf.Deg2Rad * theta) * moveWidth),rt.position.z);
         if(ReturnFlag && theta <= 75.0f)
         {
+            defaultPos = rt.position;
             FinishFlag = true;
         }
-        rt.position = new Vector3(rt.position.x,startPos.y - (Mathf.Sin(Mathf.Deg2Rad * theta) * moveWidth),rt.position.z);
-        Debug.Log("サイン"+Mathf.Sin(Mathf.Deg2Rad * theta));
     }
 
     public void vibration()
     {
         //移動中だったらリターン
-        if (!FinishFlag)
+        if (!FinishFlag || VibrationFlag)
         {
             return;
         }

@@ -66,12 +66,12 @@ public class Save_UI : MonoBehaviour
 
         // 実態化
         SaveCharacter = Instantiate(savecharacter);
+        SelectBox = Instantiate(selectbox);
         YesCharacter = Instantiate(yescharacter);
         NoCharacter = Instantiate(nocharacter);
         Stick = Instantiate(stick);
         WarpCharacter = Instantiate(warpcharacter);
         SusumuCharacter = Instantiate(susumucharacter);
-        SelectBox = Instantiate(selectbox);
 
         // キャンバスの子にする
         SaveCharacter.transform.SetParent(this.canvas.transform, false);
@@ -82,7 +82,8 @@ public class Save_UI : MonoBehaviour
         WarpCharacter.transform.SetParent(this.canvas.transform, false);
         SusumuCharacter.transform.SetParent(this.canvas.transform, false);
 
-        // 通常は非表示
+        // 通常は非表示        
+        SelectBox.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 200);
         SelectBox.GetComponent<UIBlink>().isBlink = true;
         SelectBox.GetComponent<UIBlink>().isHide = true;
         SelectBox.GetComponent<Image>().enabled = false;
@@ -133,6 +134,7 @@ public class Save_UI : MonoBehaviour
             else
             {
                 GamePadManager.onceTiltStick = false;
+                SelectBox.GetComponent<Image>().enabled = true;
                 // セーブは非表示
                 SaveCharacter.GetComponent<Image>().enabled = false;
                 YesCharacter.GetComponent<Image>().enabled = false;
@@ -140,7 +142,6 @@ public class Save_UI : MonoBehaviour
                 // ワープは表示
                 WarpCharacter.GetComponent<Image>().enabled = true;
                 SusumuCharacter.GetComponent<Image>().enabled = true;
-                NoCharacter.GetComponent<RectTransform>().localPosition = new Vector3(327.0f,115.0f,0.0f);
                 NoCharacter.GetComponent<Image>().enabled = true;
 
                 SelectBoxPosUpdete();   // 選択枠の更新
@@ -227,9 +228,9 @@ public class Save_UI : MonoBehaviour
                 Pause.isPause = true;
 
                 // セーブ可能になったらUIを表示
+                SelectBox.GetComponent<Image>().enabled = true;
                 SaveCharacter.GetComponent<Image>().enabled = true;
                 YesCharacter.GetComponent<Image>().enabled = true;
-                NoCharacter.GetComponent<RectTransform>().localPosition = new Vector3(146.0f, 115.0f, 0.0f);
                 NoCharacter.GetComponent<Image>().enabled = true;
                 Stick.GetComponent<UIBlink>().isHide = true;
                 // ワープは非表示

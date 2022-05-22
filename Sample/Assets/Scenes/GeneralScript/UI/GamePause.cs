@@ -108,6 +108,7 @@ public class GamePause : MonoBehaviour
         SelectBox.GetComponent<UIBlink>().isBlink = true;
         SelectBox.GetComponent<UIBlink>().isHide = true;
         SelectBox.GetComponent<Image>().enabled = false;
+        SelectBox.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 100);
         PauseCharacter.GetComponent<Image>().enabled = false;
         BackGame.GetComponent<Image>().enabled = false;
         GameEnd.GetComponent<Image>().enabled = false;
@@ -120,6 +121,7 @@ public class GamePause : MonoBehaviour
         Panel.GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
         Panel.GetComponent<Image>().enabled = false;
         Optionmanager.SetActive(false);
+
 
     }
 

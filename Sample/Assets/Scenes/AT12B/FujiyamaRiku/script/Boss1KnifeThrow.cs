@@ -160,6 +160,7 @@ public class Boss1KnifeThrow : MonoBehaviour
                 Debug.Log("Knife " + KnifePlayerPoint);
                 if (KnifeRefTime >= 1.0f)
                 {
+                    EffectManager.Play(EffectData.eEFFECT.EF_BOSS_KNIFEDAMAGE, Boss1Manager.BossPos);
                     BossAttack.HpScript.DelHP(BossAttack.KnifeDamage);
                     BossAttack.OnlyFlg = false;
                     KnifeRefFlg = false;
@@ -175,7 +176,6 @@ public class Boss1KnifeThrow : MonoBehaviour
                     KnifeRefTime = 0;
                     Destroy(KnifeAim);
                     SoundManager.Play(SoundData.eSE.SE_BOOS1_DAMEGE, SoundData.GameAudioList);
-
                     Destroy(Knife);
                     if (HPgage.currentHp >= 50)
                     {

@@ -66,6 +66,7 @@ public class Boss1Jamp : MonoBehaviour
         Boss1Manager.BossPos = Beziercurve.SecondCurve(JumpStartPoint,JumpMiddlePoint,JumpEndPoint, JumpTime);
         if (JumpTime >=1.0f)
         {
+            GameObject.Find("BossStageManager").GetComponent<ShakeCamera>().Shake(0.3f, 10, 1);
             if (!BossAttack.RFChange)
             {
                 BossAttack.RFChange = true;

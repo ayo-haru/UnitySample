@@ -123,7 +123,7 @@ public class DataManager : MonoBehaviour
 
 
     //---その他(今のところ未使用)
-    [SerializeField] private ParticleSystem ef_shield2;
+    //[SerializeField] private ParticleSystem ef_shield2;
 
     // Start is called before the first frame update
     void Awake()
@@ -171,12 +171,12 @@ public class DataManager : MonoBehaviour
         EffectData.EFDataSet(ef_gimick_healitem,(int)EffectData.eEFFECT.EF_GIMICK_HEALITEM);
         EffectData.EFDataSet(ef_gimick_magiccircle_red,(int)EffectData.eEFFECT.EF_GIMICK_MAGICCIRCLE_RED);
         EffectData.EFDataSet(ef_gimick_magiccircle_blue,(int)EffectData.eEFFECT.EF_GIMICK_MAGICCIRCLE_BLUE);
-        EffectData.EFDataSet(ef_gimick_guide_left,(int)EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT);
-        EffectData.EFDataSet(ef_gimick_guide_left_up,(int)EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT_UP);
-        EffectData.EFDataSet(ef_gimick_guide_left_down,(int)EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT_DOWN);
-        EffectData.EFDataSet(ef_gimick_guide_right,(int)EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT);
-        EffectData.EFDataSet(ef_gimick_guide_right_up,(int)EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT_UP);
-        EffectData.EFDataSet(ef_gimick_guide_right_down,(int)EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT_DOWN);
+        EffectData.EFDataSet(ef_gimick_guide_left, (int)EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT);
+        EffectData.EFDataSet(ef_gimick_guide_left_up, (int)EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT_UP);
+        EffectData.EFDataSet(ef_gimick_guide_left_down, (int)EffectData.eEFFECT.EF_GIMICK_GUIDE_LEFT_DOWN);
+        EffectData.EFDataSet(ef_gimick_guide_right, (int)EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT);
+        EffectData.EFDataSet(ef_gimick_guide_right_up, (int)EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT_UP);
+        EffectData.EFDataSet(ef_gimick_guide_right_down, (int)EffectData.eEFFECT.EF_GIMICK_GUIDE_RIGHT_DOWN);
 
         //---プレイヤー関連
         EffectData.EFDataSet(ef_player_shield,(int)EffectData.eEFFECT.EF_PLAYER_SHIELD);
@@ -198,7 +198,7 @@ public class DataManager : MonoBehaviour
         EffectData.EFDataSet(ef_boss_rainzone, (int)EffectData.eEFFECT.EF_BOSS_RAINZONE);
 
 
-        EffectData.EFDataSet(ef_shield2,(int)EffectData.eEFFECT.EF_SHEILD2);
+        //EffectData.EFDataSet(ef_shield2,(int)EffectData.eEFFECT.EF_SHEILD2);
 
         SoundData.isSetSound = true;                 // デバッグ時サウンド初期化してない場合にエラーが出るからけす
         EffectData.isSetEffect = true;                  // デバッグ時エフェクト初期化していない場合にエラーを出さない

@@ -32,14 +32,16 @@ public class BalloonMove : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        theta += moveSpeed;
-        if (theta >= 180.0f)
+        if (!Pause.isPause)
         {
-            theta -= 360.0f;
+            theta += moveSpeed;
+            if (theta >= 180.0f)
+            {
+                theta -= 360.0f;
+            }
+            //風船上下
+            gameObject.transform.position += gameObject.transform.up * finPos * Mathf.Sin(theta) * 0.01f;
         }
-        //風船上下
-        gameObject.transform.position += gameObject.transform.up * finPos * Mathf.Sin(theta) * 0.01f;
-
         //上昇、下降切り替え
         //if(transform.position.y >= finPos　||　transform.position.y <= startPos.y)
         //{

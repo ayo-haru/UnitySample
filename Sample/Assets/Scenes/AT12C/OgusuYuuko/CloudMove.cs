@@ -29,14 +29,16 @@ public class CloudMove : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
-    {
-        theta += moveSpeed;
-        if (theta >= 180.0f)
+    void FixedUpdate() {
+        if (!Pause.isPause)
         {
-            theta -= 360.0f;
+            theta += moveSpeed;
+            if (theta >= 180.0f)
+            {
+                theta -= 360.0f;
+            }
+            //ˆÚ“®
+            gameObject.transform.position += gameObject.transform.right * moveWidth * Mathf.Sin(theta);
         }
-        //ˆÚ“®
-        gameObject.transform.position += gameObject.transform.right * moveWidth * Mathf.Sin(theta);
     }
 }

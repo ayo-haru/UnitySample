@@ -51,8 +51,6 @@ public class KitchenSceneManager : MonoBehaviour {
         }
         else
         {
-            Debug.Log("<color=red>続きから初期化失敗</color>");
-
             //---ゲームシーンをシーン遷移してきた場合やはじめからやる場合
             switch (GameData.CurrentMapNumber)
             {
@@ -78,10 +76,14 @@ public class KitchenSceneManager : MonoBehaviour {
                     {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                         GameData.PlayerPos = GameData.Player.transform.position = new Vector3(25.0f, 20.0f, 0.0f);
+#if UNITY_EDITOR
+                        if(GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage001)
+                            GameData.SaveAll();
+#endif
+
                         if (GameData.OldMapNumber == (int)GameData.eSceneState.Tutorial3 || (GameData.OldMapNumber == GameData.CurrentMapNumber && !GameOver.GameOverFlag))
                         {
                             GameData.InitData();
-                            GameData.SaveAll();
                         }
                     }
                     break;

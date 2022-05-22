@@ -111,7 +111,7 @@ public class Player : MonoBehaviour
             shouldRespawn = false;
 
             //---フェード
-            if (!GameObject.Find("Player_deth(Clone)"))
+            if (!GameObject.Find(EffectData.EF[(int)EffectData.eEFFECT.EF_PLAYER_DEATH].name+"(Clone)"))
             {
                 GameData.isFadeOut = true;              // フェードかける
                 GameOver.GameOverReset();               // りすぽん
@@ -138,6 +138,7 @@ public class Player : MonoBehaviour
         //effectPos = new Vector3(GameData.PlayerPos.x, GameData.PlayerPos.y + 10.0f, GameData.PlayerPos.z);
         _animator.Play("Death");
         EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_DEATH, GameData.PlayerPos, 7.0f);
+        Debug.Log("死亡エフェクト");
     }
 
 

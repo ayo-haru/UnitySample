@@ -44,7 +44,7 @@ public class LB_Attack : MonoBehaviour
     public GameObject WarpBullet;                           //GameObject:Bullet
     public Destroy_WarpBullet destroywarpbullet;
     [SerializeField] public int WarpBullet_MaxSpeed;        //弾の速度
-    public bool WarpBulletUseFlag = true;                     //バレットが使用中かどうか調べるフラグ（初期値：true)
+    public bool WarpBulletUseFlag = true;                  //バレットが使用中かどうか調べるフラグ（初期値：true)
     public int WarpCount = 0;                              //アローカウント
     private float time;
     private float vecX;

@@ -509,15 +509,15 @@ public class Player2 : MonoBehaviour
 
         }
 
+        // 初期化処理をかける前にシールドのエフェクトのマネージャーに値を渡す
+        _weapon.GetComponent<ShieldEffectManager>().SetPlayerAttackDire(AttackDirection);
+
         //---コントローラーの倒したXの値が－だったらy軸に-1する(盾の角度の調整)
         if (AttackDirection.x < 0){
             AttackDirection.y *= -1;
         }
 
         //---武器回転
-        // 初期化処理をかける前にシールドのエフェクトのマネージャーに値を渡す
-        _weapon.GetComponent<ShieldEffectManager>().SetPlayerAttackDire(AttackDirection);
-
         _weapon.transform.Rotate(new Vector3(0, 0, (90 * AttackDirection.y)));
             
         ////エフェクト回転

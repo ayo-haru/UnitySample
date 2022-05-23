@@ -27,7 +27,9 @@ public class TitlePlayer : MonoBehaviour
     public bool decisionFlag;                           //決定ボタンが押されたか
     private Vector3 dir;                                //現在向いている方向
     private float rotTimer;                             //回転用タイマー
-    public float rotSpeed = 30.0f;                              //プレイヤー回転速度
+    public float rotSpeed = 30.0f;                      //プレイヤー回転速度
+    private Vector3 rightLook = new Vector3(0.0f, 0.0f, 0.0f);
+    private Vector3 leftLook = new Vector3(1.0f, 0.0f, 0.0f);
     AnimatorStateInfo animeStateInfo;                   //アニメーションの状態
 
     // Start is called before the first frame update
@@ -43,7 +45,7 @@ public class TitlePlayer : MonoBehaviour
         //scale = transform.localScale;
         timer = 0;
         decisionFlag = false;
-        dir = new Vector3(0.0f, 0.0f, 0.0f);
+        dir = rightLook;
         rotTimer = 0.0f;
     }
 
@@ -85,13 +87,13 @@ public class TitlePlayer : MonoBehaviour
         if (transform.position.z > selectPosObject[titleSceneManager.select].transform.position.z)
         {
             //前回と方向が変わってるか
-            if(dir != new Vector3(1.0f, 0.0f, 0.0f))
+            if(dir != leftLook)
             {
                 rotTimer = 0.0f;
             }
             //向きを設定
-            target = Quaternion.LookRotation(new Vector3(1.0f, 0.0f, 0.0f));
-            dir = new Vector3(1.0f, 0.0f, 0.0f);
+            target = Quaternion.LookRotation(leftLook);
+            dir = leftLook;
 
             //アニメーション再生
             if (!animator.GetBool("Walk"))
@@ -111,13 +113,13 @@ public class TitlePlayer : MonoBehaviour
         else if (transform.position.z < selectPosObject[titleSceneManager.select].transform.position.z)
         {
             //前回と方向が変わっているか
-            if(dir != new Vector3(0.0f, 0.0f, 0.0f))
+            if(dir != rightLook)
             {
                 rotTimer = 0.0f;
             }
             //向きを設定
-            target = Quaternion.LookRotation(new Vector3(0.0f, 0.0f, 0.0f));
-            dir = new Vector3(0.0f, 0.0f, 0.0f);
+            target = Quaternion.LookRotation(rightLook);
+            dir = rightLook;
             //アニメーション再生
             if (!animator.GetBool("Walk"))
             {
@@ -133,14 +135,28 @@ public class TitlePlayer : MonoBehaviour
         }
         else//左右移動しなかったとき
         {
-            if (dir.x > 0)
+            //中央向かせる
+            //ゲームをやめる、オプションを選択してるとき
+            if(titleSceneManager.select > 1)
             {
-                target = Quaternion.LookRotation(new Vector3(1.0f, 0.0f, 0.0f));
+                if (dir != leftLook)
+                {
+                    rotTimer = 0.0f;
+                }
+                target = Quaternion.LookRotation(leftLook);
+                dir = leftLook;
+
             }
-            else
+            else//始める、続きからを選択してるとき
             {
-                target = Quaternion.LookRotation(new Vector3(0.0f, 0.0f, 0.0f));
+                if(dir != rightLook)
+                {
+                    rotTimer = 0.0f;
+                }
+                target = Quaternion.LookRotation(rightLook);
+                dir = rightLook;
             }
+
             //アニメーション再生
             if (animator.GetBool("Walk"))
             {

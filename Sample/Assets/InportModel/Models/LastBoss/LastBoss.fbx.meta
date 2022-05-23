@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 64ebb972966db6343860c9918827decb
+guid: 94b8853df7e77d840af485007d0bf7e0
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: interactive_tex
-    second: {fileID: 2100000, guid: 1cda969187415c646b437842f6c0cb53, type: 2}
+      name: lastbass
+    second: {fileID: 2100000, guid: 4bdba8731e409b6468a0ec22f3edece0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -18,7 +18,7 @@ ModelImporter:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
-    optimizeGameObjects: 1
+    optimizeGameObjects: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -39,7 +39,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 10000
+    globalScale: 500
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -90,8 +90,8 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 100
-    rootMotionBoneName: 
+    globalScale: 5
+    rootMotionBoneName: Hips
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1

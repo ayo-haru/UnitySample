@@ -42,6 +42,7 @@ public class TitleSceneManager : MonoBehaviour {
     private GameObject Option;
     private GameObject Optionmanager;
     private GameObject SelectFrame;
+    private GameObject DesitionImage;
 
     private TitlePlayer titlePlayer;
     private bool weight = false;    //演出待ちかどうか
@@ -76,6 +77,7 @@ public class TitleSceneManager : MonoBehaviour {
         Option = GameObject.Find("Option");
         Optionmanager = GameObject.Find("OptionManager");
         SelectFrame = GameObject.Find("SelectFrame");
+        DesitionImage = GameObject.Find("DecitionImage");
         PressAnyButton.GetComponent<UI_Parry>().enabled = true;
         TitleLogo.GetComponent<UI_Parry>().enabled = true;
         GameStart.GetComponent<UIBlink>().isHide = true;        // ゲームが始まった瞬間は要らないので消す
@@ -89,6 +91,7 @@ public class TitleSceneManager : MonoBehaviour {
         Optionmanager.SetActive(false);
         SelectFrame.GetComponent<UIBlink>().isHide = true;
         SelectFrame.GetComponent<UIBlink>().isBlink = false;
+        DesitionImage.GetComponent<UIBlink>().isHide = true;
 
         //---タイトル用プレイヤー取得
         titlePlayer = GameObject.Find("Rulaby").GetComponent<TitlePlayer>();
@@ -126,6 +129,7 @@ public class TitleSceneManager : MonoBehaviour {
             GameContinue.GetComponent<pieceMove>().startFlag = true;
             GameEnd.GetComponent<pieceMove>().startFlag = true;
             Option.GetComponent<pieceMove>().startFlag = true;
+            DesitionImage.GetComponent<UIBlink>().isHide = false;
 
             SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
 

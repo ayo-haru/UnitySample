@@ -302,7 +302,7 @@ public class Player2 : MonoBehaviour
                 Attack();
                 isAttack = false;
                 canMoveflg = true;
-                StartCoroutine(StartAttackEvent(0.12f));
+                StartCoroutine(StartAttackEvent(0.1f));
 
             }
 

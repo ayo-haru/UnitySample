@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1503e29cdaf6144f8be2d53ccd652e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FinishFlag: 0
   moveSpeed: 1.8
   vibrationSpeed: 10
   moveWidth: 250
@@ -211,6 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1503e29cdaf6144f8be2d53ccd652e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FinishFlag: 0
   moveSpeed: 2
   vibrationSpeed: 10
   moveWidth: 300
@@ -319,6 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1503e29cdaf6144f8be2d53ccd652e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FinishFlag: 0
   moveSpeed: 1.6
   vibrationSpeed: 10
   moveWidth: 250
@@ -663,6 +666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1503e29cdaf6144f8be2d53ccd652e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FinishFlag: 0
   moveSpeed: 2
   vibrationSpeed: 10
   moveWidth: 300
@@ -862,6 +866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1503e29cdaf6144f8be2d53ccd652e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FinishFlag: 0
   moveSpeed: 1.2
   vibrationSpeed: 10
   moveWidth: 250
@@ -1074,7 +1079,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7979991949022214912}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8, y: 253, z: 0}
+  m_LocalPosition: {x: -8, y: 280, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1621696712832004716}
@@ -1205,6 +1210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1503e29cdaf6144f8be2d53ccd652e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FinishFlag: 0
   moveSpeed: 1.4
   vibrationSpeed: 10
   moveWidth: 250
@@ -1486,8 +1492,6 @@ MonoBehaviour:
   dir: {x: 0, y: 1}
   moveSpeed: 0.07
   moveWidth: 0.5
-  underParryFlag: 0
-  ParrySpeed: 10
 --- !u!114 &1875629562763448697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1503,8 +1507,6 @@ MonoBehaviour:
   dir: {x: 0, y: 1}
   moveSpeed: 0.05
   moveWidth: 0.5
-  underParryFlag: 0
-  ParrySpeed: 10
 --- !u!114 &2551594335551670586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1520,8 +1522,6 @@ MonoBehaviour:
   dir: {x: 0, y: 1}
   moveSpeed: 0.08
   moveWidth: 0.5
-  underParryFlag: 0
-  ParrySpeed: 10
 --- !u!114 &1612901367378125202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1537,5 +1537,3 @@ MonoBehaviour:
   dir: {x: 0, y: 1}
   moveSpeed: 0.06
   moveWidth: 0.5
-  underParryFlag: 0
-  ParrySpeed: 10

@@ -23,8 +23,8 @@ Material:
   m_Name: mt_energy
   m_Shader: {fileID: 4800000, guid: 1bc5c6a70411243779ce486a98012125, type: 3}
   m_ShaderKeywords: _ALPHA_TRANSITION_MAP_MODE_2D _BASE_MAP_MODE_2D _DISSOLVE_TRANSITION_ENABLED
-    _EMISSION_AREA_ALL _EMISSION_COLOR_BASECOLOR _EMISSION_MAP_MODE_2D _FLOW_MAP_TARGET_BASE
-    _TINT_COLOR_ENABLED _TRANSPARENCY_BY_RIM
+    _EMISSION_AREA_ALL _EMISSION_COLOR_BASECOLOR _EMISSION_MAP_MODE_2D _TINT_COLOR_ENABLED
+    _TRANSPARENCY_BY_RIM
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -181,6 +181,8 @@ Material:
     - _EmissionIntensity: 1
     - _EmissionIntensityCoord: 0
     - _EmissionMapMode: 0
+    - _EmissionMapOffsetXCoord: 0
+    - _EmissionMapOffsetYCoord: 0
     - _EmissionMapProgress: 0
     - _EmissionMapProgressCoord: 0
     - _EmissionMapSliceCount: 4

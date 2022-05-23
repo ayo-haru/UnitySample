@@ -19,7 +19,7 @@ public class GimickGuide : MonoBehaviour
 
     private ParticleSystem effect;
     private bool Play;      // エフェクト再生フラグ
-    private float EffectTime = 4.0f;
+    private float EffectTime = 5.1f;
     private float Timer;
 
     // Start is called before the first frame update
@@ -46,7 +46,7 @@ public class GimickGuide : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // プレイヤーが近づいたらエフェクトを再生する
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !Play)
         {
             // 右
             if (Guide_Right)
@@ -86,7 +86,7 @@ public class GimickGuide : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         // プレイヤーが離れたらエフェクトを停止する
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && Play)
         {
             Destroy(effect.gameObject, 0.0f);   // エフェクト削除
             Timer = 0.0f;                       // タイマーのリセット

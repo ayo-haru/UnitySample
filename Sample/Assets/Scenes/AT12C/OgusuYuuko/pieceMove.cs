@@ -18,7 +18,7 @@ public class pieceMove : MonoBehaviour
     private RectTransform rt;
     private Vector3 startPos;           //初期位置
     private bool ReturnFlag;            //折り返し用フラグ
-    private bool FinishFlag;            //終了フラグ
+    public  bool FinishFlag;            //終了フラグ
     private bool VibrationFlag;         //振動用フラグ
     public float moveSpeed = 0.5f;     //移動速度
     public float vibrationSpeed = 10.0f;        //振動速度
@@ -70,13 +70,13 @@ public class pieceMove : MonoBehaviour
 
         //theta更新
         theta += moveSpeed;
-        if(theta >= 90.0f && !ReturnFlag)
+        if(theta >= 90.0f || theta <= -90.0f && !ReturnFlag)
         {
             moveSpeed *= -1;
             ReturnFlag = true;
         }
         rt.position = new Vector3(rt.position.x,startPos.y - (Mathf.Sin(Mathf.Deg2Rad * theta) * moveWidth),rt.position.z);
-        if(ReturnFlag && theta <= 75.0f)
+        if((ReturnFlag && theta <= 75.0f && moveSpeed < 0) || (ReturnFlag && theta >= -75.0f && moveSpeed > 0))
         {
             defaultPos = rt.position;
             FinishFlag = true;

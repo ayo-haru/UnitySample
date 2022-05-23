@@ -18,6 +18,8 @@ public class UI_Parry : MonoBehaviour
     private RectTransform image;
     //’e‚©‚ê‚½‚Ì‘¬‚³
     public float ParrySpeed = 10.0f;
+    //’e‚­•ûŒü
+    public Vector2 ParryDir = new Vector2(0.0f, -1.0f);
     //ˆê‰ñ‚¾‚¯ˆ—‚·‚é‚æ‚¤
     private bool onceFlag;
     //‰ŠúˆÊ’u
@@ -48,7 +50,10 @@ public class UI_Parry : MonoBehaviour
             onceFlag = false;
         }
 
-        if(underParryFlag)
-        image.transform.position += image.transform.up * -ParrySpeed;
+        if (underParryFlag)
+        {
+            image.transform.position += image.transform.up * (ParrySpeed * ParryDir.y);
+            image.transform.position += image.transform.right * (ParrySpeed * ParryDir.x);
+        }
     }
 }

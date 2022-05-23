@@ -76,6 +76,8 @@ public class TitleSceneManager : MonoBehaviour {
         Option = GameObject.Find("Option");
         Optionmanager = GameObject.Find("OptionManager");
         SelectFrame = GameObject.Find("SelectFrame");
+        PressAnyButton.GetComponent<UI_Parry>().enabled = true;
+        TitleLogo.GetComponent<UI_Parry>().enabled = true;
         GameStart.GetComponent<UIBlink>().isHide = true;        // ゲームが始まった瞬間は要らないので消す
         //GameStart.GetComponent<Move2DTheta>().enabled = false;
         GameContinue.GetComponent<UIBlink>().isHide = true;
@@ -109,8 +111,10 @@ public class TitleSceneManager : MonoBehaviour {
         {
             isPressButton = true;
             PressAnyButton.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
-            PressAnyButton.GetComponent<UIBlink>().isHide = true;   // ボタンが押されたら消す
-            TitleLogo.GetComponent<UIBlink>().isHide = true;
+            //PressAnyButton.GetComponent<UIBlink>().isHide = true;   // ボタンが押されたら消す
+            PressAnyButton.GetComponent<UI_Parry>().underParryFlag = true;
+            //TitleLogo.GetComponent<UIBlink>().isHide = true;
+            TitleLogo.GetComponent<UI_Parry>().underParryFlag = true;
             GameStart.GetComponent<UIBlink>().isHide = false;       // ボタンが押されたら表示する
             GameContinue.GetComponent<UIBlink>().isHide = false;
             GameEnd.GetComponent<UIBlink>().isHide = false;
@@ -118,8 +122,10 @@ public class TitleSceneManager : MonoBehaviour {
             SelectFrame.GetComponent<UIBlink>().isHide = false;
             SelectFrame.GetComponent<RectTransform>().position = GameStart.GetComponent<RectTransform>().position;
             SelectFrame.GetComponent<UI_Parry>().enabled = true;
-            GameStart.GetComponent<UI_Parry>().enabled = true;
-
+            GameStart.GetComponent<pieceMove>().startFlag = true;
+            GameContinue.GetComponent<pieceMove>().startFlag = true;
+            GameEnd.GetComponent<pieceMove>().startFlag = true;
+            Option.GetComponent<pieceMove>().startFlag = true;
 
             SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
 
@@ -133,6 +139,12 @@ public class TitleSceneManager : MonoBehaviour {
         if (!isPressButton)
         {
             PressAnyButton.GetComponent<UIBlink>().isBlink = true;
+            return;
+        }
+
+        //選択肢が移動途中だったらリターン
+        if (!GameStart.GetComponent<pieceMove>().FinishFlag&&!GameContinue.GetComponent<pieceMove>().FinishFlag&&!GameEnd.GetComponent<pieceMove>().FinishFlag&&!Option.GetComponent<pieceMove>().FinishFlag)
+        {
             return;
         }
 

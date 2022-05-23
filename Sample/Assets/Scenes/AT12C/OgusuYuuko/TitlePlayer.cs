@@ -38,7 +38,7 @@ public class TitlePlayer : MonoBehaviour
         //タイトルシーンマネージャ取得
         titleSceneManager = GameObject.Find("TitleSceneManager").GetComponent<TitleSceneManager>();
         //プレイヤー回転　右に向かせる
-        transform.Rotate(new Vector3(0.0f, -90.0f, 0.0f));
+        transform.Rotate(new Vector3(0.0f, 180.0f, 0.0f));
         //変数初期化
         pressAnyButtonFlag = false;
         selectFlag = false;
@@ -58,7 +58,7 @@ public class TitlePlayer : MonoBehaviour
             if(timer <= 0)
             {
                 animator.SetTrigger("Attack");
-                transform.Rotate(new Vector3(0.0f, 90.0f, 0.0f));
+                transform.Rotate(new Vector3(0.0f, -180.0f, 0.0f));
 
                 timer = first_timer;
             }
@@ -89,7 +89,8 @@ public class TitlePlayer : MonoBehaviour
             //前回と方向が変わってるか
             if(dir != leftLook)
             {
-                rotTimer = 0.0f;
+                //移動中の回転は素早くしたい
+                rotTimer = 10.0f;
             }
             //向きを設定
             target = Quaternion.LookRotation(leftLook);
@@ -115,7 +116,8 @@ public class TitlePlayer : MonoBehaviour
             //前回と方向が変わっているか
             if(dir != rightLook)
             {
-                rotTimer = 0.0f;
+                //移動中の回転は素早くしたい
+                rotTimer = 10.0f;
             }
             //向きを設定
             target = Quaternion.LookRotation(rightLook);

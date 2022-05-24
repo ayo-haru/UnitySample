@@ -555,7 +555,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7567749413586506971}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -774,7 +774,7 @@ RectTransform:
   - {fileID: 8302986592540930910}
   - {fileID: 7567749411682389292}
   m_Father: {fileID: 7567749413586506971}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1011,6 +1011,7 @@ GameObject:
   - component: {fileID: 7567749412160719226}
   - component: {fileID: 7567749412160719227}
   - component: {fileID: 7567749412160719224}
+  - component: {fileID: 622613328427415875}
   m_Layer: 5
   m_Name: SelectFrame
   m_TagString: Untagged
@@ -1030,7 +1031,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7567749413586506971}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1090,6 +1091,19 @@ MonoBehaviour:
   dir: {x: 1, y: 0}
   moveSpeed: 0.1
   moveWidth: 0.5
+--- !u!114 &622613328427415875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7567749412160719230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61baacaf229283648ad2ad09e166673f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.5
 --- !u!1 &7567749412246627588
 GameObject:
   m_ObjectHideFlags: 0
@@ -1273,7 +1287,7 @@ RectTransform:
   - {fileID: 6439697364741623705}
   - {fileID: 7567749412148525998}
   m_Father: {fileID: 7567749413586506971}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1683,10 +1697,10 @@ RectTransform:
   m_Children:
   - {fileID: 1148555427851718378}
   - {fileID: 1124198969141309693}
+  - {fileID: 7567749412160719225}
   - {fileID: 7567749411820320306}
   - {fileID: 7567749412363672121}
   - {fileID: 1261840103639851725}
-  - {fileID: 7567749412160719225}
   - {fileID: 4323463447564111124}
   - {fileID: 711469194201499342}
   m_Father: {fileID: 0}

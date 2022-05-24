@@ -56,6 +56,8 @@ public class OptionManager : MonoBehaviour
         rt_selectFrame = selectFrame.GetComponent<RectTransform>();
         //–îˆóˆÊ’uİ’è
         Vector3 newPos = new Vector3(rt_selectFrame.position.x, bgmSlider.GetComponent<RectTransform>().position.y, rt_selectFrame.position.z);
+        //‘I‘ğ˜g“_–Å
+        selectFrame.GetComponent<UIBlink>().isBlink = true;
         rt_selectFrame.position = newPos;
         // ‰Šú‰»Å‰‚ÍŒˆ’è‚¶‚á‚È‚¢
         isDecision = false;

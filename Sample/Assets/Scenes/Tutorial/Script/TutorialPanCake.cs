@@ -59,13 +59,21 @@ public class TutorialPanCake : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        pancakePos = this.transform.position;
-        if (!onceUpdate)
+        if (!Pause.isPause)
         {
-            MoveFlg = true;
-            onceUpdate = true;
+            BossAnim.speed = 1.0f;
+            pancakePos = this.transform.position;
+            if (!onceUpdate)
+            {
+                MoveFlg = true;
+                onceUpdate = true;
+            }
+            ForkAction();
         }
-        ForkAction();
+        else
+        {
+            BossAnim.speed = 0.0f;
+        }
     }
 
     private void ForkAction() {

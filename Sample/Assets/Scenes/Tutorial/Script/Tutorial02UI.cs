@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Tutorial02UI : MonoBehaviour {
+    //----- 表示するUI -----
     [SerializeField]
     private GameObject characterback;
     private GameObject CharacterBack;
@@ -26,6 +27,12 @@ public class Tutorial02UI : MonoBehaviour {
     [SerializeField]
     private GameObject nexticon;
     private GameObject NextIcon;
+    [SerializeField]
+    private GameObject successchara;
+    private GameObject SuccessChara;
+    [SerializeField]
+    private GameObject failedchara;
+    private GameObject FailedChara;
 
 
     private Canvas canvas;  // 表示するキャンバス
@@ -35,9 +42,13 @@ public class Tutorial02UI : MonoBehaviour {
     private Game_pad UIActionAssets;        // InputActionのUIを扱う
     private bool isDecision;                // 決定された
 
-    private Tutorial02Manager scenemanager;
-    private DelayFollowCamera _delayfollowcamera;
-    private BoxCollider wallcollider;
+    private Tutorial02Manager scenemanager; // 02シーンのマネージャー
+
+    private DelayFollowCamera _delayfollowcamera;   // ディレイフォローカメラを保存しておく
+
+    private BoxCollider wallcollider;   // はじくチュートリアルが終わるまでの壁
+
+    private bool tutorialPause; // チュートリアル中のポーズ
 
     private void Awake() {
         UIActionAssets = new Game_pad();            // InputActionインスタンスを生成
@@ -45,18 +56,15 @@ public class Tutorial02UI : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+        //----- 各種変数初期化 -----
         isDecision = false; // 決定を初期化
+        UIcnt = 0;  // UIを表示する順番を管理する
+        canvas = GetComponent<Canvas>();    // キャンバスを指定
+        scenemanager = GameObject.Find("SceneManager").GetComponent<Tutorial02Manager>();   // シーンマネージャーをほそん
+        _delayfollowcamera = Camera.main.GetComponent<DelayFollowCamera>(); // ディレイフォローカメラを保存
+        wallcollider = GameObject.Find("wallcollider004").GetComponent<BoxCollider>();  // 壁を保存
+        tutorialPause = false;  // 初期はポーズしないのでfalse
 
-        UIcnt = 0;
-
-        // キャンバスを指定
-        canvas = GetComponent<Canvas>();
-
-        scenemanager = GameObject.Find("SceneManager").GetComponent<Tutorial02Manager>();
-
-        _delayfollowcamera = Camera.main.GetComponent<DelayFollowCamera>();
-
-        wallcollider = GameObject.Find("wallcollider004").GetComponent<BoxCollider>();
         //----- UI初期化 -----
         // 実態化
         CharacterBack = Instantiate(characterback);
@@ -66,6 +74,8 @@ public class Tutorial02UI : MonoBehaviour {
         Chara2_4 = Instantiate(chara2_4);
         Panel = Instantiate(panel);
         NextIcon = Instantiate(nexticon);
+        SuccessChara = Instantiate(successchara);
+        FailedChara = Instantiate(failedchara);
 
         // キャンバスの子に指定
         Panel.transform.SetParent(this.canvas.transform, false);
@@ -75,6 +85,8 @@ public class Tutorial02UI : MonoBehaviour {
         Chara2_3.transform.SetParent(this.canvas.transform, false);
         Chara2_4.transform.SetParent(this.canvas.transform, false);
         NextIcon.transform.SetParent(this.canvas.transform, false);
+        SuccessChara.transform.SetParent(this.canvas.transform, false);
+        FailedChara.transform.SetParent(this.canvas.transform, false);
 
         // 初期表示調整
         CharacterBack.GetComponent<ImageShow>().Hide();
@@ -86,22 +98,25 @@ public class Tutorial02UI : MonoBehaviour {
         NextIcon.GetComponent<ImageShow>().Hide();
         Panel.GetComponent<Image>().color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
         Panel.GetComponent<Image>().enabled = false;
+        SuccessChara.GetComponent<ImageShow>().Hide();
+        FailedChara.GetComponent<ImageShow>().Hide();
+
 
     }
 
-    // Update is called once per frame
     void Update() {
         if (UIcnt == 0)
         {
+            //---敵が現れました
             Panel.GetComponent<Image>().enabled = true;
 
-            Time.timeScale = 0.0f;
+            //Time.timeScale = 0.0f;
+            Pause.isPause = true;
             CharacterBack.GetComponent<ImageShow>().Show();
             Chara2_1.GetComponent<ImageShow>().Show();
             NextIcon.GetComponent<ImageShow>().Show();
             if (isDecision)
             {
-
                 UIcnt++;
                 isDecision = false;
                 return;
@@ -109,6 +124,7 @@ public class Tutorial02UI : MonoBehaviour {
         }
         else if(UIcnt == 1)
         {
+            //---タイミングよく弾きましょう
             Chara2_1.GetComponent<ImageShow>().Clear();
             Chara2_2.GetComponent<ImageShow>().Show();
             NextIcon.transform.localPosition = new Vector3(850.0f, -380.0f, 0.0f);
@@ -120,17 +136,19 @@ public class Tutorial02UI : MonoBehaviour {
                 Panel.GetComponent<Image>().enabled = false;
                 UIcnt++;
                 isDecision = false;
-                Time.timeScale = 1.0f;
+                //Time.timeScale = 1.0f;
+                Pause.isPause = false;
                 return;
             }
-
         }
         else if (UIcnt == 2)
         {
+            //---はじけたか分岐
             NextIcon.GetComponent<ImageShow>().Clear();
             if (!TutorialPanCake.isAlive)
             {
-                StartCoroutine("DelayDestroyPancake");
+                SuccessChara.GetComponent<ImageShow>().Show(30);
+                StartCoroutine("DelayDestroyPancake");     // すぐに消すのではなく遅延させて消す
                 Chara2_2.GetComponent<ImageShow>().Clear();
                 Chara2_3.GetComponent<ImageShow>().Show(3);
                 UIcnt++;
@@ -138,21 +156,32 @@ public class Tutorial02UI : MonoBehaviour {
 
             if (GameData.PlayerPos.x > TutorialPanCake.pancakePos.x)
             {
-                UIcnt = 1;  // UIを一個前のやつに戻す
-                Time.timeScale = 0.0f;  // タイムは止める
-                scenemanager.PancakeDestroy();  // パンケーキ消す  
-                scenemanager.PancakeAppearance();   // パンケーき出現
-                scenemanager.PlayerDestroy();   // プレイヤー消す
-                scenemanager.PlayerAppearance();    // プレイヤー出現
+                FailedChara.GetComponent<ImageShow>().Show(30);
+                UIcnt = 1;                          // UIを一個前のやつに戻す
+                //Time.timeScale = 0.0f;              // タイムは止める
+                Pause.isPause = true;
+                if (false)
+                {
+
+                }
+                if (Pause.isPause)
+                {
+                    scenemanager.PancakeDestroy();      // パンケーキ消す  
+                    scenemanager.PancakeAppearance();   // パンケーき出現
+                    scenemanager.PlayerDestroy();       // プレイヤー消す
+                    scenemanager.PlayerAppearance();    // プレイヤー出現
+                }
             }
         }
         else if(UIcnt == 3 && Chara2_3.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
         {
+            //---たいみんぐよくはじく
             Chara2_4.GetComponent<ImageShow>().Show(3);
             UIcnt++;
         }
         else if(UIcnt == 4 && Chara2_4.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
         {
+            //---これがこの世界の戦い方
             CharacterBack.GetComponent<ImageShow>().FadeOut();
             _delayfollowcamera.enabled = true;
             wallcollider.enabled = false;

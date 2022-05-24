@@ -43,6 +43,7 @@ public class Boss1Rain : MonoBehaviour
     bool StartFlg;
     public int LoopSave = 0;
     public int LoopSaver = 0;
+    bool EFFlg;
 
     public RainWeapon[] g_Weapon;
     // Start is called before the first frame update
@@ -76,12 +77,26 @@ public class Boss1Rain : MonoBehaviour
         BossAttack.WeaponAttackFlg = true;
         if (!BossAttack.AnimFlg)
         {
-            EffectManager.Play(EffectData.eEFFECT.EF_BOSS_RAINZONE, GameObject.Find("Emargens").transform.position);
+            if (BossAttack.RFChange)
+                {
+                    EffectManager.Play(EffectData.eEFFECT.EF_BOSS_RAINZONE, GameObject.Find("EmargensL").transform.position);
+                }
+            if (!BossAttack.RFChange)
+                {
+                    EffectManager.Play(EffectData.eEFFECT.EF_BOSS_RAINZONE, GameObject.Find("Emargens").transform.position);
+                }
+            
             BossAttack.AnimFlagOnOff();
             BossAttack.BossAnim.SetTrigger("RainThrow");
         }
         if (StartFlg)
         {
+            if (!EFFlg)
+                {
+                    Destroy(GameObject.Find("start_main(Clone)"));
+                    EFFlg = true;
+                }
+
             if (!g_Weapon[MaxWeapon - 1].UseFlg)
             {
                 RainNowTime = RainNowTime + (1.0f / 60.0f);
@@ -219,6 +234,7 @@ public class Boss1Rain : MonoBehaviour
                                     g_Weapon[MaxWeapon - 1].DelTime = 0;
                                     RainNum = 0;
                                     BossAttack.BossAnim.SetBool("Tired", false);
+                                    EFFlg = false;
                                     BossAttack.AnimFlagOnOff();
                                     BossMove.SetState(BossMove.Boss_State.idle);
                                     return;

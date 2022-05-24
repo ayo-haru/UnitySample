@@ -105,7 +105,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2834348872302260761}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -444,7 +444,7 @@ RectTransform:
   - {fileID: 2615922355068258153}
   - {fileID: 4636975930427844694}
   m_Father: {fileID: 2834348872302260761}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1178,10 +1178,10 @@ RectTransform:
   m_Children:
   - {fileID: 4669174052727496687}
   - {fileID: 1579912701391224233}
+  - {fileID: 5281261073103223642}
   - {fileID: 7870985411499945334}
   - {fileID: 8225710032131746850}
   - {fileID: 5662093127537504798}
-  - {fileID: 5281261073103223642}
   - {fileID: 7233849425938930052}
   - {fileID: 846818292501488329}
   m_Father: {fileID: 0}
@@ -1579,7 +1579,7 @@ RectTransform:
   - {fileID: 5517180207152519466}
   - {fileID: 6710463379688075058}
   m_Father: {fileID: 2834348872302260761}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1636,6 +1636,7 @@ GameObject:
   - component: {fileID: 7464150442880928372}
   - component: {fileID: 7988356335316718057}
   - component: {fileID: 107209335126422947}
+  - component: {fileID: 6314958360299307850}
   m_Layer: 5
   m_Name: SelectFrame
   m_TagString: Untagged
@@ -1655,7 +1656,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2834348872302260761}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1715,6 +1716,19 @@ MonoBehaviour:
   dir: {x: 1, y: 0}
   moveSpeed: 0.1
   moveWidth: 0.5
+--- !u!114 &6314958360299307850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912776599748689607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61baacaf229283648ad2ad09e166673f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.5
 --- !u!1 &8063217897375930084
 GameObject:
   m_ObjectHideFlags: 0

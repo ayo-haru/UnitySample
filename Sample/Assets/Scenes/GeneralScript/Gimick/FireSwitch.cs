@@ -9,7 +9,8 @@ public class FireSwitch : MonoBehaviour {
     private GameObject switch_OFF;
     private MeshRenderer Mesh_Off;
     private GameObject stove;
-    public Animator animator;
+    [SerializeField]
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start() {

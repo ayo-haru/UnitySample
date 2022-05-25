@@ -84,6 +84,7 @@ public class Boss1Manager : MonoBehaviour
                 }
             case Boss1State.BOSS1_END:
                 {
+                    GetComponent<BossTrac>().enabled = false;
                     if (!PlayEffect)
                     {
                         EffectManager.Play(EffectData.eEFFECT.EF_BOSS_DEATH,new Vector3(Boss.transform.position.x, Boss.transform.position.y, Boss.transform.position.z),8f);

@@ -118,6 +118,7 @@ public class Tutorial02Manager : MonoBehaviour
     /// ÉvÉåÉCÉÑÅ[è¡Ç∑
     /// </summary>
     public void PlayerDestroy() {
-        Destroy(GameObject.Find(player.name));
+        //Destroy(GameObject.Find(player.name).gameObject);
+        DestroyImmediate(GameObject.Find(player.name));
     }
 }

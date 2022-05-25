@@ -26,6 +26,7 @@ public class Boss1Rush : MonoBehaviour
     float RushReturnSpeed;
     bool ReturnDelay;                                      //戻ろうとするまでの時間
     bool EFFlg;
+    bool EFDelFlg;
     Vector3 oldScale;
     [SerializeField] public float RotateSpeed;
     Vector3 Rotate;
@@ -67,6 +68,11 @@ public class Boss1Rush : MonoBehaviour
             if (!EFFlg)
             {
                 EffectManager.Play(EffectData.eEFFECT.EF_BOSS_FORK, GameObject.Find("ForkEF").transform.position);
+                if (BossAttack.RFChange)
+                {
+                    GameObject.Find("Boss_Fork2(Clone)").transform.rotation = new Quaternion(0.0f, 180.0f, 0.0f, 0.0f);
+                }
+                
                 EFFlg = true;
             }
             //ボスが突進終了後に変える処理
@@ -113,6 +119,7 @@ public class Boss1Rush : MonoBehaviour
                             BossAttack.RFChange = false;
                         }
                     }
+                    EFDelFlg = false;
                     ReturnDelay = false;
                     RushEndFlg = false;
                     BossReturnFlg = false;
@@ -154,6 +161,12 @@ public class Boss1Rush : MonoBehaviour
                 RushTime += Time.deltaTime * RushSpeed;
                 
                 Boss1Manager.BossPos = Vector3.Lerp(RushStartPoint, RushEndPoint, RushTime);
+                if (RushTime >= 0.5f && !EFDelFlg)
+                    {
+                        Destroy(GameObject.Find("Boss_Fork2(Clone)"));
+                        EFDelFlg = true;
+                    }
+
                 if (RushTime >= 1.0f)
                 {
                     BossAttack.Scale.x *= -1;

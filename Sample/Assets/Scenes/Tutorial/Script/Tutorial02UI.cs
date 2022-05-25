@@ -99,9 +99,7 @@ public class Tutorial02UI : MonoBehaviour {
         Panel.GetComponent<Image>().color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
         Panel.GetComponent<Image>().enabled = false;
         SuccessChara.GetComponent<ImageShow>().Hide();
-        FailedChara.GetComponent<ImageShow>().Hide();
-
-
+        
     }
 
     void Update() {
@@ -132,7 +130,7 @@ public class Tutorial02UI : MonoBehaviour {
 
             if (isDecision)
             {
-                NextIcon.GetComponent<ImageShow>().Hide();
+                NextIcon.GetComponent<Image>().enabled = false;
                 Panel.GetComponent<Image>().enabled = false;
                 UIcnt++;
                 isDecision = false;
@@ -144,10 +142,13 @@ public class Tutorial02UI : MonoBehaviour {
         else if (UIcnt == 2)
         {
             //---はじけたか分岐
-            NextIcon.GetComponent<ImageShow>().Clear();
             if (!TutorialPanCake.isAlive)
             {
-                SuccessChara.GetComponent<ImageShow>().Show(30);
+                //SuccessChara.GetComponent<ImageShow>().Show(30);
+                if(SuccessChara.GetComponent<SuccessMove>().mode == SuccessMove.eSccessState.NONE)
+                {
+                    SuccessChara.GetComponent<SuccessMove>().StartSccess();
+                }
                 StartCoroutine("DelayDestroyPancake");     // すぐに消すのではなく遅延させて消す
                 Chara2_2.GetComponent<ImageShow>().Clear();
                 Chara2_3.GetComponent<ImageShow>().Show(3);
@@ -156,20 +157,21 @@ public class Tutorial02UI : MonoBehaviour {
 
             if (GameData.PlayerPos.x > TutorialPanCake.pancakePos.x)
             {
-                FailedChara.GetComponent<ImageShow>().Show(30);
-                UIcnt = 1;                          // UIを一個前のやつに戻す
-                //Time.timeScale = 0.0f;              // タイムは止める
-                Pause.isPause = true;
-                if (false)
+                //FailedChara.GetComponent<ImageShow>().Show(30);
+                if(FailedChara.GetComponent<FailedMove>().mode == FailedMove.eFailedState.NONE)
                 {
-
+                    FailedChara.GetComponent<FailedMove>().StartFailed();
+                    Pause.isPause = true;
+                    //Time.timeScale = 0.0f;              // タイムは止める
                 }
-                if (Pause.isPause)
+                if (FailedChara.GetComponent<FailedMove>().mode == FailedMove.eFailedState.FIN)
                 {
+                    FailedChara.GetComponent<FailedMove>().FinFailed();
                     scenemanager.PancakeDestroy();      // パンケーキ消す  
                     scenemanager.PancakeAppearance();   // パンケーき出現
                     scenemanager.PlayerDestroy();       // プレイヤー消す
                     scenemanager.PlayerAppearance();    // プレイヤー出現
+                    UIcnt = 1;                          // UIを一個前のやつに戻す
                 }
             }
         }
@@ -185,6 +187,14 @@ public class Tutorial02UI : MonoBehaviour {
             CharacterBack.GetComponent<ImageShow>().FadeOut();
             _delayfollowcamera.enabled = true;
             wallcollider.enabled = false;
+        }
+        else if(UIcnt == 5)
+        {
+            // 多分いらんけどエラー防止
+            if (SuccessChara.GetComponent<SuccessMove>().mode == SuccessMove.eSccessState.FIN)
+            {
+                SuccessChara.GetComponent<SuccessMove>().FinSuccess();
+            }
         }
     }
 

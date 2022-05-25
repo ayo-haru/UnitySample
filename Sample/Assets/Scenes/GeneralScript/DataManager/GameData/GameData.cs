@@ -28,6 +28,9 @@ public static class GameData {
         KitchenStage004,
         KitchenStage005,
         KitchenStage006,
+        ExStage001,
+        ExStage002,
+        ExStage003,
         Tutorial1,
         Tutorial2,
         Tutorial3,
@@ -43,6 +46,7 @@ public static class GameData {
     static string[] MapName = {                                     // マップの名前
         "TitleScene",
         "KitchenStage001", "KitchenStage002", "KitchenStage003", "KitchenStage004", "KitchenStage005", "KitchenStage006",
+        "ExStage001", "ExStage002", "ExStage003",
         "Tutorial01","Tutorial02","Tutorial03",
         "Tester"
     };

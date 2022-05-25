@@ -27,8 +27,9 @@ public class PieceManager : MonoBehaviour
     private int MaxPieceGrade;
     //一回だけ実行する用のフラグ
     private bool onceFlag;
-    //エフェクト
-    //public GameObject effect;
+    
+    //エフェクト管理コンポーネント
+    private GetStarItemEffect effectManager;
     //ランタン画像
     //public GameObject PieceImage;
     //UVScrollコンポーネント
@@ -38,12 +39,15 @@ public class PieceManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        effectManager = GetComponent<GetStarItemEffect>();
         onceFlag = true;
 
         //コンポーネント取得
         //pieceUV = PieceImage.GetComponent<UVScroll>();
 
-       // stockManager = GameObject.Find("StockHPManager").GetComponent<StockManager>();
+        // stockManager = GameObject.Find("StockHPManager").GetComponent<StockManager>();
+
+        
     }
 
     // Update is called once per frame
@@ -53,13 +57,15 @@ public class PieceManager : MonoBehaviour
         {
             return;
         }
+        onceFlag = false;
+        //かけらが５個ある時
         // 所持枠最大値設定
         MaxPieceGrade = piece.Length;
         //ゲームデータクラスから回復のかけらの数取得して入れる
         nPiece = GameData.CurrentPiece;
         //ゲームデータクラスから取得していれる
         PieceGrade = GameData.CurrentPieceGrade;
-
+        Debug.Log(PieceGrade + "シーン切り替え時ピースグレード取得");
         //現在のかけらの数に応じてＵＶ座標決定
         //pieceUV.SetFrame(nPiece);
         //PieceGradeの数だけランタンを出す
@@ -86,8 +92,7 @@ public class PieceManager : MonoBehaviour
         //    piece[i].GetComponent<ImageShow>().Show();
         //}
 
-        onceFlag = false;
-        //かけらが５個ある時
+        
         //if(nPiece == piece.Length)
         //{
         //    if (stockManager.IsAddStock())
@@ -209,28 +214,26 @@ public class PieceManager : MonoBehaviour
             PieceUpGradeNum += i;
         }
         //累計アイテム数
-        int TotalItem = 0;
-        for(int i = 0; i < 10; ++i)
-        {
-         for(int j = 0; j < 10; ++j)
-            {
-                if (GameData.isStarGet[j, i])
-                {
-                    ++TotalItem;
-                }
-            }   
-        }
-        Debug.Log(TotalItem);
-        if(TotalItem >= PieceUpGradeNum + PieceGrade)   //今ゲットしたアイテムの情報がまだ配列に入ってないためイコール付けてる
+        int TotalItem = effectManager.GetTotalItem();
+
+        Debug.Log(TotalItem + "とーたるあいてむ");
+        
+        if(TotalItem > PieceUpGradeNum + PieceGrade)   //今ゲットしたアイテムの情報がまだ配列に入ってないためイコール付けてる
         {
             //かけら所持枠を増やす
             ++PieceGrade;
             //ランタンを一つ増やす
-            //piece[PieceGrade - 1].transform.parent.gameObject.GetComponent<pieceMove>().startFlag = true;
-            //エフェクト消去
-
+            piece[PieceGrade - 1].transform.parent.gameObject.GetComponent<pieceMove>().startFlag = true;
+            //エフェクトループ解除
+            if(TotalItem > 1)
+            {
+                //バグ出てるからコメントアウト
+                //effectManager.effectFinish();
+            }
+            
             //ゲームデータ更新
             ++GameData.CurrentPieceGrade;
+            
             //保存
             //SaveManager.savePieceGrade(GameData.CurrentPieceGrade);
             ////表示
@@ -239,17 +242,10 @@ public class PieceManager : MonoBehaviour
             ////エフェクト発生
             //Instantiate(effect, piece[PieceGrade - 1].GetComponent<RectTransform>().position, Quaternion.identity);
         }
-
-        if(TotalItem == 0 || TotalItem == 1 || TotalItem == 3 || TotalItem == 6)
+        else//ランタン増えなかったときはエフェクトの制御する
         {
-            //ランタンを一つ増やす
-            piece[PieceGrade - 1].transform.parent.gameObject.GetComponent<pieceMove>().startFlag = true;
-            //エフェクト出す
-            //TotalItemが0の時は出さない
-        }
-        else if(true)//エフェクトが生成されてたら
-        {
-            //エフェクトの透明度更新
+            //バグ出てるからコメントアウト
+            //effectManager.StartEffect(TotalItem);
         }
     }
 
@@ -262,4 +258,7 @@ public class PieceManager : MonoBehaviour
             piece[i].transform.parent.gameObject.GetComponent<pieceMove>().vibration();
         }
     }
+
+    
+    
 }

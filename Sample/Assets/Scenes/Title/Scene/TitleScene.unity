@@ -1026,7 +1026,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -230, y: 201}
+  m_AnchoredPosition: {x: -180, y: 140}
   m_SizeDelta: {x: 2400, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &235347394
@@ -1049,7 +1049,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 52baa3c7f2b462b45adef817540d04e3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 58f9f086e02c5dc43909449e41a46e5d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1994,7 +1994,9 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -8239601862322545065, guid: 4e1c9d0047563d44986180323c249d38, type: 3}
+    - {fileID: 7293839534209206287, guid: 4e1c9d0047563d44986180323c249d38, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4e1c9d0047563d44986180323c249d38, type: 3}
 --- !u!1001 &555881358
 PrefabInstance:
@@ -3140,7 +3142,9 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -8239601862322545065, guid: 4e1c9d0047563d44986180323c249d38, type: 3}
+    - {fileID: 7293839534209206287, guid: 4e1c9d0047563d44986180323c249d38, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4e1c9d0047563d44986180323c249d38, type: 3}
 --- !u!1001 &890314812
 PrefabInstance:
@@ -3332,7 +3336,9 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -8239601862322545065, guid: 4e1c9d0047563d44986180323c249d38, type: 3}
+    - {fileID: 7293839534209206287, guid: 4e1c9d0047563d44986180323c249d38, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4e1c9d0047563d44986180323c249d38, type: 3}
 --- !u!4 &940139036 stripped
 Transform:
@@ -3433,7 +3439,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -270, y: -271}
+  m_AnchoredPosition: {x: -270, y: -350}
   m_SizeDelta: {x: 800, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &943761091

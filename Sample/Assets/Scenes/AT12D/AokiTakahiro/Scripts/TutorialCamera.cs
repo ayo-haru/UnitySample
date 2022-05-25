@@ -9,7 +9,7 @@ public class TutorialCamera : MonoBehaviour
 
     [SerializeField] private float cameraZ = -100.0f;
 
-    private float cameraPosY = 25.0f;
+    private float cameraPosY = 10.0f;
 
     //画面真ん中から端までのワールド座標での距離
     private float edgetocenter;

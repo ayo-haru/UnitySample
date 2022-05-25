@@ -190,7 +190,7 @@ public class Boss1Rush : MonoBehaviour
                 Boss1Manager.BossPos = Vector3.Lerp(RushPlayerPoint, RushRefEndPoint, RushRefTime);
                 if (RushRefTime >= 1.0f)
                 {
-                    
+                    BossAttack.DamageColor.Invoke("Play" ,0.0f);
                     if (RushRefTime <= 1.1f)
                     {
                         GameObject.Find("BossStageManager").GetComponent<ShakeCamera>().Shake(0.3f, 5, 1);

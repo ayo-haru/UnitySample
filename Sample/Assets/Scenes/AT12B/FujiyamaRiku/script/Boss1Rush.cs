@@ -35,8 +35,8 @@ public class Boss1Rush : MonoBehaviour
     {
         Forkobj = (GameObject)Resources.Load("Fork");
         BossAttack = this.GetComponent<Boss1Attack>();
-        
     }
+
 
     // Update is called once per frame
     void Update()
@@ -148,7 +148,6 @@ public class Boss1Rush : MonoBehaviour
             //íeÇ©ÇÍÇΩÇÁàÍâÒÇæÇØèàóùÇ∑ÇÈïîï™
             if (BossAttack.RefrectFlg)
             {
-                
                 RushRefFlg = true;
                 RushPlayerPoint = Boss1Manager.Boss.transform.position;
                 BossAttack.BossAnim.SetBool("RushToJump", false);
@@ -158,17 +157,22 @@ public class Boss1Rush : MonoBehaviour
             //íeÇ©ÇÍÇƒÇ¢Ç»Ç©Ç¡ÇΩèÍçáÇÃèàóù
             if (!RushRefFlg)
             {
+                if (!BossAttack.RFChange)
+                {
+                    GameObject.Find("Boss_Fork2(Clone)").transform.position = GameObject.Find("ForkEF").transform.position;
+                }
+                if (BossAttack.RFChange)
+                {
+                    GameObject.Find("Boss_Fork2(Clone)").transform.position = GameObject.Find("LForkEF").transform.position;
+                }
                 RushTime += Time.deltaTime * RushSpeed;
                 
                 Boss1Manager.BossPos = Vector3.Lerp(RushStartPoint, RushEndPoint, RushTime);
-                if (RushTime >= 0.5f && !EFDelFlg)
-                    {
-                        Destroy(GameObject.Find("Boss_Fork2(Clone)"));
-                        EFDelFlg = true;
-                    }
 
                 if (RushTime >= 1.0f)
                 {
+                    Destroy(GameObject.Find("Boss_Fork2(Clone)"));
+                    EFDelFlg = true;
                     BossAttack.Scale.x *= -1;
                     RushReturnSpeed = 1f;
                     RushEndFlg = true;
@@ -229,6 +233,7 @@ public class Boss1Rush : MonoBehaviour
             //âEÇ©ÇÁç∂
             if (!BossAttack.RFChange)
             {
+                
                 BossAttack.OnlyFlg = true;
                 Debug.Log("Pos : " + Boss1Manager.BossPos);
                 RushStartPoint = GameObject.Find("BossPoint").transform.position;
@@ -252,7 +257,6 @@ public class Boss1Rush : MonoBehaviour
                 ForkPos = GameObject.Find("ForkPos").transform.position;
                 Fork = Instantiate(Forkobj, ForkPos, Quaternion.Euler(GameObject.Find("ForkPos").transform.rotation.eulerAngles));
                 Fork.transform.parent = GameObject.Find("ForkPos").transform;
-                
                 RushRefEndPoint = GameObject.Find("LeftForkRefEndPoint").transform.position;
                 Rotate.x = -1;
                 BossAttack.BossAnim.SetTrigger("TakeToRushTr");

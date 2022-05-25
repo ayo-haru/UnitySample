@@ -55,7 +55,7 @@ public class GateSwitch : MonoBehaviour
         if (GameData.GateOnOff)
         {
             animator.Play("Off");
-
+            StartCoroutine("WaitOff");
             //Mesh_Close.enabled = true;
             //Mesh_Open.enabled = false;
             SoundManager.Play(SoundData.eSE.SE_SWITCH, SoundData.GameAudioList);

@@ -31,7 +31,10 @@ public class Star : MonoBehaviour
         if (collision.gameObject.tag == "Weapon")   // 盾と当たったらUIを変更して音だしてエフェクトだして消す
         {
             //取得済みのフラグ立てる
-            GameData.isStarGet[GameData.CurrentMapNumber - 1,id] = true;
+            if (GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial3)
+            {
+                GameData.isStarGet[GameData.CurrentMapNumber - 1, id] = true;
+            }
             if (GameObject.Find("HPSystem(2)(Clone)"))
             {
 

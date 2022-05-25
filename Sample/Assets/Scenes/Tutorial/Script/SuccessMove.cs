@@ -16,7 +16,7 @@ public class SuccessMove : MonoBehaviour {
     private const float MaxWidth = 600.0f * maxSizeRate;
     private const float MaxHeight = 200.0f * maxSizeRate;
     private const float upforce = 10.0f;        // 上に飛ばす力
-    private const float expantionSpeed = 1.5f;   // 拡大スピード
+    private const float expantionSpeed = 3.0f;   // 拡大スピード
 
     //------ 変数定義 -----
     public eSccessState mode;       // 表示の変更のステート
@@ -62,7 +62,7 @@ public class SuccessMove : MonoBehaviour {
 
     public void StartSccess() {
         mode = eSccessState.EXPANSION;
-        rectTransform.sizeDelta = new Vector2(600, 200);
+        rectTransform.sizeDelta = new Vector2(0, 0);
         width = 0.0f;     // 最初は少し小さい状態から始めていく
         height = 0.0f;     // 最初は少し小さい状態から始めていく
         rectTransform.localPosition = new Vector3(0.0f,0.0f,0.0f);

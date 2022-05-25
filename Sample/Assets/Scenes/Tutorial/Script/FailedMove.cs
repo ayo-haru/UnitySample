@@ -18,7 +18,8 @@ public class FailedMove : MonoBehaviour
     private const float MaxHeight = 200.0f * maxSizeRate;
     private const float maxAngle = -45.0f;        // 傾ける角度の最大
     private const float angle = 1.0f;        // 傾ける角度
-    private const float expantionSpeed = 1.5f;   // 拡大スピード
+    //private const float expantionSpeed = 1.5f;   // 拡大スピード
+    private const float expantionSpeed = 3.0f;   // 拡大スピード
     private const float tiltSpeed = 0.5f;        // 傾けるスピード
 
     //------ 変数定義 -----
@@ -68,7 +69,8 @@ public class FailedMove : MonoBehaviour
 
     public void StartFailed() {
         mode = eFailedState.EXPANSION;
-        rectTransform.sizeDelta = new Vector2(600, 200);
+        rectTransform.sizeDelta = new Vector2(0, 0);
+        //rectTransform.sizeDelta = new Vector2(600, 200);
         width = 0.0f;     // 最初は少し小さい状態から始めていく
         height = 0.0f;     // 最初は少し小さい状態から始めていく
         rectTransform.eulerAngles = new Vector3(0.0f, 0.0f, 0.0f);

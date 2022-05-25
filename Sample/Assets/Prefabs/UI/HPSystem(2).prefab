@@ -1064,7 +1064,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6564312574104820065}
   - component: {fileID: 8453681067692798682}
-  - component: {fileID: 5139599647457164629}
   m_Layer: 0
   m_Name: pieceManager
   m_TagString: Untagged
@@ -1108,19 +1107,6 @@ MonoBehaviour:
   - {fileID: 8760230311618923093}
   - {fileID: 1488548545822478824}
   - {fileID: 6263217335894822266}
---- !u!114 &5139599647457164629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7979991949022214912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef8b8e201f98bcf46827c9ef42ae0808, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effect: {fileID: 2513453272276334756, guid: d893bc3a515a97b43a4cc74b994dde47, type: 3}
 --- !u!1 &8690027205653039328
 GameObject:
   m_ObjectHideFlags: 0
@@ -1466,6 +1452,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8963946bb0559f4f85d92e00901b94c, type: 3}
+--- !u!1 &5818413556894257486 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5556889252997096614, guid: f8963946bb0559f4f85d92e00901b94c, type: 3}
+  m_PrefabInstance: {fileID: 2135024085379069416}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6749215185720705057 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4614824487838430665, guid: f8963946bb0559f4f85d92e00901b94c, type: 3}
@@ -1474,11 +1465,6 @@ GameObject:
 --- !u!224 &7555484535503144677 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8465456954451653389, guid: f8963946bb0559f4f85d92e00901b94c, type: 3}
-  m_PrefabInstance: {fileID: 2135024085379069416}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5818413556894257486 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5556889252997096614, guid: f8963946bb0559f4f85d92e00901b94c, type: 3}
   m_PrefabInstance: {fileID: 2135024085379069416}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &6441444402889253833 stripped

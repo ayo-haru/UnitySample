@@ -226,7 +226,9 @@ public class PieceManager : MonoBehaviour
             //かけら所持枠を増やす
             ++PieceGrade;
             //ランタンを一つ増やす
-            piece[PieceGrade - 1].transform.parent.gameObject.GetComponent<pieceMove>().startFlag = true;
+            //piece[PieceGrade - 1].transform.parent.gameObject.GetComponent<pieceMove>().startFlag = true;
+            //エフェクト消去
+
             //ゲームデータ更新
             ++GameData.CurrentPieceGrade;
             //保存
@@ -236,6 +238,18 @@ public class PieceManager : MonoBehaviour
             //piece[PieceGrade - 1].GetComponent<ImageShow>().Show();
             ////エフェクト発生
             //Instantiate(effect, piece[PieceGrade - 1].GetComponent<RectTransform>().position, Quaternion.identity);
+        }
+
+        if(TotalItem == 0 || TotalItem == 1 || TotalItem == 3 || TotalItem == 6)
+        {
+            //ランタンを一つ増やす
+            piece[PieceGrade - 1].transform.parent.gameObject.GetComponent<pieceMove>().startFlag = true;
+            //エフェクト出す
+            //TotalItemが0の時は出さない
+        }
+        else if(true)//エフェクトが生成されてたら
+        {
+            //エフェクトの透明度更新
         }
     }
 

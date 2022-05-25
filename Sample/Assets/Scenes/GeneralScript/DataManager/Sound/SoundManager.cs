@@ -17,7 +17,7 @@ using UnityEngine;
 public static class SoundManager {
 
     //BGMボリューム
-    public static float bgmVolume = 0.5f;
+    public static float bgmVolume = 1.0f;
     //SEボリューム
     public static float seVolume = 0.5f;
     /// <summary>

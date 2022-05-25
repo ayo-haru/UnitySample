@@ -44,7 +44,7 @@ public class Tutorial02UI : MonoBehaviour {
 
     private Tutorial02Manager scenemanager; // 02シーンのマネージャー
 
-    private DelayFollowCamera _delayfollowcamera;   // ディレイフォローカメラを保存しておく
+    private TutorialCamera tutorialCamera;   // カメラのスクリプトを保存しておく
 
     private BoxCollider wallcollider;   // はじくチュートリアルが終わるまでの壁
 
@@ -61,7 +61,7 @@ public class Tutorial02UI : MonoBehaviour {
         UIcnt = 0;  // UIを表示する順番を管理する
         canvas = GetComponent<Canvas>();    // キャンバスを指定
         scenemanager = GameObject.Find("SceneManager").GetComponent<Tutorial02Manager>();   // シーンマネージャーをほそん
-        _delayfollowcamera = Camera.main.GetComponent<DelayFollowCamera>(); // ディレイフォローカメラを保存
+        tutorialCamera = Camera.main.GetComponent<TutorialCamera>(); // ディレイフォローカメラを保存
         wallcollider = GameObject.Find("wallcollider004").GetComponent<BoxCollider>();  // 壁を保存
         tutorialPause = false;  // 初期はポーズしないのでfalse
 
@@ -98,7 +98,6 @@ public class Tutorial02UI : MonoBehaviour {
         NextIcon.GetComponent<ImageShow>().Hide();
         Panel.GetComponent<Image>().color = new Color(0.0f, 0.0f, 0.0f, 0.5f);
         Panel.GetComponent<Image>().enabled = false;
-        SuccessChara.GetComponent<ImageShow>().Hide();
         
     }
 
@@ -185,7 +184,7 @@ public class Tutorial02UI : MonoBehaviour {
         {
             //---これがこの世界の戦い方
             CharacterBack.GetComponent<ImageShow>().FadeOut();
-            _delayfollowcamera.enabled = true;
+            tutorialCamera.enabled = true;
             wallcollider.enabled = false;
         }
         else if(UIcnt == 5)

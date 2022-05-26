@@ -39,7 +39,8 @@ public class Tutorial01Manager : MonoBehaviour
         GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-165.0f, 17.0f, 0.0f);
         GameObject player = Instantiate(GameData.Player);
         player.name = GameData.Player.name;                     // 名前の後ろに(Clone)とつくのを防ぐため、
-
+        //プレイヤーに演出用のスクリプト追加
+        player.AddComponent<StartStagePllayer>();
 
 
         //----- 音鳴らす準備 -----                                                       //----- 音鳴らす準備 -----

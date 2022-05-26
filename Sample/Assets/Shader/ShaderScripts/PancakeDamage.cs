@@ -40,7 +40,7 @@ public class PancakeDamage : MonoBehaviour
 		}
 
         //---コルーチンをスタートする(今回は特に処理はなし)
-        _Playcoroutine = StartCoroutine(Run(1f));
+        _Playcoroutine = StartCoroutine(Run(0.3f));
 	}
 
     public void Stop()

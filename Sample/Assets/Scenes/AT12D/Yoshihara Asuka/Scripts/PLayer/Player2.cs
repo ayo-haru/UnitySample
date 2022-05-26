@@ -206,8 +206,9 @@ public class Player2 : MonoBehaviour
                 animator.speed = 1.0f;
             }
 
+            //GamePadManager.onceTiltStick = false;
+
             rb.Resume(gameObject);
-            GamePadManager.onceTiltStick = false;
 
             //---HPオブジェクトを検索
             if (!hp)
@@ -271,7 +272,6 @@ public class Player2 : MonoBehaviour
             animator.speed = 0.0f;
             rb.Pause(gameObject);
         }
-
     }
 
     private void FixedUpdate()
@@ -311,9 +311,8 @@ public class Player2 : MonoBehaviour
         {
             // 処理なし
         }
-        else
+        else if(Pause.isPause)
         {
-            // 処理なし
         }
     }
 
@@ -456,7 +455,7 @@ public class Player2 : MonoBehaviour
                 rb.velocity = Vector3.zero;
 
                 UnderParryNow = true;
-                GamePadManager.onceTiltStick = true;
+                //GamePadManager.onceTiltStick = true;
                 //GroundNow = false;
                 animator.SetTrigger("Attack_DOWN");
             }

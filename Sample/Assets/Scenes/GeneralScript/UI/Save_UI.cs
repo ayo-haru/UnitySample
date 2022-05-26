@@ -36,8 +36,8 @@ public class Save_UI : MonoBehaviour
     private GameObject SusumuCharacter;
 
     [SerializeField]
-    private GameObject stick;
-    private GameObject Stick;
+    private GameObject abutton;
+    private GameObject AButton;
 
     [SerializeField]
     private GameObject selectbox;
@@ -69,7 +69,7 @@ public class Save_UI : MonoBehaviour
         SelectBox = Instantiate(selectbox);
         YesCharacter = Instantiate(yescharacter);
         NoCharacter = Instantiate(nocharacter);
-        Stick = Instantiate(stick);
+        AButton = Instantiate(abutton);
         WarpCharacter = Instantiate(warpcharacter);
         SusumuCharacter = Instantiate(susumucharacter);
 
@@ -78,7 +78,7 @@ public class Save_UI : MonoBehaviour
         SelectBox.transform.SetParent(this.canvas.transform, false);
         YesCharacter.transform.SetParent(this.canvas.transform, false);
         NoCharacter.transform.SetParent(this.canvas.transform, false);
-        Stick.transform.SetParent(this.canvas.transform,false);
+        AButton.transform.SetParent(this.canvas.transform,false);
         WarpCharacter.transform.SetParent(this.canvas.transform, false);
         SusumuCharacter.transform.SetParent(this.canvas.transform, false);
 
@@ -90,7 +90,7 @@ public class Save_UI : MonoBehaviour
         SaveCharacter.GetComponent<Image>().enabled = false;
         YesCharacter.GetComponent<Image>().enabled = false;
         NoCharacter.GetComponent<Image>().enabled = false;
-        Stick.GetComponent<UIBlink>().isHide = true;
+        AButton.GetComponent<UIBlink>().isHide = true;
         WarpCharacter.GetComponent<Image>().enabled = false;
         SusumuCharacter.GetComponent<Image>().enabled = false;
 
@@ -120,25 +120,25 @@ public class Save_UI : MonoBehaviour
                 SaveCharacter.GetComponent<Image>().enabled = false;
                 YesCharacter.GetComponent<Image>().enabled = false;
                 NoCharacter.GetComponent<Image>().enabled = false;
-                Stick.GetComponent<Image>().enabled = false;
+                AButton.GetComponent<Image>().enabled = false;
                 WarpCharacter.GetComponent<Image>().enabled = false;
                 SusumuCharacter.GetComponent<Image>().enabled = false;
 
                 if (Player.isHitSavePoint)  // セーブポイントに当たったら操作方法を表示
                 {
-                    Stick.GetComponent<UIBlink>().isHide = false;
+                    AButton.GetComponent<UIBlink>().isHide = false;
                 }
 
                 return; // セーブできないときは以下の処理は必要ないので返す
             }
             else
             {
-                GamePadManager.onceTiltStick = false;
+                //GamePadManager.onceTiltStick = false;
                 SelectBox.GetComponent<Image>().enabled = true;
                 // セーブは非表示
                 SaveCharacter.GetComponent<Image>().enabled = false;
                 YesCharacter.GetComponent<Image>().enabled = false;
-                Stick.GetComponent<UIBlink>().isHide = true;
+                AButton.GetComponent<UIBlink>().isHide = true;
                 // ワープは表示
                 WarpCharacter.GetComponent<Image>().enabled = true;
                 SusumuCharacter.GetComponent<Image>().enabled = true;
@@ -211,20 +211,20 @@ public class Save_UI : MonoBehaviour
                 SaveCharacter.GetComponent<Image>().enabled = false;
                 YesCharacter.GetComponent<Image>().enabled = false;
                 NoCharacter.GetComponent<Image>().enabled = false;
-                Stick.GetComponent<UIBlink>().isHide = true;
+                AButton.GetComponent<UIBlink>().isHide = true;
                 WarpCharacter.GetComponent<Image>().enabled = false;
                 SusumuCharacter.GetComponent<Image>().enabled = false;
 
                 if (Player.isHitSavePoint)  // セーブポイントに当たったら操作方法を表示
                 {
-                    Stick.GetComponent<UIBlink>().isHide = false;
+                    AButton.GetComponent<UIBlink>().isHide = false;
                 }
 
                 return; // セーブできないときは以下の処理は必要ないので返す
             }
             else
             {
-                GamePadManager.onceTiltStick = false;
+                //GamePadManager.onceTiltStick = false;
                 Pause.isPause = true;
 
                 // セーブ可能になったらUIを表示
@@ -232,7 +232,7 @@ public class Save_UI : MonoBehaviour
                 SaveCharacter.GetComponent<Image>().enabled = true;
                 YesCharacter.GetComponent<Image>().enabled = true;
                 NoCharacter.GetComponent<Image>().enabled = true;
-                Stick.GetComponent<UIBlink>().isHide = true;
+                AButton.GetComponent<UIBlink>().isHide = true;
                 // ワープは非表示
                 WarpCharacter.GetComponent<Image>().enabled = false;
                 SusumuCharacter.GetComponent<Image>().enabled = false;
@@ -362,6 +362,9 @@ public class Save_UI : MonoBehaviour
         if (SaveManager.canSave || Warp.canWarp)
         {
             isDecision = true;
+        }else if(Player.isHitSavePoint && !SaveManager.canSave)
+        {
+            SaveManager.canSave = true;
         }
     }
 

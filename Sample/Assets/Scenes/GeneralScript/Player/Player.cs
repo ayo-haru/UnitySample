@@ -60,22 +60,22 @@ public class Player : MonoBehaviour
         //    this.transform.position = GameData.Player.transform.position = GameData.PlayerPos = GameData.ReSpawnPos;
         //}
 
-        if (isHitSavePoint) // セーブポイントに当たっていて、そのフレームの最初にスティックが傾けられたら
-        {
-            //Debug.Log("セーブポイントに当たってる");
-            if (GamePadManager.onceTiltStick)
-            {
-                if (HitSavePointColorisRed)
-                {
-                    Warp.canWarp = true;
-                }
-                else
-                {
-                    SaveManager.canSave = true;
-                }
-                //Debug.Log("セーブかのう");
-            }
-        }
+        //if (isHitSavePoint) // セーブポイントに当たっていて、そのフレームの最初にスティックが傾けられたら
+        //{
+        //    //Debug.Log("セーブポイントに当たってる");
+        //    if (GamePadManager.onceTiltStick)
+        //    {
+        //        if (HitSavePointColorisRed)
+        //        {
+        //            Warp.canWarp = true;
+        //        }
+        //        else
+        //        {
+        //            SaveManager.canSave = true;
+        //        }
+        //        //Debug.Log("セーブかのう");
+        //    }
+        //}
 
         if (SaveManager.shouldSave) // セーブするが選択されたら
         {
@@ -120,8 +120,8 @@ public class Player : MonoBehaviour
                 //Pause.isPause = false;
             }
         }
-
-        Debug.Log("ポーズフラグ確認" + Pause.isPause);
+        //GamePadManager.onceTiltStick = false;
+        Debug.Log("<color=red>ポーズフラグ確認</color>" + Pause.isPause);
     }
 
     private void PlayerDeath() {

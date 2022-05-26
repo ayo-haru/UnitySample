@@ -206,7 +206,6 @@ public class Player2 : MonoBehaviour
             }
 
             rb.Resume(gameObject);
-            GamePadManager.onceTiltStick = false;
 
             //---HPオブジェクトを検索
             if (!hp)
@@ -270,7 +269,7 @@ public class Player2 : MonoBehaviour
             animator.speed = 0.0f;
             rb.Pause(gameObject);
         }
-
+        GamePadManager.onceTiltStick = false;
     }
 
     private void FixedUpdate()

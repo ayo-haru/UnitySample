@@ -21,6 +21,7 @@ public class BossTrac : MonoBehaviour
     float UpCurrentDif;
     bool ChangeFlg;
     float CurrentFlame;
+    float MinDif;
     Vector3 A_Pos;
     Vector3 B_Pos;
     Vector3 CamPos;
@@ -34,7 +35,8 @@ public class BossTrac : MonoBehaviour
     {
         TracCamera = Camera.main;
         BegCamPos = GameObject.Find("CameraPos").transform.position;
-        LimitLength = MaxLength + 105;
+        LimitLength = MaxLength + 105.0f;
+        MinDif = 
         DelFlameNum = DelFlame / 60.0f;
     }
 
@@ -42,6 +44,7 @@ public class BossTrac : MonoBehaviour
     void Update()
     {
         Debug.Log("‚Ü‚Á‚½‚­‚Ü‚Á‚½‚­" + DelFlame);
+        Debug.Log("‚Í‚¢‚Á‚Ä‚é‚º" + (Length));
         Difference();
         if(UpLength <= UpMax)
         {
@@ -78,7 +81,7 @@ public class BossTrac : MonoBehaviour
         }
         if (Length >= MaxLength && Length <= LimitLength)
         {
-            Debug.Log("‚Í‚¢‚Á‚Ä‚é‚º");
+            
                 if (B_Pos.x <= A_Pos.x)
                 {
                 if(ChangeFlg)
@@ -88,25 +91,25 @@ public class BossTrac : MonoBehaviour
                     ChangeFlg = false;
                 }
                     Dif = HalfLength - (MaxLength / 2);
-                    if (CurrentDif == Dif)
+                    if ((CurrentDif - Dif) > 0.0f)
                     {
-                    CurrentFlame = 0;
-                    return;
+                        CurrentFlame = 0;
+                        return;
                     }
                     if (CurrentDif <= Dif)
                     {
                     //·•ª‚ÌÀ•W
                         CurrentFlame += Time.deltaTime;
-                    if (DelFlameNum <= CurrentFlame)
-                    {
-                        CamPos.x = TracCamera.transform.position.x + CurrentDif / Dif;
-                        CamPos.y = TracCamera.transform.position.y;
-                        CamPos.z = TracCamera.transform.position.z;
+                        if (DelFlameNum <= CurrentFlame)
+                        {
+                            CamPos.x = TracCamera.transform.position.x + CurrentDif / Dif;
+                            CamPos.y = TracCamera.transform.position.y;
+                            CamPos.z = TracCamera.transform.position.z;
 
-                        TracCamera.transform.position = CamPos;
-                        CurrentDif++;
-                        return;
-                    }
+                            TracCamera.transform.position = CamPos;
+                            CurrentDif++;
+                            return;
+                        }
                     }
                 }
                 if(B_Pos.x >= A_Pos.x)
@@ -118,7 +121,7 @@ public class BossTrac : MonoBehaviour
                     ChangeFlg = true;
                 }
                 Dif = HalfLength - (MaxLength / 2);
-                if (CurrentDif == Dif)
+                if ((CurrentDif - Dif) > 0.0f)
                 {
                     CurrentFlame = 0;
                     return;

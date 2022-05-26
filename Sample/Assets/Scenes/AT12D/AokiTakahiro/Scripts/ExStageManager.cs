@@ -88,12 +88,12 @@ public class ExStageManager : MonoBehaviour
                     if (GameData.OldMapNumber == (int)GameData.eSceneState.BossStage002)
                     {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
-                        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(20.0f, 107.0f, 0.0f);
+                        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(30.0f, 107.0f, 0.0f);
                     }
                     else
                     {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
-                        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(20.0f, 107.0f, 0.0f);
+                        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(30.0f, 107.0f, 0.0f);
                     }
                     break;
 

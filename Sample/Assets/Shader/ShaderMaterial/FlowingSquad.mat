@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Flowing
+  m_Name: FlowingSquad
   m_Shader: {fileID: -6465566751694194690, guid: 8cba00f58ab63a24db6c2edf0f714b12, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -32,16 +32,17 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Metallic: 0
+    - _Metallic: 1
     - _NormalsStrength: 0.12
     - _Smoothness: 1.4
+    - _TransparencyMask: 0
     - _VoronoiAgitition: 1
     - _VoronoiPower: 4.31
     - _VoronoiScale: 10
     m_Colors:
-    - _BaseColor: {r: 0.2825567, g: 0.79, b: 0.14220001, a: 1}
+    - _BaseColor: {r: 3.2243402, g: 0.71178824, b: 2.4359891, a: 1}
     - _NormalsSpeed: {r: 0, g: -0.75, b: 0, a: 0}
-    - _VoronoiColor: {r: 0.29019594, g: 1, b: 0, a: 1}
+    - _VoronoiColor: {r: 1, g: 0, b: 0.7226367, a: 1}
     - _VoronoiSpeed: {r: 0, g: 0.5, b: 0, a: 0}
     - _VoronoiTiling: {r: 1.2, g: 0.6, b: 0, a: 0}
   m_BuildTextureStacks: []

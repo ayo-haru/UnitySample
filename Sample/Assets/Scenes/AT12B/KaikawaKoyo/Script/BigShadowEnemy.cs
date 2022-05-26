@@ -39,13 +39,13 @@ public class BigShadowEnemy : MonoBehaviour
         switch (EnemyNumber)
         {
             case 0:
-                Enemy = (GameObject)Resources.Load("Carrot");
+                Enemy = (GameObject)Resources.Load("Carrot 1");
                 break;
             case 1:
-                Enemy = (GameObject)Resources.Load("Broccoli");
+                Enemy = (GameObject)Resources.Load("Broccoli 1");
                 break;
             case 2:
-                Enemy = (GameObject)Resources.Load("Tomato");
+                Enemy = (GameObject)Resources.Load("Tomato 1");
                 break;
             case 3:
                 Enemy = (GameObject)Resources.Load("Carrot 2");

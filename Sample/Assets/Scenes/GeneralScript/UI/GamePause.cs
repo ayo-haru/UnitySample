@@ -42,6 +42,9 @@ public class GamePause : MonoBehaviour
     [SerializeField]
     private GameObject selectbox;
     private GameObject SelectBox;
+    [SerializeField]
+    private GameObject decision;
+    private GameObject Decision;
 
     //---表示に使用するCanvas
     Canvas canvas;
@@ -62,20 +65,29 @@ public class GamePause : MonoBehaviour
 
     private bool notShowPause;
 
+    private GameObject hpUI;                // ポーズに入ったらUIを消したいから
+    private GameObject minimapUI;             
+
     // Start is called before the first frame update
     void Awake()
     {
         UIActionAssets = new Game_pad();            // InputActionインスタンスを生成
+    }
 
+
+    private void Start() {
         select = (int)eSTATEPAUSE.RETURNGAME;   // 選択のモードの初期化
 
         UIBasePosx = 0.0f;  // UIの表示位置の基準位置初期化
 
         notShowPause = false;   // trueが表示しないとき
 
+        hpUI = GameObject.Find("HPSystem(2)(Clone)");   // 探して格納
+        minimapUI = GameObject.Find("MiniMapFrame");
+
         // キャンバスを指定
         canvas = GetComponent<Canvas>();
-        if(GameData.CurrentMapNumber == (int)GameData.eSceneState.BOSS1_SCENE)
+        if (GameData.CurrentMapNumber == (int)GameData.eSceneState.BOSS1_SCENE)
         {
             canvas2 = GameObject.Find("Canvas2").GetComponent<Canvas>();
         }
@@ -125,8 +137,6 @@ public class GamePause : MonoBehaviour
         Panel.GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
         Panel.GetComponent<Image>().enabled = false;
         Optionmanager.SetActive(false);
-
-
     }
 
     // Update is called once per frame
@@ -163,6 +173,7 @@ public class GamePause : MonoBehaviour
                 }
             }
 
+            // 非表示
             SelectBox.GetComponent<Image>().enabled = false;
             PauseCharacter.GetComponent<Image>().enabled = false;
             BackGame.GetComponent<Image>().enabled = false;
@@ -171,6 +182,9 @@ public class GamePause : MonoBehaviour
             Option.GetComponent<Image>().enabled = false;
             Panel.GetComponent<Image>().enabled = false;
             isCalledOncce = false;
+            hpUI.SetActive(true);
+            minimapUI.SetActive(true);
+
 
             if (UIBasePosx > 0.0f)
             {
@@ -193,6 +207,8 @@ public class GamePause : MonoBehaviour
                 BackTitle.GetComponent<Image>().enabled = true;
                 Option.GetComponent<Image>().enabled = true;
                 Panel.GetComponent<Image>().enabled = true;
+                hpUI.SetActive(false);
+                minimapUI.SetActive(false);
 
                 //音楽停止
                 if (GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE && GameData.CurrentMapNumber != (int)GameData.eSceneState.TITLE_SCENE)

@@ -11,7 +11,7 @@ public class SmoothDampCamera : MonoBehaviour
     [SerializeField] private Transform _follower;
 
     // 目標値に到達するまでのおおよその時間
-    [SerializeField] private float _SmoothTime = 0.3f;
+    [SerializeField] private float _SmoothTime = 1.0f;
 
     // 最高速度
     [SerializeField] private float _maxSpeed = float.PositiveInfinity;

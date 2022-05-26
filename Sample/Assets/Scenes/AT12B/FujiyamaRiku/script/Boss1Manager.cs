@@ -97,6 +97,7 @@ public class Boss1Manager : MonoBehaviour
                     if (DeathEFTime >= 5.5f)
                     {
                         EFPos.z = EFPos.z - 0.4f;
+                        
                     }
                     GameObject.Find("Boss_Death(Clone)").transform.position = EFPos;
                     GetComponent<BossDeathCam>().DeathCamera();

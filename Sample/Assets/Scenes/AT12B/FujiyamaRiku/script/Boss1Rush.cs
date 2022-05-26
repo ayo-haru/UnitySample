@@ -68,6 +68,7 @@ public class Boss1Rush : MonoBehaviour
             if (!EFFlg)
             {
                 EffectManager.Play(EffectData.eEFFECT.EF_BOSS_FORK, GameObject.Find("ForkEF").transform.position);
+                EffectManager.Play(EffectData.eEFFECT.EF_BOOS_FORK_DUST, GameObject.Find("ForkEF").transform.position);
                 if (BossAttack.RFChange)
                 {
                     GameObject.Find("Boss_Fork2(Clone)").transform.rotation = new Quaternion(0.0f, 180.0f, 0.0f, 0.0f);

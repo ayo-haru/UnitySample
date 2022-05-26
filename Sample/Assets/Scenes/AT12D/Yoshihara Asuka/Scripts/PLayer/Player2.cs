@@ -205,7 +205,7 @@ public class Player2 : MonoBehaviour
                 animator.speed = 1.0f;
             }
 
-            GamePadManager.onceTiltStick = false;
+            //GamePadManager.onceTiltStick = false;
 
             rb.Resume(gameObject);
 
@@ -312,11 +312,6 @@ public class Player2 : MonoBehaviour
         }
         else if(Pause.isPause)
         {
-            // このifが一番最後じゃないと他のポーズを使うところで引っかかって死ぬ
-            if (Player.isHitSavePoint)
-            {
-
-            }
         }
     }
 
@@ -459,7 +454,7 @@ public class Player2 : MonoBehaviour
                 rb.velocity = Vector3.zero;
 
                 UnderParryNow = true;
-                GamePadManager.onceTiltStick = true;
+                //GamePadManager.onceTiltStick = true;
                 //GroundNow = false;
                 animator.SetTrigger("Attack_DOWN");
             }

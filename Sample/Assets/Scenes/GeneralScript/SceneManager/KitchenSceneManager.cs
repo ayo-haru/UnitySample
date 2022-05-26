@@ -168,18 +168,17 @@ public class KitchenSceneManager : MonoBehaviour {
                     break;
 
 
-
                 // EXステージ 1
                 case (int)GameData.eSceneState.BossStage001:
-                    if(GameData.OldMapNumber == (int)GameData.eSceneState.BOSS1_SCENE)
-                    {
-                        GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
-                        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(15.0f, 23.0f, 0.0f);
-                    }
-                    else if (GameData.OldMapNumber == (int)GameData.eSceneState.BossStage002)
+                    if (GameData.OldMapNumber == (int)GameData.eSceneState.BossStage002)
                     {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                         GameData.PlayerPos = GameData.Player.transform.position = new Vector3(480.0f, 107.0f, 0.0f);
+                    }
+                    else
+                    {
+                        GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
+                        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(15.0f, 23.0f, 0.0f);
                     }
                     break;
 
@@ -195,15 +194,26 @@ public class KitchenSceneManager : MonoBehaviour {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                         GameData.PlayerPos = GameData.Player.transform.position = new Vector3(510.0f, 135.0f, 0.0f);
                     }
+                    else
+                    {
+                        GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
+                        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(30.0f, 107.0f, 0.0f);
+                    }
+
                     break;
                 // EXステージ 3
-                //case (int)GameData.eSceneState.BossStage003:
-                //    if (GameData.OldMapNumber == (int)GameData.eSceneState.BossStage002)
-                //    {
-                //        GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
-                //        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
-                //    }
-                //    break;
+                case (int)GameData.eSceneState.BossStage003:
+                    if (GameData.OldMapNumber == (int)GameData.eSceneState.BossStage002)
+                    {
+                        GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
+                        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+                    }
+                    else
+                    {
+                        GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
+                        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(0.0f, 0.0f, 0.0f);
+                    }
+                    break;
                 default:
                     break;
             }

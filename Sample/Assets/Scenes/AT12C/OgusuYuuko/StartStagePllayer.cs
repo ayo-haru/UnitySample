@@ -64,11 +64,13 @@ public class StartStagePllayer : MonoBehaviour
 
         if(gameObject.transform.position.x > finishPosX)
         {
+            //アニメーション再生 シャボン玉割る
+            playerAnimator.SetTrigger("Attack_UP");
             //演出が終わったので、player2とrigidbodyを元に戻す
             gameObject.GetComponent<Player2>().enabled = true;
             gameObject.GetComponent<Rigidbody>().useGravity = true;
             //コンポーネント消す
-            Destroy(gameObject.GetComponent<StartStagePllayer>());
+            Destroy(this);
         }
 
     }

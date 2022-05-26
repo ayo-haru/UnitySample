@@ -287,6 +287,7 @@ public class Boss1StrawBerry : MonoBehaviour
                     //’e‚ª“ž’…‚µ‚½‚çÁ‚·,UŒ‚‚ð‚Í‚¶‚¢‚Ä‚¢‚½‚çˆ—‚ð‚µ‚È‚¢
                     if (FinishTime[i] >= 1.0f && !StrawberryRefFlg[i])
                     {
+                        EffectManager.Play(EffectData.eEFFECT.EF_BOSS_STRAWBERRY_LAND, Strawberry[i].transform.position);
                         FinishTime[i] = 0;
                         StrawberryUseFlg[i] = false;
                         Destroy(Strawberry[i]);

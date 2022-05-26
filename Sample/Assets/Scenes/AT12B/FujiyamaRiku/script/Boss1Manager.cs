@@ -33,6 +33,8 @@ public class Boss1Manager : MonoBehaviour
     BossTrac Track;
     private Vector3 WarpEFPoint;
     private bool PlayEffect = false;
+    private Vector3 EFPos;
+    private float DeathEFTime;
     
     private void Awake()
     {
@@ -87,10 +89,18 @@ public class Boss1Manager : MonoBehaviour
                     GetComponent<BossTrac>().enabled = false;
                     if (!PlayEffect)
                     {
+                        EFPos = Boss.transform.position;
                         EffectManager.Play(EffectData.eEFFECT.EF_BOSS_DEATH,new Vector3(Boss.transform.position.x, Boss.transform.position.y, Boss.transform.position.z),8f);
                         PlayEffect = true;
                     }
+                    DeathEFTime += Time.deltaTime;
+                    if (DeathEFTime >= 5.5f)
+                    {
+                        EFPos.z = EFPos.z - 0.4f;
+                    }
+                    GameObject.Find("Boss_Death(Clone)").transform.position = EFPos;
                     GetComponent<BossDeathCam>().DeathCamera();
+
                      Destroy(Boss,7.9f);
 
                     //Warp.SetActive(true);

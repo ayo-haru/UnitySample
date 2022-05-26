@@ -210,17 +210,17 @@ public class Player : MonoBehaviour
             GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
         }
 
-        if (other.gameObject.tag == "toExStage01")
+        if (other.gameObject.tag == "toExStage1")
         {
             GameData.isFadeOut = true;  // フェードかける
             GameData.NextMapNumber = (int)GameData.eSceneState.BossStage001;
         }
-        if (other.gameObject.tag == "toExStage02")
+        if (other.gameObject.tag == "toExStage2")
         {
             GameData.isFadeOut = true;  // フェードかける
             GameData.NextMapNumber = (int)GameData.eSceneState.BossStage002;
         }
-        if (other.gameObject.tag == "toExStage03")
+        if (other.gameObject.tag == "toExStage3")
         {
             GameData.isFadeOut = true;  // フェードかける
             GameData.NextMapNumber = (int)GameData.eSceneState.BossStage003;

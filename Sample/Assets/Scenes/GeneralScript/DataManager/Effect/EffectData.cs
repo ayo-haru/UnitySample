@@ -38,10 +38,12 @@ public static class EffectData
 
         //---プレイヤー関連
         EF_PLAYER_SHIELD,
+        EF_PLAYER_BREAK,
         EF_PLAYER_HIT,
         EF_PLAYER_HEAL,
         EF_PLAYER_DAMAGE,
         EF_PLAYER_DEATH,
+        
 
         //---雑魚的関連
         EF_ENEMY_DARKAREA,
@@ -54,6 +56,8 @@ public static class EffectData
         EF_BOSS_STRAWBERRY,
         EF_BOSS_FORK,
         EF_BOSS_RAINZONE,
+        EF_BOSS_STRAWBERRY_LAND,
+        EF_BOOS_FORK_DUST,
 
         //---その他
         //EF_SHEILD2,

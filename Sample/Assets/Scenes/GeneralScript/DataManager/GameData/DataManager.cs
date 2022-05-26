@@ -104,6 +104,7 @@ public class DataManager : MonoBehaviour
 
     //---プレイヤー
     [SerializeField] private ParticleSystem ef_player_shield;
+    [SerializeField] private ParticleSystem ef_player_break;
     [SerializeField] private ParticleSystem ef_player_hit;
     [SerializeField] private ParticleSystem ef_player_heal;
     [SerializeField] private ParticleSystem ef_player_damage;
@@ -120,6 +121,8 @@ public class DataManager : MonoBehaviour
     [SerializeField] private ParticleSystem ef_boss_strawberry;
     [SerializeField] private ParticleSystem ef_boss_fork;
     [SerializeField] private ParticleSystem ef_boss_rainzone;
+    [SerializeField] private ParticleSystem ef_boss_strawberry_land;
+    [SerializeField] private ParticleSystem ef_boss_fork_dust;
 
 
     //---その他(今のところ未使用)
@@ -202,6 +205,7 @@ public class DataManager : MonoBehaviour
 
         //---プレイヤー関連
         EffectData.EFDataSet(ef_player_shield, (int)EffectData.eEFFECT.EF_PLAYER_SHIELD);
+        EffectData.EFDataSet(ef_player_break, (int)EffectData.eEFFECT.EF_PLAYER_BREAK);
         EffectData.EFDataSet(ef_player_hit, (int)EffectData.eEFFECT.EF_PLAYER_HIT);
         EffectData.EFDataSet(ef_player_heal, (int)EffectData.eEFFECT.EF_PLAYER_HEAL);
         EffectData.EFDataSet(ef_player_damage, (int)EffectData.eEFFECT.EF_PLAYER_DAMAGE);
@@ -218,6 +222,8 @@ public class DataManager : MonoBehaviour
         EffectData.EFDataSet(ef_boss_strawberry, (int)EffectData.eEFFECT.EF_BOSS_STRAWBERRY);
         EffectData.EFDataSet(ef_boss_fork, (int)EffectData.eEFFECT.EF_BOSS_FORK);
         EffectData.EFDataSet(ef_boss_rainzone, (int)EffectData.eEFFECT.EF_BOSS_RAINZONE);
+        EffectData.EFDataSet(ef_boss_strawberry_land, (int)EffectData.eEFFECT.EF_BOSS_STRAWBERRY_LAND);
+        EffectData.EFDataSet(ef_boss_fork_dust, (int)EffectData.eEFFECT.EF_BOOS_FORK_DUST);
 
 
         //EffectData.EFDataSet(ef_shield2,(int)EffectData.eEFFECT.EF_SHEILD2);

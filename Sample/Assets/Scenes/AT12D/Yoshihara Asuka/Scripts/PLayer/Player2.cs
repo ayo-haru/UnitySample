@@ -158,6 +158,7 @@ public class Player2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         Weapon = (GameObject)Resources.Load("Weapon");
         
         if (GameObject.Find("HPSystem(2)(Clone)")){
@@ -562,6 +563,7 @@ public class Player2 : MonoBehaviour
 
     public Vector2 GetAttackDirection()
     {
+        
         return AttackDirection;
     }
 

@@ -19,14 +19,14 @@ public class SmoothDampCamera : MonoBehaviour
     // 現在速度(SmoothDampの計算のために必要)
     private float _currentVelocity = 0;
 
-    // X座標をターゲットのX座標に追従
-    void LateUpdate()
+    // Y座標をターゲットのY座標に追従
+    void Update()
     {
         // 現在位置取得
         var currentPos = _follower.position;
 
         // 次フレームの位置を計算
-        currentPos.x = Mathf.SmoothDamp(currentPos.x, _target.position.x, ref _currentVelocity, _SmoothTime, _maxSpeed);
+        currentPos.y = Mathf.SmoothDamp(currentPos.x, _target.position.x, ref _currentVelocity, _SmoothTime, _maxSpeed);
 
         // 現在位置のX座標を更新
         _follower.position = currentPos;

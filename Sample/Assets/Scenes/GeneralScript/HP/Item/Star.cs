@@ -9,7 +9,7 @@ public class Star : MonoBehaviour
     HPManager hpmanager;
 
     //識別用ID
-    private int id;
+    private int id = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +34,9 @@ public class Star : MonoBehaviour
             if (GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial3)
             {
                 GameData.isStarGet[GameData.CurrentMapNumber - 1, id] = true;
+            }else//チュートリアル３の場合
+            {
+                GameData.isStarGet[9, id] = true;
             }
             if (GameObject.Find("HPSystem(2)(Clone)"))
             {
@@ -51,6 +54,7 @@ public class Star : MonoBehaviour
 
     public void SetID(int ID)
     {
+        Debug.Log("セットID");
         id = ID;
     }
 }

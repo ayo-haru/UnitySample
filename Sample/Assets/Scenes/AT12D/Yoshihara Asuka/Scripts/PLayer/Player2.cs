@@ -205,6 +205,8 @@ public class Player2 : MonoBehaviour
                 animator.speed = 1.0f;
             }
 
+            GamePadManager.onceTiltStick = false;
+
             rb.Resume(gameObject);
 
             //---HPオブジェクトを検索
@@ -269,7 +271,6 @@ public class Player2 : MonoBehaviour
             animator.speed = 0.0f;
             rb.Pause(gameObject);
         }
-        GamePadManager.onceTiltStick = false;
     }
 
     private void FixedUpdate()
@@ -309,9 +310,13 @@ public class Player2 : MonoBehaviour
         {
             // 処理なし
         }
-        else
+        else if(Pause.isPause)
         {
-            // 処理なし
+            // このifが一番最後じゃないと他のポーズを使うところで引っかかって死ぬ
+            if (Player.isHitSavePoint)
+            {
+
+            }
         }
     }
 

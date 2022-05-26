@@ -73,6 +73,7 @@ public class WeaponCollision : MonoBehaviour
             {
                 if (Player.isHitSavePoint)
                 {
+                    CanCollision = false;
                     return;
                 }
 

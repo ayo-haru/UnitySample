@@ -19,6 +19,9 @@ public class GamePause : MonoBehaviour
 
     //---表示するUI
     [SerializeField]
+    private GameObject pauseframe;
+    private GameObject PauseFrame;
+    [SerializeField]
     private GameObject pausecharacter;
     private GameObject PauseCharacter;
     [SerializeField]
@@ -62,6 +65,7 @@ public class GamePause : MonoBehaviour
        
     private float UIBasePosx;               // UI表示の基準位置
     private float UIMoveSpeed = 1.5f;       // UI表示を動かすときのスピード
+    //private float UIPosx = 0.0f;            // RectTransformのpos
 
     private bool notShowPause;
 
@@ -79,6 +83,7 @@ public class GamePause : MonoBehaviour
         select = (int)eSTATEPAUSE.RETURNGAME;   // 選択のモードの初期化
 
         UIBasePosx = 0.0f;  // UIの表示位置の基準位置初期化
+        //UIPosx = 0.0f;
 
         notShowPause = false;   // trueが表示しないとき
 
@@ -92,6 +97,7 @@ public class GamePause : MonoBehaviour
             canvas2 = GameObject.Find("Canvas2").GetComponent<Canvas>();
         }
         // 実態化
+        PauseFrame = Instantiate(pauseframe);
         PauseCharacter = Instantiate(pausecharacter);
         BackGame = Instantiate(backgame);
         GameEnd = Instantiate(gameend);
@@ -104,7 +110,8 @@ public class GamePause : MonoBehaviour
 
 
         // キャンバスの子にする
-        Panel.transform.SetParent(this.canvas.transform, false);
+        //Panel.transform.SetParent(this.canvas.transform, false);
+        PauseFrame.transform.SetParent(this.transform, false);
         SelectBox.transform.SetParent(this.canvas.transform, false);
         PauseCharacter.transform.SetParent(this.canvas.transform, false);
         BackGame.transform.SetParent(this.canvas.transform, false);
@@ -127,6 +134,7 @@ public class GamePause : MonoBehaviour
         SelectBox.GetComponent<UIBlink>().isHide = true;
         SelectBox.GetComponent<Image>().enabled = false;
         SelectBox.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 100);
+        PauseFrame.GetComponent<Image>().enabled = false;
         PauseCharacter.GetComponent<Image>().enabled = false;
         BackGame.GetComponent<Image>().enabled = false;
         GameEnd.GetComponent<Image>().enabled = false;
@@ -177,19 +185,21 @@ public class GamePause : MonoBehaviour
             }
 
             // 非表示
+            PauseFrame.GetComponent<Image>().enabled = false;
             SelectBox.GetComponent<Image>().enabled = false;
             PauseCharacter.GetComponent<Image>().enabled = false;
             BackGame.GetComponent<Image>().enabled = false;
             GameEnd.GetComponent<Image>().enabled = false;
             BackTitle.GetComponent<Image>().enabled = false;
             Option.GetComponent<Image>().enabled = false;
-            Panel.GetComponent<Image>().enabled = false;
+            //Panel.GetComponent<Image>().enabled = false;
             isCalledOncce = false;
             hpUI.SetActive(true);
             minimapUI.SetActive(true);
             Decision.GetComponent<Image>().enabled = false;
 
             if (UIBasePosx > 0.0f)
+            //if (UIPosx > -1390.0f)
             {
                 FinUIMove();
             }
@@ -203,13 +213,14 @@ public class GamePause : MonoBehaviour
             {
                 //----- ポーズに入ったら一回のみする -----
                 // ポーズ中になったら表示
+                PauseFrame.GetComponent<Image>().enabled = true;
                 SelectBox.GetComponent<Image>().enabled = true;
                 PauseCharacter.GetComponent<Image>().enabled = true;
                 BackGame.GetComponent<Image>().enabled = true;
                 GameEnd.GetComponent<Image>().enabled = true;
                 BackTitle.GetComponent<Image>().enabled = true;
                 Option.GetComponent<Image>().enabled = true;
-                Panel.GetComponent<Image>().enabled = true;
+                //Panel.GetComponent<Image>().enabled = true;
                 hpUI.SetActive(false);
                 minimapUI.SetActive(false);
 
@@ -226,6 +237,7 @@ public class GamePause : MonoBehaviour
             isCalledOncce = true;   // もう上のif文に入らないようにフラグを反転
 
             if (UIBasePosx < 0.3125f)
+            //if (UIPosx < 1920.0f)
             {
                 StartUIMove();
                 SelectBoxPosUpdete();   // 選択の枠の表示位置の更新
@@ -483,16 +495,25 @@ public class GamePause : MonoBehaviour
     /// </summary>
     private void StartUIMove() {
         Camera camera = Camera.main; // メインカメラを指定
+        //float cameraPosX = 0.0f;
 
         // タイムで画面の表示位置の割合を変える
         UIBasePosx += Time.deltaTime * UIMoveSpeed;
+        //cameraPosX = UIBasePosx;
+        //UIPosx += UIBasePosx * 1920;
         if (UIBasePosx > 0.3125f)      // 例外処理
         {
             // 0.3125(600/1920)はUIの横幅をカメラの座標にあわせたやつ
             UIBasePosx = 0.3125f;
         }
 
+        //if(UIPosx > 1920.0f)
+        //{
+        //    UIPosx = 1920.0f;
+        //}
+
         camera.rect = new Rect(UIBasePosx, 0.0f, 1.0f - UIBasePosx, 1.0f);
+        //PauseFrame.GetComponent<RectTransform>().position = new Vector3(PauseFrame.GetComponent<RectTransform>().position.x + UIPosx, 0,0);
         //BackGame.GetComponent<RectTransform>().localPosition.x = ;
     }
 
@@ -504,11 +525,19 @@ public class GamePause : MonoBehaviour
 
         // タイムで画面の表示位置の割合を変える
         UIBasePosx -= Time.deltaTime * UIMoveSpeed;
+        //UIPosx = UIBasePosx * 1920 + UIPosx;
+
         if (UIBasePosx < 0.0f)  // 例外処理
         {
             UIBasePosx = 0.0f;
         }
+        //if (UIPosx < -1390.0f)
+        //{
+        //    UIPosx = -1390.0f;
+        //}
+
         camera.rect = new Rect(UIBasePosx, 0.0f, 1.0f - UIBasePosx, 1.0f);
+        //PauseFrame.GetComponent<RectTransform>().localPosition = new Vector3(PauseFrame.GetComponent<RectTransform>().localPosition.x + UIPosx, 0, 0);
     }
 
 }

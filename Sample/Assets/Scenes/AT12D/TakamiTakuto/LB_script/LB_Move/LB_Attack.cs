@@ -54,19 +54,17 @@ public class LB_Attack : MonoBehaviour
     public GameObject Bullet;                               //GameObject:Bullet
     [SerializeField] public int Bullet_MaxSpeed;            //弾の速度
     public bool BulletUseFlag = true;                       //バレットが使用中かどうか調べるフラグ（初期値：true)
-    //[[[[[HP管理用]]]]]=====================================================================================
-    private GameObject HpObject;                            //GameObject:HpObject
-    public HPgage HpScript;                                 //HPスクリプト
-    //[[[[[アニメーション用]]]]]==============================================================================
-    public Animator BossAnim;                               //Animetor:LastBoss
+    //-----------------------------------------------------------------------------------------------------
+    private GameObject HpObject;
+    public HPgage HpScript;
+    public Animator BossAnim;
     [System.NonSerialized] public bool AnimFlg;
     [System.NonSerialized] public bool MoveFlg;
-    //[[[[[必殺技用フラグ]]]]]================================================================================
+    //必殺技用フラグ(〇%以下になったとき一回)
     bool UltFlg;
-    //-------------------------------------------------------------------------------------------------------
 
 
-    // Start is called before the first frame update=========================================================
+    // Start is called before the first frame update
     void Start()
     {
         LBState = LB_State.Idle;
@@ -79,10 +77,9 @@ public class LB_Attack : MonoBehaviour
             number.Add(i);
         }
     }
-    //--------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------
 
-
-    // Update is called once per frame========================================================================
+    // Update is called once per frame----------------------------------------------------
     void Update()
     {
 
@@ -90,37 +87,37 @@ public class LB_Attack : MonoBehaviour
         {
             if (LB_Manager.LB_States == LB_Manager.LB_State.LB_BATTLE)
             {
-                if (LBState == LB_State.Idle)               　//もしボスの状態が待機の場合
+                if (LBState == LB_State.Idle)       //もしボスの状態が待機の場合
                 {
-                    Idle();                                  //待機
+                    Idle();
                 }
-                else if (LBState == LB_State.RandomMove)     //もしボスの状態がダメージの場合
+                else if (LBState == LB_State.RandomMove)//もしボスの状態がダメージの場合
                 {
 
                 }
-                else if (LBState == LB_State.Damage)         //もしボスの状態がダメージの場合
+                else if (LBState == LB_State.Damage)//もしボスの状態がダメージの場合
                 {
                     //damage();
                 }
-                else if (LBState == LB_State.TrackingBullet) //もしボスの状態がナイフ投げの場合
+                else if (LBState == LB_State.TrackingBullet)//もしボスの状態がナイフ投げの場合
                 {
-                    BulletAttack();                          //追従弾
+                    BulletAttack();
                 }
-                else if (LBState == LB_State.BoundBoll)      //もしボスの状態がイチゴ爆弾の場合
+                else if (LBState == LB_State.BoundBoll)//もしボスの状態がイチゴ爆弾の場合
                 {
-                    BoundBollAttack();                       //バウンドボール
+                    BoundBollAttack();
                 }
-                else if (LBState == LB_State.WarpBullet)　　　//もしボスの状態がワープ弾攻撃の場合
+                else if (LBState == LB_State.WarpBullet)//もしボスの状態が突進の場合
                 {
-                    if (WarpCount <= 5)                      //攻撃回数
+                    if (WarpCount <= 5)
                     {
-                        if (WarpBullets == null)             //弾が存在している場合はワープ弾攻撃を行わない
+                        if (WarpBullets == null)
                         {
-                            WarpBulletAttack();              //ワープ弾攻撃
+                            WarpBulletAttack();
                         }
                     }
                 }
-                else if (LBState == LB_State.ArrowAttack)    //もしボスの状態がアローアタックの場合
+                else if (LBState == LB_State.ArrowAttack)//もしボスの状態がナイフ投げの場合
                 {
                     //---矢印攻撃ならば------------
                     if (ArrowUseFlag)
@@ -131,16 +128,15 @@ public class LB_Attack : MonoBehaviour
                             return;
                         }
 
-                        Index = Random.Range(0, number.Count);//0から要素の最大数までの範囲からランダムで抽選
-                        random = number[Index];               //抽選した値で要素を指定する
+                        Index = Random.Range(0, number.Count);             // 0から要素の最大数までの範囲からランダムで抽選
+                        random = number[Index];                            // 抽選した値で要素を指定する
 
-                        ArrowAttack(random);                  //引数は乱数
+                        ArrowAttack(random);
                     }
                 }
             }
         }
     }
-    //--------------------------------------------------------------------------------------------------------------------
 
     static public void SetState(LB_State LbState, Transform playerTransform = null)
     {
@@ -170,6 +166,8 @@ public class LB_Attack : MonoBehaviour
             Debug.Log("チェイス");
         }
     }
+
+
     //--------------------------------------------------------------------------------------------------------
 
     public LB_State GetState()
@@ -278,8 +276,11 @@ public class LB_Attack : MonoBehaviour
 //BulletAttack=====================================================================
 private void BulletAttack()
     {
-      Vector3 bulletPosition = firingPoint.transform.position;
-      GameObject newBullet = Instantiate(Bullet, bulletPosition, transform.rotation);// 上で取得した場所に、"bulle
+        if (Input.GetKeyDown("c"))
+        {
+            Vector3 bulletPosition = firingPoint.transform.position;
+            GameObject newBullet = Instantiate(Bullet, bulletPosition, transform.rotation);// 上で取得した場所に、"bulle
+        }
     }
     //---------------------------------------------------------------------------------
 

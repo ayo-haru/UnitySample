@@ -51,7 +51,7 @@ public class LB_Manager : MonoBehaviour
         if (GameData.isAliveBoss1)
         {
             //LB_obj.transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
-            LB = Instantiate(LB_obj, LB_Pos, Quaternion.Euler(0.0f, -180.0f, 0.0f));
+            LB = Instantiate(LB_obj, LB_Pos, Quaternion.Euler(0.0f, -90.0f, 0.0f));
             LB_States = LB_State.LB_START;
         }
         Application.targetFrameRate = 60;

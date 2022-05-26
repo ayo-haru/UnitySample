@@ -120,8 +120,8 @@ public class Player : MonoBehaviour
                 //Pause.isPause = false;
             }
         }
-
-        Debug.Log("ポーズフラグ確認" + Pause.isPause);
+        GamePadManager.onceTiltStick = false;
+        Debug.Log("<color=red>ポーズフラグ確認</color>" + Pause.isPause);
     }
 
     private void PlayerDeath() {

@@ -1,86 +1,108 @@
+//==========================================================
+//      ボスのゲージ作成
+//      作成日　2022/03/14
+//      作成者　藤山凌希
+//      
+//      <開発履歴>
+//      2022/03/14      ボスマネージャーの作成  
+//
+//==========================================================
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LB_Manager : MonoBehaviour
 {
-    public enum LBState
+    public enum LB_State
     {
         LB_START = 0,    //ボスの開始
         LB_BATTLE,      //ボスとのバトル中
         LB_END,          //ボスを倒したとき
         LB_DEAD,
     }
-    static public LBState BossState;
+    static public LB_State LB_States;
     private int CountDown;
     private float CountDownMax = 5.0f;
-    //public Text timerText;
-    public static GameObject Bossobj;
-    public static GameObject Boss;
-    public static Vector3 BossPos;
+    public Text timerText;
+    public GameObject LB_obj;
+    public static GameObject LB;
+    public static Vector3 LB_Pos;
+    private GameObject Warp;
+    LB_Entry Entry;
+    LB_Trac Track;
+    private Vector3 WarpEFPoint;
+    private bool PlayEffect = false;
+
     private void Awake()
     {
-
-        Bossobj = (GameObject)Resources.Load("LastBoss");
-
-        BossPos = GameObject.Find("BossPoint").transform.position;
-        if (GameData.isAliveBoss1)
-        {
-            Bossobj.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
-            Boss = Instantiate(Bossobj, BossPos, Quaternion.Euler(0.0f, -90.0f, 0.0f));
-            BossState = LBState.LB_START;
-        }
-        Application.targetFrameRate = 60;
         //ボスを倒したかどうかの判定
         if (!GameData.isAliveBoss1)
         {
             //ボスの処理を何もしない処理入れる
-            BossState = LBState.LB_DEAD;
+            LB_States = LB_State.LB_DEAD;
             return;
         }
+        Entry = GameObject.Find("LastBoss_Manager").GetComponent<LB_Entry>();
+        Track = GameObject.Find("LastBoss_Manager").GetComponent<LB_Trac>();
+        LB_obj = (GameObject)Resources.Load("LastBoss_Idle");
+        LB_Pos = GameObject.Find("LB_Point").transform.position;
+
+        if (GameData.isAliveBoss1)
+        {
+            //LB_obj.transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
+            LB = Instantiate(LB_obj, LB_Pos, Quaternion.Euler(0.0f, -90.0f, 0.0f));
+            LB_States = LB_State.LB_START;
+        }
+        Application.targetFrameRate = 60;
     }
     // Start is called before the first frame update
     void Start()
     {
-
+        //Warp = GameObject.Find("MovePointToKitchen6");
+        //Warp.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        switch (BossState)
+        switch (LB_States)
         {
-            case LBState.LB_START:
+            case LB_State.LB_START:
                 {
 
-                    CountDownMax -= Time.deltaTime;
-                    CountDown = (int)CountDownMax;
+                    Entry.Entry();
 
-                    //timerText.text = CountDown.ToString();
-                    if (CountDown <= 0)
+                    break;
+                }
+            case LB_State.LB_BATTLE:
+                {
+                    Track.enabled = true;
+                    LB.gameObject.transform.position = LB_Pos;
+                    break;
+                }
+            case LB_State.LB_END:
+                {
+                    if (!PlayEffect)
                     {
-                        //Debug.Log("Time : " + CountDownMax);
-                        //timerText.enabled = false;
-                        BossState = LBState.LB_BATTLE;
-
+                        //EffectManager.Play(EffectData.eEFFECT.EF_LB__DEATH, new Vector3(LB_.transform.position.x, LB_.transform.position.y, LB_.transform.position.z), 8f);
+                        //PlayEffect = true;
                     }
+                    //GetComponent<LB_DeathCam>().DeathCamera();
+                    Destroy(LB, 7.9f);
+
+                    //Warp.SetActive(true);
+                    //WarpEFPoint = Warp.transform.position;
+                    //WarpEFPoint.y = 11.7f;
+                    //EffectManager.Play(EffectData.eEFFECT.EF_DARKAREA, WarpEFPoint);
                     break;
                 }
-            case LBState.LB_BATTLE:
-                {
-                    Boss.gameObject.transform.position = BossPos;
-                    break;
-                }
-            case LBState.LB_END:
-                {
-                    Destroy(GameObject.Find("LastBoss(Clone)"));
-                    break;
-                }
-            case LBState.LB_DEAD:
+            case LB_State.LB_DEAD:
                 {
                     break;
                 }
         }
     }
 }
+

@@ -265,7 +265,6 @@ public class Player2 : MonoBehaviour
             //animator.speed = 1.0f;
             rb.Pause(gameObject);
         }
-
         else
         {
             animator.speed = 0.0f;
@@ -307,9 +306,13 @@ public class Player2 : MonoBehaviour
             }
 
         }
-
-        else{
-
+        else if (GameOver.GameOverFlag)
+        {
+            // 処理なし
+        }
+        else
+        {
+            // 処理なし
         }
     }
 
@@ -593,9 +596,12 @@ public class Player2 : MonoBehaviour
         if (!hp){                        // hpのUIがない場合は処理終了
             return;
         }
-        
-        // ステートを被弾時に変更
-        state = PLAYERSTATE.DAMAGED;
+        if (GameOver.GameOverFlag)  // ゲームオーナー時はダメージを受けない
+        {
+            return;
+        }
+            // ステートを被弾時に変更
+            state = PLAYERSTATE.DAMAGED;
         //if(animator.GetBool("Damagae") == false)
         //{
         //    animator.SetBool("Damage",true);

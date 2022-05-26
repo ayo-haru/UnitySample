@@ -29,6 +29,8 @@ public class Boss1KnifeThrow : MonoBehaviour
     GameObject KnifeAimObj;
     GameObject KnifeAim;
     Vector3 KnifeAimPos;
+    Vector3 AimSize;
+    Vector3 AimStartSize;
     bool AimFlg;
     bool AimOnly;
     bool AimStart;
@@ -68,6 +70,8 @@ public class Boss1KnifeThrow : MonoBehaviour
             if (!AimOnly)
             {
                 KnifeAim = Instantiate(KnifeAimObj, GameData.PlayerPos, Quaternion.Euler(90f, 0f, 0f));
+                AimSize = KnifeAim.transform.localScale;
+                AimStartSize = AimSize;
                 AimOnly = true;
             }
             KnifeAimPos.x = GameData.PlayerPos.x;
@@ -78,6 +82,9 @@ public class Boss1KnifeThrow : MonoBehaviour
             {
                 BossAttack.BossAnim.speed = 0;
                 KnifeAim.transform.position = KnifeAimPos;
+                AimSize.x -= (1.0f / 60.0f) * AimStartSize.x;
+                AimSize.z -= (1.0f / 60.0f) * AimStartSize.z;
+                KnifeAim.transform.localScale = AimSize;
                 KnifeThrowNowTime += Time.deltaTime;
             }
             else
@@ -160,6 +167,7 @@ public class Boss1KnifeThrow : MonoBehaviour
                 Debug.Log("Knife " + KnifePlayerPoint);
                 if (KnifeRefTime >= 1.0f)
                 {
+                    BossAttack.DamageColor.Invoke("Play", 0.0f);
                     EffectManager.Play(EffectData.eEFFECT.EF_BOSS_KNIFEDAMAGE, Boss1Manager.BossPos);
                     BossAttack.HpScript.DelHP(BossAttack.KnifeDamage);
                     BossAttack.OnlyFlg = false;

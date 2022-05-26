@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -285,8 +285,8 @@ GameObject:
   - component: {fileID: 383409740}
   - component: {fileID: 383409739}
   - component: {fileID: 383409738}
-  - component: {fileID: 383409742}
   - component: {fileID: 383409743}
+  - component: {fileID: 383409742}
   m_Layer: 0
   m_Name: LB
   m_TagString: Untagged
@@ -380,28 +380,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 383409737}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebf93e3ec2618fb41b7ec9daa88f77cc, type: 3}
+  m_Script: {fileID: 11500000, guid: ab647da49bbde5443860a9f087d997f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   timeToStayInIdle: 0
   MaxAttack: 2
-  Arrow_Right: {fileID: 1389934655}
-  Arrow_Left: {fileID: 1282889034}
-  Arrow_Up: {fileID: 1420475657}
+  Arrow_Right: {fileID: 0}
+  Arrow_Left: {fileID: 0}
+  Arrow_Up: {fileID: 0}
   LbRigidbody: {fileID: 0}
   ArrowUseFlag: 1
   ArrowCount: 0
-  Arrow_MaxSpeed: 100
-  BoundBoll: {fileID: 4167884289531769832, guid: 83ea25b528da455479c30cfedfdfc2aa, type: 3}
+  Arrow_MaxSpeed: 0
+  BoundBoll: {fileID: 0}
   firingPoint: {fileID: 1466064791}
-  Bound_MaxSpeed: 100
+  Bound_MaxSpeed: 0
   WarpBullet: {fileID: 4721270884916156425, guid: ffb07730838063049a80621e104bcf61, type: 3}
-  WarpBullet_MaxSpeed: 0
-  WarpBulletUseFlag: 1
-  MaxWarpCount: 5
-  Bullet: {fileID: 910046467732417104, guid: 7a06edb23a314eb408044aaeb0e917f1, type: 3}
-  Bullet_MaxSpeed: 100
+  WarpBullet_MaxSpeed: 100
+  WarpCount: 0
+  Bullet: {fileID: 0}
+  Bullet_MaxSpeed: 0
   BulletUseFlag: 1
+  target: {fileID: 0}
 --- !u!114 &383409743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -855,7 +855,7 @@ MonoBehaviour:
   ArrowDisapperCount: 0
   Attackspace: 0
   Arrow_MaxCount: 2
-  LbAttack: {fileID: 383409742}
+  LbAttack: {fileID: 0}
 --- !u!1 &1376365540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1069,7 +1069,7 @@ MonoBehaviour:
   ArrowDisapperCount: 0
   Attackspace: 0
   Arrow_MaxCount: 2
-  LbAttack: {fileID: 383409742}
+  LbAttack: {fileID: 0}
 --- !u!54 &1389934661
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1220,7 +1220,7 @@ MonoBehaviour:
   ArrowDisapperCount: 0
   Attackspace: 0
   Arrow_MaxCount: 2
-  LbAttack: {fileID: 383409742}
+  LbAttack: {fileID: 0}
 --- !u!1 &1466064791
 GameObject:
   m_ObjectHideFlags: 0

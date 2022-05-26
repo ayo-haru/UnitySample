@@ -27,23 +27,14 @@ public class PieceManager : MonoBehaviour
     private int MaxPieceGrade;
     //一回だけ実行する用のフラグ
     private bool onceFlag;
-    //エフェクト
-    //public GameObject effect;
-    //ランタン画像
-    //public GameObject PieceImage;
-    //UVScrollコンポーネント
-    //private UVScroll pieceUV;
-    //回復のストックマネージャー
-   // private StockManager stockManager;
+    //ランタンを下すタイミング(アイテム数)を格納　
+    private int[] rantanDown = { 1, 2, 4, 7 };
+    //ランタンのα値格納
+    private float[] rantanAlpha = { 1.0f,0.5f,1.0f,0.3f,0.6f,1.0f,0.2f,0.4f,0.6f,1.0f};
     // Start is called before the first frame update
     void Start()
     {
         onceFlag = true;
-
-        //コンポーネント取得
-        //pieceUV = PieceImage.GetComponent<UVScroll>();
-
-       // stockManager = GameObject.Find("StockHPManager").GetComponent<StockManager>();
     }
 
     // Update is called once per frame
@@ -53,112 +44,41 @@ public class PieceManager : MonoBehaviour
         {
             return;
         }
+        onceFlag = false;
+
         // 所持枠最大値設定
         MaxPieceGrade = piece.Length;
         //ゲームデータクラスから回復のかけらの数取得して入れる
         nPiece = GameData.CurrentPiece;
         //ゲームデータクラスから取得していれる
         PieceGrade = GameData.CurrentPieceGrade;
-
-        //現在のかけらの数に応じてＵＶ座標決定
-        //pieceUV.SetFrame(nPiece);
-        //PieceGradeの数だけランタンを出す
-        for(int i = 0; i < PieceGrade; ++i)
-        {
-            piece[i].transform.parent.gameObject.GetComponent<pieceMove>().startFlag = true;
-        }
+        //ランタンを下す
+        lanthanumDown();
+        //α値調整
+        lanthanumAlpha();
         //nPieceの数だけランタンを光らせる
         for(int i = 0; i < nPiece; ++i)
         {
             piece[i].GetComponent<UVScroll>().SetFrame(1);
         }
-
-        //for (int i = 0; i < nPiece; ++i)
-        //{
-        //    //かけらの所持数分黄色にして表示
-        //    piece[i].GetComponent<ImageShow>().Show();
-        //}
-
-        //for (int i = nPiece; i < PieceGrade; ++i)
-        //{
-        //    //かけらを黒色にして表示
-        //    piece[i].GetComponent<ImageShow>().SetColor(0.0f, 0.0f, 0.0f);
-        //    piece[i].GetComponent<ImageShow>().Show();
-        //}
-
-        onceFlag = false;
-        //かけらが５個ある時
-        //if(nPiece == piece.Length)
-        //{
-        //    if (stockManager.IsAddStock())
-        //    {
-        //        //ストック増やせるなら
-        //        //ストック増やす
-        //        stockManager.AddStock();
-        //        //かけら消す
-        //        nPiece = 0;
-        //        for (int i = 0; i < piece.Length; ++i)
-        //        {
-        //            piece[i].GetComponent<ImageShow>().Hide();
-        //        }
-        //        //ゲームデータ更新
-        //        //セーブデータ更新
-        //    }
-
-        //    //ストック増やせないならそのまま
-        //}
     }
 
     public void GetPiece()
     {
-        //かけらの数更新
-        //++nPiece;
-        ////かけらが5個集まったら回復のストックを増やす
-        //if(nPiece >= piece.Length)
-        //{
-        //    if (stockManager.IsAddStock())
-        //    {
-        //        //回復のストック増やす
-        //        //増やせたら
-        //        stockManager.AddStock();
-        //        //かけら消す
-        //        nPiece = 0;
-        //        for (int i = 0; i < piece.Length; ++i)
-        //        {
-        //            piece[i].GetComponent<ImageShow>().Hide();
-        //        }
-        //    }else
-        //    {
-        //        //増やせなかったら
-        //        nPiece = piece.Length;
-        //        piece[nPiece - 1].GetComponent<ImageShow>().Show();
-        //    }
-        //}
-        //else
-        //{
-        //    piece[nPiece - 1].GetComponent<ImageShow>().Show();
-        //}
-            //所持枠より多かったらリターン
-            if (nPiece >= PieceGrade)
-            {
-                return;
-            }
+        //所持枠より多かったらリターン
+        if (nPiece >= PieceGrade)
+        {
+            return;
+        }
 
-            //かけら増やす
-            ++nPiece;
-        //pieceUV.SetFrame(nPiece);
-        Debug.Log("nPiece" + nPiece);
+        //かけら増やす
+        ++nPiece;
         //ランタンを光らせる
         piece[nPiece - 1].GetComponent<UVScroll>().SetFrame(1);
-
-        //表示
-        //piece[nPiece - 1].GetComponent<ImageShow>().SetColor(1.0f,1.0f,1.0f);
-        //    //エフェクト発生
-        //    Instantiate(effect, piece[nPiece - 1].GetComponent<RectTransform>().position, Quaternion.identity);
-            //ゲームデータ更新
-            ++GameData.CurrentPiece;
-            //保存
-            //SaveManager.saveCurrentPiece(GameData.CurrentPiece);
+       //ゲームデータ更新
+        ++GameData.CurrentPiece;
+        //保存
+        //SaveManager.saveCurrentPiece(GameData.CurrentPiece);
 
     }
 
@@ -167,15 +87,12 @@ public class PieceManager : MonoBehaviour
         //かけらが無かったら
         if(nPiece <= 0)
         {
-            //HP減らす
-            //--GameData.CurrentHP;
             return false;
         }
         else
         {
             //かけら減らす
             --nPiece;
-            //pieceUV.SetFrame(nPiece);
             //ランタンの光を消す
             piece[nPiece].GetComponent<UVScroll>().SetFrame(0);
 
@@ -209,26 +126,26 @@ public class PieceManager : MonoBehaviour
             PieceUpGradeNum += i;
         }
         //累計アイテム数
-        int TotalItem = 0;
-        for(int i = 0; i < 10; ++i)
-        {
-         for(int j = 0; j < 10; ++j)
-            {
-                if (GameData.isStarGet[j, i])
-                {
-                    ++TotalItem;
-                }
-            }   
-        }
-        Debug.Log(TotalItem);
-        if(TotalItem >= PieceUpGradeNum + PieceGrade)   //今ゲットしたアイテムの情報がまだ配列に入ってないためイコール付けてる
+        int TotalItem = GetTotalItem();
+
+        Debug.Log(TotalItem + "とーたるあいてむ");
+        
+        if(TotalItem > PieceUpGradeNum + PieceGrade) 
         {
             //かけら所持枠を増やす
             ++PieceGrade;
             //ランタンを一つ増やす
-            piece[PieceGrade - 1].transform.parent.gameObject.GetComponent<pieceMove>().startFlag = true;
+            //piece[PieceGrade - 1].transform.parent.gameObject.GetComponent<pieceMove>().startFlag = true;
+            //エフェクトループ解除
+            //if(TotalItem > 1)
+            //{
+            //    //バグ出てるからコメントアウト
+            //    //effectManager.effectFinish();
+            //}
+            
             //ゲームデータ更新
             ++GameData.CurrentPieceGrade;
+            
             //保存
             //SaveManager.savePieceGrade(GameData.CurrentPieceGrade);
             ////表示
@@ -237,6 +154,68 @@ public class PieceManager : MonoBehaviour
             ////エフェクト発生
             //Instantiate(effect, piece[PieceGrade - 1].GetComponent<RectTransform>().position, Quaternion.identity);
         }
+        //ランタン下す
+        lanthanumDown();
+        //α値調整
+        lanthanumAlpha();
+    }
+
+    public void lanthanumDown()
+    {
+        //現在のアイテム取得数
+        int totalItem = GetTotalItem();
+
+        for(int i = 0; i < rantanDown.Length; ++i)
+        {
+            if(totalItem >= rantanDown[i])
+            {
+                //ランタンを下す
+                piece[i].transform.parent.gameObject.GetComponent<pieceMove>().startFlag = true;
+                Debug.Log("ランタン下した");
+            }
+        }
+
+    }
+
+    public void lanthanumAlpha()
+    {
+        // 現在のアイテム取得数
+        int totalItem = GetTotalItem();
+        //アイテム取得してなかったらリターン
+        if(totalItem <= 0)
+        {
+            return;
+        }
+        //α値調整するオブジェクトのコンポーネント取得
+        Image alphaSetImage;
+        if (rantanAlpha[totalItem - 1] < 1.0f)
+        {
+            alphaSetImage = piece[PieceGrade].GetComponent<Image>();
+        }
+        else
+        {
+            alphaSetImage = piece[PieceGrade - 1].GetComponent<Image>();
+        }
+        
+        //α値設定
+        alphaSetImage.color = new Color(1.0f, 1.0f, 1.0f, rantanAlpha[totalItem - 1]);
+    }
+
+    public int GetTotalItem()
+    {
+        int _totalItem = 0;
+        for (int i = 0; i < 10; ++i)
+        {
+            for (int j = 0; j < 10; ++j)
+            {
+                if (GameData.isStarGet[j, i])
+                {
+                    ++_totalItem;
+                }
+            }
+        }
+
+        return _totalItem;
     }
 
     public void Vibration()
@@ -248,4 +227,7 @@ public class PieceManager : MonoBehaviour
             piece[i].transform.parent.gameObject.GetComponent<pieceMove>().vibration();
         }
     }
+
+    
+    
 }

@@ -12,6 +12,8 @@ public class Boss1Attack : MonoBehaviour
     public Boss1KnifeThrow BossKnife;
     public Boss1Rain BossRain;
     public Boss1Jamp BossJump;
+    public PancakeDamage DamageColor;
+
     //É{ÉXÇÃçUåÇÇÃéÌóﬁ
     public enum BossAttack
     {
@@ -54,6 +56,7 @@ public class Boss1Attack : MonoBehaviour
         BossKnife = this.GetComponent<Boss1KnifeThrow>();
         BossRain = this.GetComponent<Boss1Rain>();
         BossJump = this.GetComponent<Boss1Jamp>();
+        DamageColor = this.GetComponent<PancakeDamage>();
         Scale = Boss1Manager.Boss.transform.localScale;
         HpObject = GameObject.Find("HPGage");
         HpScript = HpObject.GetComponent<HPgage>();

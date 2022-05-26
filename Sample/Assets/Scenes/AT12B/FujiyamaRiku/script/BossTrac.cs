@@ -43,8 +43,8 @@ public class BossTrac : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("‚Ü‚Á‚½‚­‚Ü‚Á‚½‚­" + DelFlame);
-        Debug.Log("‚Í‚¢‚Á‚Ä‚é‚º" + (Length));
+        //Debug.Log("‚Ü‚Á‚½‚­‚Ü‚Á‚½‚­" + DelFlame);
+        //Debug.Log("‚Í‚¢‚Á‚Ä‚é‚º" + (Length));
         Difference();
         if(UpLength <= UpMax)
         {

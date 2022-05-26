@@ -31,6 +31,7 @@ public class Boss1KnifeThrow : MonoBehaviour
     Vector3 KnifeAimPos;
     Vector3 AimSize;
     Vector3 AimStartSize;
+    Vector2 AimRand;
     bool AimFlg;
     bool AimOnly;
     bool AimStart;
@@ -40,6 +41,8 @@ public class Boss1KnifeThrow : MonoBehaviour
         Knifeobj = (GameObject)Resources.Load("Knife");
         KnifeAimObj = (GameObject)Resources.Load("KnifeAim");
         BossAttack = this.GetComponent<Boss1Attack>();
+        AimRand.x = (Random.Range(0, 2) * 2 - 1) * 3.0f;
+        AimRand.y = (Random.Range(0, 2) * 2 - 1) * 3.0f;
     }
 
     // Update is called once per frame
@@ -66,30 +69,48 @@ public class Boss1KnifeThrow : MonoBehaviour
 
         if (AimStart)
         {
-            Debug.Log("‚Æ‚¨‚Á‚Ä‚Ü‚µ‚ã" + BossAttack.BossAnim.speed);
             if (!AimOnly)
             {
-                KnifeAim = Instantiate(KnifeAimObj, GameData.PlayerPos, Quaternion.Euler(90f, 0f, 0f));
+
+                KnifeAimPos.x = GameData.PlayerPos.x;
+                KnifeAimPos.y = GameData.PlayerPos.y;
+                KnifeAimPos.z = GameData.PlayerPos.z + 5.0f;
+
+                KnifeAim = Instantiate(KnifeAimObj, KnifeAimPos, Quaternion.Euler(90f, 0f, 0f));
                 AimSize = KnifeAim.transform.localScale;
                 AimStartSize = AimSize;
                 AimOnly = true;
             }
-            KnifeAimPos.x = GameData.PlayerPos.x;
-            KnifeAimPos.y = GameData.PlayerPos.y;
-            KnifeAimPos.z = GameData.PlayerPos.z + 3.0f;
-
+            BossAttack.BossAnim.speed = 0;
+            KnifeAim.transform.position = KnifeAimPos;
+            Debug.Log("‚È‚ñ‚¾‚Ä‚ß‚¥I" + (KnifeThrowTime / 0.9f));
             if (KnifeThrowTime >= KnifeThrowNowTime)
             {
-                BossAttack.BossAnim.speed = 0;
-                KnifeAim.transform.position = KnifeAimPos;
-                AimSize.x -= (1.0f / 60.0f) * AimStartSize.x;
-                AimSize.z -= (1.0f / 60.0f) * AimStartSize.z;
-                KnifeAim.transform.localScale = AimSize;
-                KnifeThrowNowTime += Time.deltaTime;
+                KnifeThrowNowTime += 1.0f / 60.0f;
+                if (KnifeThrowNowTime >= (KnifeThrowTime * 0.8f))
+                {
+                    //AimSize.x -= (1.0f / 60.0f) * AimStartSize.x;
+                    //AimSize.z -= (1.0f / 60.0f) * AimStartSize.z;
+                    //KnifeAim.transform.localScale = AimSize;
+                    KnifeAimPos.x = GameData.PlayerPos.x;
+                    KnifeAimPos.y = GameData.PlayerPos.y;
+                    KnifeAimPos.z = GameData.PlayerPos.z + 5.0f;
+                }
+                else
+                {
+                    if ((int)(KnifeThrowNowTime * 60) % 11 == 10)
+                    {
+                        AimRand.x = (Random.Range(0, 2) * 2 - 1) * 0.5f;
+                        AimRand.y = (Random.Range(0, 2) * 2 - 1)* 0.5f;
+                    }
+                    
+                    KnifeAimPos.x = KnifeAimPos.x + AimRand.x;
+                    KnifeAimPos.y = KnifeAimPos.y + AimRand.y;
+                }
             }
             else
             {
-                //BossAttack.BossAnim.speed = 1.0f;
+                
                 AimFlg = true;
                 AimOnly = false;
                 AimStart = false;
@@ -102,6 +123,9 @@ public class Boss1KnifeThrow : MonoBehaviour
             
             if (!BossAttack.OnlyFlg)
             {
+                KnifeAimPos.x = GameData.PlayerPos.x;
+                KnifeAimPos.y = GameData.PlayerPos.y;
+                KnifeAimPos.z = GameData.PlayerPos.z + 5.0f;
                 BossAttack.OnlyFlg = true;
                 GameObject.Find("knife(Clone)").transform.parent.DetachChildren();
                 Vector3 KnifeDir = GameData.PlayerPos - Knife.transform.position;

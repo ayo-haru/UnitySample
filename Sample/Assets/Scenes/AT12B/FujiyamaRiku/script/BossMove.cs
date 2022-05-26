@@ -164,7 +164,7 @@ public class BossMove : MonoBehaviour
             }
             else
             {
-               RandomNumbe = Random.Range(1, 5);//攻撃パターンランダム化
+               RandomNumbe = Random.Range(4, 5);//攻撃パターンランダム化
                if(BossAttack.JampFlg)
                {
                     if(RandomNumbe == 3)

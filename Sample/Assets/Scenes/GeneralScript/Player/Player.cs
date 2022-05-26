@@ -120,6 +120,8 @@ public class Player : MonoBehaviour
                 //Pause.isPause = false;
             }
         }
+
+        Debug.Log("ポーズフラグ確認" + Pause.isPause);
     }
 
     private void PlayerDeath() {

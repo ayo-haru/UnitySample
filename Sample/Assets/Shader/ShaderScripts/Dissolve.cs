@@ -74,7 +74,8 @@ public class Dissolve : MonoBehaviour
         //---ƒ}ƒeƒŠƒAƒ‹‚ð‚à‚Æ‚É–ß‚·
         for(int i= 0;i < _skinnedMeshRenderers.Length; i++)
         {
-           _skinnedMeshRenderers[i].materials[i] = _originMaterials[i];
+           //_skinnedMeshRenderers[i].materials[i] = _originMaterials[i];
+           _skinnedMeshRenderers[i].materials[0] = _originMaterials[i];
 
         }
 	}

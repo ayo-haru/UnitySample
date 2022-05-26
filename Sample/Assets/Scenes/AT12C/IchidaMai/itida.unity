@@ -502,6 +502,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 601991739709263963, guid: f0f9533ad5f9be748af6994eda5418bb, type: 3}
     - target: {fileID: 4911571500333310828, guid: c7b0931274b01444aa3bac57b93a4c28, type: 3}
+      propertyPath: se_tomatobomb
+      value: 
+      objectReference: {fileID: 8300000, guid: ce945d2ce6bd7be45a7f4a91aaec1148, type: 3}
+    - target: {fileID: 4911571500333310828, guid: c7b0931274b01444aa3bac57b93a4c28, type: 3}
       propertyPath: ef_magicspuare
       value: 
       objectReference: {fileID: 1466858253764668105, guid: 73ca8439a3c511c47a5596a2691b0219, type: 3}
@@ -997,6 +1001,7 @@ GameObject:
   - component: {fileID: 1769012067}
   - component: {fileID: 1769012066}
   - component: {fileID: 1769012068}
+  - component: {fileID: 1769012069}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -1045,6 +1050,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DisplayHP: {fileID: 2135024087303626777, guid: 806dafc3c2fb34d4d81a4cba923775c1, type: 3}
+--- !u!114 &1769012069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769012065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59b1afc081da6244eb4f1e2772b2a7e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1792308649
 PrefabInstance:
   m_ObjectHideFlags: 0

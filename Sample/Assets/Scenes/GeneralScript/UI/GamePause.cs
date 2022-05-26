@@ -100,6 +100,7 @@ public class GamePause : MonoBehaviour
         Optionmanager = Instantiate(optionmanager);
         Panel = Instantiate(panel);
         SelectBox = Instantiate(selectbox);
+        Decision = Instantiate(decision);
 
 
         // キャンバスの子にする
@@ -110,6 +111,7 @@ public class GamePause : MonoBehaviour
         GameEnd.transform.SetParent(this.canvas.transform, false);
         BackTitle.transform.SetParent(this.canvas.transform, false);
         Option.transform.SetParent(this.canvas.transform, false);
+        Decision.transform.SetParent(this.canvas.transform, false);
         if (GameData.CurrentMapNumber == (int)GameData.eSceneState.BOSS1_SCENE)
         {
             Optionmanager.transform.SetParent(this.canvas2.transform, false);
@@ -137,6 +139,7 @@ public class GamePause : MonoBehaviour
         Panel.GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
         Panel.GetComponent<Image>().enabled = false;
         Optionmanager.SetActive(false);
+        Decision.GetComponent<Image>().enabled = false;
     }
 
     // Update is called once per frame
@@ -184,7 +187,7 @@ public class GamePause : MonoBehaviour
             isCalledOncce = false;
             hpUI.SetActive(true);
             minimapUI.SetActive(true);
-
+            Decision.GetComponent<Image>().enabled = false;
 
             if (UIBasePosx > 0.0f)
             {
@@ -234,6 +237,9 @@ public class GamePause : MonoBehaviour
         //オプションが開いてる間は無効にする
         if (!Optionmanager.activeSelf)
         {
+            // オプション中じゃないときに操作説明を表示
+            Decision.GetComponent<Image>().enabled = true;
+
             // ポーズになったら選択させる
             if (keyboard.upArrowKey.wasReleasedThisFrame)
             {
@@ -263,7 +269,12 @@ public class GamePause : MonoBehaviour
                 }
             }
         }
-        
+        else
+        {
+            // オプション中はオプション中の操作説明があるのでけす
+            Decision.GetComponent<Image>().enabled = false;
+        }
+
 
         // 選択しているものが何かで分岐
         if (select == (int)eSTATEPAUSE.RETURNGAME)

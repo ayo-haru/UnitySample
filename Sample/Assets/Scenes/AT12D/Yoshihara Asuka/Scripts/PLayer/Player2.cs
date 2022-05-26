@@ -265,7 +265,6 @@ public class Player2 : MonoBehaviour
             //animator.speed = 1.0f;
             rb.Pause(gameObject);
         }
-
         else
         {
             animator.speed = 0.0f;

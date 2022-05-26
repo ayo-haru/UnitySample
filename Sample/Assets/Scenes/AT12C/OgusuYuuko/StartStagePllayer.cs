@@ -21,6 +21,7 @@ public class StartStagePllayer : MonoBehaviour
     private Vector3 playerPos;
     private float theta;
     private Animator playerAnimator;
+    private GameObject bubbleObject;                                //シャボン玉
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +37,13 @@ public class StartStagePllayer : MonoBehaviour
         playerPos = startPos;
 
         theta = 0.0f;
+
+        //シャボン玉取得
+        bubbleObject = (GameObject)Resources.Load("Bubble");
+        //シャボン玉生成
+        bubbleObject = Instantiate(bubbleObject, gameObject.transform.position, Quaternion.identity);
+        //シャボン玉をルラビイの子オブジェクトにする
+        bubbleObject.transform.parent = gameObject.transform;
 
         //右向かせる
         gameObject.transform.Rotate(0.0f, 90.0f, 0.0f);
@@ -59,13 +67,16 @@ public class StartStagePllayer : MonoBehaviour
         }
         float SinY = Mathf.Sin(Mathf.Deg2Rad * theta) * width;
         playerPos.y = startPos.y + SinY;
-
+        //位置更新
         gameObject.transform.position = playerPos;
 
+        //終了位置をすぎていたら
         if(gameObject.transform.position.x > finishPosX)
         {
             //アニメーション再生 シャボン玉割る
             playerAnimator.SetTrigger("Attack_UP");
+            //シャボン玉のオブジェクト消す
+            Destroy(bubbleObject);
             //演出が終わったので、player2とrigidbodyを元に戻す
             gameObject.GetComponent<Player2>().enabled = true;
             gameObject.GetComponent<Rigidbody>().useGravity = true;

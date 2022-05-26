@@ -16857,7 +16857,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1303436827}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -70, y: 30, z: 0}
+  m_LocalPosition: {x: -27, y: 30, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1271444435}
@@ -23604,9 +23604,9 @@ GameObject:
   - component: {fileID: 1816711527}
   - component: {fileID: 1816711526}
   - component: {fileID: 1816711529}
-  - component: {fileID: 1816711530}
   - component: {fileID: 1816711531}
   - component: {fileID: 1816711532}
+  - component: {fileID: 1816711530}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -23721,14 +23721,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1816711525}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5da5bb4d3d060884496dc765de038b0a, type: 3}
+  m_Script: {fileID: 11500000, guid: 18f02c12109e9a8499bd48cd69a4fe67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FollowCameraPos: {x: 0, y: 30, z: -120}
-  RightScreenOut: 1025
-  LeftScreenOut: 30
-  HeightScreenOut: 500
-  UnderScreenOut: 0
+  _target: {fileID: 2465389861911039778, guid: 7378e7d4d318386408ba41cf399d7748, type: 3}
+  _follower: {fileID: 1816711528}
+  _SmoothTime: 1
+  _maxSpeed: Infinity
 --- !u!114 &1816711531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25877,7 +25876,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1965201100}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -17, y: 135, z: 0}
+  m_LocalPosition: {x: -11.9, y: 135, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 315759037}

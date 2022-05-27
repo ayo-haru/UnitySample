@@ -21,7 +21,8 @@ public class BossTrac : MonoBehaviour
     float UpCurrentDif;
     bool ChangeFlg;
     float CurrentFlame;
-    float MinDif;
+    float Movement;
+    
     Vector3 A_Pos;
     Vector3 B_Pos;
     Vector3 CamPos;
@@ -36,7 +37,6 @@ public class BossTrac : MonoBehaviour
         TracCamera = Camera.main;
         BegCamPos = GameObject.Find("CameraPos").transform.position;
         LimitLength = MaxLength + 105.0f;
-        MinDif = 
         DelFlameNum = DelFlame / 60.0f;
     }
 
@@ -79,20 +79,23 @@ public class BossTrac : MonoBehaviour
                 UpCurrentDif++;
             }
         }
+        Debug.Log("距離やでぇ" + CurrentDif / Dif);
+        
         if (Length >= MaxLength && Length <= LimitLength)
         {
             
-                if (B_Pos.x <= A_Pos.x)
-                {
+            if (B_Pos.x <= A_Pos.x)
+            {
                 if(ChangeFlg)
                 {
+                    Debug.Log("フラグやでぇ" + ChangeFlg);
                     CurrentDif = 0;
-                    
                     ChangeFlg = false;
                 }
                     Dif = HalfLength - (MaxLength / 2);
                     if ((CurrentDif - Dif) > 0.0f)
                     {
+                    Movement = Dif;
                         CurrentFlame = 0;
                         return;
                     }
@@ -102,27 +105,28 @@ public class BossTrac : MonoBehaviour
                         CurrentFlame += Time.deltaTime;
                         if (DelFlameNum <= CurrentFlame)
                         {
-                            CamPos.x = TracCamera.transform.position.x + CurrentDif / Dif;
+                            CamPos.x = TracCamera.transform.position.x + CurrentDif / (Dif + Movement);
                             CamPos.y = TracCamera.transform.position.y;
                             CamPos.z = TracCamera.transform.position.z;
-
+                            
                             TracCamera.transform.position = CamPos;
                             CurrentDif++;
                             return;
                         }
                     }
-                }
-                if(B_Pos.x >= A_Pos.x)
-                {
+            }
+            if(B_Pos.x >= A_Pos.x)
+            {
                 if (!ChangeFlg)
                 {
+                    Debug.Log("フラグやでぇ" + ChangeFlg);
                     CurrentDif = 0;
-                    
                     ChangeFlg = true;
                 }
                 Dif = HalfLength - (MaxLength / 2);
                 if ((CurrentDif - Dif) > 0.0f)
                 {
+                    Movement = Dif;
                     CurrentFlame = 0;
                     return;
                 }
@@ -132,7 +136,7 @@ public class BossTrac : MonoBehaviour
                     if (DelFlameNum <= CurrentFlame)
                     {
                         //差分の座標
-                        CamPos.x = TracCamera.transform.position.x - CurrentDif / Dif;
+                        CamPos.x = TracCamera.transform.position.x - (CurrentDif / (Dif + Movement)) ; 
                         CamPos.y = TracCamera.transform.position.y;
                         CamPos.z = TracCamera.transform.position.z;
 
@@ -145,6 +149,7 @@ public class BossTrac : MonoBehaviour
                 }
             }
         }
+        
         
     }
 

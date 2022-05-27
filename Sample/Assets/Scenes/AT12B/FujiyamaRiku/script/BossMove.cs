@@ -144,6 +144,22 @@ public class BossMove : MonoBehaviour
             Debug.Log("AttackCountF" + AttackCount);
 
             //ƒ‰ƒ“ƒ_ƒ€”‚Ì¶¬‚Æswitch•ªŠò‚ğ‚±‚Ì’†‚Ö
+            if(!BossAttack.RFChange)
+            {
+                if(Boss1Manager.BossPos.x <= GameData.PlayerPos.x)
+                {
+                    SetState(Boss_State.Jump);
+                    return;
+                }
+            }
+            if(BossAttack.RFChange)
+            {
+                if (Boss1Manager.BossPos.x >= GameData.PlayerPos.x)
+                {
+                    SetState(Boss_State.Jump);
+                    return;
+                }
+            }
             if(!UltFlg && HPgage.currentHp <= 30)
             {
                 Debug.Log("‚¤‚é‚Æ‚¾‚æ");

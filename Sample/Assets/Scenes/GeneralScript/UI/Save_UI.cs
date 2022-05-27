@@ -19,6 +19,9 @@ public class Save_UI : MonoBehaviour
 {
     // 表示するUIの変数
     [SerializeField]
+    private GameObject panel;
+    private GameObject Panel;
+    [SerializeField]
     private GameObject savecharacter;
     private GameObject SaveCharacter;
     [SerializeField]
@@ -38,6 +41,11 @@ public class Save_UI : MonoBehaviour
     [SerializeField]
     private GameObject abutton;
     private GameObject AButton;
+
+    [SerializeField]
+    private GameObject decision;
+    private GameObject Decision;
+
 
     [SerializeField]
     private GameObject selectbox;
@@ -72,8 +80,11 @@ public class Save_UI : MonoBehaviour
         AButton = Instantiate(abutton);
         WarpCharacter = Instantiate(warpcharacter);
         SusumuCharacter = Instantiate(susumucharacter);
+        Panel = Instantiate(panel);
+        Decision = Instantiate(decision);
 
         // キャンバスの子にする
+        Panel.transform.SetParent(this.canvas.transform, false);
         SaveCharacter.transform.SetParent(this.canvas.transform, false);
         SelectBox.transform.SetParent(this.canvas.transform, false);
         YesCharacter.transform.SetParent(this.canvas.transform, false);
@@ -81,8 +92,11 @@ public class Save_UI : MonoBehaviour
         AButton.transform.SetParent(this.canvas.transform,false);
         WarpCharacter.transform.SetParent(this.canvas.transform, false);
         SusumuCharacter.transform.SetParent(this.canvas.transform, false);
+        Decision.transform.SetParent(this.canvas.transform, false);
 
-        // 通常は非表示        
+        // 通常は非表示
+        Panel.GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+        Panel.GetComponent<Image>().enabled = false;
         SelectBox.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 200);
         SelectBox.GetComponent<UIBlink>().isBlink = true;
         SelectBox.GetComponent<UIBlink>().isHide = true;
@@ -93,6 +107,7 @@ public class Save_UI : MonoBehaviour
         AButton.GetComponent<UIBlink>().isHide = true;
         WarpCharacter.GetComponent<Image>().enabled = false;
         SusumuCharacter.GetComponent<Image>().enabled = false;
+        Decision.GetComponent<Image>().enabled = false;
 
     }
 
@@ -113,7 +128,9 @@ public class Save_UI : MonoBehaviour
             //----- ワープ -----
             if (!Warp.canWarp)
             {
-                // すべて非表示
+                // すべて非表
+                Panel.GetComponent<Image>().enabled = false;
+
                 SelectBox.GetComponent<UIBlink>().isBlink = true;
                 SelectBox.GetComponent<UIBlink>().isHide = true;
                 SelectBox.GetComponent<Image>().enabled = false;
@@ -123,6 +140,7 @@ public class Save_UI : MonoBehaviour
                 AButton.GetComponent<Image>().enabled = false;
                 WarpCharacter.GetComponent<Image>().enabled = false;
                 SusumuCharacter.GetComponent<Image>().enabled = false;
+                Decision.GetComponent<Image>().enabled = false;
 
                 if (Player.isHitSavePoint)  // セーブポイントに当たったら操作方法を表示
                 {
@@ -134,6 +152,7 @@ public class Save_UI : MonoBehaviour
             else
             {
                 //GamePadManager.onceTiltStick = false;
+                //Panel.GetComponent<Image>().enabled = false;
                 SelectBox.GetComponent<Image>().enabled = true;
                 // セーブは非表示
                 SaveCharacter.GetComponent<Image>().enabled = false;
@@ -205,6 +224,7 @@ public class Save_UI : MonoBehaviour
             if (!SaveManager.canSave)
             {
                 // すべて非表示
+                Panel.GetComponent<Image>().enabled = false;
                 SelectBox.GetComponent<UIBlink>().isBlink = true;
                 SelectBox.GetComponent<UIBlink>().isHide = true;
                 SelectBox.GetComponent<Image>().enabled = false;
@@ -214,6 +234,7 @@ public class Save_UI : MonoBehaviour
                 AButton.GetComponent<UIBlink>().isHide = true;
                 WarpCharacter.GetComponent<Image>().enabled = false;
                 SusumuCharacter.GetComponent<Image>().enabled = false;
+                Decision.GetComponent<Image>().enabled = false;
 
                 if (Player.isHitSavePoint)  // セーブポイントに当たったら操作方法を表示
                 {
@@ -228,11 +249,15 @@ public class Save_UI : MonoBehaviour
                 Pause.isPause = true;
 
                 // セーブ可能になったらUIを表示
+                Panel.GetComponent<Image>().enabled = true;
                 SelectBox.GetComponent<Image>().enabled = true;
                 SaveCharacter.GetComponent<Image>().enabled = true;
                 YesCharacter.GetComponent<Image>().enabled = true;
                 NoCharacter.GetComponent<Image>().enabled = true;
                 AButton.GetComponent<UIBlink>().isHide = true;
+                Decision.GetComponent<RectTransform>().localPosition = new Vector3(380,-120,0);
+                Decision.GetComponent<Image>().enabled = true;
+
                 // ワープは非表示
                 WarpCharacter.GetComponent<Image>().enabled = false;
                 SusumuCharacter.GetComponent<Image>().enabled = false;

@@ -171,6 +171,8 @@ public class PieceManager : MonoBehaviour
             {
                 //ランタンを下す
                 piece[i].transform.parent.gameObject.GetComponent<pieceMove>().startFlag = true;
+                //透明度初期値設定
+                piece[i].GetComponent<Image>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
                 Debug.Log("ランタン下した");
             }
         }

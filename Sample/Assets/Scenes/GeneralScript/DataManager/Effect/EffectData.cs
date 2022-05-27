@@ -54,6 +54,7 @@ public static class EffectData
         EF_BOSS_DEATH,
         EF_BOSS_KNIFEDAMAGE,
         EF_BOSS_STRAWBERRY,
+        EF_BOSS_STRAWBERRYAIM,
         EF_BOSS_FORK,
         EF_BOSS_RAINZONE,
         EF_BOSS_STRAWBERRY_LAND,

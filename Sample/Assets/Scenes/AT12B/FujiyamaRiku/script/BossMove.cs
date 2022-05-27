@@ -170,7 +170,7 @@ public class BossMove : MonoBehaviour
             if (HPgage.currentHp >= 51)
             {
                 
-                    RandomNumbe = Random.Range(1, 4);//攻撃パターンランダム化
+                    RandomNumbe = Random.Range(1, 2);//攻撃パターンランダム化
                     Debug.Log("Random" + RandomNumbe);
                 if(BossAttack.JampFlg)
                 {
@@ -180,7 +180,7 @@ public class BossMove : MonoBehaviour
             }
             else
             {
-               RandomNumbe = Random.Range(4, 5);//攻撃パターンランダム化
+               RandomNumbe = Random.Range(1, 5);//攻撃パターンランダム化
                if(BossAttack.JampFlg)
                {
                     if(RandomNumbe == 3)

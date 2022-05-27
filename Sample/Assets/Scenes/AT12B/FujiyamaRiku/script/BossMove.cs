@@ -146,7 +146,7 @@ public class BossMove : MonoBehaviour
             //ランダム数の生成とswitch分岐をこの中へ
             if(!BossAttack.RFChange)
             {
-                if(Boss1Manager.BossPos.x <= GameData.PlayerPos.x)
+                if(Boss1Manager.BossPos.x + Boss1Manager.Boss.transform.localScale.x <= GameData.PlayerPos.x)
                 {
                     SetState(Boss_State.Jump);
                     return;
@@ -154,7 +154,7 @@ public class BossMove : MonoBehaviour
             }
             if(BossAttack.RFChange)
             {
-                if (Boss1Manager.BossPos.x >= GameData.PlayerPos.x)
+                if (Boss1Manager.BossPos.x + Boss1Manager.Boss.transform.localScale.x >= GameData.PlayerPos.x)
                 {
                     SetState(Boss_State.Jump);
                     return;
@@ -170,7 +170,7 @@ public class BossMove : MonoBehaviour
             if (HPgage.currentHp >= 51)
             {
                 
-                    RandomNumbe = Random.Range(1, 2);//攻撃パターンランダム化
+                    RandomNumbe = Random.Range(1, 4);//攻撃パターンランダム化
                     Debug.Log("Random" + RandomNumbe);
                 if(BossAttack.JampFlg)
                 {
@@ -197,7 +197,7 @@ public class BossMove : MonoBehaviour
                         RandomNumbe = -1;
                         Debug.Log("イチゴ爆弾");
                         break;//break文
-
+                    
                     case 2://突進へ
                         SetState(Boss_State.charge);
                         RandomNumbe = -1;

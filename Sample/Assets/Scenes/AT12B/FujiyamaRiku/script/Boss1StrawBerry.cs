@@ -22,7 +22,7 @@ public class Boss1StrawBerry : MonoBehaviour
     bool[] StrawberryRefOnlyFlg;                            //弾かれたもので一回だけ処理するもの用
     public bool[] StrawberryColPlayer;               //プレイヤーに当たった時用の処理
     GameObject StrawberryAimObj;
-    GameObject[] StrawberryAim;
+    //GameObject[] StrawberryAim;
     Vector3[] StrawberryAimScale;
     bool[] StrawBerryLagFlg;
     Vector3 WeaponPos;
@@ -54,7 +54,7 @@ public class Boss1StrawBerry : MonoBehaviour
         FinishTime = new float[Max_Strawberry];
         Ref_FinishTime = new float[Max_Strawberry];
         PlayerMiddlePoint = new Vector3[Max_Strawberry];
-        StrawberryAim = new GameObject[Max_Strawberry];
+        //StrawberryAim = new GameObject[Max_Strawberry];
         StrawberryAimScale = new Vector3[Max_Strawberry];
         StrawBerryLagFlg = new bool[Max_Strawberry];
         PlayerRefDir = new bool[Max_Strawberry];
@@ -289,7 +289,7 @@ public class Boss1StrawBerry : MonoBehaviour
                     if (FinishTime[i] >= 1.0f && !StrawberryRefFlg[i])
                     {
                         EffectManager.Play(EffectData.eEFFECT.EF_BOSS_STRAWBERRY_LAND, Strawberry[i].transform.position);
-                        Destroy(GameObject.Find("strawberry_EF" + i));
+                        Destroy(GameObject.Find("strawberryAim" + i));
                         FinishTime[i] = 0;
                         StrawberryUseFlg[i] = false;
                         Destroy(Strawberry[i]);
@@ -353,7 +353,7 @@ public class Boss1StrawBerry : MonoBehaviour
             StrawberryUseFlg[StrawberryNum] = true;
             //イチゴの使用状況変更
             EffectManager.Play(EffectData.eEFFECT.EF_BOSS_STRAWBERRYAIM , EndPoint[StrawberryNum]);
-            //StrawberryAim = 
+            GameObject.Find("Boss_StrawberryAim(Clone)").name = "strawberryAim" + StrawberryNum;
             //StrawberryAim[StrawberryNum] = Instantiate(StrawberryAimObj, EndPoint[StrawberryNum], Quaternion.Euler(-7.952f, 0f, 0f));
             //StrawberryAim[StrawberryNum].transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             StrawberryAimScale[StrawberryNum] = new Vector3(1.0f, 1.0f, 1.0f);

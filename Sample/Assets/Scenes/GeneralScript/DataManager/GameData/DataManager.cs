@@ -119,6 +119,7 @@ public class DataManager : MonoBehaviour
     [SerializeField] private ParticleSystem ef_boss_death;
     [SerializeField] private ParticleSystem ef_boss_knifedamage;
     [SerializeField] private ParticleSystem ef_boss_strawberry;
+    [SerializeField] private ParticleSystem ef_boss_strawberryaim;
     [SerializeField] private ParticleSystem ef_boss_fork;
     [SerializeField] private ParticleSystem ef_boss_rainzone;
     [SerializeField] private ParticleSystem ef_boss_strawberry_land;
@@ -220,6 +221,7 @@ public class DataManager : MonoBehaviour
         EffectData.EFDataSet(ef_boss_death, (int)EffectData.eEFFECT.EF_BOSS_DEATH);
         EffectData.EFDataSet(ef_boss_knifedamage, (int)EffectData.eEFFECT.EF_BOSS_KNIFEDAMAGE);
         EffectData.EFDataSet(ef_boss_strawberry, (int)EffectData.eEFFECT.EF_BOSS_STRAWBERRY);
+        EffectData.EFDataSet(ef_boss_strawberryaim, (int)EffectData.eEFFECT.EF_BOSS_STRAWBERRYAIM);
         EffectData.EFDataSet(ef_boss_fork, (int)EffectData.eEFFECT.EF_BOSS_FORK);
         EffectData.EFDataSet(ef_boss_rainzone, (int)EffectData.eEFFECT.EF_BOSS_RAINZONE);
         EffectData.EFDataSet(ef_boss_strawberry_land, (int)EffectData.eEFFECT.EF_BOSS_STRAWBERRY_LAND);

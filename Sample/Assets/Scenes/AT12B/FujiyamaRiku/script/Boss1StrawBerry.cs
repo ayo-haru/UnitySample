@@ -26,6 +26,7 @@ public class Boss1StrawBerry : MonoBehaviour
     Vector3[] StrawberryAimScale;
     bool[] StrawBerryLagFlg;
     Vector3 WeaponPos;
+    
 
     //ベジエ曲線用
     Vector3[] StartPoint;
@@ -127,7 +128,7 @@ public class Boss1StrawBerry : MonoBehaviour
 
                     if (StrawberryAimScale[i].x <= 2.5f)
                     {
-                        StrawberryAim[i].transform.localScale = new Vector3(StrawberryAimScale[i].x, StrawberryAimScale[i].y, StrawberryAimScale[i].z);
+                        //StrawberryAim[i].transform.localScale = new Vector3(StrawberryAimScale[i].x, StrawberryAimScale[i].y, StrawberryAimScale[i].z);
                         StrawberryAimScale[i].x += 0.025f;
                         StrawberryAimScale[i].y += 0.025f;
                         StrawberryAimScale[i].z += 0.025f;
@@ -247,7 +248,7 @@ public class Boss1StrawBerry : MonoBehaviour
                             StrawberryRefOnlyFlg[i] = false;
                             StrawBerryLagFlg[i] = false;
                             Destroy(Strawberry[i]);
-                            Destroy(StrawberryAim[i]);
+                            //Destroy(StrawberryAim[i]);
                             Ref_FinishTime[i] = 0;
                             AliveStrawberry++;
                             FinishTime[i] = 0;
@@ -279,7 +280,7 @@ public class Boss1StrawBerry : MonoBehaviour
                         FinishTime[i] = 0;
                         StrawberryUseFlg[i] = false;
                         Destroy(Strawberry[i]);
-                        Destroy(StrawberryAim[i]);
+                        //Destroy(StrawberryAim[i]);
                         StrawBerryLagFlg[i] = false;
                         AliveStrawberry++;
 
@@ -288,10 +289,11 @@ public class Boss1StrawBerry : MonoBehaviour
                     if (FinishTime[i] >= 1.0f && !StrawberryRefFlg[i])
                     {
                         EffectManager.Play(EffectData.eEFFECT.EF_BOSS_STRAWBERRY_LAND, Strawberry[i].transform.position);
+                        Destroy(GameObject.Find("strawberry_EF" + i));
                         FinishTime[i] = 0;
                         StrawberryUseFlg[i] = false;
                         Destroy(Strawberry[i]);
-                        Destroy(StrawberryAim[i]);
+                        //Destroy(StrawberryAim[i]);
                         StrawBerryLagFlg[i] = false;
                         AliveStrawberry++;
 
@@ -350,8 +352,10 @@ public class Boss1StrawBerry : MonoBehaviour
             
             StrawberryUseFlg[StrawberryNum] = true;
             //イチゴの使用状況変更
-            StrawberryAim[StrawberryNum] = Instantiate(StrawberryAimObj, EndPoint[StrawberryNum], Quaternion.Euler(-7.952f, 0f, 0f));
-            StrawberryAim[StrawberryNum].transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            EffectManager.Play(EffectData.eEFFECT.EF_BOSS_STRAWBERRYAIM , EndPoint[StrawberryNum]);
+            //StrawberryAim = 
+            //StrawberryAim[StrawberryNum] = Instantiate(StrawberryAimObj, EndPoint[StrawberryNum], Quaternion.Euler(-7.952f, 0f, 0f));
+            //StrawberryAim[StrawberryNum].transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             StrawberryAimScale[StrawberryNum] = new Vector3(1.0f, 1.0f, 1.0f);
             StrawberryNum++;
             SoundManager.Play(SoundData.eSE.SE_BOOS1_STRAWBERRY, SoundData.GameAudioList);

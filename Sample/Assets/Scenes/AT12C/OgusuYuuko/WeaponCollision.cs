@@ -70,7 +70,7 @@ public class WeaponCollision : MonoBehaviour
         {
             if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "GroundDameged")
             {
-                if (Player.isHitSavePoint)
+                if (Player.isHitSavePoint && SaveManager.canSave)
                 {
                     CanCollision = false;
                     return;

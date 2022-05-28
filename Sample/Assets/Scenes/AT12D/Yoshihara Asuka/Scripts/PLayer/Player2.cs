@@ -216,35 +216,33 @@ public class Player2 : MonoBehaviour
                 return;
             }
 
-#if UNITY_EDITOR
             //---バックスペースキーでHPを減らす(デバッグ)
-            if (Input.GetKeyDown(KeyCode.Backspace))
-            {
-                GameData.CurrentHP--;
-                //SaveManager.saveHP(GameData.CurrentHP);
-                EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_DAMAGE, this.transform.position);
-                SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
-                hpmanager.Damaged();
-            }
+            //if (Input.GetKeyDown(KeyCode.Backspace))
+            //{
+            //    GameData.CurrentHP--;
+            //    //SaveManager.saveHP(GameData.CurrentHP);
+            //    EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_DAMAGE, this.transform.position);
+            //    SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
+            //    hpmanager.Damaged();
+            //}
 
-            //---コントローラーキーでHPを増やす(デバッグ)
-            if (Input.GetKeyDown(KeyCode.LeftControl))
-            {
-                if (GameData.CurrentHP < hpmanager.MaxHP)
-                {
-                    EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_HEAL, this.transform.position);
-                    //GameData.CurrentHP++;
-                    //SaveManager.saveHP(GameData.CurrentHP);
-                    hpmanager.GetItem();
-                }
-            }
+            ////---コントローラーキーでHPを増やす(デバッグ)
+            //if (Input.GetKeyDown(KeyCode.LeftControl))
+            //{
+            //    if (GameData.CurrentHP < hpmanager.MaxHP)
+            //    {
+            //        EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_HEAL, this.transform.position);
+            //        //GameData.CurrentHP++;
+            //        //SaveManager.saveHP(GameData.CurrentHP);
+            //        hpmanager.GetItem();
+            //    }
+            //}
 
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
+            //if (Input.GetKeyDown(KeyCode.Space))
+            //{
 
-                animator.Play("Death");
-            }
-#endif
+            //    animator.Play("Death");
+            //}
 
             //---地面と当たった時にジャンプフラグ・下パリイフラグを下す
             if (GroundNow)
@@ -601,8 +599,15 @@ public class Player2 : MonoBehaviour
         {
             return;
         }
-            // ステートを被弾時に変更
-            state = PLAYERSTATE.DAMAGED;
+
+        hpmanager.Damaged();
+
+        EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_DAMAGE, this.transform.position);
+        SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
+
+        // ステートを被弾時に変更
+        state = PLAYERSTATE.DAMAGED;
+
         //if(animator.GetBool("Damagae") == false)
         //{
         //    animator.SetBool("Damage",true);
@@ -619,10 +624,6 @@ public class Player2 : MonoBehaviour
             shakeCamera.Shake(0.5f, 5, 0.23f);
             animator.SetTrigger("Damage2");
         }
-        hpmanager.Damaged();
-
-        EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_DAMAGE, this.transform.position);
-        SoundManager.Play(SoundData.eSE.SE_DAMEGE, SoundData.GameAudioList);
 
 
         // ノックバック処理
@@ -710,8 +711,10 @@ public class Player2 : MonoBehaviour
         if (GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE &&
             GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial1 &&
             GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial2 &&
-            GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial3)
+            GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial3 && 
+            !Player.isHitSavePoint)
         {
+            Debug.Log("ポーズトグル");
             Pause.isPause = !Pause.isPause; // トグル
         }
     }

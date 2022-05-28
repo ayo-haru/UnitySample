@@ -309,8 +309,12 @@ public class Save_UI : MonoBehaviour
             }
             else
             {
+                Debug.Log("セーブいいえ");
+
                 if (isDecision)
                 {
+                    Debug.Log("セーブいいえけってい");
+
                     SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList); // 決定音
                     SaveManager.canSave = false;    // セーブ可能を下す
                     Pause.isPause = false;
@@ -387,7 +391,8 @@ public class Save_UI : MonoBehaviour
         if (SaveManager.canSave || Warp.canWarp)
         {
             isDecision = true;
-        }else if(Player.isHitSavePoint && !SaveManager.canSave)
+        }
+        else if(Player.isHitSavePoint && !SaveManager.canSave)
         {
             SaveManager.canSave = true;
         }

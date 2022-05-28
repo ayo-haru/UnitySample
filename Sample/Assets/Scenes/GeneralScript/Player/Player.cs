@@ -136,10 +136,8 @@ public class Player : MonoBehaviour
         //---セーブポイント地点の処理
         if (other.gameObject.tag == "SavePoint")    // この名前のタグと衝突したら
         {
-
             isHitSavePoint = true;                  // 当たったフラグを立てる
         }
-
     }
 
     void OnTriggerEnter(Collider other) {

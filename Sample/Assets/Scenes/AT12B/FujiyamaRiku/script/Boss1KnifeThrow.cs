@@ -32,7 +32,6 @@ public class Boss1KnifeThrow : MonoBehaviour
     Vector3 AimSize;
     Vector3 AimStartSize;
     Vector2 AimRand;
-    GameObject Ground;
     bool AimFlg;
     bool AimOnly;
     bool AimStart;
@@ -41,7 +40,6 @@ public class Boss1KnifeThrow : MonoBehaviour
     {
         Knifeobj = (GameObject)Resources.Load("Knife");
         KnifeAimObj = (GameObject)Resources.Load("KnifeAim");
-        Ground = GameObject.Find("ScaffoldL_L");
         BossAttack = this.GetComponent<Boss1Attack>();
         AimRand.x = (Random.Range(0, 2) * 2 - 1) * 3.0f;
         AimRand.y = (Random.Range(0, 2) * 2 - 1) * 3.0f;
@@ -104,10 +102,6 @@ public class Boss1KnifeThrow : MonoBehaviour
                     {
                         AimRand.x = (Random.Range(0, 2) * 2 - 1) * 0.5f;
                         AimRand.y = (Random.Range(0, 2) * 2 - 1)* 0.5f;
-                        if(Ground.transform.position.y + (Ground.transform.localScale.y * 0.5f) >= KnifeAimPos.y - (AimSize.y * 0.5f))
-                        {
-                            AimRand.y = 1;
-                        }
                     }
                     
                     KnifeAimPos.x = KnifeAimPos.x + AimRand.x;

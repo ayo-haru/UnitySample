@@ -1313,10 +1313,10 @@ Transform:
   - {fileID: 354475684}
   - {fileID: 1789800959}
   - {fileID: 798781760}
-  - {fileID: 2078199966}
   - {fileID: 294854570}
-  - {fileID: 919564113}
+  - {fileID: 2078199966}
   - {fileID: 897784194}
+  - {fileID: 919564113}
   - {fileID: 95518771}
   - {fileID: 324864472}
   - {fileID: 271132042}
@@ -4312,7 +4312,7 @@ Transform:
   - {fileID: 1519850064}
   - {fileID: 2119377228}
   m_Father: {fileID: 71605560}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &296720765
 PrefabInstance:
@@ -13217,7 +13217,7 @@ Transform:
   - {fileID: 93491699}
   - {fileID: 1563735925}
   m_Father: {fileID: 71605560}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &898002750
 PrefabInstance:
@@ -28570,19 +28570,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 157ca9da603525147a2aeea8828790f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseframe: {fileID: 0}
+  pauseframe: {fileID: 2360361940256539847, guid: e35c26f317f28dd40b2a733296434ecf, type: 3}
   pausecharacter: {fileID: 2639694639936533785, guid: c0d14bc3c20407e4093b28610853ae6e, type: 3}
   backgame: {fileID: 2827602723996322872, guid: 7b07097f033780741bcee2e5f1c9e95e, type: 3}
   gameend: {fileID: 655191367547373895, guid: b063513de0299884295ff613be34bc86, type: 3}
   backtitle: {fileID: 5359447438017704506, guid: dc6bd1664f8fe2844880dbc1f7eb86ce, type: 3}
+  sousachara: {fileID: 655191367547373895, guid: 69f397afbcc56ac4dacdc268e7bf2711, type: 3}
+  sousaimage: {fileID: 3898730078418667717, guid: fdc43c0839ae8c44d82811cd58912035, type: 3}
   option: {fileID: 8041143875500922608, guid: 23c8838f8b6faec42b10831253c18b37, type: 3}
   optionmanager: {fileID: 5859085180050199316, guid: f8be200bb4f274b40b7d30595630ef16, type: 3}
-  selectbox_1: {fileID: 0}
-  selectbox_2: {fileID: 0}
+  selectbox_1: {fileID: 428676219308350025, guid: 49d9e422d21d78d4cac25b8da89cec8f, type: 3}
+  selectbox_2: {fileID: 428676219308350025, guid: 96158450f85a5074cbc4f4d661e57f91, type: 3}
   decision: {fileID: 5558109519648933966, guid: 44993595966e4cc4ea2f5b32213ccaab, type: 3}
-  quitquestion: {fileID: 0}
-  quityes: {fileID: 0}
-  quitno: {fileID: 0}
+  quitquestion: {fileID: 8826311126221210820, guid: fa50f51ff2d6aa743a67690d5312d343, type: 3}
+  quityes: {fileID: 7989695582701996203, guid: 9de99fb93cf4faa4c9b6ff2d0e3b0943, type: 3}
+  quitno: {fileID: 734669660943038530, guid: fbb5bdeb39f21e843825d4971d87a164, type: 3}
 --- !u!114 &1919999130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28595,14 +28597,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee8faf6df64257540b79c3c896f61ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panel: {fileID: 0}
+  panel: {fileID: 2127309190153196343, guid: 2873e858a6a337048b42c72c52bc2047, type: 3}
   savecharacter: {fileID: 3295721291934985657, guid: 635b366fd454f664a9a7334b876d08d6, type: 3}
   yescharacter: {fileID: 7862692323530052962, guid: a69253cb804193844a7560eabb2dfc11, type: 3}
   nocharacter: {fileID: 6736157868657967214, guid: 92d977550117de444ad76bf712ec74ed, type: 3}
   warpcharacter: {fileID: 5905078255253503937, guid: be5862254fca2dc4bb0c77087ffc950b, type: 3}
   susumucharacter: {fileID: 3581372323447683369, guid: 90e4a1d91f0174d4b8cac128b1a44f9d, type: 3}
-  abutton: {fileID: 0}
-  decision: {fileID: 0}
+  abutton: {fileID: 8944257826159483627, guid: 7870dafcc1c17fe4f8bace06f14f3a09, type: 3}
+  decision: {fileID: 5558109519648933966, guid: 44993595966e4cc4ea2f5b32213ccaab, type: 3}
   selectbox: {fileID: 428676219308350025, guid: 49d9e422d21d78d4cac25b8da89cec8f, type: 3}
 --- !u!4 &1922137585 stripped
 Transform:

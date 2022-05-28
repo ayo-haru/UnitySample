@@ -30,7 +30,9 @@ public class BGCarrot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.RotateAround(position, Vector3.down, speed);
+        if (!Pause.isPause)
+        {
+            transform.RotateAround(position, Vector3.down, speed);
+        }
     }
-
 }

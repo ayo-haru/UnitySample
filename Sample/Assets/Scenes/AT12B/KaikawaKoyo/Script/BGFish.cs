@@ -34,7 +34,9 @@ public class BGFish : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.RotateAround(position, Vector3.back, speed);
+        if (!Pause.isPause)
+        {
+            transform.RotateAround(position, Vector3.back, speed);
+        }
     }
-    
 }

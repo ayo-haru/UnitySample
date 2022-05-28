@@ -28,13 +28,16 @@ public class BGPlantRota : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(TurnRight)
+        if (!Pause.isPause)
         {
-            transform.Rotate(new Vector3(0.0f, TurnSpeed, 0.0f), Space.Self);
-        }
-        if(!TurnRight)
-        {
-            transform.Rotate(new Vector3(0.0f, -TurnSpeed, 0.0f), Space.Self);
+            if (TurnRight)
+            {
+                transform.Rotate(new Vector3(0.0f, TurnSpeed, 0.0f), Space.Self);
+            }
+            if(!TurnRight)
+            {
+                transform.Rotate(new Vector3(0.0f, -TurnSpeed, 0.0f), Space.Self);
+            }
         }
     }
 }

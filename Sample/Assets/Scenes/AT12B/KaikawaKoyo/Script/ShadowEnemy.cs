@@ -51,21 +51,20 @@ public class ShadowEnemy : MonoBehaviour
                 Enemy = (GameObject)Resources.Load("Tomato 2");
                 break;
         }
-
-        //if(spawn)
-        //{
-        //    effect.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-        //    if (effect.transform.localScale.x <= 0.0f)
-        //    {
-        //        Destroy(effect.gameObject, 0.0f);
-        //        Destroy(gameObject, 0.0f);
-        //    }
-        //}
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (spawn)
+        {
+            effect.transform.localScale -= new Vector3(0.02f, 0.02f, 0.02f);
+            if (effect.transform.localScale.x <= 0.0f)
+            {
+                Destroy(effect.gameObject, 0.0f);
+                Destroy(gameObject, 0.0f);
+            }
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -75,11 +74,10 @@ public class ShadowEnemy : MonoBehaviour
             // プレイヤーを見つけたら敵に変身する
             if (other.CompareTag("Player"))
             {
-                Destroy(effect.gameObject, 0.0f);
-                Destroy(gameObject, 0.0f);
                 if (!spawn)
                 {
                     Instantiate(Enemy, position, Quaternion.identity);
+                    effect.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
                     spawn = true;
                 }
             }

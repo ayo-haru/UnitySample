@@ -62,6 +62,7 @@ public class Player : MonoBehaviour
 
         //if (isHitSavePoint) // セーブポイントに当たっていて、そのフレームの最初にスティックが傾けられたら
         //{
+        //    //Debug.Log("セーブポイントに当たってる");
         //    if (GamePadManager.onceTiltStick)
         //    {
         //        if (HitSavePointColorisRed)
@@ -72,6 +73,7 @@ public class Player : MonoBehaviour
         //        {
         //            SaveManager.canSave = true;
         //        }
+        //        //Debug.Log("セーブかのう");
         //    }
         //}
 
@@ -119,6 +121,7 @@ public class Player : MonoBehaviour
             }
         }
         //GamePadManager.onceTiltStick = false;
+        Debug.Log("<color=red>ポーズフラグ確認</color>" + Pause.isPause);
     }
 
     private void PlayerDeath() {
@@ -129,6 +132,7 @@ public class Player : MonoBehaviour
         //effectPos = new Vector3(GameData.PlayerPos.x, GameData.PlayerPos.y + 10.0f, GameData.PlayerPos.z);
         _animator.Play("Death");
         EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_DEATH, GameData.PlayerPos, 7.0f);
+        Debug.Log("死亡エフェクト");
     }
 
 
@@ -148,6 +152,7 @@ public class Player : MonoBehaviour
         if(other.gameObject.tag == "Respawn")
         {
             GameData.ReSpawnPos = this.transform.position;
+            Debug.Log(GameData.ReSpawnPos);
         }
 
 

@@ -4321,6 +4321,8 @@ MonoBehaviour:
   ef_boss_rainzone: {fileID: 1812393435782000225, guid: 2455bd19d61e6694490062f870fff535, type: 3}
   ef_boss_strawberry_land: {fileID: 7495855105065818708, guid: a3a490fadeb767c459c3b87744f9f67e, type: 3}
   ef_boss_fork_dust: {fileID: 4393260535336760566, guid: 468dd129ce1352e49a429006fc705540, type: 3}
+  ef_lastboss_energyball: {fileID: 0}
+  ef_lastboss_warp: {fileID: 0}
 --- !u!1001 &607376086
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8921,6 +8923,18 @@ PrefabInstance:
     - target: {fileID: 5200254816134371697, guid: b986269616d028244b75d30ade0fb969, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -227.616
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425471319626195838, guid: b986269616d028244b75d30ade0fb969, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425471319626195838, guid: b986269616d028244b75d30ade0fb969, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8425471319626195838, guid: b986269616d028244b75d30ade0fb969, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -13.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b986269616d028244b75d30ade0fb969, type: 3}

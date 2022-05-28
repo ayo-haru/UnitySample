@@ -154,6 +154,7 @@ public class Boss1Rush : MonoBehaviour
                 RushPlayerPoint = Boss1Manager.Boss.transform.position;
                 BossAttack.BossAnim.SetBool("RushToJump", false);
                 BossAttack.BossAnim.SetBool("Blow", true);
+                BossAttack.BossAnim.Play("Blow");
                 BossAttack.RefrectFlg = false;
             }
             //’e‚©‚ê‚Ä‚¢‚È‚©‚Á‚½ê‡‚Ìˆ—

@@ -9,10 +9,14 @@ public class KitchenSceneManager : MonoBehaviour {
     //private GameObject Empty;         // 未使用
     [SerializeField]
     private int currentSceneNum;        // デバッグ用現在のシーンを格納
+    [SerializeField]
+    private GameObject kitchenstart;
+    private GameObject KitchenStart;
 
-    private GameObject KitchenImage;    // 開始演出で出す画像
+    private Canvas canvas;
+
     private bool isCalledOnce = false;  // 開始演出で使用。一回だけ処理をするために使う。
-
+    
 
 
     void Awake() {
@@ -248,10 +252,6 @@ public class KitchenSceneManager : MonoBehaviour {
                                                                 // 強制的にプレハブ名にする処理
                                                                 //player.transform.SetParent(Empty.transform, false);
 
-        //----- 開始演出 -----
-        //KitchenImage = GameObject.Find("Kitchen");
-
-
 
         //----- 音鳴らす準備 -----
         for (int i = 0; i < SoundData.GameAudioList.Length; ++i)
@@ -268,13 +268,27 @@ public class KitchenSceneManager : MonoBehaviour {
         }
     }
 
+    private void Start() {
+        //----- 開始演出 -----
+        //KitchenImage = GameObject.Find("Kitchen");
+        if (kitchenstart)
+        {
+            canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+            KitchenStart = Instantiate(kitchenstart);
+            KitchenStart.transform.SetParent(this.canvas.transform, false);
+        }
+    }
+
     // Update is called once per frame
     void Update() {
         if (!isCalledOnce)     // 一回だけ呼ぶ
         {
             //---フェードイン処理
             GameData.isFadeIn = true;
-            //KitchenImage.GetComponent<ImageShow>().Show(2);
+            if (GameData.OldMapNumber == (int)GameData.eSceneState.Tutorial3 && kitchenstart)
+            {
+                KitchenStart.GetComponent<ImageShow>().Show(2);
+            }
             isCalledOnce = true;    // 二回以上はいらないように反転
         }
 

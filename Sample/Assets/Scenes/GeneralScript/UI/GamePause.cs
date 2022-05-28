@@ -13,6 +13,7 @@ public class GamePause : MonoBehaviour
         RETURNGAME = 0, // ゲームに戻る
         RETURNTITLE,    // タイトルに戻る
         QUITGAME,       // げーむをやめる
+        SOUSA,
         OPTION,         // オプション
         QUITQUESTION,   // 本当にやめますか
 
@@ -41,6 +42,12 @@ public class GamePause : MonoBehaviour
     [SerializeField]
     private GameObject backtitle;
     private GameObject BackTitle;
+    [SerializeField]
+    private GameObject sousachara;
+    private GameObject SousaChara;
+    [SerializeField]
+    private GameObject sousaimage;
+    private GameObject SousaImage;
     [SerializeField]
     private GameObject option;
     private GameObject Option;
@@ -130,6 +137,8 @@ public class GamePause : MonoBehaviour
         BackGame = Instantiate(backgame);               // ゲームに戻るの文字
         GameEnd = Instantiate(gameend);                 // ゲームやめるの文字
         BackTitle = Instantiate(backtitle);             // タイトルもドルの文字
+        SousaChara = Instantiate(sousachara);           // 操作方法文字
+        SousaImage = Instantiate(sousaimage);           // 操作方法画像
         Option = Instantiate(option);                   // オプションの文字
         Optionmanager = Instantiate(optionmanager);     // オプションの画面
         SelectBox_1 = Instantiate(selectbox_1);         // 選択枠
@@ -147,6 +156,8 @@ public class GamePause : MonoBehaviour
         BackGame.transform.SetParent(this.canvas.transform, false);         // ゲームに戻るの文字
         GameEnd.transform.SetParent(this.canvas.transform, false);          // ゲームやめるの文字
         BackTitle.transform.SetParent(this.canvas.transform, false);        // タイトルもドルの文字
+        SousaChara.transform.SetParent(this.canvas.transform, false);       // 操作方法
+        SousaImage.transform.SetParent(this.canvas.transform, false);       // 操作方法
         Option.transform.SetParent(this.canvas.transform, false);           // オプションの文字
         Decision.transform.SetParent(this.canvas.transform, false);         // 決定操作説明文字
         QuitQuestion.transform.SetParent(this.canvas.transform, false);     // 本当にやめますか文字
@@ -183,6 +194,10 @@ public class GamePause : MonoBehaviour
         GameEnd.GetComponent<Image>().enabled = false;
         // タイトルもドルの文字
         BackTitle.GetComponent<Image>().enabled = false;
+        // 操作方法
+        SousaChara.GetComponent<Image>().enabled = false;
+        // 操作方法
+        SousaImage.GetComponent<Image>().enabled = false;
         // オプションの文字
         Option.GetComponent<Image>().enabled = false;
         // オプションの画面
@@ -239,6 +254,7 @@ public class GamePause : MonoBehaviour
             BackGame.GetComponent<Image>().enabled = false;
             GameEnd.GetComponent<Image>().enabled = false;
             BackTitle.GetComponent<Image>().enabled = false;
+            SousaChara.GetComponent<Image>().enabled = false;
             Option.GetComponent<Image>().enabled = false;
             isCalledOncce = false;
             hpUI.SetActive(true);
@@ -271,6 +287,7 @@ public class GamePause : MonoBehaviour
                 BackGame.GetComponent<Image>().enabled = true;
                 GameEnd.GetComponent<Image>().enabled = true;
                 BackTitle.GetComponent<Image>().enabled = true;
+                SousaChara.GetComponent<Image>().enabled = true;
                 Option.GetComponent<Image>().enabled = true;
                 hpUI.SetActive(false);
                 minimapUI.SetActive(false);
@@ -389,7 +406,7 @@ public class GamePause : MonoBehaviour
                 isDecision = false;
             }
         }
-        else if(pauseSelect == (int)eSTATEPAUSE.QUITQUESTION)
+        else if (pauseSelect == (int)eSTATEPAUSE.QUITQUESTION)
         {
             //----- 最終確認 -----
             SelectBox_2.GetComponent<Image>().enabled = true;
@@ -506,8 +523,21 @@ public class GamePause : MonoBehaviour
             {
                 isConfirm = false;
             }
-    }
-        else if(pauseSelect == (int)eSTATEPAUSE.OPTION)
+        }
+        else if (pauseSelect == (int)eSTATEPAUSE.SOUSA)
+        {
+            if (isDecision)
+            {
+                // 決定音
+                SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
+
+                // とりあえず決定押されるたびに反転
+                SousaImage.GetComponent<Image>().enabled = !SousaImage.GetComponent<Image>().enabled;
+
+                isDecision = false;
+            }
+        }
+        else if (pauseSelect == (int)eSTATEPAUSE.OPTION)
         {
             //----- オプション -----
             if (isDecision) // 選択を確定
@@ -649,6 +679,11 @@ public class GamePause : MonoBehaviour
         else if (pauseSelect == (int)eSTATEPAUSE.QUITGAME)
         {
             SelectBox_1.GetComponent<RectTransform>().localPosition = GameEnd.GetComponent<RectTransform>().localPosition;
+        }
+        else if(pauseSelect == (int)eSTATEPAUSE.SOUSA)
+        {
+            SelectBox_1.GetComponent<RectTransform>().localPosition = SousaChara.GetComponent<RectTransform>().localPosition;
+
         }
         else if (pauseSelect == (int)eSTATEPAUSE.OPTION)
         {

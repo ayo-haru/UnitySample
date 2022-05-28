@@ -19,6 +19,12 @@ public class Tutorial01UI : MonoBehaviour
     [SerializeField]
     private GameObject goahead;
     private GameObject GoAhead;
+
+
+    [SerializeField]
+    private GameObject tutorialstart;
+    private GameObject tutorialStart;
+
     Canvas canvas;
 
     private int UIcnt;
@@ -36,12 +42,14 @@ public class Tutorial01UI : MonoBehaviour
         RShield = Instantiate(rshield);
         RJump = Instantiate(rjump);
         GoAhead = Instantiate(goahead);
+        tutorialStart = Instantiate(tutorialstart);
 
         CharacterBack.transform.SetParent(this.canvas.transform, false);
         Lmove.transform.SetParent(this.canvas.transform, false);
         RShield.transform.SetParent(this.canvas.transform, false);
         RJump.transform.SetParent(this.canvas.transform, false);
         GoAhead.transform.SetParent(this.canvas.transform, false);
+        tutorialStart.transform.SetParent(this.canvas.transform, false);
 
         CharacterBack.GetComponent<ImageShow>().Hide();
         Lmove.GetComponent<ImageShow>().Hide();
@@ -56,29 +64,33 @@ public class Tutorial01UI : MonoBehaviour
     {
         if (GameData.PlayerPos.x >= -200.0f && UIcnt == 0)
         {
+            tutorialStart.GetComponent<ImageShow>().Show(2);
+            UIcnt++;
+        } else if (UIcnt == 1 && tutorialStart.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE) { 
             CharacterBack.GetComponent<ImageShow>().Show();
             Lmove.GetComponent<ImageShow>().Show(120);
             UIcnt++;
+
         }
-        else if (GameData.PlayerPos.x >= 40.0f && UIcnt == 1)
+        else if (GameData.PlayerPos.x >= 40.0f && UIcnt == 2)
         {
             Lmove.GetComponent<ImageShow>().Clear();
             RShield.GetComponent<ImageShow>().Show(120);
             UIcnt++;
         }
-        else if (GameData.PlayerPos.x >= 220.0f && UIcnt == 2)
+        else if (GameData.PlayerPos.x >= 220.0f && UIcnt == 3)
         {
             RShield.GetComponent<ImageShow>().Clear();
             RJump.GetComponent<ImageShow>().Show(120);
             UIcnt++;
         }
-        else if (GameData.PlayerPos.x >= 320.0f && UIcnt == 3)
+        else if (GameData.PlayerPos.x >= 320.0f && UIcnt == 4)
         {
             RJump.GetComponent<ImageShow>().Clear();
             GoAhead.GetComponent<ImageShow>().Show(120);
             UIcnt++;
         }
-        else if(GameData.PlayerPos.x >= 400.0f && UIcnt == 4)
+        else if(GameData.PlayerPos.x >= 400.0f && UIcnt == 5)
         {
             GoAhead.GetComponent<ImageShow>().FadeOut();
             CharacterBack.GetComponent<ImageShow>().FadeOut();

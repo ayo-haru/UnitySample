@@ -10,6 +10,11 @@ public class ExStageManager : MonoBehaviour
     //private GameObject Empty;         // 未使用
     [SerializeField]
     private int currentSceneNum;        // デバッグ用現在のシーンを格納
+    [SerializeField]
+    private GameObject hazamastart;
+    private GameObject HazamaStart;
+
+    private Canvas canvas;
 
     private bool isCalledOnce = false;  // 開始演出で使用。一回だけ処理をするために使う。
 
@@ -137,6 +142,15 @@ public class ExStageManager : MonoBehaviour
             bgmObject = (GameObject)Resources.Load("BGMObject");
             Instantiate(bgmObject);
         }
+
+        //----- 開始演出 -----
+        //KitchenImage = GameObject.Find("Kitchen");
+        if (hazamastart)
+        {
+            canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+            HazamaStart = Instantiate(hazamastart);
+            HazamaStart.transform.SetParent(this.canvas.transform, false);
+        }
     }
 
     // Update is called once per frame
@@ -146,7 +160,10 @@ public class ExStageManager : MonoBehaviour
         {
             //---フェードイン処理
             GameData.isFadeIn = true;
-            //KitchenImage.GetComponent<ImageShow>().Show(2);
+            if (GameData.OldMapNumber == (int)GameData.eSceneState.BOSS1_SCENE && hazamastart)
+            {
+                HazamaStart.GetComponent<ImageShow>().Show(2);
+            }
             isCalledOnce = true;    // 二回以上はいらないように反転
         }
 

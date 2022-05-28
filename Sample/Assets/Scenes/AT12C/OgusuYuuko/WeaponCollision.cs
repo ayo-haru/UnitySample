@@ -35,7 +35,6 @@ public class WeaponCollision : MonoBehaviour
     
     private bool CanCollision = true;                      // 当たり判定の使用フラグ
 
-
     // Start is called before the first frame update
     void Awake()
     {
@@ -124,9 +123,9 @@ public class WeaponCollision : MonoBehaviour
                 CanCollision = false;
             }
 
-            if (collision.gameObject.tag == "Enemy")
-            {
+            if (collision.gameObject.tag == "Enemy"){
                 player2.OnAttackHit();
+                EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_BREAK, transform.position);
             }
             else
             {
@@ -159,4 +158,9 @@ public class WeaponCollision : MonoBehaviour
             player_rb.velocity = PlayerVelocity.normalized * baunceGround;
         }
     }
+
+private void PlayBreakEffect()
+	{
+        EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_BREAK, transform.position);
+	}
 }

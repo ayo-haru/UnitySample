@@ -41,9 +41,9 @@ public class Player2 : MonoBehaviour
     private Vector3 Distination;                        // 被弾時の位置と距離を算出するための変数
 
     //---振動
-    [SerializeField] private float LowFrequency;        // 左側の振動の値
-    [SerializeField] private float HighFrequency;       // 右側の振動の値
-    [SerializeField] private float VibrationTime;       // 振動時間
+    //[SerializeField] private float LowFrequency;        // 左側の振動の値
+    //[SerializeField] private float HighFrequency;       // 右側の振動の値
+    //[SerializeField] private float VibrationTime;       // 振動時間
 
     //---InputSystem関連
     [System.NonSerialized]
@@ -623,6 +623,9 @@ public class Player2 : MonoBehaviour
         {
             shakeCamera.Shake(0.5f, 5, 0.23f);
             animator.SetTrigger("Damage2");
+            if(GameData.CurrentHP > 0){
+                StartCoroutine(VibrationPlay(1.0f, 1.0f, 0.3f));
+			}
         }
 
 
@@ -811,16 +814,17 @@ public class Player2 : MonoBehaviour
 
 	#region コントローラー振動
 	//---コントローラー振動処理
-	private IEnumerator VibrationPlay
+	public IEnumerator VibrationPlay
     (
         float lowFrequency,     // 低周波(左) モーターの強さ(0.0 ~ 1.0)
-        float HighFrequency     // 高周波(右) モータ-の強さ(0.0 ~ 1.0)
+        float HighFrequency,     // 高周波(右) モータ-の強さ(0.0 ~ 1.0)
+        float VibtationTime
     )
     {
         Gamepad gamepad = Gamepad.current;
         if(gamepad != null){
             gamepad.SetMotorSpeeds(lowFrequency,HighFrequency);
-            yield return new WaitForSeconds(VibrationTime);
+            yield return new WaitForSeconds(VibtationTime);
             gamepad.SetMotorSpeeds(0.0f,0.0f);
         }
     }

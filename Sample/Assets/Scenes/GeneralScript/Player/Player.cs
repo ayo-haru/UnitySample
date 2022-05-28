@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     private GameObject fadeimage;   // フェードのパネル
 
     private Animator _animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -129,6 +130,7 @@ public class Player : MonoBehaviour
         //effectPos = new Vector3(GameData.PlayerPos.x, GameData.PlayerPos.y + 10.0f, GameData.PlayerPos.z);
         _animator.Play("Death");
         EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_DEATH, GameData.PlayerPos, 7.0f);
+        StartCoroutine(this.GetComponent<Player2>().VibrationPlay(1.0f, 1.0f, 5.0f));
     }
 
 

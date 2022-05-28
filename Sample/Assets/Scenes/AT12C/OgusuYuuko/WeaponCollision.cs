@@ -70,7 +70,7 @@ public class WeaponCollision : MonoBehaviour
         {
             if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "GroundDameged")
             {
-                if (Player.isHitSavePoint && SaveManager.canSave)
+                if (Player.isHitSavePoint)
                 {
                     CanCollision = false;
                     return;
@@ -125,11 +125,14 @@ public class WeaponCollision : MonoBehaviour
 
             if (collision.gameObject.tag == "Enemy"){
                 player2.OnAttackHit();
+                StartCoroutine(player2.VibrationPlay(0.2f, 0.2f, 0.05f));
+                Debug.Log("çUåÇêUìÆ");
                 EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_BREAK, transform.position);
             }
             else
             {
                 player2.CanHitStopflg = false;
+                //StopCoroutine(player2.VibrationPlay(1.0f, 1.0f, 0.25f));
             }
 
             if(collision.gameObject.name == "TutorialFork(Clone)")

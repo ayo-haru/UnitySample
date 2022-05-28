@@ -60,22 +60,20 @@ public class Player : MonoBehaviour
         //    this.transform.position = GameData.Player.transform.position = GameData.PlayerPos = GameData.ReSpawnPos;
         //}
 
-        if (isHitSavePoint) // セーブポイントに当たっていて、そのフレームの最初にスティックが傾けられたら
-        {
-            //Debug.Log("セーブポイントに当たってる");
-            if (GamePadManager.onceTiltStick)
-            {
-                if (HitSavePointColorisRed)
-                {
-                    Warp.canWarp = true;
-                }
-                else
-                {
-                    SaveManager.canSave = true;
-                }
-                //Debug.Log("セーブかのう");
-            }
-        }
+        //if (isHitSavePoint) // セーブポイントに当たっていて、そのフレームの最初にスティックが傾けられたら
+        //{
+        //    if (GamePadManager.onceTiltStick)
+        //    {
+        //        if (HitSavePointColorisRed)
+        //        {
+        //            Warp.canWarp = true;
+        //        }
+        //        else
+        //        {
+        //            SaveManager.canSave = true;
+        //        }
+        //    }
+        //}
 
         if (SaveManager.shouldSave) // セーブするが選択されたら
         {
@@ -120,6 +118,7 @@ public class Player : MonoBehaviour
                 //Pause.isPause = false;
             }
         }
+        //GamePadManager.onceTiltStick = false;
     }
 
     private void PlayerDeath() {
@@ -130,7 +129,6 @@ public class Player : MonoBehaviour
         //effectPos = new Vector3(GameData.PlayerPos.x, GameData.PlayerPos.y + 10.0f, GameData.PlayerPos.z);
         _animator.Play("Death");
         EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_DEATH, GameData.PlayerPos, 7.0f);
-        Debug.Log("死亡エフェクト");
     }
 
 
@@ -150,7 +148,6 @@ public class Player : MonoBehaviour
         if(other.gameObject.tag == "Respawn")
         {
             GameData.ReSpawnPos = this.transform.position;
-            Debug.Log(GameData.ReSpawnPos);
         }
 
 
@@ -206,6 +203,22 @@ public class Player : MonoBehaviour
         {
             GameData.isFadeOut = true;  // フェードかける
             GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
+        }
+
+        if (other.gameObject.tag == "toExStage1")
+        {
+            GameData.isFadeOut = true;  // フェードかける
+            GameData.NextMapNumber = (int)GameData.eSceneState.BossStage001;
+        }
+        if (other.gameObject.tag == "toExStage2")
+        {
+            GameData.isFadeOut = true;  // フェードかける
+            GameData.NextMapNumber = (int)GameData.eSceneState.BossStage002;
+        }
+        if (other.gameObject.tag == "toExStage3")
+        {
+            GameData.isFadeOut = true;  // フェードかける
+            GameData.NextMapNumber = (int)GameData.eSceneState.BossStage003;
         }
     }
 

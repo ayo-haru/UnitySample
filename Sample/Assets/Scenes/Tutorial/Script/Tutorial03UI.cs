@@ -140,17 +140,17 @@ public class Tutorial03UI : MonoBehaviour
             {
                 //---HP上限が増えました
                 Chara3_1.GetComponent<ImageShow>().Clear();
-                Chara3_2.GetComponent<ImageShow>().Show(5);
+                Chara3_2.GetComponent<ImageShow>().Show(3);
                 UIcnt++;
             }
             else if(UIcnt == 2 && Chara3_2.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
             {
                 //---星をはじくとHP上限を増やすことができます
-                Chara3_3.GetComponent<ImageShow>().Show(30);
+                Chara3_3.GetComponent<ImageShow>().Show(3);
                 UIcnt++;
             }
         }
-        else if(GameData.PlayerPos.x >= -5.0f && UIcnt < 6)
+        else if(GameData.PlayerPos.x >= -40.0f && UIcnt < 6)
         {
             //---かけら説明
             if (UIcnt == 3 && Chara3_3.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
@@ -163,13 +163,13 @@ public class Tutorial03UI : MonoBehaviour
             {
                 //---HPが回復しました
                 Chara3_4.GetComponent<ImageShow>().Clear();
-                Chara3_5.GetComponent<ImageShow>().Show(10);
+                Chara3_5.GetComponent<ImageShow>().Show(3);
                 UIcnt++;
             }
             else if (UIcnt == 5 && Chara3_5.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
             {
                 //---かけらをはじくとHPを回復することができます
-                Chara3_6.GetComponent<ImageShow>().Show(30);
+                Chara3_6.GetComponent<ImageShow>().Show(3);
                 UIcnt++;
             }
 
@@ -180,19 +180,19 @@ public class Tutorial03UI : MonoBehaviour
             if (UIcnt == 6 && Chara3_6.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
             {
                 //---扉がありますが閉じていて通れません
-                Chara3_7.GetComponent<ImageShow>().Show(30);
+                Chara3_7.GetComponent<ImageShow>().Show(3);
                 UIcnt++;
             }
             else if (UIcnt == 7 && Chara3_7.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
             {
                 //---どこかに仕掛けがありそうです
-                Chara3_8.GetComponent<ImageShow>().Show(30);
+                Chara3_8.GetComponent<ImageShow>().Show(3);
                 UIcnt++;
             }
             else if (UIcnt == 8 && Chara3_8.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
             {
                 //---マップで確認してみましょう
-                Chara3_9.GetComponent<ImageShow>().Show(30);
+                Chara3_9.GetComponent<ImageShow>().Show(3);
                 UIcnt++;
             }
             else if (UIcnt == 9 && Chara3_9.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
@@ -205,17 +205,21 @@ public class Tutorial03UI : MonoBehaviour
         }
         else if (GameData.PlayerPos.x >= 370.0f && GameData.PlayerPos.y >= 90.0f && UIcnt < 14)
         {
+            if(GameData.GateOnOff == false)
+            {
+                UIcnt = 11;
+            }
+
             //---ギミック説明
             if (UIcnt == 10)
             {
                 Chara3_10.GetComponent<ImageShow>().Clear();
-                Chara3_11.GetComponent<ImageShow>().Show();
+                Chara3_11.GetComponent<ImageShow>().Show(3);
                 UIcnt++;
             }
-            else if (UIcnt == 11 && GameData.GateOnOff == false)
+            else if (UIcnt == 11 && Chara3_11.GetComponent<ImageShow>().mode == ImageShow.ImageMode.NONE)
             {
-                Chara3_11.GetComponent<ImageShow>().Clear();
-                Chara3_12.GetComponent<ImageShow>().Show(30);
+                Chara3_12.GetComponent<ImageShow>().Show(3);
                 UIcnt++;
             }
         }
@@ -223,7 +227,7 @@ public class Tutorial03UI : MonoBehaviour
         {
             //---とおれるよ
             Chara3_12.GetComponent<ImageShow>().Clear();
-            Chara3_13.GetComponent<ImageShow>().Show(30);
+            Chara3_13.GetComponent<ImageShow>().Show(3);
 
             UIcnt++;
         }

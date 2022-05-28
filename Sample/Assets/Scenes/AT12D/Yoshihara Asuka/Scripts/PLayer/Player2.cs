@@ -158,6 +158,7 @@ public class Player2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         Weapon = (GameObject)Resources.Load("Weapon");
         
         if (GameObject.Find("HPSystem(2)(Clone)")){
@@ -205,8 +206,9 @@ public class Player2 : MonoBehaviour
                 animator.speed = 1.0f;
             }
 
+            //GamePadManager.onceTiltStick = false;
+
             rb.Resume(gameObject);
-            GamePadManager.onceTiltStick = false;
 
             //---HPオブジェクトを検索
             if (!hp)
@@ -265,13 +267,11 @@ public class Player2 : MonoBehaviour
             //animator.speed = 1.0f;
             rb.Pause(gameObject);
         }
-
         else
         {
             animator.speed = 0.0f;
             rb.Pause(gameObject);
         }
-
     }
 
     private void FixedUpdate()
@@ -302,14 +302,17 @@ public class Player2 : MonoBehaviour
                 Attack();
                 isAttack = false;
                 canMoveflg = true;
-                StartCoroutine(StartAttackEvent(0.12f));
+                StartCoroutine(StartAttackEvent(0.1f));
 
             }
 
         }
-
-        else{
-
+        else if (GameOver.GameOverFlag)
+        {
+            // 処理なし
+        }
+        else if(Pause.isPause)
+        {
         }
     }
 
@@ -452,7 +455,7 @@ public class Player2 : MonoBehaviour
                 rb.velocity = Vector3.zero;
 
                 UnderParryNow = true;
-                GamePadManager.onceTiltStick = true;
+                //GamePadManager.onceTiltStick = true;
                 //GroundNow = false;
                 animator.SetTrigger("Attack_DOWN");
             }
@@ -559,6 +562,7 @@ public class Player2 : MonoBehaviour
 
     public Vector2 GetAttackDirection()
     {
+        
         return AttackDirection;
     }
 
@@ -593,9 +597,12 @@ public class Player2 : MonoBehaviour
         if (!hp){                        // hpのUIがない場合は処理終了
             return;
         }
-        
-        // ステートを被弾時に変更
-        state = PLAYERSTATE.DAMAGED;
+        if (GameOver.GameOverFlag)  // ゲームオーナー時はダメージを受けない
+        {
+            return;
+        }
+            // ステートを被弾時に変更
+            state = PLAYERSTATE.DAMAGED;
         //if(animator.GetBool("Damagae") == false)
         //{
         //    animator.SetBool("Damage",true);

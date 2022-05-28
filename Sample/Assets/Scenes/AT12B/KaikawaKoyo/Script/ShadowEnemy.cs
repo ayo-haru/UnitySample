@@ -17,6 +17,8 @@ public class ShadowEnemy : MonoBehaviour
     private Vector3 position;
     public int EnemyNumber;
     private bool spawn = false;
+    private float Timer;
+    private float LimitTime = 3.0f;
     private ParticleSystem effect;
     
     // Start is called before the first frame update
@@ -49,6 +51,16 @@ public class ShadowEnemy : MonoBehaviour
                 Enemy = (GameObject)Resources.Load("Tomato 2");
                 break;
         }
+
+        //if(spawn)
+        //{
+        //    effect.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        //    if (effect.transform.localScale.x <= 0.0f)
+        //    {
+        //        Destroy(effect.gameObject, 0.0f);
+        //        Destroy(gameObject, 0.0f);
+        //    }
+        //}
     }
 
     // Update is called once per frame
@@ -70,9 +82,7 @@ public class ShadowEnemy : MonoBehaviour
                     Instantiate(Enemy, position, Quaternion.identity);
                     spawn = true;
                 }
-
             }
         }
-       
     }
 }

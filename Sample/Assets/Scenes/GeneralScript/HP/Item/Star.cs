@@ -9,7 +9,7 @@ public class Star : MonoBehaviour
     HPManager hpmanager;
 
     //識別用ID
-    private int id;
+    private int id = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -30,24 +30,31 @@ public class Star : MonoBehaviour
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.tag == "Weapon")   // 盾と当たったらUIを変更して音だしてエフェクトだして消す
         {
+            //取得済みのフラグ立てる
+            if (GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial3)
+            {
+                GameData.isStarGet[GameData.CurrentMapNumber - 1, id] = true;
+            }else//チュートリアル３の場合
+            {
+                GameData.isStarGet[9, id] = true;
+            }
             if (GameObject.Find("HPSystem(2)(Clone)"))
             {
 
                 hpmanager.GetItem();
             }
-            Destroy(gameObject);
-            //取得済みのフラグ立てる
-            GameData.isStarGet[GameData.CurrentMapNumber - 1,id] = true;
             SoundManager.Play(SoundData.eSE.SE_REFLECTION_STAR, SoundData.GameAudioList);
             Vector3 effekctPos = this.transform.position;
             //effekctPos.y -= 2.5f;
             EffectManager.Play(EffectData.eEFFECT.EF_GIMICK_HEALITEM, effekctPos);
+            Destroy(gameObject);
             //Debug.Log("げっとあいてむ");
         }
     }
 
     public void SetID(int ID)
     {
+        Debug.Log("セットID");
         id = ID;
     }
 }

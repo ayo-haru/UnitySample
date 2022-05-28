@@ -17,9 +17,9 @@ using UnityEngine;
 public static class SoundManager {
 
     //BGMボリューム
-    public static float bgmVolume = 0.5f;
+    public static float bgmVolume = 1.0f;
     //SEボリューム
-    public static float seVolume = 0.5f;
+    public static float seVolume = 1.0f;
     /// <summary>
     /// 未使用のAudioSourceを探す
     /// </summary>
@@ -72,10 +72,10 @@ public static class SoundManager {
             return; // 再生できませんでした
         }
         audioSource.clip = SoundData.SEClip[(int)_seDataNumber];
-        audioSource.volume = seVolume;
+        audioSource.volume = seVolume * SoundData.SEVolume[(int)_seDataNumber];
         //audioSource.Play();
         audioSource.PlayOneShot(audioSource.clip);
-        float endTime = audioSource.clip.length * Time.timeScale;
+        //float endTime = audioSource.clip.length * Time.timeScale;
 
     }
 

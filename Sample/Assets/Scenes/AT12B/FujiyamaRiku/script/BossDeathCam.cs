@@ -34,6 +34,11 @@ public class BossDeathCam : MonoBehaviour
             BossImage.BossHPBar.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
             BossImage. BossHPFrame.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         }
+        else
+        {
+            GameObject.Find("Main Camera").GetComponent<DelayFollowCamera>().enabled = true;
+            Destroy(GameObject.Find("RightTree"));
+        }
     }
     
 }

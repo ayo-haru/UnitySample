@@ -144,6 +144,22 @@ public class BossMove : MonoBehaviour
             Debug.Log("AttackCount：" + AttackCount);
 
             //ランダム数の生成とswitch分岐をこの中へ
+            if(!BossAttack.RFChange)
+            {
+                if(Boss1Manager.BossPos.x + Boss1Manager.Boss.transform.localScale.x <= GameData.PlayerPos.x)
+                {
+                    SetState(Boss_State.Jump);
+                    return;
+                }
+            }
+            if(BossAttack.RFChange)
+            {
+                if (Boss1Manager.BossPos.x + Boss1Manager.Boss.transform.localScale.x >= GameData.PlayerPos.x)
+                {
+                    SetState(Boss_State.Jump);
+                    return;
+                }
+            }
             if(!UltFlg && HPgage.currentHp <= 30)
             {
                 Debug.Log("うるとだよ");
@@ -181,7 +197,7 @@ public class BossMove : MonoBehaviour
                         RandomNumbe = -1;
                         Debug.Log("イチゴ爆弾");
                         break;//break文
-
+                    
                     case 2://突進へ
                         SetState(Boss_State.charge);
                         RandomNumbe = -1;

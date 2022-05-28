@@ -313,7 +313,7 @@ public class EnemyDown : MonoBehaviour
                 //EnemyDead(vec , Player.transform.position.x);
                 //---このタイミングでエネミーの死亡処理を呼び出す
                 seq.AppendCallback(() => EnemyDead(vec));
-                Shake(0.1f, 5, 0.23f);
+                Shake(0.5f, 5, 0.23f);
             }
 
             // トマトがほかの敵に当たったら爆発する

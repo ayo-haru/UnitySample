@@ -14,6 +14,8 @@
 // <開発履歴>
 // 2022/04/04 作成
 // 2022/04/06 次に進む、前に戻るを追加
+// 2022/05/24 バグ直した
+// 2022/05/25 バグ直ったはず！
 //=============================================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -86,7 +88,7 @@ public class UVScroll : MonoBehaviour
 
         //テクスチャの位置設定
         rt.position = new Vector3(pearent.transform.position.x + (rt.sizeDelta.x / 2) - (width / 2) - ((nFrame % split_x) * width),
-                                      pearent.transform.position.y - (rt.sizeDelta.y / 2) + (height / 2) + (nFrame / split_x) / split_y * height,
+                                      pearent.transform.position.y - (rt.sizeDelta.y / 2) + (height / 2) + (int)(nFrame / split_x) * height,
                                        0.0f);
     }
 
@@ -99,7 +101,7 @@ public class UVScroll : MonoBehaviour
         }
         //テクスチャの位置設定
         rt.position = new Vector3(pearent.transform.position.x + (rt.sizeDelta.x / 2) - (width / 2) - ((nFrame % split_x) * width),
-                                      pearent.transform.position.y - (rt.sizeDelta.y / 2) + (height / 2) + (nFrame / split_x) / split_y * height,
+                                      pearent.transform.position.y - (rt.sizeDelta.y / 2) + (height / 2) + (int)(nFrame / split_x) * height,
                                        0.0f);
     }
 
@@ -112,7 +114,7 @@ public class UVScroll : MonoBehaviour
         }
         //テクスチャの位置設定
         rt.position = new Vector3(pearent.transform.position.x + (rt.sizeDelta.x / 2) - (width / 2) - ((nFrame % split_x) * width),
-                                      pearent.transform.position.y - (rt.sizeDelta.y / 2) + (height / 2) + (nFrame / split_x) / split_y * height,
+                                      pearent.transform.position.y - (rt.sizeDelta.y / 2) + (height / 2) + (int)(nFrame / split_x) * height,
                                        0.0f);
     }
 

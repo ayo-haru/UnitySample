@@ -3541,9 +3541,11 @@ GameObject:
   - component: {fileID: -712047140982903845}
   - component: {fileID: -1164592511550159492}
   - component: {fileID: -6640084371976975786}
+  - component: {fileID: 8831362076741182058}
+  - component: {fileID: 3530980882272438997}
   m_Layer: 0
   m_Name: PanCake
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3601,6 +3603,7 @@ MonoBehaviour:
   BossKnife: {fileID: 0}
   BossRain: {fileID: 0}
   BossJump: {fileID: 0}
+  DamageColor: {fileID: 0}
   RushDamage: 15
   StrawberryDamage: 10
   KnifeDamage: 10
@@ -3681,7 +3684,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RainTime: 5
-  MaxWeapon: 50
+  MaxWeapon: 75
   PreMaxWeapon: 0
   LoopSave: 0
   LoopSaver: 0
@@ -3698,6 +3701,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 5
+--- !u!65 &8831362076741182058
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6232079251362198321}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 42.085648, y: 58.928467, z: 73.371506}
+  m_Center: {x: -1.5979996, y: -0.27125454, z: -2.5340424}
+--- !u!114 &3530980882272438997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6232079251362198321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89ae31dfa10e3684981f5f814ea2042e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skinnedMeshRenderers:
+  - {fileID: 6828421978621302454}
+  - {fileID: 6175813912403405618}
+  - {fileID: 512836059632500794}
+  - {fileID: 4644248159620793081}
+  - {fileID: 5487182205050121001}
+  - {fileID: 7918330800364701196}
+  - {fileID: 5721484552358534977}
+  - {fileID: 2108284741275747813}
+  - {fileID: 5969698143326440102}
+  - {fileID: 293316207624220716}
+  - {fileID: 7775759725558372653}
+  - {fileID: 1490577939734552874}
+  - {fileID: 4252904908404740625}
+  - {fileID: 9047426502466885112}
+  - {fileID: 7513580589301582165}
+  - {fileID: 2458334188186083746}
+  - {fileID: 1375676008753815654}
+  - {fileID: 2428789679054367996}
+  - {fileID: 3439639085367308154}
+  - {fileID: 2608393159380592791}
+  - {fileID: 2236357232201955485}
+  - {fileID: 8677496786953282714}
+  _DamageMaterial: {fileID: 2100000, guid: 10f5622e15f298644b9af3bef4961372, type: 2}
+  _OriginalMaterial: {fileID: 2100000, guid: d1bb071574b0d2d43957db0fedff226a, type: 2}
 --- !u!1 &6374558938003141172
 GameObject:
   m_ObjectHideFlags: 0

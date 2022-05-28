@@ -44,17 +44,42 @@ public class StarManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < starList.Length; ++i)
+        //キッチンシーン１～６の場合
+        if(GameData.CurrentMapNumber >= (int)GameData.eSceneState.KitchenStage001 && GameData.CurrentMapNumber <= (int)GameData.eSceneState.KitchenStage006)
         {
-            //trueだったら取得済みなので消す
-            if(GameData.isStarGet[GameData.CurrentMapNumber - 1, i])
+            for (int i = 0; i < starList.Length; ++i)
             {
-                Destroy(starList[i]);
-                continue;
-            }
-            //スターに識別用id割り当て
-            starList[i].GetComponent<Star>().SetID(i);
+                //trueだったら取得済みなので消す
+                if (GameData.isStarGet[GameData.CurrentMapNumber - 1, i])
+                {
+                    Destroy(starList[i]);
+                    continue;
+                }
+                //スターに識別用id割り当て
+                starList[i].GetComponent<Star>().SetID(i);
 
+            }
+        }
+        
+
+        //ステージ1のidが3,4の星はステージ３のidが0,1の星と同じため、ステージ３の星取得状況を参照
+        if(GameData.CurrentMapNumber == (int)GameData.eSceneState.KitchenStage001)
+        {
+            if(GameData.isStarGet[(int)GameData.eSceneState.KitchenStage003 - 1, 0])
+            {
+                Destroy(starList[2]);
+            }
+            if (GameData.isStarGet[(int)GameData.eSceneState.KitchenStage003 - 1, 1])
+            {
+                Destroy(starList[3]);
+            }
+        }
+
+        //チュートリアル３場合
+        if(GameData.CurrentMapNumber == (int)GameData.eSceneState.Tutorial3)
+        {
+            //スター識別用id割り当て
+            starList[0].GetComponent<Star>().SetID(0);
         }
     }
 

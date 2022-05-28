@@ -5,20 +5,21 @@ using UnityEngine;
 public class LB_Attack : MonoBehaviour
 {
     //「状態推移:列挙型」===================　
-    public enum Boss_State
+    public enum LB_State
     {
         Idle,           //待機(0)
-        Damage,         //ダメージ(1)
-        TrackingBullet, //追従弾(2)
-        BoundBoll,      //バウンド弾(3)
-        WarpBullet,     //ワープボール（4）
-        ArrowAttack,    //アローアタック(5)
+        RandomMove,     //ランダム移動(1)
+        Damage,         //ダメージ(2)
+        TrackingBullet, //追従弾(3)
+        BoundBoll,      //バウンド弾(4)
+        WarpBullet,     //ワープボール（5）
+        ArrowAttack,    //アローアタック(6)
     }
     //------------------------------------
 
     //[[[[[idleの処理で使う変数]]]]]=========================================================================
     private Vector3 defaultPos;                             //ボスが登場した最初の位置
-    static private Boss_State BossState = Boss_State.Idle;  //ボスの状態(初期値はidel)
+    static private LB_State LBState = LB_State.Idle;        //ボスの状態(初期値はidel)
     private int RandomNumbe = 0;                            //モーションのランダム抽選用の数
     [SerializeField] private float timeToStayInIdle;        //idle状態で留まる時間(フレーム指定)
     private float elapsedTimeOfIdleState = 0f;              //idle状態の経過時間
@@ -38,27 +39,38 @@ public class LB_Attack : MonoBehaviour
     private int Index;                                      //抽選する要素の指定
     //[[[[[BoundBollの処理で使う変数]]]]]====================================================================
     public GameObject BoundBoll;                            //GameObject:BoundBoll
-    public GameObject firingPoint;                          //
+    public GameObject firingPoint;                          //弾が発射される場所
     [SerializeField] public int Bound_MaxSpeed;             //BoundBollの速度
-    //[[[[WarpBulletの処理で使う変数]]]]]=======================================================================
+    //[[[[WarpBulletの処理で使う変数]]]]]====================================================================
     public GameObject WarpBullet;                           //GameObject:Bullet
-    public Destroy_WarpBullet destroywarpbullet;
+    GameObject WarpBullets;                                 //WarpBulletで生成する弾
     [SerializeField] public int WarpBullet_MaxSpeed;        //弾の速度
-    public bool WarpBulletUseFlag = true;                  //バレットが使用中かどうか調べるフラグ（初期値：true)
-    public int WarpCount = 0;                              //アローカウント
-    private float time;
-    private float vecX;
-    private float vecY;
+    public int WarpCount = 0;                               //アローカウント
+    //ランダム移動用の変数-----------------------------------------------------------------------------------
+    private float time;                                     //移動までの時間
+    private float vecX;                                     //座標指定用：X座標格納場所
+    private float vecY;                                     //座標指定用：Y座標格納場所
     //[[[[[Bulletの処理で使う変数]]]]]=======================================================================
     public GameObject Bullet;                               //GameObject:Bullet
-    [SerializeField] public int Bullet_MaxSpeed;           //弾の速度
+    [SerializeField] public int Bullet_MaxSpeed;            //弾の速度
     public bool BulletUseFlag = true;                       //バレットが使用中かどうか調べるフラグ（初期値：true)
     //-----------------------------------------------------------------------------------------------------
+    private GameObject HpObject;
+    public HPgage HpScript;
+    public Animator BossAnim;
+    [System.NonSerialized] public bool AnimFlg;
+    [System.NonSerialized] public bool MoveFlg;
+    //必殺技用フラグ(〇%以下になったとき一回)
+    bool UltFlg;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        LBState = LB_State.Idle;
+        HpObject = GameObject.Find("HPGage");
+        HpScript = HpObject.GetComponent<HPgage>();
+        BossAnim = this.gameObject.GetComponent<Animator>();
         //---抽選する番号をリスト構造に格納
         //---抽選回数を指定(ここでは1~3)
         for (int i = 1; i <= 3; i++) {
@@ -70,37 +82,42 @@ public class LB_Attack : MonoBehaviour
     // Update is called once per frame----------------------------------------------------
     void Update()
     {
+
         if (!Pause.isPause)
         {
-            if (LB_Manager.BossState == LB_Manager.LBState.LB_BATTLE)
+            if (LB_Manager.LB_States == LB_Manager.LB_State.LB_BATTLE)
             {
-                if (BossState == Boss_State.Idle)       //もしボスの状態が待機の場合
+                if (LBState == LB_State.Idle)       //もしボスの状態が待機の場合
                 {
                     Idle();
                 }
-                else if (BossState == Boss_State.Damage)//もしボスの状態がダメージの場合
+                else if (LBState == LB_State.RandomMove)//もしボスの状態がダメージの場合
+                {
+
+                }
+                else if (LBState == LB_State.Damage)//もしボスの状態がダメージの場合
                 {
                     //damage();
                 }
-                else if (BossState == Boss_State.TrackingBullet)//もしボスの状態がナイフ投げの場合
+                else if (LBState == LB_State.TrackingBullet)//もしボスの状態がナイフ投げの場合
                 {
                     BulletAttack();
                 }
-                else if (BossState == Boss_State.BoundBoll)//もしボスの状態がイチゴ爆弾の場合
+                else if (LBState == LB_State.BoundBoll)//もしボスの状態がイチゴ爆弾の場合
                 {
                     BoundBollAttack();
                 }
-                else if (BossState == Boss_State.WarpBullet)//もしボスの状態が突進の場合
+                else if (LBState == LB_State.WarpBullet)//もしボスの状態が突進の場合
                 {
                     if (WarpCount <= 5)
                     {
-                        if (WarpBulletUseFlag)
+                        if (WarpBullets == null)
                         {
                             WarpBulletAttack();
                         }
                     }
                 }
-                else if (BossState == Boss_State.ArrowAttack)//もしボスの状態がナイフ投げの場合
+                else if (LBState == LB_State.ArrowAttack)//もしボスの状態がナイフ投げの場合
                 {
                     //---矢印攻撃ならば------------
                     if (ArrowUseFlag)
@@ -121,60 +138,143 @@ public class LB_Attack : MonoBehaviour
         }
     }
 
+    static public void SetState(LB_State LbState, Transform playerTransform = null)
+    {
+        LBState = LbState;
+        if (LBState == LB_State.Idle)
+        {
+            Debug.Log("アイドル");
+        }
+        else if (LBState == LB_State.RandomMove)
+        {
+            Debug.Log("ランダム移動");
+        }
+        else if (LBState == LB_State.Damage)
+        {
+            Debug.Log("ダメージ");
+        }
+        else if (LBState == LB_State.TrackingBullet)
+        {
+            Debug.Log("通常攻撃");
+        }
+        else if (LBState == LB_State.BoundBoll)
+        {
+            Debug.Log("衝撃波攻撃");
+        }
+        else if (LBState == LB_State.WarpBullet)
+        {
+            Debug.Log("チェイス");
+        }
+    }
+
+
     //--------------------------------------------------------------------------------------------------------
+
+    public LB_State GetState()
+    {
+        return LBState;
+    }
+
+    public void AnimFlagOnOff()
+    {
+        if (!AnimFlg)
+        {
+            AnimFlg = true;
+            return;
+        }
+        if (AnimFlg)
+        {
+            AnimFlg = false;
+            return;
+        }
+
+    }
+    public void AnimMoveFlgOnOff()
+    {
+        if (!MoveFlg)
+        {
+            MoveFlg = true;
+            return;
+        }
+        if (MoveFlg)
+        {
+            MoveFlg = false;
+            return;
+        }
+    }
 
     //Idel=============================================================================
     private void Idle()
     {
         elapsedTimeOfIdleState += Time.deltaTime;
         //Debug.Log("Time" + elapsedTimeOfIdleState);
-
-        //アタックカウントが最大攻撃回数と同等なら
         if (AttackCount == MaxAttack)
         {
-            //SetState(Boss_State.idle);                //待機モーション
             elapsedTimeOfIdleState = timeToStayInIdle;
-            AttackCount = 0;                            //攻撃数カウントをゼロに
-            Debug.Log("アイドル");                       //デバックログ
+            AttackCount = 0;          //攻撃数カウントをゼロに
+            Debug.Log("Idel");
         }
+        //　一定時間が経過したら各種攻撃状態にする
         if (elapsedTimeOfIdleState >= timeToStayInIdle)
-        {    //一定時間が経過したら各種攻撃状態にする
-            elapsedTimeOfIdleState = 0f;                 //idle状態の経過時間をoffにする
-            Debug.Log("AttackCount：" + AttackCount);    //デバックログ
+        {
+            elapsedTimeOfIdleState = 0f;       //idle状態の経過時間をoffにする
+            Debug.Log("AttackCount：" + AttackCount);
 
             //ランダム数の生成とswitch分岐をこの中へ
+            if (!UltFlg && HPgage.currentHp <= 30)
+            {
+                Debug.Log("アローアタック");
+                UltFlg = true;
+                SetState(LB_State.ArrowAttack);
+                return;
+            }
             if (HPgage.currentHp >= 51)
-            {   //HPが半分以上の場合
-                RandomNumbe = Random.Range(1, 3);        //攻撃パターンランダム化
-                Debug.Log("Random" + RandomNumbe);       //デバックログ
+            {
+                RandomNumbe = Random.Range(1, 4);//攻撃パターンランダム化
+                Debug.Log("Random" + RandomNumbe);
             }
             else
-            {   //HPが半分以下の場合
-                RandomNumbe = Random.Range(1, 4);        //攻撃パターンランダム化
-                Debug.Log("Random" + RandomNumbe);       //デバックログ
+            {
+                RandomNumbe = Random.Range(1, 5);//攻撃パターンランダム化
+                Debug.Log("Random" + RandomNumbe);
             }
-
-            //ランダムナンバーによるswitch分岐
-            switch (RandomNumbe)
+            switch (RandomNumbe)            //switch分岐
             {
                 case 1://イチゴ爆弾へ
+                    SetState(LB_State.TrackingBullet);
+                    RandomNumbe = -1;
                     Debug.Log("イチゴ爆弾");
-                    break;
+                    break;//break文
 
                 case 2://突進へ
+                    SetState(LB_State.BoundBoll);
+                    RandomNumbe = -1;
                     Debug.Log("突進攻撃");
-                    break;
+                    break;//break文
 
-                case 3://ナイフ攻撃
+                case 3://ジャンプ
+                    SetState(LB_State.WarpBullet);
+                    RandomNumbe = -1;
+                    Debug.Log("ジャンプ");
+                    break;//break文
+
+                case 4://ナイフ攻撃
+                    SetState(LB_State.ArrowAttack);
+                    RandomNumbe = -1;
                     Debug.Log("ナイフ攻撃");
                     break;
             }
+
+
+
         }
     }
-    //-------------------------------------------------------------------------------
+    
 
-    //BulletAttack=====================================================================
-    private void BulletAttack()
+//-------------------------------------------------------------------------------
+
+//BulletAttack=====================================================================
+private void BulletAttack()
     {
         if (Input.GetKeyDown("c"))
         {
@@ -191,8 +291,7 @@ public class LB_Attack : MonoBehaviour
         firingPoint.transform.position = new Vector3(vecX, vecY, 27.0f);
         Vector3 bulletPosition = firingPoint.transform.position;
         GameObject WarpBullets = Instantiate(WarpBullet, bulletPosition, transform.rotation);
-        WarpCount++;
-        WarpBulletUseFlag = false;                   
+        WarpCount++;                 
     }
 
 //BoundBollAttack=====================================================================

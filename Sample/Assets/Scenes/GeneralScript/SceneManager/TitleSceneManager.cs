@@ -90,7 +90,7 @@ public class TitleSceneManager : MonoBehaviour {
         //Option.GetComponent<Move2DTheta>().enabled = false;
         Optionmanager.SetActive(false);
         SelectFrame.GetComponent<UIBlink>().isHide = true;
-        SelectFrame.GetComponent<UIBlink>().isBlink = false;
+        SelectFrame.GetComponent<UIBlink>().isBlink = true;
         DesitionImage.GetComponent<UIBlink>().isHide = true;
 
         //---タイトル用プレイヤー取得
@@ -189,10 +189,10 @@ public class TitleSceneManager : MonoBehaviour {
         // 選択しているものが何かで分岐
         if (select == (int)eSTATETITLE.FROMBIGINING)
         {
-            GameStart.GetComponent<UIBlink>().isBlink = true; // UIを点滅
-            GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
-            GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
-            Option.GetComponent<UIBlink>().isBlink = false;     //UIの点滅を消す
+            //GameStart.GetComponent<UIBlink>().isBlink = true; // UIを点滅
+            //GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+            //GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+            //Option.GetComponent<UIBlink>().isBlink = false;     //UIの点滅を消す
 
             SelectFrame.GetComponent<RectTransform>().position = GameStart.GetComponent<RectTransform>().position;  //選択枠の位置設定
 
@@ -230,10 +230,10 @@ public class TitleSceneManager : MonoBehaviour {
         }
         else if (select == (int)eSTATETITLE.FROMCONTINUE)
         {
-            GameStart.GetComponent<UIBlink>().isBlink = false; // UIを点滅
-            GameContinue.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
-            GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
-            Option.GetComponent<UIBlink>().isBlink = false;     //UIの点滅を消す
+            //GameStart.GetComponent<UIBlink>().isBlink = false; // UIを点滅
+            //GameContinue.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
+            //GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+            //Option.GetComponent<UIBlink>().isBlink = false;     //UIの点滅を消す
 
             SelectFrame.GetComponent<RectTransform>().position = GameContinue.GetComponent<RectTransform>().position;  //選択枠の位置設定
 
@@ -262,10 +262,10 @@ public class TitleSceneManager : MonoBehaviour {
         }
         else if (select == (int)eSTATETITLE.QUIT)
         {
-            GameStart.GetComponent<UIBlink>().isBlink = false; // UIを点滅
-            GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
-            GameEnd.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
-            Option.GetComponent<UIBlink>().isBlink = false;     //UIの点滅を消す
+            //GameStart.GetComponent<UIBlink>().isBlink = false; // UIを点滅
+            //GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+            //GameEnd.GetComponent<UIBlink>().isBlink = true; // UIの点滅を消す
+            //Option.GetComponent<UIBlink>().isBlink = false;     //UIの点滅を消す
 
             SelectFrame.GetComponent<RectTransform>().position = GameEnd.GetComponent<RectTransform>().position;  //選択枠の位置設定
 
@@ -298,10 +298,10 @@ public class TitleSceneManager : MonoBehaviour {
         }
         else if (select == (int)eSTATETITLE.OPTION)
         {
-            Option.GetComponent<UIBlink>().isBlink = true;     //UIを点滅
-            GameStart.GetComponent<UIBlink>().isBlink = false; // UIを点滅を消す
-            GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
-            GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+            //Option.GetComponent<UIBlink>().isBlink = true;     //UIを点滅
+            //GameStart.GetComponent<UIBlink>().isBlink = false; // UIを点滅を消す
+            //GameContinue.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
+            //GameEnd.GetComponent<UIBlink>().isBlink = false; // UIの点滅を消す
 
             SelectFrame.GetComponent<RectTransform>().position = Option.GetComponent<RectTransform>().position;  //選択枠の位置設定
 

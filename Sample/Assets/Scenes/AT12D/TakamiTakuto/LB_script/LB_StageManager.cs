@@ -34,8 +34,8 @@ public class LB_StageManager: MonoBehaviour
                                                                 // GameDataにプレイヤーを定義する
         }
         GameData.PlayerPos = GameData.Player.transform.position = GameObject.Find("PlayerStart").transform.position; // プレイヤーの初期位置を設定
-        //GameObject Player = Instantiate(GameData.Player);       // プレハブをクローン
-        //Player.name = GameData.Player.name;                         // プレハブの名前通りにする
+        GameObject Player = Instantiate(GameData.Player);       // プレハブをクローン
+        Player.name = GameData.Player.name;                         // プレハブの名前通りにする
 
         //---プレイヤーUIを表示
         //ボスシーンのキャンバスの設定が他と異なって表示できないためｈｐ専用のキャンバスの作った

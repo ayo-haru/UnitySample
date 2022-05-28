@@ -56,7 +56,7 @@ public class Arrow_Disappear : MonoBehaviour
                     LbAttack.ArrowUseFlag = true;
                     Debug.Log("Bool:" + LbAttack.ArrowUseFlag); //デバックログ
                     LbAttack.ArrowCount++;
-                    Debug.Log("ArrowCount:" + LbAttack.ArrowCount);             //デバックログ
+                    Debug.Log("ArrowCount:" + LbAttack.ArrowCount);//デバックログ
                 }
                 //-------------------------------------------------------------------------------------------------
 

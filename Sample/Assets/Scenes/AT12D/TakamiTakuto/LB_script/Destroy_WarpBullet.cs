@@ -5,7 +5,7 @@ using UnityEngine;
 public class Destroy_WarpBullet : MonoBehaviour
 {
     public GameObject WarpBullet;
-    public bool flag = true;
+    public static bool flag = true;
 
     // Start is called before the first frame update
     void Start()

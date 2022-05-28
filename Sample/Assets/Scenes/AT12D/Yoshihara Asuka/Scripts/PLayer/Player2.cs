@@ -193,7 +193,7 @@ public class Player2 : MonoBehaviour
         //    Gravity();
         //}
 
-        if (!Pause.isPause)
+        if (!Pause.isPause && !GameOver.GameOverFlag)
         {
             // プレイヤーがダメージ中は以降の処理はしない
             if (state == PLAYERSTATE.DAMAGED)
@@ -274,7 +274,7 @@ public class Player2 : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!Pause.isPause) {
+        if (!Pause.isPause && !GameOver.GameOverFlag) {
 
             //---前フレームを格納
             for (int i = 29; 1 <= i; i--)
@@ -712,7 +712,7 @@ public class Player2 : MonoBehaviour
             GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial1 &&
             GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial2 &&
             GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial3 && 
-            !Player.isHitSavePoint)
+            !Player.isHitSavePoint && !GameOver.GameOverFlag)
         {
             Debug.Log("ポーズトグル");
             Pause.isPause = !Pause.isPause; // トグル
@@ -724,27 +724,33 @@ public class Player2 : MonoBehaviour
     //---HPがゼロになった時の処理
     private void OnCollisionEnter(Collision collision) {
 
-        //---"Damaged"&"GroundDameged"&"Enemy"との処理
-        if (collision.gameObject.tag == "Damaged" ||
-            collision.gameObject.tag == "GroundDameged" ||
-            collision.gameObject.tag == "Enemy")
+        if (!GameOver.GameOverFlag)
         {
-            OnAttackHit();
+            //---"Damaged"&"GroundDameged"&"Enemy"との処理
+            if (collision.gameObject.tag == "Damaged" ||
+                collision.gameObject.tag == "GroundDameged" ||
+                collision.gameObject.tag == "Enemy")
+            {
+                OnAttackHit();
 
-            //---自分の位置と接触してきたオブジェクトの位置を計算し、距離と方向を算出
-            Distination = (transform.position - collision.transform.position).normalized;
+                //---自分の位置と接触してきたオブジェクトの位置を計算し、距離と方向を算出
+                Distination = (transform.position - collision.transform.position).normalized;
 
-            // プレイヤーがダメージを食らっていないとき
-            if (state == PLAYERSTATE.NORMAL){
-                Damaged(Distination);
+                // プレイヤーがダメージを食らっていないとき
+                if (state == PLAYERSTATE.NORMAL)
+                {
+                    Damaged(Distination);
+                }
             }
-        }
 
 
-        //---"Damaged"&"GroundDameged"との処理
-        if (collision.gameObject.tag == "Damaged" || collision.gameObject.tag == "GroundDameged"){
-            if (!GameOver.GameOverFlag){
-                DamegeRespawn();
+            //---"Damaged"&"GroundDameged"との処理
+            if (collision.gameObject.tag == "Damaged" || collision.gameObject.tag == "GroundDameged")
+            {
+                if (!GameOver.GameOverFlag)
+                {
+                    DamegeRespawn();
+                }
             }
         }
     }

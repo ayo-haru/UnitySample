@@ -31,7 +31,7 @@ public class ShieldManager : MonoBehaviour
 
     public bool AddShield()
     {
-        if (Player.isHitSavePoint)
+        if (Player.isHitSavePoint && SaveManager.canSave)
         {
             return false;
         }

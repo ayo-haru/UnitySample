@@ -259,6 +259,11 @@ public class GamePause : MonoBehaviour
             BackTitle.GetComponent<Image>().enabled = false;
             SousaChara.GetComponent<Image>().enabled = false;
             Option.GetComponent<Image>().enabled = false;
+            SousaImage.GetComponent<Image>().enabled = false;
+            QuitQuestion.GetComponent<Image>().enabled = false;
+            QuitYes.GetComponent<Image>().enabled = false;
+            QuitNo.GetComponent<Image>().enabled = false;
+
             isCalledOncce = false;
             hpUI.SetActive(true);
             if (GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE)
@@ -733,7 +738,7 @@ public class GamePause : MonoBehaviour
         SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.IndelibleAudioList);
 
         pauseSelect++;
-        if (pauseSelect >= (int)eSTATEPAUSE.MAX_STATE)   // ó·äOèàóù
+        if (pauseSelect >= (int)eSTATEPAUSE.OPTION)   // ó·äOèàóù
         {
             pauseSelect = (int)eSTATEPAUSE.OPTION;
         }

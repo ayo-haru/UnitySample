@@ -51,6 +51,7 @@ public class FireSwitch : MonoBehaviour {
 
     private void ToggleButton() {
         GameData.FireOnOff = !GameData.FireOnOff;
+        SaveManager.saveFireOnOff(GameData.FireOnOff);
 
         if (GameData.FireOnOff)
         {

@@ -51,6 +51,7 @@ public class GateSwitch : MonoBehaviour
     }
     private void ToggleButton() {
         GameData.GateOnOff = !GameData.GateOnOff;
+        SaveManager.saveGateOnOff(GameData.GateOnOff);
 
         if (GameData.GateOnOff)
         {

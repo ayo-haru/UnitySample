@@ -60,6 +60,11 @@ public static class EffectData
         EF_BOSS_STRAWBERRY_LAND,
         EF_BOOS_FORK_DUST,
 
+        //---ƒ‰ƒXƒ{ƒX
+        EF_LASTBOSS_ENERGYBALL,
+        EF_LASTBOSS_WARP,
+
+
         //---‚»‚Ì‘¼
         //EF_SHEILD2,
 

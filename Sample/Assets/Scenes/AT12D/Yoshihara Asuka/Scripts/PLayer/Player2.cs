@@ -300,8 +300,6 @@ public class Player2 : MonoBehaviour
                 Attack();
                 isAttack = false;
                 canMoveflg = true;
-                StartCoroutine(StartAttackEvent(0.095f));
-
             }
 
         }
@@ -552,6 +550,11 @@ public class Player2 : MonoBehaviour
         yield return new WaitForSeconds(waittime);
         PlayerActionAsset.Player.Attack.started += OnAttack;
 	}
+
+    public void AbleToAttack()
+	{
+        PlayerActionAsset.Player.Attack.started += OnAttack;
+    }
 
     public void SetAttackDirection(Vector2 attackdirection)
     {

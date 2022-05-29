@@ -60,10 +60,10 @@ public class CallAnimEvent : MonoBehaviour
         player2.CreateShiled();
     }
 
-    public void AttackEnd()
-	{
-        player2.AbleToAttack();
-	}
+ //   public void AttackEnd()
+	//{
+ //       player2.AbleToAttack();
+	//}
 
 
 }

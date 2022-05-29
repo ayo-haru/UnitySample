@@ -300,6 +300,7 @@ public class Player2 : MonoBehaviour
                 Attack();
                 isAttack = false;
                 canMoveflg = true;
+                StartCoroutine(StartAttackEvent(0.09f));
             }
 
         }
@@ -447,8 +448,8 @@ public class Player2 : MonoBehaviour
                 //{
                 //    rb.AddForce(transform.up * 10.0f, ForceMode.Impulse);
                 //}
-                Timer = 1;
-                rb.velocity = Vector3.zero;
+                //Timer = 1;
+                //rb.velocity = Vector3.zero;
 
                 UnderParryNow = true;
                 //GamePadManager.onceTiltStick = true;
@@ -493,9 +494,6 @@ public class Player2 : MonoBehaviour
             //ShiledEffect = EffectManager.Play(EffectData.eEFFECT.EF_SHIELD, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
                                                                                          //GameData.PlayerPos.y + (AttackDirection.y * AttckPosHeightUp),
                                                                                          //GameData.PlayerPos.x), Quaternion.identity);
-
-            
-
         }
         else{
             _weapon = Instantiate(Weapon, new Vector3(GameData.PlayerPos.x + (AttackDirection.x * AttckPosWidth),
@@ -536,7 +534,6 @@ public class Player2 : MonoBehaviour
         //---SE・EF再生
         SoundManager.Play(SoundData.eSE.SE_SHIELD, SoundData.GameAudioList);
 
-
         //シールド・エフェクト消去
         Destroy(_weapon, DestroyTime);
         //Destroy(ShiledEffect.transform.gameObject, DestroyTime);
@@ -551,21 +548,16 @@ public class Player2 : MonoBehaviour
         PlayerActionAsset.Player.Attack.started += OnAttack;
 	}
 
-    public void AbleToAttack()
-	{
-        PlayerActionAsset.Player.Attack.started += OnAttack;
-    }
+ //   public void AbleToAttack()
+	//{
+ //       PlayerActionAsset.Player.Attack.started += OnAttack;
+ //   }
 
     public void SetAttackDirection(Vector2 attackdirection)
     {
         AttackDirection = attackdirection;
     }
 
-    public Vector2 GetAttackDirection()
-    {
-        
-        return AttackDirection;
-    }
 
     #region ジャンプ処理
     //---ジャンプ処理
@@ -737,7 +729,7 @@ public class Player2 : MonoBehaviour
                 collision.gameObject.tag == "GroundDameged" ||
                 collision.gameObject.tag == "Enemy")
             {
-                OnAttackHit();
+                //OnAttackHit();
 
                 //---自分の位置と接触してきたオブジェクトの位置を計算し、距離と方向を算出
                 Distination = (transform.position - collision.transform.position).normalized;

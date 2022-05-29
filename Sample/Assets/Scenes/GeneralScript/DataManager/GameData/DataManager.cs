@@ -125,6 +125,10 @@ public class DataManager : MonoBehaviour
     [SerializeField] private ParticleSystem ef_boss_strawberry_land;
     [SerializeField] private ParticleSystem ef_boss_fork_dust;
 
+    //ラスボス
+    [SerializeField] private ParticleSystem ef_lastboss_energyball;
+    [SerializeField] private ParticleSystem ef_lastboss_warp;
+
 
     //---その他(今のところ未使用)
     //[SerializeField] private ParticleSystem ef_shield2;
@@ -227,6 +231,9 @@ public class DataManager : MonoBehaviour
         EffectData.EFDataSet(ef_boss_strawberry_land, (int)EffectData.eEFFECT.EF_BOSS_STRAWBERRY_LAND);
         EffectData.EFDataSet(ef_boss_fork_dust, (int)EffectData.eEFFECT.EF_BOOS_FORK_DUST);
 
+        //---ラスボス関連
+        EffectData.EFDataSet(ef_lastboss_energyball, (int)EffectData.eEFFECT.EF_LASTBOSS_ENERGYBALL);
+        EffectData.EFDataSet(ef_lastboss_warp, (int)EffectData.eEFFECT.EF_LASTBOSS_WARP);
 
         //EffectData.EFDataSet(ef_shield2,(int)EffectData.eEFFECT.EF_SHEILD2);
 

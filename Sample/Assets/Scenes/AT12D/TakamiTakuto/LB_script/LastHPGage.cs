@@ -13,14 +13,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HPgage : MonoBehaviour
+public class LastHPGage : MonoBehaviour
 {
-    [SerializeField] int MAXHP = 0;     //最大HP数値変更可
-    public static int currentHp;        //現在HP
-    //public Slider slider;               //スライダー
+    int MAXHP = 100;     //最大HP数値変更可
+    public static int currentHp=100;        //現在HP
+    //public Slider slider;             //スライダー
     //ゲージ用画像
-    private Image HpGageImage;
-    private int m_DelHp ;         //ダメージ収納用変数
+    private Image BossHpBar;
+    private int m_DelHp;         //ダメージ収納用変数
     private int damage = 0;
     private float DamageTimer;
     private int HpDelNow;
@@ -28,8 +28,8 @@ public class HPgage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        HpGageImage = gameObject.GetComponent<Image>();
-        HpGageImage.fillAmount = 1.0f;
+        BossHpBar = gameObject.GetComponent<Image>();
+        BossHpBar.fillAmount = 1.0f;
         currentHp = MAXHP;              //現在のHPを最大HPにする
         m_DelHp = 0;
         //Debug.Log("Start currentHp : " + slider.value);
@@ -38,28 +38,33 @@ public class HPgage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       //ゲージの長さ
-        if(DamageTimer>=0.0f && HpDelNow > 0)
+        //ダメージを受けたモーション再生後これを実行←だれか任せた
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            DelHP(10);
+            Debug.Log("After currentHp : " + currentHp);
+        }//ゲージの長さ
+        if (DamageTimer >= 0.0f && HpDelNow > 0)
         {
             DamageTimer -= 1.0f;
             currentHp -= 1;
             HpDelNow -= 1;
         }
-        HpGageImage.fillAmount = (float)currentHp / MAXHP;
+        BossHpBar.fillAmount = (float)currentHp / MAXHP;
         if (currentHp <= 0)
         {
             //ボスのタグ付けして全部のボスで使えるようにしたい所存
-            GameData.isAliveBoss1 = false;
+            //GameData.isAliveBoss1 = false;
         }
     }
     //ダメージ受けた時処理
     public void DelHP(int Damage)
     {
-            HpDelNow = Damage;                //受けたダメージを受け取る
-            DamageTimer = Damage;             //現在のHPから受けたダメージ分減らす
-            Debug.Log("delHP : " + m_DelHp);
-            Debug.Log("m_damage : " + damage);
-        
+        HpDelNow = Damage;                //受けたダメージを受け取る
+        DamageTimer = Damage;             //現在のHPから受けたダメージ分減らす
+        Debug.Log("delHP : " + Damage);
+        Debug.Log("m_damage : " + Damage);
+
     }
-    
+
 }

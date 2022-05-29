@@ -9,6 +9,7 @@ public class BoundBoll_Division : MonoBehaviour
     //----------------------Prehub内のBoundBollに入っている--------------------------
     //==============================================================================
     public GameObject BoundBoll;                //ゲームオブジェクト：バウンドボール
+    public static bool Flg = false;
     public int BoundBollCount;                  //バウンド弾が壁に当たった回数をカウント
     [SerializeField] public int Max_BoundBoll;  //バウンド弾の最大個数
     [SerializeField] public int Max_BoundCount; //バウンド弾の最大バウンド回数
@@ -47,6 +48,11 @@ public class BoundBoll_Division : MonoBehaviour
             }
         }
         //-----------------------------------------------------------------------------------------------------
-        
+        if (collision.gameObject.name == "LB(Clone)")
+        {
+            Flg = true;
+            Destroy(BoundBoll);
+            Debug.Log("弾を破壊した");//デバックログを表示
+        }
     }
 }

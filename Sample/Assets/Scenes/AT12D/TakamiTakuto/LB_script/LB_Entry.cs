@@ -46,7 +46,7 @@ public class LB_Entry : MonoBehaviour
             StartCameraPos = GameData.PlayerPos;
             StartCameraPos.z = CameraPos.z;
             StartCamera = true;
-            Debug.Log("‚È‚º“®‚­" + GameObject.Find("CameraOn").transform.position);
+            //Debug.Log("‚È‚º“®‚­" + GameObject.Find("CameraOn").transform.position);
         }
 
         if (StartCamera)
@@ -61,6 +61,7 @@ public class LB_Entry : MonoBehaviour
                     break;
                 case 2:
                     {
+                        Debug.Log("‚†‚‹‚‡‚„‚‡‚ˆ‚Š‚„‚‡‚ˆ‚è‚¤‚‡‚Ö‚è‚¤‚‡‚Ó‚¢‚„‚ˆ‚°‚è‚ˆ‚‡‚ê‚¶‚ã‚ˆ‚‡‚‹‚’‚Š‚‡‚ˆ‚é‚ˆ‚‡‚µ‚¤‚„‚ˆ‚¬‚’‚“‚ˆ‚‡‚’‚Š‚‡‚Ó‚™‚“‚‡‚’");
                         BossBarName.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
                         BossHPBar.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
                         BossHPFrame.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);

@@ -14,7 +14,9 @@ GameObject:
   - component: {fileID: 4721270884916156427}
   - component: {fileID: 4721270884916156424}
   - component: {fileID: 4721270884916156471}
-  - component: {fileID: 4721270884916156470}
+  - component: {fileID: 7530364637004477063}
+  - component: {fileID: 7655126455036166009}
+  - component: {fileID: -184592621438727716}
   m_Layer: 0
   m_Name: WarpBullet
   m_TagString: Untagged
@@ -31,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 4721270884916156425}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 50, y: 17, z: 27}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 25, y: 25, z: 25}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -111,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WarpBullet: {fileID: 4721270884916156425}
-  WarpBullet_Lbattack: {fileID: 0}
+  flag: 1
 --- !u!54 &4721270884916156471
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -128,7 +130,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
---- !u!114 &4721270884916156470
+--- !u!114 &7530364637004477063
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,9 +139,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 4721270884916156425}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8315eba32a3d1e84c96ab95f988d8b83, type: 3}
+  m_Script: {fileID: 11500000, guid: 23d133c8e30fcb141a0be08147f07342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 5068078774378264027, guid: df481fce1d331094e8f67763a3689082, type: 3}
+--- !u!114 &7655126455036166009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4721270884916156425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d499868db9159a343bd286936af8871f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_target: {fileID: 0}
   m_speed: 5
   m_attenuation: 0.5
+--- !u!114 &-184592621438727716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4721270884916156425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7a80a08579def54fac204cc6203d015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jjj: {fileID: 4721270884916156425}

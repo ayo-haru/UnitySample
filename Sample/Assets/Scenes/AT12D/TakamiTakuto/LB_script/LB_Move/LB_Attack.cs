@@ -17,11 +17,12 @@ public class LB_Attack : MonoBehaviour
     }
     //------------------------------------
 
+    public GameObject LB;
     //[[[[[idleの処理で使う変数]]]]]=========================================================================
     private Vector3 defaultPos;                             //ボスが登場した最初の位置
     static private LB_State LBState = LB_State.Idle;        //ボスの状態(初期値はidel)
     private int RandomNumbe = 0;                            //モーションのランダム抽選用の数
-    [SerializeField] private float timeToStayInIdle;        //idle状態で留まる時間(フレーム指定)
+    [SerializeField] private float timeToStayInIdle=2.4f;    //idle状態で留まる時間(フレーム指定)
     private float elapsedTimeOfIdleState = 0f;              //idle状態の経過時間
     [SerializeField] private int MaxAttack = 2;             //待機モーションなしの攻撃回数（HP50％以下のみ）
     public static int AttackCount = 0;                      //攻撃数カウント
@@ -33,43 +34,64 @@ public class LB_Attack : MonoBehaviour
     public bool ArrowUseFlag = true;                        //アローが使用中かどうか調べるフラグ（初期値：true)
     public int ArrowCount = 0;                              //アローカウント
     [SerializeField] public int Arrow_MaxSpeed;             //アローの速さ調節用
+    public Arrow_Disappear Arrow_End;
     //抽選用の変数-------------------------------------------------------------------------------------------
     List<int> number = new List<int>();                     //抽選する最大数(List構造)
     private int random;                                     //抽選した番号
     private int Index;                                      //抽選する要素の指定
     //[[[[[BoundBollの処理で使う変数]]]]]====================================================================
     public GameObject BoundBoll;                            //GameObject:BoundBoll
+    public GameObject BoundBolls;                            //GameObject:BoundBoll
     public GameObject firingPoint;                          //弾が発射される場所
-    [SerializeField] public int Bound_MaxSpeed;             //BoundBollの速度
+    [SerializeField] public int BOundDamage = 10;           //弾の速度
+    public BoundBoll_Division BoundBollEnd;
+    private float k;
+    public Quaternion rotation = Quaternion.identity;
     //[[[[WarpBulletの処理で使う変数]]]]]====================================================================
     public GameObject WarpBullet;                           //GameObject:Bullet
     GameObject WarpBullets;                                 //WarpBulletで生成する弾
     [SerializeField] public int WarpBullet_MaxSpeed;        //弾の速度
     public int WarpCount = 0;                               //アローカウント
+    [SerializeField] public int WapeDamage = 10;            //弾の速度
+    public Destroy_WarpBullet WarpEnd;
     //ランダム移動用の変数-----------------------------------------------------------------------------------
     private float time;                                     //移動までの時間
     private float vecX;                                     //座標指定用：X座標格納場所
     private float vecY;                                     //座標指定用：Y座標格納場所
     //[[[[[Bulletの処理で使う変数]]]]]=======================================================================
     public GameObject Bullet;                               //GameObject:Bullet
+    GameObject TrakingBullet;
     [SerializeField] public int Bullet_MaxSpeed;            //弾の速度
     public bool BulletUseFlag = true;                       //バレットが使用中かどうか調べるフラグ（初期値：true)
+    [SerializeField] public int BulletDamage = 10;            //弾の速度
+    public DestroyBullet BulletEnd;
     //-----------------------------------------------------------------------------------------------------
     private GameObject HpObject;
-    public HPgage HpScript;
+    public LastHPGage HpScript;
+    //=====================================================================================================
     public Animator BossAnim;
     [System.NonSerialized] public bool AnimFlg;
     [System.NonSerialized] public bool MoveFlg;
+    //=====================================================================================================
     //必殺技用フラグ(〇%以下になったとき一回)
     bool UltFlg;
-
+    bool End;
+    bool OnlryFlg = true;
+    //-----------------------------------------------------------------------------------------------------
+    int IdleCount = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        k = 0;
         LBState = LB_State.Idle;
+        LB = GameObject.Find("LB(Clone)");
+        firingPoint = GameObject.Find("LB_ShotPoint(Clone)");
         HpObject = GameObject.Find("HPGage");
-        HpScript = HpObject.GetComponent<HPgage>();
+        HpScript = HpObject.GetComponent<LastHPGage>();
+        Arrow_End = GetComponent<Arrow_Disappear>();
+        BoundBollEnd = GetComponent<BoundBoll_Division>();
+        BulletEnd = GetComponent<DestroyBullet>();
         BossAnim = this.gameObject.GetComponent<Animator>();
         //---抽選する番号をリスト構造に格納
         //---抽選回数を指定(ここでは1~3)
@@ -89,7 +111,8 @@ public class LB_Attack : MonoBehaviour
             {
                 if (LBState == LB_State.Idle)       //もしボスの状態が待機の場合
                 {
-                    Idle();
+                     Idle();
+                     Debug.Log("Onlry" + OnlryFlg);
                 }
                 else if (LBState == LB_State.RandomMove)//もしボスの状態がダメージの場合
                 {
@@ -101,41 +124,91 @@ public class LB_Attack : MonoBehaviour
                 }
                 else if (LBState == LB_State.TrackingBullet)//もしボスの状態がナイフ投げの場合
                 {
-                    BulletAttack();
+                    if (OnlryFlg == true)
+                    {
+                        OnlryFlg = false;
+                        IdleCount = 0;
+                        BulletAttack();
+                        
+                    }
+                    if (TrakingBullet==null)
+                    {
+                        OnlryFlg = true;
+                        MoveSelect();
+                    }
+
                 }
                 else if (LBState == LB_State.BoundBoll)//もしボスの状態がイチゴ爆弾の場合
                 {
-                    BoundBollAttack();
-                }
-                else if (LBState == LB_State.WarpBullet)//もしボスの状態が突進の場合
-                {
-                    if (WarpCount <= 5)
+                    if (OnlryFlg == true)
                     {
+                        OnlryFlg = false;
+                        Debug.Log("Onlry" + OnlryFlg);
+                        IdleCount = 0;
+                        StartCoroutine("BallSet");
+                    }
+                    if (BoundBoll == null)
+                    {
+                        OnlryFlg = true;
+                        MoveSelect();
+                    }
+
+                    else if (LBState == LB_State.WarpBullet)//もしボスの状態が突進の場合
+                    {
+
+                        if (OnlryFlg == true)
+                        {
+                            IdleCount = 0;
+                            OnlryFlg = false;
+                            if (WarpCount <= 5)
+                            {
+                                if (WarpBullets == null)
+                                {
+                                    WarpBulletAttack();
+                                }
+                            }
+                        }
                         if (WarpBullets == null)
                         {
-                            WarpBulletAttack();
+                            OnlryFlg = true;
+                            MoveSelect();
                         }
                     }
-                }
-                else if (LBState == LB_State.ArrowAttack)//もしボスの状態がナイフ投げの場合
-                {
-                    //---矢印攻撃ならば------------
-                    if (ArrowUseFlag)
+                    else if (LBState == LB_State.ArrowAttack)//もしボスの状態がナイフ投げの場合
                     {
-                        //--最後のリストの要素数に達したら
-                        if (number.Count <= 0)
+                        IdleCount = 0;
+                        if (OnlryFlg == true)
                         {
-                            return;
+                            Debug.Log("Onlry" + OnlryFlg);
+                            OnlryFlg = false;
+                            //---矢印攻撃ならば------------
+                            if (ArrowUseFlag)
+                            {
+                                //--最後のリストの要素数に達したら
+                                if (number.Count <= 0)
+                                {
+                                    return;
+                                }
+
+                                Index = Random.Range(0, number.Count);             // 0から要素の最大数までの範囲からランダムで抽選
+                                random = number[Index];                            // 抽選した値で要素を指定する
+
+                                ArrowAttack(random);
+                            }
+                            if (End == true)
+                            {
+                                OnlryFlg = true;
+                                MoveSelect();
+                            }
                         }
-
-                        Index = Random.Range(0, number.Count);             // 0から要素の最大数までの範囲からランダムで抽選
-                        random = number[Index];                            // 抽選した値で要素を指定する
-
-                        ArrowAttack(random);
                     }
                 }
             }
         }
+    }
+    private void DelayMethod()
+    {
+        Debug.Log("Invoke");
     }
 
     static public void SetState(LB_State LbState, Transform playerTransform = null)
@@ -155,15 +228,15 @@ public class LB_Attack : MonoBehaviour
         }
         else if (LBState == LB_State.TrackingBullet)
         {
-            Debug.Log("通常攻撃");
+            Debug.Log("追従弾");
         }
         else if (LBState == LB_State.BoundBoll)
         {
-            Debug.Log("衝撃波攻撃");
+            Debug.Log("バウンド弾");
         }
         else if (LBState == LB_State.WarpBullet)
         {
-            Debug.Log("チェイス");
+            Debug.Log("ワープ弾");
         }
     }
 
@@ -203,128 +276,128 @@ public class LB_Attack : MonoBehaviour
         }
     }
 
+    private void MoveSelect()
+    {
+        //HPが30以下になった時→ULTへ----------------------------------
+        if (!UltFlg && LastHPGage.currentHp <= 30)
+        {
+            Debug.Log("Hp" + LastHPGage.currentHp);
+            Debug.Log("アローアタック");
+            UltFlg = true;
+            SetState(LB_State.ArrowAttack);
+            return;
+        }
+        //HPが51以上の場合---------------------------------------------
+        if (LastHPGage.currentHp >= 51)
+        {
+            RandomNumbe = Random.Range(0, 3);//攻撃パターンランダム化
+            Debug.Log("ランダムナンバーは" + RandomNumbe);
+        }
+        //HPが30以下の場合----------------------------------------------
+        else
+        {
+            RandomNumbe = Random.Range(0, 4);//攻撃パターンランダム化
+            Debug.Log("ランダムナンバーは" + RandomNumbe);
+        }
+        //switch(ランダムナンバー)
+        switch (RandomNumbe)//switch分岐
+        {
+            case 0://アイドル
+                SetState(LB_State.Idle);
+                break;
+
+            case 1://追従弾
+                SetState(LB_State.TrackingBullet);
+                break;
+
+            case 2://バウンド弾
+                SetState(LB_State.BoundBoll);
+                break;//break文
+
+            case 3://ワープバレット
+                SetState(LB_State.WarpBullet);
+                break;//break文
+
+            case 4://アローアタック
+                SetState(LB_State.ArrowAttack);
+                break;
+        }
+    }
+
     //Idel=============================================================================
     private void Idle()
     {
-        elapsedTimeOfIdleState += Time.deltaTime;
-        //Debug.Log("Time" + elapsedTimeOfIdleState);
-        if (AttackCount == MaxAttack)
+        //Idleを二回連続で行わないようにするIF
+        if (IdleCount == 0)
         {
-            elapsedTimeOfIdleState = timeToStayInIdle;
-            AttackCount = 0;          //攻撃数カウントをゼロに
-            Debug.Log("Idel");
+            elapsedTimeOfIdleState += Time.deltaTime;　//Idle経過時間
+            Debug.Log("Time" + elapsedTimeOfIdleState);//デバックログ
+            if (AttackCount == MaxAttack)
+            {
+                elapsedTimeOfIdleState = timeToStayInIdle;
+                AttackCount = 0;          //攻撃数カウントをゼロに
+                Debug.Log("Idel");
+            }
+            //アイドルの時間経過が指定値を超えた時
+            if (elapsedTimeOfIdleState >= timeToStayInIdle)
+            {
+                elapsedTimeOfIdleState = 0f;//idle状態の経過時間をoffにする
+                MoveSelect();               //ランダム行動
+                Debug.Log("Idel");          //デバックログ
+                IdleCount++;                //カウント増加
+            }
         }
-        //　一定時間が経過したら各種攻撃状態にする
-        if (elapsedTimeOfIdleState >= timeToStayInIdle)
+        else
         {
-            elapsedTimeOfIdleState = 0f;       //idle状態の経過時間をoffにする
-            Debug.Log("AttackCount：" + AttackCount);
-
-            //ランダム数の生成とswitch分岐をこの中へ
-            if (!UltFlg && HPgage.currentHp <= 30)
-            {
-                Debug.Log("アローアタック");
-                UltFlg = true;
-                SetState(LB_State.ArrowAttack);
-                return;
-            }
-            if (HPgage.currentHp >= 51)
-            {
-                RandomNumbe = Random.Range(1, 4);//攻撃パターンランダム化
-                Debug.Log("Random" + RandomNumbe);
-            }
-            else
-            {
-                RandomNumbe = Random.Range(1, 5);//攻撃パターンランダム化
-                Debug.Log("Random" + RandomNumbe);
-            }
-            switch (RandomNumbe)            //switch分岐
-            {
-                case 1://イチゴ爆弾へ
-                    SetState(LB_State.TrackingBullet);
-                    RandomNumbe = -1;
-                    Debug.Log("イチゴ爆弾");
-                    break;//break文
-
-                case 2://突進へ
-                    SetState(LB_State.BoundBoll);
-                    RandomNumbe = -1;
-                    Debug.Log("突進攻撃");
-                    break;//break文
-
-                case 3://ジャンプ
-                    SetState(LB_State.WarpBullet);
-                    RandomNumbe = -1;
-                    Debug.Log("ジャンプ");
-                    break;//break文
-
-                case 4://ナイフ攻撃
-                    SetState(LB_State.ArrowAttack);
-                    RandomNumbe = -1;
-                    Debug.Log("ナイフ攻撃");
-                    break;
-            }
-
-
-
+            MoveSelect();//ランダム行動
         }
     }
-    
-
-//-------------------------------------------------------------------------------
-
-//BulletAttack=====================================================================
-private void BulletAttack()
+    //RandomMove=========================================================================
+    private void RandomMove()
     {
-        if (Input.GetKeyDown("c"))
+        time -= Time.deltaTime;
+        if (time <= 0)
         {
-            Vector3 bulletPosition = firingPoint.transform.position;
-            GameObject newBullet = Instantiate(Bullet, bulletPosition, transform.rotation);// 上で取得した場所に、"bulle
+            vecX = Random.Range(20f, 40f);
+            vecY = Random.Range(10f, 20f);
+            LB.transform.position = new Vector3(vecX, vecY, 0.0f);
+            time = 1.0f;
         }
+    }
+    //BulletAttack=====================================================================
+    private void BulletAttack()
+    {
+       DestroyBullet.Flg = false;
+       Vector3 bulletPosition = firingPoint.transform.position;
+       TrakingBullet = Instantiate(Bullet, bulletPosition, transform.rotation);// 上で取得した場所に、"bulle
     }
     //---------------------------------------------------------------------------------
 
     private void WarpBulletAttack()
     {
-        vecX = Random.Range(20f, 40f);
-        vecY = Random.Range(10f, 20f);
-        firingPoint.transform.position = new Vector3(vecX, vecY, 27.0f);
+        vecX = Random.Range(-180f, 3000f);
+        vecY = Random.Range(0f,230f);
+        LB.transform.position = new Vector3(vecX, vecY);
         Vector3 bulletPosition = firingPoint.transform.position;
-        GameObject WarpBullets = Instantiate(WarpBullet, bulletPosition, transform.rotation);
+        WarpBullets = Instantiate(WarpBullet, bulletPosition, transform.rotation);
         WarpCount++;                 
     }
-
-//BoundBollAttack=====================================================================
-private void BoundBollAttack()
+    //BoundBollAttack=====================================================================
+    IEnumerator BallSet()
     {
-        if (Input.GetKeyDown("a"))
+        //Vector3 bulletPosition = firingPoint.transform.position;
+        //BoundBolls = Instantiate(BoundBoll, bulletPosition, transform.rotation);// 上で取得した場所に、"bullet"のPrefabを出現させる
+        //Vector3 direction = BoundBolls.transform.up;
+        //// 弾の発射方向にnewBallのz方向(ローカル座標)を入れ、弾オブジェクトのrigidbodyに衝撃力を加える
+        //BoundBolls.GetComponent<Rigidbody>().AddForce(direction * 100, ForceMode.Impulse);
+        //Rigidbody rb = BoundBolls.GetComponent<Rigidbody>(); // SphereオブジェクトのRigidbodyコンポーネントへの参照を取得
+        for (int i = 0; i < 6; i++)
         {
-            for (int i = 0; i <= 1; i++)
-            {
-              
-                if (i == 0)
-                {
-                    Vector3 forceDirection = new Vector3(1.0f, 1.0f, 0f);
-                    Vector3 bulletPosition = firingPoint.transform.position;
-                    GameObject newBall = Instantiate(BoundBoll, bulletPosition, transform.rotation);// 上で取得した場所に、"bullet"のPrefabを出現させる
-                    float forceMagnitude = 10.0f;                     // 上の向きに加わる力の大きさを定義
-                    Vector3 force = forceMagnitude * forceDirection;  // 向きと大きさからSphereに加わる力を計算する
-                    Rigidbody rb = newBall.GetComponent<Rigidbody>(); // SphereオブジェクトのRigidbodyコンポーネントへの参照を取得
-                    rb.AddForce(force, ForceMode.Impulse);            //力を加えるメソッド,ForceMode.Impulseは撃力
-                }
-                if(i == 1)
-                {
-                    Vector3 forceDirection = new Vector3(-1.0f, 1.0f, 0f);
-                    Vector3 bulletPosition = firingPoint.transform.position;
-                    GameObject newBall = Instantiate(BoundBoll, bulletPosition, transform.rotation);// 上で取得した場所に、"bullet"のPrefabを出現させる
-                    float forceMagnitude = 10.0f;                     // 上の向きに加わる力の大きさを定義
-                    Vector3 force = forceMagnitude * forceDirection;  // 向きと大きさからSphereに加わる力を計算する
-                    Rigidbody rb = newBall.GetComponent<Rigidbody>(); // SphereオブジェクトのRigidbodyコンポーネントへの参照を取得
-                    rb.AddForce(force, ForceMode.Impulse);            //力を加えるメソッド,ForceMode.Impulseは撃力
-                }
-
-
-            }
+            Debug.Log("BallSet");
+            rotation.eulerAngles = new Vector3(0, k, 0);
+            yield return new WaitForSeconds(3.0f);
+            Instantiate(BoundBoll, firingPoint.transform.position, rotation);
+            k += 30;
         }
     }
     //-------------------------------------------------------------------------------------

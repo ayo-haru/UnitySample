@@ -28,9 +28,12 @@ public class LB_Manager : MonoBehaviour
     public GameObject LB_obj;
     public static GameObject LB;
     public static Vector3 LB_Pos;
+    public  GameObject LBShot;
+    public static GameObject LBShot_obj;
+    public static Vector3 LBShot_Pos;
     private GameObject Warp;
     LB_Entry Entry;
-    LB_Trac Track;
+    //LB_Trac Track;
     private Vector3 WarpEFPoint;
     private bool PlayEffect = false;
 
@@ -44,14 +47,20 @@ public class LB_Manager : MonoBehaviour
             return;
         }
         Entry = GameObject.Find("LastBoss_Manager").GetComponent<LB_Entry>();
-        Track = GameObject.Find("LastBoss_Manager").GetComponent<LB_Trac>();
-        LB_obj = (GameObject)Resources.Load("LastBoss_Idle");
+        //Track = GameObject.Find("LastBoss_Manager").GetComponent<LB_Trac>();
+        LB_obj = (GameObject)Resources.Load("LB");
         LB_Pos = GameObject.Find("LB_Point").transform.position;
+        LBShot_obj= (GameObject)Resources.Load("LB_ShotPoint");
+        LBShot_Pos = GameObject.Find("LB_Point").transform.position;
+        LBShot_Pos.z = 0.0f;
+        transform.position = LBShot_Pos;
 
         if (GameData.isAliveBoss1)
         {
             //LB_obj.transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
-            LB = Instantiate(LB_obj, LB_Pos, Quaternion.Euler(0.0f, -90.0f, 0.0f));
+            LB = Instantiate(LB_obj, LB_Pos, Quaternion.Euler(0.0f, -180.0f, 0.0f));
+            LBShot = Instantiate(LBShot_obj, LBShot_Pos, Quaternion.Euler(0.0f, 0.0f, 0.0f));
+            LBShot.transform.parent = LB.transform;
             LB_States = LB_State.LB_START;
         }
         Application.targetFrameRate = 60;
@@ -78,7 +87,7 @@ public class LB_Manager : MonoBehaviour
                 }
             case LB_State.LB_BATTLE:
                 {
-                    Track.enabled = true;
+                    //Track.enabled = true;
                     LB.gameObject.transform.position = LB_Pos;
                     break;
                 }

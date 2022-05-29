@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 1343381975939596722}
   - component: {fileID: 2153696448560212308}
   - component: {fileID: -1298254860927577402}
-  - component: {fileID: -5296004843707612747}
-  - component: {fileID: -8628190722498355688}
+  - component: {fileID: 5601088810499714336}
+  - component: {fileID: -2058539444270945407}
   m_Layer: 0
   m_Name: BoundBall
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 4167884289531769832}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 35.1, y: 15, z: 27}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 25, y: 25, z: 25}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -114,7 +114,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 72
   m_CollisionDetection: 2
---- !u!114 &-5296004843707612747
+--- !u!114 &5601088810499714336
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,14 +123,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4167884289531769832}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31851c9aa4d479c4d83e18d35ff78067, type: 3}
+  m_Script: {fileID: 11500000, guid: 23d133c8e30fcb141a0be08147f07342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BoundBoll: {fileID: 4167884289531769832}
-  BoundBollCount: 0
-  Max_BoundBoll: 3
-  Max_BoundCount: 4
---- !u!114 &-8628190722498355688
+--- !u!114 &-2058539444270945407
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,6 +138,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dd8329629e1a944e922bda682c4bf65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  minSpeed: 10
-  maxSpeed: 10

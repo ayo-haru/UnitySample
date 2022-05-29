@@ -16,7 +16,6 @@ public class effectkari : MonoBehaviour
         if(transform.localScale.x >= 0.0f)
         {
             transform.localScale -= new Vector3(0.01f, 0.01f, 0.01f);
-
         }
     }
 }

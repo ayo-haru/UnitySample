@@ -127,6 +127,8 @@ public class DataManager : MonoBehaviour
 
     //ラスボス
     [SerializeField] private ParticleSystem ef_lastboss_energyball;
+    [SerializeField] private ParticleSystem ef_lastboss_fastenergyball;
+    [SerializeField] private ParticleSystem ef_lastboss_charge;
     [SerializeField] private ParticleSystem ef_lastboss_warp;
 
 
@@ -233,6 +235,8 @@ public class DataManager : MonoBehaviour
 
         //---ラスボス関連
         EffectData.EFDataSet(ef_lastboss_energyball, (int)EffectData.eEFFECT.EF_LASTBOSS_ENERGYBALL);
+        EffectData.EFDataSet(ef_lastboss_fastenergyball, (int)EffectData.eEFFECT.EF_LASTBOSS_FASTENERGYBALL);
+        EffectData.EFDataSet(ef_lastboss_charge, (int)EffectData.eEFFECT.EF_LASTBOSS_CHARGE);
         EffectData.EFDataSet(ef_lastboss_warp, (int)EffectData.eEFFECT.EF_LASTBOSS_WARP);
 
         //EffectData.EFDataSet(ef_shield2,(int)EffectData.eEFFECT.EF_SHEILD2);

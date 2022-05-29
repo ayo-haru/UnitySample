@@ -76,7 +76,7 @@ public class LB_Attack : MonoBehaviour
     public bool OnlryFlg = true;
     //-----------------------------------------------------------------------------------------------------
     int IdleCount = 0;
-    GameObject Effect = null;
+    public GameObject Effect = null;
 
     // Start is called before the first frame update
     void Start()
@@ -125,8 +125,8 @@ public class LB_Attack : MonoBehaviour
                         OnlryFlg = false;
                         IdleCount = 0;
                         LBossAnim.SetTrigger("AttakTr");
-                        EffectManager.Play(EffectData.eEFFECT.EF_ENEMY_DARKAREA, firingPoint.transform.position);      //effect生成
-                        Effect = GameObject.Find("Enemy_bowa(Clone)");
+                        EffectManager.Play(EffectData.eEFFECT.EF_LASTBOSS_ENERGYBALL, firingPoint.transform.position);      //effect生成
+                        Effect = GameObject.Find("energyBall(Clone)");
                         
 
                     }
@@ -158,6 +158,10 @@ public class LB_Attack : MonoBehaviour
                             LBossAnim.SetTrigger("CircleBulletTrigger");
                             AnimFlg = true;
                         }
+                    }
+                    if (CircleBulletobj != null)
+                    {
+                                                     //Effectをww
                     }
                     if (OneTimeFlg && Circlenum >= 20)
                     {
@@ -365,7 +369,14 @@ public class LB_Attack : MonoBehaviour
             Debug.Log("ゴミかすしねbaaaaaaaaaaaaaaaaaaaaaaaaakaaaaaaaaaaaaaa"+i);
             rotation.eulerAngles = new Vector3(0.0f,0.0f,Angle);                       //クォータニオン→オイラー角への変換
             yield return new WaitForSeconds(0.3f);                                     //0.3f待つ 
-            CircleBulletobj=Instantiate(CircleBullet, firingPoint.transform.position, rotation);       //CircleBulletを生成
+            EffectManager.Play(EffectData.eEFFECT.EF_LASTBOSS_ENERGYBALL, firingPoint.transform.position);      //effect生成
+            Effect = GameObject.Find("energyBall(Clone)");
+            CircleBulletobj =Instantiate(CircleBullet, firingPoint.transform.position, rotation);       //CircleBulletを生成
+            CircleBulletobj.name = "Circle" + i;
+            Effect.name = "EF_BALL" + i;
+
+            GameObject.Find("EF_BALL" + i).transform.parent = GameObject.Find("EF_BALL" + i).transform;
+            
             Angle += 30;                                                               //k(Z角度)を30ずつ増加
         }
     }

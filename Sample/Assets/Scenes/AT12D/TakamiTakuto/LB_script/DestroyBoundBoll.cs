@@ -35,7 +35,7 @@ public class DestroyBoundBoll : MonoBehaviour
             
 
             Attack.Circlenum++;
-
+            
             Attack.OneTimeFlg = true;
             Destroy(BoundBoll);      //BoundBollを破壊
             Debug.Log("弾を破壊した");//デバックログを表示

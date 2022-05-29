@@ -81,7 +81,7 @@ public class KitchenSceneManager : MonoBehaviour {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                         GameData.PlayerPos = GameData.Player.transform.position = new Vector3(25.0f, 20.0f, 0.0f);
 
-                        if (GameData.OldMapNumber == (int)GameData.eSceneState.Tutorial3 || (GameData.OldMapNumber == GameData.CurrentMapNumber && !GameOver.GameOverFlag))
+                        if (GameData.OldMapNumber == (int)GameData.eSceneState.Tutorial3 || (GameData.OldMapNumber == GameData.CurrentMapNumber && !GameOver.GameOverFlag && !Player.shouldRespawn))
                         {
                             GameData.InitData();
                             GameData.PlayerPos = GameData.Player.transform.position = new Vector3(25.0f, 20.0f, 0.0f);
@@ -232,7 +232,7 @@ public class KitchenSceneManager : MonoBehaviour {
         }
         else if (Player.shouldRespawn)
         {
-            //---ギミックに殺されたときか、毒沼落ちた時
+            //---ギミックに轢かれたときか、毒沼落ちた時
             // 直前に通ったリスポーン地点へリスポーン
             GameData.PlayerPos = GameData.Player.transform.position = GameData.ReSpawnPos;
             Player.shouldRespawn = false;

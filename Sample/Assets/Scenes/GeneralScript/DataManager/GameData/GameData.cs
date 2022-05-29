@@ -19,6 +19,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
+
 public static class GameData {
     public enum eSceneState {   // シーンステート
         TITLE_SCENE = 0,

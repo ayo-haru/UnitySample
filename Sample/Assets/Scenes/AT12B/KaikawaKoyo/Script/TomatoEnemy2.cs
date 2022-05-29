@@ -89,19 +89,6 @@ public class TomatoEnemy2 : MonoBehaviour
                         TargetPos = Target.position - new Vector3(0.0f, a, 0.0f);
                         float step = MoveSpeed * Time.deltaTime;
                         rb.position = Vector3.MoveTowards(pos, TargetPos, step);
-                        //if (Attack)
-                        //{
-                        //    // âÒì]Ç≥ÇπÇÈ
-                        //    if (look)
-                        //    {
-                        //        transform.Rotate(new Vector3(-8.2f, 0.0f, 0.0f), Space.Self);
-                        //    }
-                        //    if (!look)
-                        //    {
-                        //        transform.Rotate(new Vector3(8.2f, 0.0f, 0.0f), Space.Self);
-                        //    }
-                        //    AttackEnd = true;
-                        //}
                     }
                 }
 
@@ -119,7 +106,9 @@ public class TomatoEnemy2 : MonoBehaviour
                                              RigidbodyConstraints.FreezeRotationY;
                             rb.velocity = new Vector3(0.0f, 100.0f, 0.0f);
                             // ç¿ïWåvéZ
-                            TargetPos = Target.position - new Vector3(0.0f, 15.0f, 0.0f);
+                            float a = Player.transform.position.y - transform.position.y - 5.0f;
+                            TargetPos = Target.position - new Vector3(0.0f, a, 0.0f);
+                            TargetPos = TargetPos - new Vector3(0.0f, 5.0f, 0.0f);
 
                             isGround = false;
                             TomatoDead = true;
@@ -136,7 +125,9 @@ public class TomatoEnemy2 : MonoBehaviour
                                              RigidbodyConstraints.FreezeRotationY;
                             rb.velocity = new Vector3(0.0f, 100.0f, 0.0f);
                             // ç¿ïWåvéZ
-                            TargetPos = Target.position - new Vector3(0.0f, 15.0f, 0.0f);
+                            float a = Player.transform.position.y - transform.position.y;
+                            TargetPos = Target.position - new Vector3(0.0f, a, 0.0f);
+                            TargetPos = TargetPos - new Vector3(0.0f, 5.0f, 0.0f);
 
                             isGround = false;
                             TomatoDead = true;
@@ -183,23 +174,10 @@ public class TomatoEnemy2 : MonoBehaviour
                 }
 
                 // è„è∏ë¨ìx&óéâ∫ë¨ìxí≤êÆ
-                if (!isGround)
+                if (!isGround && !TomatoDead)
                 {
                     rb.velocity += new Vector3(0.0f, -1.0f, 0.0f);
                 }
-            }
-
-            if(AttackEnd && AttackPattern == 0)
-            {
-                //// âÒì]Ç≥ÇπÇÈ
-                //if (look)
-                //{
-                //    transform.Rotate(new Vector3(20.0f, 0.0f, 0.0f), Space.Self);
-                //}
-                //if (!look)
-                //{
-                //    transform.Rotate(new Vector3(-20.0f, 0.0f, 0.0f), Space.Self);
-                //}
             }
 
             if(TomatoDead)
@@ -213,7 +191,7 @@ public class TomatoEnemy2 : MonoBehaviour
                 // è„è∏ë¨ìx&óéâ∫ë¨ìxí≤êÆ
                 if (!isGround)
                 {
-                    rb.velocity += new Vector3(0.0f, -2.0f, 0.0f);
+                    rb.velocity += new Vector3(0.0f, -2.5f, 0.0f);
                 }
                 Explosion = true;
             }

@@ -369,14 +369,13 @@ public class LB_Attack : MonoBehaviour
             Debug.Log("ゴミかすしねbaaaaaaaaaaaaaaaaaaaaaaaaakaaaaaaaaaaaaaa"+i);
             rotation.eulerAngles = new Vector3(0.0f,0.0f,Angle);                       //クォータニオン→オイラー角への変換
             yield return new WaitForSeconds(0.3f);                                     //0.3f待つ 
-            EffectManager.Play(EffectData.eEFFECT.EF_LASTBOSS_ENERGYBALL, firingPoint.transform.position);      //effect生成
-            Effect = GameObject.Find("energyBall(Clone)");
+            EffectManager.Play(EffectData.eEFFECT.EF_LASTBOSS_FASTENERGYBALL, firingPoint.transform.position);      //effect生成
+            Effect = GameObject.Find("FastEnergyBall(Clone)");
+            yield return new WaitForSeconds(0.3f);
             CircleBulletobj =Instantiate(CircleBullet, firingPoint.transform.position, rotation);       //CircleBulletを生成
             CircleBulletobj.name = "Circle" + i;
             Effect.name = "EF_BALL" + i;
-
-            GameObject.Find("EF_BALL" + i).transform.parent = GameObject.Find("EF_BALL" + i).transform;
-            
+            GameObject.Find("EF_BALL" + i).transform.parent = GameObject.Find("Circle" + i).transform;
             Angle += 30;                                                               //k(Z角度)を30ずつ増加
         }
     }

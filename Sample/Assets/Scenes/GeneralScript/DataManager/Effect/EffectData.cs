@@ -62,6 +62,8 @@ public static class EffectData
 
         //---ƒ‰ƒXƒ{ƒX
         EF_LASTBOSS_ENERGYBALL,
+        EF_LASTBOSS_FASTENERGYBALL,
+        EF_LASTBOSS_CHARGE,
         EF_LASTBOSS_WARP,
 
 

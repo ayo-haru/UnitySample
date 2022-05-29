@@ -27,15 +27,18 @@ public class LastBossHit : MonoBehaviour
     {
         if (Collision.gameObject.name == "BoundBoll(Clone)")
         {
+            Attack.OneTimeFlg = true;
            Debug.Log("BoundBollDamage");
         }
         if (Collision.gameObject.name == "Bulletl(Clone)")
         {
+            Attack.OneTimeFlg = true;
             HpScript.DelHP(Attack.BulletDamage);
             Debug.Log("BulletDamage");
         }
         if (Collision.gameObject.name == " WarpBullet(Clone)")
         {
+            Attack.OneTimeFlg = true;
             HpScript.DelHP(Attack.WapeDamage);
             Debug.Log("WeapBulletDamage");
         }

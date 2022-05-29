@@ -38,7 +38,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 onryflg = true;
                 WeaponPos = GameObject.Find("Weapon(Clone)").transform.position;
-                LastBossPos = GameObject.Find("LB(Clone)").transform.position;
+                LastBossPos = GameObject.Find("LastBoss(Clone)").transform.position;
                 BeziePos= GameObject.Find("BeziePos").transform.position;
                 BeziePos.x = LastBossPos.x;
                 BeziePos.y = LastBossPos.y;

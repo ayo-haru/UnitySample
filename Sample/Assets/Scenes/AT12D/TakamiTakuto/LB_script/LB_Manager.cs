@@ -48,7 +48,7 @@ public class LB_Manager : MonoBehaviour
         }
         Entry = GameObject.Find("LastBoss_Manager").GetComponent<LB_Entry>();
         //Track = GameObject.Find("LastBoss_Manager").GetComponent<LB_Trac>();
-        LB_obj = (GameObject)Resources.Load("LB");
+        LB_obj = (GameObject)Resources.Load("LastBoss");
         LB_Pos = GameObject.Find("LB_Point").transform.position;
         LBShot_obj= (GameObject)Resources.Load("LB_ShotPoint");
         LBShot_Pos = GameObject.Find("LB_Point").transform.position;
@@ -88,7 +88,7 @@ public class LB_Manager : MonoBehaviour
             case LB_State.LB_BATTLE:
                 {
                     //Track.enabled = true;
-                    LB.gameObject.transform.position = LB_Pos;
+                    //LB.gameObject.transform.position = LB_Pos;
                     break;
                 }
             case LB_State.LB_END:

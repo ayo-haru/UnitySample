@@ -43,7 +43,7 @@ ModelImporter:
       name: boss_anime_enagyball2
       takeName: boss_anime_enagyball2
       internalID: 0
-      firstFrame: 2
+      firstFrame: 1
       lastFrame: 134
       wrapMode: 0
       orientationOffsetY: 0
@@ -63,7 +63,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.58590007
+        functionName: StartCircle
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1

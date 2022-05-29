@@ -9,11 +9,11 @@ public class BoundBall_Deceleration : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        speed = 70.0f;
+        speed = 100.0f;
     }
 
     void Update()
     {
-        rb.velocity = transform.forward * speed;
+        rb.velocity = transform.up * speed;
     }
 }

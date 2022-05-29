@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -1298254860927577402}
   - component: {fileID: 5601088810499714336}
   - component: {fileID: -2058539444270945407}
+  - component: {fileID: -577539900079415128}
   m_Layer: 0
   m_Name: BoundBall
   m_TagString: Untagged
@@ -138,3 +139,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dd8329629e1a944e922bda682c4bf65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-577539900079415128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4167884289531769832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f25352dcaa9777f4697d0fb4f6044563, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BoundBoll: {fileID: 4167884289531769832}

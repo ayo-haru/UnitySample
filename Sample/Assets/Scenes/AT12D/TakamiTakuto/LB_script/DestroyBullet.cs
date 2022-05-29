@@ -13,21 +13,27 @@ public class DestroyBullet : MonoBehaviour
     {
       
         HpScript = GameObject.Find("HPGage").GetComponent<LastHPGage>();
-        Attack = GameObject.Find("LB(Clone)").GetComponent<LB_Attack>();
+        Attack = GameObject.Find("LastBoss(Clone)").GetComponent<LB_Attack>();
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.name == "Rulaby")
         {
+            
+            Attack.OneTimeFlg = true;
+            Attack.AnimFlg = false;
             Destroy(Bullet);
             Flg = true;
         }
-        if (collision.gameObject.name == "LB(Clone)")
+        if (collision.gameObject.name == "LastBoss(Clone)")
         {
-            HpScript.DelHP(Attack.BOundDamage);
+            Attack.AnimFlg = false;
+            Attack.OneTimeFlg = true;
             Destroy(Bullet);
+            HpScript.DelHP(Attack.BOundDamage);
+            Flg = true;
         }
     }
 }

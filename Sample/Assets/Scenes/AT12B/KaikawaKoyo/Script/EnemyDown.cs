@@ -76,12 +76,12 @@ public class EnemyDown : MonoBehaviour
         Random.InitState(System.DateTime.Now.Millisecond);
         _dissolve = this.GetComponent<Dissolve>();
         player2 = Player.GetComponent<Player2>();
-        CamZ = Camera.main.transform.position.z;
+        CamZ = Vector3.Distance(new Vector3(0.0f, 0.0f, transform.position.z), new Vector3(0.0f, 0.0f, Camera.main.transform.position.z));
         // 法線ベクトル定義
         inNormalU = transform.up;
         inNormalD = -transform.up;
-        inNormalR = -transform.right;
-        inNormalL = transform.right;
+        inNormalR = transform.right;
+        inNormalL = -transform.right;
 
         //ui取得
         ui = GameObject.Find("HPSystem(2)(Clone)").GetComponent<HPManager>();
@@ -127,8 +127,8 @@ public class EnemyDown : MonoBehaviour
                 speed = rb.velocity.magnitude;
 
                 // カメラの端の座標取得
-                CamRightTop = Camera.main.ScreenToWorldPoint(new Vector3(0.0f, 0.0f, CamZ));
-                CamLeftBot = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, CamZ));
+                CamRightTop = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, CamZ));
+                CamLeftBot = Camera.main.ScreenToWorldPoint(new Vector3(0.0f, 0.0f, CamZ));
 
                 // 回転させる
                 if (Player.transform.position.x < transform.position.x)

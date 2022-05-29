@@ -16,6 +16,7 @@ public class ShadowEnemy : MonoBehaviour
     GameObject Enemy;
     private Vector3 position;
     public int EnemyNumber;
+    public bool TT;
     private bool spawn = false;
     private float Timer;
     private float LimitTime = 3.0f;
@@ -56,6 +57,15 @@ public class ShadowEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            TT = false;
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            TT = true;
+        }
+
         if (spawn)
         {
             effect.transform.localScale -= new Vector3(0.02f, 0.02f, 0.02f);

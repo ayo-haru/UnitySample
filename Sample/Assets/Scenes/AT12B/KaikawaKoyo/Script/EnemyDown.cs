@@ -29,6 +29,7 @@ public class EnemyDown : MonoBehaviour
     private Vector3 inNormalD;      // 法線ベクトル下
     private Vector3 inNormalR;      // 法線ベクトル右
     private Vector3 inNormalL;      // 法線ベクトル左
+    private ParticleSystem TomatoBomb;
     private Animator animator;
 
     [SerializeField]
@@ -214,7 +215,7 @@ public class EnemyDown : MonoBehaviour
                                          RigidbodyConstraints.FreezeRotationY;
                         InAngle = rb.velocity;
                         ReAngle = Vector3.Reflect(InAngle, inNormalD);
-                        rb.velocity = ReAngle - new Vector3(0.0f, 0.0f, 100.0f);
+                        rb.velocity = ReAngle - new Vector3(0.0f, 0.0f, 50.0f);
                     }
                     Reflect = true;
                     //ui振動
@@ -270,9 +271,11 @@ public class EnemyDown : MonoBehaviour
                     Destroy(gameObject, 0.0f);
                     if (EnemyNumber == 2 || EnemyNumber == 5)
                     {
-                        EffectManager.Play(EffectData.eEFFECT.EF_ENEMY_TOMATOBOMB, transform.position, 0.9f);
+                        TomatoBomb = Instantiate(EffectData.EF[(int)EffectData.eEFFECT.EF_ENEMY_TOMATOBOMB]);
+                        TomatoBomb.transform.position = Pos;
+                        Destroy(TomatoBomb.gameObject, 0.9f);
                     }
-                    EffectManager.Play(EffectData.eEFFECT.EF_ENEMY_DEATH, Pos, 2.0f);
+                    EffectManager.Play(EffectData.eEFFECT.EF_ENEMY_DEATH, Pos);
                 }
             }
             Pvec = rb.velocity;
@@ -322,6 +325,12 @@ public class EnemyDown : MonoBehaviour
                 Pos = transform.position;
                 Destroy(gameObject, 0.0f);
                 EffectManager.Play(EffectData.eEFFECT.EF_ENEMY_TOMATOBOMB, transform.position, 0.9f);
+            }
+
+            // 毒沼に入ったら消そうね
+            if (collision.gameObject.name == "Water" && isAlive)
+            {
+                Destroy(gameObject, 0.0f);
             }
         }
     }

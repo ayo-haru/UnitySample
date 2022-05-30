@@ -36,7 +36,8 @@ public static class GameData {
         Tutorial2,
         Tutorial3,
 
-        BOSS1_SCENE
+        BOSS1_SCENE,
+        BOSS2_SCENE
     }
 
     public static Gamepad gamepad;                                  // 接続されているコントローラーを保存
@@ -49,7 +50,8 @@ public static class GameData {
         "KitchenStage001", "KitchenStage002", "KitchenStage003", "KitchenStage004", "KitchenStage005", "KitchenStage006",
         "BossStage001", "BossStage002", "BossStage003",
         "Tutorial01","Tutorial02","Tutorial03",
-        "Tester"
+        "Tester", 
+        "Boss2_Scene"
     };
 
     public static Vector3 ReSpawnPos;                               // リスポーンポス

@@ -20348,23 +20348,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 568fce9bed1a9ad478855a56f598b65d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgm_title: {fileID: 8300000, guid: 6df345b672d6b494dbe0b3262860fd87, type: 3}
-  bgm_kitchen: {fileID: 8300000, guid: a2cf2ef14b0c72a428c689a8413e469a, type: 3}
-  bgm_kitchenBoss: {fileID: 8300000, guid: 82525209a5c65aa43a1e33a464034588, type: 3}
+  bgm_title: {fileID: 8300000, guid: e2eb03741f163434ab6f4b13e488358f, type: 3}
+  bgm_kitchen: {fileID: 8300000, guid: 377709d528a4fcb4abe062bf3d7fc7c7, type: 3}
+  bgm_kitchenBoss: {fileID: 8300000, guid: a2cf2ef14b0c72a428c689a8413e469a, type: 3}
+  bgm_exstage: {fileID: 8300000, guid: 32f9446e4508e9c439b4e4e2f2ff84fa, type: 3}
+  bgm_lastboss: {fileID: 8300000, guid: 82525209a5c65aa43a1e33a464034588, type: 3}
   se_jump: {fileID: 8300000, guid: d10e81f949c126c4cb07ec0e36a4ac2a, type: 3}
   se_land: {fileID: 8300000, guid: 49e048717a6dab24a8e0002e7686a8c2, type: 3}
-  se_shield: {fileID: 8300000, guid: 605137ec8a7531044b66fbbc13fdfec9, type: 3}
-  se_reflection: {fileID: 8300000, guid: fa77c42d61e98be438d81c30ee85b203, type: 3}
+  se_shield: {fileID: 8300000, guid: 7bc4f318de6363e4db2125d264273e5a, type: 3}
+  se_reflection: {fileID: 8300000, guid: 81afcbddf923ec7419d6573ae225e086, type: 3}
   se_reflectionstar: {fileID: 8300000, guid: 396ec1e33411a7d438d43ad5c277037d, type: 3}
   se_damege: {fileID: 8300000, guid: 7dca1fd54c5564d4a8a9a6dffd00c7d1, type: 3}
-  se_heal: {fileID: 8300000, guid: bf2bb07ecb2e7b4489fa67640e16d9b1, type: 3}
-  se_player_death: {fileID: 8300000, guid: a97a8333089085d439adcf6c9153ba9b, type: 3}
+  se_heal: {fileID: 8300000, guid: 9b67f7030bbaa8847a0e5af5ec64ee75, type: 3}
+  se_player_death: {fileID: 8300000, guid: 52a7a5b3059725c459b997e0255e3de9, type: 3}
   se_boss1Dashu: {fileID: 8300000, guid: 39bb9093ef348ed40afc3df50faa41eb, type: 3}
   se_boss1Strawberry: {fileID: 8300000, guid: 8e6beb5dde77d544fbc69d212d2b18b6, type: 3}
   se_boss1Knife: {fileID: 8300000, guid: 2dd8d9de2366b2a46b51b18991080316, type: 3}
   se_boss1Damege: {fileID: 8300000, guid: 0d5832afb35a3f6439ad4fcbd2dc8d7e, type: 3}
-  se_lastboss_ult: {fileID: 0}
-  se_lastboss_bullet: {fileID: 0}
+  se_lastboss_ult: {fileID: 8300000, guid: 74f52d761d0603046889cb81b4571549, type: 3}
+  se_lastboss_bullet: {fileID: 8300000, guid: c8cc0a10a8e0c5640a8457ed8e0a8c88, type: 3}
   se_burokori: {fileID: 8300000, guid: ed1cec9d70fa21542989b1236de6596e, type: 3}
   se_ninjin: {fileID: 8300000, guid: e3a7dd0c7a3663a48a3c154f492ce04d, type: 3}
   se_tomatobomb: {fileID: 8300000, guid: ce945d2ce6bd7be45a7f4a91aaec1148, type: 3}
@@ -20402,10 +20404,10 @@ MonoBehaviour:
   ef_boss_rainzone: {fileID: 1812393435782000225, guid: 2455bd19d61e6694490062f870fff535, type: 3}
   ef_boss_strawberry_land: {fileID: 7495855105065818708, guid: a3a490fadeb767c459c3b87744f9f67e, type: 3}
   ef_boss_fork_dust: {fileID: 4393260535336760566, guid: 468dd129ce1352e49a429006fc705540, type: 3}
-  ef_lastboss_energyball: {fileID: 0}
-  ef_lastboss_fastenergyball: {fileID: 0}
-  ef_lastboss_charge: {fileID: 0}
-  ef_lastboss_warp: {fileID: 0}
+  ef_lastboss_energyball: {fileID: 5116321303892358263, guid: 3ebce58946c1e7a45a01109a112200e4, type: 3}
+  ef_lastboss_fastenergyball: {fileID: 5116321303892358263, guid: 1e29d7fddb88ecc4c8a7d818cd7ae50b, type: 3}
+  ef_lastboss_charge: {fileID: 4443352491898111135, guid: b88cdbddf05708448bc2909bcbfc765b, type: 3}
+  ef_lastboss_warp: {fileID: 3508415602754163244, guid: 868f1cce2253bae4e8b1bc1e8e41f8a2, type: 3}
 --- !u!4 &2061830236 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2218125904578280414, guid: 8673d05bdee0dfa48b4194f5dda367c3, type: 3}

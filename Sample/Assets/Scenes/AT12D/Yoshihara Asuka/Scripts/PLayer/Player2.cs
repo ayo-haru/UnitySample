@@ -271,6 +271,7 @@ public class Player2 : MonoBehaviour
         {
             animator.speed = 0.0f;
             rb.Pause(gameObject);
+            CanHitStopflg = false;
         }
     }
 

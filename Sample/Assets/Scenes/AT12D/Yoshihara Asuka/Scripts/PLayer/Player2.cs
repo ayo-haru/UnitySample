@@ -131,7 +131,7 @@ public class Player2 : MonoBehaviour
         PlayerActionAsset.Player.Attack.started += OnAttack;
         PlayerActionAsset.UI.Start.canceled += PauseToggle;
 
-        PlayerActionAsset.Player.Jump.started += OnJump;            // started    ... ボタンが押された瞬間
+        //PlayerActionAsset.Player.Jump.started += OnJump;            // started    ... ボタンが押された瞬間
         //PlayerActionAsset.Player.Jump.performed += OnJump;        // performed  ... 中間くらい
         //PlayerActionAsset.Player.Jump.canceled += OnJump;         // canceled   ... ボタンを離した瞬間
 
@@ -147,7 +147,7 @@ public class Player2 : MonoBehaviour
     private void OnDisable()
     {
         PlayerActionAsset.Player.Attack.started -= OnAttack;
-        PlayerActionAsset.Player.Jump.started -= OnJump;
+        //PlayerActionAsset.Player.Jump.started -= OnJump;
         PlayerActionAsset.UI.Start.started -= PauseToggle;
 
 

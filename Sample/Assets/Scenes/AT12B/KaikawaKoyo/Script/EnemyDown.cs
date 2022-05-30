@@ -306,7 +306,10 @@ public class EnemyDown : MonoBehaviour
                 {
                     gameObject.layer = LayerMask.NameToLayer("TomatoDown");
                 }
-                gameObject.layer = LayerMask.NameToLayer("DownEnemy");
+                else
+                {
+                    gameObject.layer = LayerMask.NameToLayer("DownEnemy");
+                }
 
                 //---ヒットストップ演出
                 var seq = DOTween.Sequence();

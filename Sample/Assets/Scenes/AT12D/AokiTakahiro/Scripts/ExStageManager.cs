@@ -133,10 +133,10 @@ public class ExStageManager : MonoBehaviour
         }
         //SoundManager.Play(SoundData.eBGM.BGM_KITCHEN, SoundData.GameAudioList);
         //ｂｇｍ再生のオブジェクトが生成されてなかったら作る
-        GameObject bgmObject = GameObject.Find("BGMObject(Clone)");
+        GameObject bgmObject = GameObject.Find("BGMObject_EX(Clone)");
         if (!bgmObject)
         {
-            bgmObject = (GameObject)Resources.Load("BGMObject");
+            bgmObject = (GameObject)Resources.Load("BGMObject_EX");
             Instantiate(bgmObject);
         }
 

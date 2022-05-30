@@ -52,15 +52,15 @@ public class LB_Manager : MonoBehaviour
         LB_Pos = GameObject.Find("LB_Point").transform.position;
         LBShot_obj= (GameObject)Resources.Load("LB_ShotPoint");
         LBShot_Pos = GameObject.Find("LB_Point").transform.position;
-        LBShot_Pos.z = 0.0f;
-        transform.position = LBShot_Pos;
+        LBShot_Pos.y = LBShot_Pos.y - 10;
+        LBShot_Pos.z = GameData.PlayerPos.z;
 
         if (GameData.isAliveBoss1)
         {
             //LB_obj.transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
             LB = Instantiate(LB_obj, LB_Pos, Quaternion.Euler(0.0f, -180.0f, 0.0f));
-            LBShot = Instantiate(LBShot_obj, LBShot_Pos, Quaternion.Euler(0.0f, 0.0f, 0.0f));
-            LBShot.transform.parent = LB.transform;
+            LBShot = Instantiate(LBShot_obj, LBShot_Pos, Quaternion.identity);
+            //LBShot.transform.parent = LB.transform;
             LB_States = LB_State.LB_START;
         }
         Application.targetFrameRate = 60;
@@ -87,6 +87,10 @@ public class LB_Manager : MonoBehaviour
                 }
             case LB_State.LB_BATTLE:
                 {
+                    LBShot_Pos.x = LB.transform.position.x;
+                    LBShot_Pos.y = LB.transform.position.y;
+
+                    LBShot.transform.position = LBShot_Pos;
                     //Track.enabled = true;
                     //LB.gameObject.transform.position = LB_Pos;
                     break;

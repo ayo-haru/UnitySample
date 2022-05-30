@@ -72,7 +72,7 @@ public class LastBossBlock : MonoBehaviour
         }
     }
 
-    public void OnCollisionStay(Collision collision)
+    public void OnCollisionEnter(Collision collision)
     {
         // ’e‚©‚ê‚½‚çk‚í‚¹‚Ä—‚Æ‚·
         if (collision.gameObject.name == "Weapon(Clone)")
@@ -81,9 +81,12 @@ public class LastBossBlock : MonoBehaviour
             fall = true;
             Destroy(gameObject, 5.0f);
         }
+    }
 
+    private void OnCollisionStay(Collision collision)
+    {
         // ƒvƒŒƒCƒ„[‚ªã‚Éæ‚Á‚½‚ç‚¿‚å‚Á‚Æ’¾‚Ü‚¹‚é
-        if(collision.gameObject.CompareTag("Player") && !down)
+        if (collision.gameObject.CompareTag("Player") && !down)
         {
             transform.position -= new Vector3(0.0f, 2.5f, 0.0f);
             up = false;

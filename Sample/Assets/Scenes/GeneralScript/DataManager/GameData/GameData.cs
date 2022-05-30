@@ -35,6 +35,7 @@ public static class GameData {
         Tutorial1,
         Tutorial2,
         Tutorial3,
+        LastBossStage,
 
         BOSS1_SCENE
     }
@@ -49,7 +50,7 @@ public static class GameData {
         "KitchenStage001", "KitchenStage002", "KitchenStage003", "KitchenStage004", "KitchenStage005", "KitchenStage006",
         "BossStage001", "BossStage002", "BossStage003",
         "Tutorial01","Tutorial02","Tutorial03",
-        "Tester"
+        "Tester","LastBoss_tester"
     };
 
     public static Vector3 ReSpawnPos;                               // リスポーンポス

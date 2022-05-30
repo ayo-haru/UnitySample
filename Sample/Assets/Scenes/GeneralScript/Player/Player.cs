@@ -306,6 +306,14 @@ public class Player : MonoBehaviour
             GameData.isFadeOut = true;  // フェードかける
             GameData.NextMapNumber = (int)GameData.eSceneState.BossStage003;
         }
+
+        //---ラスボスシーン
+        if(other.gameObject.tag == "toLastBoss")
+        {
+            GameData.isFadeOut = true;  // フェードかける
+            GameData.NextMapNumber = (int)GameData.eSceneState.LastBossStage;
+
+        }
     }
 
     private void OnTriggerExit(Collider other) {

@@ -104,5 +104,14 @@ public class soudSceneManager : MonoBehaviour
         {
             SoundManager.Play(SoundData.eSE.SE_SWITCH, SoundData.GameAudioList);
         }
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            SoundManager.Play(SoundData.eSE.SE_LASTBOSS_ULT, SoundData.GameAudioList);
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            SoundManager.Play(SoundData.eSE.SE_LASTBOSS_BULLET, SoundData.GameAudioList);
+        }
+
     }
 }

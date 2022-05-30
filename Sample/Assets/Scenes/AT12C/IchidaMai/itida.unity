@@ -606,6 +606,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1466858253764668105, guid: 73ca8439a3c511c47a5596a2691b0219, type: 3}
     - target: {fileID: 4911571500333310828, guid: c7b0931274b01444aa3bac57b93a4c28, type: 3}
+      propertyPath: se_lastboss_ult
+      value: 
+      objectReference: {fileID: 8300000, guid: 74f52d761d0603046889cb81b4571549, type: 3}
+    - target: {fileID: 4911571500333310828, guid: c7b0931274b01444aa3bac57b93a4c28, type: 3}
+      propertyPath: se_player_death
+      value: 
+      objectReference: {fileID: 8300000, guid: 52a7a5b3059725c459b997e0255e3de9, type: 3}
+    - target: {fileID: 4911571500333310828, guid: c7b0931274b01444aa3bac57b93a4c28, type: 3}
       propertyPath: se_reflectionstar
       value: 
       objectReference: {fileID: 8300000, guid: 396ec1e33411a7d438d43ad5c277037d, type: 3}
@@ -613,6 +621,10 @@ PrefabInstance:
       propertyPath: ef_magicspuare_red
       value: 
       objectReference: {fileID: 1466858253764668105, guid: 73ca8439a3c511c47a5596a2691b0219, type: 3}
+    - target: {fileID: 4911571500333310828, guid: c7b0931274b01444aa3bac57b93a4c28, type: 3}
+      propertyPath: se_lastboss_bullet
+      value: 
+      objectReference: {fileID: 8300000, guid: c8cc0a10a8e0c5640a8457ed8e0a8c88, type: 3}
     - target: {fileID: 4911571500333310828, guid: c7b0931274b01444aa3bac57b93a4c28, type: 3}
       propertyPath: ef_magicspuare_blue
       value: 
@@ -1119,6 +1131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 2989549751805859224, guid: 7378e7d4d318386408ba41cf399d7748, type: 3}
   currentSceneNum: 1
+  kitchenstart: {fileID: 0}
 --- !u!4 &1769012067
 Transform:
   m_ObjectHideFlags: 0

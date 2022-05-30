@@ -64,6 +64,11 @@ public class DataManager : MonoBehaviour
     private AudioClip se_boss1Damege;
 
     [SerializeField]
+    private AudioClip se_lastboss_ult;
+    [SerializeField]
+    private AudioClip se_lastboss_bullet;
+
+    [SerializeField]
     private AudioClip se_burokori;
     [SerializeField]
     private AudioClip se_ninjin;
@@ -159,6 +164,9 @@ public class DataManager : MonoBehaviour
         SoundData.SEDataSet(se_boss1Knife, (int)SoundData.eSE.SE_BOOS1_KNIFE);
         SoundData.SEDataSet(se_boss1Damege, (int)SoundData.eSE.SE_BOOS1_DAMEGE);
 
+        SoundData.SEDataSet(se_lastboss_ult, (int)SoundData.eSE.SE_LASTBOSS_ULT);
+        SoundData.SEDataSet(se_lastboss_bullet, (int)SoundData.eSE.SE_LASTBOSS_BULLET);
+
         SoundData.SEDataSet(se_burokori, (int)SoundData.eSE.SE_BUROKORI);
         SoundData.SEDataSet(se_ninjin, (int)SoundData.eSE.SE_NINJIN);
         SoundData.SEDataSet(se_tomatobomb, (int)SoundData.eSE.SE_TOMATO_BOMB);
@@ -184,6 +192,8 @@ public class DataManager : MonoBehaviour
         SoundData.SEVolume[(int)SoundData.eSE.SE_BOOS1_KNIFE] = 0.9f;
         SoundData.SEVolume[(int)SoundData.eSE.SE_BOOS1_STRAWBERRY] = 0.1f;
         SoundData.SEVolume[(int)SoundData.eSE.SE_BOOS1_DAMEGE] = 0.5f;
+        SoundData.SEVolume[(int)SoundData.eSE.SE_LASTBOSS_ULT] = 1.0f;
+        SoundData.SEVolume[(int)SoundData.eSE.SE_LASTBOSS_BULLET] = 0.3f;
         SoundData.SEVolume[(int)SoundData.eSE.SE_BUROKORI] = 0.4f;
         SoundData.SEVolume[(int)SoundData.eSE.SE_NINJIN] = 0.4f;
         SoundData.SEVolume[(int)SoundData.eSE.SE_TOMATO_BOMB] = 0.15f;

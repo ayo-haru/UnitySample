@@ -38,6 +38,8 @@ public static class SoundData
         SE_BOOS1_STRAWBERRY,
         SE_BOOS1_KNIFE,
         SE_BOOS1_DAMEGE,
+        SE_LASTBOSS_ULT,
+        SE_LASTBOSS_BULLET,
         SE_BUROKORI,
         SE_NINJIN,
         SE_TOMATO_BOMB,

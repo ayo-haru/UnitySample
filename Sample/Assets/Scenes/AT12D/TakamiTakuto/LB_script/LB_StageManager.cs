@@ -63,7 +63,7 @@ public class LB_StageManager: MonoBehaviour
         }
         GameData.CurrentMapNumber = GameData.NextMapNumber;         // ボスシーンに到達している判定
         //SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);   // 現在のシーンをセーブ
-
+        
 
     }
     // Start is called before the first frame update

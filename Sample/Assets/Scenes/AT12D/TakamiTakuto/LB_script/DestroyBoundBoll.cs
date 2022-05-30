@@ -20,7 +20,7 @@ public class DestroyBoundBoll : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)//当たり判定処理
     {
-        if (collision.gameObject.tag == "Ground")        //もし当たったモノにGroundタグが付いていた場合
+        if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "GroundDameged")        //もし当たったモノにGroundタグが付いていた場合
         {
             
            

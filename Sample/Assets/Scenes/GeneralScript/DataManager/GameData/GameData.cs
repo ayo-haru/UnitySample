@@ -1,16 +1,16 @@
 //=============================================================================
 //
-// ƒQ[ƒ€‚Ìƒf[ƒ^‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+// ã‚²ãƒ¼ãƒ ã®ãƒ‡ãƒ¼ã‚¿ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 //
-// ì¬“ú:2022/03/10
-// ì¬Ò:ˆÉ’n“c^ˆß
+// ä½œæˆæ—¥:2022/03/10
+// ä½œæˆè€…:ä¼Šåœ°ç”°çœŸè¡£
 //
-// <ŠJ”­—š—ğ>
-// 2022/03/10 ì¬
-// 2022/03/11 ƒ}ƒbƒv‚Ì”Ô†‚ğ“ü‚ê‚Æ‚­•Ï”ì‚Á‚½
-// 2022/03/30 ¶‰E‚Ì‘JˆÚ‚ğ‚Å‚«‚é‚æ‚¤‚É‚·‚é
-// 2022/04/17 ‚©‚¯‚ç‚ÌŠ”’Ç‰Á
-// 2022/05/10 ‚Â‚Ã‚«‚©‚ç‚ğ‚â‚é‚½‚ß‚ÉFX•Ï‚¦‚½
+// <é–‹ç™ºå±¥æ­´>
+// 2022/03/10 ä½œæˆ
+// 2022/03/11 ãƒãƒƒãƒ—ã®ç•ªå·ã‚’å…¥ã‚Œã¨ãå¤‰æ•°ä½œã£ãŸ
+// 2022/03/30 å·¦å³ã®é·ç§»ã‚’ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
+// 2022/04/17 ã‹ã‘ã‚‰ã®æ‰€æŒæ•°è¿½åŠ 
+// 2022/05/10 ã¤ã¥ãã‹ã‚‰ã‚’ã‚„ã‚‹ãŸã‚ã«è‰²ã€…å¤‰ãˆãŸ
 //=============================================================================
 
 using System.Collections;
@@ -21,7 +21,7 @@ using UnityEngine.InputSystem;
 
 
 public static class GameData {
-    public enum eSceneState {   // ƒV[ƒ“ƒXƒe[ƒg
+    public enum eSceneState {   // ã‚·ãƒ¼ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆ
         TITLE_SCENE = 0,
         KitchenStage001,
         KitchenStage002,
@@ -35,41 +35,43 @@ public static class GameData {
         Tutorial1,
         Tutorial2,
         Tutorial3,
+        LastBossStage,
 
         BOSS1_SCENE,
         BOSS2_SCENE
     }
 
-    public static Gamepad gamepad;                                  // Ú‘±‚³‚ê‚Ä‚¢‚éƒRƒ“ƒgƒ[ƒ‰[‚ğ•Û‘¶
+    public static Gamepad gamepad;                                  // æ¥ç¶šã•ã‚Œã¦ã„ã‚‹ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã‚’ä¿å­˜
 
-    public static int OldMapNumber;                                 // ƒV[ƒ“ˆÚ“®‘O‚Ìƒ}ƒbƒv”Ô†
-    public static int CurrentMapNumber;                             // ƒ}ƒbƒv‚Ì”Ô†‚¢‚ê‚é
-    public static int NextMapNumber;                                // ƒ}ƒbƒv‚Ì”Ô†‚¢‚ê‚é
-    static string[] MapName = {                                     // ƒ}ƒbƒv‚Ì–¼‘O
+    public static int OldMapNumber;                                 // ã‚·ãƒ¼ãƒ³ç§»å‹•å‰ã®ãƒãƒƒãƒ—ç•ªå·
+    public static int CurrentMapNumber;                             // ãƒãƒƒãƒ—ã®ç•ªå·ã„ã‚Œã‚‹
+    public static int NextMapNumber;                                // ãƒãƒƒãƒ—ã®ç•ªå·ã„ã‚Œã‚‹
+    static string[] MapName = {                                     // ãƒãƒƒãƒ—ã®åå‰
         "TitleScene",
         "KitchenStage001", "KitchenStage002", "KitchenStage003", "KitchenStage004", "KitchenStage005", "KitchenStage006",
         "BossStage001", "BossStage002", "BossStage003",
         "Tutorial01","Tutorial02","Tutorial03",
         "Tester", 
         "Boss2_Scene"
+
     };
 
-    public static Vector3 ReSpawnPos;                               // ƒŠƒXƒ|[ƒ“ƒ|ƒX
-    public static Vector3 PlayerPos;                                // ƒvƒŒƒCƒ„[‚ÌÀ•W
-    public static GameObject Player;                                // ƒvƒŒƒCƒ„[©‘Ì‚ğ•Û‘¶
-    public static VelocityTmp PlayerVelocyty = new VelocityTmp();   // ƒvƒŒƒCƒ„[‚ÌƒŠƒWƒbƒhƒ{ƒfƒB‚ğ•Û‘¶
-    public static int CurrentHP = 5;                                // HP‚Ì•Û‘¶(Œ»İ‚Ì)
-    public static int CurrentPiece = 0;                             //‚©‚¯‚ç‚ÌŠ”
-    public static int CurrentPieceGrade = 0;                        //‚©‚¯‚ç‚ÌŠ˜g
-    public static bool isFadeOut = false;                           //ƒtƒF[ƒhƒAƒEƒgˆ—‚ÌŠJnAŠ®—¹‚ğŠÇ—‚·‚éƒtƒ‰ƒO
-    public static bool isFadeIn = false;                            //ƒtƒF[ƒhƒCƒ“ˆ—‚ÌŠJnAŠ®—¹‚ğŠÇ—‚·‚éƒtƒ‰ƒO
+    public static Vector3 ReSpawnPos;                               // ãƒªã‚¹ãƒãƒ¼ãƒ³ãƒã‚¹
+    public static Vector3 PlayerPos;                                // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åº§æ¨™
+    public static GameObject Player;                                // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼è‡ªä½“ã‚’ä¿å­˜
+    public static VelocityTmp PlayerVelocyty = new VelocityTmp();   // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒªã‚¸ãƒƒãƒ‰ãƒœãƒ‡ã‚£ã‚’ä¿å­˜
+    public static int CurrentHP = 5;                                // HPã®ä¿å­˜(ç¾åœ¨ã®)
+    public static int CurrentPiece = 0;                             //ã‹ã‘ã‚‰ã®æ‰€æŒæ•°
+    public static int CurrentPieceGrade = 0;                        //ã‹ã‘ã‚‰ã®æ‰€æŒæ 
+    public static bool isFadeOut = false;                           //ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆå‡¦ç†ã®é–‹å§‹ã€å®Œäº†ã‚’ç®¡ç†ã™ã‚‹ãƒ•ãƒ©ã‚°
+    public static bool isFadeIn = false;                            //ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³å‡¦ç†ã®é–‹å§‹ã€å®Œäº†ã‚’ç®¡ç†ã™ã‚‹ãƒ•ãƒ©ã‚°
 
-    public static bool FireOnOff = true;                            // true‚ª‚Â‚¢‚Ä‚é
-    public static bool GateOnOff = true;                            //@ture‚ª•Â‚¶‚Ä‚é
+    public static bool FireOnOff = true;                            // trueãŒã¤ã„ã¦ã‚‹
+    public static bool GateOnOff = true;                            //ã€€tureãŒé–‰ã˜ã¦ã‚‹
 
-    public static bool isAliveBoss1 = true;                         //ƒ{ƒX‚P‚Ì“¢”°î•ñ•Û‘¶—p
+    public static bool isAliveBoss1 = true;                         //ãƒœã‚¹ï¼‘ã®è¨ä¼æƒ…å ±ä¿å­˜ç”¨
 
-    public static bool[,] isStarGet = new bool[10, 10];             //ƒXƒ^[‚Ìæ“¾ó‹µ@true‚ªæ“¾Ï‚İ
+    public static bool[,] isStarGet = new bool[10, 10];             //ã‚¹ã‚¿ãƒ¼ã®å–å¾—çŠ¶æ³ã€€trueãŒå–å¾—æ¸ˆã¿
 
 
     public static string GetNextScene(int nextscene) {
@@ -77,7 +79,7 @@ public static class GameData {
     }
 
     /// <summary>
-    /// ƒf[ƒ^‚Ì‰Šú‰»
+    /// ãƒ‡ãƒ¼ã‚¿ã®åˆæœŸåŒ–
     /// </summary>
     public static void InitData() {
         PlayerPos = new Vector3(0.0f, 0.0f, 0.0f);
@@ -98,10 +100,10 @@ public static class GameData {
     }
 
     /// <summary>
-    /// ƒV[ƒ“‚Ì‰Šú‰»
+    /// ã‚·ãƒ¼ãƒ³ã®åˆæœŸåŒ–
     /// </summary>
     public static void InitScene() {
-        SceneManager.LoadScene(MapName[CurrentMapNumber]);  // Œ»İ‚ÌƒV[ƒ“‚ğÄƒ[ƒh
+        SceneManager.LoadScene(MapName[CurrentMapNumber]);  // ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³ã‚’å†ãƒ­ãƒ¼ãƒ‰
     }
 
     public static void LoadData() {

@@ -108,6 +108,8 @@ public class Player2 : MonoBehaviour
     public float HitStopTime = 0.23f;
     public bool CanHitStopflg = false;
 
+
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -300,7 +302,7 @@ public class Player2 : MonoBehaviour
                 Attack();
                 isAttack = false;
                 canMoveflg = true;
-                StartCoroutine(StartAttackEvent(0.09f));
+                StartCoroutine(StartAttackEvent(0.08f));
             }
 
         }

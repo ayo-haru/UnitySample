@@ -68,7 +68,9 @@ public class WeaponCollision : MonoBehaviour
         Vector2 dir = (this._Player.transform.position - this.gameObject.transform.position).normalized;
         if (CanCollision)
         {
-            if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "GroundDameged")
+            if (collision.gameObject.tag == "Ground" || 
+                collision.gameObject.tag == "GroundDameged" || 
+                collision.gameObject.tag == "LastBossWeapon")
             {
                 if (Player.isHitSavePoint)
                 {

@@ -58,9 +58,9 @@ public static class SoundData
     public static AudioClip[] SEClip = new AudioClip[(int)eSE.MAX_SE];
     public static float[] SEVolume = new float[(int)eSE.MAX_SE];
 
-    public static AudioSource[] TitleAudioList = new AudioSource[5];    // ˆê‰ñ‚É“¯‚É‚È‚ç‚¹‚é”
-    public static AudioSource[] IndelibleAudioList = new AudioSource[3];    // ˆê‰ñ‚É“¯‚É‚È‚ç‚¹‚é”
-    public static AudioSource[] GameAudioList = new AudioSource[20];    // ˆê‰ñ‚É“¯‚É‚È‚ç‚¹‚é”
+    public static AudioSource[] TitleAudioList = new AudioSource[20];    // ˆê‰ñ‚É“¯‚É‚È‚ç‚¹‚é”
+    public static AudioSource[] IndelibleAudioList = new AudioSource[10];    // ˆê‰ñ‚É“¯‚É‚È‚ç‚¹‚é”
+    public static AudioSource[] GameAudioList = new AudioSource[30];    // ˆê‰ñ‚É“¯‚É‚È‚ç‚¹‚é”
 
     public static bool isSetSound = false;
 

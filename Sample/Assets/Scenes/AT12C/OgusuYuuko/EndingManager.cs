@@ -4,7 +4,7 @@
 //      作成者　小楠裕子
 //
 //      このスクリプトが入ったプレハブ(EndingManager)をラスボスシーンのCanvas2に入れる
-//      必ずプレイヤーのHPの手前に置く
+//      演出開始するときにフラグ立てる
 //      
 //      <開発履歴>
 //      2022/05/29  作成      
@@ -53,16 +53,10 @@ public class EndingManager : MonoBehaviour
         AButtonImage = GameObject.Find("AbuttonImage");
         BackTitleImage = GameObject.Find("BackTitleImage");
         FadeImage = GameObject.Find("FadeImage");
-
-        //でバック用
-        if(GameData.CurrentMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
-        {
-            GameData.CurrentMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
-        }
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //ラスボス倒されたフラグ立ってたらスタートする
         //if (GameData.isAlivelastBoss)
@@ -78,6 +72,18 @@ public class EndingManager : MonoBehaviour
         switch (step)
         {
             case 0:
+                //HPが表示されていたら
+                //HPの手前に表示する
+                GameObject hpUI = GameObject.Find("HPSystem(2)(Clone)");
+                if (hpUI)
+                {
+                    int hpUIIndex = hpUI.transform.GetSiblingIndex();
+                    gameObject.transform.SetSiblingIndex(hpUIIndex + 1);
+                }
+
+                //ボスのBGMが鳴りっぱなしは嫌なので音止める
+                SoundManager.SoundPause(SoundData.GameAudioList);
+
                 //演出が始まったら背景とタイトルロゴを表示
                 BackGroundImage.GetComponent<ImageShow>().Show();
                 TitleLogoImage.GetComponent<ImageShow>().Show();

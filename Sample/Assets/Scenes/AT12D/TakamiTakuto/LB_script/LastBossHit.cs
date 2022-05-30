@@ -25,10 +25,11 @@ public class LastBossHit : MonoBehaviour
 
     private void OnCollisionEnter(Collision Collision)//ìñÇΩÇËîªíËèàóù
     {
-        if (Collision.gameObject.name == "BoundBoll(Clone)")
+        if (Collision.gameObject.name == "BoundBall(Clone)")
         {
             Attack.OneTimeFlg = true;
-           Debug.Log("BoundBollDamage");
+            
+            Debug.Log("BoundBollDamage");
         }
         if (Collision.gameObject.name == "Bulletl(Clone)")
         {

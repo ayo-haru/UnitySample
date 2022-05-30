@@ -6,11 +6,12 @@ public class DestroyBoundBoll : MonoBehaviour
 {
     public GameObject BoundBoll;
     public LB_Attack Attack;
+    LastHPGage HpScript;
     // Start is called before the first frame update
     void Start()
     {
         Attack = GameObject.Find("LastBoss(Clone)").GetComponent<LB_Attack>();
-
+        HpScript = GameObject.Find("HPGage").GetComponent<LastHPGage>();
     }
 
     // Update is called once per frame
@@ -30,7 +31,14 @@ public class DestroyBoundBoll : MonoBehaviour
             Destroy(BoundBoll);      //BoundBollを破壊
             Debug.Log("弾を破壊した");//デバックログを表示
         }
-        if(collision.gameObject.name == "Rulaby"|| collision.gameObject.name == "LastBoss(Clone)")
+        if(collision.gameObject.name == "LastBoss(Clone)")
+        {
+            HpScript.DelHP(Attack.BulletDamage);
+            Attack.Circlenum++;
+            Attack.OneTimeFlg = true;
+            Destroy(BoundBoll);      //BoundBollを破壊
+        }
+        if(collision.gameObject.name == "Rulaby")
         {
             
 

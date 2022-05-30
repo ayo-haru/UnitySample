@@ -21,6 +21,8 @@ public static class SoundData
         BGM_TITLE = 0,
         BGM_KITCHEN,
         BGM_BOSS1,
+        BGM_EXSTAGE,
+        BGM_LASTBOSS,
 
         MAX_BGM
     }

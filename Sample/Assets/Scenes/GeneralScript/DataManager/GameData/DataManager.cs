@@ -36,6 +36,11 @@ public class DataManager : MonoBehaviour
     private AudioClip bgm_kitchen;
     [SerializeField]
     private AudioClip bgm_kitchenBoss;
+    [SerializeField]
+    private AudioClip bgm_exstage;
+    [SerializeField]
+    private AudioClip bgm_lastboss;
+
 
     [SerializeField]
     private AudioClip se_jump;
@@ -149,6 +154,8 @@ public class DataManager : MonoBehaviour
         SoundData.BGMDataSet(bgm_title, (int)SoundData.eBGM.BGM_TITLE);
         SoundData.BGMDataSet(bgm_kitchen, (int)SoundData.eBGM.BGM_KITCHEN);
         SoundData.BGMDataSet(bgm_kitchenBoss, (int)SoundData.eBGM.BGM_BOSS1);
+        SoundData.BGMDataSet(bgm_exstage, (int)SoundData.eBGM.BGM_EXSTAGE);
+        SoundData.BGMDataSet(bgm_lastboss, (int)SoundData.eBGM.BGM_LASTBOSS);
 
         SoundData.SEDataSet(se_jump, (int)SoundData.eSE.SE_JUMP);
         SoundData.SEDataSet(se_land, (int)SoundData.eSE.SE_LAND);
@@ -182,8 +189,8 @@ public class DataManager : MonoBehaviour
 
         SoundData.SEVolume[(int)SoundData.eSE.SE_JUMP] = 0.4f;
         SoundData.SEVolume[(int)SoundData.eSE.SE_LAND] = 0.5f;
-        SoundData.SEVolume[(int)SoundData.eSE.SE_SHIELD] = 0.7f;
-        SoundData.SEVolume[(int)SoundData.eSE.SE_REFLECTION] = 0.5f;
+        SoundData.SEVolume[(int)SoundData.eSE.SE_SHIELD] = 1.0f;
+        SoundData.SEVolume[(int)SoundData.eSE.SE_REFLECTION] = 1.0f;
         SoundData.SEVolume[(int)SoundData.eSE.SE_REFLECTION_STAR] = 0.5f;
         SoundData.SEVolume[(int)SoundData.eSE.SE_DAMEGE] = 0.5f;
         SoundData.SEVolume[(int)SoundData.eSE.SE_HEAL] = 0.3f;

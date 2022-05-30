@@ -87,6 +87,11 @@ public class ExStageManager : MonoBehaviour
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                         GameData.PlayerPos = GameData.Player.transform.position = new Vector3(30.0f, 107.0f, 0.0f);
                     }
+                    else if (GameData.OldMapNumber == (int)GameData.eSceneState.BOSS2_SCENE)
+                    {
+                        GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
+                        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-416.0f, 86.0f, 0.0f);
+                    }
                     else
                     {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);

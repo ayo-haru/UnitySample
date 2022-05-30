@@ -5,7 +5,7 @@ using UnityEngine;
 public class FireSwitch : MonoBehaviour {
 
     private GameObject switch_ON;
-    private MeshRenderer Mesh_On;
+    //private MeshRenderer Mesh_On;
     private GameObject switch_OFF;
     private MeshRenderer Mesh_Off;
     private GameObject stove;

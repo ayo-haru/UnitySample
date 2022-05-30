@@ -35,7 +35,7 @@ public class ChangePlayerDissolve : MonoBehaviour
     public void Play()
     {
         //---再生中であるなら止める
-
+        Stop();
         //---マテリアルの変更をする
         for (int i = 0; i < _skinnedMeshRenderers.Length; ++i)
         {
@@ -48,11 +48,27 @@ public class ChangePlayerDissolve : MonoBehaviour
 
     public void Stop()
     {
+        //---コルーチンを止める
+        if (_Playcoroutine != null)
+        {
+            StopCoroutine(_Playcoroutine);
+            _Playcoroutine = null;
+        }
+
+        //---マテリアルを基に戻す
+        for(int i= 0;i < _skinnedMeshRenderers.Length; i++)
+        {
+            _skinnedMeshRenderers[i].materials[0] = _originMaterials[i];
+        }
 
     }
 
     private void SetCutOff(float value)
     {
+        for (int materialIndex = 0; materialIndex < _dissolveMaterials.Length; ++materialIndex)
+        {
+            _dissolveMaterials[materialIndex].SetFloat("_CutOff", value);
+        }
     }
 
 
@@ -62,9 +78,12 @@ public class ChangePlayerDissolve : MonoBehaviour
 
         while(timer < 2)
         {
+            SetCutOff(timer / 1);
+
             yield return null;
 
             timer += Time.deltaTime;
         }
+        SetCutOff(1.0f);
     }
 }

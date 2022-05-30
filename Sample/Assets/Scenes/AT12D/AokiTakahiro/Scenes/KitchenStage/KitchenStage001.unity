@@ -8331,6 +8331,8 @@ MonoBehaviour:
   se_boss1Strawberry: {fileID: 8300000, guid: 8e6beb5dde77d544fbc69d212d2b18b6, type: 3}
   se_boss1Knife: {fileID: 8300000, guid: 2dd8d9de2366b2a46b51b18991080316, type: 3}
   se_boss1Damege: {fileID: 8300000, guid: 0d5832afb35a3f6439ad4fcbd2dc8d7e, type: 3}
+  se_lastboss_ult: {fileID: 0}
+  se_lastboss_bullet: {fileID: 0}
   se_burokori: {fileID: 8300000, guid: ed1cec9d70fa21542989b1236de6596e, type: 3}
   se_ninjin: {fileID: 8300000, guid: e3a7dd0c7a3663a48a3c154f492ce04d, type: 3}
   se_tomatobomb: {fileID: 8300000, guid: ce945d2ce6bd7be45a7f4a91aaec1148, type: 3}
@@ -37437,7 +37439,7 @@ GameObject:
   - component: {fileID: 1965201102}
   m_Layer: 0
   m_Name: InvisibleLeftWall
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37450,7 +37452,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1965201100}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.9, y: 135, z: 0}
+  m_LocalPosition: {x: -15.7, y: 135, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 315759037}
@@ -37467,7 +37469,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 250, z: 30}
+  m_Size: {x: 10, y: 250, z: 30}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1972249782
 GameObject:

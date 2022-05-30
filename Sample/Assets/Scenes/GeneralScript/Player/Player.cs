@@ -36,6 +36,14 @@ public class Player : MonoBehaviour
 
     private Animator _animator;
 
+    private bool entryGate;             //ゲートに入ろうとしてるか
+    private int nextMapNumber;          //次のシーン番号保存用
+    private float moveSpeed = 0.5f;     //扉に入る時の移動速度
+    private bool onceFlag;              //一回だけ処理する用
+    public float rotSpeed = 1.0f;       //回転速度
+    private float rotTimer;             //回転用タイマー
+    public float movePos = 15.0f;       //移動終了位置
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +56,11 @@ public class Player : MonoBehaviour
         checkHP = new ObservedValue<int>(GameData.CurrentHP);
         checkHP.OnValueChange += () => { if (checkHP.Value < 1) PlayerDeath(); };
         _animator = GetComponent<Player2>().animator;
+
+        entryGate = false;
+        nextMapNumber = 0;
+        onceFlag = true;
+        rotTimer = 0.0f;
     }
 
     // Update is called once per frame
@@ -120,6 +133,59 @@ public class Player : MonoBehaviour
             }
         }
         //GamePadManager.onceTiltStick = false;
+
+
+        //---ゲート入り中
+        if (entryGate)
+        {
+            //キー入力と重力無効かしとく
+            gameObject.GetComponent<Player2>().enabled = false;
+            gameObject.GetComponent<Rigidbody>().useGravity = false;
+            //プレイヤー移動処理
+            Vector3 newPos = transform.position;
+            newPos.z += moveSpeed;
+            transform.position = newPos;
+            //回転の目標値
+            Quaternion target = new Quaternion();
+            //向きを設定
+            target = Quaternion.LookRotation(new Vector3(0.0f,0.0f,1.0f));
+            //回転させる
+            rotTimer += rotSpeed;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotTimer);
+
+            //一定量うしろに行ったらシーン遷移
+            if (transform.position.z > movePos)
+            {
+                
+                //シーン遷移
+                if (onceFlag)
+                {
+                    GameData.isFadeOut = true;  // フェードかける
+                    switch (nextMapNumber)
+                    {
+                        case (int)GameData.eSceneState.Tutorial2:
+                            GameData.NextMapNumber = (int)GameData.eSceneState.Tutorial2;
+                            break;
+                        case (int)GameData.eSceneState.Tutorial3:
+                            GameData.NextMapNumber = (int)GameData.eSceneState.Tutorial3;
+                            break;
+                        case (int)GameData.eSceneState.KitchenStage001:
+                            GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001;
+                            break;
+                        case (int)GameData.eSceneState.BOSS1_SCENE:
+                            GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
+                            break;
+
+                    }
+                    //変数初期化
+                    entryGate = false;
+                    nextMapNumber = 0;
+                    onceFlag = false;
+                    rotTimer = 0.0f;
+                }
+                
+            }
+        }
     }
 
     private void PlayerDeath() {
@@ -155,18 +221,27 @@ public class Player : MonoBehaviour
         //----- 各シーン遷移 -----
         if (other.gameObject.tag == "toTutorial2")
         {
-            GameData.isFadeOut = true;  // フェードかける
-            GameData.NextMapNumber = (int)GameData.eSceneState.Tutorial2;
+            //GameData.isFadeOut = true;  // フェードかける
+            //GameData.NextMapNumber = (int)GameData.eSceneState.Tutorial2;
+
+            entryGate = true;
+            nextMapNumber = (int)GameData.eSceneState.Tutorial2;
         }
         if (other.gameObject.tag == "toTutorial3")
         {
-            GameData.isFadeOut = true;  // フェードかける
-            GameData.NextMapNumber = (int)GameData.eSceneState.Tutorial3;
+            //GameData.isFadeOut = true;  // フェードかける
+            //GameData.NextMapNumber = (int)GameData.eSceneState.Tutorial3;
+
+            entryGate = true;
+            nextMapNumber = (int)GameData.eSceneState.Tutorial3;
         }
 
         if (other.gameObject.tag == "toKitchen1"){
-            GameData.isFadeOut = true;  // フェードかける
-            GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001;
+            //GameData.isFadeOut = true;  // フェードかける
+            //GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001;
+
+            entryGate = true;
+            nextMapNumber = (int)GameData.eSceneState.KitchenStage001;
         }
 
         if (other.gameObject.tag == "toKitchen2"){
@@ -202,8 +277,11 @@ public class Player : MonoBehaviour
         }
         if (other.gameObject.tag == "toBoss1")    // この名前のタグと衝突したら
         {
-            GameData.isFadeOut = true;  // フェードかける
-            GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
+            //GameData.isFadeOut = true;  // フェードかける
+            //GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
+
+            entryGate = true;
+            nextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
         }
 
         if (other.gameObject.tag == "toExStage1")

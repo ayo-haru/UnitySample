@@ -57,15 +57,6 @@ public class ShadowEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            TT = false;
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            TT = true;
-        }
-
         if (spawn)
         {
             effect.transform.localScale -= new Vector3(0.02f, 0.02f, 0.02f);

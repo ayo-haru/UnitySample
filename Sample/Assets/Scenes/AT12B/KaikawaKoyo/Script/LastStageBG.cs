@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class LastStageBG : MonoBehaviour
 {
-    [SerializeField]
+    /*[SerializeField]
     private GameObject S;
-    private ShadowEnemy SE;
+    private ShadowEnemy SE;*/
     private Rigidbody rb;
     private Vector3 StartPos;
     private Vector3 TargetPos;
@@ -30,7 +30,7 @@ public class LastStageBG : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SE = S.GetComponent<ShadowEnemy>();
+        /*SE = S.GetComponent<ShadowEnemy>();*/
         rb = gameObject.GetComponent<Rigidbody>();
         StartPos = transform.position;
         StartRot = transform.rotation;
@@ -41,7 +41,7 @@ public class LastStageBG : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(SE.TT && True)
+        if(/*SE.TT && */ True)
         {
             CamRightTop = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, CamZ));
             CamLeftBot = Camera.main.ScreenToWorldPoint(new Vector3(0.0f, 0.0f, CamZ));
@@ -97,7 +97,7 @@ public class LastStageBG : MonoBehaviour
             }
         }
 
-        if(!True && !SE.TT)
+        if(!True/* && !SE.TT*/)
         {
             if (transform.position.y < StartPos.y)
             {

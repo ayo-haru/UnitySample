@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 61709756939850733}
   - component: {fileID: 1158615756111322096}
   - component: {fileID: 7478242759366878468}
+  - component: {fileID: 2581505331745847054}
   m_Layer: 0
   m_Name: woodfence1 (1)
   m_TagString: Untagged
@@ -81,6 +82,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2581505331745847054
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346555780971144752}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.8346539, y: 25.97431, z: 2.8346455}
+  m_Center: {x: -0.0000047683716, y: 0, z: 0}
 --- !u!1 &711982446577670382
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,6 +106,7 @@ GameObject:
   - component: {fileID: 5372146335722632465}
   - component: {fileID: 2462802491372862872}
   - component: {fileID: 1297714647481696407}
+  - component: {fileID: 73739679294465591}
   m_Layer: 0
   m_Name: woodfence1
   m_TagString: Untagged
@@ -162,6 +177,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &73739679294465591
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711982446577670382}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.8346539, y: 25.97431, z: 2.8346455}
+  m_Center: {x: -0.0000047683716, y: 0, z: 0}
 --- !u!1 &2769192958889435821
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,9 +199,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3253277883601156119}
+  - component: {fileID: 235848292269281821}
+  - component: {fileID: -7427003405271485971}
   m_Layer: 0
-  m_Name: WoodFence001 1
-  m_TagString: Untagged
+  m_Name: WoodFence001 3
+  m_TagString: LastBossWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -185,8 +215,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2769192958889435821}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 2.3, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalPosition: {x: 550, y: 85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5372146335722632465}
@@ -200,7 +230,44 @@ Transform:
   - {fileID: 4092443542608951842}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+--- !u!54 &235848292269281821
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2769192958889435821}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 124
+  m_CollisionDetection: 0
+--- !u!114 &-7427003405271485971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2769192958889435821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 831b92e0bdad83d4c98508163845a3e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ArrowRight: {fileID: 0}
+  ArrowLeft: {fileID: 0}
+  ArrowUp: {fileID: 2769192958889435821}
+  ArrowUpinitpos: {x: 0, y: 0, z: 0}
+  ArrowDisapperCount: 0
+  Attackspace: 0
+  Arrow_MaxCount: 2
+  LastBoss: {fileID: 5297460348935132312, guid: b1febf6a9d117ac46b903ccad053cb79, type: 3}
+  LbAttack: {fileID: 0}
 --- !u!1 &3454664728481392193
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,6 +279,7 @@ GameObject:
   - component: {fileID: 875294445765194616}
   - component: {fileID: 1520863475380345801}
   - component: {fileID: 4625439529510750451}
+  - component: {fileID: 4448626336525780312}
   m_Layer: 0
   m_Name: woodfence1 (7)
   m_TagString: Untagged
@@ -282,6 +350,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4448626336525780312
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3454664728481392193}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.8346539, y: 25.97431, z: 2.8346455}
+  m_Center: {x: -0.0000047683716, y: 0, z: 0}
 --- !u!1 &4026335217036918596
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,6 +374,7 @@ GameObject:
   - component: {fileID: 8308328201013050036}
   - component: {fileID: 1062448624698922665}
   - component: {fileID: 4106562089284109895}
+  - component: {fileID: 6586833749239258253}
   m_Layer: 0
   m_Name: woodfence1 (4)
   m_TagString: Untagged
@@ -363,6 +445,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6586833749239258253
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4026335217036918596}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.8346539, y: 25.97431, z: 2.8346455}
+  m_Center: {x: -0.0000047683716, y: 0, z: 0}
 --- !u!1 &4926506249725659896
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,6 +469,7 @@ GameObject:
   - component: {fileID: 4092443542608951842}
   - component: {fileID: 1395840152343148960}
   - component: {fileID: 8770632643926549461}
+  - component: {fileID: 2385271367951453141}
   m_Layer: 0
   m_Name: woodfence1 (8)
   m_TagString: Untagged
@@ -444,6 +540,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2385271367951453141
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4926506249725659896}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.8346539, y: 25.97431, z: 2.8346455}
+  m_Center: {x: -0.0000047683716, y: 0, z: 0}
 --- !u!1 &6206549151092091949
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,6 +564,7 @@ GameObject:
   - component: {fileID: 5627569321375799101}
   - component: {fileID: 803223605112402705}
   - component: {fileID: 9102666189518577187}
+  - component: {fileID: 7636547037425219056}
   m_Layer: 0
   m_Name: woodfence1 (5)
   m_TagString: Untagged
@@ -525,6 +635,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7636547037425219056
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6206549151092091949}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.8346539, y: 25.97431, z: 2.8346455}
+  m_Center: {x: -0.0000047683716, y: 0, z: 0}
 --- !u!1 &7504500585667251282
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,6 +659,7 @@ GameObject:
   - component: {fileID: 5064131828147916282}
   - component: {fileID: 6546659427091195333}
   - component: {fileID: 5497009561375340348}
+  - component: {fileID: 5209334582364042767}
   m_Layer: 0
   m_Name: woodfence1 (2)
   m_TagString: Untagged
@@ -606,6 +730,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5209334582364042767
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7504500585667251282}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.8346539, y: 25.97431, z: 2.8346455}
+  m_Center: {x: -0.0000047683716, y: 0, z: 0}
 --- !u!1 &8667216133128986949
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,6 +754,7 @@ GameObject:
   - component: {fileID: 1247861355021404357}
   - component: {fileID: 4869875190870900369}
   - component: {fileID: 3443257324983117399}
+  - component: {fileID: 6570720006272915774}
   m_Layer: 0
   m_Name: woodfence1 (6)
   m_TagString: Untagged
@@ -687,6 +825,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6570720006272915774
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8667216133128986949}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.8346539, y: 25.97431, z: 2.8346455}
+  m_Center: {x: -0.0000047683716, y: 0, z: 0}
 --- !u!1 &8731438479613517171
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,6 +849,7 @@ GameObject:
   - component: {fileID: 1343232072982929217}
   - component: {fileID: 4201957873637980560}
   - component: {fileID: 7042814193121223760}
+  - component: {fileID: 7543370997896279665}
   m_Layer: 0
   m_Name: woodfence1 (3)
   m_TagString: Untagged
@@ -768,3 +920,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7543370997896279665
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8731438479613517171}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.8346539, y: 25.97431, z: 2.8346455}
+  m_Center: {x: -0.0000047683716, y: 0, z: 0}

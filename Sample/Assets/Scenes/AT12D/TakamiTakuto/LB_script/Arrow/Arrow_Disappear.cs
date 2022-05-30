@@ -24,7 +24,7 @@ public class Arrow_Disappear : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void OnTriggerEnter(Collider Arrow_Collision)//当たり判定処理
+    private void OnCollisionEnter(Collision Arrow_Collision)//当たり判定処理
     {
         Debug.Log("何かに当たった");                              //デバックログを表示
         if (Arrow_Collision.gameObject.name == "StageBass")
@@ -41,17 +41,14 @@ public class Arrow_Disappear : MonoBehaviour
             LbAttack.ArrowNum++;
 
         }
-        else if (Arrow_Collision.gameObject.tag== "Ground")        //もし当たったモノにGroundタグが付いていた場合
+        if (Arrow_Collision.gameObject.tag== "Ground")        //もし当たったモノにGroundタグが付いていた場合
         {
            Debug.Log("Tag:Groundを持つオブジェクトに当たった");   //デバックログを表示
-            ArrowDisapperCount++;                           　 //アローを消すカウントを加算
             
-            if (ArrowDisapperCount >= Arrow_MaxCount){           //アローカウントがアローマックスと同等、またはそれ以上の時
-
                 //Arrow_Rightの場合================================================================================
-                if (gameObject.name == "Arrow_Right(Clone)"){           //接触しているのがgameObjectの"Arrow_Right"の時
+                if (gameObject.name == "Ult_Right(Clone)")
+                {           //接触しているのがgameObjectの"Arrow_Right"の時
                     Destroy(ArrowRight);
-                    Debug.Log("Arrow_Rightがワープした");         //デバックログを表示
                     ArrowDisapperCount = 0;                      //カウントリセット
                     Debug.Log("Arrow_Disapper_Countを０にした");  //デバックログを表示
                     LbAttack.ArrowUseFlag = true;
@@ -64,7 +61,8 @@ public class Arrow_Disappear : MonoBehaviour
                 //-------------------------------------------------------------------------------------------------
 
                 //Arrow_Leftの場合==================================================================================
-                if (gameObject.name == "Arrow_Left(Clone)"){          //接触しているのがgameObjectの"Arrow_Left"の場合
+                if (gameObject.name == "Ult_Left(Clone)")
+                {          //接触しているのがgameObjectの"Arrow_Left"の場合
                     Destroy(ArrowLeft);
                     Debug.Log("Arrow_Leftがワープした");        //デバックログを表示
                     ArrowDisapperCount = 0;                    //カウントリセット
@@ -77,7 +75,7 @@ public class Arrow_Disappear : MonoBehaviour
                     LbAttack.ArrowNum++;
                 }
                 //-------------------------------------------------------------------------------------------------
-            }
+            
         }
     }
 }

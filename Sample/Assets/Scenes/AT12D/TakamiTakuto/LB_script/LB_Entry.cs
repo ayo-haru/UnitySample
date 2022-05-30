@@ -10,6 +10,7 @@ public class LB_Entry : MonoBehaviour
     Vector3 CamEndPos;
     CameraMove MoveCam;
     GameObject LastBoss;
+    LB_Attack Anim;
     [SerializeField] public Image BossName;
     [SerializeField] public Image BossBarName;
     [SerializeField] public Image BossHPFrame;
@@ -28,6 +29,8 @@ public class LB_Entry : MonoBehaviour
         StartCameraPos.z = CameraPos.z;
         CamEndPos = GameObject.Find("BossDirectionCamera").transform.position;/*LB_Manager.LB_Pos;*/
         LastBoss = GameObject.Find("LastBoss(Clone)");
+        Anim = GameObject.Find("LastBoss(Clone)").GetComponent<LB_Attack>();
+        
         //CamEndPos.z = CameraPos.z;
         BossBarName.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
         BossHPBar.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
@@ -59,6 +62,7 @@ public class LB_Entry : MonoBehaviour
             switch (MoveCam.MoveCameraSpeed(StartCameraPos, CamEndPos, CameraPos, FocusTime, FocusDelTime, DelTime))
             {
                 case 1:
+                    Anim.ArrowEndObj[0].transform.position = new Vector3(-158.0f,198.0f,0.0f);
                     BossName.gameObject.SetActive(true);
                     LastBoss.transform.position = new Vector3(0, 62,70);
                     EffectManager.Play(EffectData.eEFFECT.EF_LASTBOSS_WARP, LastBoss.transform.position);

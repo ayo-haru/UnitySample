@@ -72,6 +72,7 @@ public class HPManager : MonoBehaviour
 
     public void GetPiece()
     {
+        SoundManager.Play(SoundData.eSE.SE_HEAL, SoundData.GameAudioList);
         //HP‚ªŒ¸‚Á‚Ä‚¢‚½‚çHP‚ð1‰ñ•œ
         if(GameData.CurrentHP < MaxHP)
         {

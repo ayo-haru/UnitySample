@@ -240,11 +240,11 @@ public class Player2 : MonoBehaviour
             //    }
             //}
 
-            //if (Input.GetKeyDown(KeyCode.Space))
-            //{
-
-            //    animator.Play("Death");
-            //}
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                hpmanager.GetPiece();
+                //    animator.Play("Death");
+            }
 
             //---地面と当たった時にジャンプフラグ・下パリイフラグを下す
             if (GroundNow)

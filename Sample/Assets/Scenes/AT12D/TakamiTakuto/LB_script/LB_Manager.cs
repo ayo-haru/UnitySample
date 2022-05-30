@@ -54,14 +54,11 @@ public class LB_Manager : MonoBehaviour
         HpScript = GameObject.Find("HPGage").GetComponent<LastHPGage>();
         Script = GameObject.Find("EndingManager").GetComponent<EndingManager>();
 
-        if (GameData.isAliveBoss1)
-        {
-            //LB_obj.transform.localScale = new Vector3(3.5f, 3.5f, 3.5f);
+        
             LB = Instantiate(LB_obj, LB_Pos, Quaternion.Euler(0.0f, -180.0f, 0.0f));
             LBShot = Instantiate(LBShot_obj, LBShot_Pos, Quaternion.identity);
             //LBShot.transform.parent = LB.transform;
             LB_States = LB_State.LB_START;
-        }
         Application.targetFrameRate = 60;
     }
     // Start is called before the first frame update

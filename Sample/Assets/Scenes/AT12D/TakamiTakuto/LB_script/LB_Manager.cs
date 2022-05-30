@@ -36,6 +36,8 @@ public class LB_Manager : MonoBehaviour
     //LB_Trac Track;
     private Vector3 WarpEFPoint;
     private bool PlayEffect = false;
+    public LastHPGage HpScript;                             //HPgage     
+    EndingManager Script;
 
     private void Awake()
     {
@@ -54,6 +56,8 @@ public class LB_Manager : MonoBehaviour
         LBShot_Pos = GameObject.Find("LB_Point").transform.position;
         LBShot_Pos.y = LBShot_Pos.y - 10;
         LBShot_Pos.z = GameData.PlayerPos.z;
+        HpScript = GameObject.Find("HPGage").GetComponent<LastHPGage>();
+        Script = GameObject.Find("EndingManager").GetComponent<EndingManager>();
 
         if (GameData.isAliveBoss1)
         {
@@ -91,20 +95,20 @@ public class LB_Manager : MonoBehaviour
                     LBShot_Pos.y = LB.transform.position.y;
 
                     LBShot.transform.position = LBShot_Pos;
+                    if(LastHPGage.currentHp <= 0)
+                    {
+                        LB_States = LB_State.LB_END;
+                    }
                     //Track.enabled = true;
                     //LB.gameObject.transform.position = LB_Pos;
                     break;
                 }
             case LB_State.LB_END:
                 {
-                    if (!PlayEffect)
-                    {
-                        //EffectManager.Play(EffectData.eEFFECT.EF_LB__DEATH, new Vector3(LB_.transform.position.x, LB_.transform.position.y, LB_.transform.position.z), 8f);
-                        //PlayEffect = true;
-                    }
+                    
                     //GetComponent<LB_DeathCam>().DeathCamera();
-                    Destroy(LB, 7.9f);
-
+                    Destroy(LB);
+                    Script.startFlag = true;
                     //Warp.SetActive(true);
                     //WarpEFPoint = Warp.transform.position;
                     //WarpEFPoint.y = 11.7f;

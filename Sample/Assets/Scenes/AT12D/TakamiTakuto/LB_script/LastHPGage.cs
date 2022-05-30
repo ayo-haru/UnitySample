@@ -39,11 +39,7 @@ public class LastHPGage : MonoBehaviour
     void Update()
     {
         //ダメージを受けたモーション再生後これを実行←だれか任せた
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            DelHP(10);
-            Debug.Log("After currentHp : " + currentHp);
-        }//ゲージの長さ
+        //ゲージの長さ
         if (DamageTimer >= 0.0f && HpDelNow > 0)
         {
             DamageTimer -= 1.0f;

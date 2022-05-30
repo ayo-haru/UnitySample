@@ -345,14 +345,14 @@ public class LB_Attack : MonoBehaviour
     private void MoveSelect()
     {
         //HPが30以下になった時→ULTへ-----------------------------------------------
-        if (!UltFlg && LastHPGage.currentHp <= 30)
-        {
-            Debug.Log("Hp" + LastHPGage.currentHp);      //デバックログ
-            Debug.Log("アローアタック");                  //デバックログ
-            UltFlg = true;                              //
-            SetState(LB_State.ArrowAttack);
-            return;
-        }
+        //if (!UltFlg && LastHPGage.currentHp <= 30)
+        //{
+        //    Debug.Log("Hp" + LastHPGage.currentHp);      //デバックログ
+        //    Debug.Log("アローアタック");                  //デバックログ
+        //    UltFlg = true;                              //
+        //    SetState(LB_State.ArrowAttack);
+        //    return;
+        //}
         //HPが51以上の場合--------------------------------------------------------
         if (LastHPGage.currentHp >= 51)
         {

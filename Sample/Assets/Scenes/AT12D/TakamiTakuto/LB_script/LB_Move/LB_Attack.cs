@@ -18,6 +18,7 @@ public class LB_Attack : MonoBehaviour
     //------------------------------------
 
     public GameObject LB;
+    public float EntPos;
     //[[[[[idleの処理で使う変数]]]]]=========================================================================
     private Vector3 defaultPos;                             //ボスが登場した最初の位置
     static private LB_State LBState = LB_State.Idle;        //ボスの状態(初期値はidel)
@@ -28,15 +29,21 @@ public class LB_Attack : MonoBehaviour
     public static int AttackCount = 0;                      //攻撃数カウント
     //[[[[[ArrowAttackの処理で使う変数]]]]]==================================================================
     public GameObject Arrow_Right;                          //GameObject:Arrow_Right
+    GameObject ArrowRightobj;
+    Vector3 Right_Pos;
     public GameObject Arrow_Left;                           //GameObject:Arrow_Left
+    GameObject ArrowLeftobj;
+    Vector3 Left_Pos;
     public GameObject Arrow_Up;                             //GameObject:Arrow_Up
+    GameObject ArrowUpobj;
+    Vector3 UP_Pos;
     public Rigidbody LbRigidbody;                           //リジットボディ
     public bool ArrowUseFlag = true;                        //アローが使用中かどうか調べるフラグ（初期値：true)
     public int ArrowCount = 0;                              //アローカウント
     [SerializeField] public int Arrow_MaxSpeed;             //アローの速さ調節用
     public int ArrowNum;                                    //アローの行動回数保存
     Vector3 []ArrowEsc;
-    GameObject[] ArrowEndObj;
+    public GameObject[] ArrowEndObj;
     //抽選用の変数-------------------------------------------------------------------------------------------
     List<int> number = new List<int>();                     //抽選する最大数(List構造)
     private int random;                                     //抽選した番号
@@ -247,7 +254,21 @@ public class LB_Attack : MonoBehaviour
                 else if (LBState == LB_State.ArrowAttack)//もしボスの状態がナイフ投げの場合
                 {
                     IdleCount = 0;
-                    
+                    if (ArrowLeftobj != null)
+                    {
+                        Left_Pos.x -= 1f;
+                        ArrowLeftobj.transform.position = Left_Pos;
+                    }
+                    if (ArrowRightobj != null)
+                    {
+                        Right_Pos.x += 1f;
+                        ArrowRightobj.transform.position = Right_Pos;
+                    }
+                    if (ArrowUpobj != null)
+                    {
+                        UP_Pos.y -= 1f;
+                        ArrowUpobj.transform.position = UP_Pos;
+                    }
                     //---矢印攻撃ならば------------
                     if (ArrowUseFlag)
                    {
@@ -425,7 +446,7 @@ public class LB_Attack : MonoBehaviour
         EffectManager.Play(EffectData.eEFFECT.EF_LASTBOSS_CHARGE, firingPoint.transform.position);      //effect生成
         EffectManager.Play(EffectData.eEFFECT.EF_LASTBOSS_ENERGYBALL, firingPoint.transform.position);      //effect生成
         for (int i = 0; i < 8; i++){                                                  //20回繰り返す
-            Debug.Log("ゴミかすしねbaaaaaaaaaaaaaaaaaaaaaaaaakaaaaaaaaaaaaaa"+i);
+            Debug.Log("a"+i);
             rotation.eulerAngles = new Vector3(0.0f,0.0f,Angle);                       //クォータニオン→オイラー角への変換
             yield return new WaitForSeconds(0.3f);                                     //0.3f待つ 
             EffectManager.Play(EffectData.eEFFECT.EF_LASTBOSS_FASTENERGYBALL, firingPoint.transform.position);      //effect生成
@@ -463,12 +484,9 @@ public class LB_Attack : MonoBehaviour
         switch (selectnumber) {
             //Arrow_Rightを動かす-------------------------------------------------------------
             case 1:
-                Vector3 Right_Pos;
-                Right_Pos = new Vector3(-465,85, 0);
-                GameObject ArrowRightobj = Instantiate(Arrow_Right, Right_Pos, transform.rotation);          //上で取得した
-                LbRigidbody = ArrowRightobj.GetComponent<Rigidbody>();        //rigidbodyを取得
-                Vector3 ForceArrowRight = new Vector3(80.0f, 0.0f, 0.0f);   //力を設定
-                LbRigidbody.AddForce(ForceArrowRight * Arrow_MaxSpeed);     //力を加える
+                
+                Right_Pos = new Vector3(-200,45, 0);
+                ArrowRightobj = Instantiate(Arrow_Right, Right_Pos, Quaternion.Euler(180, 180, 90));          //上で取得した
                 Debug.Log("Arrow_Rightが動いた");                          //デバックログを表示
                 LBossAnim.Play("ULT_Right");
                 LBossAnim.SetBool("OnlyFlg", true);
@@ -478,12 +496,9 @@ public class LB_Attack : MonoBehaviour
 
             //Arrow_Leftを動かす---------------------------------------------------------------
             case 2:
-                Vector3 Left_Pos;
-                Left_Pos = new Vector3(630, 85, 0);
-                GameObject ArrowLeftobj = Instantiate(Arrow_Left, Left_Pos, transform.rotation);          //上で取得した
-                LbRigidbody = ArrowLeftobj.GetComponent<Rigidbody>();         //rigidbodyを取得
-                Vector3 ForceArrowLeft = new Vector3(-80.0f, 0.0f, 0.0f);     //力を設定
-                LbRigidbody.AddForce(ForceArrowLeft * Arrow_MaxSpeed);      //力を加える
+                
+                Left_Pos = new Vector3(200, 45, 0);
+                ArrowLeftobj = Instantiate(Arrow_Left, Left_Pos, Quaternion.Euler(180,0,90));          //上で取得した
                 Debug.Log("Arrow_Leftが動いた");                           //デバックログを表示
                 LBossAnim.Play("ULT_Left");
                 LBossAnim.SetBool("OnlyFlg", true);
@@ -493,12 +508,9 @@ public class LB_Attack : MonoBehaviour
 
             //Arrow_Upを動かす------------------------------------------------------------------
             case 3:
-                Vector3 UP_Pos;
+                
                 UP_Pos = new Vector3(52, 430, 0);
-                GameObject ArrowUpobj = Instantiate(Arrow_Up, UP_Pos, transform.rotation);          //上で取得した場所に
-                LbRigidbody = ArrowUpobj.GetComponent<Rigidbody>();           //rigidbodyを取得
-                Vector3 ForceArrowUp = new Vector3(0.0f, -80.0f, 0.0f);    //力を設定
-                LbRigidbody.AddForce(ForceArrowUp * Arrow_MaxSpeed);        //力を加える
+                ArrowUpobj = Instantiate(Arrow_Up, UP_Pos, transform.rotation);          //上で取得した場所に
                 Debug.Log("Arrow_Upが動いた");                               //デバックログを表示  
                 LBossAnim.Play("ULT_Down");
                 LBossAnim.SetBool("OnlyFlg", true);

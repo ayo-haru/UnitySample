@@ -42,12 +42,7 @@ public class LB_Manager : MonoBehaviour
     private void Awake()
     {
         //ボスを倒したかどうかの判定
-        if (!GameData.isAliveBoss1)
-        {
-            //ボスの処理を何もしない処理入れる
-            LB_States = LB_State.LB_DEAD;
-            return;
-        }
+        
         Entry = GameObject.Find("LastBoss_Manager").GetComponent<LB_Entry>();
         //Track = GameObject.Find("LastBoss_Manager").GetComponent<LB_Trac>();
         LB_obj = (GameObject)Resources.Load("LastBoss");

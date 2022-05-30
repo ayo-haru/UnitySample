@@ -35,6 +35,8 @@ public class LB_Attack : MonoBehaviour
     public int ArrowCount = 0;                              //アローカウント
     [SerializeField] public int Arrow_MaxSpeed;             //アローの速さ調節用
     public int ArrowNum;                                    //アローの行動回数保存
+    Vector3 []ArrowEsc;
+    GameObject[] ArrowEndObj;
     //抽選用の変数-------------------------------------------------------------------------------------------
     List<int> number = new List<int>();                     //抽選する最大数(List構造)
     private int random;                                     //抽選した番号
@@ -44,9 +46,10 @@ public class LB_Attack : MonoBehaviour
     public GameObject CircleBulletobj;                      
     public GameObject firingPoint;                          //弾が発射される場所
     [SerializeField] public int BOundDamage = 10;           //弾の速度
-    private float Angle;                                    //角度
+    private float Angle = 90;                                    //角度
     public Quaternion rotation = Quaternion.identity;       //Quaternion
     public int Circlenum;
+    bool CircleChange;
     //[[[[WarpBulletの処理で使う変数]]]]]====================================================================
     public GameObject WarpBullet;                           //GameObject:Bullet
     GameObject WarpBullets;                                 //WarpBulletで生成する弾
@@ -81,7 +84,18 @@ public class LB_Attack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Angle = 0;
+        ArrowEndObj = new GameObject[3];
+        ArrowEndObj[0] = GameObject.Find("StageHaji");
+        ArrowEndObj[1] = GameObject.Find("StageHaji (1)");
+        ArrowEndObj[2] = GameObject.Find("StageHaji (2)");
+        ArrowEsc = new Vector3[6];
+        ArrowEsc[0] = ArrowEndObj[0].transform.position;
+        ArrowEsc[1] = ArrowEndObj[1].transform.position;
+        ArrowEsc[2] = ArrowEndObj[2].transform.position;
+        ArrowEsc[3] = new Vector3(-265.0f, ArrowEndObj[0].transform.position.y, ArrowEndObj[0].transform.position.z);
+        ArrowEsc[4] = new Vector3(257.0f, ArrowEndObj[1].transform.position.y, ArrowEndObj[1].transform.position.z);
+        ArrowEsc[5] = GameObject.Find("StageHaji (3)").transform.position;
+        Angle = 90;
         LBState = LB_State.Idle;
         firingPoint = GameObject.Find("LB_ShotPoint(Clone)");
         HpObject = GameObject.Find("HPGage");
@@ -130,7 +144,7 @@ public class LB_Attack : MonoBehaviour
                         
 
                     }
-                    if (TrakingBullet != null)
+                    if (TrakingBullet != null && Effect != null)
                     {
                          Effect.transform.position = TrakingBullet.transform.position;                             //Effectをww
                     }
@@ -153,6 +167,9 @@ public class LB_Attack : MonoBehaviour
                         OnlryFlg = false;
                         Debug.Log("Onlry" + OnlryFlg);
                         IdleCount = 0;
+                        EffectManager.Play(EffectData.eEFFECT.EF_LASTBOSS_WARP, this.transform.position);
+                        this.transform.position = new Vector3(0, 115.0f, 70.0f); //ランダム移動
+                        EffectManager.Play(EffectData.eEFFECT.EF_LASTBOSS_WARP, this.transform.position);
                         if (!AnimFlg)
                         {
                             LBossAnim.SetTrigger("CircleBulletTrigger");
@@ -163,8 +180,18 @@ public class LB_Attack : MonoBehaviour
                     {
                                                      //Effectをww
                     }
-                    if (OneTimeFlg && Circlenum >= 20)
+                    if (OneTimeFlg && Circlenum >= 8)
                     {
+                        if (CircleChange)
+                        {
+                            Angle = 90;
+                            CircleChange = false;
+                        }
+                        else if(!CircleChange)
+                        {
+                            Angle = 270;
+                            CircleChange = true ;
+                        }
                         Circlenum = 0;
                         OnlryFlg = true;
                         AnimFlg = false;
@@ -183,9 +210,11 @@ public class LB_Attack : MonoBehaviour
                         OnlryFlg = true;
                         OneTimeFlg = false;
                         WarpCount = 0;
+                        Destroy(Effect);
                         MoveSelect();
                         return;
                     }
+                    
                     if (OnlryFlg == true)
                     {
                         IdleCount = 0;
@@ -196,37 +225,57 @@ public class LB_Attack : MonoBehaviour
                             {
                                 if (!AnimFlg)
                                 {
-                                    vecX = Random.Range(-180f, 300f);                          //座標ランダム位置決め(X)
-                                    vecY = Random.Range(60, 230f);                            //座標ランダム位置決め(Y)
-                                    this.transform.position = new Vector3(vecX, vecY, 120.0f); //ランダム移動
+                                    
+                                    vecX = Random.Range(-125f, 125f);                          //座標ランダム位置決め(X)
+                                    vecY = Random.Range(40f, 115f);                            //座標ランダム位置決め(Y)
+                                    EffectManager.Play(EffectData.eEFFECT.EF_LASTBOSS_WARP, this.transform.position);
+                                    this.transform.position = new Vector3(vecX, vecY, 70.0f); //ランダム移動
+                                    EffectManager.Play(EffectData.eEFFECT.EF_LASTBOSS_WARP, this.transform.position);
                                     LBossAnim.SetTrigger("WarpTrigger");
+                                    
                                     AnimFlg = true;
                                 }
-
                             }
+                            
                         }
                     }
-                    
+                    if (WarpBullets != null && Effect != null)
+                    {
+                        Effect.transform.position = WarpBullets.transform.position;                             //Effectをww
+                    }
                 }
                 else if (LBState == LB_State.ArrowAttack)//もしボスの状態がナイフ投げの場合
                 {
                     IdleCount = 0;
-                   //---矢印攻撃ならば------------
-                   if (ArrowUseFlag)
+                    
+                    //---矢印攻撃ならば------------
+                    if (ArrowUseFlag)
                    {
                        //--最後のリストの要素数に達したら
                        if (number.Count <= 0)
                        {
-                           return;
+                            LBossAnim.SetInteger("UltCount", 0);
+                            OnlryFlg = true;
+                            ArrowEndObj[0].transform.position = ArrowEsc[0];
+                            ArrowEndObj[1].transform.position = ArrowEsc[1];
+                            ArrowEndObj[2].transform.position = ArrowEsc[2];
+                            MoveSelect();
+                            return;
                        }
                        Index = Random.Range(0, number.Count);             // 0から要素の最大数までの範囲からランダムで抽選
                        random = number[Index];                            // 抽選した値で要素を指定する
                        ArrowAttack(random);
                    }
-                   if (OneTimeFlg)
+                    if (ArrowNum >= 3)
+                    {
+                        OneTimeFlg = true;
+
+                        
+                    }
+                    if (OneTimeFlg)
                    {
                        OneTimeFlg = false;
-                        MoveSelect();
+                        
                     }
                 }
                 
@@ -349,6 +398,7 @@ public class LB_Attack : MonoBehaviour
             vecX = Random.Range(20f, 40f);                                           //座標ランダム位置決め(X)                                     
             vecY = Random.Range(10f, 20f);                                           //座標ランダム位置決め(Y)
             LB.transform.position = new Vector3(vecX, vecY, 0.0f);                   //ランダムワープ実行
+
             time = 1.0f;                                                             //時間を1.0fに
         }
     }
@@ -359,13 +409,22 @@ public class LB_Attack : MonoBehaviour
     }
     //WarpeBulletAttack========================================================================================
     private void WarpBulletAttack(){
+        
         Vector3 bulletPosition = firingPoint.transform.position;                       //発射位置をfiringPointに
         WarpBullets = Instantiate(WarpBullet, bulletPosition, this.transform.rotation);//warpBullet生成
+        
         WarpCount++;                                                                   //カウント増加               
+    }
+    private void CreateWarpBullet()
+    {
+        EffectManager.Play(EffectData.eEFFECT.EF_LASTBOSS_FASTENERGYBALL, firingPoint.transform.position);      //effect生成
+        Effect = GameObject.Find("FastEnergyBall(Clone)");
     }
     //CircleBulletAttack=======================================================================================
     IEnumerator CircleBulletAttack(){
-        for (int i = 0; i < 20; i++){                                                  //20回繰り返す
+        EffectManager.Play(EffectData.eEFFECT.EF_LASTBOSS_CHARGE, firingPoint.transform.position);      //effect生成
+        EffectManager.Play(EffectData.eEFFECT.EF_LASTBOSS_ENERGYBALL, firingPoint.transform.position);      //effect生成
+        for (int i = 0; i < 8; i++){                                                  //20回繰り返す
             Debug.Log("ゴミかすしねbaaaaaaaaaaaaaaaaaaaaaaaaakaaaaaaaaaaaaaa"+i);
             rotation.eulerAngles = new Vector3(0.0f,0.0f,Angle);                       //クォータニオン→オイラー角への変換
             yield return new WaitForSeconds(0.3f);                                     //0.3f待つ 
@@ -376,7 +435,14 @@ public class LB_Attack : MonoBehaviour
             CircleBulletobj.name = "Circle" + i;
             Effect.name = "EF_BALL" + i;
             GameObject.Find("EF_BALL" + i).transform.parent = GameObject.Find("Circle" + i).transform;
-            Angle += 30;                                                               //k(Z角度)を30ずつ増加
+            if (!CircleChange)
+            {
+                Angle += 20;                                                               //k(Z角度)を30ずつ増加
+            }
+            if (CircleChange)
+            {
+                Angle -= 20;
+            }
         }
     }
     private void StartCircle()
@@ -390,7 +456,10 @@ public class LB_Attack : MonoBehaviour
         Debug.Log("アローウゴキマスル");
         ArrowUseFlag = false;
         LBossAnim.SetInteger("UltCount", selectnumber);
-        
+        ArrowEndObj[0].transform.position = ArrowEsc[3];
+        ArrowEndObj[1].transform.position = ArrowEsc[4];
+        ArrowEndObj[2].transform.position = ArrowEsc[5];
+
         switch (selectnumber) {
             //Arrow_Rightを動かす-------------------------------------------------------------
             case 1:
@@ -403,7 +472,7 @@ public class LB_Attack : MonoBehaviour
                 Debug.Log("Arrow_Rightが動いた");                          //デバックログを表示
                 LBossAnim.Play("ULT_Right");
                 LBossAnim.SetBool("OnlyFlg", true);
-                ArrowNum ++;
+               
                 break;                                                      //caseを抜ける
             //--------------------------------------------------------------------------------
 
@@ -418,7 +487,7 @@ public class LB_Attack : MonoBehaviour
                 Debug.Log("Arrow_Leftが動いた");                           //デバックログを表示
                 LBossAnim.Play("ULT_Left");
                 LBossAnim.SetBool("OnlyFlg", true);
-                ArrowNum++;
+                
                 break;                                                      //caseを抜ける
             //---------------------------------------------------------------------------------
 
@@ -433,7 +502,7 @@ public class LB_Attack : MonoBehaviour
                 Debug.Log("Arrow_Upが動いた");                               //デバックログを表示  
                 LBossAnim.Play("ULT_Down");
                 LBossAnim.SetBool("OnlyFlg", true);
-                ArrowNum++;
+                
                 break;                                                      //caseを抜ける
             //-----------------------------------------------------------------------------------
             default:
@@ -441,13 +510,7 @@ public class LB_Attack : MonoBehaviour
             break;
         }
         number.RemoveAt(Index);//抽選で使用した値を要素から抜き出す
-        if(ArrowNum >=3)
-        {
-            OneTimeFlg = true;
-            
-            LBossAnim.SetInteger("UltCount", 0);
-            OnlryFlg = true;
-        }
+        
     }
 }
 //--------------------------------------------------------------------------------------------------------------

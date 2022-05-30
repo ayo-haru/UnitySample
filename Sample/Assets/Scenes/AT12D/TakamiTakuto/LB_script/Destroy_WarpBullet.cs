@@ -14,7 +14,7 @@ public class Destroy_WarpBullet : MonoBehaviour
         Attack = GameObject.Find("LastBoss(Clone)").GetComponent<LB_Attack>();
     }
 
-    private void OnCollisionStay(Collision collision)//当たり判定処理
+    private void OnCollisionEnter(Collision collision)//当たり判定処理
     {
         if (collision.gameObject.name == "Rulaby"|| collision.gameObject.name == "LastBoss(Clone)")        //もし当たったモノにGroundタグが付いていた場合
         {
@@ -23,6 +23,7 @@ public class Destroy_WarpBullet : MonoBehaviour
             Attack.WarpNum++;
             Attack.OneTimeFlg = true;
             Destroy(WarpBullet);      //BoundBollを破壊
+            Destroy(Attack.Effect);
             Debug.Log("弾を破壊した");//デバックログを表示
             flag = true;
 

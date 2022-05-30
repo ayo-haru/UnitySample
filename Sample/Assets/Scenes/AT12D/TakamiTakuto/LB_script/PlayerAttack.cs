@@ -37,7 +37,17 @@ public class PlayerAttack : MonoBehaviour
             if (onryflg==false)
             {
                 onryflg = true;
-                WeaponPos = GameObject.Find("Weapon(Clone)").transform.position;
+                if (this.transform.position.x >= GameData.PlayerPos.x)
+                {
+                    WeaponPos.x = GameObject.Find("Weapon(Clone)").transform.position.x + this.transform.localScale.x;
+                    WeaponPos.y = GameObject.Find("Weapon(Clone)").transform.position.y + this.transform.localScale.y;
+                }
+                if (this.transform.position.x <= GameData.PlayerPos.x)
+                {
+                    WeaponPos.x = GameObject.Find("Weapon(Clone)").transform.position.x - this.transform.localScale.x;
+                    WeaponPos.y = GameObject.Find("Weapon(Clone)").transform.position.y + this.transform.localScale.y;
+                }
+                WeaponPos.z = GameObject.Find("Weapon(Clone)").transform.position.z;
                 LastBossPos = GameObject.Find("LastBoss(Clone)").transform.position;
                 BeziePos= GameObject.Find("BeziePos").transform.position;
                 BeziePos.x = LastBossPos.x;

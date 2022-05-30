@@ -27,7 +27,7 @@ public class Arrow_Disappear : MonoBehaviour
     private void OnTriggerEnter(Collider Arrow_Collision)//当たり判定処理
     {
         Debug.Log("何かに当たった");                              //デバックログを表示
-        if (Arrow_Collision.gameObject.name == "Stage")
+        if (Arrow_Collision.gameObject.name == "StageBass")
         {
             Destroy(ArrowUp);
             Debug.Log("ArrowUpがワープした");                             //デバックログを表示
@@ -38,6 +38,7 @@ public class Arrow_Disappear : MonoBehaviour
             LbAttack.ArrowCount++;
             Debug.Log("ArrowCount:" + LbAttack.ArrowCount);             //デバックログ
             LbAttack.LBossAnim.SetBool("OnlyFlg", false);
+            LbAttack.ArrowNum++;
 
         }
         else if (Arrow_Collision.gameObject.tag== "Ground")        //もし当たったモノにGroundタグが付いていた場合
@@ -58,6 +59,7 @@ public class Arrow_Disappear : MonoBehaviour
                     LbAttack.ArrowCount++;
                     Debug.Log("ArrowCount:" + LbAttack.ArrowCount);//デバックログ
                     LbAttack.LBossAnim.SetBool("OnlyFlg", false);
+                    LbAttack.ArrowNum++;
                 }
                 //-------------------------------------------------------------------------------------------------
 
@@ -72,6 +74,7 @@ public class Arrow_Disappear : MonoBehaviour
                     LbAttack.ArrowCount++;
                     Debug.Log("ArrowCount:" + LbAttack.ArrowCount);             //デバックログ
                     LbAttack.LBossAnim.SetBool("OnlyFlg", false);
+                    LbAttack.ArrowNum++;
                 }
                 //-------------------------------------------------------------------------------------------------
             }

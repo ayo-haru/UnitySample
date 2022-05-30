@@ -24,18 +24,17 @@ public class DestroyBoundBoll : MonoBehaviour
         {
             
            
-                Attack.Circlenum++;
+            Attack.Circlenum++;
             
             Attack.OneTimeFlg = true;
             Destroy(BoundBoll);      //BoundBollを破壊
             Debug.Log("弾を破壊した");//デバックログを表示
         }
-        else if(collision.gameObject.name == "Rulaby")
+        if(collision.gameObject.name == "Rulaby"|| collision.gameObject.name == "LastBoss(Clone)")
         {
             
 
             Attack.Circlenum++;
-            
             Attack.OneTimeFlg = true;
             Destroy(BoundBoll);      //BoundBollを破壊
             Debug.Log("弾を破壊した");//デバックログを表示

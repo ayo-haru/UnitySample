@@ -237,11 +237,18 @@ public class Player : MonoBehaviour
         }
 
         if (other.gameObject.tag == "toKitchen1"){
-            //GameData.isFadeOut = true;  // フェードかける
-            //GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001;
+            
+            //チュートリアル３からキッチンステージ１のときは扉に入る
+            if(GameData.CurrentMapNumber == (int)GameData.eSceneState.Tutorial3)
+            {
+                entryGate = true;
+                nextMapNumber = (int)GameData.eSceneState.KitchenStage001;
+            }else
+            {
+                GameData.isFadeOut = true;  // フェードかける
+                GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001;
+            }
 
-            entryGate = true;
-            nextMapNumber = (int)GameData.eSceneState.KitchenStage001;
         }
 
         if (other.gameObject.tag == "toKitchen2"){

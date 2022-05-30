@@ -130,6 +130,7 @@ public class Player : MonoBehaviour
         //effectPos = new Vector3(GameData.PlayerPos.x, GameData.PlayerPos.y + 10.0f, GameData.PlayerPos.z);
         _animator.Play("Death");
         EffectManager.Play(EffectData.eEFFECT.EF_PLAYER_DEATH, GameData.PlayerPos, 7.0f);
+        SoundManager.Play(SoundData.eSE.SE_PLAYER_DEATH, SoundData.IndelibleAudioList);
         StartCoroutine(this.GetComponent<Player2>().VibrationPlay(1.0f, 1.0f, 5.0f));
     }
 

@@ -367,7 +367,7 @@ public class GamePause : MonoBehaviour
                 }
 
             }
-            else
+            else if(SousaImage.GetComponent<Image>().enabled == false)
             {
                 if (keyboard.upArrowKey.wasReleasedThisFrame)
                 {
@@ -427,6 +427,9 @@ public class GamePause : MonoBehaviour
             //---本当にいいかの確認を出すための決定
             if (isDecision)
             {
+                // 決定音
+                SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.IndelibleAudioList);
+
                 pauseSelect = returnSelect;
 
                 isConfirm = true;
@@ -593,8 +596,11 @@ public class GamePause : MonoBehaviour
     private void OnLeftStick(InputAction.CallbackContext obj) {
         if (!Pause.isPause || SaveManager.canSave || Warp.shouldWarp || GameData.isFadeIn || GameData.isFadeOut || GameOver.GameOverFlag || Optionmanager.activeSelf || notShowPause)
         {
-            // ポーズ中ではないときははじく
-            return;
+            if (SousaImage.GetComponent<Image>().enabled)
+            {
+                // ポーズ中ではないとき、操作方法表示中ははじく
+                return;
+            }
         }
 
         //---左ステックのステック入力を取得
@@ -629,8 +635,11 @@ public class GamePause : MonoBehaviour
     private void OnRightStick(InputAction.CallbackContext obj) {
         if (!Pause.isPause || SaveManager.canSave || Warp.shouldWarp || GameData.isFadeIn || GameData.isFadeOut || GameOver.GameOverFlag || Optionmanager.activeSelf || notShowPause)
         {
-            // ポーズ中ではないときははじく
-            return;
+            if (SousaImage.GetComponent<Image>().enabled)
+            {
+                // ポーズ中ではないときははじく
+                return;
+            }
         }
 
         //---右ステックのステック入力を取得

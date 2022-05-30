@@ -316,7 +316,7 @@ public class GameOver : MonoBehaviour {
     //}
 
     public static void GameOverReset() {
-        SoundManager.Play(SoundData.eSE.SE_PLAYER_DEATH, SoundData.IndelibleAudioList);
+        //SoundManager.Play(SoundData.eSE.SE_PLAYER_DEATH, SoundData.IndelibleAudioList);
         GameOverFlag = true;
         GameData.RespawnPlayer();
         if(GameData.CurrentMapNumber == GameData.NextMapNumber)

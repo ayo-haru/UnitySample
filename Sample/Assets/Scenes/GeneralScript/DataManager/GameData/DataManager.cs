@@ -241,7 +241,7 @@ public class DataManager : MonoBehaviour
         EffectData.isSetEffect = true;                  // デバッグ時エフェクト初期化していない場合にエラーを出さない
 
         // 絶対に消されない音のいれる場所
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 10; i++)
         {
             SoundData.IndelibleAudioList[i] = gameObject.AddComponent<AudioSource>();
         }

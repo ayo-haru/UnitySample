@@ -57,7 +57,7 @@ public class ExStageManager : MonoBehaviour
                     else
                     {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
-                        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(15.0f, 23.0f, 0.0f);
+                        GameData.PlayerPos = GameData.Player.transform.position = new Vector3(-50.0f, 23.0f, 0.0f);
                     }
                     break;
 

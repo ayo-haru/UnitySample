@@ -710,6 +710,7 @@ public class Player2 : MonoBehaviour
     #region ポーズの入力処理
     private void PauseToggle(InputAction.CallbackContext obj) {
         if (GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE &&
+            GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS2_SCENE &&
             GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial1 &&
             GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial2 &&
             GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial3 && 

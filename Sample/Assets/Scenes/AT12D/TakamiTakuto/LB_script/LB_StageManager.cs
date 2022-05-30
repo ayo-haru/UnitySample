@@ -24,7 +24,6 @@ public class LB_StageManager: MonoBehaviour
 {
     public GameObject PlayerPrefab;                             // プレハブ内のプレイヤーを扱う
     public GameObject HPSystem;                                 // プレハブ内のHPUIをクローンする
-
     private void Awake()
     {
         //---プレイヤープレハブの取得
@@ -34,8 +33,22 @@ public class LB_StageManager: MonoBehaviour
                                                                 // GameDataにプレイヤーを定義する
         }
         GameData.PlayerPos = GameData.Player.transform.position = GameObject.Find("PlayerStart").transform.position; // プレイヤーの初期位置を設定
-        GameObject Player = Instantiate(GameData.Player);       // プレハブをクローン
-        Player.name = GameData.Player.name;                         // プレハブの名前通りにする
+        if (GameOver.GameOverFlag)
+        {
+            //---ゲームオーバー時
+            // 最終セーブポイントか、シーン１の初期位置にリスポーン
+            GameData.PlayerPos = GameData.Player.transform.position = GameData.ReSpawnPos;
+            GameOver.GameOverFlag = false;
+        }
+        else if (Player.shouldRespawn)
+        {
+            //---ギミックに轢かれたときか、毒沼落ちた時
+            // 直前に通ったリスポーン地点へリスポーン
+            GameData.PlayerPos = GameData.Player.transform.position = GameData.ReSpawnPos;
+            Player.shouldRespawn = false;
+        }
+        GameObject player = Instantiate(GameData.Player);       // プレハブをクローン
+        player.name = GameData.Player.name;                         // プレハブの名前通りにする
 
         //---プレイヤーUIを表示
         //ボスシーンのキャンバスの設定が他と異なって表示できないためｈｐ専用のキャンバスの作った
@@ -48,7 +61,7 @@ public class LB_StageManager: MonoBehaviour
         {
             SoundData.GameAudioList[i] = gameObject.AddComponent<AudioSource>();
         }
-        SoundManager.Play(SoundData.eBGM.BGM_BOSS1, SoundData.GameAudioList);
+        SoundManager.Play(SoundData.eBGM.BGM_LASTBOSS, SoundData.GameAudioList);
 
         //---マップの番号(現在のシーン)を保存
         if (GameData.NextMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
@@ -59,7 +72,7 @@ public class LB_StageManager: MonoBehaviour
              * インスペクタービューに表示させたcurrentSceneNumで初期化をする。
              * GameData.NextMapNumberは初期化してない場合はかってに0になってるから==
              */
-            GameData.OldMapNumber = GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
+            GameData.OldMapNumber = GameData.NextMapNumber = (int)GameData.eSceneState.BOSS2_SCENE;
         }
         GameData.CurrentMapNumber = GameData.NextMapNumber;         // ボスシーンに到達している判定
         //SaveManager.saveLastMapNumber(GameData.CurrentMapNumber);   // 現在のシーンをセーブ

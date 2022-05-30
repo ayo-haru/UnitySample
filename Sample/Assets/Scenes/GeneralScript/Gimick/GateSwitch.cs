@@ -7,8 +7,8 @@ public class GateSwitch : MonoBehaviour
     private GameObject switch_Close;
     private MeshRenderer Mesh_Close;
     private GameObject switch_Open;
-    private MeshRenderer Mesh_Open;
-    private GameObject gate;
+    //private MeshRenderer Mesh_Open;
+    //private GameObject gate;
     [SerializeField]
     private Animator animator;
 
@@ -20,11 +20,11 @@ public class GateSwitch : MonoBehaviour
         switch_Open = GameObject.Find("switch_open");
         //Mesh_Open = switch_Open.GetComponent<MeshRenderer>();
 
-        gate = GameObject.Find("GateToStage1");
-        if (!gate)
-        {
-            gate = GameObject.Find("GateToBoss1");
-        }
+        //gate = GameObject.Find("GateToStage1");
+        //if (!gate)
+        //{
+        //    gate = GameObject.Find("GateToBoss1");
+        //}
 
         if (GameData.GateOnOff)
         {
@@ -62,10 +62,10 @@ public class GateSwitch : MonoBehaviour
             SoundManager.Play(SoundData.eSE.SE_SWITCH, SoundData.GameAudioList);
             SoundManager.Play(SoundData.eSE.SE_GATEOPEN, SoundData.GameAudioList);
 
-            if (gate)
-            {
-                gate.GetComponent<Gate>().Close();
-            }
+            //if (gate)
+            //{
+            //    gate.GetComponent<Gate>().Close();
+            //}
         }
         else
         {
@@ -77,10 +77,10 @@ public class GateSwitch : MonoBehaviour
 
             SoundManager.Play(SoundData.eSE.SE_SWITCH, SoundData.GameAudioList);
             SoundManager.Play(SoundData.eSE.SE_GATEOPEN, SoundData.GameAudioList);
-            if (gate)
-            {
-                gate.GetComponent<Gate>().Open();
-            }
+            //if (gate)
+            //{
+            //    gate.GetComponent<Gate>().Open();
+            //}
         }
     }
 

@@ -11,10 +11,12 @@ public class Gate : MonoBehaviour
 
     private GameObject gate;
     public Animator animator;
+    private bool oldGateflg;
     private ShakeCamera shakecamera;
     // Start is called before the first frame update
     void Start()
     {
+        oldGateflg = GameData.GateOnOff;
         //gate_Close = GameObject.Find("Gate_Close");
         //Mesh_Close = gate_Close.GetComponent<MeshRenderer>();
         //gate_Open = GameObject.Find("Gate_Open");
@@ -43,7 +45,11 @@ public class Gate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(oldGateflg != GameData.GateOnOff)
+        {
+            shakecamera.Shake(0.5f, 1000, 5);
+        }
+        oldGateflg = GameData.GateOnOff;
     }
 
     public void Open() {
@@ -55,7 +61,7 @@ public class Gate : MonoBehaviour
         gate.GetComponent<BoxCollider>().isTrigger = true;
 
         animator.Play("Open");
-        shakecamera.Shake(0.5f, 1000, 5);
+        //shakecamera.Shake(0.5f, 1000, 5);
     }
     public void Close() {
         //Mesh_Close.enabled = true;
@@ -65,8 +71,6 @@ public class Gate : MonoBehaviour
         gate.GetComponent<BoxCollider>().enabled = false;
         gate.GetComponent<BoxCollider>().isTrigger = false;
         animator.Play("Close");
-        shakecamera.Shake(0.5f, 1000, 5);
-
-
+        //shakecamera.Shake(0.5f, 1000, 5);
     }
 }

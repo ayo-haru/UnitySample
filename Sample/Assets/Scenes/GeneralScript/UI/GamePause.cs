@@ -122,7 +122,10 @@ public class GamePause : MonoBehaviour
 
         //---’T‚µ‚ÄŠi”[
         hpUI = GameObject.Find("HPSystem(2)(Clone)");
-        if (GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE)
+        if (GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE &&
+            GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial1 &&
+            GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial2 &&
+            GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial3)
         {
             minimapUI = GameObject.Find("MiniMapFrame");
         }
@@ -266,7 +269,10 @@ public class GamePause : MonoBehaviour
 
             isCalledOncce = false;
             hpUI.SetActive(true);
-            if (GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE)
+            if (GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE &&
+                GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial1 &&
+                GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial2 &&
+                GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial3)
             {
                 minimapUI.SetActive(true);
             }
@@ -301,7 +307,10 @@ public class GamePause : MonoBehaviour
                 SousaChara.GetComponent<Image>().enabled = true;
                 Option.GetComponent<Image>().enabled = true;
                 hpUI.SetActive(false);
-                if (GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE)
+                if (GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE &&
+                    GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial1 &&
+                    GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial2 &&
+                    GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial3)
                 {
                     minimapUI.SetActive(false);
                 }

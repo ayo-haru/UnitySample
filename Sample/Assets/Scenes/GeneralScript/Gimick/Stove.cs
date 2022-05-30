@@ -35,6 +35,6 @@ public class Stove : MonoBehaviour
     /// è¡âŒ
     /// </summary>
     public void Extinguish() {
-        Destroy(GameObject.Find("Fire_kari(Clone)"));
+        Destroy(GameObject.Find(EffectData.EF[(int)EffectData.eEFFECT.EF_GIMICK_FIRE].name+"(Clone)"));
     }
 }

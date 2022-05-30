@@ -1,15 +1,15 @@
 //=============================================================================
 //
-// ƒvƒŒƒCƒ„[‚ÌŠÇ—‚·‚é
+// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç®¡ç†ã™ã‚‹
 //
-// ì¬“ú:2022/03/11
-// ì¬Ò:ˆÉ’n“c^ˆß
+// ä½œæˆæ—¥:2022/03/11
+// ä½œæˆè€…:ä¼Šåœ°ç”°çœŸè¡£
 //
-// <ŠJ”­—š—ğ>
-// 2022/03/11 ì¬
-// 2022/03/30 HP•Û‘¶
-// 2022/04/18 ƒAƒjƒ[ƒVƒ‡ƒ“•Û‘¶‚µ‚Ä‚È‚¢‚í
-// 2022/04/19 ƒZ[ƒuƒ|ƒCƒ“ƒg‚É‚æ‚éƒZ[ƒuÀ‘•
+// <é–‹ç™ºå±¥æ­´>
+// 2022/03/11 ä½œæˆ
+// 2022/03/30 HPä¿å­˜
+// 2022/04/18 ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ä¿å­˜ã—ã¦ãªã„ã‚
+// 2022/04/19 ã‚»ãƒ¼ãƒ–ãƒã‚¤ãƒ³ãƒˆã«ã‚ˆã‚‹ã‚»ãƒ¼ãƒ–å®Ÿè£…
 //=============================================================================
 
 using System.Collections;
@@ -20,38 +20,38 @@ using System;
 
 public class Player : MonoBehaviour
 {
-    //---•Ï”éŒ¾
-    //private Vector3 ReSpawnPos;                   // ƒŠƒXƒ|[ƒ“ˆÊ’u‚ğ•Û‘¶
+    //---å¤‰æ•°å®£è¨€
+    //private Vector3 ReSpawnPos;                   // ãƒªã‚¹ãƒãƒ¼ãƒ³ä½ç½®ã‚’ä¿å­˜
 
     [System.NonSerialized]
-    public static bool isHitSavePoint;              // ƒZ[ƒuƒ|ƒCƒ“ƒg‚É“–‚½‚Á‚½‚©
+    public static bool isHitSavePoint;              // ã‚»ãƒ¼ãƒ–ãƒã‚¤ãƒ³ãƒˆã«å½“ãŸã£ãŸã‹
     [System.NonSerialized]
     public static bool HitSavePointColorisRed;
     [System.NonSerialized]
     public static bool shouldRespawn;
 
-    private ObservedValue<int> checkHP; // HP‚Ì’l‚ğŠÄ‹‚·‚é
+    private ObservedValue<int> checkHP; // HPã®å€¤ã‚’ç›£è¦–ã™ã‚‹
 
-    private GameObject fadeimage;   // ƒtƒF[ƒh‚Ìƒpƒlƒ‹
+    private GameObject fadeimage;   // ãƒ•ã‚§ãƒ¼ãƒ‰ã®ãƒ‘ãƒãƒ«
 
     private Animator _animator;
 
-    private bool entryGate;             //ƒQ[ƒg‚É“ü‚ë‚¤‚Æ‚µ‚Ä‚é‚©
-    private int nextMapNumber;          //Ÿ‚ÌƒV[ƒ“”Ô†•Û‘¶—p
-    private float moveSpeed = 0.5f;     //”à‚É“ü‚é‚ÌˆÚ“®‘¬“x
-    private bool onceFlag;              //ˆê‰ñ‚¾‚¯ˆ—‚·‚é—p
-    public float rotSpeed = 1.0f;       //‰ñ“]‘¬“x
-    private float rotTimer;             //‰ñ“]—pƒ^ƒCƒ}[
-    public float movePos = 15.0f;       //ˆÚ“®I—¹ˆÊ’u
+    private bool entryGate;             //ã‚²ãƒ¼ãƒˆã«å…¥ã‚ã†ã¨ã—ã¦ã‚‹ã‹
+    private int nextMapNumber;          //æ¬¡ã®ã‚·ãƒ¼ãƒ³ç•ªå·ä¿å­˜ç”¨
+    private float moveSpeed = 0.5f;     //æ‰‰ã«å…¥ã‚‹æ™‚ã®ç§»å‹•é€Ÿåº¦
+    private bool onceFlag;              //ä¸€å›ã ã‘å‡¦ç†ã™ã‚‹ç”¨
+    public float rotSpeed = 1.0f;       //å›è»¢é€Ÿåº¦
+    private float rotTimer;             //å›è»¢ç”¨ã‚¿ã‚¤ãƒãƒ¼
+    public float movePos = 15.0f;       //ç§»å‹•çµ‚äº†ä½ç½®
 
     // Start is called before the first frame update
     void Start()
     {
         fadeimage = GameObject.Find("Fade");
 
-        isHitSavePoint = false;                     // ƒtƒ‰ƒO‰Šú‰»
-        HitSavePointColorisRed = false;             // ÔF‚ÌƒZ[ƒuƒ|ƒCƒ“ƒg‚Æ“–‚½‚Á‚½‚©
-        shouldRespawn = false;                      // ƒŠƒXƒ|[ƒ“‚·‚é
+        isHitSavePoint = false;                     // ãƒ•ãƒ©ã‚°åˆæœŸåŒ–
+        HitSavePointColorisRed = false;             // èµ¤è‰²ã®ã‚»ãƒ¼ãƒ–ãƒã‚¤ãƒ³ãƒˆã¨å½“ãŸã£ãŸã‹
+        shouldRespawn = false;                      // ãƒªã‚¹ãƒãƒ¼ãƒ³ã™ã‚‹æ™‚
 
         checkHP = new ObservedValue<int>(GameData.CurrentHP);
         checkHP.OnValueChange += () => { if (checkHP.Value < 1) PlayerDeath(); };
@@ -66,15 +66,15 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameData.PlayerPos = this.transform.position;    // ƒvƒŒƒCƒ„[‚ÌˆÊ’u‚ğ•Û‘¶
+        GameData.PlayerPos = this.transform.position;    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®ã‚’ä¿å­˜
         checkHP.Value = GameData.CurrentHP;
 
-        //if (this.transform.position.y < -10000) // —‰º€‚ÉƒŠƒXƒ|[ƒ“
+        //if (this.transform.position.y < -10000) // è½ä¸‹æ­»æ™‚ã«ãƒªã‚¹ãƒãƒ¼ãƒ³
         //{
         //    this.transform.position = GameData.Player.transform.position = GameData.PlayerPos = GameData.ReSpawnPos;
         //}
 
-        //if (isHitSavePoint) // ƒZ[ƒuƒ|ƒCƒ“ƒg‚É“–‚½‚Á‚Ä‚¢‚ÄA‚»‚ÌƒtƒŒ[ƒ€‚ÌÅ‰‚ÉƒXƒeƒBƒbƒN‚ªŒX‚¯‚ç‚ê‚½‚ç
+        //if (isHitSavePoint) // ã‚»ãƒ¼ãƒ–ãƒã‚¤ãƒ³ãƒˆã«å½“ãŸã£ã¦ã„ã¦ã€ãã®ãƒ•ãƒ¬ãƒ¼ãƒ ã®æœ€åˆã«ã‚¹ãƒ†ã‚£ãƒƒã‚¯ãŒå‚¾ã‘ã‚‰ã‚ŒãŸã‚‰
         //{
         //    if (GamePadManager.onceTiltStick)
         //    {
@@ -89,10 +89,10 @@ public class Player : MonoBehaviour
         //    }
         //}
 
-        if (SaveManager.shouldSave) // ƒZ[ƒu‚·‚é‚ª‘I‘ğ‚³‚ê‚½‚ç
+        if (SaveManager.shouldSave) // ã‚»ãƒ¼ãƒ–ã™ã‚‹ãŒé¸æŠã•ã‚ŒãŸã‚‰
         {
             GameData.SaveAll();
-            SaveManager.canSave = false;                                // ƒZ[ƒu‚ªI‚í‚Á‚½‚Ì‚Åƒtƒ‰ƒO‚ğ‰º‚·
+            SaveManager.canSave = false;                                // ã‚»ãƒ¼ãƒ–ãŒçµ‚ã‚ã£ãŸã®ã§ãƒ•ãƒ©ã‚°ã‚’ä¸‹ã™
             SaveManager.shouldSave = false;
         }
 
@@ -109,21 +109,21 @@ public class Player : MonoBehaviour
             Warp.shouldWarp = false;
         }
 
-        //---ƒQ[ƒ€ƒI[ƒo[
+        //---ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼
         if (GameData.CurrentHP < 1)
         {
             shouldRespawn = false;
 
-            //---ƒtƒF[ƒh
+            //---ãƒ•ã‚§ãƒ¼ãƒ‰
             if (!GameObject.Find(EffectData.EF[(int)EffectData.eEFFECT.EF_PLAYER_DEATH].name+"(Clone)"))
             {
-                GameData.isFadeOut = true;              // ƒtƒF[ƒh‚©‚¯‚é
-                GameOver.GameOverReset();               // ‚è‚·‚Û‚ñ
+                GameData.isFadeOut = true;              // ãƒ•ã‚§ãƒ¼ãƒ‰ã‹ã‘ã‚‹
+                GameOver.GameOverReset();               // ã‚Šã™ã½ã‚“
             }
         }
 
 
-        //---€‚É–ß‚è
+        //---æ­»ã«æˆ»ã‚Šæ™‚
         if (shouldRespawn)
         {
             if (!GameData.isFadeOut)
@@ -135,32 +135,32 @@ public class Player : MonoBehaviour
         //GamePadManager.onceTiltStick = false;
 
 
-        //---ƒQ[ƒg“ü‚è’†
+        //---ã‚²ãƒ¼ãƒˆå…¥ã‚Šä¸­
         if (entryGate)
         {
-            //ƒL[“ü—Í‚Æd—Í–³Œø‚©‚µ‚Æ‚­
+            //ã‚­ãƒ¼å…¥åŠ›ã¨é‡åŠ›ç„¡åŠ¹ã‹ã—ã¨ã
             gameObject.GetComponent<Player2>().enabled = false;
             gameObject.GetComponent<Rigidbody>().useGravity = false;
-            //ƒvƒŒƒCƒ„[ˆÚ“®ˆ—
+            //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç§»å‹•å‡¦ç†
             Vector3 newPos = transform.position;
             newPos.z += moveSpeed;
             transform.position = newPos;
-            //‰ñ“]‚Ì–Ú•W’l
+            //å›è»¢ã®ç›®æ¨™å€¤
             Quaternion target = new Quaternion();
-            //Œü‚«‚ğİ’è
+            //å‘ãã‚’è¨­å®š
             target = Quaternion.LookRotation(new Vector3(0.0f,0.0f,1.0f));
-            //‰ñ“]‚³‚¹‚é
+            //å›è»¢ã•ã›ã‚‹
             rotTimer += rotSpeed;
             transform.rotation = Quaternion.RotateTowards(transform.rotation, target, rotTimer);
 
-            //ˆê’è—Ê‚¤‚µ‚ë‚És‚Á‚½‚çƒV[ƒ“‘JˆÚ
+            //ä¸€å®šé‡ã†ã—ã‚ã«è¡Œã£ãŸã‚‰ã‚·ãƒ¼ãƒ³é·ç§»
             if (transform.position.z > movePos)
             {
                 
-                //ƒV[ƒ“‘JˆÚ
+                //ã‚·ãƒ¼ãƒ³é·ç§»
                 if (onceFlag)
                 {
-                    GameData.isFadeOut = true;  // ƒtƒF[ƒh‚©‚¯‚é
+                    GameData.isFadeOut = true;  // ãƒ•ã‚§ãƒ¼ãƒ‰ã‹ã‘ã‚‹
                     switch (nextMapNumber)
                     {
                         case (int)GameData.eSceneState.Tutorial2:
@@ -177,7 +177,7 @@ public class Player : MonoBehaviour
                             break;
 
                     }
-                    //•Ï”‰Šú‰»
+                    //å¤‰æ•°åˆæœŸåŒ–
                     entryGate = false;
                     nextMapNumber = 0;
                     onceFlag = false;
@@ -202,26 +202,26 @@ public class Player : MonoBehaviour
 
 
     private void OnTriggerStay(Collider other) {
-        //---ƒZ[ƒuƒ|ƒCƒ“ƒg’n“_‚Ìˆ—
-        if (other.gameObject.tag == "SavePoint")    // ‚±‚Ì–¼‘O‚Ìƒ^ƒO‚ÆÕ“Ë‚µ‚½‚ç
+        //---ã‚»ãƒ¼ãƒ–ãƒã‚¤ãƒ³ãƒˆåœ°ç‚¹ã®å‡¦ç†
+        if (other.gameObject.tag == "SavePoint")    // ã“ã®åå‰ã®ã‚¿ã‚°ã¨è¡çªã—ãŸã‚‰
         {
-            isHitSavePoint = true;                  // “–‚½‚Á‚½ƒtƒ‰ƒO‚ğ—§‚Ä‚é
+            isHitSavePoint = true;                  // å½“ãŸã£ãŸãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
         }
     }
 
     void OnTriggerEnter(Collider other) {
 
-        //---ƒŠƒXƒ|[ƒ“’n“_‚Ìˆ—
+        //---ãƒªã‚¹ãƒãƒ¼ãƒ³åœ°ç‚¹ã®å‡¦ç†
         if(other.gameObject.tag == "Respawn")
         {
             GameData.ReSpawnPos = this.transform.position;
         }
 
 
-        //----- ŠeƒV[ƒ“‘JˆÚ -----
+        //----- å„ã‚·ãƒ¼ãƒ³é·ç§» -----
         if (other.gameObject.tag == "toTutorial2")
         {
-            //GameData.isFadeOut = true;  // ƒtƒF[ƒh‚©‚¯‚é
+            //GameData.isFadeOut = true;  // ãƒ•ã‚§ãƒ¼ãƒ‰ã‹ã‘ã‚‹
             //GameData.NextMapNumber = (int)GameData.eSceneState.Tutorial2;
 
             entryGate = true;
@@ -229,7 +229,7 @@ public class Player : MonoBehaviour
         }
         if (other.gameObject.tag == "toTutorial3")
         {
-            //GameData.isFadeOut = true;  // ƒtƒF[ƒh‚©‚¯‚é
+            //GameData.isFadeOut = true;  // ãƒ•ã‚§ãƒ¼ãƒ‰ã‹ã‘ã‚‹
             //GameData.NextMapNumber = (int)GameData.eSceneState.Tutorial3;
 
             entryGate = true;
@@ -238,53 +238,53 @@ public class Player : MonoBehaviour
 
         if (other.gameObject.tag == "toKitchen1"){
             
-            //ƒ`ƒ…[ƒgƒŠƒAƒ‹‚R‚©‚çƒLƒbƒ`ƒ“ƒXƒe[ƒW‚P‚Ì‚Æ‚«‚Í”à‚É“ü‚é
+            //ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ï¼“ã‹ã‚‰ã‚­ãƒƒãƒãƒ³ã‚¹ãƒ†ãƒ¼ã‚¸ï¼‘ã®ã¨ãã¯æ‰‰ã«å…¥ã‚‹
             if(GameData.CurrentMapNumber == (int)GameData.eSceneState.Tutorial3)
             {
                 entryGate = true;
                 nextMapNumber = (int)GameData.eSceneState.KitchenStage001;
             }else
             {
-                GameData.isFadeOut = true;  // ƒtƒF[ƒh‚©‚¯‚é
+                GameData.isFadeOut = true;  // ãƒ•ã‚§ãƒ¼ãƒ‰ã‹ã‘ã‚‹
                 GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001;
             }
 
         }
 
         if (other.gameObject.tag == "toKitchen2"){
-            GameData.isFadeOut = true;              // ƒtƒF[ƒh‚©‚¯‚é
+            GameData.isFadeOut = true;              // ãƒ•ã‚§ãƒ¼ãƒ‰ã‹ã‘ã‚‹
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage002;
         }
 
         if (other.gameObject.tag == "toKitchen3"){
-            if (GameData.CurrentMapNumber == (int)GameData.eSceneState.BOSS1_SCENE)  // ¡‚¢‚éƒV[ƒ“‚ªƒ{ƒXƒV[ƒ“‚¾‚Á‚½ƒ{ƒX‚ª¶‚«‚Ä‚½‚çƒV[ƒ“‘JˆÚ‚µ‚È‚¢
+            if (GameData.CurrentMapNumber == (int)GameData.eSceneState.BOSS1_SCENE)  // ä»Šã„ã‚‹ã‚·ãƒ¼ãƒ³ãŒãƒœã‚¹ã‚·ãƒ¼ãƒ³ã ã£ãŸæ™‚ãƒœã‚¹ãŒç”Ÿãã¦ãŸã‚‰ã‚·ãƒ¼ãƒ³é·ç§»ã—ãªã„
             {
                 if (GameData.isAliveBoss1)
                 {
                     return;
                 }
             }
-            GameData.isFadeOut = true;  // ƒtƒF[ƒh‚©‚¯‚é
+            GameData.isFadeOut = true;  // ãƒ•ã‚§ãƒ¼ãƒ‰ã‹ã‘ã‚‹
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage003;
         }
-        if (other.gameObject.tag == "toKitchen4")    // ‚±‚Ì–¼‘O‚Ìƒ^ƒO‚ÆÕ“Ë‚µ‚½‚ç
+        if (other.gameObject.tag == "toKitchen4")    // ã“ã®åå‰ã®ã‚¿ã‚°ã¨è¡çªã—ãŸã‚‰
         {
-            GameData.isFadeOut = true;  // ƒtƒF[ƒh‚©‚¯‚é
+            GameData.isFadeOut = true;  // ãƒ•ã‚§ãƒ¼ãƒ‰ã‹ã‘ã‚‹
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage004;
         }
-        if (other.gameObject.tag == "toKitchen5")    // ‚±‚Ì–¼‘O‚Ìƒ^ƒO‚ÆÕ“Ë‚µ‚½‚ç
+        if (other.gameObject.tag == "toKitchen5")    // ã“ã®åå‰ã®ã‚¿ã‚°ã¨è¡çªã—ãŸã‚‰
         {
-            GameData.isFadeOut = true;  // ƒtƒF[ƒh‚©‚¯‚é  
+            GameData.isFadeOut = true;  // ãƒ•ã‚§ãƒ¼ãƒ‰ã‹ã‘ã‚‹  
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage005;
         }
-        if (other.gameObject.tag == "toKitchen6")    // ‚±‚Ì–¼‘O‚Ìƒ^ƒO‚ÆÕ“Ë‚µ‚½‚ç
+        if (other.gameObject.tag == "toKitchen6")    // ã“ã®åå‰ã®ã‚¿ã‚°ã¨è¡çªã—ãŸã‚‰
         {
-            GameData.isFadeOut = true;  // ƒtƒF[ƒh‚©‚¯‚é
+            GameData.isFadeOut = true;  // ãƒ•ã‚§ãƒ¼ãƒ‰ã‹ã‘ã‚‹
             GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage006;
         }
-        if (other.gameObject.tag == "toBoss1")    // ‚±‚Ì–¼‘O‚Ìƒ^ƒO‚ÆÕ“Ë‚µ‚½‚ç
+        if (other.gameObject.tag == "toBoss1")    // ã“ã®åå‰ã®ã‚¿ã‚°ã¨è¡çªã—ãŸã‚‰
         {
-            //GameData.isFadeOut = true;  // ƒtƒF[ƒh‚©‚¯‚é
+            //GameData.isFadeOut = true;  // ãƒ•ã‚§ãƒ¼ãƒ‰ã‹ã‘ã‚‹
             //GameData.NextMapNumber = (int)GameData.eSceneState.BOSS1_SCENE;
 
             entryGate = true;
@@ -293,33 +293,31 @@ public class Player : MonoBehaviour
 
         if (other.gameObject.tag == "toExStage1")
         {
-            GameData.isFadeOut = true;  // ƒtƒF[ƒh‚©‚¯‚é
+            GameData.isFadeOut = true;  // ãƒ•ã‚§ãƒ¼ãƒ‰ã‹ã‘ã‚‹
             GameData.NextMapNumber = (int)GameData.eSceneState.BossStage001;
         }
         if (other.gameObject.tag == "toExStage2")
         {
-            GameData.isFadeOut = true;  // ƒtƒF[ƒh‚©‚¯‚é
+            GameData.isFadeOut = true;  // ãƒ•ã‚§ãƒ¼ãƒ‰ã‹ã‘ã‚‹
             GameData.NextMapNumber = (int)GameData.eSceneState.BossStage002;
         }
         if (other.gameObject.tag == "toExStage3")
         {
-            GameData.isFadeOut = true;  // ƒtƒF[ƒh‚©‚¯‚é
+            GameData.isFadeOut = true;  // ãƒ•ã‚§ãƒ¼ãƒ‰ã‹ã‘ã‚‹
             GameData.NextMapNumber = (int)GameData.eSceneState.BossStage003;
         }
-
-        //---ƒ‰ƒXƒ{ƒXƒV[ƒ“
-        if(other.gameObject.tag == "toLastBoss")
+        if (other.gameObject.tag == "toLastBoss")
         {
-            GameData.isFadeOut = true;  // ƒtƒF[ƒh‚©‚¯‚é
-            GameData.NextMapNumber = (int)GameData.eSceneState.LastBossStage;
+            GameData.isFadeOut = true; // ãƒ•ã‚§ãƒ¼ãƒ‰ã‹ã‘ã‚‹
+            GameData.NextMapNumber = (int)GameData.eSceneState.BOSS2_SCENE;
 
         }
     }
 
     private void OnTriggerExit(Collider other) {
-        if (other.gameObject.tag == "SavePoint")    // ‚±‚Ì–¼‘O‚Ìƒ^ƒO‚ÆÕ“Ë‚µ‚½‚ç
+        if (other.gameObject.tag == "SavePoint")    // ã“ã®åå‰ã®ã‚¿ã‚°ã¨è¡çªã—ãŸã‚‰
         {
-            isHitSavePoint = false; // “–‚½‚Á‚½ƒtƒ‰ƒO‚ğ‰º‚·
+            isHitSavePoint = false; // å½“ãŸã£ãŸãƒ•ãƒ©ã‚°ã‚’ä¸‹ã™
         }
     }
 }

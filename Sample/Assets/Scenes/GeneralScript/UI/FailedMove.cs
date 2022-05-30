@@ -67,6 +67,7 @@ public class FailedMove : MonoBehaviour
         }
     }
 
+
     public void StartFailed() {
         mode = eFailedState.EXPANSION;
         rectTransform.sizeDelta = new Vector2(0, 0);

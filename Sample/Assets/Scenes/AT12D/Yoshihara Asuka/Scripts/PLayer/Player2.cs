@@ -727,7 +727,8 @@ public class Player2 : MonoBehaviour
             //---"Damaged"&"GroundDameged"&"Enemy"との処理
             if (collision.gameObject.tag == "Damaged" ||
                 collision.gameObject.tag == "GroundDameged" ||
-                collision.gameObject.tag == "Enemy")
+                collision.gameObject.tag == "Enemy" ||
+                collision.gameObject.tag == "LastBossWeapon")
             {
                 //OnAttackHit();
 

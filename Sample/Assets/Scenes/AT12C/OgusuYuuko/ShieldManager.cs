@@ -31,10 +31,10 @@ public class ShieldManager : MonoBehaviour
 
     public bool AddShield()
     {
-        if (Player.isHitSavePoint && SaveManager.canSave)
-        {
-            return false;
-        }
+        //if (Player.isHitSavePoint && SaveManager.canSave)
+        //{
+        //    return false;
+        //}
         //‚‚Ì”XV
         ++now_Quantity;
         Debug.Log("‚o‚µ‚½" + now_Quantity);

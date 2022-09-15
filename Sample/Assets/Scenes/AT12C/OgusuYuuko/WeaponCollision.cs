@@ -72,11 +72,11 @@ public class WeaponCollision : MonoBehaviour
                 collision.gameObject.tag == "GroundDameged" || 
                 collision.gameObject.tag == "LastBossWeapon")
             {
-                if (Player.isHitSavePoint)
-                {
-                    CanCollision = false;
-                    return;
-                }
+                //if (Player.isHitSavePoint)
+                //{
+                //    CanCollision = false;
+                //    return;
+                //}
 
                 BounceCheck();
                 //•ûŒü

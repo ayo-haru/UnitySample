@@ -35,6 +35,10 @@ public class KitchenSceneManager : MonoBehaviour {
              */
             //SaveManager.load();
             GameData.OldMapNumber = GameData.NextMapNumber = currentSceneNum;
+            //----- いったことあるマップフラグの初期化 -----
+            for (int i = 0; i < System.Enum.GetValues(typeof(GameData.eSceneState)).Length; i++) {
+                GameData.isWentMap[i] = false;
+            }
         }
         GameData.CurrentMapNumber = GameData.NextMapNumber;
 
@@ -50,16 +54,24 @@ public class KitchenSceneManager : MonoBehaviour {
         // プレイヤーの初期座標格納
         if ((GameData.ReSpawnPos.x != 0.0f || GameData.ReSpawnPos.y != 0.0f )&& GameData.OldMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
         {
-            //---タイトルから続きからを選択された場合
+            //---タイトルで続きからを選択された場合
             GameData.PlayerPos = GameData.Player.transform.position = GameData.ReSpawnPos;
         }
         else
         {
+            ////----- いったことあるマップフラグの初期化 -----
+            //for (int i = 0; i< System.Enum.GetValues(typeof(GameData.eSceneState)).Length; i++) {
+            //    GameData.isWentMap[i] = false;
+            //}
+
             //---ゲームシーンをシーン遷移してきた場合やはじめからやる場合
             switch (GameData.CurrentMapNumber)
             {
                 //---ステージ1
                 case (int)GameData.eSceneState.KitchenStage001:
+                    // いったことあるフラグ立てる
+                    GameData.isWentMap[(int)GameData.eSceneState.KitchenStage001] = true;
+                    
                     if (GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage002)
                     {
 
@@ -92,6 +104,9 @@ public class KitchenSceneManager : MonoBehaviour {
 
                 //---ステージ2
                 case (int)GameData.eSceneState.KitchenStage002:
+                    // いったことあるフラグ立てる
+                    GameData.isWentMap[(int)GameData.eSceneState.KitchenStage002] = true;
+
                     GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(470.0f, -10.0f, 0.0f);
 
@@ -99,6 +114,9 @@ public class KitchenSceneManager : MonoBehaviour {
 
                 //---ステージ3
                 case (int)GameData.eSceneState.KitchenStage003:
+                    // いったことあるフラグ立てる
+                    GameData.isWentMap[(int)GameData.eSceneState.KitchenStage003] = true;
+
                     GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                     GameData.PlayerPos = GameData.Player.transform.position = new Vector3(1100.0f, 18.0f, 0.0f);
 
@@ -106,6 +124,9 @@ public class KitchenSceneManager : MonoBehaviour {
 
                 //---ステージ4
                 case (int)GameData.eSceneState.KitchenStage004:
+                    // いったことあるフラグ立てる
+                    GameData.isWentMap[(int)GameData.eSceneState.KitchenStage004] = true;
+
                     if (GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage001)
                     {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
@@ -131,6 +152,9 @@ public class KitchenSceneManager : MonoBehaviour {
 
                 //---ステージ5
                 case (int)GameData.eSceneState.KitchenStage005:
+                    // いったことあるフラグ立てる
+                    GameData.isWentMap[(int)GameData.eSceneState.KitchenStage005] = true;
+
                     if (GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage004)
                     {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
@@ -150,6 +174,9 @@ public class KitchenSceneManager : MonoBehaviour {
 
                 //---ステージ6
                 case (int)GameData.eSceneState.KitchenStage006:
+                    // いったことあるフラグ立てる
+                    GameData.isWentMap[(int)GameData.eSceneState.KitchenStage006] = true;
+
                     if (GameData.OldMapNumber == (int)GameData.eSceneState.KitchenStage003)
                     {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
@@ -175,6 +202,9 @@ public class KitchenSceneManager : MonoBehaviour {
 
                 // EXステージ 1
                 case (int)GameData.eSceneState.BossStage001:
+                    // いったことあるフラグ立てる
+                    GameData.isWentMap[(int)GameData.eSceneState.BossStage001] = true;
+
                     if (GameData.OldMapNumber == (int)GameData.eSceneState.BossStage002)
                     {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
@@ -189,6 +219,9 @@ public class KitchenSceneManager : MonoBehaviour {
 
                 // EXステージ 2
                 case (int)GameData.eSceneState.BossStage002:
+                    // いったことあるフラグ立てる
+                    GameData.isWentMap[(int)GameData.eSceneState.BossStage002] = true;
+
                     if (GameData.OldMapNumber == (int)GameData.eSceneState.BossStage001)
                     {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
@@ -208,6 +241,9 @@ public class KitchenSceneManager : MonoBehaviour {
                     break;
                 // EXステージ 3
                 case (int)GameData.eSceneState.BossStage003:
+                    // いったことあるフラグ立てる
+                    GameData.isWentMap[(int)GameData.eSceneState.BossStage003] = true;
+
                     if (GameData.OldMapNumber == (int)GameData.eSceneState.BossStage002)
                     {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);

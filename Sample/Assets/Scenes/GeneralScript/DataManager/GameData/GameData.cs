@@ -45,7 +45,7 @@ public static class GameData {
     public static int OldMapNumber;                                 // シーン移動前のマップ番号
     public static int CurrentMapNumber;                             // マップの番号いれる
     public static int NextMapNumber;                                // マップの番号いれる
-    static string[] MapName = {                                     // マップの名前
+    private static string[] MapName = {                                     // マップの名前
         "TitleScene",
         "KitchenStage001", "KitchenStage002", "KitchenStage003", "KitchenStage004", "KitchenStage005", "KitchenStage006",
         "BossStage001", "BossStage002", "BossStage003",
@@ -53,6 +53,8 @@ public static class GameData {
         "Tester",
         "LastBoss_tester"
     };
+
+    public static bool[] isWentMap = new bool[System.Enum.GetValues(typeof(eSceneState)).Length];
 
     public static Vector3 ReSpawnPos;                               // リスポーンポス
     public static Vector3 PlayerPos;                                // プレイヤーの座標

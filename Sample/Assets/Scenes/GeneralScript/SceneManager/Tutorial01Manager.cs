@@ -28,6 +28,10 @@ public class Tutorial01Manager : MonoBehaviour
         }
         GameData.CurrentMapNumber = GameData.NextMapNumber;
 
+        //----- いったことあるマップフラグの初期化 -----
+        for (int i = 0; i < System.Enum.GetValues(typeof(GameData.eSceneState)).Length; i++) {
+            GameData.isWentMap[i] = false;
+        }
 
 
         //----- プレイヤー初期化 -----

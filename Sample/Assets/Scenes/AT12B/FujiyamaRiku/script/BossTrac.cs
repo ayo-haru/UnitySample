@@ -36,7 +36,7 @@ public class BossTrac : MonoBehaviour
     {
         TracCamera = Camera.main;
         BegCamPos = GameObject.Find("CameraPos").transform.position;
-        LimitLength = MaxLength + 105.0f;
+        LimitLength = MaxLength + 90.0f;
         DelFlameNum = DelFlame / 60.0f;
     }
 
@@ -44,7 +44,7 @@ public class BossTrac : MonoBehaviour
     void Update()
     {
         //Debug.Log("‚Ü‚Á‚½‚­‚Ü‚Á‚½‚­" + DelFlame);
-        //Debug.Log("‚Í‚¢‚Á‚Ä‚é‚º" + (Length));
+        Debug.Log("‚Í‚¢‚Á‚Ä‚é‚º" + (Length));
         Difference();
         if(UpLength <= UpMax)
         {
@@ -79,7 +79,7 @@ public class BossTrac : MonoBehaviour
                 UpCurrentDif++;
             }
         }
-        Debug.Log("‹——£‚â‚Å‚¥" + CurrentDif / Dif);
+       // Debug.Log("‹——£‚â‚Å‚¥" + CurrentDif / Dif);
         
         if (Length >= MaxLength && Length <= LimitLength)
         {
@@ -95,7 +95,7 @@ public class BossTrac : MonoBehaviour
                     Dif = HalfLength - (MaxLength / 2);
                     if ((CurrentDif - Dif) > 0.0f)
                     {
-                    Movement = Dif;
+                        Movement = Dif;
                         CurrentFlame = 0;
                         return;
                     }

@@ -73,7 +73,7 @@ public class Boss1Manager : MonoBehaviour
         {
             case Boss1State.BOSS1_START:
                 {
-                    
+                    Track.enabled = false;
                     Entry.Entry();
                    
                     break;

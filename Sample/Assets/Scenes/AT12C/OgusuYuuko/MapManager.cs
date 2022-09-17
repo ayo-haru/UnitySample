@@ -30,6 +30,8 @@ public class MapManager : MonoBehaviour
     public GameObject[] WarpArrow;
     //一回だけ呼び出す用のフラグ
     private bool OnceFlag = true;
+    //ワープしますか
+    public GameObject WarpMenu;
 
     // InputActionのUIを扱う
     private Game_pad UIActionAssets;
@@ -86,6 +88,8 @@ public class MapManager : MonoBehaviour
             
             WarpArrow[i].SetActive(false);
         }
+        //初めはワープメニュー非表示
+        WarpMenu.SetActive(false);
         // 初期化最初は決定じゃない
         isDecision = false;
         OnceFlag = true;
@@ -107,6 +111,11 @@ public class MapManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //ワープメニューが表示されてたらリターン
+        if (WarpMenu.activeSelf)
+        {
+            return;
+        }
         // コントローラー初期化
         bool isSetGamePad = false;
         if (Gamepad.current != null)
@@ -169,29 +178,33 @@ public class MapManager : MonoBehaviour
         //決定ボタン押されたら
         if (isDecision)
         {
-            Debug.Log(nSelect + "に移動");
-            //指定されたシーンに遷移
-            // シーン関連
-            switch (nSelect)
-            {
-                case 0:
-                    GameData.OldMapNumber = 0;
-                    break;
-                case 1:
-                case 3:
-                    GameData.OldMapNumber = (int)GameData.eSceneState.KitchenStage001;
-                    break;
-                case 2:
-                    GameData.OldMapNumber = (int)GameData.eSceneState.KitchenStage006;
-                    break;
-                case 4:
-                    GameData.OldMapNumber = (int)GameData.eSceneState.KitchenStage004;
-                    break;
-                case 5:
-                    GameData.OldMapNumber = (int)GameData.eSceneState.KitchenStage005;
-                    break;
-            }
-            GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001 + nSelect;
+            //ワープメニュー表示
+            WarpMenu.SetActive(true);
+            WarpMenu.GetComponent<WarpMenuManager>().nWarpNumber = nSelect;
+            isDecision = false;
+            //Debug.Log(nSelect + "に移動");
+            ////指定されたシーンに遷移
+            //// シーン関連
+            //switch (nSelect)
+            //{
+            //    case 0:
+            //        GameData.OldMapNumber = 0;
+            //        break;
+            //    case 1:
+            //    case 3:
+            //        GameData.OldMapNumber = (int)GameData.eSceneState.KitchenStage001;
+            //        break;
+            //    case 2:
+            //        GameData.OldMapNumber = (int)GameData.eSceneState.KitchenStage006;
+            //        break;
+            //    case 4:
+            //        GameData.OldMapNumber = (int)GameData.eSceneState.KitchenStage004;
+            //        break;
+            //    case 5:
+            //        GameData.OldMapNumber = (int)GameData.eSceneState.KitchenStage005;
+            //        break;
+            //}
+            //GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001 + nSelect;
         }
 
 
@@ -248,6 +261,10 @@ public class MapManager : MonoBehaviour
    
     private void OnDecision(InputAction.CallbackContext obj)
     {
+        if (WarpMenu.activeSelf)
+        {
+            return;
+        }
         //音鳴らす
         SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.GameAudioList);
         isDecision = true;
@@ -255,6 +272,10 @@ public class MapManager : MonoBehaviour
 
     private void SelectUp()
     {
+        if (WarpMenu.activeSelf)
+        {
+            return;
+        }
         //矢印移動した時の音鳴らす
         SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.GameAudioList);
         if(MapTransition[nSelect,0,0] != 0)
@@ -274,6 +295,10 @@ public class MapManager : MonoBehaviour
 
     private void SelectDown()
     {
+        if (WarpMenu.activeSelf)
+        {
+            return;
+        }
         //矢印移動した時の音鳴らす
         SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.GameAudioList);
         if (MapTransition[nSelect, 1,0] != 0)
@@ -294,6 +319,10 @@ public class MapManager : MonoBehaviour
 
     private void SelectLeft()
     {
+        if (WarpMenu.activeSelf)
+        {
+            return;
+        }
         //矢印移動した時の音鳴らす
         SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.GameAudioList);
         if (MapTransition[nSelect, 2,0] != 0)
@@ -316,6 +345,10 @@ public class MapManager : MonoBehaviour
 
     private void SelectRight()
     {
+        if (WarpMenu.activeSelf)
+        {
+            return;
+        }
         //矢印移動した時の音鳴らす
         SoundManager.Play(SoundData.eSE.SE_SELECT, SoundData.GameAudioList);
         if (MapTransition[nSelect, 3,0] != 0)

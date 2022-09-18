@@ -107,6 +107,28 @@ public class WarpMenuManager : MonoBehaviour
             {
                 Debug.Log(nWarpNumber + "に移動");
                 //指定されたシーンに遷移
+
+                //キッチンステージから、EXステージ　又は　EXステージからキッチンステージの移動の場合BGMが変わるのでBGMオブジェクトを削除しておく
+                if(GameData.CurrentMapNumber < (int)GameData.eSceneState.BossStage001 && nWarpNumber + 1 > (int)GameData.eSceneState.KitchenStage006)
+                {
+                    GameObject bgmObject = GameObject.Find("BGMObject(Clone)");
+                    if (bgmObject)
+                    {
+                        Destroy(bgmObject);
+                    }
+                }
+
+                if(GameData.CurrentMapNumber > (int)GameData.eSceneState.KitchenStage006 && nWarpNumber + 1 < (int)GameData.eSceneState.BossStage001)
+                {
+                    GameObject bgmObject = GameObject.Find("BGMObject_EX(Clone)");
+                    if (bgmObject)
+                    {
+                        Destroy(bgmObject);
+                    }
+
+                }
+
+
                 // シーン関連
                 switch (nWarpNumber)
                 {
@@ -115,6 +137,7 @@ public class WarpMenuManager : MonoBehaviour
                         break;
                     case 1:
                     case 3:
+                    case 6:
                         GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage001;
                         break;
                     case 2:
@@ -125,6 +148,12 @@ public class WarpMenuManager : MonoBehaviour
                         break;
                     case 5:
                         GameData.CurrentMapNumber = (int)GameData.eSceneState.KitchenStage005;
+                        break;
+                    case 7:
+                        GameData.CurrentMapNumber = (int)GameData.eSceneState.BossStage001;
+                        break;
+                    case 8:
+                        GameData.CurrentMapNumber = (int)GameData.eSceneState.BossStage002;
                         break;
                 }
                 GameData.NextMapNumber = (int)GameData.eSceneState.KitchenStage001 + nWarpNumber;

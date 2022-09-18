@@ -49,6 +49,8 @@ public class ExStageManager : MonoBehaviour
             {
                 // EXステージ 1
                 case (int)GameData.eSceneState.BossStage001:
+                    // いったことあるフラグ立てる
+                    GameData.isWentMap[(int)GameData.eSceneState.BossStage001] = true;
                     if (GameData.OldMapNumber == (int)GameData.eSceneState.BossStage002)
                     {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
@@ -63,6 +65,8 @@ public class ExStageManager : MonoBehaviour
 
                 // EXステージ 2
                 case (int)GameData.eSceneState.BossStage002:
+                    // いったことあるフラグ立てる
+                    GameData.isWentMap[(int)GameData.eSceneState.BossStage002] = true;
                     if (GameData.OldMapNumber == (int)GameData.eSceneState.BossStage001)
                     {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
@@ -82,6 +86,8 @@ public class ExStageManager : MonoBehaviour
                     break;
                 // EXステージ 3
                 case (int)GameData.eSceneState.BossStage003:
+                    // いったことあるフラグ立てる
+                    GameData.isWentMap[(int)GameData.eSceneState.BossStage003] = true;
                     if (GameData.OldMapNumber == (int)GameData.eSceneState.BossStage002)
                     {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);

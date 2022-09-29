@@ -10,6 +10,7 @@
 // 2022/03/28 セーブの項目を増やした
 // 2022/04/01 FileStream
 // 2022/04/28 スイッチのオンオフを保存
+// 2022/09/29 ステージごとの行ったことあるフラグの保存
 //=============================================================================
 
 using System.Collections;
@@ -32,7 +33,8 @@ public struct SaveData {
     public int PieceGrade;
     public float bgmVolume;
     public float seVolume;
-    public bool[,] isStarGet; 
+    public bool[,] isStarGet;
+    public bool[] isWentMap;
 }
 /*
     シリアライズとは
@@ -105,6 +107,11 @@ public static class SaveManager {
             {
                 sd.isStarGet[i,j] = _flag[i,j];
             }
+        }
+    }
+    public static void saveIsWentMap(bool[] _flag) {
+        for (int i = 0; i < System.Enum.GetValues(typeof(GameData.eSceneState)).Length;i++) {
+            sd.isWentMap[i] = _flag[i];
         }
     }
 

@@ -90,12 +90,13 @@ public static class GameData {
         GateOnOff = true;
         CurrentPiece = 0;
         CurrentPieceGrade = 0;
-        for (int i = 0; i < 10; i++)
-        {
-            for (int j = 0; j < 10; j++)
-            {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
                 isStarGet[i, j] = false;
             }
+        }
+        for (int i = 0; i < System.Enum.GetValues(typeof(eSceneState)).Length; i++) {
+            isWentMap[i] = false;
         }
     }
 
@@ -114,8 +115,7 @@ public static class GameData {
         FireOnOff = SaveManager.sd.fireOnOff;
         GateOnOff = SaveManager.sd.gateOnOff;
         CurrentPiece = SaveManager.sd.CurrentPiece;
-        if (!GameOver.GameOverFlag)
-        {
+        if (!GameOver.GameOverFlag) {
             CurrentPieceGrade = SaveManager.sd.PieceGrade;
         }
         SoundManager.bgmVolume = SaveManager.sd.bgmVolume;
@@ -133,6 +133,8 @@ public static class GameData {
         SaveManager.savePieceGrade(CurrentPieceGrade);
         SaveManager.saveBGMVolume(SoundManager.bgmVolume);
         SaveManager.saveSEVolume(SoundManager.seVolume);
+        //SaveManager.saveIsStarGet(GameData.isStarGet);
+        //SaveManager.saveIsWentMap(GameData.isWentMap);
     }
 
     //public static void Init() {

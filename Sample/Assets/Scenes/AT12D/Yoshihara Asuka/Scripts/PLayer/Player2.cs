@@ -409,10 +409,13 @@ public class Player2 : MonoBehaviour
     }
 
     public void Attack() {
-        if (isAttack) { 
-        
+        if (isAttack) {
+
             //---振動させる
             //StartCoroutine(VibrationPlay(LowFrequency,HighFrequency));
+
+            //楯を出す前に値が更新されるのを防ぐためリターン
+            if (AttackDirection != Vector2.zero) return;
 
             //---スティック入力
             PlayerPos = transform.position;                              // 攻撃する瞬間のプレイヤーの座標を取得
@@ -519,7 +522,7 @@ public class Player2 : MonoBehaviour
 
         //---武器回転
         _weapon.transform.Rotate(new Vector3(0, 0, (90 * AttackDirection.y)));
-            
+        Debug.Log("楯の位置" + _weapon.transform.position);    
         ////エフェクト回転
         //if (AttackDirection.x < -0.2f){
         //    ShiledEffect.transform.Rotate(new Vector3(ShiledEffect.transform.rotation.x, 60.0f, ShiledEffect.transform.rotation.z));

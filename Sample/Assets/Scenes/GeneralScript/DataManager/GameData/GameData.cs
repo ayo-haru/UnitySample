@@ -120,6 +120,14 @@ public static class GameData {
         }
         SoundManager.bgmVolume = SaveManager.sd.bgmVolume;
         SoundManager.seVolume = SaveManager.sd.seVolume;
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                isStarGet[i, j] = SaveManager.sd.isStarGet[i].bools[j];
+            }
+        }
+        for (int i = 0; i < System.Enum.GetValues(typeof(eSceneState)).Length; i++) {
+            isWentMap[i] = SaveManager.sd.isWentMap[i];
+        }
     }
 
     public static void SaveAll() {
@@ -133,8 +141,8 @@ public static class GameData {
         SaveManager.savePieceGrade(CurrentPieceGrade);
         SaveManager.saveBGMVolume(SoundManager.bgmVolume);
         SaveManager.saveSEVolume(SoundManager.seVolume);
-        //SaveManager.saveIsStarGet(GameData.isStarGet);
-        //SaveManager.saveIsWentMap(GameData.isWentMap);
+        SaveManager.saveIsStarGet(isStarGet);
+        SaveManager.saveIsWentMap(GameData.isWentMap);
     }
 
     //public static void Init() {

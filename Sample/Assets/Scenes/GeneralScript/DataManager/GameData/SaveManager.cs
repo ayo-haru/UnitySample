@@ -20,9 +20,14 @@ using System;       // UnityJsonを使うのに必要
 using System.IO;    // ファイルアクセスに必要
 
 
+[Serializable]
+public class BoolArray {
+    public bool[] bools;
+}
 [Serializable]  // これをつけないとシリアライズできない
 public struct SaveData {
-    public List<string> deck;
+    public BoolArray[] isStarGet;
+    //public List<string> deck;
     public int LastMapNumber;
     public Vector3 LastPlayerPos;
     public int HP;
@@ -33,7 +38,6 @@ public struct SaveData {
     public int PieceGrade;
     public float bgmVolume;
     public float seVolume;
-    public bool[,] isStarGet;
     public bool[] isWentMap;
 }
 /*
@@ -50,10 +54,10 @@ public static class SaveManager {
     public static bool canSave = false;
     const string SAVE_FILE_PATH = "save.json";  // セーブデータの名前
 
-    public static void saveDeck(List<string> _deck) {
-        sd.deck = _deck;
-        save();
-    }
+    //public static void saveDeck(List<string> _deck) {
+    //    sd.deck = _deck;
+    //    save();
+    //}
 
     public static void saveLastMapNumber(int _CurrentMapNumber) {  // マップの番号をJsonに保存する
         sd.LastMapNumber = _CurrentMapNumber;
@@ -102,19 +106,30 @@ public static class SaveManager {
         save();
     }
     public static void saveIsStarGet(bool[,] _flag) {
-        for(int i = 0;i < 10; i++){
-            for(int j = 0;j < 10; j++)
-            {
-                sd.isStarGet[i,j] = _flag[i,j];
+        sd.isStarGet = new BoolArray[10];
+
+        for (int i = 0; i < 10; i++) {
+            sd.isStarGet[i] = new BoolArray();
+            sd.isStarGet[i].bools = new bool[10];
+        }
+
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                sd.isStarGet[i].bools[j] = _flag[i, j];
             }
         }
-    }
-    public static void saveIsWentMap(bool[] _flag) {
-        for (int i = 0; i < System.Enum.GetValues(typeof(GameData.eSceneState)).Length;i++) {
-            sd.isWentMap[i] = _flag[i];
-        }
+
+        save();
     }
 
+    public static void saveIsWentMap(bool[] _flag) {
+        sd.isWentMap = new bool[System.Enum.GetValues(typeof(GameData.eSceneState)).Length];
+
+        for (int i = 0; i < System.Enum.GetValues(typeof(GameData.eSceneState)).Length; i++) {
+            sd.isWentMap[i] = _flag[i];
+        }
+        save();
+    }
 
 
     public static void save() {

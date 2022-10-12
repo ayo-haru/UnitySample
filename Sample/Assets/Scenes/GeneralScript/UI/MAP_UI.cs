@@ -82,6 +82,8 @@ public class MAP_UI : MonoBehaviour {
 
 
     private void OnMap(InputAction.CallbackContext obj) {
-        isMapButton = true;
+        if (!Player.isHitSavePoint) {
+            isMapButton = true;
+        }
     }
 }

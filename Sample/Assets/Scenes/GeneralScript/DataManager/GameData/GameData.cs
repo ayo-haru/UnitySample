@@ -108,6 +108,7 @@ public static class GameData {
     }
 
     public static void LoadData() {
+
         ReSpawnPos = SaveManager.sd.LastPlayerPos;
         NextMapNumber = SaveManager.sd.LastMapNumber;
         CurrentHP = SaveManager.sd.HP;

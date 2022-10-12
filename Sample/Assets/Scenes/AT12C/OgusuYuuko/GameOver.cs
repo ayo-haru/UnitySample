@@ -58,6 +58,8 @@ public class GameOver : MonoBehaviour {
 
     private void Awake() {
         //UIActionAssets = new Game_pad();            // InputActionインスタンスを生成
+        //使用フラグ設定
+        GameOverFlag = false;
     }
 
     // Start is called before the first frame update
@@ -84,8 +86,6 @@ public class GameOver : MonoBehaviour {
         //imageShow_Retry = RetryImage.GetComponent<ImageShow>();
         //imageShow_BackTitle = BackTitleImage.GetComponent<ImageShow>();
 
-        //使用フラグ設定
-        GameOverFlag = false;
     }
 
     // Update is called once per frame

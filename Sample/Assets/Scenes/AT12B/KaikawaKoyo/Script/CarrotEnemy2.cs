@@ -169,7 +169,7 @@ public class CarrotEnemy2 : MonoBehaviour
         {
             Destroy(gameObject, 0.0f);
         }
-        if ((collision.gameObject.CompareTag("Default") || collision.gameObject.CompareTag("Ground")) && !IdringFlg)
+        if ((collision.gameObject.CompareTag("Untagged") || collision.gameObject.CompareTag("Ground")) && !IdringFlg)
         {
             // アイドリング開始
             IdringFlg = true;

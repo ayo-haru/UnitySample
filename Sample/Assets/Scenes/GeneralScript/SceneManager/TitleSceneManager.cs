@@ -58,7 +58,7 @@ public class TitleSceneManager : MonoBehaviour {
 
         //----- シーン -----
         SaveManager.load();
-        GameData.LoadData();
+        //GameData.LoadData();
         GameData.CurrentMapNumber = (int)GameData.eSceneState.TITLE_SCENE;
 
         //----- サウンド -----
@@ -246,6 +246,8 @@ public class TitleSceneManager : MonoBehaviour {
             {
                 // 決定音
                 SoundManager.Play(SoundData.eSE.SE_KETTEI, SoundData.TitleAudioList);
+
+                GameData.LoadData();
 
                 titlePlayer.decisionFlag = true;
                 isDecision = false;

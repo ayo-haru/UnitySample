@@ -268,7 +268,9 @@ public class GamePause : MonoBehaviour
             QuitNo.GetComponent<Image>().enabled = false;
 
             isCalledOncce = false;
-            hpUI.SetActive(true);
+            if (hpUI != null) {
+                hpUI.SetActive(true);
+            }
             if (GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE &&
                 GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial1 &&
                 GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial2 &&
@@ -306,7 +308,9 @@ public class GamePause : MonoBehaviour
                 BackTitle.GetComponent<Image>().enabled = true;
                 SousaChara.GetComponent<Image>().enabled = true;
                 Option.GetComponent<Image>().enabled = true;
-                hpUI.SetActive(false);
+                if (hpUI != null) {
+                    hpUI.SetActive(false);
+                }
                 if (GameData.CurrentMapNumber != (int)GameData.eSceneState.BOSS1_SCENE &&
                     GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial1 &&
                     GameData.CurrentMapNumber != (int)GameData.eSceneState.Tutorial2 &&

@@ -92,15 +92,17 @@ public class ShieldEffectManager : MonoBehaviour
         //---‚‚Ì“®‚«‚É“¯Šú(¶‰EUŒ‚Žž‚Í‚‚³‚ð­‚µ•â³)
         if (GameData.PlayerPos.x > this.transform.position.x || GameData.PlayerPos.x < this.transform.position.x)
         {
-            ShileEffect.transform.position = new Vector3(this.transform.position.x,
-                                             this.transform.position.y + 3f,
-                                             this.transform.position.z);
-
+            if (ShileEffect) {
+                ShileEffect.transform.position = new Vector3(this.transform.position.x,
+                                                             this.transform.position.y + 3f,
+                                                             this.transform.position.z);
+            }
         }
         else
         {
-            ShileEffect.transform.position = this.transform.position;
-
+            if (ShileEffect) {
+                ShileEffect.transform.position = this.transform.position;
+            }
         }
 
         if(isAlive == true)

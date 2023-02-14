@@ -24,7 +24,7 @@ public class KitchenSceneManager : MonoBehaviour {
 
 
 
-        //----- マップの番号を保存 -----
+        //----- デバッグ用マップの番号を保存 -----
         if (GameData.NextMapNumber == (int)GameData.eSceneState.TITLE_SCENE)
         {
             /* 
@@ -93,8 +93,9 @@ public class KitchenSceneManager : MonoBehaviour {
                         GameData.PlayerVelocyty.SetVelocity(Vector3.zero);
                         GameData.PlayerPos = GameData.Player.transform.position = new Vector3(25.0f, 20.0f, 0.0f);
 
-                        if (GameData.OldMapNumber == (int)GameData.eSceneState.Tutorial3 || (GameData.OldMapNumber == GameData.CurrentMapNumber && !GameOver.GameOverFlag && !Player.shouldRespawn))
-                        {
+                        if ((GameData.OldMapNumber == (int)GameData.eSceneState.Tutorial3 && !GameOver.GameOverFlag) || (GameData.OldMapNumber == GameData.CurrentMapNumber && !GameOver.GameOverFlag && !Player.shouldRespawn)) {
+                            // 一個前のシーンがチュート３ではないときかつゲームオーバではない（順当に初めから始めてシーン１で死んだときにはこのifには入らない）
+                            // または、デバッグ中に途中から開始したときはこのifには入らない
                             GameData.InitData();
                             GameData.PlayerPos = GameData.Player.transform.position = new Vector3(25.0f, 20.0f, 0.0f);
                             GameData.SaveAll();
